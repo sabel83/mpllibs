@@ -9,7 +9,7 @@ SELF_TEST_DEFINE = MPLLIBS_PARSER_SELF_TEST
 HEADERS = $(wildcard *.h)
 OBJECTS = $(HEADERS:.h=.o)
 
-test : $(OBJECTS)
+check : $(OBJECTS)
 	rm $(OBJECTS)
 
 $(OBJECTS) : %.o : %.h
