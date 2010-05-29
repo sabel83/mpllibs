@@ -1,0 +1,15 @@
+mpllibs is a collection of C++ template metaprogramming libraries, all of
+which are header-only.
+
+
+
+It extends the Boost MPL library:
+http://www.boost.org/doc/libs/1_43_0/libs/mpl/doc/index.html
+
+
+
+The libraries have self-testing code, which can be executed by running
+
+  make check
+
+in the src directory.
