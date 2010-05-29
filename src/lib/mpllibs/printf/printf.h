@@ -74,9 +74,54 @@ namespace mpllibs
         ); \
       }
     
+    #ifdef FPRINTF
+      #error FPRINTF already defined
+    #endif
+    #define FPRINTF(z, n, unused) \
+      template <class formatString BOOST_PP_REPEAT(n, PRINTF_CLASSES, ~)> \
+      int fprintf(FILE* stream BOOST_PP_COMMA_IF(n) BOOST_PP_REPEAT(n, PRINTF_ARGS, ~)) \
+      { \
+        BOOST_STATIC_ASSERT(( \
+          mpllibs::printf::VerifyPrintfArguments< \
+            formatString, \
+            boost::mpl::list<BOOST_PP_REPEAT(n, PRINTF_CLASS_ARGS, ~)> \
+          >::type::value \
+        )); \
+        return ::fprintf( \
+          stream, \
+          boost::mpl::c_str<formatString>::type::value \
+          BOOST_PP_REPEAT(n, PRINTF_NO_CLASS_ARGS, ~) \
+        ); \
+      }
+
+    #ifdef SPRINTF
+      #error SPRINTF already defined
+    #endif
+    #define SPRINTF(z, n, unused) \
+      template <class formatString BOOST_PP_REPEAT(n, PRINTF_CLASSES, ~)> \
+      int sprintf(char* s BOOST_PP_COMMA_IF(n) BOOST_PP_REPEAT(n, PRINTF_ARGS, ~)) \
+      { \
+        BOOST_STATIC_ASSERT(( \
+          mpllibs::printf::VerifyPrintfArguments< \
+            formatString, \
+            boost::mpl::list<BOOST_PP_REPEAT(n, PRINTF_CLASS_ARGS, ~)> \
+          >::type::value \
+        )); \
+        return ::sprintf( \
+          s, \
+          boost::mpl::c_str<formatString>::type::value \
+          BOOST_PP_REPEAT(n, PRINTF_NO_CLASS_ARGS, ~) \
+        ); \
+      }
+    
     BOOST_PP_REPEAT(PRINTF_MAX_ARGUMENT, PRINTF, ~)
+    BOOST_PP_REPEAT(PRINTF_MAX_ARGUMENT, FPRINTF, ~)
+    BOOST_PP_REPEAT(PRINTF_MAX_ARGUMENT, SPRINTF, ~)
     
     #undef PRINTF
+    #undef FPRINTF
+    #undef SPRINTF
+    
     #undef PRINTF_CLASSES
     #undef PRINTF_ARGS
     #undef PRINTF_CLASS_ARGS
