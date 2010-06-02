@@ -9,6 +9,8 @@
 #include <mpllibs/printf/PopExpected.h>
 #include <mpllibs/printf/VerifyArgument.h>
 
+#include <mpllibs/util/lazy_eval_if.h>
+
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>

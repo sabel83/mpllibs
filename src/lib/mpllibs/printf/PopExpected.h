@@ -11,6 +11,7 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/pop_front.hpp>
+#include <boost/mpl/push_front.hpp>
 
 namespace mpllibs
 {
