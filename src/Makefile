@@ -7,7 +7,7 @@ MPLLIBS_ROOT = lib/mpllibs
 
 MPLLIBS = $(filter-out $(MPLLIBS_ROOT)/Makefile,$(wildcard $(MPLLIBS_ROOT)/*))
 
-check :
-	$(foreach l, $(MPLLIBS), $(MAKE) -C $(l) check && ) true
+check clean all :
+	$(foreach l, $(MPLLIBS), $(MAKE) -C $(l) $(MAKECMDGOALS) && ) true
 
 
