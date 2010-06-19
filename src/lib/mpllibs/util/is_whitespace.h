@@ -29,47 +29,5 @@ namespace mpllibs
   }
 }
 
-/*
- * Test code
- */
-#ifdef MPLLIBS_UTIL_SELF_TEST
-
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
-
-namespace mpllibs
-{
-  namespace test_mpllibs_util_is_whitespace
-  {
-    namespace
-    {
-      struct TestSpace :
-        mpllibs::test::test<
-          mpllibs::util::is_whitespace::apply<
-            boost::mpl::integral_c<char, ' '>
-          >::type
-        >
-      {};
-
-      struct TestTab :
-        mpllibs::test::test<
-          mpllibs::util::is_whitespace::apply<
-            boost::mpl::integral_c<char, '\t'>
-          >::type
-        >
-      {};
-
-      struct TestNonWhitespace :
-        mpllibs::test::test_fail<
-          mpllibs::util::is_whitespace::apply<
-            boost::mpl::integral_c<char, 'a'>
-          >::type
-        >
-      {};
-    }
-  }
-}
-#endif
-
 #endif
 

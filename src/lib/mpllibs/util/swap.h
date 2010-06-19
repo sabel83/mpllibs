@@ -25,33 +25,5 @@ namespace mpllibs
   }
 }
 
-/*
- * Test code
- */
-#ifdef MPLLIBS_UTIL_SELF_TEST
-
-#include <mpllibs/test/test_equal.h>
-
-#include <boost/mpl/int.hpp>
-
-namespace mpllibs
-{
-  namespace test_mpllibs_util_swap
-  {
-    namespace
-    {
-      struct TestSwap :
-        mpllibs::test::test_equal<
-          mpllibs::util::swap::apply<
-            mpllibs::util::pair<boost::mpl::int_<1>, boost::mpl::int_<2> >
-          >::type,
-          mpllibs::util::pair<boost::mpl::int_<2>, boost::mpl::int_<1> >
-        >
-      {};
-    }
-  }
-}
-#endif
-
 #endif
 

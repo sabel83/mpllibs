@@ -23,39 +23,5 @@ namespace mpllibs
   }
 }
 
-/*
- * Test code
- */
-#ifdef MPLLIBS_UTIL_SELF_TEST
-
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
-
-namespace mpllibs
-{
-  namespace test_mpllibs_util_is_digit
-  {
-    namespace
-    {
-      struct TestDigit :
-        mpllibs::test::test<
-          mpllibs::util::is_digit::apply<
-            boost::mpl::integral_c<char, '7'>
-          >::type
-        >
-      {};
-
-      struct TestNonDigit :
-        mpllibs::test::test_fail<
-          mpllibs::util::is_digit::apply<
-            boost::mpl::integral_c<char, 'a'>
-          >::type
-        >
-      {};
-    }
-  }
-}
-#endif
-
 #endif
 

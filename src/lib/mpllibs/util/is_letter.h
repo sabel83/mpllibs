@@ -28,49 +28,5 @@ namespace mpllibs
   }
 }
 
-/*
- * Test code
- */
-#ifdef MPLLIBS_UTIL_SELF_TEST
-
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
-
-#include <boost/mpl/integral_c.hpp>
-
-namespace mpllibs
-{
-  namespace test_mpllibs_util_is_letter
-  {
-    namespace
-    {
-      struct TestLcaseLetter :
-        mpllibs::test::test<
-          mpllibs::util::is_letter::apply<
-            boost::mpl::integral_c<char, 'k'>
-          >::type
-        >
-      {};
-
-      struct TestUcaseLetter :
-        mpllibs::test::test<
-          mpllibs::util::is_letter::apply<
-            boost::mpl::integral_c<char, 'K'>
-          >::type
-        >
-      {};
-
-      struct TestNonLetter :
-        mpllibs::test::test_fail<
-          mpllibs::util::is_letter::apply<
-            boost::mpl::integral_c<char, '8'>
-          >::type
-        >
-      {};
-    }
-  }
-}
-#endif
-
 #endif
 
