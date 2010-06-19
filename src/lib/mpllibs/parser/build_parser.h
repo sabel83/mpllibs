@@ -6,15 +6,18 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/util/get_first.h>
 #include <mpllibs/util/compose.h>
+
+#include <boost/mpl/quote.hpp>
+#include <boost/mpl/pair.hpp>
 
 namespace mpllibs
 {
   namespace parser
   {
     template <class p>
-    struct build_parser : mpllibs::util::compose<mpllibs::util::get_first, p> {};
+    struct build_parser :
+      mpllibs::util::compose<boost::mpl::quote1<boost::mpl::first>, p> {};
   }
 }
 

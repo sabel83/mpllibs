@@ -9,7 +9,7 @@
 #include <mpllibs/parser/sequence.h>
 #include <mpllibs/parser/transform.h>
 
-#include <mpllibs/util/get_second.h>
+#include <boost/mpl/quote.hpp>
 
 namespace mpllibs
 {
@@ -19,7 +19,7 @@ namespace mpllibs
     struct keep_second :
       mpllibs::parser::transform<
         mpllibs::parser::sequence<p1, p2>,
-        mpllibs::util::get_second
+        boost::mpl::quote1<boost::mpl::second>
       >
     {};
   }

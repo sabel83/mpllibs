@@ -9,8 +9,6 @@
 #include <mpllibs/parser/nothing.h>
 
 #include <mpllibs/util/pair.h>
-#include <mpllibs/util/get_first.h>
-#include <mpllibs/util/get_second.h>
 #include <mpllibs/util/make_pair.h>
 #include <mpllibs/util/lazy_equal_to.h>
 #include <mpllibs/util/compose.h>
@@ -18,6 +16,7 @@
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/quote.hpp>
 
 namespace mpllibs
 {
@@ -37,7 +36,11 @@ namespace mpllibs
           boost::mpl::eval_if<
             mpllibs::util::lazy_equal_to<
               boost::mpl::apply<
-                mpllibs::util::compose<p2, mpllibs::util::get_second, p1>,
+                mpllibs::util::compose<
+                  p2,
+                  boost::mpl::quote1<boost::mpl::second>,
+                  p1
+                >,
                 S
               >,
               mpllibs::parser::nothing
@@ -46,14 +49,17 @@ namespace mpllibs
             mpllibs::util::make_pair<
               mpllibs::util::make_pair<
                 boost::mpl::apply<
-                  mpllibs::util::compose<mpllibs::util::get_first, p1>,
+                  mpllibs::util::compose<
+                    boost::mpl::quote1<boost::mpl::first>,
+                    p1
+                  >,
                   S
                 >,
                 boost::mpl::apply<
                   mpllibs::util::compose<
-                    mpllibs::util::get_first,
+                    boost::mpl::quote1<boost::mpl::first>,
                     p2,
-                    mpllibs::util::get_second,
+                    boost::mpl::quote1<boost::mpl::second>,
                     p1
                   >,
                   S
@@ -61,9 +67,9 @@ namespace mpllibs
               >,
               boost::mpl::apply<
                 mpllibs::util::compose<
-                  mpllibs::util::get_second,
+                  boost::mpl::quote1<boost::mpl::second>,
                   p2,
-                  mpllibs::util::get_second,
+                  boost::mpl::quote1<boost::mpl::second>,
                   p1
                 >,
                 S

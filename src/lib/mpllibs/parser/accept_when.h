@@ -8,7 +8,6 @@
 
 #include <mpllibs/parser/nothing.h>
 
-#include <mpllibs/util/get_first.h>
 #include <mpllibs/util/compose.h>
 #include <mpllibs/util/lazy_eval_if.h>
 #include <mpllibs/util/lazy_equal_to.h>
@@ -17,6 +16,8 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/quote.hpp>
+#include <boost/mpl/pair.hpp>
 
 namespace mpllibs
 {
@@ -35,7 +36,10 @@ namespace mpllibs
           mpllibs::parser::nothing,
           mpllibs::util::lazy_eval_if<
             boost::mpl::apply<
-              mpllibs::util::compose<pred, mpllibs::util::get_first>,
+              mpllibs::util::compose<
+                pred,
+                boost::mpl::quote1<boost::mpl::first>
+              >,
               typename boost::mpl::apply<p, S>::type
             >,
             boost::mpl::apply<p, S>,

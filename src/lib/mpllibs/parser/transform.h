@@ -9,8 +9,6 @@
 #include <mpllibs/parser/nothing.h>
 
 #include <mpllibs/util/pair.h>
-#include <mpllibs/util/get_first.h>
-#include <mpllibs/util/get_second.h>
 #include <mpllibs/util/make_pair.h>
 #include <mpllibs/util/compose.h>
 #include <mpllibs/util/lazy_equal_to.h>
@@ -19,6 +17,7 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/quote.hpp>
 
 namespace mpllibs
 {
@@ -37,11 +36,18 @@ namespace mpllibs
           mpllibs::parser::nothing,
           mpllibs::util::make_pair<
             boost::mpl::apply<
-              mpllibs::util::compose<t, mpllibs::util::get_first, p>,
+              mpllibs::util::compose<
+                t,
+                boost::mpl::quote1<boost::mpl::first>,
+                p
+              >,
               S
             >,
             boost::mpl::apply<
-              mpllibs::util::compose<mpllibs::util::get_second, p>,
+              mpllibs::util::compose<
+                boost::mpl::quote1<boost::mpl::second>,
+                p
+              >,
               S
             >
           >
