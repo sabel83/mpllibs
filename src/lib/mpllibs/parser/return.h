@@ -23,46 +23,5 @@ namespace mpllibs
   }
 }
 
-/*
- * Test code
- */
-#ifdef MPLLIBS_PARSER_SELF_TEST
-
-#include <mpllibs/test/test_equal.h>
-
-#include <boost/mpl/list_c.hpp>
-#include <boost/mpl/integral_c.hpp>
-
-namespace mpllibs
-{
-  namespace test_mpllibs_parser_return
-  {
-    namespace
-    {
-      typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-      typedef boost::mpl::list_c<char> emptyString;
-
-      struct TestForNonEmptyString :
-        mpllibs::test::test_equal<
-          mpllibs::parser::return_<
-            boost::mpl::integral_c<char, 'x'>
-          >::apply<helloString>::type::first,
-          boost::mpl::integral_c<char, 'x'>
-        >
-      {};
-   
-      struct TestForEmptyString :
-        mpllibs::test::test_equal<
-          mpllibs::parser::return_<
-            boost::mpl::integral_c<char, 'x'>
-          >::apply<emptyString>::type::first,
-          boost::mpl::integral_c<char, 'x'>
-        >
-      {};
-    }
-  }
-}
-#endif
-
 #endif
 

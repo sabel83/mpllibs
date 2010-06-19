@@ -36,50 +36,5 @@ namespace mpllibs
   }
 }
 
-/*
- * Test code
- */
-#ifdef MPLLIBS_PARSER_SELF_TEST
-
-#include <mpllibs/parser/one_char.h>
-#include <mpllibs/parser/fail.h>
-
-#include <boost/mpl/integral_c.hpp>
-#include <boost/mpl/identity.hpp>
-#include <boost/mpl/int.hpp>
-
-namespace mpllibs
-{
-  namespace test_mpllibs_parser_except
-  {
-    namespace
-    {
-      typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-      typedef boost::mpl::int_<13> val;
-      
-      struct TestWithGood :
-        mpllibs::test::test_equal<
-          mpllibs::parser::except<
-            mpllibs::parser::one_char,
-            val
-          >::apply<helloString>::type,
-          mpllibs::parser::nothing
-        >
-      {};    
-
-      struct TestWithBad :
-        mpllibs::test::test_equal<
-          mpllibs::parser::except<
-            mpllibs::parser::fail,
-            val
-          >::apply<helloString>::type::first,
-          val
-        >
-      {};    
-    }
-  }
-}
-#endif
-
 #endif
 

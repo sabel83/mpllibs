@@ -20,51 +20,5 @@ namespace mpllibs
   }
 }
 
-/*
- * Test code
- */
-#ifdef MPLLIBS_PARSER_SELF_TEST
-
-#include <mpllibs/parser/nothing.h>
-#include <mpllibs/parser/digit.h>
-
-#include <mpllibs/test/test_equal.h>
-
-#include <boost/mpl/int.hpp>
-#include <boost/mpl/list_c.hpp>
-
-namespace mpllibs
-{
-  namespace test_parser_always
-  {
-    namespace
-    {
-      typedef boost::mpl::list_c<char, '1'> oneString;
-      typedef boost::mpl::list_c<char, 'a'> aString;
-
-      struct TestResult :
-        mpllibs::test::test_equal<
-          mpllibs::parser::always<
-            mpllibs::parser::digit,
-            boost::mpl::int_<13>
-          >::apply<oneString>::type::first,
-          boost::mpl::int_<13>
-        >
-      {};
-
-      struct TestFail :
-        mpllibs::test::test_equal<
-          mpllibs::parser::always<
-            mpllibs::parser::digit,
-            boost::mpl::int_<13>
-          >::apply<aString>::type,
-          mpllibs::parser::nothing
-        >
-      {};
-    }
-  }
-}
-#endif
-
 #endif
 

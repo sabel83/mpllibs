@@ -24,47 +24,5 @@ namespace mpllibs
   }
 }
 
-/*
- * Test code
- */
-#ifdef MPLLIBS_PARSER_SELF_TEST
-
-#include <boost/mpl/integral_c.hpp>
-
-namespace mpllibs
-{
-  namespace mpllibs_parser_test_space
-  {
-    namespace
-    {
-      typedef boost::mpl::list_c<char, ' ', 'e', 'l', 'l', 'o'> spaceString;
-      typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-      typedef boost::mpl::list_c<char> emptyString;
-      
-      struct TestWithText :
-        mpllibs::test::test_equal<
-          mpllibs::parser::space::apply<helloString>::type,
-          mpllibs::parser::nothing
-        >
-      {};    
-
-      struct TestWithSpace :
-        mpllibs::test::test_equal<
-          mpllibs::parser::space::apply<spaceString>::type::first,
-          boost::mpl::integral_c<char, ' '>
-        >
-      {};    
-
-      struct TestWithEmptyString :
-        mpllibs::test::test_equal<
-          mpllibs::parser::space::apply<emptyString>::type,
-          mpllibs::parser::nothing
-        >
-      {};    
-    }
-  }
-}
-#endif
-
 #endif
 
