@@ -7,7 +7,8 @@
 
 #include <mpllibs/parser/letter.h>
  
-#include <mpllibs/test/test_equal_sequence.h>
+#include <mpllibs/test/test.h>
+#include <mpllibs/test/equal_sequence.h>
 
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/integral_c.hpp>
@@ -27,62 +28,62 @@ namespace
   typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> chars5;
   typedef boost::mpl::list_c<char> emptyString;
 
-  struct TestEmptyInput :
-    mpllibs::test::test_equal_sequence<
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::any<
         mpllibs::parser::letter
       >::apply<emptyString>::type::first,
       boost::mpl::list<>
-    >
-  {};
-
-  struct Test0 :
-    mpllibs::test::test_equal_sequence<
+    >::type
+    Any_TestEmptyInput;
+  
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::any<
         mpllibs::parser::letter
       >::apply<chars0>::type::first,
       boost::mpl::list<>
-    >
-  {};
-
-  struct Test1 :
-    mpllibs::test::test_equal_sequence<
+    >::type
+    Any_Test0;
+  
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::any<
         mpllibs::parser::letter
       >::apply<chars1>::type::first,
       boost::mpl::list<hCharacter>
-    >
-  {};
-
-  struct Test2 :
-    mpllibs::test::test_equal_sequence<
+    >::type
+    Any_Test1;
+  
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::any<
         mpllibs::parser::letter
       >::apply<chars2>::type::first,
       boost::mpl::list<hCharacter, eCharacter>
-    >
-  {};
-
-  struct Test3 :
-    mpllibs::test::test_equal_sequence<
+    >::type
+    Any_Test2;
+  
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::any<
         mpllibs::parser::letter
       >::apply<chars3>::type::first,
       boost::mpl::list<hCharacter, eCharacter, lCharacter>
-    >
-  {};
-      
-  struct Test4 :
-    mpllibs::test::test_equal_sequence<
+    >::type
+    Any_Test3;
+  
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::any<
         mpllibs::parser::letter
       >::apply<chars4>::type::first,
       boost::mpl::list<hCharacter, eCharacter, lCharacter, lCharacter>
-    >
-  {};
-
-  struct Test5 :
-    mpllibs::test::test_equal_sequence<
+    >::type
+    Any_Test4;
+  
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::any<
         mpllibs::parser::letter
       >::apply<chars5>::type::first,
@@ -93,7 +94,15 @@ namespace
         lCharacter,
         oCharacter
       >
-    >
-  {};
+    >::type
+    Any_Test5;
 }
+
+MPLLIBS_ADD_TEST(Any_TestEmptyInput)
+MPLLIBS_ADD_TEST(Any_Test0)
+MPLLIBS_ADD_TEST(Any_Test1)
+MPLLIBS_ADD_TEST(Any_Test2)
+MPLLIBS_ADD_TEST(Any_Test3)
+MPLLIBS_ADD_TEST(Any_Test4)
+MPLLIBS_ADD_TEST(Any_Test5)
 

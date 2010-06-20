@@ -5,7 +5,6 @@
 
 #include <mpllibs/test/equal_sequence.h>
 #include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/int.hpp>
@@ -21,40 +20,39 @@ namespace
     BOOST_PP_REPEAT(4, DEFINE_INT, ~)
   #undef DEFINE_INT
     
-  struct TestEqualSequences :
-    mpllibs::test::test<
-      mpllibs::test::equal_sequence<
-        boost::mpl::list<Int0, Int1, Int2, Int3>,
-        boost::mpl::list<Int0, Int1, Int2, Int3>
-      >::type
-    >
-  {};
-      
-  struct TestNonEqualSequences :
-    mpllibs::test::test_fail<
-      mpllibs::test::equal_sequence<
-        boost::mpl::list<Int0, Int1, Int2, Int3>,
-        boost::mpl::list<Int0, Int1, Int3, Int2>
-      >::type
-    >
-  {};
+  
+  typedef
+    mpllibs::test::equal_sequence<
+      boost::mpl::list<Int0, Int1, Int2, Int3>,
+      boost::mpl::list<Int0, Int1, Int2, Int3>
+    >::type
+    EqualSequence_TestEqualSequences;
+  
+  typedef
+    mpllibs::test::equal_sequence<
+      boost::mpl::list<Int0, Int1, Int2, Int3>,
+      boost::mpl::list<Int0, Int1, Int3, Int2>
+    >::type
+    EqualSequence_TestNonEqualSequences;
+ 
+  typedef
+    mpllibs::test::equal_sequence<
+      boost::mpl::list<Int0, Int1, Int2>,
+      boost::mpl::list<Int0, Int1, Int2, Int3>
+    >::type
+    EqualSequence_TestDifferentSize;
 
-  struct TestDifferentSize :
-    mpllibs::test::test_fail<
-      mpllibs::test::equal_sequence<
-        boost::mpl::list<Int0, Int1, Int2>,
-        boost::mpl::list<Int0, Int1, Int2, Int3>
-      >::type
-    >
-  {};
-      
-  struct TestEmptySequences :
-    mpllibs::test::test<
-      mpllibs::test::equal_sequence<
-        boost::mpl::list<>,
-        boost::mpl::list<>
-      >::type
-    >
-  {};
+  typedef
+    mpllibs::test::equal_sequence<
+      boost::mpl::list<>,
+      boost::mpl::list<>
+    >::type
+    EqualSequence_TestEmptySequences;
 }
+
+
+MPLLIBS_ADD_TEST(EqualSequence_TestEqualSequences)
+MPLLIBS_ADD_TEST_TO_FAIL(EqualSequence_TestNonEqualSequences)
+MPLLIBS_ADD_TEST_TO_FAIL(EqualSequence_TestDifferentSize)
+MPLLIBS_ADD_TEST(EqualSequence_TestEmptySequences)
 

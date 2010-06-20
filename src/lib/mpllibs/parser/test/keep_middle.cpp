@@ -6,10 +6,11 @@
 #include <mpllibs/parser/keep_middle.h>
 #include <mpllibs/parser/lit.h>
 
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/test.h>
 
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/list_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
@@ -21,59 +22,66 @@ namespace
   typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
   typedef boost::mpl::list_c<char> emptyString;
 
-  struct TestThreeChars :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::keep_middle<
         mpllibs::parser::lit<hCharacter>,
         mpllibs::parser::lit<eCharacter>,
         mpllibs::parser::lit<lCharacter>
       >::apply<helloString>::type::first,
       eCharacter
-    >
-  {};
+    >::type
+    KeepMiddle_TestThreeChars;
 
-  struct TestFirstFails :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::keep_middle<
         mpllibs::parser::lit<xCharacter>,
         mpllibs::parser::lit<eCharacter>,
         mpllibs::parser::lit<lCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    KeepMiddle_TestFirstFails;
 
-  struct TestSecondFails :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::keep_middle<
         mpllibs::parser::lit<hCharacter>,
         mpllibs::parser::lit<xCharacter>,
         mpllibs::parser::lit<lCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    KeepMiddle_TestSecondFails;
 
-  struct TestThirdFails :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::keep_middle<
         mpllibs::parser::lit<hCharacter>,
         mpllibs::parser::lit<eCharacter>,
         mpllibs::parser::lit<xCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    KeepMiddle_TestThirdFails;
 
-  struct TestEmptyInput :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::keep_middle<
         mpllibs::parser::lit<hCharacter>,
         mpllibs::parser::lit<eCharacter>,
         mpllibs::parser::lit<lCharacter>
       >::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    KeepMiddle_TestEmptyInput;
 }
+
+MPLLIBS_ADD_TEST(KeepMiddle_TestThreeChars)
+MPLLIBS_ADD_TEST(KeepMiddle_TestFirstFails)
+MPLLIBS_ADD_TEST(KeepMiddle_TestSecondFails)
+MPLLIBS_ADD_TEST(KeepMiddle_TestThirdFails)
+MPLLIBS_ADD_TEST(KeepMiddle_TestEmptyInput)
+
 

@@ -5,36 +5,42 @@
 
 #include <mpllibs/parser/space.h>
 
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/test.h>
 
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/list_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
   typedef boost::mpl::list_c<char, ' ', 'e', 'l', 'l', 'o'> spaceString;
   typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
   typedef boost::mpl::list_c<char> emptyString;
-      
-  struct TestWithText :
-    mpllibs::test::test_equal<
+
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::space::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
+    >::type
+    Space_TestWithText;
 
-  struct TestWithSpace :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::space::apply<spaceString>::type::first,
       boost::mpl::integral_c<char, ' '>
-    >
-  {};    
+    >::type
+    Space_TestWithSpace;
 
-  struct TestWithEmptyString :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::space::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
+    >::type
+    Space_TestWithEmptyString;
 }
+
+MPLLIBS_ADD_TEST(Space_TestWithText)
+MPLLIBS_ADD_TEST(Space_TestWithSpace)
+MPLLIBS_ADD_TEST(Space_TestWithEmptyString)
+
 

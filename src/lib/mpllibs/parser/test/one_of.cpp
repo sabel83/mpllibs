@@ -7,147 +7,165 @@
 #include <mpllibs/parser/one_char.h>
 #include <mpllibs/parser/fail.h>
 
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/test.h>
 
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/list_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
   typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
 
-  struct Test0 :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of_0< >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
-
-  struct Test1WithGood :
-    mpllibs::test::test_equal<
+    >::type
+    OneOf_Test0;
+  
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of_1<
         mpllibs::parser::one_char
       >::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >
-  {};    
+    >::type
+    OneOf_Test1WithGood;
 
-  struct Test1WithBad :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of_1<
         mpllibs::parser::fail
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
+    >::type
+    OneOf_Test1WithBad;
 
-  struct Test2WithTwoGood :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of_2<
         mpllibs::parser::one_char,
         mpllibs::parser::one_char
       >::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >
-  {};    
+    >::type
+    OneOf_Test2WithTwoGood;
 
-  struct Test2WithFirstGood :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of_2<
         mpllibs::parser::one_char,
         mpllibs::parser::fail
       >::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >
-  {};    
+    >::type
+    OneOf_Test2WithFirstGood;
 
-  struct Test2WithSecondGood :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of_2<
         mpllibs::parser::fail,
         mpllibs::parser::one_char
       >::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >
-  {};    
-      
-  struct Test2WithTwoBad :
-    mpllibs::test::test_equal<
+    >::type
+    OneOf_Test2WithSecondGood;
+
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of_2<
         mpllibs::parser::fail,
         mpllibs::parser::fail
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
-
-      
+    >::type
+    OneOf_Test2WithTwoBad;
 
 
-  struct Test :
-    mpllibs::test::test_equal<
+
+
+
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of< >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
-
-  struct TestWithGood :
-    mpllibs::test::test_equal<
+    >::type
+    OneOf_Test;
+  
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of<
         mpllibs::parser::one_char
       >::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >
-  {};    
-
-  struct TestWithBad :
-    mpllibs::test::test_equal<
+    >::type
+    OneOf_TestWithGood;
+  
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of<
         mpllibs::parser::fail
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
+    >::type
+    OneOf_TestWithBad;
 
-  struct TestWithTwoGood :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of<
         mpllibs::parser::one_char,
         mpllibs::parser::one_char
       >::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >
-  {};    
-
-  struct TestWithFirstGood :
-    mpllibs::test::test_equal<
+    >::type
+    OneOf_TestWithTwoGood;
+    
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of<
         mpllibs::parser::one_char,
         mpllibs::parser::fail
       >::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >
-  {};    
+    >::type
+    OneOf_TestWithFirstGood;
 
-  struct TestWithSecondGood :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of<
         mpllibs::parser::fail,
         mpllibs::parser::one_char
       >::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >
-  {};    
-      
-  struct TestWithTwoBad :
-    mpllibs::test::test_equal<
+    >::type
+    OneOf_TestWithSecondGood;
+
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::one_of<
         mpllibs::parser::fail,
         mpllibs::parser::fail
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
+    >::type
+    OneOf_TestWithTwoBad;
 }
+
+MPLLIBS_ADD_TEST(OneOf_Test0)
+MPLLIBS_ADD_TEST(OneOf_Test1WithGood)
+MPLLIBS_ADD_TEST(OneOf_Test1WithBad)
+MPLLIBS_ADD_TEST(OneOf_Test2WithTwoGood)
+MPLLIBS_ADD_TEST(OneOf_Test2WithFirstGood)
+MPLLIBS_ADD_TEST(OneOf_Test2WithSecondGood)
+MPLLIBS_ADD_TEST(OneOf_Test2WithTwoBad)
+
+MPLLIBS_ADD_TEST(OneOf_Test)
+MPLLIBS_ADD_TEST(OneOf_TestWithGood)
+MPLLIBS_ADD_TEST(OneOf_TestWithBad)
+MPLLIBS_ADD_TEST(OneOf_TestWithTwoGood)
+MPLLIBS_ADD_TEST(OneOf_TestWithFirstGood)
+MPLLIBS_ADD_TEST(OneOf_TestWithSecondGood)
+MPLLIBS_ADD_TEST(OneOf_TestWithTwoBad)
 
 

@@ -6,33 +6,30 @@
 #include <mpllibs/util/is_whitespace.h>
 
 #include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
 
 namespace
 {
-  struct TestSpace :
-    mpllibs::test::test<
-      mpllibs::util::is_whitespace::apply<
-        boost::mpl::integral_c<char, ' '>
-      >::type
-    >
-  {};
-
-  struct TestTab :
-    mpllibs::test::test<
-      mpllibs::util::is_whitespace::apply<
-        boost::mpl::integral_c<char, '\t'>
-      >::type
-    >
-  {};
-
-  struct TestNonWhitespace :
-    mpllibs::test::test_fail<
-      mpllibs::util::is_whitespace::apply<
-        boost::mpl::integral_c<char, 'a'>
-      >::type
-    >
-  {};
+  typedef
+    mpllibs::util::is_whitespace::apply<
+      boost::mpl::integral_c<char, ' '>
+    >::type
+    IsWhitespace_TestSpace;
+  
+  typedef
+    mpllibs::util::is_whitespace::apply<
+      boost::mpl::integral_c<char, '\t'>
+    >::type
+    IsWhitespace_TestTab;
+  
+  typedef
+    mpllibs::util::is_whitespace::apply<
+      boost::mpl::integral_c<char, 'a'>
+    >::type
+    IsWhitespace_TestNonWhitespace;
 }
+
+MPLLIBS_ADD_TEST(IsWhitespace_TestSpace)
+MPLLIBS_ADD_TEST(IsWhitespace_TestTab)
+MPLLIBS_ADD_TEST_TO_FAIL(IsWhitespace_TestNonWhitespace)
 
 

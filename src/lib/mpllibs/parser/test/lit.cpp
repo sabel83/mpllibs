@@ -5,10 +5,11 @@
 
 #include <mpllibs/parser/lit.h>
 
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/test.h>
 
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/list_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
@@ -19,35 +20,40 @@ namespace
   typedef boost::mpl::list_c<char, 'b', 'e', 'l', 'l', 'o'> otherString;
   typedef boost::mpl::list_c<char> emptyString;
 
-  struct TestAccept :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::lit<hCharacter>::apply<helloString>::type::first,
       hCharacter
-    >
-  {};    
+    >::type
+    Lit_TestAccept;
 
-  struct TestReject :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::lit<hCharacter>::apply<otherString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
+    >::type
+    Lit_TestReject;
 
-  struct TestWithEmptyString :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::lit<hCharacter>::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
+    >::type
+    Lit_TestWithEmptyString;
 
-  struct TestRemainingString :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::lit<eCharacter>::apply<
         mpllibs::parser::lit<hCharacter>::apply<helloString>::type::second
       >::type::first,
       eCharacter
-    >
-  {};    
+    >::type
+    Lit_TestRemainingString;
 }
+
+MPLLIBS_ADD_TEST(Lit_TestAccept)
+MPLLIBS_ADD_TEST(Lit_TestReject)
+MPLLIBS_ADD_TEST(Lit_TestWithEmptyString)
+MPLLIBS_ADD_TEST(Lit_TestRemainingString)
 
 

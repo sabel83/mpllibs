@@ -6,20 +6,18 @@
 #include <mpllibs/util/is_digit.h>
 
 #include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
 
 namespace
 {
-  struct TestDigit :
-    mpllibs::test::test<
-      mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, '7'> >::type
-    >
-  {};
-
-  struct TestNonDigit :
-    mpllibs::test::test_fail<
-      mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, 'a'> >::type
-    >
-  {};
+  typedef
+    mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, '7'> >::type
+    IsDigit_TestDigit;
+  
+  typedef
+    mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, 'a'> >::type
+    IsDigit_TestNonDigit;
 }
+
+MPLLIBS_ADD_TEST(IsDigit_TestDigit)
+MPLLIBS_ADD_TEST_TO_FAIL(IsDigit_TestNonDigit)
 

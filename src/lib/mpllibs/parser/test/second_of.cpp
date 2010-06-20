@@ -6,10 +6,11 @@
 #include <mpllibs/parser/second_of.h>
 #include <mpllibs/parser/lit.h>
 
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/test.h>
 
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/list_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
@@ -20,45 +21,50 @@ namespace
   typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
   typedef boost::mpl::list_c<char> emptyString;
 
-  struct TestTwoChars :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::second_of<
         mpllibs::parser::lit<hCharacter>,
         mpllibs::parser::lit<eCharacter>
       >::apply<helloString>::type::first,
       eCharacter
-    >
-  {};
+    >::type
+    SecondOf_TestTwoChars;
 
-  struct TestFirstFails :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::second_of<
         mpllibs::parser::lit<xCharacter>,
         mpllibs::parser::lit<eCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    SecondOf_TestFirstFails;
 
-  struct TestSecondFails :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::second_of<
         mpllibs::parser::lit<hCharacter>,
         mpllibs::parser::lit<xCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    SecondOf_TestSecondFails;
 
-  struct TestEmptyInput :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::second_of<
         mpllibs::parser::lit<hCharacter>,
         mpllibs::parser::lit<eCharacter>
       >::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    SecondOf_TestEmptyInput;
 }
+
+MPLLIBS_ADD_TEST(SecondOf_TestTwoChars)
+MPLLIBS_ADD_TEST(SecondOf_TestFirstFails)
+MPLLIBS_ADD_TEST(SecondOf_TestSecondFails)
+MPLLIBS_ADD_TEST(SecondOf_TestEmptyInput)
 
 

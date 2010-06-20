@@ -7,37 +7,41 @@
 #include <mpllibs/parser/one_char.h>
 #include <mpllibs/parser/fail.h>
 
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/test.h>
 
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/list_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
   typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
   typedef boost::mpl::int_<13> val;
-      
-  struct TestWithGood :
-    mpllibs::test::test_equal<
+
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::except<
         mpllibs::parser::one_char,
         val
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
-
-  struct TestWithBad :
-    mpllibs::test::test_equal<
+    >::type
+    Except_TestWithGood;
+  
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::except<
         mpllibs::parser::fail,
         val
       >::apply<helloString>::type::first,
       val
-    >
-  {};    
+    >::type
+    Except_TestWithBad;
 }
+
+MPLLIBS_ADD_TEST(Except_TestWithGood)
+MPLLIBS_ADD_TEST(Except_TestWithBad)
 
 

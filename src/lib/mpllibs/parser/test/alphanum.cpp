@@ -5,10 +5,11 @@
 
 #include <mpllibs/parser/alphanum.h>
 
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/test.h>
 
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
@@ -16,34 +17,39 @@ namespace
   typedef boost::mpl::list_c<char, '1', '9', '8', '3'> numberString;
   typedef boost::mpl::list_c<char, '.', '.', ','> otherString;
   typedef boost::mpl::list_c<char> emptyString;
-      
-  struct TestWithText :
-    mpllibs::test::test_equal<
+  
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::alphanum::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >
-  {};    
-
-  struct TestWithNumber :
-    mpllibs::test::test_equal<
+    >::type
+    Alphanum_TestWithText;
+   
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::digit::apply<numberString>::type::first,
       boost::mpl::integral_c<char, '1'>
-    >
-  {};
+    >::type
+    Alphanum_TestWithNumber;
 
-  struct TestWithNonAlphanum :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::digit::apply<otherString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    Alphanum_TestWithNonAlphanum;
 
-  struct TestWithEmptyString :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::digit::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >
-  {};    
+    >::type
+    Alphanum_TestWithEmptyString;
 }
+
+MPLLIBS_ADD_TEST(Alphanum_TestWithText)
+MPLLIBS_ADD_TEST(Alphanum_TestWithNumber)
+MPLLIBS_ADD_TEST(Alphanum_TestWithNonAlphanum)
+MPLLIBS_ADD_TEST(Alphanum_TestWithEmptyString)
 
 

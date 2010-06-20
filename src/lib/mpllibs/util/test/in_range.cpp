@@ -6,47 +6,42 @@
 #include <mpllibs/util/in_range.h>
 
 #include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
 
 #include <boost/mpl/int.hpp>
 
 namespace
 {
-  struct TestIntInRange :
-    mpllibs::test::test<
-      mpllibs::util::in_range<
-        boost::mpl::int_<10>,
-        boost::mpl::int_<13>
-      >::apply<boost::mpl::int_<12> >::type
-    >
-  {};
+  typedef
+    mpllibs::util::in_range<
+      boost::mpl::int_<10>,
+      boost::mpl::int_<13>
+    >::apply<boost::mpl::int_<12> >::type
+    InRange_TestIntInRange;
 
-  struct TestLowerBound :
-    mpllibs::test::test<
-      mpllibs::util::in_range<
-        boost::mpl::int_<10>,
-        boost::mpl::int_<13>
-      >::apply<boost::mpl::int_<10> >::type
-    >
-  {};
+  typedef
+    mpllibs::util::in_range<
+      boost::mpl::int_<10>,
+      boost::mpl::int_<13>
+    >::apply<boost::mpl::int_<10> >::type
+    InRange_TestLowerBound;
 
-  struct TestUpperBound :
-    mpllibs::test::test<
-      mpllibs::util::in_range<
-        boost::mpl::int_<10>,
-        boost::mpl::int_<13>
-      >::apply<boost::mpl::int_<13> >::type
-    >
-  {};
+  typedef
+    mpllibs::util::in_range<
+      boost::mpl::int_<10>,
+      boost::mpl::int_<13>
+    >::apply<boost::mpl::int_<13> >::type
+    InRange_TestUpperBound;
 
-  struct TestIntNotInRange :
-    mpllibs::test::test_fail<
-      mpllibs::util::in_range<
-        boost::mpl::int_<10>,
-        boost::mpl::int_<13>
-      >::apply<boost::mpl::int_<14> >::type
-    >
-  {};
+  typedef
+    mpllibs::util::in_range<
+      boost::mpl::int_<10>,
+      boost::mpl::int_<13>
+    >::apply<boost::mpl::int_<14> >::type
+    InRange_TestIntNotInRange;    
 }
 
+MPLLIBS_ADD_TEST(InRange_TestIntInRange)
+MPLLIBS_ADD_TEST(InRange_TestLowerBound)
+MPLLIBS_ADD_TEST(InRange_TestUpperBound)
+MPLLIBS_ADD_TEST_TO_FAIL(InRange_TestIntNotInRange)
 

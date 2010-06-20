@@ -5,19 +5,22 @@
 
 #include <mpllibs/util/swap.h>
 
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/test.h>
 
 #include <boost/mpl/int.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  struct TestSwap :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::util::swap::apply<
         mpllibs::util::pair<boost::mpl::int_<1>, boost::mpl::int_<2> >
       >::type,
       mpllibs::util::pair<boost::mpl::int_<2>, boost::mpl::int_<1> >
-    >
-  {};
+    >::type
+    Swap_TestSwap;
 }
+
+MPLLIBS_ADD_TEST(Swap_TestSwap)
 

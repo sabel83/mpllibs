@@ -6,11 +6,12 @@
 #include <mpllibs/parser/token.h>
 #include <mpllibs/parser/keyword.h>
 
-#include <mpllibs/test/test_equal.h>
-#include <mpllibs/test/test_equal_sequence.h>
+#include <mpllibs/test/test.h>
+#include <mpllibs/test/equal_sequence.h>
 
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/int.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
@@ -28,32 +29,38 @@ namespace
     mpllibs::parser::keyword<helloString, boost::mpl::int_<13> >
     testParser;
 
-  struct TestNoSpace :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::token<testParser>::apply<helloString>::type::first,
       testParser::apply<helloString>::type::first
-    >
-  {};
+    >::type
+    Token_TestNoSpace;
 
-  struct TestSpaces :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::token<testParser>::apply<helloSpaceString>::type::first,
       testParser::apply<helloString>::type::first
-    >
-  {};
+    >::type
+    Token_TestSpaces;
 
-  struct TestSpacesConsumed :
-    mpllibs::test::test_equal_sequence<
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::token<testParser>::apply<helloSpaceString>::type::second,
       boost::mpl::list_c<char>
-    >
-  {};
-      
-  struct TestFail :
-    mpllibs::test::test_equal<
+    >::type
+    Token_TestSpacesConsumed;
+
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::token<testParser>::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    Token_TestFail;
 }
+
+MPLLIBS_ADD_TEST(Token_TestNoSpace)
+MPLLIBS_ADD_TEST(Token_TestSpaces)
+MPLLIBS_ADD_TEST(Token_TestSpacesConsumed)
+MPLLIBS_ADD_TEST(Token_TestFail)
+
 

@@ -6,27 +6,24 @@
 #include <mpllibs/util/is_char.h>
 
 #include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
 
 #include <boost/mpl/integral_c.hpp>
 
 namespace
 {
-  struct TestSame :
-    mpllibs::test::test<
-      mpllibs::util::is_char<
-        boost::mpl::integral_c<char, 'a'>
-      >::apply<boost::mpl::integral_c<char, 'a'> >::type
-    >
-  {};
-
-  struct TestDifferent :
-    mpllibs::test::test_fail<
-      mpllibs::util::is_char<
-        boost::mpl::integral_c<char, 'a'>
-      >::apply<boost::mpl::integral_c<char, 'b'> >::type
-    >
-  {};
+  typedef
+    mpllibs::util::is_char<
+      boost::mpl::integral_c<char, 'a'>
+    >::apply<boost::mpl::integral_c<char, 'a'> >::type
+    IsChar_TestSame;
+  
+  typedef
+    mpllibs::util::is_char<
+      boost::mpl::integral_c<char, 'a'>
+    >::apply<boost::mpl::integral_c<char, 'b'> >::type
+    IsChar_TestDifferent;
 }
 
+MPLLIBS_ADD_TEST(IsChar_TestSame)
+MPLLIBS_ADD_TEST_TO_FAIL(IsChar_TestDifferent)
 

@@ -6,11 +6,11 @@
 #include <mpllibs/parser/keyword.h>
 
 #include <mpllibs/test/test.h>
-#include <mpllibs/test/test_equal_sequence.h>
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/equal_sequence.h>
 
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
@@ -27,51 +27,59 @@ namespace
   typedef boost::mpl::list_c<char, 'h', 'x', 'l', 'l', 'o'> hxlloString;
   typedef boost::mpl::list_c<char> emptyString;
 
-  struct TestResultType :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::keyword<
         helloString,
         lCharacter
       >::apply<helloString>::type::first,
       lCharacter
-    >
-  {};
+    >::type
+    Keyword_TestResultType;
 
-  struct TestEmptyInput :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::keyword<helloString>::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    Keyword_TestEmptyInput;
 
-  struct TestItself :
-    mpllibs::test::test_equal_sequence<
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::keyword<helloString>::apply<helloString>::type::second,
       boost::mpl::list_c<char>
-    >
-  {};
-      
-  struct TestMoreThanItself :
-    mpllibs::test::test_equal_sequence<
+    >::type
+    Keyword_TestItself;
+
+  typedef
+    mpllibs::test::equal_sequence<
       mpllibs::parser::keyword<helloString>::apply<
         helloWorldString
       >::type::second,
       boost::mpl::list_c<char, ' ', 'w', 'o', 'r', 'l', 'd'>
-    >
-  {};
+    >::type
+    Keyword_TestMoreThanItself;
 
-  struct TestNonMatchAtEnd :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::keyword<helloString>::apply<hellxString>::type,
       mpllibs::parser::nothing
-    >
-  {};
-      
-  struct TestNonMatchInTheMiddle :
-    mpllibs::test::test_equal<
+    >::type
+    Keyword_TestNonMatchAtEnd;
+
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::keyword<helloString>::apply<hxlloString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    Keyword_TestNonMatchInTheMiddle;
 }
+
+MPLLIBS_ADD_TEST(Keyword_TestResultType)
+MPLLIBS_ADD_TEST(Keyword_TestEmptyInput)
+MPLLIBS_ADD_TEST(Keyword_TestItself)
+MPLLIBS_ADD_TEST(Keyword_TestMoreThanItself)
+MPLLIBS_ADD_TEST(Keyword_TestNonMatchAtEnd)
+MPLLIBS_ADD_TEST(Keyword_TestNonMatchInTheMiddle)
+
 

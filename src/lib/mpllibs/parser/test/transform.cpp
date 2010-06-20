@@ -6,10 +6,11 @@
 #include <mpllibs/parser/transform.h>
 #include <mpllibs/parser/lit.h>
 
-#include <mpllibs/test/test_equal.h>
+#include <mpllibs/test/test.h>
 
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/list_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace
 {
@@ -29,34 +30,39 @@ namespace
   typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
   typedef boost::mpl::list_c<char> emptyString;
 
-  struct TestNormalCase :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::transform<
         mpllibs::parser::lit<hCharacter>,
         transformation
       >::apply<helloString>::type::first,
       xCharacter
-    >
-  {};
+    >::type
+    Transform_TestNormalCase;
 
-  struct TestParserFails :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::transform<
         mpllibs::parser::lit<xCharacter>,
         transformation
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    Transform_TestParserFails;
 
-  struct TestEmptyInput :
-    mpllibs::test::test_equal<
+  typedef
+    boost::mpl::equal_to<
       mpllibs::parser::transform<
         mpllibs::parser::lit<hCharacter>,
         transformation
       >::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >
-  {};
+    >::type
+    Transform_TestEmptyInput;
 }
+
+MPLLIBS_ADD_TEST(Transform_TestNormalCase)
+MPLLIBS_ADD_TEST(Transform_TestParserFails)
+MPLLIBS_ADD_TEST(Transform_TestEmptyInput)
+
 

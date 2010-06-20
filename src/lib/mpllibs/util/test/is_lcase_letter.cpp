@@ -6,24 +6,22 @@
 #include <mpllibs/util/is_lcase_letter.h>
 
 #include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
 
 namespace
 {
-  struct TestLetter :
-    mpllibs::test::test<
-      mpllibs::util::is_lcase_letter::apply<
-        boost::mpl::integral_c<char, 'k'>
-      >::type
-    >
-  {};
-
-  struct TestNonLetter :
-    mpllibs::test::test_fail<
-      mpllibs::util::is_lcase_letter::apply<
-        boost::mpl::integral_c<char, 'K'>
-      >::type
-    >
-  {};
+  typedef
+    mpllibs::util::is_lcase_letter::apply<
+      boost::mpl::integral_c<char, 'k'>
+    >::type
+    IsLcaseLetter_TestLetter;
+  
+  typedef
+    mpllibs::util::is_lcase_letter::apply<
+      boost::mpl::integral_c<char, 'K'>
+    >::type
+    IsLcaseLetter_TestNonLetter;
 }
+
+MPLLIBS_ADD_TEST(IsLcaseLetter_TestLetter)
+MPLLIBS_ADD_TEST_TO_FAIL(IsLcaseLetter_TestNonLetter)
 

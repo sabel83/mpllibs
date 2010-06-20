@@ -6,25 +6,24 @@
 #include <mpllibs/util/is_ucase_letter.h>
 
 #include <mpllibs/test/test.h>
-#include <mpllibs/test/test_fail.h>
 
 namespace
 {
-  struct TestLetter :
-    mpllibs::test::test<
-      mpllibs::util::is_ucase_letter::apply<
-        boost::mpl::integral_c<char, 'K'>
-      >::type
-    >
-  {};
-
-  struct TestNonLetter :
-    mpllibs::test::test_fail<
-      mpllibs::util::is_ucase_letter::apply<
-        boost::mpl::integral_c<char, 'k'>
-      >::type
-    >
-  {};
+  typedef
+    mpllibs::util::is_ucase_letter::apply<
+      boost::mpl::integral_c<char, 'K'>
+    >::type
+    IsUcaseLetter_TestLetter;
+  
+  typedef
+    mpllibs::util::is_ucase_letter::apply<
+      boost::mpl::integral_c<char, 'k'>
+    >::type
+    IsUcaseLetter_TestNonLetter;
 }
+
+MPLLIBS_ADD_TEST(IsUcaseLetter_TestLetter)
+MPLLIBS_ADD_TEST_TO_FAIL(IsUcaseLetter_TestNonLetter)
+
 
 
