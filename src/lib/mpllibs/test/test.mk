@@ -39,10 +39,7 @@ CXXFLAGS += -Wcast-align
 CXXFLAGS += -Wconversion
 CXXFLAGS += -Wsign-conversion
 CXXFLAGS += -Wlogical-op
-CXXFLAGS += -Waggregate-return
 CXXFLAGS += -Wmissing-declarations
-
-CXXFLAGS += -Wunreachable-code
 
 # We need it for dependency file generation
 CXXFLAGS += -MMD
