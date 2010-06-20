@@ -6,17 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/test_c.h>
-
-namespace mpllibs
-{
-  namespace test
-  {
-    template <class cond>
-    struct test : mpllibs::test::test_c<cond::value> {};
-  }
-}
-
 #include <mpllibs/test/TestDriver.h>
 
 #ifdef MPLLIBS_ADD_TEST_IMPL
