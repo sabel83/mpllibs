@@ -25,28 +25,28 @@ namespace
     mpllibs::test::equal_sequence<
       boost::mpl::list<Int0, Int1, Int2, Int3>,
       boost::mpl::list<Int0, Int1, Int2, Int3>
-    >::type
+    >
     EqualSequence_TestEqualSequences;
   
   typedef
     mpllibs::test::equal_sequence<
       boost::mpl::list<Int0, Int1, Int2, Int3>,
       boost::mpl::list<Int0, Int1, Int3, Int2>
-    >::type
+    >
     EqualSequence_TestNonEqualSequences;
  
   typedef
     mpllibs::test::equal_sequence<
       boost::mpl::list<Int0, Int1, Int2>,
       boost::mpl::list<Int0, Int1, Int2, Int3>
-    >::type
+    >
     EqualSequence_TestDifferentSize;
 
   typedef
     mpllibs::test::equal_sequence<
       boost::mpl::list<>,
       boost::mpl::list<>
-    >::type
+    >
     EqualSequence_TestEmptySequences;
 }
 

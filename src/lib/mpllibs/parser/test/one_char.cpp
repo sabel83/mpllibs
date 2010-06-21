@@ -20,7 +20,7 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::one_char::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >::type
+    >
     OneChar_TestOnceCharForNonEmptyString;
 
   typedef
@@ -29,14 +29,14 @@ namespace
         mpllibs::parser::one_char::apply<helloString>::type::second
       >::type::first,
       boost::mpl::integral_c<char, 'e'>
-    >::type
+    >
     OneChar_TestOnceCharForNonEmptyStringSecond;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::one_char::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     OneChar_TestOnceCharForEmptyString;
 }
 

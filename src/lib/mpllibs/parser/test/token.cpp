@@ -33,28 +33,28 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::token<testParser>::apply<helloString>::type::first,
       testParser::apply<helloString>::type::first
-    >::type
+    >
     Token_TestNoSpace;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::token<testParser>::apply<helloSpaceString>::type::first,
       testParser::apply<helloString>::type::first
-    >::type
+    >
     Token_TestSpaces;
 
   typedef
     mpllibs::test::equal_sequence<
       mpllibs::parser::token<testParser>::apply<helloSpaceString>::type::second,
       boost::mpl::list_c<char>
-    >::type
+    >
     Token_TestSpacesConsumed;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::token<testParser>::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Token_TestFail;
 }
 

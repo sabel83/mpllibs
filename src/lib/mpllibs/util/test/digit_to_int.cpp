@@ -18,7 +18,7 @@ namespace
         boost::mpl::integral_c<char, '0'>
       >::type,
       boost::mpl::int_<0>
-    >::type
+    >
     DigitToInt_Test0;
 
   typedef
@@ -27,7 +27,7 @@ namespace
         boost::mpl::integral_c<char, '9'>
       >::type,
       boost::mpl::int_<9>
-    >::type
+    >
     DigitToInt_Test9;
 }
 

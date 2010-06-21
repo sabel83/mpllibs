@@ -26,7 +26,7 @@ namespace
         boost::mpl::int_<13>
       >::apply<oneString>::type::first,
       boost::mpl::int_<11>
-    >::type
+    >
     If_TestTrue;
     
   typedef
@@ -37,7 +37,7 @@ namespace
         boost::mpl::int_<13>
       >::apply<aString>::type::first,
       boost::mpl::int_<13>
-    >::type
+    >
     If_TestFalse;
 }
 

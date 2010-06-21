@@ -10,21 +10,15 @@
 namespace
 {
   typedef
-    mpllibs::util::is_whitespace::apply<
-      boost::mpl::integral_c<char, ' '>
-    >::type
+    mpllibs::util::is_whitespace::apply<boost::mpl::integral_c<char, ' '> >
     IsWhitespace_TestSpace;
   
   typedef
-    mpllibs::util::is_whitespace::apply<
-      boost::mpl::integral_c<char, '\t'>
-    >::type
+    mpllibs::util::is_whitespace::apply<boost::mpl::integral_c<char, '\t'> >
     IsWhitespace_TestTab;
   
   typedef
-    mpllibs::util::is_whitespace::apply<
-      boost::mpl::integral_c<char, 'a'>
-    >::type
+    mpllibs::util::is_whitespace::apply<boost::mpl::integral_c<char, 'a'> >
     IsWhitespace_TestNonWhitespace;
 }
 

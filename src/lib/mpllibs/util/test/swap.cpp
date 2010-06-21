@@ -18,7 +18,7 @@ namespace
         mpllibs::util::pair<boost::mpl::int_<1>, boost::mpl::int_<2> >
       >::type,
       mpllibs::util::pair<boost::mpl::int_<2>, boost::mpl::int_<1> >
-    >::type
+    >
     Swap_TestSwap;
 }
 

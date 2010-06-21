@@ -30,7 +30,7 @@ namespace
         mpllibs::parser::lit<lCharacter>
       >::apply<helloString>::type::first,
       eCharacter
-    >::type
+    >
     KeepMiddle_TestThreeChars;
 
   typedef
@@ -41,7 +41,7 @@ namespace
         mpllibs::parser::lit<lCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     KeepMiddle_TestFirstFails;
 
   typedef
@@ -52,7 +52,7 @@ namespace
         mpllibs::parser::lit<lCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     KeepMiddle_TestSecondFails;
 
   typedef
@@ -63,7 +63,7 @@ namespace
         mpllibs::parser::lit<xCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     KeepMiddle_TestThirdFails;
 
   typedef
@@ -74,7 +74,7 @@ namespace
         mpllibs::parser::lit<lCharacter>
       >::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     KeepMiddle_TestEmptyInput;
 }
 

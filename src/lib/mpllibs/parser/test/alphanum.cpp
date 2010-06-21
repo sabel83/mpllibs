@@ -22,28 +22,28 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::alphanum::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >::type
+    >
     Alphanum_TestWithText;
    
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<numberString>::type::first,
       boost::mpl::integral_c<char, '1'>
-    >::type
+    >
     Alphanum_TestWithNumber;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<otherString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Alphanum_TestWithNonAlphanum;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Alphanum_TestWithEmptyString;
 }
 

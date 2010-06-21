@@ -10,11 +10,11 @@
 namespace
 {
   typedef
-    mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, '7'> >::type
+    mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, '7'> >
     IsDigit_TestDigit;
   
   typedef
-    mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, 'a'> >::type
+    mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, 'a'> >
     IsDigit_TestNonDigit;
 }
 

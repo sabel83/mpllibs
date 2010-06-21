@@ -10,15 +10,11 @@
 namespace
 {
   typedef
-    mpllibs::util::is_ucase_letter::apply<
-      boost::mpl::integral_c<char, 'K'>
-    >::type
+    mpllibs::util::is_ucase_letter::apply<boost::mpl::integral_c<char, 'K'> >
     IsUcaseLetter_TestLetter;
   
   typedef
-    mpllibs::util::is_ucase_letter::apply<
-      boost::mpl::integral_c<char, 'k'>
-    >::type
+    mpllibs::util::is_ucase_letter::apply<boost::mpl::integral_c<char, 'k'> >
     IsUcaseLetter_TestNonLetter;
 }
 

@@ -34,21 +34,21 @@ namespace
         lCharacter
       >::apply<helloString>::type::first,
       lCharacter
-    >::type
+    >
     Keyword_TestResultType;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keyword<helloString>::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Keyword_TestEmptyInput;
 
   typedef
     mpllibs::test::equal_sequence<
       mpllibs::parser::keyword<helloString>::apply<helloString>::type::second,
       boost::mpl::list_c<char>
-    >::type
+    >
     Keyword_TestItself;
 
   typedef
@@ -57,21 +57,21 @@ namespace
         helloWorldString
       >::type::second,
       boost::mpl::list_c<char, ' ', 'w', 'o', 'r', 'l', 'd'>
-    >::type
+    >
     Keyword_TestMoreThanItself;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keyword<helloString>::apply<hellxString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Keyword_TestNonMatchAtEnd;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keyword<helloString>::apply<hxlloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Keyword_TestNonMatchInTheMiddle;
 }
 

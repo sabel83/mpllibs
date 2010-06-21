@@ -21,21 +21,21 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::space::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Space_TestWithText;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::space::apply<spaceString>::type::first,
       boost::mpl::integral_c<char, ' '>
-    >::type
+    >
     Space_TestWithSpace;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::space::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Space_TestWithEmptyString;
 }
 

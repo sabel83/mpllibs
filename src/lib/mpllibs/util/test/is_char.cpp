@@ -14,13 +14,13 @@ namespace
   typedef
     mpllibs::util::is_char<
       boost::mpl::integral_c<char, 'a'>
-    >::apply<boost::mpl::integral_c<char, 'a'> >::type
+    >::apply<boost::mpl::integral_c<char, 'a'> >
     IsChar_TestSame;
   
   typedef
     mpllibs::util::is_char<
       boost::mpl::integral_c<char, 'a'>
-    >::apply<boost::mpl::integral_c<char, 'b'> >::type
+    >::apply<boost::mpl::integral_c<char, 'b'> >
     IsChar_TestDifferent;
 }
 

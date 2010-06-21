@@ -18,7 +18,7 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::fail::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Fail_TestFailForNonEmptyString;
 }
 

@@ -37,7 +37,7 @@ namespace
         transformation
       >::apply<helloString>::type::first,
       xCharacter
-    >::type
+    >
     Transform_TestNormalCase;
 
   typedef
@@ -47,7 +47,7 @@ namespace
         transformation
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Transform_TestParserFails;
 
   typedef
@@ -57,7 +57,7 @@ namespace
         transformation
       >::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Transform_TestEmptyInput;
 }
 

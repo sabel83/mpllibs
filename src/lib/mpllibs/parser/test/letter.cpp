@@ -21,21 +21,21 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::letter::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'h'>
-    >::type
+    >
     Letter_TestWithText;
   
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::letter::apply<numberString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Letter_TestWithNumber;
   
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::letter::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Letter_TestWithEmptyString;
 }
 

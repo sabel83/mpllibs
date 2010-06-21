@@ -15,28 +15,28 @@ namespace
     mpllibs::util::in_range<
       boost::mpl::int_<10>,
       boost::mpl::int_<13>
-    >::apply<boost::mpl::int_<12> >::type
+    >::apply<boost::mpl::int_<12> >
     InRange_TestIntInRange;
 
   typedef
     mpllibs::util::in_range<
       boost::mpl::int_<10>,
       boost::mpl::int_<13>
-    >::apply<boost::mpl::int_<10> >::type
+    >::apply<boost::mpl::int_<10> >
     InRange_TestLowerBound;
 
   typedef
     mpllibs::util::in_range<
       boost::mpl::int_<10>,
       boost::mpl::int_<13>
-    >::apply<boost::mpl::int_<13> >::type
+    >::apply<boost::mpl::int_<13> >
     InRange_TestUpperBound;
 
   typedef
     mpllibs::util::in_range<
       boost::mpl::int_<10>,
       boost::mpl::int_<13>
-    >::apply<boost::mpl::int_<14> >::type
+    >::apply<boost::mpl::int_<14> >
     InRange_TestIntNotInRange;    
 }
 

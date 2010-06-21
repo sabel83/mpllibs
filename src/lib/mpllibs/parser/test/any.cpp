@@ -34,7 +34,7 @@ namespace
         mpllibs::parser::letter
       >::apply<emptyString>::type::first,
       boost::mpl::list<>
-    >::type
+    >
     Any_TestEmptyInput;
   
   typedef
@@ -43,7 +43,7 @@ namespace
         mpllibs::parser::letter
       >::apply<chars0>::type::first,
       boost::mpl::list<>
-    >::type
+    >
     Any_Test0;
   
   typedef
@@ -52,7 +52,7 @@ namespace
         mpllibs::parser::letter
       >::apply<chars1>::type::first,
       boost::mpl::list<hCharacter>
-    >::type
+    >
     Any_Test1;
   
   typedef
@@ -61,7 +61,7 @@ namespace
         mpllibs::parser::letter
       >::apply<chars2>::type::first,
       boost::mpl::list<hCharacter, eCharacter>
-    >::type
+    >
     Any_Test2;
   
   typedef
@@ -70,7 +70,7 @@ namespace
         mpllibs::parser::letter
       >::apply<chars3>::type::first,
       boost::mpl::list<hCharacter, eCharacter, lCharacter>
-    >::type
+    >
     Any_Test3;
   
   typedef
@@ -79,7 +79,7 @@ namespace
         mpllibs::parser::letter
       >::apply<chars4>::type::first,
       boost::mpl::list<hCharacter, eCharacter, lCharacter, lCharacter>
-    >::type
+    >
     Any_Test4;
   
   typedef
@@ -94,7 +94,7 @@ namespace
         lCharacter,
         oCharacter
       >
-    >::type
+    >
     Any_Test5;
 }
 

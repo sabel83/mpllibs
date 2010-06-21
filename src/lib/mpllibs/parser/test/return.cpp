@@ -22,7 +22,7 @@ namespace
         boost::mpl::integral_c<char, 'x'>
       >::apply<helloString>::type::first,
       boost::mpl::integral_c<char, 'x'>
-    >::type
+    >
     Return_TestForNonEmptyString;
 
   typedef
@@ -31,7 +31,7 @@ namespace
         boost::mpl::integral_c<char, 'x'>
       >::apply<emptyString>::type::first,
       boost::mpl::integral_c<char, 'x'>
-    >::type
+    >
     Return_TestForEmptyString;
 }
 

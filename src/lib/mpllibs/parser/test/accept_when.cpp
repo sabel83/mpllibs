@@ -26,7 +26,7 @@ namespace
         mpllibs::util::is_digit
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     AcceptWhen_TestWithText;
   
   typedef
@@ -36,7 +36,7 @@ namespace
         mpllibs::util::is_digit
       >::apply<numberString>::type::first,
       boost::mpl::integral_c<char, '1'>
-    >::type
+    >
     AcceptWhen_TestWithNumber;
 
   typedef
@@ -46,7 +46,7 @@ namespace
         mpllibs::util::is_digit
       >::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     AcceptWhen_TestWithEmptyString;
 }
 

@@ -22,21 +22,21 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Digit_TestWithText;
   
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<numberString>::type::first,
       boost::mpl::integral_c<char, '1'>
-    >::type
+    >
     Digit_TestWithNumber;
   
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Digit_TestWithEmptyString;
 }
 

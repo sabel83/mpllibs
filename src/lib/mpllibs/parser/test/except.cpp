@@ -27,7 +27,7 @@ namespace
         val
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Except_TestWithGood;
   
   typedef
@@ -37,7 +37,7 @@ namespace
         val
       >::apply<helloString>::type::first,
       val
-    >::type
+    >
     Except_TestWithBad;
 }
 

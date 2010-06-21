@@ -28,7 +28,7 @@ namespace
         mpllibs::parser::lit<eCharacter>
       >::apply<helloString>::type::first,
       eCharacter
-    >::type
+    >
     SecondOf_TestTwoChars;
 
   typedef
@@ -38,7 +38,7 @@ namespace
         mpllibs::parser::lit<eCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     SecondOf_TestFirstFails;
 
   typedef
@@ -48,7 +48,7 @@ namespace
         mpllibs::parser::lit<xCharacter>
       >::apply<helloString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     SecondOf_TestSecondFails;
 
   typedef
@@ -58,7 +58,7 @@ namespace
         mpllibs::parser::lit<eCharacter>
       >::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     SecondOf_TestEmptyInput;
 }
 

@@ -12,21 +12,15 @@
 namespace
 {
   typedef
-    mpllibs::util::is_letter::apply<
-      boost::mpl::integral_c<char, 'k'>
-    >::type
+    mpllibs::util::is_letter::apply<boost::mpl::integral_c<char, 'k'> >
     IsLetter_TestLcaseLetter;
   
   typedef
-    mpllibs::util::is_letter::apply<
-      boost::mpl::integral_c<char, 'K'>
-    >::type
+    mpllibs::util::is_letter::apply<boost::mpl::integral_c<char, 'K'> >
     IsLetter_TestUcaseLetter;
     
   typedef
-    mpllibs::util::is_letter::apply<
-      boost::mpl::integral_c<char, '8'>
-    >::type
+    mpllibs::util::is_letter::apply<boost::mpl::integral_c<char, '8'> >
     IsLetter_TestNonLetter;
 }
 

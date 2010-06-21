@@ -25,7 +25,7 @@ namespace
         boost::mpl::int_<13>
       >::apply<oneString>::type::first,
       boost::mpl::int_<13>
-    >::type
+    >
     Always_TestResult;
   
   typedef
@@ -35,7 +35,7 @@ namespace
         boost::mpl::int_<13>
       >::apply<aString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Always_TestFail;
 }
 

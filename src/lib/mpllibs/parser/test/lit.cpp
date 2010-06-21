@@ -24,21 +24,21 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::lit<hCharacter>::apply<helloString>::type::first,
       hCharacter
-    >::type
+    >
     Lit_TestAccept;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::lit<hCharacter>::apply<otherString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Lit_TestReject;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::lit<hCharacter>::apply<emptyString>::type,
       mpllibs::parser::nothing
-    >::type
+    >
     Lit_TestWithEmptyString;
 
   typedef
@@ -47,7 +47,7 @@ namespace
         mpllibs::parser::lit<hCharacter>::apply<helloString>::type::second
       >::type::first,
       eCharacter
-    >::type
+    >
     Lit_TestRemainingString;
 }
 
