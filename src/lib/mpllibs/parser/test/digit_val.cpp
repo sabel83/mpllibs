@@ -6,35 +6,31 @@
 #include <mpllibs/parser/digit_val.h>
 #include <mpllibs/parser/nothing.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/list_c.hpp>
-#include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-  typedef boost::mpl::list_c<char, '1', '9', '8', '3'> numberString;
-  typedef boost::mpl::list_c<char> emptyString;
-
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::digit_val::apply<helloString>::type,
+      mpllibs::parser::digit_val::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     DigitVal_TestWithText;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::digit_val::apply<numberString>::type::first,
-      boost::mpl::int_<1>
+      mpllibs::parser::digit_val::apply<str_1983>::type::first,
+      int1
     >
     DigitVal_TestWithNumber;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::digit_val::apply<emptyString>::type,
+      mpllibs::parser::digit_val::apply<str_>::type,
       mpllibs::parser::nothing
     >
     DigitVal_TestWithEmptyString;

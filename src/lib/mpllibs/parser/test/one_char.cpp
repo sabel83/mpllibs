@@ -5,36 +5,33 @@
 
 #include <mpllibs/parser/one_char.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/list_c.hpp>
-#include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-  typedef boost::mpl::list_c<char> emptyString;
-
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::one_char::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      mpllibs::parser::one_char::apply<str_hello>::type::first,
+      char_h
     >
     OneChar_TestOnceCharForNonEmptyString;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::one_char::apply<
-        mpllibs::parser::one_char::apply<helloString>::type::second
+        mpllibs::parser::one_char::apply<str_hello>::type::second
       >::type::first,
-      boost::mpl::integral_c<char, 'e'>
+      char_e
     >
     OneChar_TestOnceCharForNonEmptyStringSecond;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::one_char::apply<emptyString>::type,
+      mpllibs::parser::one_char::apply<str_>::type,
       mpllibs::parser::nothing
     >
     OneChar_TestOnceCharForEmptyString;

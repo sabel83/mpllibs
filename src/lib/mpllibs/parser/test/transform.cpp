@@ -4,58 +4,42 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/parser/transform.h>
-#include <mpllibs/parser/lit.h>
+
+#include "common.h"
 
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/integral_c.hpp>
-#include <boost/mpl/list_c.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/identity.hpp>
 
 namespace
 {
-  struct transformation
+  struct transform
   {
     template <class t>
-    struct apply
-    {
-      typedef boost::mpl::integral_c<char, 'x'> type;
-    };
+    struct apply : boost::mpl::identity<char_x> {};
   };
     
-  typedef boost::mpl::integral_c<char, 'h'> hCharacter;
-  typedef boost::mpl::integral_c<char, 'e'> eCharacter;
-  typedef boost::mpl::integral_c<char, 'x'> xCharacter;
-      
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-  typedef boost::mpl::list_c<char> emptyString;
-
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::transform<
-        mpllibs::parser::lit<hCharacter>,
-        transformation
-      >::apply<helloString>::type::first,
-      xCharacter
+        lit_h,
+        transform
+      >::apply<str_hello>::type::first,
+      char_x
     >
     Transform_TestNormalCase;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::transform<
-        mpllibs::parser::lit<xCharacter>,
-        transformation
-      >::apply<helloString>::type,
+      mpllibs::parser::transform<lit_x, transform>::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     Transform_TestParserFails;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::transform<
-        mpllibs::parser::lit<hCharacter>,
-        transformation
-      >::apply<emptyString>::type,
+      mpllibs::parser::transform<lit_h, transform>::apply<str_>::type,
       mpllibs::parser::nothing
     >
     Transform_TestEmptyInput;

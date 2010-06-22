@@ -5,28 +5,21 @@
 
 #include <mpllibs/parser/iterate.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/equal_sequence.h>
 
-#include <boost/mpl/list_c.hpp>
-#include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::integral_c<char, 'h'> hCharacter;
-  typedef boost::mpl::integral_c<char, 'e'> eCharacter;
-  typedef boost::mpl::integral_c<char, 'l'> lCharacter;
-      
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-  typedef boost::mpl::list_c<char> emptyString;
-
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::iterate<
         mpllibs::parser::one_char,
-        boost::mpl::int_<13>
-      >::apply<emptyString>::type,
+        int13
+      >::apply<str_>::type,
       mpllibs::parser::nothing
     >
     Iterate_TestEmptyInput;
@@ -35,8 +28,8 @@ namespace
     mpllibs::test::equal_sequence<
       mpllibs::parser::iterate<
         mpllibs::parser::one_char,
-        boost::mpl::int_<0>
-      >::apply<helloString>::type::first,
+        int0
+      >::apply<str_hello>::type::first,
       boost::mpl::list<>
     >
     Iterate_Test0;
@@ -45,9 +38,9 @@ namespace
     mpllibs::test::equal_sequence<
       mpllibs::parser::iterate<
         mpllibs::parser::one_char,
-        boost::mpl::int_<1>
-      >::apply<helloString>::type::first,
-      boost::mpl::list<hCharacter>
+        int1
+      >::apply<str_hello>::type::first,
+      boost::mpl::list<char_h>
     >
     Iterate_Test1;
 
@@ -55,9 +48,9 @@ namespace
     mpllibs::test::equal_sequence<
       mpllibs::parser::iterate<
         mpllibs::parser::one_char,
-        boost::mpl::int_<2>
-      >::apply<helloString>::type::first,
-      boost::mpl::list<hCharacter, eCharacter>
+        int2
+      >::apply<str_hello>::type::first,
+      boost::mpl::list<char_h, char_e>
     >
     Iterate_Test2;
 
@@ -65,9 +58,9 @@ namespace
     mpllibs::test::equal_sequence<
       mpllibs::parser::iterate<
         mpllibs::parser::one_char,
-        boost::mpl::int_<3>
-      >::apply<helloString>::type::first,
-      boost::mpl::list<hCharacter, eCharacter, lCharacter>
+        int3
+      >::apply<str_hello>::type::first,
+      boost::mpl::list<char_h, char_e, char_l>
     >
     Iterate_Test3;
 }

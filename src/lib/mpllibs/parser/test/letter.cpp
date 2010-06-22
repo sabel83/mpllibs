@@ -5,35 +5,31 @@
 
 #include <mpllibs/parser/letter.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/integral_c.hpp>
-#include <boost/mpl/list_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-  typedef boost::mpl::list_c<char, '1', '9', '8', '3'> numberString;
-  typedef boost::mpl::list_c<char> emptyString;
-  
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::letter::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      mpllibs::parser::letter::apply<str_hello>::type::first,
+      char_h
     >
     Letter_TestWithText;
   
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::letter::apply<numberString>::type,
+      mpllibs::parser::letter::apply<str_1983>::type,
       mpllibs::parser::nothing
     >
     Letter_TestWithNumber;
   
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::letter::apply<emptyString>::type,
+      mpllibs::parser::letter::apply<str_>::type,
       mpllibs::parser::nothing
     >
     Letter_TestWithEmptyString;

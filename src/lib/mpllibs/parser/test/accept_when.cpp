@@ -6,25 +6,22 @@
 #include <mpllibs/parser/accept_when.h>
 #include <mpllibs/parser/one_char.h>
 
+#include "common.h"
+
 #include <mpllibs/util/is_digit.h>
 
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/list_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-  typedef boost::mpl::list_c<char, '1', '9', '8', '3'> numberString;
-  typedef boost::mpl::list_c<char> emptyString;
-      
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::accept_when<
         mpllibs::parser::one_char,
         mpllibs::util::is_digit
-      >::apply<helloString>::type,
+      >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     AcceptWhen_TestWithText;
@@ -34,8 +31,8 @@ namespace
       mpllibs::parser::accept_when<
         mpllibs::parser::one_char,
         mpllibs::util::is_digit
-      >::apply<numberString>::type::first,
-      boost::mpl::integral_c<char, '1'>
+      >::apply<str_1983>::type::first,
+      char_1
     >
     AcceptWhen_TestWithNumber;
 
@@ -44,7 +41,7 @@ namespace
       mpllibs::parser::accept_when<
         mpllibs::parser::one_char,
         mpllibs::util::is_digit
-      >::apply<emptyString>::type,
+      >::apply<str_>::type,
       mpllibs::parser::nothing
     >
     AcceptWhen_TestWithEmptyString;

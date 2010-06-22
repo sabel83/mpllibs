@@ -7,24 +7,19 @@
 #include <mpllibs/parser/nothing.h>
 #include <mpllibs/parser/digit.h>
 
-#include <mpllibs/test/test.h>
+#include "common.h"
 
-#include <boost/mpl/int.hpp>
-#include <boost/mpl/list_c.hpp>
-#include <boost/mpl/equal_to.hpp>
+#include <mpllibs/test/test.h>
 
 namespace
 {
-  typedef boost::mpl::list_c<char, '1'> oneString;
-  typedef boost::mpl::list_c<char, 'a'> aString;
-
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::always<
         mpllibs::parser::digit,
-        boost::mpl::int_<13>
-      >::apply<oneString>::type::first,
-      boost::mpl::int_<13>
+        int13
+      >::apply<str_1>::type::first,
+      int13
     >
     Always_TestResult;
   
@@ -32,8 +27,8 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::always<
         mpllibs::parser::digit,
-        boost::mpl::int_<13>
-      >::apply<aString>::type,
+        int13
+      >::apply<str_a>::type,
       mpllibs::parser::nothing
     >
     Always_TestFail;

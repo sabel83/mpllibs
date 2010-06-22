@@ -7,19 +7,17 @@
 #include <mpllibs/parser/one_char.h>
 #include <mpllibs/parser/fail.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/integral_c.hpp>
-#include <boost/mpl/list_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::one_of_0< >::apply<helloString>::type,
+      mpllibs::parser::one_of_0< >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     OneOf_Test0;
@@ -28,8 +26,8 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::one_of_1<
         mpllibs::parser::one_char
-      >::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      >::apply<str_hello>::type::first,
+      char_h
     >
     OneOf_Test1WithGood;
 
@@ -37,7 +35,7 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::one_of_1<
         mpllibs::parser::fail
-      >::apply<helloString>::type,
+      >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     OneOf_Test1WithBad;
@@ -47,8 +45,8 @@ namespace
       mpllibs::parser::one_of_2<
         mpllibs::parser::one_char,
         mpllibs::parser::one_char
-      >::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      >::apply<str_hello>::type::first,
+      char_h
     >
     OneOf_Test2WithTwoGood;
 
@@ -57,8 +55,8 @@ namespace
       mpllibs::parser::one_of_2<
         mpllibs::parser::one_char,
         mpllibs::parser::fail
-      >::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      >::apply<str_hello>::type::first,
+      char_h
     >
     OneOf_Test2WithFirstGood;
 
@@ -67,8 +65,8 @@ namespace
       mpllibs::parser::one_of_2<
         mpllibs::parser::fail,
         mpllibs::parser::one_char
-      >::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      >::apply<str_hello>::type::first,
+      char_h
     >
     OneOf_Test2WithSecondGood;
 
@@ -77,7 +75,7 @@ namespace
       mpllibs::parser::one_of_2<
         mpllibs::parser::fail,
         mpllibs::parser::fail
-      >::apply<helloString>::type,
+      >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     OneOf_Test2WithTwoBad;
@@ -88,7 +86,7 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::one_of< >::apply<helloString>::type,
+      mpllibs::parser::one_of< >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     OneOf_Test;
@@ -97,8 +95,8 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::one_of<
         mpllibs::parser::one_char
-      >::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      >::apply<str_hello>::type::first,
+      char_h
     >
     OneOf_TestWithGood;
   
@@ -106,7 +104,7 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::one_of<
         mpllibs::parser::fail
-      >::apply<helloString>::type,
+      >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     OneOf_TestWithBad;
@@ -116,8 +114,8 @@ namespace
       mpllibs::parser::one_of<
         mpllibs::parser::one_char,
         mpllibs::parser::one_char
-      >::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      >::apply<str_hello>::type::first,
+      char_h
     >
     OneOf_TestWithTwoGood;
     
@@ -126,8 +124,8 @@ namespace
       mpllibs::parser::one_of<
         mpllibs::parser::one_char,
         mpllibs::parser::fail
-      >::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      >::apply<str_hello>::type::first,
+      char_h
     >
     OneOf_TestWithFirstGood;
 
@@ -136,8 +134,8 @@ namespace
       mpllibs::parser::one_of<
         mpllibs::parser::fail,
         mpllibs::parser::one_char
-      >::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'h'>
+      >::apply<str_hello>::type::first,
+      char_h
     >
     OneOf_TestWithSecondGood;
 
@@ -146,7 +144,7 @@ namespace
       mpllibs::parser::one_of<
         mpllibs::parser::fail,
         mpllibs::parser::fail
-      >::apply<helloString>::type,
+      >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     OneOf_TestWithTwoBad;

@@ -5,18 +5,17 @@
 
 #include <mpllibs/parser/fail.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/list_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::fail::apply<helloString>::type,
+      mpllibs::parser::fail::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     Fail_TestFailForNonEmptyString;

@@ -4,59 +4,39 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/parser/first_of.h>
-#include <mpllibs/parser/lit.h>
+
+#include "common.h"
 
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/integral_c.hpp>
-#include <boost/mpl/list_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::integral_c<char, 'h'> hCharacter;
-  typedef boost::mpl::integral_c<char, 'e'> eCharacter;
-  typedef boost::mpl::integral_c<char, 'x'> xCharacter;
-      
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-  typedef boost::mpl::list_c<char> emptyString;
-
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::first_of<
-        mpllibs::parser::lit<hCharacter>,
-        mpllibs::parser::lit<eCharacter>
-      >::apply<helloString>::type::first,
-      hCharacter
+      mpllibs::parser::first_of<lit_h, lit_e>::apply<str_hello>::type::first,
+      char_h
     >
     FirstOf_TestTwoChars;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::first_of<
-        mpllibs::parser::lit<xCharacter>,
-        mpllibs::parser::lit<eCharacter>
-      >::apply<helloString>::type,
+      mpllibs::parser::first_of<lit_x, lit_e>::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     FirstOf_TestFirstFails;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::first_of<
-        mpllibs::parser::lit<hCharacter>,
-        mpllibs::parser::lit<xCharacter>
-      >::apply<helloString>::type,
+      mpllibs::parser::first_of<lit_h, lit_x>::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     FirstOf_TestSecondFails;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::first_of<
-        mpllibs::parser::lit<hCharacter>,
-        mpllibs::parser::lit<eCharacter>
-      >::apply<emptyString>::type,
+      mpllibs::parser::first_of<lit_h, lit_e>::apply<str_>::type,
       mpllibs::parser::nothing
     >
     FirstOf_TestEmptyInput;

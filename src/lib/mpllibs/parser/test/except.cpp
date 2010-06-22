@@ -7,25 +7,21 @@
 #include <mpllibs/parser/one_char.h>
 #include <mpllibs/parser/fail.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/identity.hpp>
-#include <boost/mpl/int.hpp>
-#include <boost/mpl/list_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-  typedef boost::mpl::int_<13> val;
-
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::except<
         mpllibs::parser::one_char,
-        val
-      >::apply<helloString>::type,
+        int13
+      >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
     Except_TestWithGood;
@@ -34,9 +30,9 @@ namespace
     boost::mpl::equal_to<
       mpllibs::parser::except<
         mpllibs::parser::fail,
-        val
-      >::apply<helloString>::type::first,
-      val
+        int13
+      >::apply<str_hello>::type::first,
+      int13
     >
     Except_TestWithBad;
 }

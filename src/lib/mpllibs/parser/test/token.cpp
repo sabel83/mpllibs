@@ -6,53 +6,45 @@
 #include <mpllibs/parser/token.h>
 #include <mpllibs/parser/keyword.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/equal_sequence.h>
 
-#include <boost/mpl/list_c.hpp>
-#include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::integral_c<char, 'h'> hCharacter;
-  typedef boost::mpl::integral_c<char, 'e'> eCharacter;
-  typedef boost::mpl::integral_c<char, 'l'> lCharacter;
-      
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
   typedef
     boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o', ' ', '\t'>
-    helloSpaceString;
-  typedef boost::mpl::list_c<char> emptyString;
+    str_hello_t;
       
-  typedef
-    mpllibs::parser::keyword<helloString, boost::mpl::int_<13> >
-    testParser;
+  typedef mpllibs::parser::keyword<str_hello, int13> testParser;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::token<testParser>::apply<helloString>::type::first,
-      testParser::apply<helloString>::type::first
+      mpllibs::parser::token<testParser>::apply<str_hello>::type::first,
+      testParser::apply<str_hello>::type::first
     >
     Token_TestNoSpace;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::token<testParser>::apply<helloSpaceString>::type::first,
-      testParser::apply<helloString>::type::first
+      mpllibs::parser::token<testParser>::apply<str_hello_t>::type::first,
+      testParser::apply<str_hello>::type::first
     >
     Token_TestSpaces;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::token<testParser>::apply<helloSpaceString>::type::second,
-      boost::mpl::list_c<char>
+      mpllibs::parser::token<testParser>::apply<str_hello_t>::type::second,
+      str_
     >
     Token_TestSpacesConsumed;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::token<testParser>::apply<emptyString>::type,
+      mpllibs::parser::token<testParser>::apply<str_>::type,
       mpllibs::parser::nothing
     >
     Token_TestFail;

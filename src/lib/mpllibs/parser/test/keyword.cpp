@@ -5,71 +5,63 @@
 
 #include <mpllibs/parser/keyword.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/equal_sequence.h>
 
-#include <boost/mpl/list_c.hpp>
-#include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::integral_c<char, 'h'> hCharacter;
-  typedef boost::mpl::integral_c<char, 'e'> eCharacter;
-  typedef boost::mpl::integral_c<char, 'l'> lCharacter;
-      
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
   typedef boost::mpl::list_c<
     char,
     'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'
-  > helloWorldString;
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'x'> hellxString;
-  typedef boost::mpl::list_c<char, 'h', 'x', 'l', 'l', 'o'> hxlloString;
-  typedef boost::mpl::list_c<char> emptyString;
+  > str_hello_world;
+  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'x'> str_hellx;
+  typedef boost::mpl::list_c<char, 'h', 'x', 'l', 'l', 'o'> str_hxllo;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keyword<
-        helloString,
-        lCharacter
-      >::apply<helloString>::type::first,
-      lCharacter
+        str_hello,
+        char_l
+      >::apply<str_hello>::type::first,
+      char_l
     >
     Keyword_TestResultType;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::keyword<helloString>::apply<emptyString>::type,
+      mpllibs::parser::keyword<str_hello>::apply<str_>::type,
       mpllibs::parser::nothing
     >
     Keyword_TestEmptyInput;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::keyword<helloString>::apply<helloString>::type::second,
-      boost::mpl::list_c<char>
+      mpllibs::parser::keyword<str_hello>::apply<str_hello>::type::second,
+      str_
     >
     Keyword_TestItself;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::keyword<helloString>::apply<
-        helloWorldString
-      >::type::second,
+      mpllibs::parser::keyword<str_hello>::apply<str_hello_world>::type::second,
       boost::mpl::list_c<char, ' ', 'w', 'o', 'r', 'l', 'd'>
     >
     Keyword_TestMoreThanItself;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::keyword<helloString>::apply<hellxString>::type,
+      mpllibs::parser::keyword<str_hello>::apply<str_hellx>::type,
       mpllibs::parser::nothing
     >
     Keyword_TestNonMatchAtEnd;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::keyword<helloString>::apply<hxlloString>::type,
+      mpllibs::parser::keyword<str_hello>::apply<str_hxllo>::type,
       mpllibs::parser::nothing
     >
     Keyword_TestNonMatchInTheMiddle;

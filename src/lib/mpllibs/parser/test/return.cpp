@@ -5,32 +5,25 @@
 
 #include <mpllibs/parser/return.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 
-#include <boost/mpl/list_c.hpp>
-#include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> helloString;
-  typedef boost::mpl::list_c<char> emptyString;
-
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::return_<
-        boost::mpl::integral_c<char, 'x'>
-      >::apply<helloString>::type::first,
-      boost::mpl::integral_c<char, 'x'>
+      mpllibs::parser::return_<char_x>::apply<str_hello>::type::first,
+      char_x
     >
     Return_TestForNonEmptyString;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::return_<
-        boost::mpl::integral_c<char, 'x'>
-      >::apply<emptyString>::type::first,
-      boost::mpl::integral_c<char, 'x'>
+      mpllibs::parser::return_<char_x>::apply<str_>::type::first,
+      char_x
     >
     Return_TestForEmptyString;
 }
