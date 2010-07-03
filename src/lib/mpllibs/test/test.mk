@@ -22,7 +22,6 @@ CXXFLAGS += -Woverloaded-virtual
 CXXFLAGS += -Wsign-promo
 CXXFLAGS += -Winit-self
 CXXFLAGS += -Wmissing-include-dirs
-CXXFLAGS += -Wswitch-default
 CXXFLAGS += -Wswitch-enum
 CXXFLAGS += -Wsync-nand
 CXXFLAGS += -Wunused-parameter

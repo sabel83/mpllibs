@@ -6,8 +6,9 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <string>
-#include <iostream>
+#include <mpllibs/test/Location.h>
+
+#include <cassert>
 
 namespace mpllibs
 {
@@ -18,40 +19,46 @@ namespace mpllibs
     public:
       TestResult(
         const std::string& name_,
-        const std::string& filename_,
-        int lineNumber_,
-        bool success_
+        const Location& location_,
+        bool success_,
+        const std::string& reason_
       ) :
         _name(name_),
-        _filename(filename_),
-        _lineNumber(lineNumber_),
-        _success(success_)
+        _location(location_),
+        _success(success_),
+        _reason(reason_)
       {}
       
       const std::string& name() const
       {
         return _name;
       }
-      
-      const std::string& filename() const
+      const mpllibs::test::Location& location() const
       {
-        return _filename;
-      }
-      
-      int lineNumber() const
-      {
-        return _lineNumber;
+        return _location;
       }
       
       bool success() const
       {
         return _success;
       }
+      
+      const std::string& reason() const
+      {
+        assert(hasReason());
+        
+        return _reason;
+      }
+      
+      bool hasReason() const
+      {
+        return _reason != "";
+      }
     private:
       std::string _name;
-      std::string _filename;
-      int _lineNumber;
+      mpllibs::test::Location _location;
       bool _success;
+      std::string _reason;
     };
     
     inline std::ostream& operator<<(std::ostream& out_, const TestResult& r_)
@@ -63,7 +70,11 @@ namespace mpllibs
       }
       else
       {
-        out_ << "FAIL (" << r_.filename() << ":" << r_.lineNumber() << ")";
+        out_ << "FAIL (" << r_.location() << ")";
+        if (r_.hasReason())
+        {
+          out_ << std::endl << "\t" << r_.reason();
+        }
       }
       return out_ << std::endl;
     }

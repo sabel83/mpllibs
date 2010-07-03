@@ -26,8 +26,7 @@
             { \
               mpllibs::test::TestDriver::instance().runTest<name, result>( \
                 #name, \
-                __FILE__, \
-                __LINE__ \
+                mpllibs::test::Location(__FILE__, __LINE__) \
               ); \
             } \
             \
