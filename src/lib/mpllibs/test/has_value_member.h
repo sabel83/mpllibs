@@ -26,6 +26,8 @@ namespace mpllibs
         template <ValueType value_>
         struct value_wrapper;
         
+        // It needs an extra int argument to remove ambiguity between
+        // this version and the one with ...
         template <class T>
         static
           typename
@@ -36,15 +38,19 @@ namespace mpllibs
                 ValueType
               >::type::template value_wrapper<T::value>
             >::type
-          tester(T *t);
+          tester(T*, int);
       
+        // I have to pass a T* argument to make Visual C++ accept it
         template <class T>
-        static mpllibs::test::no tester(...);
+        static mpllibs::test::no tester(T*, ...);
       
         static const bool
           value =
             sizeof(
-              mpllibs::test::has_value_member<F, ValueType>::type::tester<F>(0)
+              mpllibs::test::has_value_member<F, ValueType>::type::tester(
+                static_cast<F*>(0),
+                13
+              )
             )
             == sizeof(mpllibs::test::yes);
       };
