@@ -91,6 +91,12 @@ namespace mpllibs
       {
         return _results.end();
       }
+    
+      int main(int, char*[]) const
+      {
+        // Summary is printed in the destructor
+        return this->failureCount() > 0 ? 1 : 0;
+      }
     private:
       ResultList _results;
     };

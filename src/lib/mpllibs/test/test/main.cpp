@@ -3,5 +3,9 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-int main() {}
+#include <mpllibs/test/test.h>
 
+int main(int argc_, char* argv_[])
+{
+  return mpllibs::test::TestDriver::instance().main(argc_, argv_);
+}
