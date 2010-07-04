@@ -8,27 +8,30 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("return");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::return_<char_x>::apply<str_hello>::type::first,
       char_x
     >
-    Return_TestForNonEmptyString;
+    TestForNonEmptyString;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::return_<char_x>::apply<str_>::type::first,
       char_x
     >
-    Return_TestForEmptyString;
+    TestForEmptyString;
 }
 
-MPLLIBS_ADD_TEST(Return_TestForEmptyString)
-MPLLIBS_ADD_TEST(Return_TestForNonEmptyString)
+MPLLIBS_ADD_TEST(suite, TestForEmptyString)
+MPLLIBS_ADD_TEST(suite, TestForNonEmptyString)
 
 

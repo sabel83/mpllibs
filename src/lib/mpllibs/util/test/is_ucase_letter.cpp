@@ -6,20 +6,23 @@
 #include <mpllibs/util/is_ucase_letter.h>
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("is_ucase_letter");
+
   typedef
     mpllibs::util::is_ucase_letter::apply<boost::mpl::integral_c<char, 'K'> >
-    IsUcaseLetter_TestLetter;
+    TestLetter;
   
   typedef
     mpllibs::util::is_ucase_letter::apply<boost::mpl::integral_c<char, 'k'> >
-    IsUcaseLetter_TestNonLetter;
+    TestNonLetter;
 }
 
-MPLLIBS_ADD_TEST(IsUcaseLetter_TestLetter)
-MPLLIBS_ADD_TEST_TO_FAIL(IsUcaseLetter_TestNonLetter)
+MPLLIBS_ADD_TEST(suite, TestLetter)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, TestNonLetter)
 
 
 

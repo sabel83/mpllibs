@@ -6,37 +6,40 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("lit");
+
   typedef
     boost::mpl::equal_to<lit_h::apply<str_hello>::type::first, char_h>
-    Lit_TestAccept;
+    TestAccept;
 
   typedef
     boost::mpl::equal_to<
       lit_h::apply<str_bello>::type,
       mpllibs::parser::nothing
     >
-    Lit_TestReject;
+    TestReject;
 
   typedef
     boost::mpl::equal_to<lit_h::apply<str_>::type, mpllibs::parser::nothing>
-    Lit_TestWithEmptyString;
+    TestWithEmptyString;
 
   typedef
     boost::mpl::equal_to<
       lit_e::apply<lit_h::apply<str_hello>::type::second>::type::first,
       char_e
     >
-    Lit_TestRemainingString;
+    TestRemainingString;
 }
 
-MPLLIBS_ADD_TEST(Lit_TestAccept)
-MPLLIBS_ADD_TEST(Lit_TestReject)
-MPLLIBS_ADD_TEST(Lit_TestWithEmptyString)
-MPLLIBS_ADD_TEST(Lit_TestRemainingString)
+MPLLIBS_ADD_TEST(suite, TestAccept)
+MPLLIBS_ADD_TEST(suite, TestReject)
+MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
+MPLLIBS_ADD_TEST(suite, TestRemainingString)
 
 

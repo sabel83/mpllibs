@@ -8,17 +8,17 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/always.hpp>
 
 namespace
 {
-  struct transform
-  {
-    template <class t>
-    struct apply : boost::mpl::identity<char_x> {};
-  };
+  const mpllibs::test::TestSuite suite("transform");
+
+  typedef boost::mpl::always<char_x> transform;
     
   typedef
     boost::mpl::equal_to<
@@ -28,25 +28,25 @@ namespace
       >::apply<str_hello>::type::first,
       char_x
     >
-    Transform_TestNormalCase;
+    TestNormalCase;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::transform<lit_x, transform>::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    Transform_TestParserFails;
+    TestParserFails;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::transform<lit_h, transform>::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    Transform_TestEmptyInput;
+    TestEmptyInput;
 }
 
-MPLLIBS_ADD_TEST(Transform_TestNormalCase)
-MPLLIBS_ADD_TEST(Transform_TestParserFails)
-MPLLIBS_ADD_TEST(Transform_TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, TestNormalCase)
+MPLLIBS_ADD_TEST(suite, TestParserFails)
+MPLLIBS_ADD_TEST(suite, TestEmptyInput)
 
 

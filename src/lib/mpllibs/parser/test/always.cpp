@@ -10,9 +10,12 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("always");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::always<
@@ -21,7 +24,7 @@ namespace
       >::apply<str_1>::type::first,
       int13
     >
-    Always_TestResult;
+    TestResult;
   
   typedef
     boost::mpl::equal_to<
@@ -31,9 +34,9 @@ namespace
       >::apply<str_a>::type,
       mpllibs::parser::nothing
     >
-    Always_TestFail;
+    TestFail;
 }
 
-MPLLIBS_ADD_TEST(Always_TestResult)
-MPLLIBS_ADD_TEST(Always_TestFail)
+MPLLIBS_ADD_TEST(suite, TestResult)
+MPLLIBS_ADD_TEST(suite, TestFail)
 

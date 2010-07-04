@@ -6,12 +6,15 @@
 #include <mpllibs/util/digit_to_int.h>
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("digit_to_int");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::util::digit_to_int::apply<
@@ -19,7 +22,7 @@ namespace
       >::type,
       boost::mpl::int_<0>
     >
-    DigitToInt_Test0;
+    Test0;
 
   typedef
     boost::mpl::equal_to<      
@@ -28,10 +31,10 @@ namespace
       >::type,
       boost::mpl::int_<9>
     >
-    DigitToInt_Test9;
+    Test9;
 }
 
-MPLLIBS_ADD_TEST(DigitToInt_Test0)
-MPLLIBS_ADD_TEST(DigitToInt_Test9)
+MPLLIBS_ADD_TEST(suite, Test0)
+MPLLIBS_ADD_TEST(suite, Test9)
 
 

@@ -9,35 +9,38 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("digit");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    Digit_TestWithText;
+    TestWithText;
   
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<str_1983>::type::first,
       char_1
     >
-    Digit_TestWithNumber;
+    TestWithNumber;
   
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    Digit_TestWithEmptyString;
+    TestWithEmptyString;
 }
 
-MPLLIBS_ADD_TEST(Digit_TestWithText)
-MPLLIBS_ADD_TEST(Digit_TestWithNumber)
-MPLLIBS_ADD_TEST(Digit_TestWithEmptyString)
+MPLLIBS_ADD_TEST(suite, TestWithText)
+MPLLIBS_ADD_TEST(suite, TestWithNumber)
+MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
 
 

@@ -6,18 +6,21 @@
 #include <mpllibs/util/is_digit.h>
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("is_digit");
+
   typedef
     mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, '7'> >
-    IsDigit_TestDigit;
+    TestDigit;
   
   typedef
     mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, 'a'> >
-    IsDigit_TestNonDigit;
+    TestNonDigit;
 }
 
-MPLLIBS_ADD_TEST(IsDigit_TestDigit)
-MPLLIBS_ADD_TEST_TO_FAIL(IsDigit_TestNonDigit)
+MPLLIBS_ADD_TEST(suite, TestDigit)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, TestNonDigit)
 

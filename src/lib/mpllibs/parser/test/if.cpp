@@ -9,11 +9,14 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("if");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::if_<
@@ -23,7 +26,7 @@ namespace
       >::apply<str_1>::type::first,
       int11
     >
-    If_TestTrue;
+    TestTrue;
     
   typedef
     boost::mpl::equal_to<
@@ -34,9 +37,9 @@ namespace
       >::apply<str_a>::type::first,
       int13
     >
-    If_TestFalse;
+    TestFalse;
 }
 
-MPLLIBS_ADD_TEST(If_TestTrue)
-MPLLIBS_ADD_TEST(If_TestFalse)
+MPLLIBS_ADD_TEST(suite, TestTrue)
+MPLLIBS_ADD_TEST(suite, TestFalse)
 

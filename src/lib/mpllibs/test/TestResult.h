@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/test/Location.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <cassert>
 
@@ -18,11 +19,13 @@ namespace mpllibs
     {
     public:
       TestResult(
+        const mpllibs::test::TestSuite& suite_,
         const std::string& name_,
-        const Location& location_,
+        const mpllibs::test::Location& location_,
         bool success_,
         const std::string& reason_
       ) :
+        _suite(suite_),
         _name(name_),
         _location(location_),
         _success(success_),
@@ -54,7 +57,13 @@ namespace mpllibs
       {
         return _reason != "";
       }
+      
+      const mpllibs::test::TestSuite& testSuite() const
+      {
+        return _suite;
+      }
     private:
+      mpllibs::test::TestSuite _suite;
       std::string _name;
       mpllibs::test::Location _location;
       bool _success;
@@ -63,7 +72,7 @@ namespace mpllibs
     
     inline std::ostream& operator<<(std::ostream& out_, const TestResult& r_)
     {
-      out_ << r_.name() << ": ";
+      out_ << r_.testSuite() << "::" << r_.name() << ": ";
       if (r_.success())
       {
         out_ << "OK";

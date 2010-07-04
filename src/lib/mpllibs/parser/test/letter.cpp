@@ -8,35 +8,38 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("letter");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::letter::apply<str_hello>::type::first,
       char_h
     >
-    Letter_TestWithText;
+    TestWithText;
   
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::letter::apply<str_1983>::type,
       mpllibs::parser::nothing
     >
-    Letter_TestWithNumber;
+    TestWithNumber;
   
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::letter::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    Letter_TestWithEmptyString;
+    TestWithEmptyString;
 }
 
-MPLLIBS_ADD_TEST(Letter_TestWithText)
-MPLLIBS_ADD_TEST(Letter_TestWithNumber)
-MPLLIBS_ADD_TEST(Letter_TestWithEmptyString)
+MPLLIBS_ADD_TEST(suite, TestWithText)
+MPLLIBS_ADD_TEST(suite, TestWithNumber)
+MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
 
 

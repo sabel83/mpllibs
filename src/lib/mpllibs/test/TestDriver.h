@@ -38,6 +38,7 @@ namespace mpllibs
     
       template <class TestFunctor, bool expectedResult>
       void runTest(
+        const mpllibs::test::TestSuite& suite_,
         const std::string& name_,
         const mpllibs::test::Location& location_
       )
@@ -52,6 +53,7 @@ namespace mpllibs
 
         _results.push_back(
           TestResult(
+            suite_,
             name_,
             location_,
             hasType && hasValue && result == expectedResult,

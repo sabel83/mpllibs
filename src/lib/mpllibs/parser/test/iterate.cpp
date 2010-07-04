@@ -9,11 +9,14 @@
 
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/equal_sequence.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("iterate");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::iterate<
@@ -22,7 +25,7 @@ namespace
       >::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    Iterate_TestEmptyInput;
+    TestEmptyInput;
 
   typedef
     mpllibs::test::equal_sequence<
@@ -32,7 +35,7 @@ namespace
       >::apply<str_hello>::type::first,
       boost::mpl::list<>
     >
-    Iterate_Test0;
+    Test0;
 
   typedef
     mpllibs::test::equal_sequence<
@@ -42,7 +45,7 @@ namespace
       >::apply<str_hello>::type::first,
       boost::mpl::list<char_h>
     >
-    Iterate_Test1;
+    Test1;
 
   typedef
     mpllibs::test::equal_sequence<
@@ -52,7 +55,7 @@ namespace
       >::apply<str_hello>::type::first,
       boost::mpl::list<char_h, char_e>
     >
-    Iterate_Test2;
+    Test2;
 
   typedef
     mpllibs::test::equal_sequence<
@@ -62,12 +65,12 @@ namespace
       >::apply<str_hello>::type::first,
       boost::mpl::list<char_h, char_e, char_l>
     >
-    Iterate_Test3;
+    Test3;
 }
 
-MPLLIBS_ADD_TEST(Iterate_TestEmptyInput)
-MPLLIBS_ADD_TEST(Iterate_Test0)
-MPLLIBS_ADD_TEST(Iterate_Test1)
-MPLLIBS_ADD_TEST(Iterate_Test2)
-MPLLIBS_ADD_TEST(Iterate_Test3)
+MPLLIBS_ADD_TEST(suite, TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, Test0)
+MPLLIBS_ADD_TEST(suite, Test1)
+MPLLIBS_ADD_TEST(suite, Test2)
+MPLLIBS_ADD_TEST(suite, Test3)
 

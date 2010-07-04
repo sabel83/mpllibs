@@ -11,11 +11,14 @@
 #include <mpllibs/util/is_digit.h>
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("accept_when");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::accept_when<
@@ -24,7 +27,7 @@ namespace
       >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    AcceptWhen_TestWithText;
+    TestWithText;
   
   typedef
     boost::mpl::equal_to<
@@ -34,7 +37,7 @@ namespace
       >::apply<str_1983>::type::first,
       char_1
     >
-    AcceptWhen_TestWithNumber;
+    TestWithNumber;
 
   typedef
     boost::mpl::equal_to<
@@ -44,10 +47,10 @@ namespace
       >::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    AcceptWhen_TestWithEmptyString;
+    TestWithEmptyString;
 }
 
-MPLLIBS_ADD_TEST(AcceptWhen_TestWithText)
-MPLLIBS_ADD_TEST(AcceptWhen_TestWithNumber)
-MPLLIBS_ADD_TEST(AcceptWhen_TestWithEmptyString)
+MPLLIBS_ADD_TEST(suite, TestWithText)
+MPLLIBS_ADD_TEST(suite, TestWithNumber)
+MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
 

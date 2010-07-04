@@ -8,19 +8,22 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("fail");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::fail::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    Fail_TestFailForNonEmptyString;
+    TestFailForNonEmptyString;
 }
 
-MPLLIBS_ADD_TEST(Fail_TestFailForNonEmptyString)
+MPLLIBS_ADD_TEST(suite, TestFailForNonEmptyString)
 
 

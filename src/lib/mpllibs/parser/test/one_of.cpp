@@ -10,17 +10,20 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("one_of");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::one_of_0< >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    OneOf_Test0;
+    Test0;
   
   typedef
     boost::mpl::equal_to<
@@ -29,7 +32,7 @@ namespace
       >::apply<str_hello>::type::first,
       char_h
     >
-    OneOf_Test1WithGood;
+    Test1WithGood;
 
   typedef
     boost::mpl::equal_to<
@@ -38,7 +41,7 @@ namespace
       >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    OneOf_Test1WithBad;
+    Test1WithBad;
 
   typedef
     boost::mpl::equal_to<
@@ -48,7 +51,7 @@ namespace
       >::apply<str_hello>::type::first,
       char_h
     >
-    OneOf_Test2WithTwoGood;
+    Test2WithTwoGood;
 
   typedef
     boost::mpl::equal_to<
@@ -58,7 +61,7 @@ namespace
       >::apply<str_hello>::type::first,
       char_h
     >
-    OneOf_Test2WithFirstGood;
+    Test2WithFirstGood;
 
   typedef
     boost::mpl::equal_to<
@@ -68,7 +71,7 @@ namespace
       >::apply<str_hello>::type::first,
       char_h
     >
-    OneOf_Test2WithSecondGood;
+    Test2WithSecondGood;
 
   typedef
     boost::mpl::equal_to<
@@ -78,7 +81,7 @@ namespace
       >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    OneOf_Test2WithTwoBad;
+    Test2WithTwoBad;
 
 
 
@@ -89,7 +92,7 @@ namespace
       mpllibs::parser::one_of< >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    OneOf_Test;
+    Test;
   
   typedef
     boost::mpl::equal_to<
@@ -98,7 +101,7 @@ namespace
       >::apply<str_hello>::type::first,
       char_h
     >
-    OneOf_TestWithGood;
+    TestWithGood;
   
   typedef
     boost::mpl::equal_to<
@@ -107,7 +110,7 @@ namespace
       >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    OneOf_TestWithBad;
+    TestWithBad;
 
   typedef
     boost::mpl::equal_to<
@@ -117,7 +120,7 @@ namespace
       >::apply<str_hello>::type::first,
       char_h
     >
-    OneOf_TestWithTwoGood;
+    TestWithTwoGood;
     
   typedef
     boost::mpl::equal_to<
@@ -127,7 +130,7 @@ namespace
       >::apply<str_hello>::type::first,
       char_h
     >
-    OneOf_TestWithFirstGood;
+    TestWithFirstGood;
 
   typedef
     boost::mpl::equal_to<
@@ -137,7 +140,7 @@ namespace
       >::apply<str_hello>::type::first,
       char_h
     >
-    OneOf_TestWithSecondGood;
+    TestWithSecondGood;
 
   typedef
     boost::mpl::equal_to<
@@ -147,23 +150,23 @@ namespace
       >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    OneOf_TestWithTwoBad;
+    TestWithTwoBad;
 }
 
-MPLLIBS_ADD_TEST(OneOf_Test0)
-MPLLIBS_ADD_TEST(OneOf_Test1WithGood)
-MPLLIBS_ADD_TEST(OneOf_Test1WithBad)
-MPLLIBS_ADD_TEST(OneOf_Test2WithTwoGood)
-MPLLIBS_ADD_TEST(OneOf_Test2WithFirstGood)
-MPLLIBS_ADD_TEST(OneOf_Test2WithSecondGood)
-MPLLIBS_ADD_TEST(OneOf_Test2WithTwoBad)
+MPLLIBS_ADD_TEST(suite, Test0)
+MPLLIBS_ADD_TEST(suite, Test1WithGood)
+MPLLIBS_ADD_TEST(suite, Test1WithBad)
+MPLLIBS_ADD_TEST(suite, Test2WithTwoGood)
+MPLLIBS_ADD_TEST(suite, Test2WithFirstGood)
+MPLLIBS_ADD_TEST(suite, Test2WithSecondGood)
+MPLLIBS_ADD_TEST(suite, Test2WithTwoBad)
 
-MPLLIBS_ADD_TEST(OneOf_Test)
-MPLLIBS_ADD_TEST(OneOf_TestWithGood)
-MPLLIBS_ADD_TEST(OneOf_TestWithBad)
-MPLLIBS_ADD_TEST(OneOf_TestWithTwoGood)
-MPLLIBS_ADD_TEST(OneOf_TestWithFirstGood)
-MPLLIBS_ADD_TEST(OneOf_TestWithSecondGood)
-MPLLIBS_ADD_TEST(OneOf_TestWithTwoBad)
+MPLLIBS_ADD_TEST(suite, Test)
+MPLLIBS_ADD_TEST(suite, TestWithGood)
+MPLLIBS_ADD_TEST(suite, TestWithBad)
+MPLLIBS_ADD_TEST(suite, TestWithTwoGood)
+MPLLIBS_ADD_TEST(suite, TestWithFirstGood)
+MPLLIBS_ADD_TEST(suite, TestWithSecondGood)
+MPLLIBS_ADD_TEST(suite, TestWithTwoBad)
 
 

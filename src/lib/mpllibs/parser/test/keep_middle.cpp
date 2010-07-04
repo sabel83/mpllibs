@@ -8,11 +8,14 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("keep_middle");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keep_middle<
@@ -22,41 +25,41 @@ namespace
       >::apply<str_hello>::type::first,
       char_e
     >
-    KeepMiddle_TestThreeChars;
+    TestThreeChars;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keep_middle<lit_x, lit_e, lit_l>::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    KeepMiddle_TestFirstFails;
+    TestFirstFails;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keep_middle<lit_h, lit_x, lit_l>::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    KeepMiddle_TestSecondFails;
+    TestSecondFails;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keep_middle<lit_h, lit_e, lit_x>::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    KeepMiddle_TestThirdFails;
+    TestThirdFails;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keep_middle<lit_h, lit_e, lit_l>::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    KeepMiddle_TestEmptyInput;
+    TestEmptyInput;
 }
 
-MPLLIBS_ADD_TEST(KeepMiddle_TestThreeChars)
-MPLLIBS_ADD_TEST(KeepMiddle_TestFirstFails)
-MPLLIBS_ADD_TEST(KeepMiddle_TestSecondFails)
-MPLLIBS_ADD_TEST(KeepMiddle_TestThirdFails)
-MPLLIBS_ADD_TEST(KeepMiddle_TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, TestThreeChars)
+MPLLIBS_ADD_TEST(suite, TestFirstFails)
+MPLLIBS_ADD_TEST(suite, TestSecondFails)
+MPLLIBS_ADD_TEST(suite, TestThirdFails)
+MPLLIBS_ADD_TEST(suite, TestEmptyInput)
 
 

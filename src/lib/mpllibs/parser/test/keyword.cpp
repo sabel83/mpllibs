@@ -9,11 +9,14 @@
 
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/equal_sequence.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("keyword");
+
   typedef boost::mpl::list_c<
     char,
     'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'
@@ -29,49 +32,49 @@ namespace
       >::apply<str_hello>::type::first,
       char_l
     >
-    Keyword_TestResultType;
+    TestResultType;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keyword<str_hello>::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    Keyword_TestEmptyInput;
+    TestEmptyInput;
 
   typedef
     mpllibs::test::equal_sequence<
       mpllibs::parser::keyword<str_hello>::apply<str_hello>::type::second,
       str_
     >
-    Keyword_TestItself;
+    TestItself;
 
   typedef
     mpllibs::test::equal_sequence<
       mpllibs::parser::keyword<str_hello>::apply<str_hello_world>::type::second,
       boost::mpl::list_c<char, ' ', 'w', 'o', 'r', 'l', 'd'>
     >
-    Keyword_TestMoreThanItself;
+    TestMoreThanItself;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keyword<str_hello>::apply<str_hellx>::type,
       mpllibs::parser::nothing
     >
-    Keyword_TestNonMatchAtEnd;
+    TestNonMatchAtEnd;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::keyword<str_hello>::apply<str_hxllo>::type,
       mpllibs::parser::nothing
     >
-    Keyword_TestNonMatchInTheMiddle;
+    TestNonMatchInTheMiddle;
 }
 
-MPLLIBS_ADD_TEST(Keyword_TestResultType)
-MPLLIBS_ADD_TEST(Keyword_TestEmptyInput)
-MPLLIBS_ADD_TEST(Keyword_TestItself)
-MPLLIBS_ADD_TEST(Keyword_TestMoreThanItself)
-MPLLIBS_ADD_TEST(Keyword_TestNonMatchAtEnd)
-MPLLIBS_ADD_TEST(Keyword_TestNonMatchInTheMiddle)
+MPLLIBS_ADD_TEST(suite, TestResultType)
+MPLLIBS_ADD_TEST(suite, TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, TestItself)
+MPLLIBS_ADD_TEST(suite, TestMoreThanItself)
+MPLLIBS_ADD_TEST(suite, TestNonMatchAtEnd)
+MPLLIBS_ADD_TEST(suite, TestNonMatchInTheMiddle)
 
 

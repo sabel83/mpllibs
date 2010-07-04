@@ -8,43 +8,46 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("second_of");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::second_of<lit_h, lit_e>::apply<str_hello>::type::first,
       char_e
     >
-    SecondOf_TestTwoChars;
+    TestTwoChars;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::second_of<lit_x, lit_e>::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    SecondOf_TestFirstFails;
+    TestFirstFails;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::second_of<lit_h, lit_x>::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    SecondOf_TestSecondFails;
+    TestSecondFails;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::second_of<lit_h, lit_e>::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    SecondOf_TestEmptyInput;
+    TestEmptyInput;
 }
 
-MPLLIBS_ADD_TEST(SecondOf_TestTwoChars)
-MPLLIBS_ADD_TEST(SecondOf_TestFirstFails)
-MPLLIBS_ADD_TEST(SecondOf_TestSecondFails)
-MPLLIBS_ADD_TEST(SecondOf_TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, TestTwoChars)
+MPLLIBS_ADD_TEST(suite, TestFirstFails)
+MPLLIBS_ADD_TEST(suite, TestSecondFails)
+MPLLIBS_ADD_TEST(suite, TestEmptyInput)
 
 

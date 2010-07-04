@@ -10,12 +10,15 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("except");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::except<
@@ -24,7 +27,7 @@ namespace
       >::apply<str_hello>::type,
       mpllibs::parser::nothing
     >
-    Except_TestWithGood;
+    TestWithGood;
   
   typedef
     boost::mpl::equal_to<
@@ -34,10 +37,10 @@ namespace
       >::apply<str_hello>::type::first,
       int13
     >
-    Except_TestWithBad;
+    TestWithBad;
 }
 
-MPLLIBS_ADD_TEST(Except_TestWithGood)
-MPLLIBS_ADD_TEST(Except_TestWithBad)
+MPLLIBS_ADD_TEST(suite, TestWithGood)
+MPLLIBS_ADD_TEST(suite, TestWithBad)
 
 

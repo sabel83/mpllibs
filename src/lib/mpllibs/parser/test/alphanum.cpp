@@ -8,11 +8,14 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("alphanum");
+
   typedef boost::mpl::list_c<char, '.', '.', ','> otherString;
   
   typedef
@@ -20,33 +23,33 @@ namespace
       mpllibs::parser::alphanum::apply<str_hello>::type::first,
       char_h
     >
-    Alphanum_TestWithText;
+    TestWithText;
    
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<str_1983>::type::first,
       char_1
     >
-    Alphanum_TestWithNumber;
+    TestWithNumber;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<otherString>::type,
       mpllibs::parser::nothing
     >
-    Alphanum_TestWithNonAlphanum;
+    TestWithNonAlphanum;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::digit::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    Alphanum_TestWithEmptyString;
+    TestWithEmptyString;
 }
 
-MPLLIBS_ADD_TEST(Alphanum_TestWithText)
-MPLLIBS_ADD_TEST(Alphanum_TestWithNumber)
-MPLLIBS_ADD_TEST(Alphanum_TestWithNonAlphanum)
-MPLLIBS_ADD_TEST(Alphanum_TestWithEmptyString)
+MPLLIBS_ADD_TEST(suite, TestWithText)
+MPLLIBS_ADD_TEST(suite, TestWithNumber)
+MPLLIBS_ADD_TEST(suite, TestWithNonAlphanum)
+MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
 
 

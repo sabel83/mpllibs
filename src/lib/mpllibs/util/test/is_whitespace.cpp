@@ -6,24 +6,27 @@
 #include <mpllibs/util/is_whitespace.h>
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("is_whitespace");
+
   typedef
     mpllibs::util::is_whitespace::apply<boost::mpl::integral_c<char, ' '> >
-    IsWhitespace_TestSpace;
+    TestSpace;
   
   typedef
     mpllibs::util::is_whitespace::apply<boost::mpl::integral_c<char, '\t'> >
-    IsWhitespace_TestTab;
+    TestTab;
   
   typedef
     mpllibs::util::is_whitespace::apply<boost::mpl::integral_c<char, 'a'> >
-    IsWhitespace_TestNonWhitespace;
+    TestNonWhitespace;
 }
 
-MPLLIBS_ADD_TEST(IsWhitespace_TestSpace)
-MPLLIBS_ADD_TEST(IsWhitespace_TestTab)
-MPLLIBS_ADD_TEST_TO_FAIL(IsWhitespace_TestNonWhitespace)
+MPLLIBS_ADD_TEST(suite, TestSpace)
+MPLLIBS_ADD_TEST(suite, TestTab)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, TestNonWhitespace)
 
 

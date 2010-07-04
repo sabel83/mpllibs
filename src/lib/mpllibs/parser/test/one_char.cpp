@@ -8,17 +8,20 @@
 #include "common.h"
 
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("one_char");
+
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::one_char::apply<str_hello>::type::first,
       char_h
     >
-    OneChar_TestOnceCharForNonEmptyString;
+    TestOnceCharForNonEmptyString;
 
   typedef
     boost::mpl::equal_to<
@@ -27,18 +30,18 @@ namespace
       >::type::first,
       char_e
     >
-    OneChar_TestOnceCharForNonEmptyStringSecond;
+    TestOnceCharForNonEmptyStringSecond;
 
   typedef
     boost::mpl::equal_to<
       mpllibs::parser::one_char::apply<str_>::type,
       mpllibs::parser::nothing
     >
-    OneChar_TestOnceCharForEmptyString;
+    TestOnceCharForEmptyString;
 }
 
-MPLLIBS_ADD_TEST(OneChar_TestOnceCharForNonEmptyString)
-MPLLIBS_ADD_TEST(OneChar_TestOnceCharForNonEmptyStringSecond)
-MPLLIBS_ADD_TEST(OneChar_TestOnceCharForEmptyString)
+MPLLIBS_ADD_TEST(suite, TestOnceCharForNonEmptyString)
+MPLLIBS_ADD_TEST(suite, TestOnceCharForNonEmptyStringSecond)
+MPLLIBS_ADD_TEST(suite, TestOnceCharForEmptyString)
 
 

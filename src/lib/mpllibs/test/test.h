@@ -11,43 +11,40 @@
 #ifdef MPLLIBS_ADD_TEST_IMPL
   #error MPLLIBS_ADD_TEST_IMPL already defined
 #endif
-#define MPLLIBS_ADD_TEST_IMPL(name, result) \
-  namespace mpllibs \
+// We have to use a namespace not used anywhere else to avoid
+// test cases being replaced by other classes in the background
+#define MPLLIBS_ADD_TEST_IMPL(suite, name, result) \
+  namespace mpllibs_test_cases \
   { \
-    namespace test \
+    namespace \
     { \
-      namespace test_cases \
+      struct name##Executor \
       { \
-        namespace \
+        name##Executor() \
         { \
-          struct name##Executor \
-          { \
-            name##Executor() \
-            { \
-              mpllibs::test::TestDriver::instance().runTest<name, result>( \
-                #name, \
-                mpllibs::test::Location(__FILE__, __LINE__) \
-              ); \
-            } \
-            \
-            static name##Executor instance; \
-          }; \
-          \
-          name##Executor name##Executor::instance; \
+          mpllibs::test::TestDriver::instance().runTest<name, result>( \
+            (suite), \
+            #name, \
+            mpllibs::test::Location(__FILE__, __LINE__) \
+          ); \
         } \
-      } \
+        \
+        static name##Executor instance; \
+      }; \
+      \
+      name##Executor name##Executor::instance; \
     } \
-  } \
+  }
 
 #ifdef MPLLIBS_ADD_TEST
   #error MPLLIBS_ADD_TEST already defined
 #endif
-#define MPLLIBS_ADD_TEST(name) MPLLIBS_ADD_TEST_IMPL(name, true)
+#define MPLLIBS_ADD_TEST(suite, name) MPLLIBS_ADD_TEST_IMPL((suite), name, true)
 
 #ifdef MPLLIBS_ADD_TEST_TO_FAIL
   #error MPLLIBS_ADD_TEST_TO_FAIL already defined
 #endif
-#define MPLLIBS_ADD_TEST_TO_FAIL(name) MPLLIBS_ADD_TEST_IMPL(name, false)
+#define MPLLIBS_ADD_TEST_TO_FAIL(suite, name) MPLLIBS_ADD_TEST_IMPL((suite), name, false)
 
 #endif
 

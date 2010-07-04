@@ -20,6 +20,13 @@ typedef boost::mpl::list_c<char, 'a'> str_a;
 typedef boost::mpl::list_c<char, 'b', 'e', 'l', 'l', 'o'> str_bello;
 typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> str_hello;
 
+typedef boost::mpl::list_c<char, '0', 'e', 'l', 'l', 'o'> chars0;
+typedef boost::mpl::list_c<char, 'h', '0', 'l', 'l', 'o'> chars1;
+typedef boost::mpl::list_c<char, 'h', 'e', '0', 'l', 'o'> chars2;
+typedef boost::mpl::list_c<char, 'h', 'e', 'l', '0', 'o'> chars3;
+typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', '0'> chars4;
+typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> chars5;
+
 typedef boost::mpl::integral_c<char, '1'> char_1;
 typedef boost::mpl::integral_c<char, 'e'> char_e;
 typedef boost::mpl::integral_c<char, 'h'> char_h;

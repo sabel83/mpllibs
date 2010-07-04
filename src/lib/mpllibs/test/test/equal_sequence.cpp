@@ -5,6 +5,7 @@
 
 #include <mpllibs/test/equal_sequence.h>
 #include <mpllibs/test/test.h>
+#include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/int.hpp>
@@ -13,6 +14,8 @@
 
 namespace
 {
+  const mpllibs::test::TestSuite suite("equal_sequence");
+
   #ifdef DEFINE_INT
     #error DEFINE_INT already defined
   #endif
@@ -26,33 +29,33 @@ namespace
       boost::mpl::list<Int0, Int1, Int2, Int3>,
       boost::mpl::list<Int0, Int1, Int2, Int3>
     >
-    EqualSequence_TestEqualSequences;
+    TestEqualSequences;
   
   typedef
     mpllibs::test::equal_sequence<
       boost::mpl::list<Int0, Int1, Int2, Int3>,
       boost::mpl::list<Int0, Int1, Int3, Int2>
     >
-    EqualSequence_TestNonEqualSequences;
+    TestNonEqualSequences;
  
   typedef
     mpllibs::test::equal_sequence<
       boost::mpl::list<Int0, Int1, Int2>,
       boost::mpl::list<Int0, Int1, Int2, Int3>
     >
-    EqualSequence_TestDifferentSize;
+    TestDifferentSize;
 
   typedef
     mpllibs::test::equal_sequence<
       boost::mpl::list<>,
       boost::mpl::list<>
     >
-    EqualSequence_TestEmptySequences;
+    TestEmptySequences;
 }
 
 
-MPLLIBS_ADD_TEST(EqualSequence_TestEqualSequences)
-MPLLIBS_ADD_TEST_TO_FAIL(EqualSequence_TestNonEqualSequences)
-MPLLIBS_ADD_TEST_TO_FAIL(EqualSequence_TestDifferentSize)
-MPLLIBS_ADD_TEST(EqualSequence_TestEmptySequences)
+MPLLIBS_ADD_TEST(suite, TestEqualSequences)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, TestNonEqualSequences)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, TestDifferentSize)
+MPLLIBS_ADD_TEST(suite, TestEmptySequences)
 
