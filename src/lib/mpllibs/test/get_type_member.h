@@ -27,7 +27,8 @@ namespace mpllibs
       typedef
         typename boost::mpl::eval_if<
           typename mpllibs::test::has_type_member<T>::type,
-          mpllibs::test::get_type_member<T, Default>::no_check<T>,
+          typename
+	    mpllibs::test::get_type_member<T, Default>::template no_check<T>,
           boost::mpl::identity<Default>
         >::type
         type;

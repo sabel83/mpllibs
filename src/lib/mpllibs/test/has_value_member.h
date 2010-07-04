@@ -31,10 +31,10 @@ namespace mpllibs
           typename
             boost::mpl::apply<
               boost::mpl::always<mpllibs::test::yes>,
-              mpllibs::test::has_value_member<
+              typename mpllibs::test::has_value_member<
                 F,
                 ValueType
-              >::type::value_wrapper<T::value>
+              >::type::template value_wrapper<T::value>
             >::type
           tester(T *t);
       
