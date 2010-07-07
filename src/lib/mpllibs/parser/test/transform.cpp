@@ -13,6 +13,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/always.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
@@ -22,24 +23,30 @@ namespace
     
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::transform<
-        lit_h,
-        transform
-      >::apply<str_hello>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::transform<lit_h, transform>,
+        str_hello
+      >::type::first,
       char_x
     >
     TestNormalCase;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::transform<lit_x, transform>::apply<str_hello>::type,
+      boost::mpl::apply<
+        mpllibs::parser::transform<lit_x, transform>,
+        str_hello
+      >::type,
       mpllibs::parser::nothing
     >
     TestParserFails;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::transform<lit_h, transform>::apply<str_>::type,
+      boost::mpl::apply<
+        mpllibs::parser::transform<lit_h, transform>,
+        str_
+      >::type,
       mpllibs::parser::nothing
     >
     TestEmptyInput;

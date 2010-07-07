@@ -8,16 +8,24 @@
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/TestSuite.h>
 
+#include <boost/mpl/apply.hpp>
+
 namespace
 {
   const mpllibs::test::TestSuite suite("is_digit");
 
   typedef
-    mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, '7'> >
+    boost::mpl::apply<
+      mpllibs::util::is_digit,
+      boost::mpl::integral_c<char, '7'>
+    >
     TestDigit;
   
   typedef
-    mpllibs::util::is_digit::apply<boost::mpl::integral_c<char, 'a'> >
+    boost::mpl::apply<
+      mpllibs::util::is_digit,
+      boost::mpl::integral_c<char, 'a'>
+    >
     TestNonDigit;
 }
 

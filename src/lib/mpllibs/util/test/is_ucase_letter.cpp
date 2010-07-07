@@ -8,16 +8,24 @@
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/TestSuite.h>
 
+#include <boost/mpl/apply.hpp>
+
 namespace
 {
   const mpllibs::test::TestSuite suite("is_ucase_letter");
 
   typedef
-    mpllibs::util::is_ucase_letter::apply<boost::mpl::integral_c<char, 'K'> >
+    boost::mpl::apply<
+      mpllibs::util::is_ucase_letter,
+      boost::mpl::integral_c<char, 'K'>
+    >
     TestLetter;
   
   typedef
-    mpllibs::util::is_ucase_letter::apply<boost::mpl::integral_c<char, 'k'> >
+    boost::mpl::apply<
+      mpllibs::util::is_ucase_letter,
+      boost::mpl::integral_c<char, 'k'>
+    >
     TestNonLetter;
 }
 

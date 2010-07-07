@@ -10,6 +10,7 @@
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
@@ -17,7 +18,8 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::util::swap::apply<
+      boost::mpl::apply<
+        mpllibs::util::swap,
         mpllibs::util::pair<boost::mpl::int_<1>, boost::mpl::int_<2> >
       >::type,
       mpllibs::util::pair<boost::mpl::int_<2>, boost::mpl::int_<1> >

@@ -9,6 +9,8 @@
 #include <mpllibs/printf/PrintfParser.h>
 #include <mpllibs/printf/VerifyPrintfArgumentsImpl.h>
 
+#include <boost/mpl/apply.hpp>
+
 namespace mpllibs
 {
   namespace printf
@@ -16,7 +18,7 @@ namespace mpllibs
     template <class F, class ArgTypes>
     struct VerifyPrintfArguments :
       VerifyPrintfArgumentsImpl<
-        PrintfParser::apply<F>,
+        boost::mpl::apply<PrintfParser, F>,
         boost::mpl::identity<ArgTypes>
       >
     {};

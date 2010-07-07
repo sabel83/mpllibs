@@ -13,6 +13,7 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 { 
@@ -20,59 +21,70 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::any1<mpllibs::parser::letter>::apply<str_>::type,
+      boost::mpl::apply<
+        mpllibs::parser::any1<mpllibs::parser::letter>,
+        str_
+      >::type,
       mpllibs::parser::nothing
     >
     TestEmptyInput;
   
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::any1<mpllibs::parser::letter>::apply<chars0>::type,
+      boost::mpl::apply<
+        mpllibs::parser::any1<mpllibs::parser::letter>,
+        chars0
+      >::type,
       mpllibs::parser::nothing
     >
     Test0;
   
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::any1<
-        mpllibs::parser::letter
-      >::apply<chars1>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::any1<mpllibs::parser::letter>,
+        chars1
+      >::type::first,
       boost::mpl::list<char_h>
     >
     Test1;
   
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::any1<
-        mpllibs::parser::letter
-      >::apply<chars2>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::any1<mpllibs::parser::letter>,
+        chars2
+      >::type::first,
       boost::mpl::list<char_h, char_e>
     >
     Test2;
   
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::any1<
-        mpllibs::parser::letter
-      >::apply<chars3>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::any1<mpllibs::parser::letter>,
+        chars3
+      >::type::first,
       boost::mpl::list<char_h, char_e, char_l>
     >
     Test3;
   
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::any1<
-        mpllibs::parser::letter
-      >::apply<chars4>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::any1<mpllibs::parser::letter>,
+        chars4
+      >::type::first,
       boost::mpl::list<char_h, char_e, char_l, char_l>
     >
     Test4;
   
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::any1<
-        mpllibs::parser::letter
-      >::apply<chars5>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::any1<mpllibs::parser::letter>,
+        chars5
+      >::type::first,
       boost::mpl::list<char_h, char_e, char_l, char_l, char_o>
     >
     Test5;

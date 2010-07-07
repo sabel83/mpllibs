@@ -9,21 +9,31 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
   const mpllibs::test::TestSuite suite("is_letter");
 
   typedef
-    mpllibs::util::is_letter::apply<boost::mpl::integral_c<char, 'k'> >
+    boost::mpl::apply<
+      mpllibs::util::is_letter,
+      boost::mpl::integral_c<char, 'k'>
+    >
     TestLcaseLetter;
   
   typedef
-    mpllibs::util::is_letter::apply<boost::mpl::integral_c<char, 'K'> >
+    boost::mpl::apply<
+      mpllibs::util::is_letter,
+      boost::mpl::integral_c<char, 'K'>
+    >
     TestUcaseLetter;
     
   typedef
-    mpllibs::util::is_letter::apply<boost::mpl::integral_c<char, '8'> >
+    boost::mpl::apply<
+      mpllibs::util::is_letter,
+      boost::mpl::integral_c<char, '8'>
+    >
     TestNonLetter;
 }
 

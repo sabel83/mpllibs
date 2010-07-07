@@ -9,37 +9,38 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/int.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
   const mpllibs::test::TestSuite suite("in_range");
 
   typedef
-    mpllibs::util::in_range<
-      boost::mpl::int_<10>,
-      boost::mpl::int_<13>
-    >::apply<boost::mpl::int_<12> >
+    boost::mpl::apply<
+      mpllibs::util::in_range<boost::mpl::int_<10>, boost::mpl::int_<13> >,
+      boost::mpl::int_<12>
+    >
     TestIntInRange;
 
   typedef
-    mpllibs::util::in_range<
-      boost::mpl::int_<10>,
-      boost::mpl::int_<13>
-    >::apply<boost::mpl::int_<10> >
+    boost::mpl::apply<
+      mpllibs::util::in_range<boost::mpl::int_<10>, boost::mpl::int_<13> >,
+      boost::mpl::int_<10>
+    >
     TestLowerBound;
 
   typedef
-    mpllibs::util::in_range<
-      boost::mpl::int_<10>,
+    boost::mpl::apply<
+      mpllibs::util::in_range<boost::mpl::int_<10>, boost::mpl::int_<13> >,
       boost::mpl::int_<13>
-    >::apply<boost::mpl::int_<13> >
+    >
     TestUpperBound;
 
   typedef
-    mpllibs::util::in_range<
-      boost::mpl::int_<10>,
-      boost::mpl::int_<13>
-    >::apply<boost::mpl::int_<14> >
+    boost::mpl::apply<
+      mpllibs::util::in_range<boost::mpl::int_<10>, boost::mpl::int_<13> >,
+      boost::mpl::int_<14>
+    >
     TestIntNotInRange;    
 }
 

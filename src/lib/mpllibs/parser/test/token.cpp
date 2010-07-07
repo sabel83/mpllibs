@@ -13,6 +13,7 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
@@ -26,28 +27,37 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::token<testParser>::apply<str_hello>::type::first,
-      testParser::apply<str_hello>::type::first
+      boost::mpl::apply<
+        mpllibs::parser::token<testParser>,
+        str_hello
+      >::type::first,
+      boost::mpl::apply<testParser, str_hello>::type::first
     >
     TestNoSpace;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::token<testParser>::apply<str_hello_t>::type::first,
-      testParser::apply<str_hello>::type::first
+      boost::mpl::apply<
+        mpllibs::parser::token<testParser>,
+        str_hello_t
+      >::type::first,
+      boost::mpl::apply<testParser, str_hello>::type::first
     >
     TestSpaces;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::token<testParser>::apply<str_hello_t>::type::second,
+      boost::mpl::apply<
+        mpllibs::parser::token<testParser>,
+        str_hello_t
+      >::type::second,
       str_
     >
     TestSpacesConsumed;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::token<testParser>::apply<str_>::type,
+      boost::mpl::apply<mpllibs::parser::token<testParser>, str_>::type,
       mpllibs::parser::nothing
     >
     TestFail;

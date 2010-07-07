@@ -12,6 +12,7 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
@@ -19,22 +20,20 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::if_<
-        mpllibs::parser::digit,
-        int11,
-        int13
-      >::apply<str_1>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::if_<mpllibs::parser::digit, int11, int13>,
+        str_1
+      >::type::first,
       int11
     >
     TestTrue;
     
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::if_<
-        mpllibs::parser::digit,
-        int11,
-        int13
-      >::apply<str_a>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::if_<mpllibs::parser::digit, int11, int13>,
+        str_a
+      >::type::first,
       int13
     >
     TestFalse;

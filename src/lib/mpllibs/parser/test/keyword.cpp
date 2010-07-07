@@ -12,6 +12,7 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
@@ -26,45 +27,54 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::keyword<
-        str_hello,
-        char_l
-      >::apply<str_hello>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::keyword<str_hello, char_l>,
+        str_hello
+      >::type::first,
       char_l
     >
     TestResultType;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::keyword<str_hello>::apply<str_>::type,
+      boost::mpl::apply<mpllibs::parser::keyword<str_hello>, str_>::type,
       mpllibs::parser::nothing
     >
     TestEmptyInput;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::keyword<str_hello>::apply<str_hello>::type::second,
+      boost::mpl::apply<
+        mpllibs::parser::keyword<str_hello>,
+        str_hello
+      >::type::second,
       str_
     >
     TestItself;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::keyword<str_hello>::apply<str_hello_world>::type::second,
+      boost::mpl::apply<
+        mpllibs::parser::keyword<str_hello>,
+        str_hello_world
+      >::type::second,
       boost::mpl::list_c<char, ' ', 'w', 'o', 'r', 'l', 'd'>
     >
     TestMoreThanItself;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::keyword<str_hello>::apply<str_hellx>::type,
+      boost::mpl::apply<
+        mpllibs::parser::keyword<str_hello>,
+        str_hellx
+      >::type,
       mpllibs::parser::nothing
     >
     TestNonMatchAtEnd;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::keyword<str_hello>::apply<str_hxllo>::type,
+      boost::mpl::apply<mpllibs::parser::keyword<str_hello>, str_hxllo>::type,
       mpllibs::parser::nothing
     >
     TestNonMatchInTheMiddle;

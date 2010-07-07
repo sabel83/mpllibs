@@ -10,6 +10,7 @@
 #include <mpllibs/util/is_lcase_letter.h>
 
 #include <boost/mpl/or.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace mpllibs
 {
@@ -20,8 +21,8 @@ namespace mpllibs
       template <class S>
       struct apply :
         boost::mpl::or_<
-          mpllibs::util::is_lcase_letter::apply<S>,
-          mpllibs::util::is_ucase_letter::apply<S>
+          boost::mpl::apply<mpllibs::util::is_lcase_letter, S>,
+          boost::mpl::apply<mpllibs::util::is_ucase_letter, S>
         >
       {};
     };

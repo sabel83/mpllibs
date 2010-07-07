@@ -12,6 +12,7 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
@@ -19,50 +20,50 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::iterate<
-        mpllibs::parser::one_char,
-        int13
-      >::apply<str_>::type,
+      boost::mpl::apply<
+        mpllibs::parser::iterate<mpllibs::parser::one_char, int13>,
+        str_
+      >::type,
       mpllibs::parser::nothing
     >
     TestEmptyInput;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::iterate<
-        mpllibs::parser::one_char,
-        int0
-      >::apply<str_hello>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::iterate<mpllibs::parser::one_char, int0>,
+        str_hello
+      >::type::first,
       boost::mpl::list<>
     >
     Test0;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::iterate<
-        mpllibs::parser::one_char,
-        int1
-      >::apply<str_hello>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::iterate<mpllibs::parser::one_char, int1>,
+        str_hello
+      >::type::first,
       boost::mpl::list<char_h>
     >
     Test1;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::iterate<
-        mpllibs::parser::one_char,
-        int2
-      >::apply<str_hello>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::iterate<mpllibs::parser::one_char, int2>,
+        str_hello
+      >::type::first,
       boost::mpl::list<char_h, char_e>
     >
     Test2;
 
   typedef
     mpllibs::test::equal_sequence<
-      mpllibs::parser::iterate<
-        mpllibs::parser::one_char,
-        int3
-      >::apply<str_hello>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::iterate<mpllibs::parser::one_char, int3>,
+        str_hello
+      >::type::first,
       boost::mpl::list<char_h, char_e, char_l>
     >
     Test3;

@@ -9,21 +9,24 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
   const mpllibs::test::TestSuite suite("is_char");
 
   typedef
-    mpllibs::util::is_char<
+    boost::mpl::apply<
+      mpllibs::util::is_char<boost::mpl::integral_c<char, 'a'> >,
       boost::mpl::integral_c<char, 'a'>
-    >::apply<boost::mpl::integral_c<char, 'a'> >
+    >
     TestSame;
   
   typedef
-    mpllibs::util::is_char<
-      boost::mpl::integral_c<char, 'a'>
-    >::apply<boost::mpl::integral_c<char, 'b'> >
+    boost::mpl::apply<
+      mpllibs::util::is_char<boost::mpl::integral_c<char, 'a'> >,
+      boost::mpl::integral_c<char, 'b'>
+    >
     TestDifferent;
 }
 

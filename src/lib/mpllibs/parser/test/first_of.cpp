@@ -11,6 +11,7 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
@@ -18,28 +19,37 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::first_of<lit_h, lit_e>::apply<str_hello>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::first_of<lit_h, lit_e>,
+        str_hello
+      >::type::first,
       char_h
     >
     TestTwoChars;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::first_of<lit_x, lit_e>::apply<str_hello>::type,
+      boost::mpl::apply<
+        mpllibs::parser::first_of<lit_x, lit_e>,
+        str_hello
+      >::type,
       mpllibs::parser::nothing
     >
     TestFirstFails;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::first_of<lit_h, lit_x>::apply<str_hello>::type,
+      boost::mpl::apply<
+        mpllibs::parser::first_of<lit_h, lit_x>,
+        str_hello
+      >::type,
       mpllibs::parser::nothing
     >
     TestSecondFails;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::first_of<lit_h, lit_e>::apply<str_>::type,
+      boost::mpl::apply<mpllibs::parser::first_of<lit_h, lit_e>, str_>::type,
       mpllibs::parser::nothing
     >
     TestEmptyInput;

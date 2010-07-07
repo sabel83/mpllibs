@@ -11,6 +11,7 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
@@ -20,21 +21,21 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::space::apply<str_hello>::type,
+      boost::mpl::apply<mpllibs::parser::space, str_hello>::type,
       mpllibs::parser::nothing
     >
     TestWithText;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::space::apply<str__ello>::type::first,
+      boost::mpl::apply<mpllibs::parser::space, str__ello>::type::first,
       boost::mpl::integral_c<char, ' '>
     >
     TestWithSpace;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::space::apply<str_>::type,
+      boost::mpl::apply<mpllibs::parser::space, str_>::type,
       mpllibs::parser::nothing
     >
     TestWithEmptyString;

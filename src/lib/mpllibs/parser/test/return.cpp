@@ -11,6 +11,7 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace
 {
@@ -18,14 +19,17 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::return_<char_x>::apply<str_hello>::type::first,
+      boost::mpl::apply<
+        mpllibs::parser::return_<char_x>,
+        str_hello
+      >::type::first,
       char_x
     >
     TestForNonEmptyString;
 
   typedef
     boost::mpl::equal_to<
-      mpllibs::parser::return_<char_x>::apply<str_>::type::first,
+      boost::mpl::apply<mpllibs::parser::return_<char_x>, str_>::type::first,
       char_x
     >
     TestForEmptyString;
