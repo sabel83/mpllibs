@@ -1,0 +1,43 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+mpllibs
+=======
+Abel Sinkovics <abel@elte.hu>
+
+Introduction
+------------
+
+Welcome to the website of _mpllibs_. This is a collection of C++ template
+metaprogramming libraries.
+
+Components
+----------
+
+_mpllibs_ contains the following libraries:
+
+* link:util/index.html[util] -
+    A number of small extensions to
+    http://www.boost.org/doc/libs/1_43_0/libs/mpl/doc/index.html[boost::mpl]
+* test -
+    Unit testing framework for C++ template metaprograms
+* parser -
+    A library for generating compile time parsers parsing embedded
+    DSL code as part of the C++ compilation process
+* printf -
+    A type-safe +printf+, +fprintf+ and +sprintf+ implementation
+
+License
+-------
+
+The libraries are published under the
+http://www.boost.org/LICENSE_1_0.txt[Boost Software License].
+
+Download
+--------
+
+The libraries are available at http://github.com/sabel83/mpllibs[github].
+
+

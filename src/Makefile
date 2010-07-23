@@ -5,9 +5,17 @@
 
 MPLLIBS_ROOT = lib/mpllibs
 
-MPLLIBS = $(filter-out $(MPLLIBS_ROOT)/Makefile,$(wildcard $(MPLLIBS_ROOT)/*))
+CODE_DIRS = $(filter-out $(MPLLIBS_ROOT)/Makefile,$(wildcard $(MPLLIBS_ROOT)/*))
+DOC_DIRS = doc
 
-check clean all :
-	$(foreach l, $(MPLLIBS), $(MAKE) -C $(l) $(MAKECMDGOALS) && ) true
+clean all : recurse_code recurse_doc
 
+check : recurse_code
+html : recurse_doc
+
+recurse_code :
+	$(foreach l, $(CODE_DIRS), $(MAKE) -C $(l) $(MAKECMDGOALS) && ) true
+
+recurse_doc :
+	$(foreach l, $(DOC_DIRS), $(MAKE) -C $(l) $(MAKECMDGOALS) && ) true
 
