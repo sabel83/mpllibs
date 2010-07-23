@@ -5,22 +5,20 @@
 
 #include <mpllibs/util/cons.h>
 
+#include "common.h"
+
 #include <mpllibs/test/equal_sequence.h>
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/int.hpp>
 #include <boost/mpl/pair.hpp>
 
 namespace
 {
   const mpllibs::test::TestSuite suite("cons");
   
-  typedef boost::mpl::int_<11> int11;
-  typedef boost::mpl::int_<13> int13;
-
   typedef
     mpllibs::test::equal_sequence<
       boost::mpl::apply<
@@ -35,7 +33,7 @@ namespace
     mpllibs::test::equal_sequence<
       boost::mpl::apply<
         mpllibs::util::cons,
-        boost::mpl::pair<int13, boost::mpl::list< > >
+        boost::mpl::pair<int13, empty_list>
       >::type,
       boost::mpl::list<int13>
     >

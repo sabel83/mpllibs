@@ -5,6 +5,8 @@
 
 #include <mpllibs/util/lazy_equal_to.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/TestSuite.h>
 
@@ -18,18 +20,12 @@ namespace
 {
   const mpllibs::test::TestSuite suite("lazy_equal_to");
   
-  typedef boost::mpl::int_<13> int13;
-  typedef boost::mpl::int_<11> int11;
-  
   typedef mpllibs::util::lazy_equal_to<int13, int13> Evaluated;
   
   typedef
     boost::mpl::eval_if<
       boost::mpl::false_,
-      mpllibs::util::lazy_equal_to<
-        boost::mpl::at<boost::mpl::vector<int, double>, int11>,
-        int13
-      >,
+      mpllibs::util::lazy_equal_to<can_not_be_instantiated, int13>,
       boost::mpl::true_
     >
     NotEvaluated;
@@ -37,4 +33,6 @@ namespace
 
 MPLLIBS_ADD_TEST(suite, Evaluated)
 MPLLIBS_ADD_TEST(suite, NotEvaluated)
+
+
 

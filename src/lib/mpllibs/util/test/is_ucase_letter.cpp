@@ -5,6 +5,8 @@
 
 #include <mpllibs/util/is_ucase_letter.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/TestSuite.h>
 
@@ -14,18 +16,10 @@ namespace
 {
   const mpllibs::test::TestSuite suite("is_ucase_letter");
 
-  typedef
-    boost::mpl::apply<
-      mpllibs::util::is_ucase_letter,
-      boost::mpl::integral_c<char, 'K'>
-    >
-    TestLetter;
+  typedef boost::mpl::apply<mpllibs::util::is_ucase_letter, char_K> TestLetter;
   
   typedef
-    boost::mpl::apply<
-      mpllibs::util::is_ucase_letter,
-      boost::mpl::integral_c<char, 'k'>
-    >
+    boost::mpl::apply<mpllibs::util::is_ucase_letter, char_k>
     TestNonLetter;
 }
 

@@ -5,10 +5,11 @@
 
 #include <mpllibs/util/digit_to_int.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/TestSuite.h>
 
-#include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
@@ -18,21 +19,15 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::util::digit_to_int,
-        boost::mpl::integral_c<char, '0'>
-      >::type,
-      boost::mpl::int_<0>
+      boost::mpl::apply<mpllibs::util::digit_to_int, char_0>::type,
+      int0
     >
     Test0;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::util::digit_to_int,
-        boost::mpl::integral_c<char, '9'>
-      >::type,
-      boost::mpl::int_<9>
+      boost::mpl::apply<mpllibs::util::digit_to_int, char_9>::type,
+      int9
     >
     Test9;
 }

@@ -5,6 +5,8 @@
 
 #include <mpllibs/util/is_digit.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/TestSuite.h>
 
@@ -14,19 +16,9 @@ namespace
 {
   const mpllibs::test::TestSuite suite("is_digit");
 
-  typedef
-    boost::mpl::apply<
-      mpllibs::util::is_digit,
-      boost::mpl::integral_c<char, '7'>
-    >
-    TestDigit;
+  typedef boost::mpl::apply<mpllibs::util::is_digit, char_7> TestDigit;
   
-  typedef
-    boost::mpl::apply<
-      mpllibs::util::is_digit,
-      boost::mpl::integral_c<char, 'a'>
-    >
-    TestNonDigit;
+  typedef boost::mpl::apply<mpllibs::util::is_digit, char_a> TestNonDigit;
 }
 
 MPLLIBS_ADD_TEST(suite, TestDigit)

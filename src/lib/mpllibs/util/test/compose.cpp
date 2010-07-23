@@ -5,13 +5,14 @@
 
 #include <mpllibs/util/compose.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/times.hpp>
-#include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/type_traits/is_same.hpp>
 
@@ -28,13 +29,13 @@ namespace
   struct incr
   {
     template <class T>
-    struct apply : boost::mpl::plus<boost::mpl::int_<13>, T> {};
+    struct apply : boost::mpl::plus<int13, T> {};
   };
 
   struct double_value
   {
     template <class T>
-    struct apply : boost::mpl::times<boost::mpl::int_<2>, T> {};
+    struct apply : boost::mpl::times<int2, T> {};
   };
 
   typedef
@@ -67,9 +68,9 @@ namespace
     boost::mpl::equal_to<
       boost::mpl::apply<
         mpllibs::util::compose<double_value, incr>,
-        boost::mpl::int_<1>
+        int1
       >::type,
-      boost::mpl::int_<28>
+      int28
     >
     TestOrder;
 
