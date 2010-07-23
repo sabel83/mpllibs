@@ -5,10 +5,11 @@
 
 #include <mpllibs/util/swap.h>
 
+#include "common.h"
+
 #include <mpllibs/test/test.h>
 #include <mpllibs/test/TestSuite.h>
 
-#include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
@@ -20,9 +21,9 @@ namespace
     boost::mpl::equal_to<
       boost::mpl::apply<
         mpllibs::util::swap,
-        mpllibs::util::pair<boost::mpl::int_<1>, boost::mpl::int_<2> >
+        mpllibs::util::pair<int1, int2>
       >::type,
-      mpllibs::util::pair<boost::mpl::int_<2>, boost::mpl::int_<1> >
+      mpllibs::util::pair<int2, int1>
     >
     TestSwap;
 }
