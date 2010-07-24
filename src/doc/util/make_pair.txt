@@ -5,7 +5,7 @@
 
 make_pair
 =========
-Abel Sinkovics <abel@elte.hu>
+Abel Sinkovics
 
 Synopsis
 --------

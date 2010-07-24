@@ -5,7 +5,7 @@
 
 digit_to_int
 ============
-Abel Sinkovics <abel@elte.hu>
+Abel Sinkovics
 
 Synopsis
 --------

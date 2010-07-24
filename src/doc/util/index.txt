@@ -5,7 +5,7 @@
 
 mpllibs::util
 =============
-Abel Sinkovics <abel@elte.hu>
+Abel Sinkovics
 
 This library contains a number of metaprogramming utilities that
 are not available in +boost::mpl+, however are needed by other components

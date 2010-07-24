@@ -5,7 +5,7 @@
 
 cons
 ====
-Abel Sinkovics <abel@elte.hu>
+Abel Sinkovics
 
 Synopsis
 --------

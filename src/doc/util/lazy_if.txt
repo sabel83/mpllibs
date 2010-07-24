@@ -5,7 +5,7 @@
 
 lazy_if
 =======
-Abel Sinkovics <abel@elte.hu>
+Abel Sinkovics
 
 Synopsis
 --------
