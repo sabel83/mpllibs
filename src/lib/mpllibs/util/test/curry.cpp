@@ -35,7 +35,7 @@ namespace
     boost::mpl::equal_to<
       boost::mpl::apply<
         boost::mpl::apply<
-          mpllibs::util::curry<boost::mpl::quote2<getFirst>, int2>::type,
+          mpllibs::util::curry<boost::mpl::quote2<getFirst>, int2>,
           int11
         >::type,
         int13
@@ -48,7 +48,7 @@ namespace
     boost::mpl::equal_to<
       boost::mpl::apply<
         boost::mpl::apply<
-          mpllibs::util::curry<boost::mpl::quote2<getSecond>, int2>::type,
+          mpllibs::util::curry<boost::mpl::quote2<getSecond>, int2>,
           int11
         >::type,
         int13

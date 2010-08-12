@@ -37,20 +37,19 @@ namespace mpllibs
       >
       struct nextCurryingStep
       {
-        struct type
-        {
-          template <class T>
-          struct apply :
-            mpllibs::util::impl::curryImpl<
-              UnpackedMetafunctionClass,
-              typename boost::mpl::minus<
-                ArgumentsLeft,
-                boost::mpl::int_<1>
-              >::type,
-              typename boost::mpl::push_back<ArgumentList, T>::type
-            >
-          {};
-        };
+        typedef nextCurryingStep type;
+      
+        template <class T>
+        struct apply :
+          mpllibs::util::impl::curryImpl<
+            UnpackedMetafunctionClass,
+            typename boost::mpl::minus<
+              ArgumentsLeft,
+              boost::mpl::int_<1>
+            >::type,
+            typename boost::mpl::push_back<ArgumentList, T>::type
+          >
+        {};
       };
   
   
@@ -81,7 +80,7 @@ namespace mpllibs
         boost::mpl::unpack_args<MetafunctionClass>,
         ArgumentNumber,
         boost::mpl::deque<>
-      >
+      >::type
     {};
   }
 }
