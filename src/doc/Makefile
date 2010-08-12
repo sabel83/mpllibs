@@ -4,7 +4,7 @@
 #          http://www.boost.org/LICENSE_1_0.txt)
 
 DOC_SRC_ROOT = .
-SUBDIRS = util test printf
+SUBDIRS = util test parser printf
 
 include $(DOC_SRC_ROOT)/doc.mk
 
