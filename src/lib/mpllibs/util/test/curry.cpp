@@ -21,16 +21,10 @@ namespace
   const mpllibs::test::TestSuite suite("curry");
   
   template <class a, class b>
-  struct getFirst
-  {
-    typedef a type;
-  };
+  struct getFirst : boost::mpl::identity<a> {};
   
   template <class a, class b>
-  struct getSecond
-  {
-    typedef b type;
-  };
+  struct getSecond : boost::mpl::identity<b> {};
   
   struct nullaryMetafunction : boost::mpl::identity<int13> {};
   
