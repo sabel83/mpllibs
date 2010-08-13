@@ -81,15 +81,6 @@ namespace mpllibs
           >
         >
       {};
-
-      template <class MetafunctionClass, class ArgumentNumber>
-      struct curryMetafunctionClass :
-        mpllibs::util::impl::curryImpl<
-          boost::mpl::unpack_args<MetafunctionClass>,
-          ArgumentNumber,
-          boost::mpl::deque<>
-        >::type
-      {};
     }
 
     
@@ -107,10 +98,11 @@ namespace mpllibs
     #define CURRY(z, n, unused) \
       template <template <BOOST_PP_REPEAT(n, CLASS_REPEAT, ~)> class T> \
       struct curry##n : \
-        mpllibs::util::impl::curryMetafunctionClass< \
-          boost::mpl::quote##n <T>, \
-          boost::mpl::int_<n> \
-        > \
+        mpllibs::util::impl::curryImpl< \
+          boost::mpl::unpack_args<boost::mpl::quote##n <T> >, \
+          boost::mpl::int_<n>, \
+          boost::mpl::deque<> \
+        >::type \
         {};
     
     BOOST_PP_REPEAT_FROM_TO(1, CURRY_MAX_ARGUMENT, CURRY, ~)
