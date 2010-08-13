@@ -14,6 +14,7 @@
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/quote.hpp>
 #include <boost/mpl/plus.hpp>
+#include <boost/mpl/identity.hpp>
 
 namespace
 {
@@ -30,14 +31,13 @@ namespace
   {
     typedef b type;
   };
-
+  
+  struct nullaryMetafunction : boost::mpl::identity<int13> {};
+  
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        boost::mpl::apply<
-          mpllibs::util::curry<boost::mpl::quote2<getFirst>, int2>,
-          int11
-        >::type,
+        boost::mpl::apply<mpllibs::util::curry2<getFirst>, int11>::type,
         int13
       >::type,
       int11
@@ -47,17 +47,22 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        boost::mpl::apply<
-          mpllibs::util::curry<boost::mpl::quote2<getSecond>, int2>,
-          int11
-        >::type,
+        boost::mpl::apply<mpllibs::util::curry2<getSecond>, int11>::type,
         int13
       >::type,
       int13
     >
     TestCurryingSecondArgument;
+
+  typedef
+    boost::mpl::equal_to<
+      mpllibs::util::curry0<nullaryMetafunction>::type,
+      int13
+    >
+    TestNullary;
 }
 
 MPLLIBS_ADD_TEST(suite, TestCurryingFirstArgument)
 MPLLIBS_ADD_TEST(suite, TestCurryingSecondArgument)
+MPLLIBS_ADD_TEST(suite, TestNullary)
 

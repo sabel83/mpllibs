@@ -14,11 +14,20 @@
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/unpack_args.hpp>
 #include <boost/mpl/deque.hpp>
+#include <boost/mpl/quote.hpp>
+
+#include <boost/preprocessor/repetition.hpp>
+#include <boost/preprocessor/comma_if.hpp>
+#include <boost/preprocessor/repeat_from_to.hpp>
 
 namespace mpllibs
 {
   namespace util
   {
+    #ifndef CURRY_MAX_ARGUMENT
+      #define CURRY_MAX_ARGUMENT 5
+    #endif
+
     namespace impl
     {
       template <
@@ -72,16 +81,42 @@ namespace mpllibs
           >
         >
       {};
+
+      template <class MetafunctionClass, class ArgumentNumber>
+      struct curryMetafunctionClass :
+        mpllibs::util::impl::curryImpl<
+          boost::mpl::unpack_args<MetafunctionClass>,
+          ArgumentNumber,
+          boost::mpl::deque<>
+        >::type
+      {};
     }
 
-    template <class MetafunctionClass, class ArgumentNumber>
-    struct curry :
-      mpllibs::util::impl::curryImpl<
-        boost::mpl::unpack_args<MetafunctionClass>,
-        ArgumentNumber,
-        boost::mpl::deque<>
-      >::type
-    {};
+    
+    template <class T>
+    struct curry0 : T {};
+
+    #ifdef CLASS_REPEAT
+      #error CLASS_REPEAT already defined
+    #endif
+    #define CLASS_REPEAT(z, n, unused) BOOST_PP_COMMA_IF(n) class
+
+    #ifdef CURRY
+      #error CURRY already defined
+    #endif
+    #define CURRY(z, n, unused) \
+      template <template <BOOST_PP_REPEAT(n, CLASS_REPEAT, ~)> class T> \
+      struct curry##n : \
+        mpllibs::util::impl::curryMetafunctionClass< \
+          boost::mpl::quote##n <T>, \
+          boost::mpl::int_<n> \
+        > \
+        {};
+    
+    BOOST_PP_REPEAT_FROM_TO(1, CURRY_MAX_ARGUMENT, CURRY, ~)
+    
+    #undef CURRY
+    #undef CLASS_REPEAT
   }
 }
 
