@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/test/has_type_value.h>
-#include <mpllibs/test/get_type_value_member.h>
+#include <mpllibs/test/get_type_value.h>
 #include <mpllibs/test/get_value_member.h>
 #include <mpllibs/test/has_value_member.h>
 #include <mpllibs/test/has_type.h>
@@ -47,7 +47,7 @@ namespace mpllibs
         const bool hasValue = has_type_value<TestFunctor, bool>::type::value;
           
         const bool result =
-          get_type_value_member<TestFunctor, boost::mpl::false_>::type::value;
+          get_type_value<TestFunctor, boost::mpl::false_>::type::value;
 
         _results.push_back(
           TestResult(
