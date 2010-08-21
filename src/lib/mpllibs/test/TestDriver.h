@@ -11,7 +11,7 @@
 #include <mpllibs/test/get_value_member.h>
 #include <mpllibs/test/get_type_member.h>
 #include <mpllibs/test/has_value_member.h>
-#include <mpllibs/test/has_type_member.h>
+#include <mpllibs/test/has_type.h>
 #include <mpllibs/test/TestResult.h>
 #include <mpllibs/test/yes.h>
 #include <mpllibs/test/no.h>
@@ -43,7 +43,7 @@ namespace mpllibs
         const mpllibs::test::Location& location_
       )
       {
-        const bool hasType = has_type_member<TestFunctor>::type::value;
+        const bool hasType = has_type<TestFunctor>::type::value;
         
         const bool hasValue =
           has_type_value_member<TestFunctor, bool>::type::value;

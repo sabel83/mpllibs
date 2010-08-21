@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_TEST_HAS_TYPE_MEMBER_H
-#define MPLLIBS_TEST_HAS_TYPE_MEMBER_H
+#ifndef MPLLIBS_TEST_HAS_TYPE_H
+#define MPLLIBS_TEST_HAS_TYPE_H
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -18,7 +18,7 @@ namespace mpllibs
   {
     // Based on C++ Template Metaprogramming, chapter 9.10
     template <class F>
-    struct has_type_member
+    struct has_type
     {
       struct type
       {
@@ -40,7 +40,7 @@ namespace mpllibs
         static const bool
           value =
             sizeof(
-              mpllibs::test::has_type_member<F>::type::tester(
+              mpllibs::test::has_type<F>::type::tester(
                 static_cast<F*>(0),
                 13
               )
