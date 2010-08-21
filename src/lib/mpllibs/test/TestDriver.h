@@ -8,7 +8,6 @@
 
 #include <mpllibs/test/has_type_value.h>
 #include <mpllibs/test/get_type_value.h>
-#include <mpllibs/test/get_value_member.h>
 #include <mpllibs/test/has_value_member.h>
 #include <mpllibs/test/has_type.h>
 #include <mpllibs/test/TestResult.h>
