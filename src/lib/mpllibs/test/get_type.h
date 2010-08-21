@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_TEST_GET_TYPE_MEMBER_H
-#define MPLLIBS_TEST_GET_TYPE_MEMBER_H
+#ifndef MPLLIBS_TEST_GET_TYPE_H
+#define MPLLIBS_TEST_GET_TYPE_H
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -16,7 +16,7 @@ namespace mpllibs
   namespace test
   {
     template <class T, class Default>
-    struct get_type_member
+    struct get_type
     {
       template <class U>
       struct no_check
@@ -28,7 +28,7 @@ namespace mpllibs
         typename boost::mpl::eval_if<
           typename mpllibs::test::has_type<T>::type,
           typename
-            mpllibs::test::get_type_member<T, Default>::template no_check<T>,
+            mpllibs::test::get_type<T, Default>::template no_check<T>,
           boost::mpl::identity<Default>
         >::type
         type;

@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/test/get_value_member.h>
-#include <mpllibs/test/get_type_member.h>
+#include <mpllibs/test/get_type.h>
 
 #include <boost/mpl/identity.hpp>
 
@@ -18,7 +18,7 @@ namespace mpllibs
     template <class T, class Default>
     struct get_type_value_member :
       mpllibs::test::get_value_member<
-        typename mpllibs::test::get_type_member<
+        typename mpllibs::test::get_type<
           T,
           boost::mpl::identity<Default>
         >::type,
