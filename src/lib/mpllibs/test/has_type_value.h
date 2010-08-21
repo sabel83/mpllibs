@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/has_value_member.h>
+#include <mpllibs/test/has_value.h>
 #include <mpllibs/test/get_type.h>
 
 namespace mpllibs
@@ -15,7 +15,7 @@ namespace mpllibs
   {
     template <class T, class ValueType>
     struct has_type_value :
-      mpllibs::test::has_value_member<
+      mpllibs::test::has_value<
         typename mpllibs::test::get_type<T, int>::type,
         ValueType
       >

@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/has_value_member.h>
+#include <mpllibs/test/has_value.h>
 
 #include <boost/mpl/eval_if.hpp>
 
@@ -17,7 +17,7 @@ namespace mpllibs
     template <class T, class Default>
     struct get_value :
       boost::mpl::eval_if<
-        typename mpllibs::test::has_value_member<T, bool>::type,
+        typename mpllibs::test::has_value<T, bool>::type,
         T,
         Default
       >

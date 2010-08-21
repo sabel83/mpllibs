@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_TEST_HAS_VALUE_MEMBER_H
-#define MPLLIBS_TEST_HAS_VALUE_MEMBER_H
+#ifndef MPLLIBS_TEST_HAS_VALUE_H
+#define MPLLIBS_TEST_HAS_VALUE_H
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -19,7 +19,7 @@ namespace mpllibs
   {
     // Based on C++ Template Metaprogramming, chapter 9.10
     template <class F, class ValueType>
-    struct has_value_member
+    struct has_value
     {
       struct type
       {
@@ -33,7 +33,7 @@ namespace mpllibs
           typename
             boost::mpl::apply<
               boost::mpl::always<mpllibs::test::yes>,
-              typename mpllibs::test::has_value_member<
+              typename mpllibs::test::has_value<
                 F,
                 ValueType
               >::type::template value_wrapper<T::value>
@@ -47,7 +47,7 @@ namespace mpllibs
         static const bool
           value =
             sizeof(
-              mpllibs::test::has_value_member<F, ValueType>::type::tester(
+              mpllibs::test::has_value<F, ValueType>::type::tester(
                 static_cast<F*>(0),
                 13
               )
