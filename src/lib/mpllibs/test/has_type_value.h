@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_TEST_HAS_TYPE_VALUE_MEMBER_H
-#define MPLLIBS_TEST_HAS_TYPE_VALUE_MEMBER_H
+#ifndef MPLLIBS_TEST_HAS_TYPE_VALUE_H
+#define MPLLIBS_TEST_HAS_TYPE_VALUE_H
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -14,7 +14,7 @@ namespace mpllibs
   namespace test
   {
     template <class T, class ValueType>
-    struct has_type_value_member :
+    struct has_type_value :
       mpllibs::test::has_value_member<
         typename mpllibs::test::get_type<T, int>::type,
         ValueType
