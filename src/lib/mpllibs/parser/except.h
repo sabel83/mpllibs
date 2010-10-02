@@ -13,6 +13,7 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/apply.hpp>
 
 namespace mpllibs
 {
@@ -25,7 +26,7 @@ namespace mpllibs
       struct apply :
         boost::mpl::eval_if<
           typename boost::mpl::equal_to<
-            typename p::template apply<S>::type,
+            typename boost::mpl::apply<p, S>::type,
             mpllibs::parser::nothing
           >::type,
           mpllibs::util::make_pair<boost::mpl::identity<result>, S>,
