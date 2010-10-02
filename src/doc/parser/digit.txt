@@ -1,0 +1,67 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+digit
+=====
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+struct digit
+{
+  template <class s>
+  struct apply
+  {
+    // unspecified
+  };
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Parser accepting one character in the range +0-9+. The
+result of the parser is the accepted character.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/parser/digit.h>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +s+ compile-time string
+
+--------------------------------------
+boost::mpl::apply<digit, s>
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+mpllibs::util::pair<boost::mpl::front<s>::type, boost::mpl::pop_front<s>::type>
+--------------------------------------
+
+when +boost::mpl::empty<s>::type+ is +false+ and +boost::mpl::front<s>::type+
+is in the range +0-9+. It is +nothing+ otherwise.
+
+Example
+-------
+
+--------------------------------------
+boost::mpl::apply<mpllibs::parser::digit, boost::mpl::string<'13'> >
+--------------------------------------
+
+include::../copyright[]
+
+link:index.html[[up]]
+
+
