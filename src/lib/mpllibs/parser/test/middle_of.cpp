@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/parser/keep_middle.h>
+#include <mpllibs/parser/middle_of.h>
 
 #include "common.h"
 
@@ -15,12 +15,12 @@
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("keep_middle");
+  const mpllibs::test::TestSuite suite("middle_of");
 
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        mpllibs::parser::keep_middle<lit_h, lit_e, lit_l>,
+        mpllibs::parser::middle_of<lit_h, lit_e, lit_l>,
         str_hello
       >::type::first,
       char_e
@@ -30,7 +30,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        mpllibs::parser::keep_middle<lit_x, lit_e, lit_l>,
+        mpllibs::parser::middle_of<lit_x, lit_e, lit_l>,
         str_hello
       >::type,
       mpllibs::parser::nothing
@@ -40,7 +40,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        mpllibs::parser::keep_middle<lit_h, lit_x, lit_l>,
+        mpllibs::parser::middle_of<lit_h, lit_x, lit_l>,
         str_hello
       >::type,
       mpllibs::parser::nothing
@@ -50,7 +50,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        mpllibs::parser::keep_middle<lit_h, lit_e, lit_x>,
+        mpllibs::parser::middle_of<lit_h, lit_e, lit_x>,
         str_hello
       >::type,
       mpllibs::parser::nothing
@@ -60,7 +60,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        mpllibs::parser::keep_middle<lit_h, lit_e, lit_l>,
+        mpllibs::parser::middle_of<lit_h, lit_e, lit_l>,
         str_
       >::type,
       mpllibs::parser::nothing

@@ -13,11 +13,10 @@
 #include <mpllibs/parser/any1.h>
 #include <mpllibs/parser/digit.h>
 #include <mpllibs/parser/except.h>
-#include <mpllibs/parser/keep_first.h>
-#include <mpllibs/parser/keep_second.h>
+#include <mpllibs/parser/first_of.h>
+#include <mpllibs/parser/second_of.h>
 #include <mpllibs/parser/lit_c.h>
 #include <mpllibs/parser/one_char.h>
-#include <mpllibs/parser/second_of.h>
 
 namespace mpllibs
 {
@@ -121,18 +120,18 @@ namespace mpllibs
 
       struct Format :
         mpllibs::parser::one_of<
-          mpllibs::parser::keep_second<mpllibs::parser::lit_c<'h'>, Format_hFlag>,
-          mpllibs::parser::keep_second<mpllibs::parser::lit_c<'l'>, Format_lFlag>,
-          mpllibs::parser::keep_second<mpllibs::parser::lit_c<'L'>, Format_LFlag>,
+          mpllibs::parser::second_of<mpllibs::parser::lit_c<'h'>, Format_hFlag>,
+          mpllibs::parser::second_of<mpllibs::parser::lit_c<'l'>, Format_lFlag>,
+          mpllibs::parser::second_of<mpllibs::parser::lit_c<'L'>, Format_LFlag>,
           Format_NoFlag
         >
       {};
 
       // returns pair<defined extra int, pair<defined extra int, format> >
       struct Parameter :
-        mpllibs::parser::keep_second<
+        mpllibs::parser::second_of<
           mpllibs::parser::lit_c<'%'>,
-          mpllibs::parser::keep_second<
+          mpllibs::parser::second_of<
             mpllibs::parser::any<Flag>,
             mpllibs::parser::sequence<
               Width,
@@ -143,10 +142,10 @@ namespace mpllibs
       {};
 
       struct S :
-        mpllibs::parser::keep_second<
+        mpllibs::parser::second_of<
           NormalChars,
           mpllibs::parser::any<
-            mpllibs::parser::keep_first<Parameter, NormalChars>
+            mpllibs::parser::first_of<Parameter, NormalChars>
           >
         >
       {};
