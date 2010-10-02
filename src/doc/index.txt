@@ -29,6 +29,18 @@ _mpllibs_ contains the following libraries:
 * link:printf/index.html[printf] -
     A type-safe +printf+, +fprintf+ and +sprintf+ implementation
 
+Usage
+-----
+
+The +src+ directory of the source tree contains a +Makefile+. The following
+targets are supported:
+
+* +make check+ builds and runs all unit tests of the project.
+* +make html+ generates all HTML documentation to the +doc+ directory of the
+  source tree.
+* +make clean+ deletes all generated files.
+* +make all+ rebuilds everything.
+
 License
 -------
 
