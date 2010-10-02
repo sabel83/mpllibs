@@ -8,9 +8,8 @@
 
 #include <mpllibs/parser/nothing.h>
 
-#include <mpllibs/util/pair.h>
+#include <mpllibs/util/make_pair.h>
 
-#include <boost/mpl/identity.hpp>
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
@@ -20,28 +19,17 @@ namespace mpllibs
 {
   namespace parser
   {
-    namespace impl
-    {
-      // pre-condition: not<empty<S> >
-      template <class S>
-      struct getFirstChar :
-        boost::mpl::identity<
-          mpllibs::util::pair<
-            typename boost::mpl::front<S>::type,
-            typename boost::mpl::pop_front<S>::type
-          >
-        >
-      {};
-    }
-    
     struct one_char
     {
       template <class S>
       struct apply :
         boost::mpl::eval_if<
           typename boost::mpl::empty<S>::type,
-          boost::mpl::identity<nothing>,
-          impl::getFirstChar<S>
+          nothing,
+          mpllibs::util::make_pair<
+            boost::mpl::front<S>,
+            boost::mpl::pop_front<S>
+          >
         >
       {};
     };
