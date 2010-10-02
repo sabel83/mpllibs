@@ -11,7 +11,6 @@
 #include <mpllibs/test/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/identity.hpp>
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply.hpp>
 
