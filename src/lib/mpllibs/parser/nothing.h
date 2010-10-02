@@ -33,10 +33,7 @@ namespace boost
 
     template <>
     struct
-      equal_to_impl<
-        mpllibs::parser::nothing_tag,
-        mpllibs::parser::nothing_tag
-      >
+      equal_to_impl<mpllibs::parser::nothing_tag, mpllibs::parser::nothing_tag>
     {
       template <class a, class b>
       struct apply : boost::mpl::identity<boost::mpl::true_> {};

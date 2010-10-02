@@ -25,6 +25,8 @@ Description
 Extension of +boost::mpl::pair+: these pairs can be compared using
 +boost::mpl::equal_to+. Two pairs are equal when their elements are equal.
 
+Pairs are nullary metafunctions evaluating to themselves.
+
 Header
 ------
 
@@ -49,6 +51,8 @@ boost::mpl::and_<
   boost::mpl::equal_to<b1, b2>::type
 >
 --------------------------------------
+
+For any +a+ and +b+ classes +pair<a, b>::type+ is equal to +pair<a, b>+.
 
 Example
 -------

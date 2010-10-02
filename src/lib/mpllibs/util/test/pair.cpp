@@ -29,8 +29,16 @@ namespace
       mpllibs::util::pair<int11, int11>
     >
     TestNonEquality;
+
+  typedef
+    boost::mpl::equal_to<
+      mpllibs::util::pair<int11, int13>::type,
+      mpllibs::util::pair<int11, int13>
+    >
+    TestNestedType;
 }
 
 MPLLIBS_ADD_TEST(suite, TestEquality)
 MPLLIBS_ADD_TEST_TO_FAIL(suite, TestNonEquality)
+MPLLIBS_ADD_TEST(suite, TestNestedType)
 

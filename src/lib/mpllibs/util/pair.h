@@ -20,6 +20,8 @@ namespace mpllibs
     struct pair : boost::mpl::pair<first, second>
     {
       typedef pair_tag tag;
+      
+      typedef pair<first, second> type;
     };
   }
 }

@@ -8,8 +8,6 @@
 
 #include <mpllibs/util/pair.h>
 
-#include <boost/mpl/identity.hpp>
-
 namespace mpllibs
 {
   namespace parser
@@ -18,7 +16,7 @@ namespace mpllibs
     struct return_
     {
       template <class S>
-      struct apply : boost::mpl::identity<mpllibs::util::pair<c, S> > {};
+      struct apply : mpllibs::util::pair<c, S> {};
     };
   }
 }
