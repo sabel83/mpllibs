@@ -62,7 +62,7 @@ Example
 --------------------------------------
 typedef
   boost::mpl::apply<
-    mpllibs::parser::one_char,
+    mpllibs::parser::accept_when,
     mpllibs::util::is_digit
   >
   accept_digit;
