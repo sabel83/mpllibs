@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-sprintf
+fprintf
 =======
 Abel Sinkovics
 
@@ -12,43 +12,43 @@ Synopsis
 
 --------------------------------------
 template <class FormatString, class T1, ..., class Tn>
-int sprintf(char *dst, T1 a1, ..., Tn an);
+int fprintf(FILE *f, T1 a1, ..., Tn an);
 --------------------------------------
 
 
 Description
 -----------
 
-Wrapper of the +sprintf+ function of the C library. It takes the format string
+Wrapper of the +fprintf+ function of the C library. It takes the format string
 as a compile-time string, which is a +boost::mpl::string+.
 It type-checks the arguments based on the format string. When type-checking
 fails, this function emits a compilation error. When type-checking succeeds,
 this function calls the +sprintf+ function of the C library. This thin wrapper
 is likely to be inlined in which case it has no runtime overhead compared to
-using +sprintf+ without type-checking.
+using +fprintf+ without type-checking.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/printf/printf.h>
+#include <mpllibs/safe_printf/printf.h>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +s+ +boost::mpl::string+, +buf+ +char+ pointer and
+For any +s+ +boost::mpl::string+, +f+ +FILE+ pointer and
 +a1+ ... +an+ runtime objects:
 
 --------------------------------------
-mpllibs::printf::sprintf<s>(buf, a1, ..., an)
+mpllibs::printf::fprintf<s>(f, a1, ..., an)
 --------------------------------------
 
 When the number and types of +a1+ ... +an+ are correct according to +s+, the
 format string, it is equivalent to
 
 --------------------------------------
-std::sprintf(buf, boost::mpl::c_str<s>::type::value, a1, ..., an)
+std::fprintf(f, boost::mpl::c_str<s>::type::value, a1, ..., an)
 --------------------------------------
 
 otherwise it is a compilation error.
@@ -57,8 +57,9 @@ Example
 -------
 
 --------------------------------------
-char s[32];
-mpllibs::printf::sprintf<boost::mpl::string<'%d %','d\n'> >(s, 11, 13);
+FILE *f = std::fopen("test.txt", "wt");
+mpllibs::printf::fprintf<boost::mpl::string<'%d %','d\n'> >(f, 11, 13);
+fclose(f);
 --------------------------------------
 
 include::../copyright[]

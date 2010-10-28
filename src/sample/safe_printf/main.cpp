@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/printf/printf.h>
+#include <mpllibs/safe_printf/printf.h>
 
 namespace safe = mpllibs::printf;
 

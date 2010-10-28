@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/printf/expect.h>
+#include <mpllibs/safe_printf/expect.h>
 
 #include <mpllibs/parser/always.h>
 #include <mpllibs/parser/any.h>

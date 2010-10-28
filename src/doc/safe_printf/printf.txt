@@ -31,7 +31,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/printf/printf.h>
+#include <mpllibs/safe_printf/printf.h>
 --------------------------------------
 
 Expression semantics

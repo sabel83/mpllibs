@@ -6,8 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/printf/PopExpected.h>
-#include <mpllibs/printf/VerifyArgument.h>
+#include <mpllibs/safe_printf/PopExpected.h>
+#include <mpllibs/safe_printf/VerifyArgument.h>
 
 #include <mpllibs/util/lazy_eval_if.h>
 

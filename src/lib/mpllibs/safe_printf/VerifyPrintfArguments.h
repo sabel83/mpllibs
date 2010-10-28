@@ -6,8 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/printf/PrintfParser.h>
-#include <mpllibs/printf/VerifyPrintfArgumentsImpl.h>
+#include <mpllibs/safe_printf/PrintfParser.h>
+#include <mpllibs/safe_printf/VerifyPrintfArgumentsImpl.h>
 
 #include <boost/mpl/apply.hpp>
 
