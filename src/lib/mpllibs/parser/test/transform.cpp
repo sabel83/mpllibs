@@ -7,8 +7,8 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/always.hpp>
@@ -16,7 +16,7 @@
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("transform");
+  const mpllibs::metatest::TestSuite suite("transform");
 
   typedef boost::mpl::always<char_x> transform;
     

@@ -21,7 +21,7 @@ _mpllibs_ contains the following libraries:
 * link:util/index.html[util] -
     A number of small extensions to
     http://www.boost.org/doc/libs/1_43_0/libs/mpl/doc/index.html[boost::mpl]
-* link:test/index.html[test] -
+* link:metatest/index.html[metatest] -
     Unit testing framework for C++ template metaprograms
 * link:parser/index.html[parser] -
     A library for generating compile time parsers parsing embedded

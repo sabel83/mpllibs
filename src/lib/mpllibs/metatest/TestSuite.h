@@ -11,7 +11,7 @@
 
 namespace mpllibs
 {
-  namespace test
+  namespace metatest
   {
     class TestSuite
     {

@@ -7,8 +7,8 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
@@ -19,7 +19,7 @@
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("lazy_eval_if");
+  const mpllibs::metatest::TestSuite suite("lazy_eval_if");
   
   typedef
     mpllibs::util::lazy_eval_if<

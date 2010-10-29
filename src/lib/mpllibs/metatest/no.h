@@ -8,7 +8,7 @@
 
 namespace mpllibs
 {
-  namespace test
+  namespace metatest
   {
     typedef char (&no)[2];
   }

@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/TestDriver.h>
+#include <mpllibs/metatest/TestDriver.h>
 
 #ifdef MPLLIBS_ADD_TEST_IMPL
   #error MPLLIBS_ADD_TEST_IMPL already defined
@@ -22,10 +22,10 @@
       { \
         name##Executor() \
         { \
-          mpllibs::test::TestDriver::instance().runTest<name, result>( \
+          mpllibs::metatest::TestDriver::instance().runTest<name, result>( \
             (suite), \
             #name, \
-            mpllibs::test::Location(__FILE__, __LINE__) \
+            mpllibs::metatest::Location(__FILE__, __LINE__) \
           ); \
         } \
         \

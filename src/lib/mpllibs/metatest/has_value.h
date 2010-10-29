@@ -6,8 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/yes.h>
-#include <mpllibs/test/no.h>
+#include <mpllibs/metatest/yes.h>
+#include <mpllibs/metatest/no.h>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/always.hpp>
@@ -15,7 +15,7 @@
 
 namespace mpllibs
 {
-  namespace test
+  namespace metatest
   {
     // Based on C++ Template Metaprogramming, chapter 9.10
     template <class F, class ValueType>
@@ -32,8 +32,8 @@ namespace mpllibs
         static
           typename
             boost::mpl::apply<
-              boost::mpl::always<mpllibs::test::yes>,
-              typename mpllibs::test::has_value<
+              boost::mpl::always<mpllibs::metatest::yes>,
+              typename mpllibs::metatest::has_value<
                 F,
                 ValueType
               >::type::template value_wrapper<T::value>
@@ -42,17 +42,17 @@ namespace mpllibs
       
         // I have to pass a T* argument to make Visual C++ accept it
         template <class T>
-        static mpllibs::test::no tester(T*, ...);
+        static mpllibs::metatest::no tester(T*, ...);
       
         static const bool
           value =
             sizeof(
-              mpllibs::test::has_value<F, ValueType>::type::tester(
+              mpllibs::metatest::has_value<F, ValueType>::type::tester(
                 static_cast<F*>(0),
                 13
               )
             )
-            == sizeof(mpllibs::test::yes);
+            == sizeof(mpllibs::metatest::yes);
       };
     };
   }

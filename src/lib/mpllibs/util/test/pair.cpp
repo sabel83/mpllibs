@@ -7,14 +7,14 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("pair");
+  const mpllibs::metatest::TestSuite suite("pair");
   
   typedef
     boost::mpl::equal_to<

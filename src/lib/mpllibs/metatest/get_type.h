@@ -6,14 +6,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/has_type.h>
+#include <mpllibs/metatest/has_type.h>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 
 namespace mpllibs
 {
-  namespace test
+  namespace metatest
   {
     template <class T, class Default>
     struct get_type
@@ -26,9 +26,9 @@ namespace mpllibs
       
       typedef
         typename boost::mpl::eval_if<
-          typename mpllibs::test::has_type<T>::type,
+          typename mpllibs::metatest::has_type<T>::type,
           typename
-            mpllibs::test::get_type<T, Default>::template no_check<T>,
+            mpllibs::metatest::get_type<T, Default>::template no_check<T>,
           boost::mpl::identity<Default>
         >::type
         type;

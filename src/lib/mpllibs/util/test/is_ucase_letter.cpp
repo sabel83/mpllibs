@@ -7,14 +7,14 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/apply.hpp>
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("is_ucase_letter");
+  const mpllibs::metatest::TestSuite suite("is_ucase_letter");
 
   typedef boost::mpl::apply<mpllibs::util::is_ucase_letter, char_K> TestLetter;
   

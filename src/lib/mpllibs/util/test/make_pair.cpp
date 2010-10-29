@@ -7,8 +7,8 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <mpllibs/util/pair.h>
 
@@ -16,7 +16,7 @@
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("make_pair");
+  const mpllibs::metatest::TestSuite suite("make_pair");
   
   typedef
     boost::mpl::equal_to<

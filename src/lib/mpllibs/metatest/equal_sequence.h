@@ -16,7 +16,7 @@
 
 namespace mpllibs
 {
-  namespace test
+  namespace metatest
   {
     template <class, class>
     struct equal_sequence;
@@ -30,7 +30,7 @@ namespace mpllibs
             typename boost::mpl::front<l1>::type,
             typename boost::mpl::front<l2>::type
           >::type,
-          typename mpllibs::test::equal_sequence<
+          typename mpllibs::metatest::equal_sequence<
             typename boost::mpl::pop_front<l1>::type,
             typename boost::mpl::pop_front<l2>::type
           >::type
@@ -52,7 +52,7 @@ namespace mpllibs
             typename boost::mpl::empty<l2>::type
           >::type,
           boost::mpl::identity<boost::mpl::false_>,
-          mpllibs::test::impl::equal_nonempty_sequence<l1, l2>
+          mpllibs::metatest::impl::equal_nonempty_sequence<l1, l2>
         >
       >
     {};

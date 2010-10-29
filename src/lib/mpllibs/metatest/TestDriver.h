@@ -6,10 +6,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/has_type_value.h>
-#include <mpllibs/test/get_type_value.h>
-#include <mpllibs/test/has_type.h>
-#include <mpllibs/test/TestResult.h>
+#include <mpllibs/metatest/has_type_value.h>
+#include <mpllibs/metatest/get_type_value.h>
+#include <mpllibs/metatest/has_type.h>
+#include <mpllibs/metatest/TestResult.h>
 
 #include <boost/pool/detail/singleton.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -20,7 +20,7 @@
 
 namespace mpllibs
 {
-  namespace test
+  namespace metatest
   {
     class TestDriver
     {
@@ -33,9 +33,9 @@ namespace mpllibs
     
       template <class TestFunctor, bool expectedResult>
       void runTest(
-        const mpllibs::test::TestSuite& suite_,
+        const mpllibs::metatest::TestSuite& suite_,
         const std::string& name_,
-        const mpllibs::test::Location& location_
+        const mpllibs::metatest::Location& location_
       )
       {
         const bool hasType = has_type<TestFunctor>::type::value;

@@ -31,7 +31,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/test/equal_sequence.h>
+#include <mpllibs/metatest/equal_sequence.h>
 --------------------------------------
 
 Expression semantics
@@ -40,7 +40,7 @@ Expression semantics
 For every +a+ and +b+ sequences:
 
 --------------------------------------
-mpllibs::test::equal_sequence<a, b>
+equal_sequence<a, b>
 --------------------------------------
 
 is equivalent to
@@ -91,7 +91,7 @@ Example
 -------
 
 --------------------------------------
-mpllibs::equal_sequence<
+equal_sequence<
   boost::mpl::vector<
     boost::mpl::int_<11>,
     boost::mpl::int_<13>

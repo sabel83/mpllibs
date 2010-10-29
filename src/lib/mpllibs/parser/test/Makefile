@@ -5,5 +5,5 @@
 
 INCLUDES += ../../..
 
-include ../../test/test.mk
+include ../../metatest/test.mk
 

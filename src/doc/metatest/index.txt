@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-mpllibs::test
-=============
+mpllibs::metatest
+=================
 Abel Sinkovics
 
 This is a unit testing framework for C\++ template metaprograms. The framework
@@ -38,15 +38,15 @@ How to write tests
 Include the following headers:
 
 --------------------------------------
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 --------------------------------------
 
-Create a test suite by creating a static +mpllibs::test::TestSuite+ object.
+Create a test suite by creating a static +mpllibs::metatest::TestSuite+ object.
 It's constructor takes a +string+ argument, the name of the test suite.
 
 --------------------------------------
-mpllibs::test::TestSuite suite("foo");
+mpllibs::metatest::TestSuite suite("foo");
 --------------------------------------
 
 Create your test cases. They are nullary template metafunctions, so create
@@ -95,11 +95,11 @@ the summary is printed regardless of the contents of +main()+. However, it is
 recommended to implement +main+ the following way:
 
 --------------------------------------
-#include <mpllibs/test/test.h>
+#include <mpllibs/metatest/test.h>
 
 int main(int argc, char* argv[])
 {
-  return mpllibs::test::TestDriver::instance().main(argc, argv);
+  return mpllibs::metatest::TestDriver::instance().main(argc, argv);
 }
 --------------------------------------
 

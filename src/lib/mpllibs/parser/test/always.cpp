@@ -9,13 +9,14 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
+
 #include <boost/mpl/apply.hpp>
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("always");
+  const mpllibs::metatest::TestSuite suite("always");
 
   typedef
     boost::mpl::equal_to<

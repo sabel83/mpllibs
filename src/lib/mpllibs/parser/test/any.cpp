@@ -8,17 +8,18 @@
 
 #include "common.h"
  
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/equal_sequence.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/equal_sequence.h>
+#include <mpllibs/metatest/TestSuite.h>
+
 #include <boost/mpl/apply.hpp>
 
 namespace
 { 
-  const mpllibs::test::TestSuite suite("any");
+  const mpllibs::metatest::TestSuite suite("any");
 
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::any<mpllibs::parser::letter>,
         str_
@@ -28,7 +29,7 @@ namespace
     TestEmptyInput;
   
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::any<mpllibs::parser::letter>,
         chars0
@@ -38,7 +39,7 @@ namespace
     Test0;
   
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::any<mpllibs::parser::letter>,
         chars1
@@ -48,7 +49,7 @@ namespace
     Test1;
   
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::any<mpllibs::parser::letter>,
         chars2
@@ -58,7 +59,7 @@ namespace
     Test2;
   
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::any<mpllibs::parser::letter>,
         chars3
@@ -68,7 +69,7 @@ namespace
     Test3;
   
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::any<mpllibs::parser::letter>,
         chars4
@@ -78,7 +79,7 @@ namespace
     Test4;
   
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::any<mpllibs::parser::letter>,
         chars5

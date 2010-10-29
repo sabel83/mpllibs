@@ -6,22 +6,22 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/Location.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/Location.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <cassert>
 
 namespace mpllibs
 {
-  namespace test
+  namespace metatest
   {
     class TestResult
     {
     public:
       TestResult(
-        const mpllibs::test::TestSuite& suite_,
+        const mpllibs::metatest::TestSuite& suite_,
         const std::string& name_,
-        const mpllibs::test::Location& location_,
+        const mpllibs::metatest::Location& location_,
         bool success_,
         const std::string& reason_
       ) :
@@ -36,7 +36,7 @@ namespace mpllibs
       {
         return _name;
       }
-      const mpllibs::test::Location& location() const
+      const mpllibs::metatest::Location& location() const
       {
         return _location;
       }
@@ -58,14 +58,14 @@ namespace mpllibs
         return _reason != "";
       }
       
-      const mpllibs::test::TestSuite& testSuite() const
+      const mpllibs::metatest::TestSuite& testSuite() const
       {
         return _suite;
       }
     private:
-      mpllibs::test::TestSuite _suite;
+      mpllibs::metatest::TestSuite _suite;
       std::string _name;
-      mpllibs::test::Location _location;
+      mpllibs::metatest::Location _location;
       bool _success;
       std::string _reason;
     };

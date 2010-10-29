@@ -7,8 +7,8 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/plus.hpp>
@@ -18,7 +18,7 @@
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("compose");
+  const mpllibs::metatest::TestSuite suite("compose");
 
   struct make_pointer
   {

@@ -6,19 +6,19 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/get_value.h>
-#include <mpllibs/test/get_type.h>
+#include <mpllibs/metatest/get_value.h>
+#include <mpllibs/metatest/get_type.h>
 
 #include <boost/mpl/identity.hpp>
 
 namespace mpllibs
 {
-  namespace test
+  namespace metatest
   {
     template <class T, class Default>
     struct get_type_value :
-      mpllibs::test::get_value<
-        typename mpllibs::test::get_type<
+      mpllibs::metatest::get_value<
+        typename mpllibs::metatest::get_type<
           T,
           boost::mpl::identity<Default>
         >::type,

@@ -10,15 +10,15 @@
 
 #include <mpllibs/util/is_digit.h>
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("accept_when");
+  const mpllibs::metatest::TestSuite suite("accept_when");
 
   typedef
     boost::mpl::equal_to<

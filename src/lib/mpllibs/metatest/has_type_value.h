@@ -6,17 +6,17 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/test/has_value.h>
-#include <mpllibs/test/get_type.h>
+#include <mpllibs/metatest/has_value.h>
+#include <mpllibs/metatest/get_type.h>
 
 namespace mpllibs
 {
-  namespace test
+  namespace metatest
   {
     template <class T, class ValueType>
     struct has_type_value :
-      mpllibs::test::has_value<
-        typename mpllibs::test::get_type<T, int>::type,
+      mpllibs::metatest::has_value<
+        typename mpllibs::metatest::get_type<T, int>::type,
         ValueType
       >
     {};

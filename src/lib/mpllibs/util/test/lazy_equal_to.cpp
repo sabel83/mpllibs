@@ -7,8 +7,8 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
@@ -18,7 +18,7 @@
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("lazy_equal_to");
+  const mpllibs::metatest::TestSuite suite("lazy_equal_to");
   
   typedef mpllibs::util::lazy_equal_to<int13, int13> Evaluated;
   

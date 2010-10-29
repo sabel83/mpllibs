@@ -8,16 +8,16 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/equal_sequence.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/equal_sequence.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("token");
+  const mpllibs::metatest::TestSuite suite("token");
 
   typedef
     boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o', ' ', '\t'>
@@ -46,7 +46,7 @@ namespace
     TestSpaces;
 
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::token<testParser>,
         str_hello_t

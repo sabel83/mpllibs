@@ -7,16 +7,16 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/equal_sequence.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/equal_sequence.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("keyword");
+  const mpllibs::metatest::TestSuite suite("keyword");
 
   typedef boost::mpl::list_c<
     char,
@@ -43,7 +43,7 @@ namespace
     TestEmptyInput;
 
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::keyword<str_hello>,
         str_hello
@@ -53,7 +53,7 @@ namespace
     TestItself;
 
   typedef
-    mpllibs::test::equal_sequence<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::parser::keyword<str_hello>,
         str_hello_world

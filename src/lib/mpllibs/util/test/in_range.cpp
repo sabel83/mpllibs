@@ -7,14 +7,14 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/apply.hpp>
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("in_range");
+  const mpllibs::metatest::TestSuite suite("in_range");
 
   typedef
     boost::mpl::apply<mpllibs::util::in_range<int10, int13>, int12>

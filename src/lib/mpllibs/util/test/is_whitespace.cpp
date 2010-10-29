@@ -7,14 +7,14 @@
 
 #include "common.h"
 
-#include <mpllibs/test/test.h>
-#include <mpllibs/test/TestSuite.h>
+#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/apply.hpp>
 
 namespace
 {
-  const mpllibs::test::TestSuite suite("is_whitespace");
+  const mpllibs::metatest::TestSuite suite("is_whitespace");
 
   typedef boost::mpl::apply<mpllibs::util::is_whitespace, char_space> TestSpace;
   
