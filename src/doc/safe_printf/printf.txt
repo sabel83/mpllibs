@@ -40,7 +40,7 @@ Expression semantics
 For any +s+ +boost::mpl::string+ and +a1+ ... +an+ runtime objects:
 
 --------------------------------------
-mpllibs::printf::printf<s>(a1, ..., an)
+mpllibs::safe_printf::printf<s>(a1, ..., an)
 --------------------------------------
 
 When the number and types of +a1+ ... +an+ are correct according to +s+, the
@@ -56,7 +56,7 @@ Example
 -------
 
 --------------------------------------
-mpllibs::printf::printf<boost::mpl::string<'%d %','d\n'> >(11, 13);
+mpllibs::safe_printf::printf<boost::mpl::string<'%d %','d\n'> >(11, 13);
 --------------------------------------
 
 include::../copyright[]

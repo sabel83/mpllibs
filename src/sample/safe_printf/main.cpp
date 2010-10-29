@@ -5,7 +5,7 @@
 
 #include <mpllibs/safe_printf/printf.h>
 
-namespace safe = mpllibs::printf;
+namespace safe = mpllibs::safe_printf;
 
 int main()
 {

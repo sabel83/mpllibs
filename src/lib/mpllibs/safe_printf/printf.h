@@ -25,7 +25,7 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
     #ifndef PRINTF_MAX_ARGUMENT
       #define PRINTF_MAX_ARGUMENT 10
@@ -63,7 +63,7 @@ namespace mpllibs
       int printf(BOOST_PP_REPEAT(n, PRINTF_ARGS, ~)) \
       { \
         BOOST_STATIC_ASSERT(( \
-          mpllibs::printf::VerifyPrintfArguments< \
+          mpllibs::safe_printf::VerifyPrintfArguments< \
             formatString, \
             boost::mpl::list<BOOST_PP_REPEAT(n, PRINTF_CLASS_ARGS, ~)> \
           >::type::value \
@@ -82,7 +82,7 @@ namespace mpllibs
       int fprintf(FILE* stream BOOST_PP_COMMA_IF(n) BOOST_PP_REPEAT(n, PRINTF_ARGS, ~)) \
       { \
         BOOST_STATIC_ASSERT(( \
-          mpllibs::printf::VerifyPrintfArguments< \
+          mpllibs::safe_printf::VerifyPrintfArguments< \
             formatString, \
             boost::mpl::list<BOOST_PP_REPEAT(n, PRINTF_CLASS_ARGS, ~)> \
           >::type::value \
@@ -102,7 +102,7 @@ namespace mpllibs
       int sprintf(char* s BOOST_PP_COMMA_IF(n) BOOST_PP_REPEAT(n, PRINTF_ARGS, ~)) \
       { \
         BOOST_STATIC_ASSERT(( \
-          mpllibs::printf::VerifyPrintfArguments< \
+          mpllibs::safe_printf::VerifyPrintfArguments< \
             formatString, \
             boost::mpl::list<BOOST_PP_REPEAT(n, PRINTF_CLASS_ARGS, ~)> \
           >::type::value \

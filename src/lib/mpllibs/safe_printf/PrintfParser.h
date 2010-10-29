@@ -12,9 +12,9 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
-    typedef parser::build_parser<mpllibs::printf::grammar::S> PrintfParser;
+    typedef parser::build_parser<mpllibs::safe_printf::grammar::S> PrintfParser;
   }
 }
 

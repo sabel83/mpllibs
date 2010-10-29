@@ -11,7 +11,7 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
     template <class Expected, class Actual>
     struct VerifyArgumentImpl : boost::mpl::identity<boost::mpl::false_> {};

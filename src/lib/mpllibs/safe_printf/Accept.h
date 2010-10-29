@@ -11,7 +11,7 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
     typedef boost::mpl::identity<boost::mpl::true_> Accept;
   }

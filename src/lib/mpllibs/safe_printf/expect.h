@@ -8,7 +8,7 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
     // Expected argument types
     struct ExpectCharacter;

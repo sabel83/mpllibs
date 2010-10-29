@@ -20,7 +20,7 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
     namespace grammar
     {

@@ -13,7 +13,7 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
     template <class F, class ArgTypes>
     struct VerifyPrintfArguments :

@@ -13,7 +13,7 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
     // This function is lazy
     template <class Expected, class Actual>
@@ -24,7 +24,7 @@ namespace mpllibs
           typename Expected::type::second::first
         >::type,
         VerifyArgumentImpl<
-          mpllibs::printf::ExpectUnsignedInteger,
+          mpllibs::safe_printf::ExpectUnsignedInteger,
           typename Actual::type
         >,
         VerifyArgumentImpl<

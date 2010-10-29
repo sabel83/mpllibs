@@ -19,7 +19,7 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
     // Lazy function
     template <class Expected, class Actual>

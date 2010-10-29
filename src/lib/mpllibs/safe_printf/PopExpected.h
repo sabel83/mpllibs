@@ -15,7 +15,7 @@
 
 namespace mpllibs
 {
-  namespace printf
+  namespace safe_printf
   {
     template <class Expected>
     struct PopExpected :

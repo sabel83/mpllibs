@@ -41,7 +41,7 @@ For any +s+ +boost::mpl::string+, +f+ +FILE+ pointer and
 +a1+ ... +an+ runtime objects:
 
 --------------------------------------
-mpllibs::printf::fprintf<s>(f, a1, ..., an)
+mpllibs::safe_printf::fprintf<s>(f, a1, ..., an)
 --------------------------------------
 
 When the number and types of +a1+ ... +an+ are correct according to +s+, the
@@ -58,7 +58,7 @@ Example
 
 --------------------------------------
 FILE *f = std::fopen("test.txt", "wt");
-mpllibs::printf::fprintf<boost::mpl::string<'%d %','d\n'> >(f, 11, 13);
+mpllibs::safe_printf::fprintf<boost::mpl::string<'%d %','d\n'> >(f, 11, 13);
 fclose(f);
 --------------------------------------
 

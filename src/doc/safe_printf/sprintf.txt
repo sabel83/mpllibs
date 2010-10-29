@@ -41,7 +41,7 @@ For any +s+ +boost::mpl::string+, +buf+ +char+ pointer and
 +a1+ ... +an+ runtime objects:
 
 --------------------------------------
-mpllibs::printf::sprintf<s>(buf, a1, ..., an)
+mpllibs::safe_printf::sprintf<s>(buf, a1, ..., an)
 --------------------------------------
 
 When the number and types of +a1+ ... +an+ are correct according to +s+, the
@@ -58,7 +58,7 @@ Example
 
 --------------------------------------
 char s[32];
-mpllibs::printf::sprintf<boost::mpl::string<'%d %','d\n'> >(s, 11, 13);
+mpllibs::safe_printf::sprintf<boost::mpl::string<'%d %','d\n'> >(s, 11, 13);
 --------------------------------------
 
 include::../copyright[]
