@@ -1,0 +1,76 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+iterate
+=======
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class p, class n>
+struct iterate
+{
+  template <class s>
+  struct apply
+  {
+    // unspecified
+  };
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Parser combinator taking a parser and an integer as arguments.
+It applies the parser on the input string +n+ times. The result of parsing
+is a sequence of the results of the individual applications of the parser.
++p+ has to accept the input +n+ times for +iterate+ to accept it.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/iterate.h>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +p+ parser, +n+ wrapped integer and +s+ compile-time string
+
+--------------------------------------
+boost::mpl::apply<iterate<p, n>, s>
+--------------------------------------
+
+is equivalent to +boost::mpl::list<>+ when +n+ is +0+. It is +nothing+ when
++n+ is not +0+ and +boost::mpl::apply<p, s>+ is +nothing+. It is
+
+--------------------------------------
+boost::mpl::push_front<
+  boost::mpl::apply<
+    iterate<p, boost::mpl::minus<n, boost::mpl::int_<1> >::type>,
+    boost::mpl::apply<p, s>::type::second
+  >::type,
+  boost::mpl::apply<p, s>::type::first
+>
+--------------------------------------
+
+otherwise.
+
+Example
+-------
+
+--------------------------------------
+typedef iterate<mpllibs::metaparse::one_char, boost::mpl::int_<3> > three_chars;
+--------------------------------------
+
+include::../copyright[]
+
+link:index.html[[up]]
+
+

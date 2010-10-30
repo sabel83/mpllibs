@@ -8,13 +8,13 @@
 
 #include <mpllibs/safe_printf/grammar/printf_grammar.h>
 
-#include <mpllibs/parser/build_parser.h>
+#include <mpllibs/metaparse/build_parser.h>
 
 namespace mpllibs
 {
   namespace safe_printf
   {
-    typedef parser::build_parser<mpllibs::safe_printf::grammar::S> PrintfParser;
+    typedef metaparse::build_parser<mpllibs::safe_printf::grammar::S> PrintfParser;
   }
 }
 

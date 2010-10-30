@@ -4,7 +4,7 @@
 #          http://www.boost.org/LICENSE_1_0.txt)
 
 DOC_SRC_ROOT = .
-SUBDIRS = util metatest parser safe_printf
+SUBDIRS = util metatest metaparse safe_printf
 
 include $(DOC_SRC_ROOT)/doc.mk
 
