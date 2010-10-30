@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/nothing.h>
 
-#include <mpllibs/util/make_pair.h>
+#include <mpllibs/metaparse/util/make_pair.h>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -29,7 +29,7 @@ namespace mpllibs
             typename boost::mpl::apply<p, S>::type,
             mpllibs::metaparse::nothing
           >::type,
-          mpllibs::util::make_pair<boost::mpl::identity<result>, S>,
+          mpllibs::metaparse::util::make_pair<boost::mpl::identity<result>, S>,
           mpllibs::metaparse::nothing
         >
       {};

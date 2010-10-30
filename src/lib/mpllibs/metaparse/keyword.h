@@ -11,7 +11,7 @@
 #include <mpllibs/metaparse/sequence.h>
 #include <mpllibs/metaparse/second_of.h>
 
-#include <mpllibs/util/lazy_if.h>
+#include <mpllibs/metaparse/util/lazy_if.h>
 
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/empty.hpp>
@@ -47,7 +47,7 @@ namespace mpllibs
     // Does not consume/check anything after the keyword
     template <class s, class result_type = accepted_keyword>
     struct keyword :
-      mpllibs::util::lazy_if<
+      mpllibs::metaparse::util::lazy_if<
         boost::mpl::empty<s>,
         mpllibs::metaparse::return_<result_type>,
         mpllibs::metaparse::impl::nonemptyKeyword<s, result_type>

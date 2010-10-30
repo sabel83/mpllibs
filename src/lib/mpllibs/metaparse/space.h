@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/accept_when.h>
 #include <mpllibs/metaparse/one_char.h>
 
-#include <mpllibs/util/is_whitespace.h>
+#include <mpllibs/metaparse/util/is_whitespace.h>
 
 namespace mpllibs
 {
@@ -18,7 +18,7 @@ namespace mpllibs
     typedef
       mpllibs::metaparse::accept_when<
         mpllibs::metaparse::one_char,
-        mpllibs::util::is_whitespace
+        mpllibs::metaparse::util::is_whitespace
       >
       space;
   }

@@ -46,7 +46,7 @@ boost::mpl::apply<spaces, s>
 is equivalent to
 
 --------------------------------------
-mpllibs::util::pair<
+mpllibs::metaparse::util::pair<
   // undefined
   ,
   boost::mpl::pop_front<s>::type

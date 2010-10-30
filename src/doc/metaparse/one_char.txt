@@ -47,7 +47,7 @@ boost::mpl::apply<one_char, s>
 is equivalent to
 
 --------------------------------------
-mpllibs::util::pair<boost::mpl::front<s>::type, boost::mpl::pop_front<s>::type>
+mpllibs::metaparse::util::pair<boost::mpl::front<s>::type, boost::mpl::pop_front<s>::type>
 --------------------------------------
 
 when +s+ is not empty. It is +nothing+ is otherwise.

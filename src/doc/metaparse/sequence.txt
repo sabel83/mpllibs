@@ -49,7 +49,7 @@ boost::mpl::apply<sequence<p1, p2>, s>
 is equivalent to
 
 --------------------------------------
-mpllibs::util::pair<
+mpllibs::metaparse::util::pair<
   boost::mpl::apply<p1, s>::type::first,
   boost::mpl::apply<p2, boost::mpl::apply<p1, s>::type::second>::type::first
 >

@@ -48,7 +48,7 @@ boost::mpl::apply<except<p, c>, s>::type
 is equivalent to
 
 --------------------------------------
-mpllibs::util::pair<c, s>
+mpllibs::metaparse::util::pair<c, s>
 --------------------------------------
 
 when +p+ rejects the input and +nothing+ otherwise.

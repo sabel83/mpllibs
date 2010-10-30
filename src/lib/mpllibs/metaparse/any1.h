@@ -16,7 +16,7 @@ namespace mpllibs
     struct any1 :
       mpllibs::metaparse::transform<
         mpllibs::metaparse::sequence<p, mpllibs::metaparse::any<p> >,
-        mpllibs::util::cons
+        mpllibs::metaparse::util::cons
       >
     {};
   }

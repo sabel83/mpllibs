@@ -9,7 +9,7 @@
 #include <mpllibs/safe_printf/PopExpected.h>
 #include <mpllibs/safe_printf/VerifyArgument.h>
 
-#include <mpllibs/util/lazy_eval_if.h>
+#include <mpllibs/metaparse/util/lazy_eval_if.h>
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/empty.hpp>
@@ -30,7 +30,7 @@ namespace mpllibs
         boost::mpl::eval_if<
           typename boost::mpl::empty<typename Actual::type>::type,
           boost::mpl::false_,
-          mpllibs::util::lazy_eval_if<
+          mpllibs::metaparse::util::lazy_eval_if<
             VerifyArgument<
               boost::mpl::front<typename Expected::type>,
               boost::mpl::front<typename Actual::type>

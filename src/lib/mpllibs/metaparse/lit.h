@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/accept_when.h>
 #include <mpllibs/metaparse/one_char.h>
 
-#include <mpllibs/util/is_char.h>
+#include <mpllibs/metaparse/util/is_char.h>
 
 namespace mpllibs
 {
@@ -19,7 +19,7 @@ namespace mpllibs
     struct lit :
       mpllibs::metaparse::accept_when<
         mpllibs::metaparse::one_char,
-        mpllibs::util::is_char<c>
+        mpllibs::metaparse::util::is_char<c>
       >
     {};
   }

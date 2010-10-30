@@ -23,7 +23,7 @@ namespace
         mpllibs::metaparse::sequence<lit_h, lit_e>,
         str_hello
       >::type::first,
-      mpllibs::util::pair<char_h, char_e>
+      mpllibs::metaparse::util::pair<char_h, char_e>
     >
     TestTwoChars;
 

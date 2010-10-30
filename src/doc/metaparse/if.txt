@@ -49,13 +49,13 @@ boost::mpl::apply<if_<p, t, f>, s>::type
 is equivalent to
 
 --------------------------------------
-mpllibs::util::pair<t, boost::mpl::apply<p, s>::type::second>
+mpllibs::metaparse::util::pair<t, boost::mpl::apply<p, s>::type::second>
 --------------------------------------
 
 when +p+ accepts the input and
 
 --------------------------------------
-mpllibs::util::pair<f, s>
+mpllibs::metaparse::util::pair<f, s>
 --------------------------------------
 
 otherwise.

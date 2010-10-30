@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/util/pair.h>
+#include <mpllibs/metaparse/util/pair.h>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
@@ -23,7 +23,7 @@ namespace mpllibs
         typename boost::mpl::front<Expected>::type::first,
         boost::mpl::push_front<
           typename boost::mpl::pop_front<Expected>::type,
-          mpllibs::util::pair<
+          mpllibs::metaparse::util::pair<
             boost::mpl::false_,
             typename boost::mpl::front<Expected>::type::second
           >
@@ -32,9 +32,9 @@ namespace mpllibs
           typename boost::mpl::front<Expected>::type::second::first,
           boost::mpl::push_front<
             typename boost::mpl::pop_front<Expected>::type,
-            mpllibs::util::pair<
+            mpllibs::metaparse::util::pair<
               boost::mpl::false_,
-              mpllibs::util::pair<
+              mpllibs::metaparse::util::pair<
                 boost::mpl::false_,
                 typename boost::mpl::front<Expected>::type::second::second
               >

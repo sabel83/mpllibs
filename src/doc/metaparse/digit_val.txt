@@ -47,8 +47,8 @@ boost::mpl::apply<digit, s>
 is equivalent to
 
 --------------------------------------
-mpllibs::util::pair<
-  mpllibs::util::digit_to_int::apply<boost::mpl::front<s>::type>::type,
+mpllibs::metaparse::util::pair<
+  mpllibs::metaparse::util::digit_to_int::apply<boost::mpl::front<s>::type>::type,
   boost::mpl::pop_front<s>::type
 >
 --------------------------------------

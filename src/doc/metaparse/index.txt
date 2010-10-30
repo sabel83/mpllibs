@@ -21,7 +21,7 @@ What is a parser
 
 A parser is a template metafunction, taking the input text, a compile time
 string, as it's argument. The function parses a prefix of the input string.
-When the parsing is successful, it returns an +mpllibs::util::pair+:
+When the parsing is successful, it returns an +mpllibs::metaparse::util::pair+:
 
 * The first element of the pair is the result of parsing, this is up to the parser itself.
 * The second element of the pair is the remainder of the input string.
@@ -57,7 +57,7 @@ digit characters:
 typedef
   mpllibs::metaparse::accept_when<
     mpllibs::metaparse::one_char,
-    mpllibs::util::is_digit
+    mpllibs::metaparse::util::is_digit
   >
   digit;
 --------------------------------------
@@ -125,6 +125,13 @@ Metafunctions and metafunction classes
 --------------------------------------
 
 link:build_parser.html[build_parser] +
+
+Utilities
+---------
+
++metaparse+ uses a number of small extensions to
+http://www.boost.org/doc/libs/1_43_0/libs/mpl/doc/index.html[boost::mpl].
+They are in link:util/index.html[metaparse::util].
 
 include::../copyright[]
 

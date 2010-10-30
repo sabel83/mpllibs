@@ -48,7 +48,7 @@ boost::mpl::apply<keyword<k>, s>
 is equivalent to
 
 --------------------------------------
-mpllibs::util::pair<
+mpllibs::metaparse::util::pair<
   // unspecified
   ,
   // the last (<length of s> - <length of k>) characters of s
@@ -66,7 +66,7 @@ boost::mpl::apply<keyword<k, c>, s>
 is equivalent to
 
 --------------------------------------
-mpllibs::util::pair<
+mpllibs::metaparse::util::pair<
   c,
   // the last (<length of s> - <length of k>) characters of s
 >

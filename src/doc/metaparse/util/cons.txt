@@ -1,0 +1,70 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+cons
+====
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+struct cons
+{
+  template <class T>
+  struct apply
+  {
+    // unspecified
+  };
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Metafunction class taking a pair as argument. The second element of the pair
+has to be a sequence. +cons+ pushes the first element of the pair to the front
+of that sequence.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/util/cons.h>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +P+ pair, where +P::second+ is a sequence
+
+--------------------------------------
+boost::mpl::apply<cons, P>
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+boost::mpl::push_front<typename P::second, typename P::first>
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+boost::mpl::apply<
+  cons,
+  boost::mpl::pair<int, boost::mpl::list<double, char> >
+>::type,
+--------------------------------------
+
+include::../../copyright[]
+
+link:index.html[[up]]
+
+
+
+

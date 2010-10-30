@@ -8,7 +8,7 @@
 
 #include "common.h"
 
-#include <mpllibs/util/is_digit.h>
+#include <mpllibs/metaparse/util/is_digit.h>
 
 #include <mpllibs/metatest/test.h>
 #include <mpllibs/metatest/TestSuite.h>
@@ -25,7 +25,7 @@ namespace
       boost::mpl::apply<
         mpllibs::metaparse::accept_when<
           mpllibs::metaparse::one_char,
-          mpllibs::util::is_digit
+          mpllibs::metaparse::util::is_digit
         >,
         str_hello
       >::type,
@@ -38,7 +38,7 @@ namespace
       boost::mpl::apply<
         mpllibs::metaparse::accept_when<
           mpllibs::metaparse::one_char,
-          mpllibs::util::is_digit
+          mpllibs::metaparse::util::is_digit
         >,
         str_1983
       >::type::first,
@@ -51,7 +51,7 @@ namespace
       boost::mpl::apply<
         mpllibs::metaparse::accept_when<
           mpllibs::metaparse::one_char,
-          mpllibs::util::is_digit
+          mpllibs::metaparse::util::is_digit
         >,
         str_
       >::type,

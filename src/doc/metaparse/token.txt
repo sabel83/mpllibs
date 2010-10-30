@@ -50,7 +50,7 @@ is equivalent to +nothing+ when +boost::mpl::apply<p, s>+
 is +nothing+. It is
 
 --------------------------------------
-mpllibs::util::pair<
+mpllibs::metaparse::util::pair<
   boost::mpl::apply<p, s>::type::first,
   boost::mpl::apply<
     mpllibs::metaparse::spaces,

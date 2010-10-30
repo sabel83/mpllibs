@@ -11,7 +11,7 @@
 #include <mpllibs/metaparse/return.h>
 #include <mpllibs/metaparse/transform.h>
 
-#include <mpllibs/util/cons.h>
+#include <mpllibs/metaparse/util/cons.h>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/int.hpp>
@@ -37,7 +37,7 @@ namespace mpllibs
               typename boost::mpl::minus<n, boost::mpl::int_<1> >::type
             >
           >,
-          mpllibs::util::cons
+          mpllibs::metaparse::util::cons
         >
       >::type
     {};

@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/nothing.h>
 
-#include <mpllibs/util/make_pair.h>
+#include <mpllibs/metaparse/util/make_pair.h>
 
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -26,7 +26,7 @@ namespace mpllibs
         boost::mpl::eval_if<
           typename boost::mpl::empty<S>::type,
           nothing,
-          mpllibs::util::make_pair<
+          mpllibs::metaparse::util::make_pair<
             boost::mpl::front<S>,
             boost::mpl::pop_front<S>
           >

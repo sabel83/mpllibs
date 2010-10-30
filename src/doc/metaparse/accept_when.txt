@@ -63,7 +63,7 @@ Example
 typedef
   accept_when<
     mpllibs::metaparse::one_char,
-    mpllibs::util::is_digit
+    mpllibs::metaparse::util::is_digit
   >
   accept_digit;
 --------------------------------------

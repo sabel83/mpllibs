@@ -50,7 +50,7 @@ is equivalent to +nothing+ when +boost::mpl::apply<p, s>+
 is +nothing+. It is
 
 --------------------------------------
-mpllibs::util::pair<
+mpllibs::metaparse::util::pair<
   boost::mpl::apply<t, boost::mpl::apply<p, s>::type::first>::type,
   boost::mpl::apply<p, s>::type::second
 >
@@ -65,7 +65,7 @@ Example
 typedef
   mpllibs::metaparse::transform<
     mpllibs::metaparse::digit,
-    mpllibs::util::digit_to_int
+    mpllibs::metaparse::util::digit_to_int
   >
   digit_val;
 --------------------------------------

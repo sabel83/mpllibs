@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/digit.h>
 #include <mpllibs/metaparse/transform.h>
 
-#include <mpllibs/util/digit_to_int.h>
+#include <mpllibs/metaparse/util/digit_to_int.h>
 
 namespace mpllibs
 {
@@ -18,7 +18,7 @@ namespace mpllibs
     typedef
       mpllibs::metaparse::transform<
         mpllibs::metaparse::digit,
-        mpllibs::util::digit_to_int
+        mpllibs::metaparse::util::digit_to_int
       >
       digit_val;
   }

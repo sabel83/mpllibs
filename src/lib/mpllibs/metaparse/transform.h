@@ -8,11 +8,11 @@
 
 #include <mpllibs/metaparse/nothing.h>
 
-#include <mpllibs/util/pair.h>
-#include <mpllibs/util/make_pair.h>
-#include <mpllibs/util/compose.h>
-#include <mpllibs/util/lazy_equal_to.h>
-#include <mpllibs/util/lazy_eval_if.h>
+#include <mpllibs/metaparse/util/pair.h>
+#include <mpllibs/metaparse/util/make_pair.h>
+#include <mpllibs/metaparse/util/compose.h>
+#include <mpllibs/metaparse/util/lazy_equal_to.h>
+#include <mpllibs/metaparse/util/lazy_eval_if.h>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -29,14 +29,14 @@ namespace mpllibs
       template <class S>
       struct apply :
         boost::mpl::eval_if<
-          mpllibs::util::lazy_equal_to<
+          mpllibs::metaparse::util::lazy_equal_to<
             boost::mpl::apply<p, S>,
             mpllibs::metaparse::nothing
           >,
           mpllibs::metaparse::nothing,
-          mpllibs::util::make_pair<
+          mpllibs::metaparse::util::make_pair<
             boost::mpl::apply<
-              mpllibs::util::compose<
+              mpllibs::metaparse::util::compose<
                 t,
                 boost::mpl::quote1<boost::mpl::first>,
                 p
@@ -44,7 +44,7 @@ namespace mpllibs
               S
             >,
             boost::mpl::apply<
-              mpllibs::util::compose<
+              mpllibs::metaparse::util::compose<
                 boost::mpl::quote1<boost::mpl::second>,
                 p
               >,

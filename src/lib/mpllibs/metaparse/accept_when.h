@@ -8,9 +8,9 @@
 
 #include <mpllibs/metaparse/nothing.h>
 
-#include <mpllibs/util/compose.h>
-#include <mpllibs/util/lazy_eval_if.h>
-#include <mpllibs/util/lazy_equal_to.h>
+#include <mpllibs/metaparse/util/compose.h>
+#include <mpllibs/metaparse/util/lazy_eval_if.h>
+#include <mpllibs/metaparse/util/lazy_equal_to.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -28,14 +28,14 @@ namespace mpllibs
       template <class S>
       struct apply :
         boost::mpl::eval_if<
-          mpllibs::util::lazy_equal_to<
+          mpllibs::metaparse::util::lazy_equal_to<
             boost::mpl::apply<p, S>,
             mpllibs::metaparse::nothing
           >,
           mpllibs::metaparse::nothing,
-          mpllibs::util::lazy_eval_if<
+          mpllibs::metaparse::util::lazy_eval_if<
             boost::mpl::apply<
-              mpllibs::util::compose<
+              mpllibs::metaparse::util::compose<
                 pred,
                 boost::mpl::quote1<boost::mpl::first>
               >,
