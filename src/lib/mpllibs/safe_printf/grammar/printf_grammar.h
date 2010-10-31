@@ -244,7 +244,7 @@ namespace mpllibs
         >
       {};
 
-      // returns pair<defined extra int, pair<defined extra int, format> >
+      // returns deque<defined extra int, deque<defined extra int, format> >
       struct Parameter :
         mpllibs::metaparse::second_of<
           mpllibs::metaparse::lit_c<'%'>,

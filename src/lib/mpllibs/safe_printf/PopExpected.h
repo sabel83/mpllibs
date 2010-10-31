@@ -6,12 +6,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/pair.h>
-
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
+#include <boost/mpl/back.hpp>
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/push_front.hpp>
+#include <boost/mpl/deque.hpp>
 
 namespace mpllibs
 {
@@ -20,23 +20,35 @@ namespace mpllibs
     template <class Expected>
     struct PopExpected :
       boost::mpl::eval_if<
-        typename boost::mpl::front<Expected>::type::first,
+        typename boost::mpl::front<
+          typename boost::mpl::front<Expected>::type
+        >::type,
         boost::mpl::push_front<
           typename boost::mpl::pop_front<Expected>::type,
-          mpllibs::metaparse::util::pair<
+          boost::mpl::deque<
             boost::mpl::false_,
-            typename boost::mpl::front<Expected>::type::second
+            typename boost::mpl::back<
+              typename boost::mpl::front<Expected>::type
+            >::type
           >
         >,
         boost::mpl::eval_if<
-          typename boost::mpl::front<Expected>::type::second::first,
+          typename boost::mpl::front<
+            typename boost::mpl::back<
+              typename boost::mpl::front<Expected>::type
+            >::type
+          >::type,
           boost::mpl::push_front<
             typename boost::mpl::pop_front<Expected>::type,
-            mpllibs::metaparse::util::pair<
+            boost::mpl::deque<
               boost::mpl::false_,
-              mpllibs::metaparse::util::pair<
+              boost::mpl::deque<
                 boost::mpl::false_,
-                typename boost::mpl::front<Expected>::type::second::second
+                typename boost::mpl::back<
+                  typename boost::mpl::back<
+                    typename boost::mpl::front<Expected>::type
+                  >::type
+                >::type
               >
             >
           >,

@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-sequence
+cons_seq
 ========
 Abel Sinkovics
 
@@ -11,8 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p1, class p2>
-struct sequence
+struct cons_seq
 {
   template <class s>
   struct apply
@@ -26,49 +25,46 @@ struct sequence
 Description
 -----------
 
-Parser combinator applying two parsers after each other. It accepts an input
-when both parsers accept it. The result of parsing is a sequence of the results
-of the parsers.
+Metafunction class taking a sequence with two elements as argument. The second
+element of the sequence has to be a sequence as well. +cons_seq+ pushes the
+first element of +s+ to the front of that sequence.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/sequence.h>
+#include <mpllibs/metaparse/util/cons_seq.h>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +p1+ and +p2+ parsers and +s+ compile-time string
+For any +s+ sequence, where +boost::mpl::back<s>::type+ is a sequence
 
 --------------------------------------
-boost::mpl::apply<sequence<p1, p2>, s>
+boost::mpl::apply<cons_seq, p>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::deque<
-  boost::mpl::apply<p1, s>::type::first,
-  boost::mpl::apply<p2, boost::mpl::apply<p1, s>::type::second>::type::first
->
+boost::mpl::push_front<boost::mpl::back<p>::type, boost::mpl::front<p>::type>
 --------------------------------------
-
-when +p1+ accepts +s+ and +p2+ accepts the string remaining after the
-application of +p1+. It is +nothing+ otherwise.
 
 Example
 -------
 
 --------------------------------------
-typedef
-  sequence<mpllibs::metaparse::digit, mpllibs::metaparse::digit>
-  two_digits;
+boost::mpl::apply<
+  cons_seq,
+  boost::mpl::deque<int, boost::mpl::list<double, char> >
+>::type,
 --------------------------------------
 
-include::../copyright[]
+include::../../copyright[]
 
 link:index.html[[up]]
+
+
 
 

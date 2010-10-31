@@ -9,21 +9,23 @@
 
 #include <mpllibs/metatest/test.h>
 #include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/equal_sequence.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/list.hpp>
 
 namespace
 {
   const mpllibs::metatest::TestSuite suite("sequence");
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
         mpllibs::metaparse::sequence<lit_h, lit_e>,
         str_hello
       >::type::first,
-      mpllibs::metaparse::util::pair<char_h, char_e>
+      boost::mpl::list<char_h, char_e>
     >
     TestTwoChars;
 

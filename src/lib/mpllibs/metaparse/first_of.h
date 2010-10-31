@@ -10,6 +10,7 @@
 #include <mpllibs/metaparse/sequence.h>
 
 #include <boost/mpl/quote.hpp>
+#include <boost/mpl/front.hpp>
 
 namespace mpllibs
 {
@@ -19,7 +20,7 @@ namespace mpllibs
     struct first_of :
       mpllibs::metaparse::transform<
         mpllibs::metaparse::sequence<p1, p2>,
-        boost::mpl::quote1<boost::mpl::first>
+        boost::mpl::quote1<boost::mpl::front>
       >
     {};
   }

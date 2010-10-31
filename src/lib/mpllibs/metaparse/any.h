@@ -11,7 +11,7 @@
 #include <mpllibs/metaparse/transform.h>
 #include <mpllibs/metaparse/sequence.h>
 
-#include <mpllibs/metaparse/util/cons.h>
+#include <mpllibs/metaparse/util/cons_seq.h>
 
 #include <boost/mpl/list.hpp>
 
@@ -24,7 +24,7 @@ namespace mpllibs
       mpllibs::metaparse::one_of<
         mpllibs::metaparse::transform<
           mpllibs::metaparse::sequence<p, mpllibs::metaparse::any<p> >,
-          mpllibs::metaparse::util::cons
+          mpllibs::metaparse::util::cons_seq
         >,
         mpllibs::metaparse::return_<boost::mpl::list<> >
       >

@@ -20,6 +20,7 @@ Metafunctions and metafunction classes
 
 link:compose.html[compose] + 
 link:cons.html[cons] + 
+link:cons_seq.html[cons_seq] + 
 link:curry.html[curry] + 
 link:digit_to_int.html[digit_to_int] + 
 link:in_range.html[in_range] + 
