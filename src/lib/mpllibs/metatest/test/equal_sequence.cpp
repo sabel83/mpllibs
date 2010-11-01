@@ -51,6 +51,13 @@ namespace
       boost::mpl::list<>
     >
     TestEmptySequences;
+
+  typedef
+    mpllibs::metatest::equal_sequence<
+      boost::mpl::list<Int0, Int1>,
+      boost::mpl::list<Int1, Int0>
+    >
+    TestSwapped;
 }
 
 
@@ -58,4 +65,8 @@ MPLLIBS_ADD_TEST(suite, TestEqualSequences)
 MPLLIBS_ADD_TEST_TO_FAIL(suite, TestNonEqualSequences)
 MPLLIBS_ADD_TEST_TO_FAIL(suite, TestDifferentSize)
 MPLLIBS_ADD_TEST(suite, TestEmptySequences)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, TestSwapped)
+
+
+
 
