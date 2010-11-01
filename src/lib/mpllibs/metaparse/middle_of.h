@@ -6,17 +6,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/first_of.h>
-#include <mpllibs/metaparse/last_of.h>
+#include <mpllibs/metaparse/nth_of.h>
 
 namespace mpllibs
 {
   namespace metaparse
   {
     template <class p1, class p2, class p3>
-    struct middle_of :
-      mpllibs::metaparse::last_of<p1, mpllibs::metaparse::first_of<p2, p3> >
-    {};
+    struct middle_of : mpllibs::metaparse::nth_of_c<1, p1, p2, p3> {};
   }
 }
 
