@@ -7,105 +7,75 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/safe_printf/expect.h>
-#include <mpllibs/safe_printf/Accept.h>
+
+#include <boost/mpl/bool.hpp>
 
 namespace mpllibs
 {
   namespace safe_printf
   {
     template <class Expected, class Actual>
-    struct VerifyArgumentImpl : boost::mpl::identity<boost::mpl::false_> {};
+    struct VerifyArgumentImpl : boost::mpl::false_ {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectCharacter, char> :
-      Accept
+    struct VerifyArgumentImpl<ExpectCharacter, char> : boost::mpl::true_ {};
+
+    template <>
+    struct VerifyArgumentImpl<ExpectUnsignedCharacter, unsigned char> :
+      boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<
-      ExpectUnsignedCharacter,
-      unsigned char
-    > :
-      Accept
-    {};
+    struct VerifyArgumentImpl<ExpectString, char*> : boost::mpl::true_ {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectString, char*> :
-      Accept
-    {};
+    struct VerifyArgumentImpl<ExpectString, const char*> : boost::mpl::true_ {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectString, const char*> :
-      Accept
-    {};
+    struct VerifyArgumentImpl<ExpectSignedInteger, int> : boost::mpl::true_ {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectSignedInteger, int> :
-      Accept
-    {};
-
-    template <>
-    struct VerifyArgumentImpl<
-      ExpectUnsignedInteger,
-      unsigned int
-    > :
-      Accept
+    struct VerifyArgumentImpl<ExpectUnsignedInteger, unsigned int> :
+      boost::mpl::true_
     {};
 
     template <>
     struct VerifyArgumentImpl<ExpectShortSignedInteger, short> :
-      Accept
+      boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<
-      ExpectShortUnsignedInteger,
-      unsigned short
-    > :
-      Accept
+    struct VerifyArgumentImpl<ExpectShortUnsignedInteger, unsigned short> :
+      boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectLongSignedInteger, long> :
-      Accept
+    struct VerifyArgumentImpl<ExpectLongSignedInteger, long> : boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<
-      ExpectLongUnsignedInteger,
-      unsigned long
-    > :
-      Accept
+    struct VerifyArgumentImpl<ExpectLongUnsignedInteger, unsigned long> :
+      boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectFloat, float> :
-      Accept
-    {};
+    struct VerifyArgumentImpl<ExpectFloat, float> : boost::mpl::true_ {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectDouble, double> :
-      Accept
-    {};
+    struct VerifyArgumentImpl<ExpectDouble, double> : boost::mpl::true_ {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectLongDouble, long double> :
-      Accept
+    struct VerifyArgumentImpl<ExpectLongDouble, long double> : boost::mpl::true_
     {};
 
     template <class T>
-    struct VerifyArgumentImpl<ExpectPointer, T*> :
-      Accept
-    {};
+    struct VerifyArgumentImpl<ExpectPointer, T*> : boost::mpl::true_ {};
 
     template <class T>
-    struct VerifyArgumentImpl<ExpectPointer, const T*> :
-      Accept
-    {};
+    struct VerifyArgumentImpl<ExpectPointer, const T*> : boost::mpl::true_ {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectSignedIntPointer, int*> :
-      Accept
+    struct VerifyArgumentImpl<ExpectSignedIntPointer, int*> : boost::mpl::true_
     {};
   }
 }
