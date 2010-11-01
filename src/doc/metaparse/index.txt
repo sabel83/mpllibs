@@ -102,6 +102,7 @@ link:first_of.html[first_of] +
 link:if.html[if] +
 link:iterate.html[iterate] +
 link:keyword.html[keyword] +
+link:last_of.html[last_of] +
 link:letter.html[letter] +
 link:lit_c.html[lit_c] +
 link:lit.html[lit] +
@@ -111,7 +112,6 @@ link:nth_of.html[nth_of] +
 link:one_char.html[one_char] +
 link:one_of.html[one_of] +
 link:return.html[return] +
-link:second_of.html[second_of] +
 link:sequence.html[sequence] +
 link:space.html[space] +
 link:spaces.html[spaces] +

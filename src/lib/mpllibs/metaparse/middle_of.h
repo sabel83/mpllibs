@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/first_of.h>
-#include <mpllibs/metaparse/second_of.h>
+#include <mpllibs/metaparse/last_of.h>
 
 namespace mpllibs
 {
@@ -15,7 +15,7 @@ namespace mpllibs
   {
     template <class p1, class p2, class p3>
     struct middle_of :
-      mpllibs::metaparse::second_of<p1, mpllibs::metaparse::first_of<p2, p3> >
+      mpllibs::metaparse::last_of<p1, mpllibs::metaparse::first_of<p2, p3> >
     {};
   }
 }

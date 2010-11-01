@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/return.h>
-#include <mpllibs/metaparse/second_of.h>
+#include <mpllibs/metaparse/last_of.h>
 
 namespace mpllibs
 {
@@ -15,7 +15,7 @@ namespace mpllibs
   {
     template <class p, class result>
     struct always :
-      mpllibs::metaparse::second_of<p, mpllibs::metaparse::return_<result> >
+      mpllibs::metaparse::last_of<p, mpllibs::metaparse::return_<result> >
     {};
   }
 }

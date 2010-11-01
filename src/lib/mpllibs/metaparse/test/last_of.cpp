@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/second_of.h>
+#include <mpllibs/metaparse/last_of.h>
 
 #include "common.h"
 
@@ -15,12 +15,22 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("second_of");
+  const mpllibs::metatest::TestSuite suite("last_of");
 
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        mpllibs::metaparse::second_of<lit_h, lit_e>,
+        mpllibs::metaparse::last_of<lit_h>,
+        str_hello
+      >::type::first,
+      char_h
+    >
+    TestOneChar;
+
+  typedef
+    boost::mpl::equal_to<
+      boost::mpl::apply<
+        mpllibs::metaparse::last_of<lit_h, lit_e>,
         str_hello
       >::type::first,
       char_e
@@ -30,7 +40,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        mpllibs::metaparse::second_of<lit_x, lit_e>,
+        mpllibs::metaparse::last_of<lit_x, lit_e>,
         str_hello
       >::type,
       mpllibs::metaparse::nothing
@@ -40,7 +50,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        mpllibs::metaparse::second_of<lit_h, lit_x>,
+        mpllibs::metaparse::last_of<lit_h, lit_x>,
         str_hello
       >::type,
       mpllibs::metaparse::nothing
@@ -50,17 +60,29 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
-        mpllibs::metaparse::second_of<lit_h, lit_e>,
+        mpllibs::metaparse::last_of<lit_h, lit_e>,
         str_
       >::type,
       mpllibs::metaparse::nothing
     >
     TestEmptyInput;
+
+  typedef
+    boost::mpl::equal_to<
+      boost::mpl::apply<
+        mpllibs::metaparse::last_of<lit_h, lit_e, lit_l>,
+        str_hello
+      >::type::first,
+      char_l
+    >
+    TestThreeChars;
 }
 
+MPLLIBS_ADD_TEST(suite, TestOneChar)
 MPLLIBS_ADD_TEST(suite, TestTwoChars)
 MPLLIBS_ADD_TEST(suite, TestFirstFails)
 MPLLIBS_ADD_TEST(suite, TestSecondFails)
 MPLLIBS_ADD_TEST(suite, TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, TestThreeChars)
 
 

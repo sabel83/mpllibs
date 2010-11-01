@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/lit.h>
 #include <mpllibs/metaparse/return.h>
 #include <mpllibs/metaparse/sequence.h>
-#include <mpllibs/metaparse/second_of.h>
+#include <mpllibs/metaparse/last_of.h>
 
 #include <mpllibs/metaparse/util/lazy_if.h>
 
@@ -31,7 +31,7 @@ namespace mpllibs
     {
       template <class s, class result_type>
       struct nonemptyKeyword :
-        mpllibs::metaparse::second_of<
+        mpllibs::metaparse::last_of<
           mpllibs::metaparse::sequence<
             mpllibs::metaparse::lit<typename boost::mpl::front<s>::type>,
             mpllibs::metaparse::keyword<

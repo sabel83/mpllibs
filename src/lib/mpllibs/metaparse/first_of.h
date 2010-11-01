@@ -8,9 +8,6 @@
 
 #include <mpllibs/metaparse/nth_of.h>
 
-#include <boost/mpl/quote.hpp>
-#include <boost/mpl/front.hpp>
-
 namespace mpllibs
 {
   namespace metaparse

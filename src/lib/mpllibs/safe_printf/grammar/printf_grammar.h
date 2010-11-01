@@ -14,7 +14,7 @@
 #include <mpllibs/metaparse/digit.h>
 #include <mpllibs/metaparse/except.h>
 #include <mpllibs/metaparse/first_of.h>
-#include <mpllibs/metaparse/second_of.h>
+#include <mpllibs/metaparse/last_of.h>
 #include <mpllibs/metaparse/lit_c.h>
 #include <mpllibs/metaparse/one_char.h>
 
@@ -26,7 +26,7 @@ namespace mpllibs
     {
       struct NormalChars :
         mpllibs::metaparse::any<
-          mpllibs::metaparse::second_of<
+          mpllibs::metaparse::last_of<
             mpllibs::metaparse::except<
               mpllibs::metaparse::lit_c<'%'>, int>,
               mpllibs::metaparse::one_char
@@ -61,7 +61,7 @@ namespace mpllibs
       // Returns true_ or false_
       struct Precision :
         mpllibs::metaparse::one_of<
-          mpllibs::metaparse::second_of<mpllibs::metaparse::lit_c<'.'>, Width>,
+          mpllibs::metaparse::last_of<mpllibs::metaparse::lit_c<'.'>, Width>,
           mpllibs::metaparse::return_<boost::mpl::false_>
         >
       {};
@@ -228,15 +228,15 @@ namespace mpllibs
 
       struct Format :
         mpllibs::metaparse::one_of<
-          mpllibs::metaparse::second_of<
+          mpllibs::metaparse::last_of<
             mpllibs::metaparse::lit_c<'h'>,
             Format_hFlag
           >,
-          mpllibs::metaparse::second_of<
+          mpllibs::metaparse::last_of<
             mpllibs::metaparse::lit_c<'l'>,
             Format_lFlag
           >,
-          mpllibs::metaparse::second_of<
+          mpllibs::metaparse::last_of<
             mpllibs::metaparse::lit_c<'L'>,
             Format_LFlag
           >,
@@ -246,9 +246,9 @@ namespace mpllibs
 
       // returns deque<defined extra int, deque<defined extra int, format> >
       struct Parameter :
-        mpllibs::metaparse::second_of<
+        mpllibs::metaparse::last_of<
           mpllibs::metaparse::lit_c<'%'>,
-          mpllibs::metaparse::second_of<
+          mpllibs::metaparse::last_of<
             mpllibs::metaparse::any<Flag>,
             mpllibs::metaparse::sequence<
               Width,
@@ -259,7 +259,7 @@ namespace mpllibs
       {};
 
       struct S :
-        mpllibs::metaparse::second_of<
+        mpllibs::metaparse::last_of<
           NormalChars,
           mpllibs::metaparse::any<
             mpllibs::metaparse::first_of<Parameter, NormalChars>

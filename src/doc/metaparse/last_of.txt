@@ -3,16 +3,20 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-second_of
-=========
+last_of
+=======
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class p1, class p2>
-struct second_of
+template <
+  class p1,
+  // ...
+  class pn
+>
+struct last_of
 {
   template <class s>
   struct apply
@@ -26,41 +30,38 @@ struct second_of
 Description
 -----------
 
-Parser combinator applying two parsers after each other. It accepts an input
-when both parsers accept it. The result of parsing is the result of the second
-parser.
+Parser combinator applying a number parsers after each other. It accepts an
+input when all parsers accept it. The result of parsing is the result of the
+last parser.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparser/second_of.h>
+#include <mpllibs/metaparse/last_of.h>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +p1+ and +p2+ parsers and +s+ compile-time string
+For any +p1+, ... +pn+ parsers and +s+ compile-time string
 
 --------------------------------------
-boost::mpl::apply<second_of<p1, p2>, s>
+first_of<p1, ..., pn>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply<p2, boost::mpl::apply<p1, s>::type::second>
+mpllibs::metaparse::nth_of_c<n, p1, ..., pn>
 --------------------------------------
-
-when +p1+ accepts +s+ and +p2+ accepts the string remaining after the
-application of +p1+. It is +nothing+ otherwise.
 
 Example
 -------
 
 --------------------------------------
 typedef
-  second_of<mpllibs::metaparse::digit, mpllibs::metaparse::digit>
+  last_of<mpllibs::metaparse::digit, mpllibs::metaparse::digit>
   second_digit;
 --------------------------------------
 
