@@ -14,11 +14,39 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/list.hpp>
+#include <boost/mpl/at.hpp>
 
 namespace
 {
   const mpllibs::metatest::TestSuite suite("sequence");
 
+  typedef
+    mpllibs::metatest::equal_sequence<
+      boost::mpl::apply<mpllibs::metaparse::sequence<>, str_hello>::type::first,
+      boost::mpl::list<>
+    >
+    TestNoParser;
+
+  typedef
+    mpllibs::metatest::equal_sequence<
+      boost::mpl::apply<
+        mpllibs::metaparse::sequence<lit_h>,
+        str_hello
+      >::type::first,
+      boost::mpl::list<char_h>
+    >
+    TestOneParser;
+
+  typedef
+    boost::mpl::equal_to<
+      boost::mpl::apply<
+        mpllibs::metaparse::sequence<lit_e>,
+        str_hello
+      >::type,
+      mpllibs::metaparse::nothing
+    >
+    TestOneFailingParser;
+  
   typedef
     mpllibs::metatest::equal_sequence<
       boost::mpl::apply<
@@ -55,11 +83,39 @@ namespace
       mpllibs::metaparse::nothing
     >
     TestEmptyInput;
+
+  typedef
+    mpllibs::metatest::equal_sequence<
+      boost::mpl::apply<
+        mpllibs::metaparse::sequence<lit_h, lit_e, lit_l>,
+        str_hello
+      >::type::first,
+      boost::mpl::list<char_h, char_e, char_l>
+    >
+    TestThreeChars;
+
+  typedef
+    boost::mpl::equal_to<
+      boost::mpl::at_c<
+        boost::mpl::apply<
+          mpllibs::metaparse::sequence<lit_h, lit_e, lit_l>,
+          str_hello
+        >::type::first,
+        1
+      >::type,
+      char_e
+    >
+    TestIndexingInResult;
 }
 
+MPLLIBS_ADD_TEST(suite, TestNoParser)
+MPLLIBS_ADD_TEST(suite, TestOneParser)
+MPLLIBS_ADD_TEST(suite, TestOneFailingParser)
 MPLLIBS_ADD_TEST(suite, TestTwoChars)
 MPLLIBS_ADD_TEST(suite, TestFirstFails)
 MPLLIBS_ADD_TEST(suite, TestSecondFails)
 MPLLIBS_ADD_TEST(suite, TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, TestThreeChars)
+MPLLIBS_ADD_TEST(suite, TestIndexingInResult)
 
 

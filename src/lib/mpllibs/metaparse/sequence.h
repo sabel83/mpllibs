@@ -17,6 +17,12 @@
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/fold.hpp>
 
+#include <boost/preprocessor/repetition.hpp>
+#include <boost/preprocessor/comma_if.hpp>
+#include <boost/preprocessor/repetition/enum_params.hpp>
+#include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
+#include <boost/preprocessor/arithmetic/sub.hpp>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -70,14 +76,82 @@ namespace mpllibs
       {};
     }
   
-    template <class p1, class p2>
-    struct sequence
+    #ifndef SEQUENCE_MAX_ARGUMENT
+      #define SEQUENCE_MAX_ARGUMENT 5
+    #endif
+
+    #ifdef SEQUENCE_CASE
+      #error SEQUENCE_CASE already defined
+    #endif
+    // We need a mock argument to make the 0 case compile
+    #define SEQUENCE_CASE(z, n, unused) \
+      template < \
+        BOOST_PP_ENUM_PARAMS(n, class p) \
+        BOOST_PP_COMMA_IF(n) \
+        class mock = int \
+      > \
+      struct sequence##n \
+      { \
+        template <class s> \
+        struct apply : \
+          mpllibs::metaparse::impl::sequence_impl< \
+            boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, p)>, \
+            s \
+          > \
+        {}; \
+      };
+    
+    BOOST_PP_REPEAT(SEQUENCE_MAX_ARGUMENT, SEQUENCE_CASE, ~)
+    
+    #undef SEQUENCE_CASE
+    
+
+
+
+
+    namespace impl
     {
-      template <class s>
-      struct apply :
-        mpllibs::metaparse::impl::sequence_impl<boost::mpl::vector<p1, p2>, s>
+      struct sequence_no_argument;
+    }
+
+    template <
+      BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
+        SEQUENCE_MAX_ARGUMENT,
+        class p,
+        mpllibs::metaparse::impl::sequence_no_argument
+      ),
+      class mock = int
+    >
+    struct sequence;
+
+
+    #ifdef SEQUENCE_UNUSED_PARAM
+      #error SEQUENCE_UNUSED_PARAM already defined
+    #endif
+    #define SEQUENCE_UNUSED_PARAM(z, n, unused) \
+      BOOST_PP_COMMA_IF(n) mpllibs::metaparse::impl::sequence_no_argument
+    
+    #ifdef SEQUENCE_N
+      #error SEQUENCE_N already defined
+    #endif
+    #define SEQUENCE_N(z, n, unused) \
+      template <BOOST_PP_ENUM_PARAMS(n, class p)> \
+      struct sequence< \
+        BOOST_PP_ENUM_PARAMS(n, p) \
+        BOOST_PP_COMMA_IF(n) \
+        BOOST_PP_REPEAT( \
+          BOOST_PP_SUB(SEQUENCE_MAX_ARGUMENT, n), \
+          SEQUENCE_UNUSED_PARAM, \
+          ~ \
+        ) \
+      > : \
+        mpllibs::metaparse::sequence##n<BOOST_PP_ENUM_PARAMS(n, p)> \
       {};
-    };
+    
+    BOOST_PP_REPEAT(SEQUENCE_MAX_ARGUMENT, SEQUENCE_N, ~)
+    
+    #undef SEQUENCE_N
+    #undef SEQUENCE_UNUSED_PARAM
   }
 }
 

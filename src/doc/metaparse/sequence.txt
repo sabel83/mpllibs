@@ -11,7 +11,11 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p1, class p2>
+template <
+  class p0,
+  // ...
+  class pn
+>
 struct sequence
 {
   template <class s>
@@ -26,9 +30,12 @@ struct sequence
 Description
 -----------
 
-Parser combinator applying two parsers after each other. It accepts an input
-when both parsers accept it. The result of parsing is a sequence of the results
-of the parsers.
+Parser combinator applying a number of parsers after each other. It accepts an
+input when all parsers accept it. The result of parsing is a sequence of the
+results of the parsers.
+
+The maximum number of parsers +sequence+ accepts can be specified with the
++SEQUENCE_MAX_ARGUMENT+ macro. Its default value is 5.
 
 Header
 ------
@@ -40,23 +47,31 @@ Header
 Expression semantics
 --------------------
 
-For any +p1+ and +p2+ parsers and +s+ compile-time string
+For any +p0+, ..., +pn+ parsers, +s+ compile-time string and +k+ value, where
++0 <= k < n+
 
 --------------------------------------
-boost::mpl::apply<sequence<p1, p2>, s>
+boost::mpl::at_c<
+  boost::mpl::apply<sequence<p0, ..., pn>, s>::type,
+  k
+>::type
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::deque<
-  boost::mpl::apply<p1, s>::type::first,
-  boost::mpl::apply<p2, boost::mpl::apply<p1, s>::type::second>::type::first
->
+boost::mpl::apply<
+  pk,
+  // ...
+  boost::mpl::apply<
+    p1,
+    boost::mpl::apply<p0, s>::type::second
+  >::type::second
+  // ...
+>::type::first
 --------------------------------------
 
-when +p1+ accepts +s+ and +p2+ accepts the string remaining after the
-application of +p1+. It is +nothing+ otherwise.
+when +p0+ ... +pk+ all accept the input. It is +nothing+ otherwise.
 
 Example
 -------
