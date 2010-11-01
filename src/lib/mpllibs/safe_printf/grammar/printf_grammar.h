@@ -27,9 +27,8 @@ namespace mpllibs
       struct NormalChars :
         mpllibs::metaparse::any<
           mpllibs::metaparse::last_of<
-            mpllibs::metaparse::except<
-              mpllibs::metaparse::lit_c<'%'>, int>,
-              mpllibs::metaparse::one_char
+            mpllibs::metaparse::except<mpllibs::metaparse::lit_c<'%'>, int>,
+            mpllibs::metaparse::one_char
           >
         >
       {};
@@ -244,17 +243,12 @@ namespace mpllibs
         >
       {};
 
-      // returns deque<defined extra int, deque<defined extra int, format> >
+      // returns deque<defined extra int, defined extra int, format>
       struct Parameter :
         mpllibs::metaparse::last_of<
           mpllibs::metaparse::lit_c<'%'>,
-          mpllibs::metaparse::last_of<
-            mpllibs::metaparse::any<Flag>,
-            mpllibs::metaparse::sequence<
-              Width,
-              mpllibs::metaparse::sequence<Precision, Format>
-            >
-          >
+          mpllibs::metaparse::any<Flag>,
+          mpllibs::metaparse::sequence<Width, Precision, Format>
         >
       {};
 

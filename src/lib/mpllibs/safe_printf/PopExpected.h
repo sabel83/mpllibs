@@ -12,6 +12,7 @@
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/push_front.hpp>
 #include <boost/mpl/deque.hpp>
+#include <boost/mpl/at.hpp>
 
 namespace mpllibs
 {
@@ -33,23 +34,18 @@ namespace mpllibs
           >
         >,
         boost::mpl::eval_if<
-          typename boost::mpl::front<
-            typename boost::mpl::back<
-              typename boost::mpl::front<Expected>::type
-            >::type
+          typename boost::mpl::at_c<
+            typename boost::mpl::front<Expected>::type,
+            1
           >::type,
           boost::mpl::push_front<
             typename boost::mpl::pop_front<Expected>::type,
             boost::mpl::deque<
               boost::mpl::false_,
-              boost::mpl::deque<
-                boost::mpl::false_,
-                typename boost::mpl::back<
-                  typename boost::mpl::back<
-                    typename boost::mpl::front<Expected>::type
-                  >::type
-                >::type
-              >
+              boost::mpl::false_,
+              typename boost::mpl::back<
+                typename boost::mpl::front<Expected>::type
+              >::type
             >
           >,
           boost::mpl::pop_front<Expected>

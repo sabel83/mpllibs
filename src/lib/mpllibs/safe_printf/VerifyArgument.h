@@ -13,6 +13,7 @@
 
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/back.hpp>
+#include <boost/mpl/at.hpp>
 
 namespace mpllibs
 {
@@ -24,18 +25,14 @@ namespace mpllibs
       boost::mpl::eval_if<
         typename boost::mpl::or_<
           typename boost::mpl::front<typename Expected::type>::type,
-          typename boost::mpl::front<
-            typename boost::mpl::back<typename Expected::type>::type
-          >::type
+          typename boost::mpl::at_c<typename Expected::type, 1>::type
         >::type,
         VerifyArgumentImpl<
           mpllibs::safe_printf::ExpectUnsignedInteger,
           typename Actual::type
         >,
         VerifyArgumentImpl<
-          typename boost::mpl::back<
-            typename boost::mpl::back<typename Expected::type>::type
-          >::type,
+          typename boost::mpl::back<typename Expected::type>::type,
           typename Actual::type
         >
       >
