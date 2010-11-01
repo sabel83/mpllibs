@@ -18,64 +18,130 @@ namespace mpllibs
     struct VerifyArgumentImpl : boost::mpl::false_ {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectCharacter, char> : boost::mpl::true_ {};
-
-    template <>
-    struct VerifyArgumentImpl<ExpectUnsignedCharacter, unsigned char> :
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectCharacter,
+      char
+    > :
       boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectString, char*> : boost::mpl::true_ {};
-
-    template <>
-    struct VerifyArgumentImpl<ExpectString, const char*> : boost::mpl::true_ {};
-
-    template <>
-    struct VerifyArgumentImpl<ExpectSignedInteger, int> : boost::mpl::true_ {};
-
-    template <>
-    struct VerifyArgumentImpl<ExpectUnsignedInteger, unsigned int> :
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectUnsignedCharacter,
+      unsigned char
+    > :
       boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectShortSignedInteger, short> :
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectString,
+      char*
+    > :
       boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectShortUnsignedInteger, unsigned short> :
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectString,
+      const char*
+    > :
       boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectLongSignedInteger, long> : boost::mpl::true_
-    {};
-
-    template <>
-    struct VerifyArgumentImpl<ExpectLongUnsignedInteger, unsigned long> :
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectSignedInteger,
+      int
+    > :
       boost::mpl::true_
     {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectFloat, float> : boost::mpl::true_ {};
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectUnsignedInteger,
+      unsigned int
+    > :
+      boost::mpl::true_
+    {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectDouble, double> : boost::mpl::true_ {};
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectShortSignedInteger,
+      short
+    > :
+      boost::mpl::true_
+    {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectLongDouble, long double> : boost::mpl::true_
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectShortUnsignedInteger,
+      unsigned short
+    > :
+      boost::mpl::true_
+    {};
+
+    template <>
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectLongSignedInteger,
+      long
+    > :
+      boost::mpl::true_
+    {};
+
+    template <>
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectLongUnsignedInteger,
+      unsigned long
+    > :
+      boost::mpl::true_
+    {};
+
+    template <>
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectFloat,
+      float
+    > :
+      boost::mpl::true_
+    {};
+
+    template <>
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectDouble,
+      double
+    > :
+      boost::mpl::true_
+    {};
+
+    template <>
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectLongDouble,
+      long double
+    > :
+      boost::mpl::true_
     {};
 
     template <class T>
-    struct VerifyArgumentImpl<ExpectPointer, T*> : boost::mpl::true_ {};
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectPointer,
+      T*
+    > :
+      boost::mpl::true_
+    {};
 
     template <class T>
-    struct VerifyArgumentImpl<ExpectPointer, const T*> : boost::mpl::true_ {};
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectPointer,
+      const T*
+    > :
+      boost::mpl::true_ {};
 
     template <>
-    struct VerifyArgumentImpl<ExpectSignedIntPointer, int*> : boost::mpl::true_
+    struct VerifyArgumentImpl<
+      mpllibs::safe_printf::ExpectSignedIntPointer,
+      int*
+    > :
+      boost::mpl::true_
     {};
   }
 }

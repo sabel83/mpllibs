@@ -17,9 +17,9 @@ namespace mpllibs
   {
     template <class F, class ArgTypes>
     struct VerifyPrintfArguments :
-      VerifyPrintfArgumentsImpl<
-        boost::mpl::apply<PrintfParser, F>,
-        boost::mpl::identity<ArgTypes>
+      mpllibs::safe_printf::VerifyPrintfArgumentsImpl<
+        boost::mpl::apply<mpllibs::safe_printf::PrintfParser, F>,
+        ArgTypes
       >
     {};
   }

@@ -36,7 +36,7 @@ namespace mpllibs
               boost::mpl::front<typename Actual::type>
             >,
             VerifyPrintfArgumentsImpl<
-              PopExpected<typename Expected::type>,
+              mpllibs::safe_printf::PopExpected<typename Expected::type>,
               boost::mpl::pop_front<typename Actual::type>
             >,
             boost::mpl::false_

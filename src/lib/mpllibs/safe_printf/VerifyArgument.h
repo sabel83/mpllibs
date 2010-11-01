@@ -27,11 +27,11 @@ namespace mpllibs
           typename boost::mpl::front<typename Expected::type>::type,
           typename boost::mpl::at_c<typename Expected::type, 1>::type
         >::type,
-        VerifyArgumentImpl<
+        mpllibs::safe_printf::VerifyArgumentImpl<
           mpllibs::safe_printf::ExpectUnsignedInteger,
           typename Actual::type
         >,
-        VerifyArgumentImpl<
+        mpllibs::safe_printf::VerifyArgumentImpl<
           typename boost::mpl::back<typename Expected::type>::type,
           typename Actual::type
         >
