@@ -1,0 +1,87 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+nth_of_c
+========
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <
+  int n,
+  class p0,
+  // ...
+  class pk
+>
+struct nth_of_c
+{
+  template <class s>
+  struct apply
+  {
+    // unspecified
+  };
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Parser combinator applying a number of parsers after each other. It accepts an
+input when all parsers accept it. The result of parsing is the result of the
++n+th parser.
+
+The maximum number of parsers +sequence+ accepts can be specified with the
++SEQUENCE_MAX_ARGUMENT+ macro. Its default value is 5.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/nth_of.h>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +p0+, ..., +pn+ parsers, +s+ compile-time string and +k+ integer, where
++0 <= k < n+
+
+--------------------------------------
+boost::mpl::apply<nth_of_c<k, p0, ..., pn>, s>::type,
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+boost::mpl::apply<
+  pk,
+  // ...
+  boost::mpl::apply<
+    p1,
+    boost::mpl::apply<p0, s>::type::second
+  >::type::second
+  // ...
+>::type::first
+--------------------------------------
+
+when +p0+ ... +pn+ all accept the input. It is +nothing+ otherwise.
+
+Example
+-------
+
+--------------------------------------
+typedef
+  nth_of_c<1, mpllibs::metaparse::digit, mpllibs::metaparse::digit>
+  second_digit;
+--------------------------------------
+
+include::../copyright[]
+
+link:index.html[[up]]
+
+

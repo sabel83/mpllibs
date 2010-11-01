@@ -106,6 +106,8 @@ link:letter.html[letter] +
 link:lit_c.html[lit_c] +
 link:lit.html[lit] +
 link:middle_of.html[middle_of] +
+link:nth_of_c.html[nth_of_c] +
+link:nth_of.html[nth_of] +
 link:one_char.html[one_char] +
 link:one_of.html[one_of] +
 link:return.html[return] +
