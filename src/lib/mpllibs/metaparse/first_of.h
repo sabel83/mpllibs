@@ -6,8 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/transform.h>
-#include <mpllibs/metaparse/sequence.h>
+#include <mpllibs/metaparse/nth_of.h>
 
 #include <boost/mpl/quote.hpp>
 #include <boost/mpl/front.hpp>
@@ -16,12 +15,15 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p1, class p2>
+    template <
+      BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
+        SEQUENCE_MAX_ARGUMENT,
+        class p,
+        mpllibs::metaparse::impl::sequence_no_argument
+      )
+    >
     struct first_of :
-      mpllibs::metaparse::transform<
-        mpllibs::metaparse::sequence<p1, p2>,
-        boost::mpl::quote1<boost::mpl::front>
-      >
+      nth_of_c<0, BOOST_PP_ENUM_PARAMS(SEQUENCE_MAX_ARGUMENT, p)>
     {};
   }
 }

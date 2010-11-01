@@ -20,6 +20,16 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::apply<
+        mpllibs::metaparse::first_of<lit_h>,
+        str_hello
+      >::type::first,
+      char_h
+    >
+    TestOneChar;
+
+  typedef
+    boost::mpl::equal_to<
+      boost::mpl::apply<
         mpllibs::metaparse::first_of<lit_h, lit_e>,
         str_hello
       >::type::first,
@@ -53,10 +63,22 @@ namespace
       mpllibs::metaparse::nothing
     >
     TestEmptyInput;
+
+  typedef
+    boost::mpl::equal_to<
+      boost::mpl::apply<
+        mpllibs::metaparse::first_of<lit_h, lit_e, lit_l>,
+        str_hello
+      >::type::first,
+      char_h
+    >
+    TestThreeChars;
 }
 
+MPLLIBS_ADD_TEST(suite, TestOneChar)
 MPLLIBS_ADD_TEST(suite, TestTwoChars)
 MPLLIBS_ADD_TEST(suite, TestFirstFails)
 MPLLIBS_ADD_TEST(suite, TestSecondFails)
 MPLLIBS_ADD_TEST(suite, TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, TestThreeChars)
 

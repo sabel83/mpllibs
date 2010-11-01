@@ -11,7 +11,11 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p1, class p2>
+template <
+  class p1,
+  // ...
+  class pn
+>
 struct first_of
 {
   template <class s>
@@ -26,9 +30,9 @@ struct first_of
 Description
 -----------
 
-Parser combinator applying two parsers after each other. It accepts an input
-when both parsers accept it. The result of parsing is the result of the first
-parser.
+Parser combinator applying a number parsers after each other. It accepts an
+input when all parsers accept it. The result of parsing is the result of the
+first parser.
 
 Header
 ------
@@ -40,23 +44,17 @@ Header
 Expression semantics
 --------------------
 
-For any +p1+ and +p2+ parsers and +s+ compile-time string
+For any +p1+, ... +pn+ parsers and +s+ compile-time string
 
 --------------------------------------
-boost::mpl::apply<first_of<p1, p2>, s>::type
+first_of<p1, ..., pn>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::pair<
-  boost::mpl::apply<p1, s>::type::first,
-  boost::mpl::apply<p2, boost::mpl::apply<p1, s>::type::second>::type::second
->
+mpllibs::metaparse::nth_of_c<0, p1, ..., pn>
 --------------------------------------
-
-when +p1+ accepts +s+ and +p2+ accepts the string remaining after the
-application of +p1+. It is +nothing+ otherwise.
 
 Example
 -------
