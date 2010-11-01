@@ -71,7 +71,7 @@ boost::mpl::apply<
 >::type::first
 --------------------------------------
 
-when +p0+ ... +pk+ all accept the input. It is +nothing+ otherwise.
+when +p0+ ... +pn+ all accept the input. It is +nothing+ otherwise.
 
 Example
 -------
