@@ -32,14 +32,11 @@ namespace mpllibs
       template <class s, class result_type>
       struct nonemptyKeyword :
         mpllibs::metaparse::last_of<
-          mpllibs::metaparse::sequence<
-            mpllibs::metaparse::lit<typename boost::mpl::front<s>::type>,
-            mpllibs::metaparse::keyword<
-              typename boost::mpl::pop_front<s>::type,
-              result_type
-            >
-          >,
-          mpllibs::metaparse::return_<result_type>
+          mpllibs::metaparse::lit<typename boost::mpl::front<s>::type>,
+          mpllibs::metaparse::keyword<
+            typename boost::mpl::pop_front<s>::type,
+            result_type
+          >
         >
       {};
     }
