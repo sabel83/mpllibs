@@ -6,8 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/nothing.h>
-
+#include <mpllibs/metaparse/util/is_nothing.h>
 #include <mpllibs/metaparse/util/make_pair.h>
 
 #include <boost/mpl/eval_if.hpp>
@@ -22,14 +21,14 @@ namespace mpllibs
     template <class p, class result>
     struct except
     {
-      template <class S>
+      template <class s>
       struct apply :
         boost::mpl::eval_if<
-          typename boost::mpl::equal_to<
-            typename boost::mpl::apply<p, S>::type,
-            mpllibs::metaparse::nothing
-          >::type,
-          mpllibs::metaparse::util::make_pair<boost::mpl::identity<result>, S>,
+          typename
+            mpllibs::metaparse::util::is_nothing<
+              boost::mpl::apply<p, s>
+            >::type,
+          mpllibs::metaparse::util::make_pair<boost::mpl::identity<result>, s>,
           mpllibs::metaparse::nothing
         >
       {};

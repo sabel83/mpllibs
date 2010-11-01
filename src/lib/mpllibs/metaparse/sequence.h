@@ -6,8 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/nothing.h>
-
+#include <mpllibs/metaparse/util/unless_nothing.h>
 #include <mpllibs/metaparse/util/pair.h>
 #include <mpllibs/metaparse/util/make_pair.h>
 
@@ -37,12 +36,8 @@ namespace mpllibs
     
       template <class accum, class s, class parser>
       struct apply_impl :
-        boost::mpl::eval_if<
-          typename boost::mpl::equal_to<
-            mpllibs::metaparse::nothing,
-            typename boost::mpl::apply<parser, typename s::type>::type
-          >::type,
-          mpllibs::metaparse::nothing,
+        mpllibs::metaparse::util::unless_nothing<
+          boost::mpl::apply<parser, typename s::type>,
           mpllibs::metaparse::impl::append_to_first<
             typename accum::type,
             typename boost::mpl::apply<parser, typename s::type>::type
@@ -54,10 +49,8 @@ namespace mpllibs
       {
         template <class state, class parser>
         struct apply :
-          boost::mpl::eval_if<
-            typename
-              boost::mpl::equal_to<mpllibs::metaparse::nothing, state>::type,
-            mpllibs::metaparse::nothing,
+          mpllibs::metaparse::util::unless_nothing<
+            state,
             mpllibs::metaparse::impl::apply_impl<
               boost::mpl::first<state>,
               boost::mpl::second<state>,

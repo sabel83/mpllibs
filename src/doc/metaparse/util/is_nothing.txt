@@ -1,0 +1,63 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+is_nothing
+==========
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class t>
+struct is_nothing
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Metafunction checking if a type is +mpllibs::metaparse::nothing+ or not. It
+returns a wrapped boolean value.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/util/is_nothing.h>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +t+ type
+
+--------------------------------------
+is_nothing<t>
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+boost::mpl::equal_to<mpllibs::metaparse::nothing, t>
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+is_nothing<mpllibs::metaparse::nothing>
+--------------------------------------
+
+include::../../copyright[]
+
+link:index.html[[up]]
+
+
+
+

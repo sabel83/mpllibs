@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/nothing.h>
+#include <mpllibs/metaparse/util/unless_nothing.h>
 
 #include <mpllibs/metaparse/util/compose.h>
 #include <mpllibs/metaparse/util/lazy_eval_if.h>
@@ -27,12 +27,8 @@ namespace mpllibs
     {
       template <class S>
       struct apply :
-        boost::mpl::eval_if<
-          mpllibs::metaparse::util::lazy_equal_to<
-            boost::mpl::apply<p, S>,
-            mpllibs::metaparse::nothing
-          >,
-          mpllibs::metaparse::nothing,
+        mpllibs::metaparse::util::unless_nothing<
+          boost::mpl::apply<p, S>,
           mpllibs::metaparse::util::lazy_eval_if<
             boost::mpl::apply<
               mpllibs::metaparse::util::compose<

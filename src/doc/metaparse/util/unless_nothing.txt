@@ -1,0 +1,83 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+unless_nothing
+==============
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class t, class not_nothing>
+struct unless_nothing
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Metafunction taking a type, +t+ and a nullary metafunction as arguments.
+When +t+ is +mpllibs::metaparse::nothing+, the value of the metafunction is
++mpllibs::metaparse::nothing+. Otherwise the nullary metafunction is evaluated
+and its return value is the value of the metafunction.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/util/unless_nothing.h>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +f+ nullary metafunction
+
+--------------------------------------
+unless_nothing<mpllibs::metaparse::nothing, f>::type
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+mpllibs::metaparse::nothing
+--------------------------------------
+
+For any +t+ type that is not equal to +mpllibs::metaparse::nothing+
+
+--------------------------------------
+unless_nothing<t, f>::type
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+f::type
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+unless_nothing<
+  mpllibs::metaparse::nothing,
+  boost::mpl::plus<
+    boost::mpl::int_<11>,
+    boost::mpl::int_<13>
+  >
+>
+--------------------------------------
+
+include::../../copyright[]
+
+link:index.html[[up]]
+
+
+
+

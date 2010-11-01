@@ -25,7 +25,7 @@ namespace mpllibs
       struct apply :
         boost::mpl::eval_if<
           typename boost::mpl::empty<S>::type,
-          nothing,
+          mpllibs::metaparse::nothing,
           mpllibs::metaparse::util::make_pair<
             boost::mpl::front<S>,
             boost::mpl::pop_front<S>
