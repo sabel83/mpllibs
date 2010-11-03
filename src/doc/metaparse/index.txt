@@ -96,6 +96,7 @@ link:any1.html[any1] +
 link:any.html[any] +
 link:digit.html[digit] +
 link:digit_val.html[digit_val] +
+link:empty.html[empty] +
 link:except.html[except] +
 link:fail.html[fail] +
 link:first_of.html[first_of] +

@@ -1,0 +1,77 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+empty
+=====
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class result>
+struct empty
+{
+  template <class s>
+  struct apply
+  {
+    // unspecified
+  };
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Parser accepting empty input only. The result of parsing is the +result+
+argument. This parser can detect the end of an input.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/empty.h>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +t+ type and +s+ non-empty compile-time string
+
+--------------------------------------
+boost::mpl::apply<empty<t>, s>::type
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+mpllibs::metaparse::nothing
+--------------------------------------
+
+For any +t+ type and +s+ empty compile-time string
+
+--------------------------------------
+boost::mpl::apply<empty<t>, s>::type::first
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+t
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+typedef empty<int> end_of_input;
+--------------------------------------
+
+include::../copyright[]
+
+link:index.html[[up]]
+
+
