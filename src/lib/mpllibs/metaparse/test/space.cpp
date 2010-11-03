@@ -17,7 +17,9 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("space");
 
-  typedef boost::mpl::list_c<char, ' ', 'e', 'l', 'l', 'o'> str__ello;
+  typedef boost::mpl::list_c<char, '\t', 'e', 'l', 'l', 'o'> str_with_t;
+  typedef boost::mpl::list_c<char, '\n', 'e', 'l', 'l', 'o'> str_with_n;
+  typedef boost::mpl::list_c<char, '\r', 'e', 'l', 'l', 'o'> str_with_r;
 
   typedef
     boost::mpl::equal_to<
@@ -35,6 +37,27 @@ namespace
 
   typedef
     boost::mpl::equal_to<
+      boost::mpl::apply<mpllibs::metaparse::space, str_with_t>::type::first,
+      boost::mpl::integral_c<char, '\t'>
+    >
+    TestWithTab;
+
+  typedef
+    boost::mpl::equal_to<
+      boost::mpl::apply<mpllibs::metaparse::space, str_with_n>::type::first,
+      boost::mpl::integral_c<char, '\n'>
+    >
+    TestWithLineFeed;
+
+  typedef
+    boost::mpl::equal_to<
+      boost::mpl::apply<mpllibs::metaparse::space, str_with_r>::type::first,
+      boost::mpl::integral_c<char, '\r'>
+    >
+    TestWithCReturn;
+
+  typedef
+    boost::mpl::equal_to<
       boost::mpl::apply<mpllibs::metaparse::space, str_>::type,
       mpllibs::metaparse::nothing
     >
@@ -43,6 +66,9 @@ namespace
 
 MPLLIBS_ADD_TEST(suite, TestWithText)
 MPLLIBS_ADD_TEST(suite, TestWithSpace)
+MPLLIBS_ADD_TEST(suite, TestWithTab)
+MPLLIBS_ADD_TEST(suite, TestWithLineFeed)
+MPLLIBS_ADD_TEST(suite, TestWithCReturn)
 MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
 
 

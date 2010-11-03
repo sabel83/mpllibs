@@ -22,6 +22,7 @@ typedef boost::mpl::list_c<char, '1', '9', '8', '3'> str_1983;
 typedef boost::mpl::list_c<char, 'a'> str_a;
 typedef boost::mpl::list_c<char, 'b', 'e', 'l', 'l', 'o'> str_bello;
 typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> str_hello;
+typedef boost::mpl::list_c<char, ' ', 'e', 'l', 'l', 'o'> str__ello;
 
 typedef boost::mpl::list_c<char, '0', 'e', 'l', 'l', 'o'> chars0;
 typedef boost::mpl::list_c<char, 'h', '0', 'l', 'l', 'o'> chars1;

@@ -6,14 +6,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/any.h>
+#include <mpllibs/metaparse/any1.h>
 #include <mpllibs/metaparse/space.h>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    typedef mpllibs::metaparse::any<mpllibs::metaparse::space> spaces;
+    typedef mpllibs::metaparse::any1<mpllibs::metaparse::space> spaces;
   }
 }
 

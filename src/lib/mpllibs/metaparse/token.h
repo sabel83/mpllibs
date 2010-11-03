@@ -8,13 +8,22 @@
 
 #include <mpllibs/metaparse/spaces.h>
 #include <mpllibs/metaparse/first_of.h>
+#include <mpllibs/metaparse/one_of.h>
+#include <mpllibs/metaparse/empty.h>
 
 namespace mpllibs
 {
   namespace metaparse
   {
     template <class p>
-    struct token : mpllibs::metaparse::first_of<p, mpllibs::metaparse::spaces>
+    struct token :
+      mpllibs::metaparse::first_of<
+        p,
+        mpllibs::metaparse::one_of<
+          mpllibs::metaparse::empty<int>,
+          mpllibs::metaparse::spaces
+        >
+      >
     {};
   }
 }
