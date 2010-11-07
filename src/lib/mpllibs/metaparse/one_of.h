@@ -44,17 +44,16 @@ namespace mpllibs
     #define PARSER_ONE_OF_BODY_POSTFIX(z, n, unused) \
       >
   
-    #ifdef PARSER_ONE_OF_CLASSES
-      #error PARSER_ONE_OF_CLASSES already defined
-    #endif
-    #define PARSER_ONE_OF_CLASSES(z, n, unused) class p##n ,
-  
     #ifdef MPLLIBS_PARSER_ONE_OF
       #error MPLLIBS_PARSER_ONE_OF already defined
     #endif
     // We need mock otherwise n = 0 wouldn't compile
     #define MPLLIBS_PARSER_ONE_OF(z, n, unused) \
-      template <BOOST_PP_REPEAT(n, PARSER_ONE_OF_CLASSES, ~) class mock = int> \
+      template < \
+        BOOST_PP_ENUM_PARAMS(n, class p) \
+        BOOST_PP_COMMA_IF(n) \
+        class mock = int \
+      > \
       struct one_of_##n \
       { \
         template <class S> \
@@ -68,7 +67,6 @@ namespace mpllibs
     BOOST_PP_REPEAT(PARSER_ONE_OF_MAX_ARGUMENT, MPLLIBS_PARSER_ONE_OF, ~)
     
     #undef MPLLIBS_PARSER_ONE_OF
-    #undef PARSER_ONE_OF_CLASSES
     #undef PARSER_ONE_OF_BODY_POSTFIX
     #undef PARSER_ONE_OF_BODY_PREFIX
     
