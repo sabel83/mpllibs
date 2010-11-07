@@ -9,11 +9,11 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/equal_sequence.h>
 #include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/equal.hpp>
 
 namespace
 {
@@ -29,7 +29,7 @@ namespace
     TestEmptyInput;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int0>,
         str_hello
@@ -39,7 +39,7 @@ namespace
     Test0;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int1>,
         str_hello
@@ -49,7 +49,7 @@ namespace
     Test1;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int2>,
         str_hello
@@ -59,7 +59,7 @@ namespace
     Test2;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int3>,
         str_hello

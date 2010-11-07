@@ -130,11 +130,6 @@ The components of +mpllibs+ use this framework for unit testing. You can find
 the tests in the +test+ directory of every component. You can check how they
 use this framework.
 
-Metafunctions and metafunction classes
---------------------------------------
-
-link:equal_sequence.html[equal_sequence] + 
-
 include::../copyright[]
 
 link:../index.html[[up]]

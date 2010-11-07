@@ -10,7 +10,6 @@
 
 #include "common.h"
 
-#include <mpllibs/metatest/equal_sequence.h>
 #include <mpllibs/metatest/test.h>
 #include <mpllibs/metatest/TestSuite.h>
 
@@ -18,13 +17,14 @@
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/string.hpp>
+#include <boost/mpl/equal.hpp>
 
 namespace
 {
   const mpllibs::metatest::TestSuite suite("any_one_of");
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any_one_of< >,
         str_hello
@@ -34,7 +34,7 @@ namespace
     Test0;
   
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any_one_of<mpllibs::metaparse::one_char>,
         str_hello
@@ -44,7 +44,7 @@ namespace
     TestGoodSequence;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any_one_of<mpllibs::metaparse::fail>,
         str_hello
@@ -54,7 +54,7 @@ namespace
     Test1WithBad;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any_one_of<
           mpllibs::metaparse::one_char,
@@ -67,7 +67,7 @@ namespace
     Test2WithFirstGood;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any_one_of<
           mpllibs::metaparse::fail,
@@ -80,7 +80,7 @@ namespace
     Test2WithSecondGood;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any_one_of<
           mpllibs::metaparse::keyword<boost::mpl::string<'h'>, char_h>,

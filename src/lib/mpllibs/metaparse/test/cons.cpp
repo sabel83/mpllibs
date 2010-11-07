@@ -7,20 +7,20 @@
 
 #include "common.h"
 
-#include <mpllibs/metatest/equal_sequence.h>
 #include <mpllibs/metatest/test.h>
 #include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/pair.hpp>
+#include <boost/mpl/equal.hpp>
 
 namespace
 {
   const mpllibs::metatest::TestSuite suite("util::cons");
   
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::util::cons,
         boost::mpl::pair<int11, boost::mpl::list<int13> >
@@ -30,7 +30,7 @@ namespace
     TestPushingToList;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::util::cons,
         boost::mpl::pair<int13, empty_list>

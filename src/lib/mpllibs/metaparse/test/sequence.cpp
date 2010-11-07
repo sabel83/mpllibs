@@ -10,26 +10,26 @@
 
 #include <mpllibs/metatest/test.h>
 #include <mpllibs/metatest/TestSuite.h>
-#include <mpllibs/metatest/equal_sequence.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/at.hpp>
+#include <boost/mpl/equal.hpp>
 
 namespace
 {
   const mpllibs::metatest::TestSuite suite("sequence");
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<mpllibs::metaparse::sequence<>, str_hello>::type::first,
       boost::mpl::list<>
     >
     TestNoParser;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::sequence<lit_h>,
         str_hello
@@ -45,7 +45,7 @@ namespace
     TestOneFailingParser;
   
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::sequence<lit_h, lit_e>,
         str_hello
@@ -73,7 +73,7 @@ namespace
     TestEmptyInput;
 
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::sequence<lit_h, lit_e, lit_l>,
         str_hello

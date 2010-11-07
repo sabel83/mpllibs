@@ -10,11 +10,11 @@
 #include "common.h"
  
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/equal_sequence.h>
 #include <mpllibs/metatest/TestSuite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/equal.hpp>
 
 namespace
 { 
@@ -39,7 +39,7 @@ namespace
     Test0;
   
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
         chars1
@@ -49,7 +49,7 @@ namespace
     Test1;
   
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
         chars2
@@ -59,7 +59,7 @@ namespace
     Test2;
   
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
         chars3
@@ -69,7 +69,7 @@ namespace
     Test3;
   
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
         chars4
@@ -79,7 +79,7 @@ namespace
     Test4;
   
   typedef
-    mpllibs::metatest::equal_sequence<
+    boost::mpl::equal<
       boost::mpl::apply<
         mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
         chars5
