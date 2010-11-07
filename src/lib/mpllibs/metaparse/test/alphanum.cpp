@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/alphanum.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -34,16 +35,14 @@ namespace
     TestWithNumber;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::digit, otherString>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::digit, otherString>
     >
     TestWithNonAlphanum;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::digit, str_>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::digit, str_>
     >
     TestWithEmptyString;
 }

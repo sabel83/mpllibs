@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/nth_of.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -49,12 +50,11 @@ namespace
     TestSecondOfTwo;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::nth_of_c<1, lit_x, lit_e>,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestNothing;
 }

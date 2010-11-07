@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/spaces.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -25,17 +26,15 @@ namespace
     str_____ello;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::spaces, str_hello>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::spaces, str_hello>
     >
     TestRejectNoSpace;
 
   typedef
     boost::mpl::not_<
-      boost::mpl::equal_to<
-        boost::mpl::apply<mpllibs::metaparse::spaces, str__ello>::type,
-        mpllibs::metaparse::nothing
+      mpllibs::metaparse::util::is_nothing<
+        boost::mpl::apply<mpllibs::metaparse::spaces, str__ello>
       >
     >
     TestAcceptOneSpace;
@@ -49,9 +48,8 @@ namespace
 
   typedef
     boost::mpl::not_<
-      boost::mpl::equal_to<
-        boost::mpl::apply<mpllibs::metaparse::spaces, str_____ello>::type,
-        mpllibs::metaparse::nothing
+      mpllibs::metaparse::util::is_nothing<
+        boost::mpl::apply<mpllibs::metaparse::spaces, str_____ello>
       >
     >
     TestAcceptAllSpaces;

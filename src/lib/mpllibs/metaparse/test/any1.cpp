@@ -5,6 +5,7 @@
 
 #include <mpllibs/metaparse/any1.h>
 #include <mpllibs/metaparse/letter.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
  
@@ -20,22 +21,20 @@ namespace
   const mpllibs::metatest::TestSuite suite("any1");
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
         str_
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestEmptyInput;
   
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
         chars0
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     Test0;
   

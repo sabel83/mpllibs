@@ -5,6 +5,7 @@
 
 #include <mpllibs/metaparse/digit_val.h>
 #include <mpllibs/metaparse/nothing.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -19,9 +20,8 @@ namespace
   const mpllibs::metatest::TestSuite suite("digit_val");
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::digit_val, str_hello>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::digit_val, str_hello>
     >
     TestWithText;
 
@@ -33,9 +33,8 @@ namespace
     TestWithNumber;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::digit_val, str_>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::digit_val, str_>
     >
     TestWithEmptyString;
 }

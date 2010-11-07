@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/space.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -22,9 +23,8 @@ namespace
   typedef boost::mpl::list_c<char, '\r', 'e', 'l', 'l', 'o'> str_with_r;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::space, str_hello>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::space, str_hello>
     >
     TestWithText;
 
@@ -57,9 +57,8 @@ namespace
     TestWithCReturn;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::space, str_>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::space, str_>
     >
     TestWithEmptyString;
 }

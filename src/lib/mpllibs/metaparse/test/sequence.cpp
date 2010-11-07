@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/sequence.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -38,12 +39,8 @@ namespace
     TestOneParser;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::sequence<lit_e>,
-        str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::sequence<lit_e>, str_hello>
     >
     TestOneFailingParser;
   
@@ -58,29 +55,20 @@ namespace
     TestTwoChars;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::sequence<lit_x, lit_e>,
-        str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::sequence<lit_x, lit_e>, str_hello>
     >
     TestFirstFails;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::sequence<lit_h, lit_x>,
-        str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::sequence<lit_h, lit_x>, str_hello>
     >
     TestSecondFails;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::sequence<lit_h, lit_e>, str_>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::sequence<lit_h, lit_e>, str_>
     >
     TestEmptyInput;
 

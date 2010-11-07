@@ -6,6 +6,7 @@
 #include <mpllibs/metaparse/always.h>
 #include <mpllibs/metaparse/nothing.h>
 #include <mpllibs/metaparse/digit.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -29,12 +30,11 @@ namespace
     TestResult;
   
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::always<mpllibs::metaparse::digit, int13>,
         str_a
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestFail;
 }

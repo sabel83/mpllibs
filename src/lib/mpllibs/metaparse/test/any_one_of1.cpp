@@ -7,6 +7,7 @@
 #include <mpllibs/metaparse/one_char.h>
 #include <mpllibs/metaparse/fail.h>
 #include <mpllibs/metaparse/keyword.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -24,12 +25,8 @@ namespace
   const mpllibs::metatest::TestSuite suite("any_one_of1");
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::any_one_of1< >,
-        str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::any_one_of1< >, str_hello>
     >
     Test0;
   
@@ -44,12 +41,11 @@ namespace
     TestGoodSequence;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::any_one_of1<mpllibs::metaparse::fail>,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     Test1WithBad;
 

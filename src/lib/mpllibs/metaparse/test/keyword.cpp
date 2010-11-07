@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/keyword.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -36,9 +37,8 @@ namespace
     TestResultType;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::keyword<str_hello>, str_>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::keyword<str_hello>, str_>
     >
     TestEmptyInput;
 
@@ -63,22 +63,20 @@ namespace
     TestMoreThanItself;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::keyword<str_hello>,
         str_hellx
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestNonMatchAtEnd;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::keyword<str_hello>,
         str_hxllo
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestNonMatchInTheMiddle;
 }

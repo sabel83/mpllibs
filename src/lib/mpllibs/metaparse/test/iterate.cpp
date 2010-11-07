@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/iterate.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -19,12 +20,11 @@ namespace
   const mpllibs::metatest::TestSuite suite("iterate");
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int13>,
         str_
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestEmptyInput;
 

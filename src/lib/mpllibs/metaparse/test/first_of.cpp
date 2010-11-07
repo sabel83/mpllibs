@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/first_of.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -38,29 +39,26 @@ namespace
     TestTwoChars;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::first_of<lit_x, lit_e>,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestFirstFails;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::first_of<lit_h, lit_x>,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestSecondFails;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::first_of<lit_h, lit_e>, str_>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::first_of<lit_h, lit_e>, str_>
     >
     TestEmptyInput;
 

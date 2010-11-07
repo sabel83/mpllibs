@@ -5,6 +5,7 @@
 
 #include <mpllibs/metaparse/token.h>
 #include <mpllibs/metaparse/keyword.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -56,9 +57,8 @@ namespace
     TestSpacesConsumed;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::token<testParser>, str_>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::token<testParser>, str_>
     >
     TestFail;
 }

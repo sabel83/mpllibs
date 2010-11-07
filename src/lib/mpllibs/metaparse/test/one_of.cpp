@@ -6,6 +6,7 @@
 #include <mpllibs/metaparse/one_of.h>
 #include <mpllibs/metaparse/one_char.h>
 #include <mpllibs/metaparse/fail.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -20,9 +21,8 @@ namespace
   const mpllibs::metatest::TestSuite suite("one_of");
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::one_of_0< >, str_hello>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::one_of_0< >, str_hello>
     >
     Test0;
   
@@ -37,12 +37,11 @@ namespace
     Test1WithGood;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::one_of_1<mpllibs::metaparse::fail>,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     Test1WithBad;
 
@@ -86,15 +85,14 @@ namespace
     Test2WithSecondGood;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::one_of_2<
           mpllibs::metaparse::fail,
           mpllibs::metaparse::fail
         >,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     Test2WithTwoBad;
 
@@ -103,9 +101,8 @@ namespace
 
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::one_of< >, str_hello>::type,
-      mpllibs::metaparse::nothing
+    mpllibs::metaparse::util::is_nothing<
+      boost::mpl::apply<mpllibs::metaparse::one_of< >, str_hello>
     >
     Test;
   
@@ -120,12 +117,11 @@ namespace
     TestWithGood;
   
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::one_of<mpllibs::metaparse::fail>,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestWithBad;
 
@@ -169,15 +165,14 @@ namespace
     TestWithSecondGood;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::fail,
           mpllibs::metaparse::fail
         >,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestWithTwoBad;
 }

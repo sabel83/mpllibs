@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/transform.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -31,22 +32,20 @@ namespace
     TestNormalCase;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::transform<lit_x, transform>,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestParserFails;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::transform<lit_h, transform>,
         str_
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestEmptyInput;
 }

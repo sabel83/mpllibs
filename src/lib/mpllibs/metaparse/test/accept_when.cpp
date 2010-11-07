@@ -5,6 +5,7 @@
 
 #include <mpllibs/metaparse/accept_when.h>
 #include <mpllibs/metaparse/one_char.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -21,15 +22,14 @@ namespace
   const mpllibs::metatest::TestSuite suite("accept_when");
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::accept_when<
           mpllibs::metaparse::one_char,
           mpllibs::metaparse::util::is_digit
         >,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestWithText;
   
@@ -47,15 +47,14 @@ namespace
     TestWithNumber;
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::accept_when<
           mpllibs::metaparse::one_char,
           mpllibs::metaparse::util::is_digit
         >,
         str_
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestWithEmptyString;
 }

@@ -3,6 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metaparse/util/is_nothing.h>
+
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
@@ -23,17 +25,11 @@ namespace
     TestAccept;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<lit_h, str_bello>::type,
-      mpllibs::metaparse::nothing
-    >
+    mpllibs::metaparse::util::is_nothing<boost::mpl::apply<lit_h, str_bello> >
     TestReject;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<lit_h, str_>::type,
-      mpllibs::metaparse::nothing
-    >
+    mpllibs::metaparse::util::is_nothing<boost::mpl::apply<lit_h, str_> >
     TestWithEmptyString;
 
   typedef

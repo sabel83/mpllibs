@@ -6,6 +6,7 @@
 #include <mpllibs/metaparse/except.h>
 #include <mpllibs/metaparse/one_char.h>
 #include <mpllibs/metaparse/fail.h>
+#include <mpllibs/metaparse/util/is_nothing.h>
 
 #include "common.h"
 
@@ -20,12 +21,11 @@ namespace
   const mpllibs::metatest::TestSuite suite("except");
 
   typedef
-    boost::mpl::equal_to<
+    mpllibs::metaparse::util::is_nothing<
       boost::mpl::apply<
         mpllibs::metaparse::except<mpllibs::metaparse::one_char, int13>,
         str_hello
-      >::type,
-      mpllibs::metaparse::nothing
+      >
     >
     TestWithGood;
   
