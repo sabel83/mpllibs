@@ -16,23 +16,13 @@ namespace mpllibs
   namespace metatest
   {
     template <class T, class Default>
-    struct get_type
-    {
-      template <class U>
-      struct no_check
-      {
-        typedef typename U::type type;
-      };
-      
-      typedef
-        typename boost::mpl::eval_if<
-          typename mpllibs::metatest::has_type<T>::type,
-          typename
-            mpllibs::metatest::get_type<T, Default>::template no_check<T>,
-          boost::mpl::identity<Default>
-        >::type
-        type;
-    };
+    struct get_type :
+      boost::mpl::eval_if<
+        typename mpllibs::metatest::has_type<T>::type,
+        T,
+        boost::mpl::identity<Default>
+      >
+    {};
   }
 }
 
