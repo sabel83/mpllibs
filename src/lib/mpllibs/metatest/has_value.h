@@ -12,6 +12,7 @@
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/integral_c.hpp>
 
 namespace mpllibs
 {
@@ -33,10 +34,7 @@ namespace mpllibs
           typename
             boost::mpl::apply<
               boost::mpl::always<mpllibs::metatest::yes>,
-              typename mpllibs::metatest::has_value<
-                F,
-                ValueType
-              >::type::template value_wrapper<T::value>
+              boost::mpl::integral_c<ValueType, T::value>
             >::type
           tester(T*, int);
       
