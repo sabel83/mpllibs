@@ -8,32 +8,11 @@
 #include <mpllibs/metatest/test.h>
 #include <mpllibs/metatest/TestSuite.h>
 
-#include <boost/mpl/int.hpp>
-#include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/times.hpp>
-#include <boost/mpl/plus.hpp>
+#include "common.h"
 
 namespace
 {
   const mpllibs::metatest::TestSuite suite("let");
-
-  struct x;
-  struct y;
-  
-  typedef boost::mpl::int_<2> int2;
-  typedef boost::mpl::int_<11> int11;
-  typedef boost::mpl::int_<13> int13;
-  typedef boost::mpl::int_<24> int24;
-  typedef boost::mpl::int_<26> int26;
-  typedef boost::mpl::int_<37> int37;
-  
-  template <class T>
-  struct double_value : boost::mpl::times<T, int2> {};
-  
-  template <class a, class b>
-  struct double_lazy_plus :
-    boost::mpl::plus<typename a::type::type, typename b::type::type>
-  {};
 
   typedef
     boost::mpl::equal_to<int13, mpllibs::error::let<x, int13, x>::type>
