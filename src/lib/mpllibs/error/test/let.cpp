@@ -25,9 +25,15 @@ namespace
   typedef boost::mpl::int_<13> int13;
   typedef boost::mpl::int_<24> int24;
   typedef boost::mpl::int_<26> int26;
+  typedef boost::mpl::int_<37> int37;
   
   template <class T>
   struct double_value : boost::mpl::times<T, int2> {};
+  
+  template <class a, class b>
+  struct double_lazy_plus :
+    boost::mpl::plus<typename a::type::type, typename b::type::type>
+  {};
 
   typedef
     boost::mpl::equal_to<int13, mpllibs::error::let<x, int13, x>::type>
@@ -56,12 +62,12 @@ namespace
   
   typedef
     boost::mpl::equal_to<
-      int24,
+      int37,
       mpllibs::error::let<
         x, int13,
-        boost::mpl::plus<
+        double_lazy_plus<
           x,
-          mpllibs::error::let<x, int11, x>::type
+          mpllibs::error::let<x, int11, boost::mpl::plus<x, int13> >
         >
       >::type::type
     >

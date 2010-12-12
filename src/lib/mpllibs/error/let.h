@@ -29,6 +29,11 @@ namespace mpllibs
     template <class a, class e1, class e2>
     struct let_impl : mpllibs::error::util::id<e2> {};
 
+    template <class a, class e1a, class e1b, class e2>
+    struct let_impl<a, e1a, let<a, e1b, e2> > :
+      mpllibs::error::util::id<let<a, e1b, e2> >
+    {};
+
     #ifndef LET_MAX_TEMPLATE_ARGUMENT
       #define LET_MAX_TEMPLATE_ARGUMENT 10
     #endif
