@@ -20,12 +20,9 @@ namespace
   typedef
     boost::mpl::equal_to<
       Right<int11>,
-      mpllibs::error::do_<
-        mpllibs::error::set<
-          x,
-          mpllibs::error::call<mpllibs::error::return_<Either>, int13>
-        >,
-        mpllibs::error::call<minus_2, x>
+      DO<
+        SET<x, CALL<RETURN<Either>, int13> >,
+        CALL<minus_2, x>
       >::type
     >
     TestDo;
@@ -33,13 +30,10 @@ namespace
   typedef
     boost::mpl::equal_to<
       Right<int9>,
-      mpllibs::error::do_<
-        mpllibs::error::set<
-          x,
-          mpllibs::error::call<mpllibs::error::return_<Either>, int13>
-        >,
-        mpllibs::error::set<y, mpllibs::error::call<minus_2, x> >,
-        mpllibs::error::call<minus_2, y>
+      DO<
+        SET<x, CALL<RETURN<Either>, int13> >,
+        SET<y, CALL<minus_2, x> >,
+        CALL<minus_2, y>
       >::type
     >
     TestDoThreeSteps;

@@ -21,6 +21,24 @@ namespace mpllibs
     #ifndef DO_MAX_ARGUMENT
       #define DO_MAX_ARGUMENT 10
     #endif
+    
+    /*
+     * Syntactic sugar
+     */
+    #ifdef DO
+      #error DO already defined
+    #endif
+    #define DO mpllibs::error::do_
+    
+    #ifdef CALL
+      #error CALL already defined
+    #endif
+    #define CALL mpllibs::error::call
+    
+    #ifdef SET
+      #error SET already defined
+    #endif
+    #define SET mpllibs::error::set
   
     struct unused_do_argument;
 
