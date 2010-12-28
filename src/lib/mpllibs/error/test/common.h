@@ -10,8 +10,11 @@
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/plus.hpp>
+#include <boost/mpl/minus.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
+
+#include "Either_monad.h"
 
 namespace
 {
@@ -58,6 +61,16 @@ namespace
 
   template <class f, class a1>
   struct lazy_apply : boost::mpl::apply<typename f::type, a1> {};
+
+  struct minus_2
+  {
+    typedef minus_2 type;
+  
+    template <class a>
+    struct apply :
+      Right<typename boost::mpl::minus<typename a::value, int2>::type>
+    {};
+  };
 }
 
 #endif
