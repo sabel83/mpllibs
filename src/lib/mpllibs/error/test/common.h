@@ -22,6 +22,7 @@ namespace
   typedef boost::mpl::int_<1> int1;
   typedef boost::mpl::int_<2> int2;
   typedef boost::mpl::int_<4> int4;
+  typedef boost::mpl::int_<9> int9;
   typedef boost::mpl::int_<11> int11;
   typedef boost::mpl::int_<13> int13;
   typedef boost::mpl::int_<24> int24;

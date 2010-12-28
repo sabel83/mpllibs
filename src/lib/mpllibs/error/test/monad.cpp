@@ -154,11 +154,25 @@ namespace
       mpllibs::error::bind<Left<int13>, minus_2>::type
     >
     TestBindLeft;
+
+  typedef
+    boost::mpl::equal_to<
+      Right<int9>,
+      mpllibs::error::bind<
+        mpllibs::error::bind<
+          boost::mpl::apply<mpllibs::error::return_<Either>, int13>,
+          minus_2
+        >,
+        minus_2
+      >
+    >
+    TestMultiStepChain;
 }
 
 MPLLIBS_ADD_TEST(suite, TestReturn)
 MPLLIBS_ADD_TEST(suite, TestBindLeft)
 MPLLIBS_ADD_TEST(suite, TestBindRight)
+MPLLIBS_ADD_TEST(suite, TestMultiStepChain)
 
 
 
