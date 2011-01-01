@@ -22,7 +22,7 @@
       { \
         name##Executor() \
         { \
-          mpllibs::metatest::TestDriver::instance().runTest<name, result>( \
+          mpllibs::metatest::TestDriver::runTest<name, result>( \
             (suite), \
             #name, \
             mpllibs::metatest::Location(__FILE__, __LINE__) \

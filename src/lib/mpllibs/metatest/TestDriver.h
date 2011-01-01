@@ -32,20 +32,25 @@ namespace mpllibs
       ~TestDriver();
     
       template <class TestFunctor, bool expectedResult>
-      void runTest(
+      static void runTest(
         const mpllibs::metatest::TestSuite& suite_,
         const std::string& name_,
         const mpllibs::metatest::Location& location_
       )
       {
-        const bool hasType = has_type<TestFunctor>::type::value;
+        const bool hasType =
+          mpllibs::metatest::has_type<TestFunctor>::type::value;
         
-        const bool hasValue = has_type_value<TestFunctor, bool>::type::value;
+        const bool hasValue =
+          mpllibs::metatest::has_type_value<TestFunctor, bool>::type::value;
           
         const bool result =
-          get_type_value<TestFunctor, boost::mpl::false_>::type::value;
+          mpllibs::metatest::get_type_value<
+            TestFunctor,
+            boost::mpl::false_
+          >::type::value;
 
-        _results.push_back(
+        mpllibs::metatest::TestDriver::instance()._results.push_back(
           TestResult(
             suite_,
             name_,
