@@ -14,6 +14,9 @@
 
 // Updated to use metatest by Abel Sinkovics 2010.
 
+#include <string>
+#include <iostream>
+
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/insert.hpp>
 #include <boost/mpl/erase_key.hpp>

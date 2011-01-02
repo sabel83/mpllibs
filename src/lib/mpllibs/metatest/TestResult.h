@@ -1,15 +1,13 @@
 #ifndef MPLLIBS_TEST_TEST_RESULT_H
 #define MPLLIBS_TEST_TEST_RESULT_H
 
-// Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Copyright Abel Sinkovics (abel@sinkovics.hu) 2010-2011.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metatest/Location.h>
 #include <mpllibs/metatest/TestSuite.h>
-
-#include <cassert>
 
 namespace mpllibs
 {
@@ -24,44 +22,18 @@ namespace mpllibs
         const mpllibs::metatest::Location& location_,
         bool success_,
         const std::string& reason_
-      ) :
-        _suite(suite_),
-        _name(name_),
-        _location(location_),
-        _success(success_),
-        _reason(reason_)
-      {}
+      );
       
-      const std::string& name() const
-      {
-        return _name;
-      }
-      const mpllibs::metatest::Location& location() const
-      {
-        return _location;
-      }
+      const std::string& name() const;
+      const mpllibs::metatest::Location& location() const;
       
-      bool success() const
-      {
-        return _success;
-      }
+      bool success() const;
       
-      const std::string& reason() const
-      {
-        assert(hasReason());
-        
-        return _reason;
-      }
+      const std::string& reason() const;
       
-      bool hasReason() const
-      {
-        return _reason != "";
-      }
+      bool hasReason() const;
       
-      const mpllibs::metatest::TestSuite& testSuite() const
-      {
-        return _suite;
-      }
+      const mpllibs::metatest::TestSuite& testSuite() const;
     private:
       mpllibs::metatest::TestSuite _suite;
       std::string _name;
@@ -70,23 +42,7 @@ namespace mpllibs
       std::string _reason;
     };
     
-    inline std::ostream& operator<<(std::ostream& out_, const TestResult& r_)
-    {
-      out_ << r_.testSuite() << "::" << r_.name() << ": ";
-      if (r_.success())
-      {
-        out_ << "OK";
-      }
-      else
-      {
-        out_ << "FAIL (" << r_.location() << ")";
-        if (r_.hasReason())
-        {
-          out_ << std::endl << "\t" << r_.reason();
-        }
-      }
-      return out_ << std::endl;
-    }
+    std::ostream& operator<<(std::ostream& out_, const TestResult& r_);
   }
 }
 

@@ -4,6 +4,7 @@
 #          http://www.boost.org/LICENSE_1_0.txt)
 
 INCLUDES += ../../..
+LIB_DIRS += ../../metatest
 
 include ../../metatest/test.mk
 

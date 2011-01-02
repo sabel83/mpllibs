@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <string>
-#include <iostream>
+#include <iosfwd>
 
 namespace mpllibs
 {
@@ -16,22 +16,14 @@ namespace mpllibs
     class TestSuite
     {
     public:
-      explicit TestSuite(const std::string& name_) :
-        _name(name_)
-      {}
+      explicit TestSuite(const std::string& name_);
       
-      const std::string& name() const
-      {
-        return _name;
-      }
+      const std::string& name() const;
     private:
       std::string _name;
     };
     
-    inline std::ostream& operator<<(std::ostream& out_, const TestSuite& s_)
-    {
-      return out_ << s_.name();
-    }
+    std::ostream& operator<<(std::ostream& out_, const TestSuite& s_);
   }
 }
 
