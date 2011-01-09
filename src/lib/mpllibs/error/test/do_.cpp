@@ -37,9 +37,22 @@ namespace
       >::type
     >
     TestDoThreeSteps;
+
+  typedef
+    boost::mpl::equal_to<
+      Right<int9>,
+      DO<
+        SET<x, CALL<RETURN<Either>, int13> >,
+        SET<y, CALL<minus_2, x> >,
+        CALL<minus_2, x>,
+        CALL<minus_2, y>
+      >::type
+    >
+    TestDoTwoCalls;
 }
 
 MPLLIBS_ADD_TEST(suite, TestDo)
 MPLLIBS_ADD_TEST(suite, TestDoThreeSteps)
+MPLLIBS_ADD_TEST(suite, TestDoTwoCalls)
 
 
