@@ -16,6 +16,7 @@ check : build recurse_code
 html : recurse_doc
 
 recurse_code :
+	$(MAKE) -C lib/mpllibs/metatest $(MAKECMDGOALS) # start with the test lib
 	$(foreach l, $(CODE_DIRS), $(MAKE) -C $(l) $(MAKECMDGOALS) && ) true
 
 recurse_doc :
