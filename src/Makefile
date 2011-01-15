@@ -5,20 +5,24 @@
 
 MPLLIBS_ROOT = lib/mpllibs
 
-CODE_DIRS = $(filter-out $(MPLLIBS_ROOT)/Makefile,$(wildcard $(MPLLIBS_ROOT)/*))
+# Make sure, that metatest is the first code dir
+ALL_CODE_DIRS = $(filter-out $(MPLLIBS_ROOT)/Makefile,$(wildcard $(MPLLIBS_ROOT)/*))
+CODE_DIRS = lib/mpllibs/metatest $(filter-out lib/mpllibs/metatest, $(ALL_CODE_DIRS))
+
 DOC_DIRS = doc
 
-build : recurse_code
+main_target : all
 
-clean all : recurse_code recurse_doc
+build check :
+	$(foreach l, $(CODE_DIRS), $(MAKE) -C $(l) $@ && ) true
 
-check : build recurse_code
-html : recurse_doc
+html :
+	$(foreach l, $(DOC_DIRS), $(MAKE) -C $(l) $@ && ) true
 
-recurse_code :
-	$(MAKE) -C lib/mpllibs/metatest $(MAKECMDGOALS) # start with the test lib
-	$(foreach l, $(CODE_DIRS), $(MAKE) -C $(l) $(MAKECMDGOALS) && ) true
+clean all :
+	$(foreach l, $(DOC_DIRS), $(MAKE) -C $(l) $@ && ) true
+	$(foreach l, $(CODE_DIRS), $(MAKE) -C $(l) $@ && ) true
 
-recurse_doc :
-	$(foreach l, $(DOC_DIRS), $(MAKE) -C $(l) $(MAKECMDGOALS) && ) true
+check : build
+
 
