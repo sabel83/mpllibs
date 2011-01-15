@@ -47,7 +47,7 @@ TestDriver::const_iterator TestDriver::begin() const
 
 TestDriver::const_iterator TestDriver::end() const
 {
-  return _results.begin();
+  return _results.end();
 }
 
 int TestDriver::main(int, char*[]) const
