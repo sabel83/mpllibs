@@ -17,6 +17,7 @@ namespace mpllibs
     struct bind_impl;
     // No default implementation
     
+    // bind evaluates arguments lazily
     template <class a, class f>
     struct bind :
       boost::mpl::apply<

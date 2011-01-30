@@ -117,7 +117,7 @@ namespace mpllibs
           boost::mpl::apply<f, arg>, \
           typename mpllibs::error::do_< \
             BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
-          >::type \
+          > \
         > \
       {}; \
       \
@@ -132,7 +132,7 @@ namespace mpllibs
         BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
       > : \
         mpllibs::error::bind< \
-          typename mpllibs::error::do_<ex>::type, \
+          mpllibs::error::do_<ex>, \
           mpllibs::error::lambda< \
             name, \
             mpllibs::error::do_< \

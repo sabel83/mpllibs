@@ -37,9 +37,7 @@ namespace mpllibs
           mpllibs::error::return__impl<typename boost::mpl::tag<monad>::type>,
           a
         >
-      {
-        typedef typename boost::mpl::tag<monad>::type tag;
-      };
+      {};
     };
   }
 }

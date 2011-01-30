@@ -7,8 +7,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/error/bind.h>
+#include <mpllibs/error/util/id.h>
 
-#include <boost/mpl/identity.hpp>
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/tag.hpp>
@@ -22,19 +22,23 @@ namespace mpllibs
     {
       template <class a, class b>
       struct apply :
-        mpllibs::error::bind<a, boost::mpl::identity<boost::mpl::always<b> > >
+        mpllibs::error::bind<
+          mpllibs::error::util::id<a>,
+          mpllibs::error::util::id<boost::mpl::always<b> >
+        >
       {};
     };
 
+    // bind_ evaluates its arguments lazily
     template <class a, class b>
     struct bind_ :
       boost::mpl::apply<
         mpllibs::error::bind__impl<
-          typename boost::mpl::tag<a>::type,
-          typename boost::mpl::tag<b>::type
+          typename boost::mpl::tag<typename a::type>::type,
+          typename boost::mpl::tag<typename a::type>::type
         >,
-        a,
-        b
+        typename a::type,
+        typename b::type
       >
     {};
   }

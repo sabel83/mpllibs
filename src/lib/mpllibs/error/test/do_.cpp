@@ -49,10 +49,21 @@ namespace
       >::type
     >
     TestDoTwoCalls;
+
+  typedef
+    boost::mpl::equal_to<
+      Right<int13>,
+      DO<
+        CALL<RETURN<Either>, int11>,
+        CALL<RETURN<Either>, int13>
+      >::type
+    >
+    TestDoTwoReturns;
 }
 
 MPLLIBS_ADD_TEST(suite, TestDo)
 MPLLIBS_ADD_TEST(suite, TestDoThreeSteps)
 MPLLIBS_ADD_TEST(suite, TestDoTwoCalls)
+MPLLIBS_ADD_TEST(suite, TestDoTwoReturns)
 
 
