@@ -38,7 +38,7 @@ namespace
     boost::mpl::equal_to<
       int13,
       DO<
-        CALL<RETURN<mpllibs::error::ExceptionMonad>, int13>
+        boost::mpl::apply<RETURN<mpllibs::error::ExceptionMonad>, int13>
       >::type::type
     >
     TestMonadicNoException;
@@ -48,7 +48,7 @@ namespace
       int11,
       mpllibs::error::get_data<
         DO<
-          CALL<boost::mpl::always<e>, int>
+          boost::mpl::apply<boost::mpl::always<e>, int>
         >::type
       >::type
     >
@@ -60,8 +60,8 @@ namespace
       int11,
       mpllibs::error::get_data<
         DO<
-          CALL<boost::mpl::always<e>, int>,
-          CALL<RETURN<mpllibs::error::ExceptionMonad>, int13>
+          boost::mpl::apply<boost::mpl::always<e>, int>,
+          boost::mpl::apply<RETURN<mpllibs::error::ExceptionMonad>, int13>
         >::type
       >::type
     >
@@ -84,9 +84,9 @@ namespace
     boost::is_same<
       mpllibs::error::NoException_tag,
       boost::mpl::tag<
-        mpllibs::error::do_<
-          mpllibs::error::call<
-            mpllibs::error::return_<mpllibs::error::ExceptionMonad>,
+        DO<
+          boost::mpl::apply<
+            RETURN<mpllibs::error::ExceptionMonad>,
             int11
           >
         >::type
@@ -98,8 +98,8 @@ namespace
     boost::mpl::equal_to<
       int11,
       DO<
-        CALL<RETURN<mpllibs::error::ExceptionMonad>, int13>,
-        CALL<RETURN<mpllibs::error::ExceptionMonad>, int11>
+        boost::mpl::apply<RETURN<mpllibs::error::ExceptionMonad>, int13>,
+        boost::mpl::apply<RETURN<mpllibs::error::ExceptionMonad>, int11>
       >::type::type // the last ::type unwraps the value
     >
     TestExecutionSequence;
@@ -111,8 +111,8 @@ namespace
       int11,
       mpllibs::error::get_data<
         DO<
-          SET<x, CALL<boost::mpl::always<e>, int> >,
-          CALL<RETURN<mpllibs::error::ExceptionMonad>, int13>
+          SET<x, boost::mpl::apply<boost::mpl::always<e>, int> >,
+          boost::mpl::apply<RETURN<mpllibs::error::ExceptionMonad>, int13>
         >::type
       >::type
     >

@@ -30,11 +30,6 @@ namespace mpllibs
     #endif
     #define DO mpllibs::error::do_
     
-    #ifdef CALL
-      #error CALL already defined
-    #endif
-    #define CALL mpllibs::error::call
-    
     #ifdef SET
       #error SET already defined
     #endif
@@ -58,20 +53,11 @@ namespace mpllibs
     struct set;
 
     /*
-     * call
-     */
-    template <class f, class arg>
-    struct call;
-  
-  
-    /*
      * do1
      */
+    // This case handles nullary metafunction elements of the do
     template <class e>
-    struct do1;
-
-    template <class f, class arg>
-    struct do1<mpllibs::error::call<f, arg> > : boost::mpl::apply<f, arg> {};
+    struct do1 : e {};
 
     template <class name, class f>
     struct do1<mpllibs::error::set<name, f> >;
@@ -100,21 +86,10 @@ namespace mpllibs
     #endif
     // I need at least one template argument. The "n"th case handles n+1 args.
     #define DO_CASE(z, n, unused) \
-      template <BOOST_PP_ENUM_PARAMS(n, class e)> \
-      struct do##n; \
-      \
-      template < \
-        class f, \
-        class arg \
-        BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_CASE, ~) \
-      > \
-      struct do##n< \
-        mpllibs::error::call<f, arg> \
-        BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
-        BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
-      > : \
+      template <class t BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_CASE, ~)> \
+      struct do##n : \
         mpllibs::error::bind_< \
-          boost::mpl::apply<f, arg>, \
+          t, \
           typename mpllibs::error::do_< \
             BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
           > \

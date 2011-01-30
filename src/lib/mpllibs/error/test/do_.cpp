@@ -21,8 +21,8 @@ namespace
     boost::mpl::equal_to<
       Right<int11>,
       DO<
-        SET<x, CALL<RETURN<Either>, int13> >,
-        CALL<minus_2, x>
+        SET<x, boost::mpl::apply<RETURN<Either>, int13> >,
+        boost::mpl::apply<minus_2, x>
       >::type
     >
     TestDo;
@@ -31,9 +31,9 @@ namespace
     boost::mpl::equal_to<
       Right<int9>,
       DO<
-        SET<x, CALL<RETURN<Either>, int13> >,
-        SET<y, CALL<minus_2, x> >,
-        CALL<minus_2, y>
+        SET<x, boost::mpl::apply<RETURN<Either>, int13> >,
+        SET<y, boost::mpl::apply<minus_2, x> >,
+        boost::mpl::apply<minus_2, y>
       >::type
     >
     TestDoThreeSteps;
@@ -42,10 +42,10 @@ namespace
     boost::mpl::equal_to<
       Right<int9>,
       DO<
-        SET<x, CALL<RETURN<Either>, int13> >,
-        SET<y, CALL<minus_2, x> >,
-        CALL<minus_2, x>,
-        CALL<minus_2, y>
+        SET<x, boost::mpl::apply<RETURN<Either>, int13> >,
+        SET<y, boost::mpl::apply<minus_2, x> >,
+        boost::mpl::apply<minus_2, x>,
+        boost::mpl::apply<minus_2, y>
       >::type
     >
     TestDoTwoCalls;
@@ -54,8 +54,8 @@ namespace
     boost::mpl::equal_to<
       Right<int13>,
       DO<
-        CALL<RETURN<Either>, int11>,
-        CALL<RETURN<Either>, int13>
+        boost::mpl::apply<RETURN<Either>, int11>,
+        boost::mpl::apply<RETURN<Either>, int13>
       >::type
     >
     TestDoTwoReturns;
