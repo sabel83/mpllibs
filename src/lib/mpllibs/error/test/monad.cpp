@@ -19,6 +19,16 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("monad");
   
+  struct minus_2
+  {
+    typedef minus_2 type;
+  
+    template <class a>
+    struct apply :
+      Right<typename boost::mpl::minus<typename a::value, int2>::type>
+    {};
+  };
+
   typedef
     boost::mpl::equal_to<
       Right<int13>,
