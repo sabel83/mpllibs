@@ -47,8 +47,16 @@ namespace
       boost::mpl::apply<mpllibs::error::return_<Test>, int>::type
     >
     TestSpecialisationIsCalled;  
+
+  typedef
+    boost::mpl::equal_to<
+      int13,
+      mpllibs::error::return_<Test, int>::type
+    >
+    TestUsingTwoArguments;  
 }
 
 MPLLIBS_ADD_TEST(suite, TestSpecialisationIsCalled)
+MPLLIBS_ADD_TEST(suite, TestUsingTwoArguments)
 
 

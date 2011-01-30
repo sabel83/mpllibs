@@ -16,7 +16,7 @@
 namespace
 {
   const mpllibs::metatest::TestSuite suite("do_");
-
+  
   template <class a>
   struct minus_2 :
     Right<typename boost::mpl::minus<typename a::value, int2>::type>
@@ -26,7 +26,7 @@ namespace
     boost::mpl::equal_to<
       Right<int11>,
       DO<
-        SET<x, boost::mpl::apply<RETURN<Either>, int13> >,
+        SET<x, RETURN<Either, int13> >,
         minus_2<x>
       >::type
     >
@@ -36,7 +36,7 @@ namespace
     boost::mpl::equal_to<
       Right<int9>,
       DO<
-        SET<x, boost::mpl::apply<RETURN<Either>, int13> >,
+        SET<x, RETURN<Either, int13> >,
         SET<y, minus_2<x> >,
         minus_2<y>
       >::type
@@ -47,7 +47,7 @@ namespace
     boost::mpl::equal_to<
       Right<int9>,
       DO<
-        SET<x, boost::mpl::apply<RETURN<Either>, int13> >,
+        SET<x, RETURN<Either, int13> >,
         SET<y, minus_2<x> >,
         minus_2<x>,
         minus_2<y>
@@ -59,8 +59,8 @@ namespace
     boost::mpl::equal_to<
       Right<int13>,
       DO<
-        boost::mpl::apply<RETURN<Either>, int11>,
-        boost::mpl::apply<RETURN<Either>, int13>
+        RETURN<Either, int11>,
+        RETURN<Either, int13>
       >::type
     >
     TestDoTwoReturns;

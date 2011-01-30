@@ -32,7 +32,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       Right<int13>,
-      boost::mpl::apply<mpllibs::error::return_<Either>, int13>::type
+      mpllibs::error::return_<Either, int13>::type
     >
     TestReturn;
 
@@ -55,7 +55,7 @@ namespace
       Right<int9>,
       mpllibs::error::bind<
         mpllibs::error::bind<
-          boost::mpl::apply<mpllibs::error::return_<Either>, int13>,
+          mpllibs::error::return_<Either, int13>,
           minus_2
         >,
         minus_2

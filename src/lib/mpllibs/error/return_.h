@@ -27,9 +27,14 @@ namespace mpllibs
     template <class>
     struct return__impl;
     // No default implementation
+    
+    struct no_return_argument;
 
+    template <class monad, class a = mpllibs::error::no_return_argument>
+    struct return_ : boost::mpl::apply<mpllibs::error::return_<monad>, a> {};
+    
     template <class monad>
-    struct return_
+    struct return_<monad, mpllibs::error::no_return_argument>
     {
       template <class a>
       struct apply :
