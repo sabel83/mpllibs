@@ -103,6 +103,20 @@ namespace
       >::type::type // the last ::type unwraps the value
     >
     TestExecutionSequence;
+  
+  struct x;
+  
+  typedef
+    boost::mpl::equal_to<
+      int11,
+      mpllibs::error::get_data<
+        DO<
+          SET<x, CALL<boost::mpl::always<e>, int> >,
+          CALL<RETURN<mpllibs::error::ExceptionMonad>, int13>
+        >::type
+      >::type
+    >
+    TestExceptionInSet;
 }
 
 MPLLIBS_ADD_TEST(suite, TestGetData)
@@ -114,6 +128,6 @@ MPLLIBS_ADD_TEST(suite, TestExceptionPropagation)
 MPLLIBS_ADD_TEST(suite, TestTagWith1ElementDo)
 MPLLIBS_ADD_TEST(suite, TestReturnTag)
 MPLLIBS_ADD_TEST(suite, TestExecutionSequence)
-
+MPLLIBS_ADD_TEST(suite, TestExceptionInSet)
 
 
