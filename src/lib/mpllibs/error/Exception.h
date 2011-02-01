@@ -13,7 +13,10 @@ namespace mpllibs
 {
   namespace error
   {
-    struct Exception_tag;
+    struct Exception_tag
+    {
+      typedef Exception_tag type;
+    };
   
     template <class Data>
     struct Exception
@@ -51,12 +54,12 @@ namespace mpllibs
      *    - its type is the wrapped value
      *
      */
-    struct ExceptionMonad
-    {
-      typedef Exception_tag tag;
-    };
+    typedef Exception_tag ExceptionMonad;
     
-    struct NoException_tag;
+    struct NoException_tag
+    {
+      typedef NoException_tag type;
+    };
     
     template <class T>
     struct NoException

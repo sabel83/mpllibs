@@ -16,11 +16,9 @@
 
 namespace
 {
-  struct test_tag;
-  
-  struct Test
+  struct test_tag
   {
-    typedef test_tag tag;
+    typedef test_tag type;
   };
 }
 
@@ -44,15 +42,12 @@ namespace
   typedef
     boost::mpl::equal_to<
       int13,
-      boost::mpl::apply<mpllibs::error::return_<Test>, int>::type
+      boost::mpl::apply<mpllibs::error::return_<test_tag>, int>::type
     >
     TestSpecialisationIsCalled;  
 
   typedef
-    boost::mpl::equal_to<
-      int13,
-      mpllibs::error::return_<Test, int>::type
-    >
+    boost::mpl::equal_to<int13, mpllibs::error::return_<test_tag, int>::type>
     TestUsingTwoArguments;  
 }
 

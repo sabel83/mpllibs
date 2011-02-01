@@ -15,14 +15,22 @@ namespace
   /*
    * Either monad for testing
    */
-  struct either_tag;
-  struct left_tag;
-  struct right_tag;
-
-  struct Either
+  struct either_tag
   {
-    typedef either_tag tag;
+    typedef either_tag type;
   };
+  
+  struct left_tag
+  {
+    typedef left_tag type;
+  };
+  
+  struct right_tag
+  {
+    typedef right_tag type;
+  };
+
+  typedef either_tag Either;
   
   template <class t>
   struct Left
