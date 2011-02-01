@@ -12,12 +12,10 @@ namespace mpllibs
 {
   namespace error
   {
-    template <class location>
-    struct throw_
-    {
-      template <class e>
-      struct apply : mpllibs::error::Exception<e, location> {};
-    };
+    #ifdef THROW
+      #error THROW already defined
+    #endif
+    #define THROW mpllibs::error::Exception
   }
 }
 

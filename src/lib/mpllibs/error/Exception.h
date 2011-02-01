@@ -15,11 +15,11 @@ namespace mpllibs
   {
     struct Exception_tag;
   
-    template <class Data, class Location>
+    template <class Data>
     struct Exception
     {
       typedef Exception_tag tag;
-      typedef mpllibs::error::Exception<Data, Location> type;
+      typedef mpllibs::error::Exception<Data> type;
     };
     
     template <class>
@@ -31,30 +31,14 @@ namespace mpllibs
       template <class>
       struct apply;
       
-      template <class Data, class Location>
-      struct apply<mpllibs::error::Exception<Data, Location> >
+      template <class Data>
+      struct apply<mpllibs::error::Exception<Data> >
       {
         typedef Data type;
       };
     };
 
-
-    template <class>
-    struct get_location_impl;
-    
-    template <>
-    struct get_location_impl<mpllibs::error::Exception_tag>
-    {
-      template <class>
-      struct apply;
-      
-      template <class Data, class Location>
-      struct apply<mpllibs::error::Exception<Data, Location> >
-      {
-        typedef Location type;
-      };
-    };
-    
+   
     
     /*
      * The Exception monad

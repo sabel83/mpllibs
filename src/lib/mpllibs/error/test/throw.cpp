@@ -4,11 +4,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/error/Exception.h>
-#include <mpllibs/error/throw_.h>
+#include <mpllibs/error/throw.h>
 #include <mpllibs/error/do_.h>
 
 #include <mpllibs/error/get_data.h>
-#include <mpllibs/error/get_location.h>
 
 #include <mpllibs/metatest/test.h>
 #include <mpllibs/metatest/TestSuite.h>
@@ -22,34 +21,21 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("throw_");
+  const mpllibs::metatest::TestSuite suite("THROW");
   
-  typedef
-    boost::mpl::equal_to<
-      int11,
-      mpllibs::error::get_data<
-        mpllibs::error::throw_<int13>::apply<int11>
-      >::type
-    >
-    TestGetData;
-
   typedef
     boost::mpl::equal_to<
       int13,
-      mpllibs::error::get_location<
-        mpllibs::error::throw_<int13>::apply<int11>
-      >::type
+      mpllibs::error::get_data<THROW<int13> >::type
     >
-    TestGetLocation;
-  
+    TestGetData;
+
   
   typedef
     boost::mpl::equal_to<
-      int11,
+      int13,
       mpllibs::error::get_data<
-        DO<
-          mpllibs::error::throw_<int13>::apply<int11>
-        >::type
+        DO<THROW<int13> >::type
       >::type
     >
     TestMonadicException;
@@ -60,7 +46,7 @@ namespace
       int11,
       mpllibs::error::get_data<
         DO<
-          mpllibs::error::throw_<int13>::apply<int11>,
+          THROW<int11>,
           RETURN<mpllibs::error::ExceptionMonad, int13>
         >::type
       >::type
@@ -69,7 +55,6 @@ namespace
 }
 
 MPLLIBS_ADD_TEST(suite, TestGetData)
-MPLLIBS_ADD_TEST(suite, TestGetLocation)
 
 MPLLIBS_ADD_TEST(suite, TestMonadicException)
 MPLLIBS_ADD_TEST(suite, TestExceptionPropagation)

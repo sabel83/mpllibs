@@ -7,7 +7,6 @@
 #include <mpllibs/error/do_.h>
 
 #include <mpllibs/error/get_data.h>
-#include <mpllibs/error/get_location.h>
 
 #include <mpllibs/metatest/test.h>
 #include <mpllibs/metatest/TestSuite.h>
@@ -23,17 +22,12 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("Exception");
   
-  typedef mpllibs::error::Exception<int11, int13> e;
+  typedef mpllibs::error::Exception<int13> e;
 
   typedef
-    boost::mpl::equal_to<int11, mpllibs::error::get_data<e>::type>
+    boost::mpl::equal_to<int13, mpllibs::error::get_data<e>::type>
     TestGetData;
 
-  typedef
-    boost::mpl::equal_to<int13, mpllibs::error::get_location<e>::type>
-    TestGetLocation;
-  
-  
   typedef
     boost::mpl::equal_to<
       int13,
@@ -45,7 +39,7 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      int11,
+      int13,
       mpllibs::error::get_data<
         DO<
           boost::mpl::apply<boost::mpl::always<e>, int>
@@ -57,7 +51,7 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      int11,
+      int13,
       mpllibs::error::get_data<
         DO<
           boost::mpl::apply<boost::mpl::always<e>, int>,
@@ -102,7 +96,7 @@ namespace
   
   typedef
     boost::mpl::equal_to<
-      int11,
+      int13,
       mpllibs::error::get_data<
         DO<
           SET<x, boost::mpl::apply<boost::mpl::always<e>, int> >,
@@ -114,7 +108,6 @@ namespace
 }
 
 MPLLIBS_ADD_TEST(suite, TestGetData)
-MPLLIBS_ADD_TEST(suite, TestGetLocation)
 
 MPLLIBS_ADD_TEST(suite, TestMonadicNoException)
 MPLLIBS_ADD_TEST(suite, TestMonadicException)
