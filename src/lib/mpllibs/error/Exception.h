@@ -97,12 +97,12 @@ namespace mpllibs
     /*
      * bind
      */
-    template <class, class>
+    template <class>
     struct bind_impl;
 
     // Exception delegation
-    template <class t>
-    struct bind_impl<mpllibs::error::Exception_tag, t>
+    template <>
+    struct bind_impl<mpllibs::error::Exception_tag>
     {
       template <class a, class f>
       struct apply
@@ -112,8 +112,8 @@ namespace mpllibs
     };
     
     // Normal evaluation
-    template <class t>
-    struct bind_impl<mpllibs::error::NoException_tag, t>
+    template <>
+    struct bind_impl<mpllibs::error::NoException_tag>
     {
       template <class a, class f>
       struct apply : boost::mpl::apply<f, typename a::type> {};

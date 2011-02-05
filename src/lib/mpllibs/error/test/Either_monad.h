@@ -99,15 +99,15 @@ namespace mpllibs
 {
   namespace error
   {
-    template <class t>
-    struct bind_impl<right_tag, t>
+    template <>
+    struct bind_impl<right_tag>
     {
       template <class a, class f>
       struct apply : boost::mpl::apply<f, a> {};
     };
 
-    template <class t>
-    struct bind_impl<left_tag, t>
+    template <>
+    struct bind_impl<left_tag>
     {
       template <class a, class f>
       struct apply : a {};

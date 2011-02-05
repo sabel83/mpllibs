@@ -17,7 +17,7 @@ namespace mpllibs
 {
   namespace error
   {
-    template <class, class>
+    template <class>
     struct bind__impl
     {
       template <class a, class b>
@@ -34,7 +34,6 @@ namespace mpllibs
     struct bind_ :
       boost::mpl::apply<
         mpllibs::error::bind__impl<
-          typename boost::mpl::tag<typename a::type>::type,
           typename boost::mpl::tag<typename a::type>::type
         >,
         typename a::type,

@@ -13,7 +13,7 @@ namespace mpllibs
 {
   namespace error
   {
-    template <class, class>
+    template <class>
     struct bind_impl;
     // No default implementation
     
@@ -22,8 +22,7 @@ namespace mpllibs
     struct bind :
       boost::mpl::apply<
         mpllibs::error::bind_impl<
-          typename boost::mpl::tag<typename a::type>::type,
-          typename boost::mpl::tag<typename f::type>::type
+          typename boost::mpl::tag<typename a::type>::type
         >,
         typename a::type,
         typename f::type
