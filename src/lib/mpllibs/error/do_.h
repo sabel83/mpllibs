@@ -41,6 +41,11 @@ namespace mpllibs
     #endif
     #define SET mpllibs::error::set
   
+    #ifdef RETURN
+      #error RETURN already defined
+    #endif
+    #define RETURN mpllibs::error::do_return
+
     struct unused_do_argument;
 
     template <

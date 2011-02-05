@@ -47,7 +47,7 @@ namespace
       mpllibs::error::get_data<
         DO<mpllibs::error::ExceptionMonad>::apply<
           THROW<int11>,
-          mpllibs::error::do_return<int13>
+          RETURN<int13>
         >::type
       >::type
     >

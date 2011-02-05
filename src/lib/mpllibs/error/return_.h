@@ -14,14 +14,6 @@ namespace mpllibs
   namespace error
   {
     /*
-     * Syntactic sugar
-     */
-    #ifdef RETURN
-      #error RETURN already defined
-    #endif
-    #define RETURN mpllibs::error::return_
-  
-    /*
      * return_
      */
     template <class>

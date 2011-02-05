@@ -26,7 +26,7 @@ namespace
     boost::mpl::equal_to<
       Right<int11>,
       DO<Either>::apply<
-        SET<x, mpllibs::error::do_return<int13> >,
+        SET<x, RETURN<int13> >,
         minus_2<x>
       >::type
     >
@@ -36,7 +36,7 @@ namespace
     boost::mpl::equal_to<
       Right<int9>,
       DO<Either>::apply<
-        SET<x, mpllibs::error::do_return<int13> >,
+        SET<x, RETURN<int13> >,
         SET<y, minus_2<x> >,
         minus_2<y>
       >::type
@@ -47,7 +47,7 @@ namespace
     boost::mpl::equal_to<
       Right<int9>,
       DO<Either>::apply<
-        SET<x, mpllibs::error::do_return<int13> >,
+        SET<x, RETURN<int13> >,
         SET<y, minus_2<x> >,
         minus_2<x>,
         minus_2<y>
@@ -59,8 +59,8 @@ namespace
     boost::mpl::equal_to<
       Right<int13>,
       DO<Either>::apply<
-        mpllibs::error::do_return<int11>,
-        mpllibs::error::do_return<int13>
+        RETURN<int11>,
+        RETURN<int13>
       >::type
     >
     TestDoTwoReturns;
