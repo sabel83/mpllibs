@@ -49,7 +49,7 @@ namespace mpllibs
         mpllibs::error::unused_do_argument
       )
     >
-    struct do_;
+    struct do_impl;
 
     /*
      * set
@@ -100,7 +100,7 @@ namespace mpllibs
         boost::mpl::apply< \
           mpllibs::error::bind__impl<monad>, \
           typename t::type, \
-          typename mpllibs::error::do_< \
+          typename mpllibs::error::do_impl< \
             monad, \
             BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
           >::type \
@@ -121,10 +121,10 @@ namespace mpllibs
       > : \
         boost::mpl::apply< \
           mpllibs::error::bind_impl<monad>, \
-          typename mpllibs::error::do_<monad, ex>::type, \
+          typename mpllibs::error::do1<monad, ex>::type, \
           typename mpllibs::error::lambda< \
             name, \
-            mpllibs::error::do_< \
+            mpllibs::error::do_impl< \
               monad, \
               BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
             > \
@@ -139,7 +139,7 @@ namespace mpllibs
     #undef DO_CLASS_CASE
         
     /*
-     * do_
+     * do_impl
      */
     #ifdef DO_UNUSED_PARAM
       #error DO_UNUSED_PARAM already defined
@@ -152,7 +152,7 @@ namespace mpllibs
     #endif
     #define DO_CASE(z, n, unused) \
       template <class monad, BOOST_PP_ENUM_PARAMS(n, class e)> \
-      struct do_< \
+      struct do_impl< \
         monad, \
         BOOST_PP_ENUM_PARAMS(n, e) BOOST_PP_COMMA_IF(n) \
         BOOST_PP_REPEAT( \
@@ -168,6 +168,24 @@ namespace mpllibs
     
     #undef DO_CASE
     #undef DO_UNUSED_PARAM
+    
+    /*
+     * do_
+     */
+    template <class monad>
+    struct do_
+    {
+      template <
+        BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
+          DO_MAX_ARGUMENT,
+          class e,
+          mpllibs::error::unused_do_argument
+        )
+      >
+      struct apply :
+        mpllibs::error::do_impl<monad, BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)>
+      {};
+    };
   }
 }
 

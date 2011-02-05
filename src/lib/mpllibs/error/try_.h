@@ -74,21 +74,21 @@ namespace mpllibs
           mpllibs::error::Exception_tag,
           typename boost::mpl::tag<
             typename
-              DO<mpllibs::error::ExceptionMonad,
+              DO<mpllibs::error::ExceptionMonad>::template apply<
                 BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)
               >::type
           >::type
         >::type,
         mpllibs::error::impl::was_exception<
           typename
-            DO<mpllibs::error::ExceptionMonad,
+            DO<mpllibs::error::ExceptionMonad>::template apply<
               BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)
             >::type
         >,
         mpllibs::error::impl::skip_further_catches<
           // NoException evaluates to the wrapped value
           typename
-            DO<mpllibs::error::ExceptionMonad,
+            DO<mpllibs::error::ExceptionMonad>::template apply<
               BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)
             >::type
         >

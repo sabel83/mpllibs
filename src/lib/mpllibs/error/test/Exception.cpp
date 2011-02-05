@@ -31,7 +31,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       int13,
-      DO<mpllibs::error::ExceptionMonad,
+      DO<mpllibs::error::ExceptionMonad>::apply<
         RETURN<mpllibs::error::ExceptionMonad, int13>
       >::type::type
     >
@@ -41,7 +41,7 @@ namespace
     boost::mpl::equal_to<
       int13,
       mpllibs::error::get_data<
-        DO<mpllibs::error::ExceptionMonad,
+        DO<mpllibs::error::ExceptionMonad>::apply<
           boost::mpl::apply<boost::mpl::always<e>, int>
         >::type
       >::type
@@ -53,7 +53,7 @@ namespace
     boost::mpl::equal_to<
       int13,
       mpllibs::error::get_data<
-        DO<mpllibs::error::ExceptionMonad,
+        DO<mpllibs::error::ExceptionMonad>::apply<
           boost::mpl::apply<boost::mpl::always<e>, int>,
           RETURN<mpllibs::error::ExceptionMonad, int13>
         >::type
@@ -75,7 +75,7 @@ namespace
     boost::is_same<
       mpllibs::error::NoException_tag,
       boost::mpl::tag<
-        DO<mpllibs::error::ExceptionMonad,
+        DO<mpllibs::error::ExceptionMonad>::apply<
           RETURN<mpllibs::error::ExceptionMonad, int11>
         >::type
       >::type
@@ -85,7 +85,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       int11,
-      DO<mpllibs::error::ExceptionMonad,
+      DO<mpllibs::error::ExceptionMonad>::apply<
         RETURN<mpllibs::error::ExceptionMonad, int13>,
         RETURN<mpllibs::error::ExceptionMonad, int11>
       >::type::type // the last ::type unwraps the value
@@ -98,7 +98,7 @@ namespace
     boost::mpl::equal_to<
       int13,
       mpllibs::error::get_data<
-        DO<mpllibs::error::ExceptionMonad,
+        DO<mpllibs::error::ExceptionMonad>::apply<
           SET<x, boost::mpl::apply<boost::mpl::always<e>, int> >,
           RETURN<mpllibs::error::ExceptionMonad, int13>
         >::type

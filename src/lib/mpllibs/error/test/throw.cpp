@@ -35,7 +35,7 @@ namespace
     boost::mpl::equal_to<
       int13,
       mpllibs::error::get_data<
-        DO<mpllibs::error::ExceptionMonad, THROW<int13> >::type
+        DO<mpllibs::error::ExceptionMonad>::apply< THROW<int13> >::type
       >::type
     >
     TestMonadicException;
@@ -45,7 +45,7 @@ namespace
     boost::mpl::equal_to<
       int11,
       mpllibs::error::get_data<
-        DO<mpllibs::error::ExceptionMonad,
+        DO<mpllibs::error::ExceptionMonad>::apply<
           THROW<int11>,
           RETURN<mpllibs::error::ExceptionMonad, int13>
         >::type
