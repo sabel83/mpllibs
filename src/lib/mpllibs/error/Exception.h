@@ -6,8 +6,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/error/get_data.h>
+
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/tag.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 namespace mpllibs
 {
@@ -40,8 +44,7 @@ namespace mpllibs
         typedef Data type;
       };
     };
-
-   
+    
     
     /*
      * The Exception monad
@@ -114,6 +117,65 @@ namespace mpllibs
     {
       template <class a, class f>
       struct apply : boost::mpl::apply<f, typename a::type> {};
+    };
+  }
+}
+
+namespace boost
+{
+  namespace mpl
+  {
+    template <class a, class b>
+    struct equal_to_impl;
+
+    template <>
+    struct
+      equal_to_impl<
+        mpllibs::error::Exception_tag,
+        mpllibs::error::Exception_tag
+      >
+    {
+      template <class a, class b>
+      struct apply :
+        boost::mpl::equal_to<
+          typename mpllibs::error::get_data<a>::type,
+          typename mpllibs::error::get_data<b>::type
+        >
+      {};
+    };
+    
+    template <>
+    struct
+      equal_to_impl<
+        mpllibs::error::NoException_tag,
+        mpllibs::error::NoException_tag
+      >
+    {
+      template <class a, class b>
+      struct apply : boost::mpl::equal_to<typename a::type, typename b::type>
+      {};
+    };
+    
+    template <>
+    struct
+      equal_to_impl<
+        mpllibs::error::Exception_tag,
+        mpllibs::error::NoException_tag
+      >
+    {
+      template <class>
+      struct apply : boost::mpl::false_ {};
+    };
+    
+    template <>
+    struct
+      equal_to_impl<
+        mpllibs::error::NoException_tag,
+        mpllibs::error::Exception_tag
+      >
+    {
+      template <class>
+      struct apply : boost::mpl::false_ {};
     };
   }
 }
