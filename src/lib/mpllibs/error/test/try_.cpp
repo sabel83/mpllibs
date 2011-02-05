@@ -50,7 +50,7 @@ namespace
     boost::mpl::equal_to<
       int13,
       TRY<
-        RETURN<mpllibs::error::ExceptionMonad, int13>
+        mpllibs::error::do_return<int13>
       >
       ::catch_<tag1, x, int11>
       ::type
@@ -107,7 +107,7 @@ namespace
       int11,
       TRY<
         THROW<e1>,
-        RETURN<mpllibs::error::ExceptionMonad, int1>
+        mpllibs::error::do_return<int1>
       >
       ::catch_<tag1, x, boost::mpl::identity<int11> >
       ::type
@@ -119,8 +119,8 @@ namespace
     boost::mpl::equal_to<
       int11,
       TRY<
-        RETURN<mpllibs::error::ExceptionMonad, int13>,
-        RETURN<mpllibs::error::ExceptionMonad, int11>
+        mpllibs::error::do_return<int13>,
+        mpllibs::error::do_return<int11>
       >
       ::catch_<tag1, x, boost::mpl::identity<int11> >
       ::type
@@ -132,7 +132,7 @@ namespace
       int11,
       TRY<
         SET<x, THROW<e1> >,
-        RETURN<mpllibs::error::ExceptionMonad, int1>
+        mpllibs::error::do_return<int1>
       >
       ::catch_<tag1, x, boost::mpl::identity<int11> >
       ::type

@@ -32,7 +32,7 @@ namespace
     boost::mpl::equal_to<
       int13,
       DO<mpllibs::error::ExceptionMonad>::apply<
-        RETURN<mpllibs::error::ExceptionMonad, int13>
+        mpllibs::error::do_return<int13>
       >::type::type
     >
     TestMonadicNoException;
@@ -55,7 +55,7 @@ namespace
       mpllibs::error::get_data<
         DO<mpllibs::error::ExceptionMonad>::apply<
           boost::mpl::apply<boost::mpl::always<e>, int>,
-          RETURN<mpllibs::error::ExceptionMonad, int13>
+          mpllibs::error::do_return<int13>
         >::type
       >::type
     >
@@ -76,7 +76,7 @@ namespace
       mpllibs::error::NoException_tag,
       boost::mpl::tag<
         DO<mpllibs::error::ExceptionMonad>::apply<
-          RETURN<mpllibs::error::ExceptionMonad, int11>
+          mpllibs::error::do_return<int11>
         >::type
       >::type
     >
@@ -86,8 +86,8 @@ namespace
     boost::mpl::equal_to<
       int11,
       DO<mpllibs::error::ExceptionMonad>::apply<
-        RETURN<mpllibs::error::ExceptionMonad, int13>,
-        RETURN<mpllibs::error::ExceptionMonad, int11>
+        mpllibs::error::do_return<int13>,
+        mpllibs::error::do_return<int11>
       >::type::type // the last ::type unwraps the value
     >
     TestExecutionSequence;
@@ -100,7 +100,7 @@ namespace
       mpllibs::error::get_data<
         DO<mpllibs::error::ExceptionMonad>::apply<
           SET<x, boost::mpl::apply<boost::mpl::always<e>, int> >,
-          RETURN<mpllibs::error::ExceptionMonad, int13>
+          mpllibs::error::do_return<int13>
         >::type
       >::type
     >

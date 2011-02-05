@@ -9,6 +9,8 @@
 #include <mpllibs/error/lambda.h>
 #include <mpllibs/error/bind_.h>
 #include <mpllibs/error/bind.h>
+#include <mpllibs/error/let.h>
+#include <mpllibs/error/return_.h>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
@@ -19,10 +21,10 @@ namespace mpllibs
   namespace error
   {
     #ifndef DO_MAX_ARGUMENT
-      #define DO_MAX_ARGUMENT 9
+      #define DO_MAX_ARGUMENT 8
     #endif
     
-    #if DO_MAX_ARGUMENT + 1 > LET_MAX_TEMPLATE_ARGUMENT
+    #if DO_MAX_ARGUMENT + 2 > LET_MAX_TEMPLATE_ARGUMENT
       #error LET_MAX_TEMPLATE_ARGUMENT not big enough
     #endif
     
@@ -50,6 +52,57 @@ namespace mpllibs
       )
     >
     struct do_impl;
+    
+    /*
+     * do_return
+     */
+    template <class>
+    struct do_return;
+
+    /*
+     * do_return substitution
+     */
+    // I can't use let, because I need to stop at nested do_'s
+    // even though it is the same solution
+    template <class monad, class t>
+    struct do_substitute : mpllibs::error::util::id<t> {};
+    
+    template <class monad, class t>
+    struct do_substitute<monad, do_return<t> > :
+      mpllibs::error::util::id<mpllibs::error::return_<monad, t> >
+    {};
+
+    #ifdef DO_CLASS
+      #error DO_CLASS alread defined
+    #endif
+    #define DO_CLASS(z, n, unused) \
+      BOOST_PP_COMMA_IF(n) class
+    
+    #ifdef DO_REC_CASE
+      #error DO_REC_CASE alread defined
+    #endif
+    #define DO_REC_CASE(z, n, unused) \
+      BOOST_PP_COMMA_IF(n) \
+      typename mpllibs::error::do_substitute<monad, x##n>::type
+
+    #ifdef DO_TEMPLATE_CASE
+      #error DO_TEMPLATE_CASE already defined
+    #endif
+    #define DO_TEMPLATE_CASE(z, n, unused) \
+      template < \
+        class monad, \
+        template<BOOST_PP_REPEAT(n, DO_CLASS, ~) > class t, \
+        BOOST_PP_ENUM_PARAMS(n, class x) \
+      > \
+      struct do_substitute<monad, t<BOOST_PP_ENUM_PARAMS(n, x)> > : \
+        mpllibs::error::util::id< t< BOOST_PP_REPEAT(n, DO_REC_CASE, ~) > > \
+      {};
+    
+    BOOST_PP_REPEAT_FROM_TO(1, LET_MAX_TEMPLATE_ARGUMENT, DO_TEMPLATE_CASE, ~)
+
+    #undef DO_TEMPLATE_CASE
+    #undef DO_CLASS
+    #undef DO_REC_CASE
 
     /*
      * set
@@ -172,6 +225,11 @@ namespace mpllibs
     /*
      * do_
      */
+    #ifdef DO_ARG
+      #error DO_ARG already defined
+    #endif
+    #define DO_ARG(z, n, unused) , typename do_substitute<monad, e##n>::type
+    
     template <class monad>
     struct do_
     {
@@ -183,9 +241,14 @@ namespace mpllibs
         )
       >
       struct apply :
-        mpllibs::error::do_impl<monad, BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)>
+        mpllibs::error::do_impl<
+          monad
+          BOOST_PP_REPEAT(DO_MAX_ARGUMENT, DO_ARG, ~)
+        >
       {};
     };
+    
+    #undef DO_ARG
   }
 }
 
