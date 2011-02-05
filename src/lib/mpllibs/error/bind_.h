@@ -7,7 +7,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/error/bind.h>
-#include <mpllibs/error/util/id.h>
 
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply.hpp>
@@ -17,14 +16,15 @@ namespace mpllibs
 {
   namespace error
   {
-    template <class>
+    template <class monad>
     struct bind__impl
     {
       template <class a, class b>
       struct apply :
-        mpllibs::error::bind<
-          mpllibs::error::util::id<a>,
-          mpllibs::error::util::id<boost::mpl::always<b> >
+        boost::mpl::apply<
+          mpllibs::error::bind_impl<monad>,
+          a,
+          boost::mpl::always<b>
         >
       {};
     };

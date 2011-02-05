@@ -73,15 +73,24 @@ namespace mpllibs
         typename boost::is_same<
           mpllibs::error::Exception_tag,
           typename boost::mpl::tag<
-            typename DO<BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)>::type
+            typename
+              DO<mpllibs::error::ExceptionMonad,
+                BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)
+              >::type
           >::type
         >::type,
         mpllibs::error::impl::was_exception<
-          typename DO<BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)>::type
+          typename
+            DO<mpllibs::error::ExceptionMonad,
+              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)
+            >::type
         >,
         mpllibs::error::impl::skip_further_catches<
           // NoException evaluates to the wrapped value
-          typename DO<BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)>::type
+          typename
+            DO<mpllibs::error::ExceptionMonad,
+              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)
+            >::type
         >
       >::type
     {};

@@ -9,6 +9,9 @@
 #include <mpllibs/error/bind.h>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/tag.hpp>
+
+#include <boost/type_traits/is_same.hpp>
 
 namespace
 {
@@ -100,18 +103,26 @@ namespace mpllibs
   namespace error
   {
     template <>
-    struct bind_impl<right_tag>
+    struct bind_impl<either_tag>
     {
       template <class a, class f>
-      struct apply : boost::mpl::apply<f, a> {};
+      struct apply :
+        boost::mpl::if_<
+          typename boost::is_same<
+            right_tag,
+            typename boost::mpl::tag<a>::type
+          >::type,
+          boost::mpl::apply<f, a>,
+          a
+        >::type
+      {};
     };
-
+    
     template <>
-    struct bind_impl<left_tag>
-    {
-      template <class a, class f>
-      struct apply : a {};
-    };
+    struct bind_impl<right_tag> : mpllibs::error::bind_impl<either_tag> {};
+  
+    template <>
+    struct bind_impl<left_tag> : mpllibs::error::bind_impl<either_tag> {};
   }
 }
 

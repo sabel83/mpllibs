@@ -12,6 +12,9 @@
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/if.hpp>
+
+#include <boost/type_traits/is_same.hpp>
 
 namespace mpllibs
 {
@@ -100,24 +103,38 @@ namespace mpllibs
     template <class>
     struct bind_impl;
 
-    // Exception delegation
+    namespace impl
+    {
+      template <class exception>
+      struct propagate_exception
+      {
+        typedef exception type;
+      };
+      
+      template <class a, class f>
+      struct eval_next_step : boost::mpl::apply<f, typename a::type> {};
+    }
+
     template <>
     struct bind_impl<mpllibs::error::Exception_tag>
     {
       template <class a, class f>
-      struct apply
-      {
-        typedef a type;
-      };
+      struct apply :
+        boost::mpl::if_<
+          typename boost::is_same<
+            mpllibs::error::Exception_tag,
+            typename boost::mpl::tag<a>::type
+          >::type,
+          mpllibs::error::impl::propagate_exception<a>,
+          mpllibs::error::impl::eval_next_step<a, f>
+        >::type
+      {};
     };
     
-    // Normal evaluation
     template <>
-    struct bind_impl<mpllibs::error::NoException_tag>
-    {
-      template <class a, class f>
-      struct apply : boost::mpl::apply<f, typename a::type> {};
-    };
+    struct bind_impl<mpllibs::error::NoException_tag> :
+      mpllibs::error::bind_impl<mpllibs::error::Exception_tag>
+    {};
   }
 }
 
