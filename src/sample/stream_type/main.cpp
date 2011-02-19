@@ -77,5 +77,8 @@ int main()
     boost::mpl::vector_c<char, 'h', 'e', 'l', 'l', 'o'>
   >::run(cout) << endl;
   mpllibs::metatest::to_stream<boost::mpl::vector<> >::run(cout) << endl;
+  mpllibs::metatest::to_stream<boost::mpl::_1>::run(cout) << endl;
+  mpllibs::metatest::to_stream<boost::mpl::apply<int, double> >::run(cout)
+    << endl;
 }
 

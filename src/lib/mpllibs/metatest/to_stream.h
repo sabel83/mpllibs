@@ -6,37 +6,75 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/mpl/integral_c.hpp>
-
-#include <boost/mpl/void.hpp>
-#include <boost/mpl/string.hpp>
-#include <boost/mpl/vector.hpp>
-#include <boost/mpl/list.hpp>
-#include <boost/mpl/aux_/range_c/tag.hpp>
-
-#include <boost/mpl/deref.hpp>
-#include <boost/mpl/next.hpp>
-#include <boost/mpl/if.hpp>
-#include <boost/mpl/begin.hpp>
-#include <boost/mpl/end.hpp>
-#include <boost/mpl/front.hpp>
-#include <boost/mpl/empty.hpp>
-
-#include <boost/mpl/fold.hpp>
-#include <boost/mpl/less.hpp>
-#include <boost/mpl/less_equal.hpp>
-#include <boost/mpl/greater.hpp>
-#include <boost/mpl/greater_equal.hpp>
-#include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/not_equal_to.hpp>
-
-#include <boost/mpl/for_each.hpp>
-
+#include <boost/mpl/accumulate.hpp>
 #include <boost/mpl/and.hpp>
-#include <boost/mpl/or.hpp>
-#include <boost/mpl/not.hpp>
-
+#include <boost/mpl/aux_/range_c/tag.hpp>
+#include <boost/mpl/base.hpp>
+#include <boost/mpl/begin.hpp>
+#include <boost/mpl/bitand.hpp>
+#include <boost/mpl/bitwise.hpp>
+#include <boost/mpl/contains.hpp>
+#include <boost/mpl/copy_if.hpp>
+#include <boost/mpl/count.hpp>
+#include <boost/mpl/count_if.hpp>
+#include <boost/mpl/deref.hpp>
+#include <boost/mpl/empty.hpp>
+#include <boost/mpl/empty_sequence.hpp>
+#include <boost/mpl/end.hpp>
+#include <boost/mpl/equal.hpp>
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/erase.hpp>
+#include <boost/mpl/erase_key.hpp>
+#include <boost/mpl/filter_view.hpp>
+#include <boost/mpl/find.hpp>
+#include <boost/mpl/find_if.hpp>
+#include <boost/mpl/fold.hpp>
+#include <boost/mpl/for_each.hpp>
+#include <boost/mpl/front.hpp>
+#include <boost/mpl/greater_equal.hpp>
+#include <boost/mpl/greater.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/inherit.hpp>
+#include <boost/mpl/inherit_linearly.hpp>
+#include <boost/mpl/insert.hpp>
+#include <boost/mpl/insert_range.hpp>
+#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/iterator_category.hpp>
+#include <boost/mpl/key_type.hpp>
+#include <boost/mpl/less_equal.hpp>
+#include <boost/mpl/less.hpp>
+#include <boost/mpl/list.hpp>
+#include <boost/mpl/lower_bound.hpp>
+#include <boost/mpl/max_element.hpp>
+#include <boost/mpl/min_element.hpp>
+#include <boost/mpl/modulus.hpp>
+#include <boost/mpl/next.hpp>
+#include <boost/mpl/not_equal_to.hpp>
+#include <boost/mpl/not.hpp>
+#include <boost/mpl/order.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/mpl/partition.hpp>
+#include <boost/mpl/quote.hpp>
+#include <boost/mpl/remove.hpp>
+#include <boost/mpl/remove_if.hpp>
+#include <boost/mpl/replace.hpp>
+#include <boost/mpl/replace_if.hpp>
+#include <boost/mpl/reverse.hpp>
+#include <boost/mpl/reverse_iter_fold.hpp>
+#include <boost/mpl/sizeof.hpp>
+#include <boost/mpl/sort.hpp>
+#include <boost/mpl/string.hpp>
+#include <boost/mpl/times.hpp>
+#include <boost/mpl/transform.hpp>
+#include <boost/mpl/transform_view.hpp>
+#include <boost/mpl/unique.hpp>
+#include <boost/mpl/unpack_args.hpp>
+#include <boost/mpl/upper_bound.hpp>
+#include <boost/mpl/value_type.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/void.hpp>
+#include <boost/mpl/zip_view.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
@@ -458,96 +496,17 @@ namespace mpllibs
         return o_ << "void_";
       }
     };
-    
-    /* Introspection into nullary metafunctions */
-    template <class a, class b>
-    struct to_stream<boost::is_same<a, b> >
+
+    template <int n>
+    struct to_stream<boost::mpl::arg<n> >
     {
       typedef to_stream type;
       
       static std::ostream& run(std::ostream& o_)
       {
-        o_ << "is_same<";
-        mpllibs::metatest::to_stream<a>::run(o_) << ", ";
-        mpllibs::metatest::to_stream<b>::run(o_) << ">";
-        return o_;
+        return o_ << "_" << n;
       }
     };
-
-    #ifdef DEFINE_INTRO_1
-      #error DEFINE_INTRO_1 already defined
-    #endif
-    #define DEFINE_INTRO_1(name) \
-      template <class a> \
-      struct to_stream<boost::mpl::name<a> > \
-      { \
-        typedef to_stream type; \
-        \
-        static std::ostream& run(std::ostream& o_) \
-        { \
-          o_ << #name "<"; \
-          mpllibs::metatest::to_stream<a>::run(o_) << ">"; \
-          return o_; \
-        } \
-      };
-
-    DEFINE_INTRO_1(not_)
-    DEFINE_INTRO_1(identity)
-
-    #undef DEFINE_INTRO_1
-
-    #ifdef DEFINE_INTRO_2
-      #error DEFINE_INTRO_2 already defined
-    #endif
-    #define DEFINE_INTRO_2(name) \
-      template <class a, class b> \
-      struct to_stream<boost::mpl::name<a, b> > \
-      { \
-        typedef to_stream type; \
-        \
-        static std::ostream& run(std::ostream& o_) \
-        { \
-          o_ << #name "<"; \
-          mpllibs::metatest::to_stream<a>::run(o_) << ", "; \
-          mpllibs::metatest::to_stream<b>::run(o_) << ">"; \
-          return o_; \
-        } \
-      };
-
-    DEFINE_INTRO_2(less)
-    DEFINE_INTRO_2(less_equal)
-    DEFINE_INTRO_2(greater)
-    DEFINE_INTRO_2(greater_equal)
-    DEFINE_INTRO_2(equal_to)
-    DEFINE_INTRO_2(not_equal_to)
-    DEFINE_INTRO_2(and_)
-    DEFINE_INTRO_2(or_)
-
-    #undef DEFINE_INTRO_2
-
-    #ifdef DEFINE_INTRO_3
-      #error DEFINE_INTRO_3 already defined
-    #endif
-    #define DEFINE_INTRO_3(name) \
-      template <class a, class b, class c> \
-      struct to_stream<boost::mpl::name<a, b, c> > \
-      { \
-        typedef to_stream type; \
-        \
-        static std::ostream& run(std::ostream& o_) \
-        { \
-          o_ << #name "<"; \
-          mpllibs::metatest::to_stream<a>::run(o_) << ", "; \
-          mpllibs::metatest::to_stream<b>::run(o_) << ", "; \
-          mpllibs::metatest::to_stream<c>::run(o_) << ">"; \
-          return o_; \
-        } \
-      };
-
-    DEFINE_INTRO_3(if_)
-    DEFINE_INTRO_3(eval_if)
-
-    #undef DEFINE_INTRO_3
   }
 }    
 
@@ -577,6 +536,36 @@ namespace mpllibs
 #endif
 #define DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(t) DEFINE_TO_STREAM_FOR_TYPE(t, #t)
 
+#ifdef DEFINE_TO_STREAM_FOR_TEMPLATE_N
+  #error DEFINE_TO_STREAM_FOR_TEMPLATE_N already defined
+#endif
+#define DEFINE_TO_STREAM_FOR_TEMPLATE_N(z, n, unused) \
+  mpllibs::metatest::to_stream<a##n>::run(o_ << ", ");
+
+#ifdef DEFINE_TO_STREAM_FOR_TEMPLATE
+  #error DEFINE_TO_STREAM_FOR_TEMPLATE already defined
+#endif
+#define DEFINE_TO_STREAM_FOR_TEMPLATE(n, t, name) \
+  namespace mpllibs \
+  { \
+    namespace metatest \
+    { \
+      template <BOOST_PP_ENUM_PARAMS(n, class a)> \
+      struct to_stream<t<BOOST_PP_ENUM_PARAMS(n, a)> > \
+      { \
+        typedef to_stream type; \
+        \
+        static std::ostream& run(std::ostream& o_) \
+        { \
+          mpllibs::metatest::to_stream<a0>::run(o_ << name << "<"); \
+          BOOST_PP_REPEAT_FROM_TO(1, n, DEFINE_TO_STREAM_FOR_TEMPLATE_N, ~) \
+          o_ << ">"; \
+          return o_; \
+        } \
+      }; \
+    } \
+  }
+
 DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(char)
 DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(signed char)
 DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(unsigned char)
@@ -596,6 +585,165 @@ DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(double)
 DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(bool)
 
 DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(void)
+
+DEFINE_TO_STREAM_FOR_TYPE(boost::mpl::empty_sequence, "empty_sequence")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::filter_view, "filter_view")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::iterator_range, "iterator_range")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::joint_view, "joint_view")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::single_view, "single_view")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::transform_view, "transform_view")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::zip_view, "zip_view")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::at, "at")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::back, "back")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::begin, "begin")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::clear, "clear")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::empty, "empty")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::end, "end")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::erase, "erase")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::erase_key, "erase_key")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::front, "front")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::has_key, "has_key")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::insert, "insert")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::insert_range, "insert_range")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::is_sequence, "is_sequence")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::key_type, "key_type")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::order, "order")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::pop_back, "pop_back")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::pop_front, "pop_front")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::push_back, "push_back")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::push_front, "push_front")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::sequence_tag, "sequence_tag")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::size, "size")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::value_type, "value_type")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::advance, "advance")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::distance, "distance")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::next, "next")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::prior, "prior")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::deref, "deref")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::iterator_category, "iterator_category")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::back_inserter, "back_inserter")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::front_inserter, "front_inserter")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::inserter, "inserter")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::fold, "fold")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::iter_fold, "iter_fold")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_fold, "reverse_fold")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_iter_fold, "reverse_iter_fold")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::accumulate, "accumulate")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::find, "find")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::find_if, "find_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::contains, "contains")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::count, "count")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::count_if, "count_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::lower_bound, "lower_bound")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::upper_bound, "upper_bound")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::min_element, "min_element")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::max_element, "max_element")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::equal, "equal")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::copy, "copy")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::copy_if, "copy_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::transform, "transform")
+DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::replace, "replace")
+DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::replace_if, "replace_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::remove, "remove")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::remove_if, "remove_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::unique, "unique")
+DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::partition, "partition")
+DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::stable_partition, "stable_partition")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::sort, "sort")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::reverse, "reverse")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::reverse_copy, "reverse_copy")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_copy_if, "reverse_copy_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_transform, "reverse_transform")
+DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::reverse_replace, "reverse_replace")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_replace_if, "reverse_replace_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_remove, "reverse_remove")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_remove_if, "reverse_remove_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_unique, "reverse_unique")
+DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::reverse_partition, "reverse_partition")
+DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::reverse_stable_partition, "reverse_stable_partition")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::if_, "if_")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::eval_if, "eval_if")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::unpack_args, "unpack_args")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::lambda, "lambda")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::protect, "protect")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::modulus, "modulus")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::negate, "negate")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::less, "less")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::less_equal, "less_equal")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::greater, "greater")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::greater_equal, "greater_equal")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::equal_to, "equal_to")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::not_equal_to, "not_equal_to")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::not_, "not_")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::shift_left, "shift_left")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::shift_right, "shift_right")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::first, "first")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::second, "second")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::base, "base")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::c_str, "c_str")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::identity, "identity")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::always, "always")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::inherit, "inherit")
+DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::inherit_linearly, "inherit_linearly")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::numeric_cast, "numeric_cast")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::min, "min")
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::max, "max")
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::sizeof_, "sizeof_")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::pair, "pair")
+
+DEFINE_TO_STREAM_FOR_TYPE(boost::mpl::empty_base, "empty_base")
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::is_same, "is_same")
+
+#ifdef MULTI_ARG_METAFUNCTION
+  #error MULTI_ARG_METAFUNCTION already defined
+#endif
+#define MULTI_ARG_METAFUNCTION(z, n, name) \
+  DEFINE_TO_STREAM_FOR_TEMPLATE(n, boost::mpl::name, #name)
+
+#ifdef DEF_MULTI_ARG
+  #error DEF_MULTI_ARG already defined
+#endif
+#define DEF_MULTI_ARG(name) \
+  BOOST_PP_REPEAT_FROM_TO( \
+    1, \
+    BOOST_MPL_LIMIT_METAFUNCTION_ARITY, \
+    MULTI_ARG_METAFUNCTION, \
+    name \
+  )
+  
+DEF_MULTI_ARG(apply)
+DEF_MULTI_ARG(bind)
+DEF_MULTI_ARG(plus)
+DEF_MULTI_ARG(minus)
+DEF_MULTI_ARG(times)
+DEF_MULTI_ARG(divides)
+DEF_MULTI_ARG(and_)
+DEF_MULTI_ARG(or_)
+DEF_MULTI_ARG(bitand_)
+DEF_MULTI_ARG(bitor_)
+DEF_MULTI_ARG(bitxor_)
+
+#undef DEF_MULTI_ARG
+#undef MULTI_ARG_METAFUNCTION
+
 
 #endif
 
