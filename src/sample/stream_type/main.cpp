@@ -14,6 +14,7 @@
 
 class CustomTestClass;
 class OtherCustomTestClass;
+class DefinedCustomTestClass {};
 
 class CustomTestClassWithLongName;
 
@@ -26,6 +27,7 @@ int main()
   using std::endl;
   
   mpllibs::metatest::to_stream<OtherCustomTestClass>::run(cout) << endl;
+  mpllibs::metatest::to_stream<DefinedCustomTestClass>::run(cout) << endl;
   mpllibs::metatest::to_stream<CustomTestClassWithLongName>::run(cout) << endl;
 
   mpllibs::metatest::to_stream<int>::run(cout) << endl;

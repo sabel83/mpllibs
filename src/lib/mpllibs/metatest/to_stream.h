@@ -14,7 +14,6 @@
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/aux_/range_c/tag.hpp>
 
-#include <boost/type_traits/is_same.hpp>
 #include <boost/mpl/deref.hpp>
 #include <boost/mpl/next.hpp>
 #include <boost/mpl/if.hpp>
@@ -24,8 +23,22 @@
 #include <boost/mpl/empty.hpp>
 
 #include <boost/mpl/fold.hpp>
+#include <boost/mpl/less.hpp>
+#include <boost/mpl/less_equal.hpp>
+#include <boost/mpl/greater.hpp>
+#include <boost/mpl/greater_equal.hpp>
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/not_equal_to.hpp>
 
 #include <boost/mpl/for_each.hpp>
+
+#include <boost/mpl/and.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/mpl/not.hpp>
+
+#include <boost/mpl/identity.hpp>
+
+#include <boost/type_traits/is_same.hpp>
 
 #include <iostream>
 
@@ -45,6 +58,7 @@ namespace mpllibs
       
         static std::ostream& run(std::ostream& o_)
         {
+          // I can't use typeid, because it breaks for non-defined types
           return o_ << "???";
         }
       };
@@ -444,6 +458,96 @@ namespace mpllibs
         return o_ << "void_";
       }
     };
+    
+    /* Introspection into nullary metafunctions */
+    template <class a, class b>
+    struct to_stream<boost::is_same<a, b> >
+    {
+      typedef to_stream type;
+      
+      static std::ostream& run(std::ostream& o_)
+      {
+        o_ << "is_same<";
+        mpllibs::metatest::to_stream<a>::run(o_) << ", ";
+        mpllibs::metatest::to_stream<b>::run(o_) << ">";
+        return o_;
+      }
+    };
+
+    #ifdef DEFINE_INTRO_1
+      #error DEFINE_INTRO_1 already defined
+    #endif
+    #define DEFINE_INTRO_1(name) \
+      template <class a> \
+      struct to_stream<boost::mpl::name<a> > \
+      { \
+        typedef to_stream type; \
+        \
+        static std::ostream& run(std::ostream& o_) \
+        { \
+          o_ << #name "<"; \
+          mpllibs::metatest::to_stream<a>::run(o_) << ">"; \
+          return o_; \
+        } \
+      };
+
+    DEFINE_INTRO_1(not_)
+    DEFINE_INTRO_1(identity)
+
+    #undef DEFINE_INTRO_1
+
+    #ifdef DEFINE_INTRO_2
+      #error DEFINE_INTRO_2 already defined
+    #endif
+    #define DEFINE_INTRO_2(name) \
+      template <class a, class b> \
+      struct to_stream<boost::mpl::name<a, b> > \
+      { \
+        typedef to_stream type; \
+        \
+        static std::ostream& run(std::ostream& o_) \
+        { \
+          o_ << #name "<"; \
+          mpllibs::metatest::to_stream<a>::run(o_) << ", "; \
+          mpllibs::metatest::to_stream<b>::run(o_) << ">"; \
+          return o_; \
+        } \
+      };
+
+    DEFINE_INTRO_2(less)
+    DEFINE_INTRO_2(less_equal)
+    DEFINE_INTRO_2(greater)
+    DEFINE_INTRO_2(greater_equal)
+    DEFINE_INTRO_2(equal_to)
+    DEFINE_INTRO_2(not_equal_to)
+    DEFINE_INTRO_2(and_)
+    DEFINE_INTRO_2(or_)
+
+    #undef DEFINE_INTRO_2
+
+    #ifdef DEFINE_INTRO_3
+      #error DEFINE_INTRO_3 already defined
+    #endif
+    #define DEFINE_INTRO_3(name) \
+      template <class a, class b, class c> \
+      struct to_stream<boost::mpl::name<a, b, c> > \
+      { \
+        typedef to_stream type; \
+        \
+        static std::ostream& run(std::ostream& o_) \
+        { \
+          o_ << #name "<"; \
+          mpllibs::metatest::to_stream<a>::run(o_) << ", "; \
+          mpllibs::metatest::to_stream<b>::run(o_) << ", "; \
+          mpllibs::metatest::to_stream<c>::run(o_) << ">"; \
+          return o_; \
+        } \
+      };
+
+    DEFINE_INTRO_3(if_)
+    DEFINE_INTRO_3(eval_if)
+
+    #undef DEFINE_INTRO_3
   }
 }    
 
