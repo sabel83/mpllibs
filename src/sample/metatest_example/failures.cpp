@@ -38,7 +38,7 @@ namespace
   typedef
     boost::mpl::equal_to<
       boost::mpl::int_<11>,
-      boost::mpl::plus<boost::mpl::int_<13>, boost::mpl::int_<27> >
+      boost::mpl::plus<boost::mpl::int_<13>, boost::mpl::int_<27> >::type
     >
     TestFailWithToEqual;
 
