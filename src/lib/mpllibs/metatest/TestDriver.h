@@ -10,8 +10,15 @@
 #include <mpllibs/metatest/get_type_value.h>
 #include <mpllibs/metatest/has_type.h>
 #include <mpllibs/metatest/TestResult.h>
+#include <mpllibs/metatest/to_stream.h>
+
+#include <boost/mpl/equal_to.hpp>
+
+#include <boost/type_traits/is_same.hpp>
 
 #include <list>
+#include <iostream>
+#include <sstream>
 
 namespace mpllibs
 {
@@ -44,6 +51,9 @@ namespace mpllibs
             TestFunctor,
             boost::mpl::false_
           >::type::value;
+        
+        std::ostringstream s;
+        mpllibs::metatest::to_stream<TestFunctor>::run(s);
 
         mpllibs::metatest::TestDriver::add(
           TestResult(
@@ -52,8 +62,13 @@ namespace mpllibs
             location_,
             hasType && hasValue && result == expectedResult,
             hasType ?
-              (hasValue?"":"Result of test case has no nested boolean value") :
-              "Test case has no nested type"
+              (
+                hasValue ?
+                  s.str() :
+                  std::string("Result of test case has no nested boolean value")
+              )
+              :
+              std::string("Test case has no nested type")
           )
         );
       }
