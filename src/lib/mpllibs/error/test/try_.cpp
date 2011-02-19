@@ -138,6 +138,18 @@ namespace
       ::type
     >
     TestExceptionInSet;
+
+  typedef
+    boost::mpl::equal_to<
+      int13,
+      TRY<
+        THROW<e1>,
+        RETURN<int1>
+      >
+      ::catch_<mpllibs::error::catch_any, x, boost::mpl::identity<int13> >
+      ::type
+    >
+    TestCatchAny;
 }
 
 MPLLIBS_ADD_TEST(suite, TestNoException)
@@ -148,5 +160,6 @@ MPLLIBS_ADD_TEST(suite, TestSecondCatch)
 MPLLIBS_ADD_TEST(suite, TestExceptionPropagation)
 MPLLIBS_ADD_TEST(suite, TestExecutionSequence)
 MPLLIBS_ADD_TEST(suite, TestExceptionInSet)
+MPLLIBS_ADD_TEST(suite, TestCatchAny)
 
 

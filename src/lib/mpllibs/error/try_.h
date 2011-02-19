@@ -13,6 +13,7 @@
 
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/or.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
@@ -24,6 +25,11 @@ namespace mpllibs
       #error TRY already defined
     #endif
     #define TRY mpllibs::error::try_
+
+    struct catch_any
+    {
+      typedef catch_any type;
+    };
 
     namespace impl
     {
@@ -45,9 +51,12 @@ namespace mpllibs
         template <class exception_tag, class name, class body>
         struct catch_ :
           boost::mpl::if_<
-            boost::is_same<
-              exception_tag,
-              typename boost::mpl::tag<typename _exception_data::type>::type
+            boost::mpl::or_<
+              boost::is_same<
+                exception_tag,
+                typename boost::mpl::tag<typename _exception_data::type>::type
+              >,
+              boost::is_same<exception_tag, mpllibs::error::catch_any>
             >,
             mpllibs::error::impl::skip_further_catches<
               typename mpllibs::error::let<
