@@ -16,6 +16,8 @@
 
 #include <boost/type_traits/is_same.hpp>
 
+#include <iostream>
+
 namespace mpllibs
 {
   namespace error
@@ -47,8 +49,37 @@ namespace mpllibs
         typedef Data type;
       };
     };
+  }
+  
+  namespace metatest
+  {
+    template <class t>
+    struct to_stream;
     
-    
+    template <class t>
+    struct to_stream_impl;
+
+    template <>
+    struct to_stream_impl<mpllibs::error::Exception_tag>
+    {
+      template <class e>
+      struct apply
+      {
+        typedef apply type;
+      
+        static std::ostream& run(std::ostream& o_)
+        {
+          return
+            mpllibs::metatest::to_stream<
+              typename mpllibs::error::get_data<e>::type
+            >::run(o_ << "Exception<") << ">";
+        }
+      };
+    };
+  }
+  
+  namespace error
+  {
     /*
      * The Exception monad
      * This is modeled along the Either monad of Haskell
