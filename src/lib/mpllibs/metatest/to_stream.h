@@ -395,6 +395,7 @@ namespace mpllibs
       }
     };
     
+    // pre-condition: !empty<seq>
     template <class seq>
     struct to_stream_sequence_begin<seq, boost::mpl::integral_c_tag>
     {
@@ -404,12 +405,15 @@ namespace mpllibs
       {
         using boost::mpl::begin;
         using boost::mpl::end;
+        using boost::mpl::front;
+        
+        typedef typename front<seq>::type::value_type v_type;
         
         o_ << "_c<";
-        mpllibs::metatest::to_stream<typename seq::value_type>::run(o_);
+        mpllibs::metatest::to_stream<v_type>::run(o_);
         o_ << ", ";
         
-        if (boost::is_same<char, typename seq::value_type>::type::value)
+        if (boost::is_same<char, v_type>::type::value)
         {
           o_ << '\"';
           boost::mpl::for_each<seq>(mpllibs::metatest::CharacterPrinter(o_));
@@ -559,8 +563,33 @@ namespace mpllibs
         { \
           mpllibs::metatest::to_stream<a0>::run(o_ << name << "<"); \
           BOOST_PP_REPEAT_FROM_TO(1, n, DEFINE_TO_STREAM_FOR_TEMPLATE_N, ~) \
-          o_ << ">"; \
-          return o_; \
+          return o_ << ">"; \
+        } \
+      }; \
+    } \
+  }
+
+#ifdef DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION
+  #error DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION already defined
+#endif
+#define DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(n, t, name) \
+  namespace mpllibs \
+  { \
+    namespace metatest \
+    { \
+      template <BOOST_PP_ENUM_PARAMS(n, class a)> \
+      struct to_stream<t<BOOST_PP_ENUM_PARAMS(n, a)> > \
+      { \
+        typedef to_stream type; \
+        \
+        static std::ostream& run(std::ostream& o_) \
+        { \
+          o_ << name << "<???"; \
+          for (int i = 1; i < n; ++i) \
+          { \
+            o_ << ", ???"; \
+          } \
+          return o_ << ">"; \
         } \
       }; \
     } \
@@ -594,87 +623,87 @@ DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::single_view, "single_view")
 DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::transform_view, "transform_view")
 DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::zip_view, "zip_view")
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::at, "at")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::back, "back")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::begin, "begin")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::clear, "clear")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::empty, "empty")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::end, "end")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::erase, "erase")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::erase_key, "erase_key")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::front, "front")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::has_key, "has_key")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::insert, "insert")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::insert_range, "insert_range")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::is_sequence, "is_sequence")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::key_type, "key_type")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::order, "order")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::pop_back, "pop_back")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::pop_front, "pop_front")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::push_back, "push_back")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::push_front, "push_front")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::sequence_tag, "sequence_tag")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::size, "size")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::value_type, "value_type")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::at, "at")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::back, "back")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::begin, "begin")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::clear, "clear")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::empty, "empty")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::end, "end")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::erase, "erase")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::erase_key, "erase_key")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::front, "front")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::has_key, "has_key")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::insert, "insert")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::insert_range, "insert_range")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::is_sequence, "is_sequence")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::key_type, "key_type")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::order, "order")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::pop_back, "pop_back")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::pop_front, "pop_front")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::push_back, "push_back")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::push_front, "push_front")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::sequence_tag, "sequence_tag")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::size, "size")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::value_type, "value_type")
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::advance, "advance")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::distance, "distance")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::next, "next")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::prior, "prior")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::deref, "deref")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::iterator_category, "iterator_category")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::advance, "advance")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::distance, "distance")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::next, "next")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::prior, "prior")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::deref, "deref")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::iterator_category, "iterator_category")
 
 DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::back_inserter, "back_inserter")
 DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::front_inserter, "front_inserter")
 DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::inserter, "inserter")
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::fold, "fold")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::iter_fold, "iter_fold")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_fold, "reverse_fold")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_iter_fold, "reverse_iter_fold")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::accumulate, "accumulate")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::fold, "fold")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::iter_fold, "iter_fold")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::reverse_fold, "reverse_fold")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::reverse_iter_fold, "reverse_iter_fold")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::accumulate, "accumulate")
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::find, "find")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::find_if, "find_if")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::contains, "contains")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::count, "count")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::count_if, "count_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::find, "find")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::find_if, "find_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::contains, "contains")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::count, "count")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::count_if, "count_if")
 DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::lower_bound, "lower_bound")
 DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::upper_bound, "upper_bound")
 DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::min_element, "min_element")
 DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::max_element, "max_element")
 DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::equal, "equal")
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::copy, "copy")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::copy_if, "copy_if")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::transform, "transform")
-DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::replace, "replace")
-DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::replace_if, "replace_if")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::remove, "remove")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::remove_if, "remove_if")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::unique, "unique")
-DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::partition, "partition")
-DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::stable_partition, "stable_partition")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::sort, "sort")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::reverse, "reverse")
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::reverse_copy, "reverse_copy")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_copy_if, "reverse_copy_if")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_transform, "reverse_transform")
-DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::reverse_replace, "reverse_replace")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_replace_if, "reverse_replace_if")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_remove, "reverse_remove")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_remove_if, "reverse_remove_if")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::reverse_unique, "reverse_unique")
-DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::reverse_partition, "reverse_partition")
-DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::reverse_stable_partition, "reverse_stable_partition")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::copy, "copy")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::copy_if, "copy_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::transform, "transform")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(4, boost::mpl::replace, "replace")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(4, boost::mpl::replace_if, "replace_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::remove, "remove")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::remove_if, "remove_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::unique, "unique")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(4, boost::mpl::partition, "partition")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(4, boost::mpl::stable_partition, "stable_partition")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::sort, "sort")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::reverse, "reverse")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::reverse_copy, "reverse_copy")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::reverse_copy_if, "reverse_copy_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::reverse_transform, "reverse_transform")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(4, boost::mpl::reverse_replace, "reverse_replace")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::reverse_replace_if, "reverse_replace_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::reverse_remove, "reverse_remove")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::reverse_remove_if, "reverse_remove_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::reverse_unique, "reverse_unique")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(4, boost::mpl::reverse_partition, "reverse_partition")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(4, boost::mpl::reverse_stable_partition, "reverse_stable_partition")
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::if_, "if_")
-DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::eval_if, "eval_if")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::if_, "if_")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::eval_if, "eval_if")
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::unpack_args, "unpack_args")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::unpack_args, "unpack_args")
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::lambda, "lambda")
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::protect, "protect")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::lambda, "lambda")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::protect, "protect")
 
 DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::modulus, "modulus")
 DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::negate, "negate")
@@ -697,7 +726,7 @@ DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::base, "base")
 
 DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::c_str, "c_str")
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::identity, "identity")
+DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::identity, "identity")
 DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::always, "always")
 DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::inherit, "inherit")
 DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::inherit_linearly, "inherit_linearly")
