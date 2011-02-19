@@ -67,14 +67,35 @@ namespace mpllibs
     /*
      * do_return substitution
      */
-    // I can't use let, because I need to stop at nested do_'s
-    // even though it is the same solution
+    // I can't use let, because I should not stop at let expressions.
+    // Nested do_'s are not important, since they should be used by
+    // accessing a nested apply template, and do_substitute doesn't
+    // recurse into that.
+    // Using boost::mpl::apply and do_ together is not supported
     template <class monad, class t>
     struct do_substitute : mpllibs::error::util::id<t> {};
-    
+
     template <class monad, class t>
     struct do_substitute<monad, do_return<t> > :
-      mpllibs::error::util::id<mpllibs::error::return_<monad, t> >
+      mpllibs::error::util::id<
+        mpllibs::error::return_<
+          monad,
+          typename mpllibs::error::do_substitute<monad, t>::type
+        >
+      >
+    {};
+    
+    // When an outer do_ has already substituted this do_return,
+    // we need to re-substitute it. I couldn't find a way of preventing
+    // substitution of inner do_'s do_returns.
+    template <class monad1, class monad2, class t>
+    struct do_substitute<monad1, mpllibs::error::return_<monad2, t> > :
+      mpllibs::error::util::id<
+        mpllibs::error::return_<
+          monad1,
+          typename mpllibs::error::do_substitute<monad1, t>::type
+        >
+      >
     {};
 
     #ifdef DO_CLASS
