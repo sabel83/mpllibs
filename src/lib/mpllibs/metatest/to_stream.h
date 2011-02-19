@@ -20,6 +20,10 @@
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/end.hpp>
+#include <boost/mpl/front.hpp>
+#include <boost/mpl/empty.hpp>
+
+#include <boost/mpl/fold.hpp>
 
 #include <boost/mpl/for_each.hpp>
 
@@ -222,9 +226,6 @@ namespace mpllibs
       {};
     };
 
-    template <class i, class end>
-    struct to_stream_sequence_impl;
-    
     struct to_stream_nothing
     {
       static std::ostream& run(std::ostream& o_)
@@ -232,6 +233,9 @@ namespace mpllibs
         return o_;
       }
     };
+
+    template <class i, class end>
+    struct to_stream_sequence_impl;
 
     template <class i, class end>
     struct to_stream_sequence :
@@ -260,6 +264,116 @@ namespace mpllibs
           );
       }
     };
+    
+
+    template <class i, class end>
+    struct to_stream_sequence_values_impl;
+
+    template <class i, class end>
+    struct to_stream_sequence_values :
+      boost::mpl::if_<
+        boost::is_same<i, end>,
+        mpllibs::metatest::to_stream_nothing,
+        mpllibs::metatest::to_stream_sequence_values_impl<i, end>
+      >::type
+    {};
+    
+    template <class i, class end>
+    struct to_stream_sequence_values_impl
+    {
+      static std::ostream& run(std::ostream& o_)
+      {
+        using boost::mpl::next;
+        using boost::mpl::deref;
+        using boost::is_same;
+        
+        typedef typename next<i>::type i_next;
+        
+        return
+          mpllibs::metatest::to_stream_sequence_values<i_next, end>::run(
+            o_
+              << deref<i>::type::value
+              << (is_same<i_next, end>::type::value ? "" : ", ")
+          );
+      }
+    };
+
+    struct no_common_tag
+    {
+      typedef no_common_tag type;
+    };
+    
+    // I can't use a lambda expression, because is_same is not lazy
+    struct common_tag_compare
+    {
+      template <class a, class b>
+      struct apply :
+        boost::mpl::if_<
+          boost::is_same<a, typename boost::mpl::tag<b>::type>,
+          a,
+          mpllibs::metatest::no_common_tag
+        >
+      {};
+    };
+    
+    template <class seq>
+    struct common_tag :
+      boost::mpl::fold<
+        seq,
+        typename boost::mpl::tag<typename boost::mpl::front<seq>::type>::type,
+        mpllibs::metatest::common_tag_compare
+      >
+    {};
+    
+    template <class seq, class common_tag>
+    struct to_stream_sequence_begin
+    {
+      typedef to_stream_sequence_begin type;
+      
+      static std::ostream& run(std::ostream& o_)
+      {
+        using boost::mpl::begin;
+        using boost::mpl::end;
+        
+        return
+          mpllibs::metatest::to_stream_sequence<
+            typename begin<seq>::type,
+            typename end<seq>::type
+          >::run(o_ << "<") << ">";
+      }
+    };
+    
+    template <class seq>
+    struct to_stream_sequence_begin<seq, boost::mpl::integral_c_tag>
+    {
+      typedef to_stream_sequence_begin type;
+      
+      static std::ostream& run(std::ostream& o_)
+      {
+        using boost::mpl::begin;
+        using boost::mpl::end;
+        
+        o_ << "_c<";
+        mpllibs::metatest::to_stream<typename seq::value_type>::run(o_);
+        o_ << ", ";
+        
+        if (boost::is_same<char, typename seq::value_type>::type::value)
+        {
+          o_ << '\"';
+          boost::mpl::for_each<seq>(mpllibs::metatest::CharacterPrinter(o_));
+          o_ << '\"';
+        }
+        else
+        {
+          mpllibs::metatest::to_stream_sequence_values<
+            typename begin<seq>::type,
+            typename end<seq>::type
+          >::run(o_);
+        }
+          
+        return o_ << ">";
+      }
+    };
 
     #ifdef TO_STREAM_SEQUENCE
       #error TO_STREAM_SEQUENCE already defined
@@ -268,19 +382,22 @@ namespace mpllibs
       template <> \
       struct to_stream_impl<tag> \
       { \
-        template <class T> \
+        template <class seq> \
         struct apply \
         { \
+          typedef apply type; \
+          \
           static std::ostream& run(std::ostream& o_) \
           { \
-            using boost::mpl::begin; \
-            using boost::mpl::end; \
-            \
             return \
-              mpllibs::metatest::to_stream_sequence< \
-                typename begin<T>::type, \
-                typename end<T>::type \
-              >::run(o_ << "mpl::" #name "<") << ">"; \
+              mpllibs::metatest::to_stream_sequence_begin< \
+                seq, \
+                typename boost::mpl::eval_if< \
+                  typename boost::mpl::empty<seq>::type, \
+                  mpllibs::metatest::no_common_tag, \
+                  mpllibs::metatest::common_tag<seq> \
+                >::type \
+              >::run(o_ << "mpl::" #name); \
           } \
         }; \
       };
