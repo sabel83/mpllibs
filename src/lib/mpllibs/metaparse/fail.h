@@ -6,16 +6,17 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/nothing.h>
+#include <mpllibs/metaparse/error.h>
 
 namespace mpllibs
 {
   namespace metaparse
   {
+    template <class msg>
     struct fail
     {
-      template <class S>
-      struct apply : mpllibs::metaparse::nothing {};
+      template <class s, class pos>
+      struct apply : mpllibs::metaparse::error<msg, pos> {};
     };
   }
 }

@@ -4,7 +4,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/first_of.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -20,54 +22,69 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::first_of<lit_h>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::first_of<lit_h>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_h
     >
     TestOneChar;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::first_of<lit_h, lit_e>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::first_of<lit_h, lit_e>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_h
     >
     TestTwoChars;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::first_of<lit_x, lit_e>,
-        str_hello
+        str_hello,
+        mpllibs::metaparse::start
       >
     >
     TestFirstFails;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::first_of<lit_h, lit_x>,
-        str_hello
+        str_hello,
+        mpllibs::metaparse::start
       >
     >
     TestSecondFails;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::first_of<lit_h, lit_e>, str_>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::first_of<lit_h, lit_e>,
+        str_,
+        mpllibs::metaparse::start
+      >
     >
     TestEmptyInput;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::first_of<lit_h, lit_e, lit_l>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::first_of<lit_h, lit_e, lit_l>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_h
     >
     TestThreeChars;

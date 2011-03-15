@@ -4,9 +4,11 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/always.h>
-#include <mpllibs/metaparse/nothing.h>
+#include <mpllibs/metaparse/error.h>
 #include <mpllibs/metaparse/digit.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -21,19 +23,23 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::always<mpllibs::metaparse::digit, int13>,
-        str_1
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::always<mpllibs::metaparse::digit, int13>,
+          str_1,
+          mpllibs::metaparse::start
+        >
+      >::type,
       int13
     >
     TestResult;
   
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::always<mpllibs::metaparse::digit, int13>,
-        str_a
+        str_a,
+        mpllibs::metaparse::start
       >
     >
     TestFail;

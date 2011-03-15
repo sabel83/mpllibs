@@ -14,7 +14,7 @@ Synopsis
 template <class c>
 struct return_
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -39,16 +39,19 @@ Header
 Expression semantics
 --------------------
 
-For any +c+ class and +s+ compile-time string
+For any +c+ class, +s+ compile-time string and +pos+ source position the
+following are equivalent
 
 --------------------------------------
-boost::mpl::apply<return_<c>, s>
+mpllibs::metaparse::get_result<boost::mpl::apply<return_<c>, s, pos> >::type
+
+c
 --------------------------------------
 
-is equivalent to
-
 --------------------------------------
-mpllibs::metaparse::util::pair<c, s>
+mpllibs::metaparse::get_remaining<boost::mpl::apply<return_<c>, s, pos> >::type
+
+s
 --------------------------------------
 
 Example

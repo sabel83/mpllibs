@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p, class result>
+template <class p, class result, class error_msg>
 struct except
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -39,25 +39,37 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +c+ class and +s+ compile-time string
+For any +p+ parser, +c+ class, +msg+ error message, +s+ compile-time string and
++pos+ source position the following are equivalent
 
 --------------------------------------
-boost::mpl::apply<except<p, c>, s>::type
+mpllibs::metaparse::get_result<except<p, c, msg>, s, pos>::type
+c
 --------------------------------------
 
-is equivalent to
+--------------------------------------
+mpllibs::metaparse::get_remaining<except<p, c, msg>, s, pos>::type
+s
+--------------------------------------
 
 --------------------------------------
-mpllibs::metaparse::util::pair<c, s>
+mpllibs::metaparse::get_position<except<p, c, msg>, s, pos>::type
+pos
 --------------------------------------
 
-when +p+ rejects the input and +nothing+ otherwise.
+when +p+ rejects the input. The result of the parser is an error with the error
+message +msg+ otherwise.
 
 Example
 -------
 
 --------------------------------------
-typedef except<mpllibs::metaparse::digit, int> not_digit;
+struct no_digit_expected
+{
+  typedef no_digit_expected type;
+};
+
+typedef except<mpllibs::metaparse::digit, int, no_digit_expected> not_digit;
 --------------------------------------
 
 include::../copyright[]

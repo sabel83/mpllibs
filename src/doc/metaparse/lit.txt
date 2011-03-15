@@ -14,7 +14,7 @@ Synopsis
 template <class c>
 struct lit
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -39,20 +39,20 @@ Header
 Expression semantics
 --------------------
 
-For any +c+ wrapped character and +s+ compile-time string
+For any +c+ wrapped character, +s+ compile-time string and +pos+ source position
 
 --------------------------------------
-boost::mpl::apply<lit<c>, s>
+boost::mpl::apply<lit<c>, s, pos>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::util::pair<boost::mpl::front<s>::type, boost::mpl::pop_front<s>::type>
+mpllibs::metaparse::one_char<s, pos>
 --------------------------------------
 
 when +s+ is not empty and the first character of +s+ is +c+.
-It is +nothing+ is otherwise.
+It is an error otherwise.
 
 Example
 -------

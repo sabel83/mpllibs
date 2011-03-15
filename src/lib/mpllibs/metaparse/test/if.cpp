@@ -5,6 +5,8 @@
 
 #include <mpllibs/metaparse/if.h>
 #include <mpllibs/metaparse/digit.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -20,20 +22,26 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::if_<mpllibs::metaparse::digit, int11, int13>,
-        str_1
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::if_<mpllibs::metaparse::digit, int11, int13>,
+          str_1,
+          mpllibs::metaparse::start
+        >
+      >::type,
       int11
     >
     TestTrue;
     
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::if_<mpllibs::metaparse::digit, int11, int13>,
-        str_a
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::if_<mpllibs::metaparse::digit, int11, int13>,
+          str_a,
+          mpllibs::metaparse::start
+        >
+      >::type,
       int13
     >
     TestFalse;

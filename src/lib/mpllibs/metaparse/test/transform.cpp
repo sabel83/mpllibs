@@ -4,7 +4,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/transform.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -23,28 +25,33 @@ namespace
     
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::transform<lit_h, transform>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::transform<lit_h, transform>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_x
     >
     TestNormalCase;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::transform<lit_x, transform>,
-        str_hello
+        str_hello,
+        mpllibs::metaparse::start
       >
     >
     TestParserFails;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::transform<lit_h, transform>,
-        str_
+        str_,
+        mpllibs::metaparse::start
       >
     >
     TestEmptyInput;

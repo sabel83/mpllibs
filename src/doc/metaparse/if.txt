@@ -14,7 +14,7 @@ Synopsis
 template <class p, class t, class f>
 struct if_
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -40,22 +40,23 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +t+ and +f+ classes and +s+ compile-time string
+For any +p+ parser, +t+ and +f+ classes, +s+ compile-time string and +pos+
+source position
 
 --------------------------------------
-boost::mpl::apply<if_<p, t, f>, s>::type
+mpllibs::metaparse::get_result<boost::mpl::apply<if_<p, t, f>, s, pos> >::type
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::util::pair<t, boost::mpl::apply<p, s>::type::second>
+t
 --------------------------------------
 
 when +p+ accepts the input and
 
 --------------------------------------
-mpllibs::metaparse::util::pair<f, s>
+f
 --------------------------------------
 
 otherwise.

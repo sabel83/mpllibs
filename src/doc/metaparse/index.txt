@@ -19,14 +19,42 @@ http://www.cs.lth.se/eda120/assignment4/parser.pdf[L. Andersson].
 What is a parser
 ----------------
 
-A parser is a template metafunction, taking the input text, a compile time
-string, as it's argument. The function parses a prefix of the input string.
-When the parsing is successful, it returns an +mpllibs::metaparse::util::pair+:
+A parser is a template metafunction taking the following arguments:
 
-* The first element of the pair is the result of parsing, this is up to the parser itself.
-* The second element of the pair is the remainder of the input string.
+* a postfix of the input text, a compile time string
+* a structure describing at which position of the entire input text the postfix begins at
 
-When there is a parsing error, the parser returns +mpllibs::metaparse::nothing+.
+The function parses a prefix of the input string.
+When the parsing is successful, it returns a structure with the tag
++mpllibs::metaparse::accept_tag+. The following functions can be used to query
+this result:
+
+* link:get_result.html[get_result]
+* link:get_remaining.html[get_remaining]
+* link:get_position.html[get_position]
+
+When there is a parsing error, the parser returns a structure with the tag
++mpllibs::metaparse::error_tag+.
+
+Source positions
+~~~~~~~~~~~~~~~~
+
+A source position is described using a compile-time data-structure. The
+following functions can be used to query it:
+
+* link:get_col.html[get_col]
+* link:get_line.html[get_line]
+
+The beginning of the input is +mpllibs::metaparse::start+, which requires
++<mpllibs/metaparse/source_position.h>+ to be included.
+
+Error handling
+~~~~~~~~~~~~~~
+
+An error is described using a compile-time data-structure. It contains
+information about the source position, where the error was detected and some
+description about the error. The description is a compile-time data-structure
+without any restriction.
 
 Some examples of simple parsers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,12 +70,12 @@ Complex parsers can be built by combining simple parsers. The parser library
 contains a number of parser combinators, that build new parsers from already
 existing ones.
 
-For example +mpllibs::metaparse::accept_when<Parser, Predicate>+ is a parser.
-It uses +Parser+
-to parse the input. When +Parser+ succeeds and +Predicate+ is +true+ for the
-result of parsing, +accept_when+ accepts the input and returns the same result
-+Parser+ returned. When +Parser+ fails to parse the input or it succeeds but
-+Predicate+ is +false+ for the result, +accept_when+ fails to parse the input.
+For example +mpllibs::metaparse::accept_when<Parser, Predicate, RejectErrorMsg>+
+is a parser. It uses +Parser+ to parse the input. When +Parser+ rejects the
+input, the combinator forwards the error +Parser+ emitted. When +Parser+
+is successfull, the combinator valiadtes the result using +Predicate+. If the
+predicate returns true, the combinator accepts the input, otherwise it generates
+an error with the message +RejectErrorMsg+.
 
 Having +accept_when+, +one_char+ can be used to build parsers that accept
 only digit characters, only whitespaces, etc. For example +digit+ accepts only
@@ -57,7 +85,8 @@ digit characters:
 typedef
   mpllibs::metaparse::accept_when<
     mpllibs::metaparse::one_char,
-    mpllibs::metaparse::util::is_digit
+    mpllibs::metaparse::util::is_digit,
+    mpllibs::metaparse::errors::digit_expected
   >
   digit;
 --------------------------------------
@@ -67,13 +96,15 @@ Sequence
 
 The result of a successful parsing is some value and the remaining string, that
 was not parsed. The remaining string can be processed by another parser. The
-parser library provides a parser combinator, +mpllibs::metaparse::sequence+, that
-takes two parsers as arguments and builds a new parser from them that:
+parser library provides a parser combinator, +mpllibs::metaparse::sequence+,
+that takes a number of parsers as arguments and builds a new parser from them
+that:
 
 * Parses the input using the first parser
 * If parsing succeeds, it parses the remaining string with the second parser
-* If both parsers suceed, the result is a pair of the two results
-* If any of the parsers fail, the whole parser fails
+* It continues applying the parsers in order as long as all of them succeed
+* If all of them succeded, it returns the list of results
+* If any of the parsers fail, the combinator fails as well and returns the error
 
 Repetition
 ~~~~~~~~~~
@@ -121,10 +152,24 @@ link:spaces.html[spaces] +
 link:token.html[token] +
 link:transform.html[transform] +
 
-Data structures
----------------
+Compile-time data structures and values
+---------------------------------------
 
-link:nothing.html[nothing] +
+Result of parsing +
+link:accept.html[accept] +
+link:error.html[error] +
+link:get_position.html[get_position] +
+link:get_remaining.html[get_remaining] +
+link:get_result.html[get_result] +
+link:is_error.html[is_error] +
+
+Source position +
+link:get_col.html[get_col] +
+link:get_line.html[get_line] +
+link:next_char.html[next_char] +
+link:next_line.html[next_line] +
+link:source_position.html[source_position] +
+link:start.html[start] +
 
 Metafunctions and metafunction classes
 --------------------------------------

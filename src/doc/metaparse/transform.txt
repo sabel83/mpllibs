@@ -14,7 +14,7 @@ Synopsis
 template <class p, class t>
 struct transform
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -40,23 +40,24 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +t+ metafunction class and +s+ compile-time string
+For any +p+ parser, +t+ metafunction class, +s+ compile-time string and +pos+
+source position
 
 --------------------------------------
-boost::mpl::apply<transform<p, t>, s>
+mpllibs::metaparse::get_result<boost::mpl::apply<transform<p, t>, s, pos> >::type
 --------------------------------------
 
-is equivalent to +nothing+ when +boost::mpl::apply<p, s>+
-is +nothing+. It is
+is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::util::pair<
-  boost::mpl::apply<t, boost::mpl::apply<p, s>::type::first>::type,
-  boost::mpl::apply<p, s>::type::second
->
+boost::mpl::apply<
+  t,
+  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
+>::type
 --------------------------------------
 
-otherwise.
+When +boost::mpl::apply<p, s, pos>+ doesn't return an error. The combinator
+returns the error otherwise.
 
 Example
 -------

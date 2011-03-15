@@ -6,11 +6,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/is_nothing.h>
-#include <mpllibs/metaparse/util/make_pair.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/accept.h>
 
 #include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/apply.hpp>
 
@@ -18,18 +17,17 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p, class result>
+    template <class p, class result, class error_msg>
     struct except
     {
-      template <class s>
+      template <class s, class pos>
       struct apply :
         boost::mpl::eval_if<
-          typename
-            mpllibs::metaparse::util::is_nothing<
-              boost::mpl::apply<p, s>
-            >::type,
-          mpllibs::metaparse::util::make_pair<boost::mpl::identity<result>, s>,
-          mpllibs::metaparse::nothing
+          typename mpllibs::metaparse::is_error<
+            boost::mpl::apply<p, s, pos>
+          >::type,
+          mpllibs::metaparse::accept<boost::mpl::identity<result>, s, pos>,
+          mpllibs::metaparse::error<error_msg, pos>
         >
       {};
     };

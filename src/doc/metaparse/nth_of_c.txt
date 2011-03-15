@@ -19,7 +19,7 @@ template <
 >
 struct nth_of_c
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -48,28 +48,17 @@ Header
 Expression semantics
 --------------------
 
-For any +p0+, ..., +pn+ parsers, +s+ compile-time string and +k+ integer, where
-+0 <= k < n+
+For any +p0+, ..., +pn+ parsers and +k+ integer, where +0 <= k < n+
 
 --------------------------------------
-boost::mpl::apply<nth_of_c<k, p0, ..., pn>, s>::type,
+nth_of_c<k, p0, ..., pn>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply<
-  pk,
-  // ...
-  boost::mpl::apply<
-    p1,
-    boost::mpl::apply<p0, s>::type::second
-  >::type::second
-  // ...
->::type::first
+mpllibs::metaparse::nth_of_c<boost::mpl::int_<k>, p0, ..., pn>
 --------------------------------------
-
-when +p0+ ... +pn+ all accept the input. It is +nothing+ otherwise.
 
 Example
 -------

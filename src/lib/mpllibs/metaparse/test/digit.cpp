@@ -4,8 +4,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/digit.h>
-#include <mpllibs/metaparse/nothing.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/error.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -20,21 +22,35 @@ namespace
   const mpllibs::metatest::TestSuite suite("digit");
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::digit, str_hello>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::digit,
+        str_hello,
+        mpllibs::metaparse::start
+      >
     >
     TestWithText;
   
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::digit, str_1983>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::digit,
+          str_1983,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_1
     >
     TestWithNumber;
   
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::digit, str_>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::digit,
+        str_,
+        mpllibs::metaparse::start
+      >
     >
     TestWithEmptyString;
 }

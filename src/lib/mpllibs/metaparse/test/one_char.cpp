@@ -4,7 +4,11 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/one_char.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
+#include <mpllibs/metaparse/get_remaining.h>
+#include <mpllibs/metaparse/get_position.h>
 
 #include "common.h"
 
@@ -20,27 +24,49 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::one_char,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::one_char,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_h
     >
     TestOnceCharForNonEmptyString;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::one_char,
-        boost::mpl::apply<mpllibs::metaparse::one_char, str_hello>::type::second
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::one_char,
+          mpllibs::metaparse::get_remaining<
+            boost::mpl::apply<
+              mpllibs::metaparse::one_char,
+              str_hello,
+              mpllibs::metaparse::start
+            >
+          >::type,
+          mpllibs::metaparse::get_position<
+            boost::mpl::apply<
+              mpllibs::metaparse::one_char,
+              str_hello,
+              mpllibs::metaparse::start
+            >
+          >::type
+        >
+      >::type,
       char_e
     >
     TestOnceCharForNonEmptyStringSecond;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::one_char, str_>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::one_char,
+        str_,
+        mpllibs::metaparse::start
+      >
     >
     TestOnceCharForEmptyString;
 }

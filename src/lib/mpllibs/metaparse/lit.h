@@ -15,11 +15,21 @@ namespace mpllibs
 {
   namespace metaparse
   {
+    namespace errors
+    {
+      template <class c>
+      struct literal_expected
+      {
+        typedef literal_expected type;
+      };
+    }
+  
     template <class c>
     struct lit :
       mpllibs::metaparse::accept_when<
         mpllibs::metaparse::one_char,
-        mpllibs::metaparse::util::is_char<c>
+        mpllibs::metaparse::util::is_char<c>,
+        mpllibs::metaparse::errors::literal_expected<c>
       >
     {};
   }

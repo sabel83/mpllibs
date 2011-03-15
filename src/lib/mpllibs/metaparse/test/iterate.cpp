@@ -4,7 +4,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/iterate.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -20,50 +22,63 @@ namespace
   const mpllibs::metatest::TestSuite suite("iterate");
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int13>,
-        str_
+        str_,
+        mpllibs::metaparse::start
       >
     >
     TestEmptyInput;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int0>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int0>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<>
     >
     Test0;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int1>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int1>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h>
     >
     Test1;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int2>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int2>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e>
     >
     Test2;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int3>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int3>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e, char_l>
     >
     Test3;

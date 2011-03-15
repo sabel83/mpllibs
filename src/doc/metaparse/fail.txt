@@ -11,9 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
+template <class msg>
 struct fail
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -37,13 +38,13 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string
+For any +msg+ error message and +s+ compile-time string
 
 --------------------------------------
-boost::mpl::apply<fail, s>::type
+boost::mpl::apply<fail<msg>, s>::type
 --------------------------------------
 
-is equivalent to +nothing+.
+returns an error with +msg+ as the error message.
 
 include::../copyright[]
 

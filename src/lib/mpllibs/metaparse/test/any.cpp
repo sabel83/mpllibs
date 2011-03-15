@@ -5,6 +5,8 @@
 
 #include <mpllibs/metaparse/any.h>
 #include <mpllibs/metaparse/letter.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
  
@@ -20,70 +22,91 @@ namespace
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any<mpllibs::metaparse::letter>,
-        str_
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any<mpllibs::metaparse::letter>,
+          str_,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<>
     >
     TestEmptyInput;
   
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any<mpllibs::metaparse::letter>,
-        chars0
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any<mpllibs::metaparse::letter>,
+          chars0,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<>
     >
     Test0;
   
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any<mpllibs::metaparse::letter>,
-        chars1
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any<mpllibs::metaparse::letter>,
+          chars1,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h>
     >
     Test1;
   
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any<mpllibs::metaparse::letter>,
-        chars2
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any<mpllibs::metaparse::letter>,
+          chars2,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e>
     >
     Test2;
   
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any<mpllibs::metaparse::letter>,
-        chars3
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any<mpllibs::metaparse::letter>,
+          chars3,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e, char_l>
     >
     Test3;
   
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any<mpllibs::metaparse::letter>,
-        chars4
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any<mpllibs::metaparse::letter>,
+          chars4,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e, char_l, char_l>
     >
     Test4;
   
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any<mpllibs::metaparse::letter>,
-        chars5
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any<mpllibs::metaparse::letter>,
+          chars5,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e, char_l, char_l, char_o>
     >
     Test5;

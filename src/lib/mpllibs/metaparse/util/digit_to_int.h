@@ -28,7 +28,7 @@ namespace mpllibs
       {
         template <class d>
         struct apply :
-          mpllibs::metaparse::util::impl::digit_to_int<d::value>
+          mpllibs::metaparse::util::impl::digit_to_int<d::type::value>
         {};
       };
     

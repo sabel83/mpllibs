@@ -6,7 +6,11 @@
 #include <mpllibs/metaparse/except.h>
 #include <mpllibs/metaparse/one_char.h>
 #include <mpllibs/metaparse/fail.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
+
+#include <mpllibs/metaparse/util/define_data.h>
 
 #include "common.h"
 
@@ -20,21 +24,35 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("except");
 
+  MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
+
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
-        mpllibs::metaparse::except<mpllibs::metaparse::one_char, int13>,
-        str_hello
+        mpllibs::metaparse::except<
+          mpllibs::metaparse::one_char,
+          int13,
+          test_error
+        >,
+        str_hello,
+        mpllibs::metaparse::start
       >
     >
     TestWithGood;
   
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::except<mpllibs::metaparse::fail, int13>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::except<
+            mpllibs::metaparse::fail<test_error>,
+            int13,
+            test_error
+          >,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       int13
     >
     TestWithBad;

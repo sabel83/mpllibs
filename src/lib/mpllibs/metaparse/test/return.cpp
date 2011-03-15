@@ -4,6 +4,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/return.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -19,17 +21,26 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::return_<char_x>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::return_<char_x>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_x
     >
     TestForNonEmptyString;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::return_<char_x>, str_>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::return_<char_x>,
+          str_,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_x
     >
     TestForEmptyString;

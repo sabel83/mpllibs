@@ -19,7 +19,7 @@ template <
 >
 struct nth_of
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -48,28 +48,31 @@ Header
 Expression semantics
 --------------------
 
-For any +p0+, ..., +pn+ parsers, +s+ compile-time string and +k+ nullary metafunction
-evaluating to an integer value, where this value is in the range +[0..n)+
+For any +p0+, ..., +pn+ parsers, +s+ compile-time string, +pos+ source position
+and +k+ nullary metafunction evaluating to an integer value, where this value is
+in the range +[0..n)+ the following are equivalent
 
 --------------------------------------
-boost::mpl::apply<nth_of<k, p0, ..., pn>, s>::type,
+mpllibs::metaparse::get_result<boost::mpl::apply<nth_of<k, p0, ..., pn>, s, pos> >
+
+boost::mpl::at_c<
+  mpllibs::metaparse::get_result<
+    boost::mpl::apply<mpllibs::metaparse::sequence<p0, ..., pn>, s, pos>
+  >,
+  n
+>
 --------------------------------------
 
-is equivalent to
-
 --------------------------------------
-boost::mpl::apply<
-  pk,
-  // ...
-  boost::mpl::apply<
-    p1,
-    boost::mpl::apply<p0, s>::type::second
-  >::type::second
-  // ...
->::type::first
+mpllibs::metaparse::get_remaining<boost::mpl::apply<nth_of<k, p0, ..., pn>, s, pos> >
+
+mpllibs::metaparse::get_remaning<
+  boost::mpl::apply<mpllibs::metaparse::sequence<p0, ..., pn>, s, pos>
+>
 --------------------------------------
 
-when +p0+ ... +pn+ all accept the input. It is +nothing+ otherwise.
+when +p0+ ... +pn+ all accept the input. The parser combinator returns an
+error otherwise.
 
 Example
 -------

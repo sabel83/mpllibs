@@ -4,7 +4,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/spaces.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_remaining.h>
 
 #include "common.h"
 
@@ -26,37 +28,61 @@ namespace
     str_____ello;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::spaces, str_hello>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::spaces,
+        str_hello,
+        mpllibs::metaparse::start
+      >
     >
     TestRejectNoSpace;
 
   typedef
     boost::mpl::not_<
-      mpllibs::metaparse::util::is_nothing<
-        boost::mpl::apply<mpllibs::metaparse::spaces, str__ello>
+      mpllibs::metaparse::is_error<
+        boost::mpl::apply<
+          mpllibs::metaparse::spaces,
+          str__ello,
+          mpllibs::metaparse::start
+        >
       >
     >
     TestAcceptOneSpace;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<mpllibs::metaparse::spaces, str__ello>::type::second,
+      mpllibs::metaparse::get_remaining<
+        boost::mpl::apply<
+          mpllibs::metaparse::spaces,
+          str__ello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       str_ello
     >
     TestAcceptOnlySpace;
 
   typedef
     boost::mpl::not_<
-      mpllibs::metaparse::util::is_nothing<
-        boost::mpl::apply<mpllibs::metaparse::spaces, str_____ello>
+      mpllibs::metaparse::is_error<
+        boost::mpl::apply<
+          mpllibs::metaparse::spaces,
+          str_____ello,
+          mpllibs::metaparse::start
+        >
       >
     >
     TestAcceptAllSpaces;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<mpllibs::metaparse::spaces, str_____ello>::type::second,
+      mpllibs::metaparse::get_remaining<
+        boost::mpl::apply<
+          mpllibs::metaparse::spaces,
+          str_____ello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       str_ello
     >
     TestConsumeAllSpaces;

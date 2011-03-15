@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct space
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -37,31 +37,29 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string
+For any +s+ compile-time string and +pos+ source position
 
 --------------------------------------
-boost::mpl::apply<spaces, s>
+mpllibs::metaparse::get_remaining<boost::mpl::apply<spaces, s, pos> >::type
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::util::pair<
-  // undefined
-  ,
-  boost::mpl::pop_front<s>::type
->
+boost::mpl::pop_front<s>::type
 --------------------------------------
 
-when +s+ is not empty and its first character is a white space. It is +nothing+
-otherwise.
+when +s+ is not empty and its first character is a white space. The combinator
+returns an error otherwise.
 
 Example
 -------
 
 --------------------------------------
 typedef
-  boost::mpl::apply<space, boost::mpl::string<' abc'> >::type::second
+  mpllibs::metaparse::get_remaining<
+    boost::mpl::apply<space, boost::mpl::string<' abc'>, mpllibs::metaparse::start>
+  >::type
   abc;
 --------------------------------------
 

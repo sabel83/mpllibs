@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct spaces
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -38,29 +38,14 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string
-
 --------------------------------------
-boost::mpl::apply<spaces, s>::type::second
+spaces
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply<mpllibs::metaparse::any1<mpllibs::metaparse::space>, s>::type::second
---------------------------------------
-
-when +s+ begins with a whitespace character. For any +s+ compile-time string,
-that does not begin with a whitespace character
-
---------------------------------------
-boost::mpl::apply<spaces, s>::type
---------------------------------------
-
-is equivalent to
-
---------------------------------------
-mpllibs::metaparse::nothing
+mpllibs::metaparse::any1<mpllibs::metaparse::space>
 --------------------------------------
 
 Example
@@ -72,7 +57,9 @@ typedef
   some_string;
 
 typedef
-  boost::mpl::apply<spaces, some_string>
+  mpllibs::metaparse::get_remaining<
+    boost::mpl::apply<spaces, some_string, mpllibs::metaparse::start>
+  >::type
   some_string_without_leading_whitespaces;
 --------------------------------------
 

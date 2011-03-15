@@ -1,18 +1,18 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-swap
-====
+next_line
+=========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class p>
-struct swap
+template <class source_position>
+struct next_line
 {
   // unspecified
 };
@@ -22,39 +22,47 @@ struct swap
 Description
 -----------
 
-Swaps the elements of a pair. Regardless of the type of the input pair,
-the value of the metafunction is always an +mpllibs::metaparse::util::pair+.
+Returns a new source position, pointing to the beginning of the next line.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/swap.h>
+#include <mpllibs/metaparse/next_line.h>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +p+ class, that has +p::first+ and +p::second+ member classes:
+For any +s+ source position the following are equivalent
 
 --------------------------------------
-swap<p>::type
+mpllibs::metaparse::get_col<next_line<s> >::type
+
+boost::mpl::int_<1>
 --------------------------------------
 
-is equivalent to
-
 --------------------------------------
-mpllibs::metaparse::util::pair<p::second, p::first>
+mpllibs::metaparse::get_line<next_char<s> >::type
+
+boost::mpl::plus<
+  mpllibs::metaparse::get_line<s>::type,
+  boost::mpl::int_<1>
+>::type
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-swap<mpllibs::metaparse::util::pair<int, double> >
+typedef
+  mpllibs::metaparse::get_line<next_line<mpllibs::metaparse::start> >::type
+  two;
 --------------------------------------
 
-include::../../copyright[]
+include::../copyright[]
 
 link:index.html[[up]]
+
+
 

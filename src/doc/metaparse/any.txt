@@ -14,7 +14,7 @@ Synopsis
 template <class p>
 struct any
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -43,19 +43,23 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser and +s+ compile-time string
+For any +p+ parser, +s+ compile-time string and +pos+ source position
 
 --------------------------------------
-boost::mpl::apply<any<p>, s>
+mpllibs::metaparse::get_result<boost::mpl::apply<any<p>, s, pos> >::type
 --------------------------------------
 
-is equivalent to +boost::mpl::list<>+ when +boost::mpl::apply<p, s>+
-is +nothing+. It is
+is equivalent to +boost::mpl::list<>+ when +boost::mpl::apply<p, s, pos>+
+returns an error. It is
 
 --------------------------------------
 boost::mpl::push_front<
-  boost::mpl::apply<any<p>, boost::mpl::apply<p, s>::type::second>::type,
-  boost::mpl::apply<p, s>::type::first
+  boost::mpl::apply<
+    any<p>,
+    mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
+    mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
+  >::type,
+  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
 >
 --------------------------------------
 

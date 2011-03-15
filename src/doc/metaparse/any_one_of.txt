@@ -19,7 +19,7 @@ template <
 >
 struct any_one_of
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified

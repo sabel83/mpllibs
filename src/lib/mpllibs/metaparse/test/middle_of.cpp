@@ -4,7 +4,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/middle_of.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -20,46 +22,53 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::middle_of<lit_h, lit_e, lit_l>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::middle_of<lit_h, lit_e, lit_l>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_e
     >
     TestThreeChars;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::middle_of<lit_x, lit_e, lit_l>,
-        str_hello
+        str_hello,
+        mpllibs::metaparse::start
       >
     >
     TestFirstFails;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::middle_of<lit_h, lit_x, lit_l>,
-        str_hello
+        str_hello,
+        mpllibs::metaparse::start
       >
     >
     TestSecondFails;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::middle_of<lit_h, lit_e, lit_x>,
-        str_hello
+        str_hello,
+        mpllibs::metaparse::start
       >
     >
     TestThirdFails;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::middle_of<lit_h, lit_e, lit_l>,
-        str_
+        str_,
+        mpllibs::metaparse::start
       >
     >
     TestEmptyInput;

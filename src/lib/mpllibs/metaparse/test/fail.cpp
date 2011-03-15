@@ -4,7 +4,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/fail.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+
+#include <mpllibs/metaparse/util/define_data.h>
 
 #include "common.h"
 
@@ -18,9 +21,15 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("fail");
 
+  MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
+
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::fail, str_hello>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::fail<test_error>,
+        str_hello,
+        mpllibs::metaparse::start
+      >
     >
     TestFailForNonEmptyString;
 }

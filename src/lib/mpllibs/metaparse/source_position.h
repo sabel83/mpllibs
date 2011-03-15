@@ -99,7 +99,7 @@ namespace mpllibs
             typename mpllibs::metaparse::get_line<p>::type,
             boost::mpl::int_<1>
           >,
-          mpllibs::metaparse::get_col<p>
+          boost::mpl::int_<1>
         >
       {};
     };

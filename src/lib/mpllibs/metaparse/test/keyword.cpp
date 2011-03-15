@@ -4,7 +4,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/keyword.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
+#include <mpllibs/metaparse/get_remaining.h>
 
 #include "common.h"
 
@@ -28,54 +31,69 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::keyword<str_hello, char_l>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::keyword<str_hello, char_l>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_l
     >
     TestResultType;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::keyword<str_hello>, str_>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::keyword<str_hello>,
+        str_,
+        mpllibs::metaparse::start
+      >
     >
     TestEmptyInput;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::keyword<str_hello>,
-        str_hello
-      >::type::second,
+      mpllibs::metaparse::get_remaining<
+        boost::mpl::apply<
+          mpllibs::metaparse::keyword<str_hello>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       str_
     >
     TestItself;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::keyword<str_hello>,
-        str_hello_world
-      >::type::second,
+      mpllibs::metaparse::get_remaining<
+        boost::mpl::apply<
+          mpllibs::metaparse::keyword<str_hello>,
+          str_hello_world,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list_c<char, ' ', 'w', 'o', 'r', 'l', 'd'>
     >
     TestMoreThanItself;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::keyword<str_hello>,
-        str_hellx
+        str_hellx,
+        mpllibs::metaparse::start
       >
     >
     TestNonMatchAtEnd;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::keyword<str_hello>,
-        str_hxllo
+        str_hxllo,
+        mpllibs::metaparse::start
       >
     >
     TestNonMatchInTheMiddle;

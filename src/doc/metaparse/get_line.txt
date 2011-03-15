@@ -1,18 +1,18 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-make_pair
-=========
+get_line
+========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class a, class b>
-struct make_pair
+template <class source_position>
+struct get_line
 {
   // unspecified
 };
@@ -22,42 +22,38 @@ struct make_pair
 Description
 -----------
 
-Metafunction taking two nullary metafunctions as arguments and building an
-+mpllibs::metaparse::util::pair+ from them.
+Returns the line of a source position.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/make_pair.h>
+#include <mpllibs/metaparse/get_line.h>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +a+ and +b+ nullary metafunctions:
+For any +l+, +c+ compile-time wrapped integral values, the following are
+equivalent
 
 --------------------------------------
-make_pair<a, b>::type
---------------------------------------
-
-is equivalent to
-
---------------------------------------
-mpllibs::metaparse::util::pair<a::type, b::type>
+get_line<mpllibs::metaparse::source_position<l, c> >::type
+l::type
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-make_pair<
-  boost::mpl::identity<int>,
-  boost::mpl::identity<double>
->
+typedef
+  get_line<mpllibs::metaparse::start>::type
+  one;
 --------------------------------------
 
-include::../../copyright[]
+include::../copyright[]
 
 link:index.html[[up]]
+
+
 

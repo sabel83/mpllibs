@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p, class pred>
+template <class p, class pred, class msg>
 struct accept_when
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -26,9 +26,11 @@ struct accept_when
 Description
 -----------
 
-Parser combinator taking a parser and a predicate as arguments. It builds a
-parser that acccepts the input if and only if the original parsers accepts
-the input and the predicate is +true+ for the result of the original parser.
+Parser combinator taking a parser, a predicate and an error message as
+arguments. It builds a parser that acccepts the input if and only if the
+original parsers accepts the input and the predicate is +true+ for the result of
+the original parser, otherwise it returns an error with +msg+ as the error
+message.
 
 Header
 ------
@@ -40,21 +42,22 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +pred+ predicate and +s+ compile-time string
+For any +p+ parser, +pred+ predicate, +msg+ error message, +s+ compile-time
+string and +pos+ source position
 
 --------------------------------------
-boost::mpl::apply<accept_when<p, pred>, s>
+boost::mpl::apply<accept_when<p, pred, msg>, s, pos>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply<p, s>
+boost::mpl::apply<p, s, pos>
 --------------------------------------
 
-when +boost::mpl::apply<p, s>+ is not +nothing+ and
-+boost::mpl::apply<pred, boost::mpl::apply<p, s>::first>::type+ is +true+.
-It is +nothing+ otherwise.
+when +boost::mpl::apply<p, s, pos>+ doesn't return an error and
++boost::mpl::apply<pred, mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> > >::type+
+is +true+. It is an error with +msg+ as the error message otherwise.
 
 Example
 -------
@@ -63,7 +66,8 @@ Example
 typedef
   accept_when<
     mpllibs::metaparse::one_char,
-    mpllibs::metaparse::util::is_digit
+    mpllibs::metaparse::util::is_digit,
+    mpllibs::metaparse::errors::digit_expected
   >
   accept_digit;
 --------------------------------------

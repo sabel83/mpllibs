@@ -72,7 +72,9 @@ namespace
     boost::mpl::equal_to<
       int1,
       mpllibs::metaparse::get_col<
-        mpllibs::metaparse::next_line<mpllibs::metaparse::start>
+        mpllibs::metaparse::next_line<
+          mpllibs::metaparse::next_char<mpllibs::metaparse::start>
+        >
       >::type
     >
     TestNextLinesChar;

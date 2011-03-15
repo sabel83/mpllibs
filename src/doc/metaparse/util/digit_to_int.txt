@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct digit_to_int
 {
-  template <class D>
+  template <class d>
   struct apply
   {
     // unspecified
@@ -26,6 +26,8 @@ Description
 -----------
 
 Converts a character containing a value in the range +'0'..'9'+ to an integer.
+
+It evaluates its argument lazily.
 
 Header
 ------

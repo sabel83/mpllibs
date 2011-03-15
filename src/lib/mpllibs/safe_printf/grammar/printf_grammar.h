@@ -18,16 +18,27 @@
 #include <mpllibs/metaparse/lit_c.h>
 #include <mpllibs/metaparse/one_char.h>
 
+#include <mpllibs/metaparse/util/define_data.h>
+
 namespace mpllibs
 {
   namespace safe_printf
   {
+    namespace errors
+    {
+      MPLLIBS_METAPARSE_DEFINE_DATA(no_percentage_char_expected);
+    }
+  
     namespace grammar
     {
       struct NormalChars :
         mpllibs::metaparse::any<
           mpllibs::metaparse::last_of<
-            mpllibs::metaparse::except<mpllibs::metaparse::lit_c<'%'>, int>,
+            mpllibs::metaparse::except<
+              mpllibs::metaparse::lit_c<'%'>,
+              boost::mpl::void_,
+              mpllibs::safe_printf::errors::no_percentage_char_expected
+            >,
             mpllibs::metaparse::one_char
           >
         >

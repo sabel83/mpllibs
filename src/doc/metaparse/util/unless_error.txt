@@ -1,18 +1,18 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-unless_nothing
-==============
+unless_error
+============
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class t, class not_nothing>
-struct unless_nothing
+template <class t, class not_error_case>
+struct unless_error
 {
   // unspecified
 };
@@ -22,62 +22,58 @@ struct unless_nothing
 Description
 -----------
 
-Metafunction taking a type, +t+ and a nullary metafunction as arguments.
-When +t+ is +mpllibs::metaparse::nothing+, the value of the metafunction is
-+mpllibs::metaparse::nothing+. Otherwise the nullary metafunction is evaluated
-and its return value is the value of the metafunction.
+Checks if +t+ is a parsing error or not. When it is, the result is +t+. When it
+isn't, the result is +not_error_case+. Arguments are evaluated lazily.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/unless_nothing.h>
+#include <mpllibs/metaparse/util/unless_error.h>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +f+ nullary metafunction
+For any +e+ parsing error and +c+ nullary metafunction
 
 --------------------------------------
-unless_nothing<mpllibs::metaparse::nothing, f>::type
---------------------------------------
-
-is equivalent to
-
---------------------------------------
-mpllibs::metaparse::nothing
---------------------------------------
-
-For any +t+ type that is not equal to +mpllibs::metaparse::nothing+
-
---------------------------------------
-unless_nothing<t, f>::type
+unless_error<e, c>::type
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-f::type
+e::type
+--------------------------------------
+
+For any +t+ type, that is not a parsing error and +c+ nullary metafunction
+
+--------------------------------------
+unless_error<t, c>::type
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+c::type
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-unless_nothing<
-  mpllibs::metaparse::nothing,
-  boost::mpl::plus<
-    boost::mpl::int_<11>,
-    boost::mpl::int_<13>
-  >
->
+struct digit_char
+{
+  typedef digit_char type;
+};
+
+unless_error<boost::mpl::apply<is_digit, boost::mpl::char_<'7'> >, digit_char>::type;
 --------------------------------------
 
 include::../../copyright[]
 
 link:index.html[[up]]
-
 
 
 

@@ -12,6 +12,7 @@
 #include <mpllibs/metaparse/last_of.h>
 
 #include <mpllibs/metaparse/util/lazy_if.h>
+#include <mpllibs/metaparse/util/define_data.h>
 
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/empty.hpp>
@@ -22,7 +23,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    struct accepted_keyword {};
+    MPLLIBS_METAPARSE_DEFINE_DATA(accepted_keyword);
 
     template <class s, class result_type>
     struct keyword;
@@ -42,7 +43,7 @@ namespace mpllibs
     }
     
     // Does not consume/check anything after the keyword
-    template <class s, class result_type = accepted_keyword>
+    template <class s, class result_type = mpllibs::metaparse::accepted_keyword>
     struct keyword :
       mpllibs::metaparse::util::lazy_if<
         boost::mpl::empty<s>,

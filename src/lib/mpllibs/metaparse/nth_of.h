@@ -8,10 +8,9 @@
 
 #include <mpllibs/metaparse/sequence.h>
 
-#include <mpllibs/metaparse/util/unless_nothing.h>
+#include <mpllibs/metaparse/util/unless_error.h>
 
 #include <boost/mpl/at.hpp>
-#include <boost/mpl/pair.hpp>
 #include <boost/mpl/apply.hpp>
 
 #include <boost/preprocessor/repetition.hpp>
@@ -29,7 +28,7 @@ namespace mpllibs
       template <int n, class seq>
       struct get_nth :
         boost::mpl::at_c<
-          typename boost::mpl::first<typename seq::type>::type,
+          typename mpllibs::metaparse::get_result<typename seq::type>::type,
           n
         >
       {};
@@ -37,13 +36,17 @@ namespace mpllibs
       template <int n, class seq>
       struct nth_of_c_impl
       {
-        template <class s>
+        template <class s, class pos>
         struct apply :
-          mpllibs::metaparse::util::unless_nothing<
-            boost::mpl::apply<seq, s>,
-            mpllibs::metaparse::util::make_pair<
-              mpllibs::metaparse::impl::get_nth<n, boost::mpl::apply<seq, s> >,
-              boost::mpl::second<typename boost::mpl::apply<seq, s>::type>
+          mpllibs::metaparse::util::unless_error<
+            boost::mpl::apply<seq, s, pos>,
+            mpllibs::metaparse::accept<
+              mpllibs::metaparse::impl::get_nth<
+                n,
+                boost::mpl::apply<seq, s, pos>
+              >,
+              mpllibs::metaparse::get_remaining<boost::mpl::apply<seq, s,pos> >,
+              mpllibs::metaparse::get_position<boost::mpl::apply<seq, s, pos> >
             >
           >
         {};

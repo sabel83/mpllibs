@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/pair.h>
+#include <mpllibs/metaparse/accept.h>
 
 namespace mpllibs
 {
@@ -15,8 +15,8 @@ namespace mpllibs
     template <class c>
     struct return_
     {
-      template <class S>
-      struct apply : mpllibs::metaparse::util::pair<c, S> {};
+      template <class s, class pos>
+      struct apply : mpllibs::metaparse::accept<c, s, pos> {};
     };
   }
 }

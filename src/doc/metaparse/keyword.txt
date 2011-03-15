@@ -14,7 +14,7 @@ Synopsis
 template <class s, class result_type>
 struct keyword
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -39,40 +39,21 @@ Header
 Expression semantics
 --------------------
 
-For any +k+ and +s+ compile-time strings
+For any +k+ and +s+ compile-time strings, +r+ class and +pos+ source position
 
 --------------------------------------
-boost::mpl::apply<keyword<k>, s>
---------------------------------------
-
-is equivalent to
-
---------------------------------------
-mpllibs::metaparse::util::pair<
-  // unspecified
-  ,
-  // the last (<length of s> - <length of k>) characters of s
->
---------------------------------------
-
-when +k+ is a prefix of +s+. It is +nothing+ is otherwise.
-
-For any +k+ and +s+ compile-time strings and +c+ class
-
---------------------------------------
-boost::mpl::apply<keyword<k, c>, s>
+mpllibs::metaparse::get_result<boost::mpl::apply<keyword<k, r>, s, pos> >::type
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::util::pair<
-  c,
-  // the last (<length of s> - <length of k>) characters of s
->
+r
 --------------------------------------
 
-when +k+ is a prefix of +s+. It is +nothing+ is otherwise.
+when +k+ is a prefix of +s+. The parser combinator returns an error otherwise.
+
++r+ is optional, in case it is not specified, +keyword+ returns some result.
 
 Example
 -------

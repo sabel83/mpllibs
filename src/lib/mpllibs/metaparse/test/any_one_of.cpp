@@ -7,6 +7,10 @@
 #include <mpllibs/metaparse/one_char.h>
 #include <mpllibs/metaparse/fail.h>
 #include <mpllibs/metaparse/keyword.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
+
+#include <mpllibs/metaparse/util/define_data.h>
 
 #include "common.h"
 
@@ -23,72 +27,94 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("any_one_of");
 
+  MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
+  
+  typedef mpllibs::metaparse::fail<test_error> test_fail;
+
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any_one_of< >,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any_one_of< >,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<>
     >
     Test0;
   
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any_one_of<mpllibs::metaparse::one_char>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any_one_of<mpllibs::metaparse::one_char>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e, char_l, char_l, char_o>
     >
     TestGoodSequence;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any_one_of<mpllibs::metaparse::fail>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any_one_of<test_fail>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list< >
     >
     Test1WithBad;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any_one_of<
-          mpllibs::metaparse::one_char,
-          mpllibs::metaparse::fail
-        >,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any_one_of<
+            mpllibs::metaparse::one_char,
+            test_fail
+          >,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e, char_l, char_l, char_o>
     >
     Test2WithFirstGood;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any_one_of<
-          mpllibs::metaparse::fail,
-          mpllibs::metaparse::one_char
-        >,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any_one_of<
+            test_fail,
+            mpllibs::metaparse::one_char
+          >,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e, char_l, char_l, char_o>
     >
     Test2WithSecondGood;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::any_one_of<
-          mpllibs::metaparse::keyword<boost::mpl::string<'h'>, char_h>,
-          mpllibs::metaparse::keyword<boost::mpl::string<'e'>, char_e>,
-          mpllibs::metaparse::keyword<boost::mpl::string<'l'>, char_l>
-        >,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::any_one_of<
+            mpllibs::metaparse::keyword<boost::mpl::string<'h'>, char_h>,
+            mpllibs::metaparse::keyword<boost::mpl::string<'e'>, char_e>,
+            mpllibs::metaparse::keyword<boost::mpl::string<'l'>, char_l>
+          >,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::list<char_h, char_e, char_l, char_l>
     >
     TestAcceptAnyArgument;

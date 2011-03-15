@@ -11,6 +11,8 @@
 #include <mpllibs/metaparse/one_of.h>
 #include <mpllibs/metaparse/empty.h>
 
+#include <boost/mpl/void.hpp>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -20,7 +22,7 @@ namespace mpllibs
       mpllibs::metaparse::first_of<
         p,
         mpllibs::metaparse::one_of<
-          mpllibs::metaparse::empty<int>,
+          mpllibs::metaparse::empty<boost::mpl::void_>,
           mpllibs::metaparse::spaces
         >
       >

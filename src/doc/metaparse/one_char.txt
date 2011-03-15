@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct one_char
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -38,19 +38,21 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string
+For any +s+ compile-time string the following are equivalent
 
 --------------------------------------
-boost::mpl::apply<one_char, s>
+mpllibs::metaparse::get_result<boost::mpl::apply<one_char, s, pos> >
+
+boost::mpl::front<s>
 --------------------------------------
 
-is equivalent to
-
 --------------------------------------
-mpllibs::metaparse::util::pair<boost::mpl::front<s>::type, boost::mpl::pop_front<s>::type>
+mpllibs::metaparse::get_remaining<boost::mpl::apply<one_char, s, pos> >
+
+boost::mpl::pop_front<s>
 --------------------------------------
 
-when +s+ is not empty. It is +nothing+ is otherwise.
+when +s+ is not empty. The parser returns an error otherwise.
 
 Example
 -------
@@ -59,7 +61,7 @@ Example
 struct some_string;
 
 typedef
-  boost::mpl::apply<one_char, some_string>::type::first
+  mpllibs::metaparse::get_result<boost::mpl::apply<one_char, some_string> >::type
   first_character_of_some_string;
 --------------------------------------
 
