@@ -12,6 +12,8 @@
 #include <mpllibs/metaparse/util/is_letter.h>
 #include <mpllibs/metaparse/util/define_data.h>
 
+#include <mpllibs/metatest/to_stream.h>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -30,6 +32,11 @@ namespace mpllibs
       letter;
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::errors::letter_expected,
+  "Letter expected"
+)
 
 #endif
 

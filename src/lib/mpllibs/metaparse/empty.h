@@ -11,6 +11,8 @@
 
 #include <mpllibs/metaparse/util/define_data.h>
 
+#include <mpllibs/metatest/to_stream.h>
+
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/empty.hpp>
 
@@ -40,6 +42,11 @@ namespace mpllibs
     };
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::errors::end_of_input_expected,
+  "End of input expected"
+)
 
 #endif
 

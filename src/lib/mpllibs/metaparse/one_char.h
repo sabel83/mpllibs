@@ -12,6 +12,8 @@
 
 #include <mpllibs/metaparse/util/define_data.h>
 
+#include <mpllibs/metatest/to_stream.h>
+
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
@@ -46,6 +48,11 @@ namespace mpllibs
     };
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::errors::unexpected_end_of_input,
+  "Unexpected end of input"
+)
 
 #endif
 

@@ -12,6 +12,8 @@
 #include <mpllibs/metaparse/util/define_data.h>
 #include <mpllibs/metaparse/util/is_digit.h>
 
+#include <mpllibs/metatest/to_stream.h>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -30,6 +32,11 @@ namespace mpllibs
       digit;
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::errors::digit_expected,
+  "Digit expected"
+)
 
 #endif
 

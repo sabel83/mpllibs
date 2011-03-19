@@ -14,6 +14,8 @@
 #include <mpllibs/metaparse/util/lazy_if.h>
 #include <mpllibs/metaparse/util/define_data.h>
 
+#include <mpllibs/metatest/to_stream.h>
+
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/pop_front.hpp>
@@ -53,6 +55,11 @@ namespace mpllibs
     {};
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::errors::accepted_keyword,
+  "Accepted keyword"
+)
 
 #endif
 

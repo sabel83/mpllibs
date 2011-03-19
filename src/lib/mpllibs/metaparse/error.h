@@ -28,10 +28,13 @@ namespace mpllibs
     };
   }
 
-  namespace error
+  namespace metatest
   {
     template <class t>
     struct to_stream_impl;
+    
+    template <class t>
+    struct to_stream;
     
     template <>
     struct to_stream_impl<mpllibs::metaparse::error_tag>
@@ -43,12 +46,12 @@ namespace mpllibs
       
         static std::ostream& run(std::ostream& o_)
         {
+          using mpllibs::metatest::to_stream;
+        
           o_ << "Error at ";
-          mpllibs::error::to_stream_impl<
-            typename e::source_position::type
-          >::run(o_);
+          to_stream<typename e::source_position::type>::run(o_);
           o_ << ": ";
-          mpllibs::error::to_stream_impl<typename e::message::type>::run(o_);
+          to_stream<typename e::message::type>::run(o_);
           return o_;
         }
       };

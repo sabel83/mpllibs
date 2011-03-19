@@ -10,6 +10,8 @@
 
 #include <mpllibs/metaparse/util/define_data.h>
 
+#include <mpllibs/metatest/to_stream.h>
+
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply.hpp>
@@ -119,6 +121,11 @@ namespace mpllibs
     #undef PARSER_ONE_OF_UNUSED_PARAM
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::errors::none_of_the_expected_cases_found,
+  "None of the expected cases found"
+)
 
 #endif
 

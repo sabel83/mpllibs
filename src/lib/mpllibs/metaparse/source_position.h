@@ -105,7 +105,7 @@ namespace mpllibs
     };
   }
   
-  namespace error
+  namespace metatest
   {
     template <class t>
     struct to_stream_impl;
@@ -120,15 +120,13 @@ namespace mpllibs
       
         static std::ostream& run(std::ostream& o_)
         {
-          o_ << "line ";
-          mpllibs::error::to_stream_impl<
-            typename mpllibs::metaparse::get_line<sp>::type
-          >::run(o_);
-          o_ << ", col ";
-          mpllibs::error::to_stream_impl<
-            typename mpllibs::metaparse::get_col<sp>::type
-          >::run(o_);
-          return o_;
+          using mpllibs::metaparse::get_line;
+          using mpllibs::metaparse::get_col;
+          
+          return
+            o_
+              << "line " << get_line<sp>::type::value
+              << ", col " << get_col<sp>::type::value;
         }
       };
     };
