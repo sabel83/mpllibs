@@ -57,7 +57,7 @@ namespace mpllibs
 }
 
 DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::errors::accepted_keyword,
+  mpllibs::metaparse::accepted_keyword,
   "Accepted keyword"
 )
 
