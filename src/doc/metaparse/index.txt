@@ -158,8 +158,6 @@ Compile-time data structures and values
 ---------------------------------------
 
 Result of parsing +
-link:accept.html[accept] +
-link:error.html[error] +
 link:get_position.html[get_position] +
 link:get_remaining.html[get_remaining] +
 link:get_result.html[get_result] +
