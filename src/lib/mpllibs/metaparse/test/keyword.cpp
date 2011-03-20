@@ -43,6 +43,19 @@ namespace
     TestResultType;
 
   typedef
+    boost::mpl::equal_to<
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::keyword<str_, char_l>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
+      char_l
+    >
+    TestEmptyKeyword;
+
+  typedef
     mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::keyword<str_hello>,
@@ -101,6 +114,7 @@ namespace
 
 MPLLIBS_ADD_TEST(suite, TestResultType)
 MPLLIBS_ADD_TEST(suite, TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, TestEmptyKeyword)
 MPLLIBS_ADD_TEST(suite, TestItself)
 MPLLIBS_ADD_TEST(suite, TestMoreThanItself)
 MPLLIBS_ADD_TEST(suite, TestNonMatchAtEnd)
