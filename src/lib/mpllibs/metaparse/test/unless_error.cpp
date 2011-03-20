@@ -17,7 +17,7 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("util::unless_error");
   
-  typedef mpllibs::metaparse::error<int1, int2> err;
+  typedef boost::mpl::apply<mpllibs::metaparse::fail<int1>, int11, int2> err;
   
   typedef
     mpllibs::metaparse::is_error<

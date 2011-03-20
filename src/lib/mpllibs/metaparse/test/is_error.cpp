@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/fail.h>
 
 #include "common.h"
 
@@ -19,7 +20,13 @@ namespace
   typedef boost::mpl::not_<mpllibs::metaparse::is_error<int13> > TestNotError;
 
   typedef
-    mpllibs::metaparse::is_error<mpllibs::metaparse::error<int11, int13> >
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::fail<int11>,
+        int1,
+        int13
+      >
+    >
     TestError;
 }
 

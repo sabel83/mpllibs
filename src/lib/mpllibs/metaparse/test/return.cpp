@@ -19,6 +19,8 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("return");
 
+  typedef boost::mpl::apply<mpllibs::metaparse::return_<int1>, int2, int3> Acc;
+
   typedef
     boost::mpl::equal_to<
       mpllibs::metaparse::get_result<
@@ -44,9 +46,34 @@ namespace
       char_x
     >
     TestForEmptyString;
+
+ 
+  typedef
+    boost::mpl::equal_to<
+      int1,
+      mpllibs::metaparse::get_result<Acc>::type
+    >
+    TestGetResult;
+
+  typedef
+    boost::mpl::equal_to<
+      int2,
+      mpllibs::metaparse::get_remaining<Acc>::type
+    >
+    TestGetRemaining;
+
+  typedef
+    boost::mpl::equal_to<
+      int3,
+      mpllibs::metaparse::get_position<Acc>::type
+    >
+    TestGetPosition;
 }
 
 MPLLIBS_ADD_TEST(suite, TestForEmptyString)
 MPLLIBS_ADD_TEST(suite, TestForNonEmptyString)
 
+MPLLIBS_ADD_TEST(suite, TestGetResult)
+MPLLIBS_ADD_TEST(suite, TestGetRemaining)
+MPLLIBS_ADD_TEST(suite, TestGetPosition)
 

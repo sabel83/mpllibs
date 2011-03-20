@@ -6,8 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/error.h>
-
 #include <boost/mpl/tag.hpp>
 
 #include <boost/type_traits/is_same.hpp>
@@ -16,6 +14,8 @@ namespace mpllibs
 {
   namespace metaparse
   {
+    struct error_tag;
+  
     template <class t>
     struct is_error :
       boost::is_same<
