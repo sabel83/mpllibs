@@ -31,36 +31,22 @@ namespace mpllibs
       #endif
       #define REPEAT_CONSTANT(z, n, constant) constant
   
-      #ifdef MPLLIBS_UTIL_APPEND
-        #error MPLLIBS_UTIL_APPEND already defined
-      #endif
-      #define MPLLIBS_UTIL_APPEND(a, b) a##b
-
-      #ifdef COMPOSE_CLASSES
-        #error COMPOSE_CLASSES already defined
-      #endif
-      #define COMPOSE_CLASSES(z, n, unused) \
-        class f##n, 
-
-      #ifdef COMPOSE_BODY_PREFIX
-        #error COMPOSE_BODY_PREFIX already defined
-      #endif
-      #define COMPOSE_BODY_PREFIX(z, n, unused) \
-        typename boost::mpl::apply<f##n, 
-
       #ifdef COMPOSE
         #error COMPOSE already defined
       #endif
       #define COMPOSE(z, n, unused) \
-        template <BOOST_PP_REPEAT(n, COMPOSE_CLASSES, ~) class mock = int> \
+        template < \
+          BOOST_PP_ENUM_PARAMS(n, class f) \
+          BOOST_PP_COMMA_IF(n) class mock = int \
+        > \
         struct compose##n \
         { \
           template <class a1> \
           struct apply \
           { \
             typedef \
-              BOOST_PP_REPEAT(n, COMPOSE_BODY_PREFIX, ~) \
-              a1 \
+              BOOST_PP_ENUM_PARAMS(n, typename boost::mpl::apply<f) \
+                BOOST_PP_COMMA_IF(n) a1 \
               BOOST_PP_REPEAT(n, REPEAT_CONSTANT, >::type) \
               type; \
           }; \
@@ -69,8 +55,6 @@ namespace mpllibs
       BOOST_PP_REPEAT(COMPOSE_MAX_ARGUMENT, COMPOSE, ~)
     
       #undef COMPOSE
-      #undef COMPOSE_BODY_PREFIX
-      #undef COMPOSE_CLASSES
     
 
 
@@ -117,7 +101,6 @@ namespace mpllibs
       #undef COMPOSE_UNUSED_PARAM
     
       #undef REPEAT_CONSTANT
-      #undef MPLLIBS_UTIL_APPEND
     }
   }
 }
