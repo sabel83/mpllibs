@@ -141,6 +141,7 @@ link:last_of.html[last_of] +
 link:letter.html[letter] +
 link:lit_c.html[lit_c] +
 link:lit.html[lit] +
+link:look_ahead.html[look_ahead] +
 link:middle_of.html[middle_of] +
 link:nth_of_c.html[nth_of_c] +
 link:nth_of.html[nth_of] +
