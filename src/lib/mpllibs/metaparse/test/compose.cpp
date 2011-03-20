@@ -22,20 +22,26 @@ namespace
 
   struct make_pointer
   {
-    template <class T>
-    struct apply : boost::mpl::identity<T*> {};
+    template <class t>
+    struct apply : boost::mpl::identity<t*> {};
   };
   
   struct incr
   {
-    template <class T>
-    struct apply : boost::mpl::plus<int13, T> {};
+    template <class t>
+    struct apply : boost::mpl::plus<int13, t> {};
   };
 
   struct double_value
   {
-    template <class T>
-    struct apply : boost::mpl::times<int2, T> {};
+    template <class t>
+    struct apply : boost::mpl::times<int2, t> {};
+  };
+
+  struct take_first
+  {
+    template <class a, class b>
+    struct apply : boost::mpl::identity<a> {};
   };
 
   typedef
@@ -74,10 +80,21 @@ namespace
     >
     TestOrder;
 
+  typedef
+    boost::mpl::equal_to<
+      boost::mpl::apply<
+        mpllibs::metaparse::util::compose<double_value, take_first>,
+        int1,
+        int3
+      >::type,
+      int2
+    >
+    TestTwoArgumentsForTheFirstFunction;
 }
 
 MPLLIBS_ADD_TEST(suite, TestSameFunctionTwice)
 MPLLIBS_ADD_TEST(suite, TestSameFunctionFiveTimes)
 MPLLIBS_ADD_TEST(suite, TestOrder)
+MPLLIBS_ADD_TEST(suite, TestTwoArgumentsForTheFirstFunction)
 
 
