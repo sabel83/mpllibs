@@ -136,6 +136,7 @@ link:fail.html[fail] +
 link:first_of.html[first_of] +
 link:if.html[if] +
 link:iterate.html[iterate] +
+link:iterate_c.html[iterate_c] +
 link:keyword.html[keyword] +
 link:last_of.html[last_of] +
 link:letter.html[letter] +
