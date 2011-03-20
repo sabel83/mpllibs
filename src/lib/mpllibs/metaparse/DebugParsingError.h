@@ -8,7 +8,6 @@
 
 #include <mpllibs/metaparse/source_position.h>
 #include <mpllibs/metaparse/is_error.h>
-#include <mpllibs/metaparse/error.h>
 
 #include <mpllibs/metatest/to_stream.h>
 
