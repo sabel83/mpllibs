@@ -4,7 +4,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/digit_val.h>
-#include <mpllibs/metaparse/error.h>
 #include <mpllibs/metaparse/is_error.h>
 #include <mpllibs/metaparse/source_position.h>
 #include <mpllibs/metaparse/get_result.h>
