@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/get_result.h>
 #include <mpllibs/metaparse/get_remaining.h>
 #include <mpllibs/metaparse/get_position.h>
-#include <mpllibs/metaparse/iterate.h>
+#include <mpllibs/metaparse/iterate_c.h>
 
 #include "common.h"
 
@@ -81,7 +81,7 @@ namespace
       mpllibs::metaparse::get_line<
         mpllibs::metaparse::get_position<
           boost::mpl::apply<
-            mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int2>,
+            mpllibs::metaparse::iterate_c<mpllibs::metaparse::one_char, 2>,
             UnixMultiLineText,
             mpllibs::metaparse::start
           >
@@ -96,7 +96,7 @@ namespace
       mpllibs::metaparse::get_line<
         mpllibs::metaparse::get_position<
           boost::mpl::apply<
-            mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int3>,
+            mpllibs::metaparse::iterate_c<mpllibs::metaparse::one_char, 3>,
             DOSMultiLineText,
             mpllibs::metaparse::start
           >
@@ -111,7 +111,7 @@ namespace
       mpllibs::metaparse::get_line<
         mpllibs::metaparse::get_position<
           boost::mpl::apply<
-            mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int2>,
+            mpllibs::metaparse::iterate_c<mpllibs::metaparse::one_char, 2>,
             MacMultiLineText,
             mpllibs::metaparse::start
           >
