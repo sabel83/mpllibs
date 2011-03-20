@@ -7,12 +7,13 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/fail.h>
 
 #include <mpllibs/metaparse/util/define_data.h>
 
 #include <mpllibs/metatest/to_stream.h>
 
-#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/if.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply.hpp>
 
@@ -37,19 +38,19 @@ namespace mpllibs
       #error PARSER_ONE_OF_BODY_PREFIX already defined
     #endif
     #define PARSER_ONE_OF_BODY_PREFIX(z, n, unused) \
-      boost::mpl::eval_if< \
-        typename boost::mpl::not_< \
+      typename boost::mpl::if_< \
+        boost::mpl::not_< \
           typename mpllibs::metaparse::is_error< \
             boost::mpl::apply<p##n, s, pos> \
           >::type \
-        >::type, \
-        boost::mpl::apply<p##n, s, pos>, \
+        >, \
+        p##n, \
     
     #ifdef PARSER_ONE_OF_BODY_POSTFIX
       #error PARSER_ONE_OF_BODY_POSTFIX already defined
     #endif
     #define PARSER_ONE_OF_BODY_POSTFIX(z, n, unused) \
-      >
+      >::type
   
     #ifdef MPLLIBS_PARSER_ONE_OF
       #error MPLLIBS_PARSER_ONE_OF already defined
@@ -65,12 +66,15 @@ namespace mpllibs
       { \
         template <class s, class pos> \
         struct apply : \
-          BOOST_PP_REPEAT(n, PARSER_ONE_OF_BODY_PREFIX, ~) \
-            mpllibs::metaparse::error< \
-              mpllibs::metaparse::errors::none_of_the_expected_cases_found, \
-              pos \
-            > \
-          BOOST_PP_REPEAT(n, PARSER_ONE_OF_BODY_POSTFIX, ~) \
+          boost::mpl::apply< \
+            BOOST_PP_REPEAT(n, PARSER_ONE_OF_BODY_PREFIX, ~) \
+              mpllibs::metaparse::fail< \
+                mpllibs::metaparse::errors::none_of_the_expected_cases_found \
+              > \
+            BOOST_PP_REPEAT(n, PARSER_ONE_OF_BODY_POSTFIX, ~), \
+            s, \
+            pos \
+          > \
         {}; \
       };
     

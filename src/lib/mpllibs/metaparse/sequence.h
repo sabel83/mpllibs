@@ -7,10 +7,11 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/util/unless_error.h>
-#include <mpllibs/metaparse/accept.h>
 #include <mpllibs/metaparse/get_result.h>
 #include <mpllibs/metaparse/get_remaining.h>
 #include <mpllibs/metaparse/get_position.h>
+#include <mpllibs/metaparse/return.h>
+#include <mpllibs/metaparse/transform.h>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/vector.hpp>
@@ -30,30 +31,23 @@ namespace mpllibs
   {
     namespace impl
     {
-      template <class list_to_append, class new_result>
-      struct append_accept :
-        mpllibs::metaparse::accept<
-          boost::mpl::push_back<
-            list_to_append,
-            typename mpllibs::metaparse::get_result<new_result>::type
-          >,
-          mpllibs::metaparse::get_remaining<new_result>,
-          mpllibs::metaparse::get_position<new_result>
-        >
-      {};
+      template <class list_to_append>
+      struct do_append
+      {
+        template <class item>
+        struct apply :boost::mpl::push_back<list_to_append, typename item::type>
+        {};
+      };
     
       template <class accum, class s, class pos, class parser>
       struct apply_impl :
-        mpllibs::metaparse::util::unless_error<
-          boost::mpl::apply<parser, typename s::type, typename pos::type>,
-          mpllibs::metaparse::impl::append_accept<
-            typename accum::type,
-            typename boost::mpl::apply<
-              parser,
-              typename s::type,
-              typename pos::type
-            >::type
-          >
+        boost::mpl::apply<
+          mpllibs::metaparse::transform<
+            parser,
+            mpllibs::metaparse::impl::do_append<typename accum::type>
+          >,
+          typename s::type,
+          typename pos::type
         >
       {};
     
@@ -72,12 +66,16 @@ namespace mpllibs
           >
         {};
       };
-    
+      
       template <class ps, class s, class pos>
       struct sequence_impl :
         boost::mpl::fold<
           ps,
-          mpllibs::metaparse::accept<boost::mpl::deque<>, s, pos>,
+          typename boost::mpl::apply<
+            mpllibs::metaparse::return_<boost::mpl::deque<> >,
+            s,
+            pos
+          >::type,
           mpllibs::metaparse::impl::apply_parser
         >
       {};

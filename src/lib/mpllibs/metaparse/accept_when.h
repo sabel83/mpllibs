@@ -10,12 +10,10 @@
 
 #include <mpllibs/metaparse/util/compose.h>
 #include <mpllibs/metaparse/util/lazy_eval_if.h>
-#include <mpllibs/metaparse/util/lazy_equal_to.h>
 
 #include <mpllibs/metaparse/get_result.h>
+#include <mpllibs/metaparse/fail.h>
 
-#include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/quote.hpp>
 
@@ -37,10 +35,10 @@ namespace mpllibs
                 pred,
                 boost::mpl::quote1<mpllibs::metaparse::get_result>
               >,
-              typename boost::mpl::apply<p, s, pos>::type
+              boost::mpl::apply<p, s, pos>
             >,
             boost::mpl::apply<p, s, pos>,
-            mpllibs::metaparse::error<msg, pos>
+            boost::mpl::apply<mpllibs::metaparse::fail<msg>, s, pos>
           >
         >
       {};

@@ -6,11 +6,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/is_error.h>
-#include <mpllibs/metaparse/accept.h>
+#include <mpllibs/metaparse/return.h>
 #include <mpllibs/metaparse/get_result.h>
 #include <mpllibs/metaparse/get_remaining.h>
 #include <mpllibs/metaparse/get_position.h>
+
+#include <mpllibs/metaparse/util/unless_error.h>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
@@ -24,15 +25,14 @@ namespace mpllibs
     {
       template <class s, class pos>
       struct apply :
-        boost::mpl::eval_if<
-          typename mpllibs::metaparse::is_error<
-            boost::mpl::apply<p, s, pos>
-          >::type,
+        mpllibs::metaparse::util::unless_error<
           boost::mpl::apply<p, s, pos>,
-          mpllibs::metaparse::accept<
-            boost::mpl::apply<
-              t,
-              mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
+          boost::mpl::apply<
+            mpllibs::metaparse::return_<
+              boost::mpl::apply<
+                t,
+                mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
+              >
             >,
             mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
             mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >

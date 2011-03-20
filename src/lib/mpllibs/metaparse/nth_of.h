@@ -7,8 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/sequence.h>
-
-#include <mpllibs/metaparse/util/unless_error.h>
+#include <mpllibs/metaparse/transform.h>
 
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/apply.hpp>
@@ -25,32 +24,17 @@ namespace mpllibs
   {
     namespace impl
     {
-      template <int n, class seq>
-      struct get_nth :
-        boost::mpl::at_c<
-          typename mpllibs::metaparse::get_result<typename seq::type>::type,
-          n
-        >
-      {};
+      template <int n>
+      struct get_nth
+      {
+        template <class seq>
+        struct apply : boost::mpl::at_c<typename seq::type, n> {};
+      };
       
       template <int n, class seq>
-      struct nth_of_c_impl
-      {
-        template <class s, class pos>
-        struct apply :
-          mpllibs::metaparse::util::unless_error<
-            boost::mpl::apply<seq, s, pos>,
-            mpllibs::metaparse::accept<
-              mpllibs::metaparse::impl::get_nth<
-                n,
-                boost::mpl::apply<seq, s, pos>
-              >,
-              mpllibs::metaparse::get_remaining<boost::mpl::apply<seq, s,pos> >,
-              mpllibs::metaparse::get_position<boost::mpl::apply<seq, s, pos> >
-            >
-          >
-        {};
-      };
+      struct nth_of_c_impl :
+        mpllibs::metaparse::transform<seq,mpllibs::metaparse::impl::get_nth<n> >
+      {};
     }
   
     #ifdef NTH_OF_CASE

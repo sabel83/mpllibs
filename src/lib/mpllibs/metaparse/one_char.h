@@ -6,9 +6,9 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/error.h>
 #include <mpllibs/metaparse/next_char.h>
-#include <mpllibs/metaparse/accept.h>
+#include <mpllibs/metaparse/return.h>
+#include <mpllibs/metaparse/fail.h>
 
 #include <mpllibs/metaparse/util/define_data.h>
 
@@ -27,19 +27,22 @@ namespace mpllibs
     {
       MPLLIBS_METAPARSE_DEFINE_DATA(unexpected_end_of_input);
     }
-  
+    
     struct one_char
     {
       template <class s, class pos>
       struct apply :
         boost::mpl::eval_if<
           typename boost::mpl::empty<s>::type,
-          mpllibs::metaparse::error<
-            mpllibs::metaparse::errors::unexpected_end_of_input,
+          boost::mpl::apply<
+            mpllibs::metaparse::fail<
+              mpllibs::metaparse::errors::unexpected_end_of_input
+            >,
+            s,
             pos
           >,
-          mpllibs::metaparse::accept<
-            boost::mpl::front<s>,
+          boost::mpl::apply<
+            mpllibs::metaparse::return_<boost::mpl::front<s> >,
             boost::mpl::pop_front<s>,
             mpllibs::metaparse::next_char<pos>
           >
