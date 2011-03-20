@@ -128,6 +128,7 @@ link:any1.html[any1] +
 link:any.html[any] +
 link:any_one_of.html[any_one_of] +
 link:any_one_of1.html[any_one_of1] +
+link:change_error_message.html[change_error_message] +
 link:digit.html[digit] +
 link:digit_val.html[digit_val] +
 link:empty.html[empty] +
