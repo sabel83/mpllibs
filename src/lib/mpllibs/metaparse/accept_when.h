@@ -6,43 +6,47 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/unless_error.h>
-
-#include <mpllibs/metaparse/util/compose.h>
-#include <mpllibs/metaparse/util/lazy_eval_if.h>
-
 #include <mpllibs/metaparse/get_result.h>
 #include <mpllibs/metaparse/fail.h>
+#include <mpllibs/metaparse/last_of.h>
+#include <mpllibs/metaparse/look_ahead.h>
 
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/quote.hpp>
+#include <boost/mpl/if.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
     template <class p, class pred, class msg>
-    struct accept_when
+    struct accept_when_unchecked
     {
       template <class s, class pos>
       struct apply :
-        mpllibs::metaparse::util::unless_error<
-          boost::mpl::apply<p, s, pos>,
-          
-          mpllibs::metaparse::util::lazy_eval_if<
-            boost::mpl::apply<
-              mpllibs::metaparse::util::compose<
-                pred,
-                boost::mpl::quote1<mpllibs::metaparse::get_result>
-              >,
-              boost::mpl::apply<p, s, pos>
-            >,
-            boost::mpl::apply<p, s, pos>,
-            boost::mpl::apply<mpllibs::metaparse::fail<msg>, s, pos>
-          >
+        boost::mpl::apply<
+          typename boost::mpl::if_<
+            typename boost::mpl::apply<
+              pred,
+              typename mpllibs::metaparse::get_result<
+                boost::mpl::apply<p, s, pos>
+              >::type
+            >::type,
+            p,
+            mpllibs::metaparse::fail<msg>
+          >::type,
+          s,
+          pos
         >
       {};
     };
+  
+    template <class p, class pred, class msg>
+    struct accept_when :
+      mpllibs::metaparse::last_of<
+        mpllibs::metaparse::look_ahead<p>,
+        mpllibs::metaparse::accept_when_unchecked<p, pred, msg>
+      >
+    {};
   }
 }
 
