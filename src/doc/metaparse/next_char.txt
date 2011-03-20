@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class source_position>
+template <class source_position, class ch>
 struct next_char
 {
   // unspecified
@@ -34,10 +34,11 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ source position the following are equivalent
+For any +s+ source position and +c+ wrapped character the following are
+equivalent
 
 --------------------------------------
-mpllibs::metaparse::get_col<next_char<s> >::type
+mpllibs::metaparse::get_col<next_char<s, c> >::type
 
 boost::mpl::plus<
   mpllibs::metaparse::get_col<s>::type,
@@ -46,9 +47,15 @@ boost::mpl::plus<
 --------------------------------------
 
 --------------------------------------
-mpllibs::metaparse::get_line<next_char<s> >::type
+mpllibs::metaparse::get_line<next_char<s, c> >::type
 
 mpllibs::metaparse::get_line<s>::type,
+--------------------------------------
+
+--------------------------------------
+mpllibs::metaparse::get_prev_char<next_char<s, c> >::type
+
+c,
 --------------------------------------
 
 Example
@@ -56,7 +63,9 @@ Example
 
 --------------------------------------
 typedef
-  mpllibs::metaparse::get_col<next_char<mpllibs::metaparse::start> >::type
+  mpllibs::metaparse::get_col<
+    next_char<mpllibs::metaparse::start, boost::mpl::integral_c<char, 'x'> >
+  >::type
   two;
 --------------------------------------
 

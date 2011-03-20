@@ -34,11 +34,11 @@ Header
 Expression semantics
 --------------------
 
-For any +l+, +c+ compile-time wrapped integral values, the following are
-equivalent
+For any +l+, +c+ compile-time wrapped integral values and +ch+ compile-time
+wrapped character the following are equivalent
 
 --------------------------------------
-get_line<mpllibs::metaparse::source_position<l, c> >::type
+get_line<mpllibs::metaparse::source_position<l, c, ch> >::type
 l::type
 --------------------------------------
 

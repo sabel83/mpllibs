@@ -10,6 +10,7 @@
 #include <mpllibs/metaparse/get_line.h>
 
 #include <boost/mpl/int.hpp>
+#include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/plus.hpp>
 
 #include <iostream>
@@ -23,7 +24,7 @@ namespace mpllibs
       typedef source_position_tag type;
     };
     
-    template <class line_, class col_>
+    template <class line_, class col_, class prev_char_>
     struct source_position
     {
       typedef mpllibs::metaparse::source_position_tag tag;
@@ -31,12 +32,14 @@ namespace mpllibs
       
       typedef line_ line;
       typedef col_ col;
+      typedef prev_char_ prev_char;
     };
     
     typedef
       mpllibs::metaparse::source_position<
         boost::mpl::int_<1>,
-        boost::mpl::int_<1>
+        boost::mpl::int_<1>,
+        boost::mpl::integral_c<char, 0>
       >
       start;
 
@@ -63,7 +66,17 @@ namespace mpllibs
       template <class p>
       struct apply : p::line {};
     };
+
     
+    template <class t>
+    struct get_prev_char_impl;
+    
+    template <>
+    struct get_prev_char_impl<mpllibs::metaparse::source_position_tag>
+    {
+      template <class p>
+      struct apply : p::prev_char {};
+    };
     
     
     template <class t>
@@ -72,14 +85,15 @@ namespace mpllibs
     template <>
     struct next_char_impl<mpllibs::metaparse::source_position_tag>
     {
-      template <class p>
+      template <class p, class ch>
       struct apply :
         mpllibs::metaparse::source_position<
           mpllibs::metaparse::get_line<p>,
           boost::mpl::plus<
             typename mpllibs::metaparse::get_col<p>::type,
             boost::mpl::int_<1>
-          >
+          >,
+          ch
         >
       {};
     };
@@ -92,14 +106,15 @@ namespace mpllibs
     template <>
     struct next_line_impl<mpllibs::metaparse::source_position_tag>
     {
-      template <class p>
+      template <class p, class ch>
       struct apply :
         mpllibs::metaparse::source_position<
           boost::mpl::plus<
             typename mpllibs::metaparse::get_line<p>::type,
             boost::mpl::int_<1>
           >,
-          boost::mpl::int_<1>
+          boost::mpl::int_<1>,
+          ch
         >
       {};
     };

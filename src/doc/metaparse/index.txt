@@ -166,6 +166,7 @@ link:is_error.html[is_error] +
 Source position +
 link:get_col.html[get_col] +
 link:get_line.html[get_line] +
+link:get_prev_char.html[get_prev_char] +
 link:next_char.html[next_char] +
 link:next_line.html[next_line] +
 link:source_position.html[source_position] +

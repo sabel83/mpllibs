@@ -9,6 +9,7 @@
 #include <mpllibs/metaparse/get_result.h>
 #include <mpllibs/metaparse/get_remaining.h>
 #include <mpllibs/metaparse/get_position.h>
+#include <mpllibs/metaparse/iterate.h>
 
 #include "common.h"
 
@@ -21,6 +22,10 @@
 namespace
 {
   const mpllibs::metatest::TestSuite suite("one_char");
+
+  typedef boost::mpl::list_c<char, 'a','\n','b'> UnixMultiLineText;
+  typedef boost::mpl::list_c<char, 'a','\r','\n','b'> DOSMultiLineText;
+  typedef boost::mpl::list_c<char, 'a','\r','b'> MacMultiLineText;
 
   typedef
     boost::mpl::equal_to<
@@ -69,10 +74,58 @@ namespace
       >
     >
     TestOnceCharForEmptyString;
+  
+  typedef
+    boost::mpl::equal_to<
+      int2,
+      mpllibs::metaparse::get_line<
+        mpllibs::metaparse::get_position<
+          boost::mpl::apply<
+            mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int2>,
+            UnixMultiLineText,
+            mpllibs::metaparse::start
+          >
+        >
+      >
+    >
+    TestUnixMultiLineText;
+
+  typedef
+    boost::mpl::equal_to<
+      int2,
+      mpllibs::metaparse::get_line<
+        mpllibs::metaparse::get_position<
+          boost::mpl::apply<
+            mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int3>,
+            DOSMultiLineText,
+            mpllibs::metaparse::start
+          >
+        >
+      >
+    >
+    TestDOSMultiLineText;
+
+  typedef
+    boost::mpl::equal_to<
+      int2,
+      mpllibs::metaparse::get_line<
+        mpllibs::metaparse::get_position<
+          boost::mpl::apply<
+            mpllibs::metaparse::iterate<mpllibs::metaparse::one_char, int2>,
+            MacMultiLineText,
+            mpllibs::metaparse::start
+          >
+        >
+      >
+    >
+    TestMacMultiLineText;
 }
 
 MPLLIBS_ADD_TEST(suite, TestOnceCharForNonEmptyString)
 MPLLIBS_ADD_TEST(suite, TestOnceCharForNonEmptyStringSecond)
 MPLLIBS_ADD_TEST(suite, TestOnceCharForEmptyString)
 
+MPLLIBS_ADD_TEST(suite, TestUnixMultiLineText)
+MPLLIBS_ADD_TEST(suite, TestDOSMultiLineText)
+MPLLIBS_ADD_TEST(suite, TestMacMultiLineText)
 

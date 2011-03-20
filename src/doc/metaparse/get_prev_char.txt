@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-get_col
-=======
+get_prev_char
+=============
 Abel Sinkovics
 
 Synopsis
@@ -12,7 +12,7 @@ Synopsis
 
 --------------------------------------
 template <class source_position>
-struct get_col
+struct get_prev_char
 {
   // unspecified
 };
@@ -22,13 +22,14 @@ struct get_col
 Description
 -----------
 
-Returns the column of a source position.
+Returns the last character the source position was updated with. The value it
+returns for +mpllibs::metaparse::start+ is unspecified.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/get_col.h>
+#include <mpllibs/metaparse/get_prev_char.h>
 --------------------------------------
 
 Expression semantics
@@ -38,8 +39,8 @@ For any +l+, +c+ compile-time wrapped integral values and +ch+ compile-time
 wrapped character the following are equivalent
 
 --------------------------------------
-get_col<mpllibs::metaparse::source_position<l, c, ch> >::type
-c::type
+get_prev_char<mpllibs::metaparse::source_position<l, c, ch> >::type
+ch::type
 --------------------------------------
 
 Example
@@ -47,8 +48,8 @@ Example
 
 --------------------------------------
 typedef
-  get_col<mpllibs::metaparse::start>::type
-  one;
+  get_prev_char<mpllibs::metaparse::start>::type
+  unspecified;
 --------------------------------------
 
 include::../copyright[]

@@ -6,6 +6,7 @@
 #include <mpllibs/metaparse/source_position.h>
 #include <mpllibs/metaparse/next_char.h>
 #include <mpllibs/metaparse/next_line.h>
+#include <mpllibs/metaparse/get_prev_char.h>
 
 #include "common.h"
 
@@ -22,7 +23,7 @@ namespace
     boost::mpl::equal_to<
       int11,
       mpllibs::metaparse::get_line<
-        mpllibs::metaparse::source_position<int11, int13>
+        mpllibs::metaparse::source_position<int11, int13, int1>
       >::type
     >
     TestGetLine;
@@ -31,11 +32,20 @@ namespace
     boost::mpl::equal_to<
       int13,
       mpllibs::metaparse::get_col<
-        mpllibs::metaparse::source_position<int11, int13>
+        mpllibs::metaparse::source_position<int11, int13, int1>
       >::type
     >
     TestGetCol;
   
+  typedef
+    boost::mpl::equal_to<
+      int1,
+      mpllibs::metaparse::get_prev_char<
+        mpllibs::metaparse::source_position<int11, int13, int1>
+      >::type
+    >
+    TestGetPrevChar;
+
   typedef
     boost::mpl::equal_to<
       int1,
@@ -54,7 +64,7 @@ namespace
     boost::mpl::equal_to<
       int2,
       mpllibs::metaparse::get_col<
-        mpllibs::metaparse::next_char<mpllibs::metaparse::start>
+        mpllibs::metaparse::next_char<mpllibs::metaparse::start, char_0>
       >::type
     >
     TestNextCharsChar;
@@ -63,7 +73,7 @@ namespace
     boost::mpl::equal_to<
       int1,
       mpllibs::metaparse::get_line<
-        mpllibs::metaparse::next_char<mpllibs::metaparse::start>
+        mpllibs::metaparse::next_char<mpllibs::metaparse::start, char_0>
       >::type
     >
     TestNextCharsLine;
@@ -73,7 +83,8 @@ namespace
       int1,
       mpllibs::metaparse::get_col<
         mpllibs::metaparse::next_line<
-          mpllibs::metaparse::next_char<mpllibs::metaparse::start>
+          mpllibs::metaparse::next_char<mpllibs::metaparse::start, char_0>,
+          char_0
         >
       >::type
     >
@@ -83,14 +94,33 @@ namespace
     boost::mpl::equal_to<
       int2,
       mpllibs::metaparse::get_line<
-        mpllibs::metaparse::next_line<mpllibs::metaparse::start>
+        mpllibs::metaparse::next_line<mpllibs::metaparse::start, char_0>
       >::type
     >
     TestNextLinesLine;
+
+  typedef
+    boost::mpl::equal_to<
+      char_1,
+      mpllibs::metaparse::get_prev_char<
+        mpllibs::metaparse::next_char<mpllibs::metaparse::start, char_1>
+      >::type
+    >
+    TestNextCharsPrevChar;
+
+  typedef
+    boost::mpl::equal_to<
+      char_1,
+      mpllibs::metaparse::get_prev_char<
+        mpllibs::metaparse::next_line<mpllibs::metaparse::start, char_1>
+      >::type
+    >
+    TestNextLinesPrevChar;
 }
 
 MPLLIBS_ADD_TEST(suite, TestGetLine)
 MPLLIBS_ADD_TEST(suite, TestGetCol)
+MPLLIBS_ADD_TEST(suite, TestGetPrevChar)
 
 MPLLIBS_ADD_TEST(suite, TestLineOfStart)
 MPLLIBS_ADD_TEST(suite, TestColOfStart)
@@ -100,5 +130,7 @@ MPLLIBS_ADD_TEST(suite, TestNextCharsLine)
 MPLLIBS_ADD_TEST(suite, TestNextLinesChar)
 MPLLIBS_ADD_TEST(suite, TestNextLinesLine)
 
+MPLLIBS_ADD_TEST(suite, TestNextCharsPrevChar)
+MPLLIBS_ADD_TEST(suite, TestNextLinesPrevChar)
 
 

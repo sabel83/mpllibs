@@ -19,13 +19,14 @@ namespace mpllibs
     template <class p>
     struct next_char_impl;
     
-    template <class p>
+    template <class p, class ch>
     struct next_char :
       boost::mpl::apply<
         mpllibs::metaparse::next_char_impl<
           typename boost::mpl::tag<typename p::type>::type
         >,
-        typename p::type
+        typename p::type,
+        typename ch::type
       >
     {};
   }
