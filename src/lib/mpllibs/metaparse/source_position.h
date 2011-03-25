@@ -88,11 +88,11 @@ namespace mpllibs
       template <class p, class ch>
       struct apply :
         mpllibs::metaparse::source_position<
-          mpllibs::metaparse::get_line<p>,
-          boost::mpl::plus<
+          typename mpllibs::metaparse::get_line<p>::type,
+          typename boost::mpl::plus<
             typename mpllibs::metaparse::get_col<p>::type,
             boost::mpl::int_<1>
-          >,
+          >::type,
           ch
         >
       {};
@@ -109,10 +109,10 @@ namespace mpllibs
       template <class p, class ch>
       struct apply :
         mpllibs::metaparse::source_position<
-          boost::mpl::plus<
+          typename boost::mpl::plus<
             typename mpllibs::metaparse::get_line<p>::type,
             boost::mpl::int_<1>
-          >,
+          >::type,
           boost::mpl::int_<1>,
           ch
         >

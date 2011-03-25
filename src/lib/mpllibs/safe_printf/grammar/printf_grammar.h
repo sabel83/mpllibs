@@ -17,6 +17,7 @@
 #include <mpllibs/metaparse/last_of.h>
 #include <mpllibs/metaparse/lit_c.h>
 #include <mpllibs/metaparse/one_char.h>
+#include <mpllibs/metaparse/one_of.h>
 
 #include <mpllibs/metaparse/util/define_data.h>
 

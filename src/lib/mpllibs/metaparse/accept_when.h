@@ -8,8 +8,7 @@
 
 #include <mpllibs/metaparse/get_result.h>
 #include <mpllibs/metaparse/fail.h>
-#include <mpllibs/metaparse/last_of.h>
-#include <mpllibs/metaparse/look_ahead.h>
+#include <mpllibs/metaparse/is_error.h>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/if.hpp>
@@ -41,12 +40,21 @@ namespace mpllibs
     };
   
     template <class p, class pred, class msg>
-    struct accept_when :
-      mpllibs::metaparse::last_of<
-        mpllibs::metaparse::look_ahead<p>,
-        mpllibs::metaparse::accept_when_unchecked<p, pred, msg>
-      >
-    {};
+    struct accept_when
+    {
+      template <class s, class pos>
+      struct apply :
+        boost::mpl::apply<
+          typename boost::mpl::if_<
+            mpllibs::metaparse::is_error<boost::mpl::apply<p, s, pos> >,
+            p,
+            mpllibs::metaparse::accept_when_unchecked<p, pred, msg>
+          >::type,
+          s,
+          pos
+        >
+      {};
+    };
   }
 }
 

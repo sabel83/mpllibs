@@ -17,63 +17,93 @@
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/int.hpp>
 
+namespace mpl = boost::mpl;
+namespace mp = mpllibs::metaparse;
+
 namespace
 {
   const mpllibs::metatest::TestSuite suite("nth_of");
-
+  
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::nth_of_c<0, lit_h>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
+    mpl::equal_to<
+      mp::get_result<
+        mpl::apply<mp::nth_of_c<0, lit_h>, str_hello, mp::start>
       >::type,
       char_h
     >
     TestFirstOfOne;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::nth_of_c<0, lit_h, lit_e>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
+    mpl::equal_to<
+      mp::get_result<
+        mpl::apply<mp::nth_of_c<0, lit_h, lit_e>, str_hello, mp::start>
       >::type,
       char_h
     >
     TestFirstOfTwo;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::nth_of<boost::mpl::int_<1>, lit_h, lit_e>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
+    mpl::equal_to<
+      mp::get_result<
+        mpl::apply<mp::nth_of<mpl::int_<1>, lit_h, lit_e>, str_hello, mp::start>
       >::type,
       char_e
     >
     TestSecondOfTwo;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::nth_of_c<1, lit_x, lit_e>,
-        str_hello,
-        mpllibs::metaparse::start
-      >
+    mp::is_error<
+      mpl::apply<mp::nth_of_c<1, lit_x, lit_e>, str_hello, mp::start>
     >
     TestNothing;
+  
+  typedef
+    mp::is_error<
+      mpl::apply<mp::nth_of_c<0>, str_hello, mp::start>
+    >
+    TestFirstOfNone;
+
+  typedef
+    mp::is_error<
+      mpl::apply<mp::nth_of_c<-1, lit_h, lit_e>, str_hello, mp::start>
+    >
+    TestNIsLessThanZero;
+
+  typedef
+    mp::is_error<
+      mpl::apply<mp::nth_of_c<2, lit_h, lit_e>, str_hello, mp::start>
+    >
+    TestNIsGreaterThanTheNumberOfParsers;
+
+  typedef
+    mp::is_error<
+      mpl::apply<mp::nth_of_c<1, lit_x, lit_e, lit_l>, str_hello, mp::start>
+    >
+    TestErrorBeforeTheNth;
+
+  typedef
+    mp::is_error<
+      mpl::apply<mp::nth_of_c<1, lit_h, lit_x, lit_l>, str_hello, mp::start>
+    >
+    TestErrorAtTheNth;
+
+  typedef
+    mp::is_error<
+      mpl::apply<mp::nth_of_c<1, lit_h, lit_e, lit_x>, str_hello, mp::start>
+    >
+    TestErrorAfterTheNth;
 }
 
 MPLLIBS_ADD_TEST(suite, TestFirstOfOne)
 MPLLIBS_ADD_TEST(suite, TestFirstOfTwo)
 MPLLIBS_ADD_TEST(suite, TestSecondOfTwo)
 MPLLIBS_ADD_TEST(suite, TestNothing)
+
+MPLLIBS_ADD_TEST(suite, TestFirstOfNone)
+MPLLIBS_ADD_TEST(suite, TestNIsLessThanZero)
+MPLLIBS_ADD_TEST(suite, TestNIsGreaterThanTheNumberOfParsers)
+MPLLIBS_ADD_TEST(suite, TestErrorBeforeTheNth)
+MPLLIBS_ADD_TEST(suite, TestErrorAtTheNth)
+MPLLIBS_ADD_TEST(suite, TestErrorAfterTheNth)
 
 

@@ -6,21 +6,34 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/one_of.h>
-#include <mpllibs/metaparse/always.h>
 #include <mpllibs/metaparse/return.h>
+#include <mpllibs/metaparse/is_error.h>
+
+#include <boost/mpl/apply.hpp>
+#include <boost/mpl/if.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
     template <class p, class t, class f>
-    struct if_ :
-      mpllibs::metaparse::one_of<
-        mpllibs::metaparse::always<p, t>,
-        mpllibs::metaparse::return_<f>
-      >
-    {};
+    struct if_
+    {
+      template <class s, class pos>
+      struct apply :
+        boost::mpl::apply<
+          mpllibs::metaparse::return_<
+            typename boost::mpl::if_<
+              mpllibs::metaparse::is_error<boost::mpl::apply<p, s, pos> >,
+              f,
+              t
+            >::type
+          >,
+          s,
+          pos
+        >
+      {};
+    };
   }
 }
 
