@@ -9,6 +9,8 @@
 #include <mpllibs/metaparse/util/is_ucase_letter.h>
 #include <mpllibs/metaparse/util/is_lcase_letter.h>
 
+#include <mpllibs/metatest/to_stream.h>
+
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/apply.hpp>
 
@@ -31,6 +33,8 @@ namespace mpllibs
     }
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::util::is_letter, "is_letter")
 
 #endif
 

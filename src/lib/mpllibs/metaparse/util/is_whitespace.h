@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream.h>
+
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/integral_c.hpp>
@@ -31,6 +33,11 @@ namespace mpllibs
     }
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::util::is_whitespace,
+  "is_whitespace"
+)
 
 #endif
 
