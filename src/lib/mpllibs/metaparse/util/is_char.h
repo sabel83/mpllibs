@@ -8,6 +8,8 @@
 
 #include <boost/mpl/equal_to.hpp>
 
+#include <mpllibs/metatest/to_stream.h>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -23,6 +25,8 @@ namespace mpllibs
     }
   }
 }
+
+DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::util::is_char, "is_char")
 
 #endif
 

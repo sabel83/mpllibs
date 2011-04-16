@@ -8,6 +8,8 @@
 
 #include <mpllibs/metaparse/util/in_range.h>
 
+#include <mpllibs/metatest/to_stream.h>
+
 #include <boost/mpl/integral_c.hpp>
 
 namespace mpllibs
@@ -25,6 +27,11 @@ namespace mpllibs
     }
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::util::is_lcase_letter,
+  "is_lcase_letter"
+)
 
 #endif
 
