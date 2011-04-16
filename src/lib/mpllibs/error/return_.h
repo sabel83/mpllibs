@@ -13,9 +13,6 @@ namespace mpllibs
 {
   namespace error
   {
-    /*
-     * return_
-     */
     template <class>
     struct return__impl;
     // No default implementation
