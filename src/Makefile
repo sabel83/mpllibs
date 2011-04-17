@@ -7,7 +7,11 @@ MPLLIBS_ROOT = lib/mpllibs
 
 # Make sure, that metatest is the first code dir
 ALL_CODE_DIRS = $(filter-out $(MPLLIBS_ROOT)/Makefile,$(wildcard $(MPLLIBS_ROOT)/*))
-CODE_DIRS = lib/mpllibs/metatest $(filter-out lib/mpllibs/metatest, $(ALL_CODE_DIRS))
+
+CODE_DIRS = \
+  lib/mpllibs/metatest \
+  $(filter-out lib/mpllibs/metatest, $(ALL_CODE_DIRS)) \
+  sample
 
 DOC_DIRS = doc
 

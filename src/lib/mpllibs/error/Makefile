@@ -5,6 +5,8 @@
 
 build : ; echo Header only library
 
-check clean all : ; $(MAKE) -C test $(MAKECMDGOALS)
+check : ; $(MAKE) -C test check
+clean : ; $(MAKE) -C test clean
+all : ; $(MAKE) -C test all
 
 
