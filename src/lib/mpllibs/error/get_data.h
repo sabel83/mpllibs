@@ -16,13 +16,13 @@ namespace mpllibs
     template <class>
     struct get_data_impl;
     
-    template <class e>
+    template <class E>
     struct get_data :
       boost::mpl::apply<
-        mpllibs::error::get_data_impl<
-          typename boost::mpl::tag<typename e::type>::type
+        get_data_impl<
+          typename boost::mpl::tag<typename E::type>::type
         >,
-        typename e::type
+        typename E::type
       >
     {};
   }

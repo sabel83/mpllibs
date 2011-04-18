@@ -14,7 +14,7 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
 
-#include "Either_monad.h"
+#include "either_monad.h"
 
 namespace
 {
@@ -38,29 +38,29 @@ namespace
   template <class T>
   struct lazy_double_value : boost::mpl::times<typename T::type, int2> {};
   
-  template <class a, class b>
+  template <class A, class B>
   struct lazy_plus :
-    boost::mpl::plus<typename a::type, typename b::type>
+    boost::mpl::plus<typename A::type, typename B::type>
   {};
 
-  template <class a, class b>
+  template <class A, class B>
   struct double_lazy_plus :
-    boost::mpl::plus<typename a::type::type, typename b::type::type>
+    boost::mpl::plus<typename A::type::type, typename B::type::type>
   {};
 
-  template <class a, class b>
-  struct lazy_times : boost::mpl::times<typename a::type, typename b::type> {};
+  template <class A, class B>
+  struct lazy_times : boost::mpl::times<typename A::type, typename B::type> {};
 
-  template <class c, class t, class f>
-  struct lazy_eval_if : boost::mpl::eval_if<typename c::type, t, f> {};
+  template <class C, class T, class F>
+  struct lazy_eval_if : boost::mpl::eval_if<typename C::type, T, F> {};
 
-  template <class a, class b>
+  template <class A, class B>
   struct lazy_equal_to :
-    boost::mpl::equal_to<typename a::type, typename b::type>
+    boost::mpl::equal_to<typename A::type, typename B::type>
   {};
 
-  template <class f, class a1>
-  struct lazy_apply : boost::mpl::apply<typename f::type, a1> {};
+  template <class F, class A1>
+  struct lazy_apply : boost::mpl::apply<typename F::type, A1> {};
 }
 
 #endif

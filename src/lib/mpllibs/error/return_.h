@@ -20,20 +20,15 @@ namespace mpllibs
     struct no_return_argument;
 
     // monad_tag is lazy
-    template <class monad_tag, class a = mpllibs::error::no_return_argument>
-    struct return_ :
-      boost::mpl::apply<mpllibs::error::return_<monad_tag>, a>
-    {};
+    template <class MonadTag, class A = no_return_argument>
+    struct return_ : boost::mpl::apply<return_<MonadTag>, A> {};
     
-    template <class monad_tag>
-    struct return_<monad_tag, mpllibs::error::no_return_argument>
+    template <class MonadTag>
+    struct return_<MonadTag, no_return_argument>
     {
-      template <class a>
+      template <class A>
       struct apply :
-        boost::mpl::apply<
-          mpllibs::error::return__impl<typename monad_tag::type>,
-          a
-        >
+        boost::mpl::apply<return__impl<typename MonadTag::type>, A>
       {};
     };
   }

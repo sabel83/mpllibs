@@ -22,29 +22,29 @@ namespace mpllibs
 {
   namespace error
   {
-    struct Exception_tag
+    struct exception_tag
     {
-      typedef Exception_tag type;
+      typedef exception_tag type;
     };
   
     template <class Data>
-    struct Exception
+    struct exception
     {
-      typedef Exception_tag tag;
-      typedef mpllibs::error::Exception<Data> type;
+      typedef exception_tag tag;
+      typedef exception type;
     };
     
     template <class>
     struct get_data_impl;
     
     template <>
-    struct get_data_impl<mpllibs::error::Exception_tag>
+    struct get_data_impl<mpllibs::error::exception_tag>
     {
       template <class>
       struct apply;
       
       template <class Data>
-      struct apply<mpllibs::error::Exception<Data> >
+      struct apply<mpllibs::error::exception<Data> >
       {
         typedef Data type;
       };
@@ -53,26 +53,26 @@ namespace mpllibs
   
   namespace metatest
   {
-    template <class t>
+    template <class T>
     struct to_stream;
     
-    template <class t>
+    template <class T>
     struct to_stream_impl;
 
     template <>
-    struct to_stream_impl<mpllibs::error::Exception_tag>
+    struct to_stream_impl<mpllibs::error::exception_tag>
     {
-      template <class e>
+      template <class E>
       struct apply
       {
         typedef apply type;
       
         static std::ostream& run(std::ostream& o_)
         {
-          return
-            mpllibs::metatest::to_stream<
-              typename mpllibs::error::get_data<e>::type
-            >::run(o_ << "Exception<") << ">";
+          using mpllibs::error::get_data;
+
+          typedef typename get_data<E>::type Edata;
+          return to_stream<Edata>::run(o_ << "Exception<") << ">";
         }
       };
     };
@@ -85,23 +85,23 @@ namespace mpllibs
      * This is modeled along the Either monad of Haskell
      *
      * A monadic value is either:
-     *  - An Exception
+     *  - An exception
      *  - A value wrapped with a class, that:
-     *    - its tag is NoException_tag
+     *    - its tag is no_exception_tag
      *    - its type is the wrapped value
      *
      */
-    typedef Exception_tag ExceptionMonad;
+    typedef exception_tag exception_monad;
     
-    struct NoException_tag
+    struct no_exception_tag
     {
-      typedef NoException_tag type;
+      typedef no_exception_tag type;
     };
     
     template <class T>
-    struct NoException
+    struct no_exception
     {
-      typedef mpllibs::error::NoException_tag tag;
+      typedef no_exception_tag tag;
       typedef T type;
     };
     
@@ -113,18 +113,18 @@ namespace mpllibs
     struct return__impl;
     
     template <>
-    struct return__impl<mpllibs::error::Exception_tag>
+    struct return__impl<exception_tag>
     {
       template <class T>
       struct apply
       {
-        typedef mpllibs::error::NoException<T> type;
+        typedef no_exception<T> type;
       };
     };
     
     template <>
-    struct return__impl<NoException_tag> :
-      mpllibs::error::return__impl<mpllibs::error::Exception_tag>
+    struct return__impl<no_exception_tag> :
+      mpllibs::error::return__impl<exception_tag>
     {};
 
 
@@ -136,36 +136,34 @@ namespace mpllibs
 
     namespace impl
     {
-      template <class exception>
+      template <class Exception>
       struct propagate_exception
       {
-        typedef exception type;
+        typedef Exception type;
       };
       
-      template <class a, class f>
-      struct eval_next_step : boost::mpl::apply<f, typename a::type> {};
+      template <class A, class F>
+      struct eval_next_step : boost::mpl::apply<F, typename A::type> {};
     }
 
     template <>
-    struct bind_impl<mpllibs::error::Exception_tag>
+    struct bind_impl<exception_tag>
     {
-      template <class a, class f>
+      template <class A, class F>
       struct apply :
         boost::mpl::if_<
           typename boost::is_same<
-            mpllibs::error::Exception_tag,
-            typename boost::mpl::tag<a>::type
+            exception_tag,
+            typename boost::mpl::tag<A>::type
           >::type,
-          mpllibs::error::impl::propagate_exception<a>,
-          mpllibs::error::impl::eval_next_step<a, f>
+          mpllibs::error::impl::propagate_exception<A>,
+          mpllibs::error::impl::eval_next_step<A, F>
         >::type
       {};
     };
     
     template <>
-    struct bind_impl<mpllibs::error::NoException_tag> :
-      mpllibs::error::bind_impl<mpllibs::error::Exception_tag>
-    {};
+    struct bind_impl<no_exception_tag> : bind_impl<exception_tag> {};
   }
 }
 
@@ -173,21 +171,21 @@ namespace boost
 {
   namespace mpl
   {
-    template <class a, class b>
+    template <class A, class B>
     struct equal_to_impl;
 
     template <>
     struct
       equal_to_impl<
-        mpllibs::error::Exception_tag,
-        mpllibs::error::Exception_tag
+        mpllibs::error::exception_tag,
+        mpllibs::error::exception_tag
       >
     {
-      template <class a, class b>
+      template <class A, class B>
       struct apply :
-        boost::mpl::equal_to<
-          typename mpllibs::error::get_data<a>::type,
-          typename mpllibs::error::get_data<b>::type
+        equal_to<
+          typename mpllibs::error::get_data<A>::type,
+          typename mpllibs::error::get_data<B>::type
         >
       {};
     };
@@ -195,35 +193,35 @@ namespace boost
     template <>
     struct
       equal_to_impl<
-        mpllibs::error::NoException_tag,
-        mpllibs::error::NoException_tag
+        mpllibs::error::no_exception_tag,
+        mpllibs::error::no_exception_tag
       >
     {
-      template <class a, class b>
-      struct apply : boost::mpl::equal_to<typename a::type, typename b::type>
+      template <class A, class B>
+      struct apply : equal_to<typename A::type, typename B::type>
       {};
     };
     
     template <>
     struct
       equal_to_impl<
-        mpllibs::error::Exception_tag,
-        mpllibs::error::NoException_tag
+        mpllibs::error::exception_tag,
+        mpllibs::error::no_exception_tag
       >
     {
       template <class>
-      struct apply : boost::mpl::false_ {};
+      struct apply : false_ {};
     };
     
     template <>
     struct
       equal_to_impl<
-        mpllibs::error::NoException_tag,
-        mpllibs::error::Exception_tag
+        mpllibs::error::no_exception_tag,
+        mpllibs::error::exception_tag
       >
     {
       template <class>
-      struct apply : boost::mpl::false_ {};
+      struct apply : false_ {};
     };
   }
 }

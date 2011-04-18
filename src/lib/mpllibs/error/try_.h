@@ -8,7 +8,7 @@
 
 #include <mpllibs/error/do_.h>
 #include <mpllibs/error/let.h>
-#include <mpllibs/error/Exception.h>
+#include <mpllibs/error/exception.h>
 #include <mpllibs/error/get_data.h>
 
 #include <boost/mpl/tag.hpp>
@@ -34,37 +34,39 @@ namespace mpllibs
     namespace impl
     {
       // evaluates result lazily
-      template <class result>
-      struct skip_further_catches : result
+      template <class Result>
+      struct skip_further_catches : Result
       {
-        template <class exception_tag, class name, class body>
+        template <class ExceptionTag, class Name, class Body>
         struct catch_ : skip_further_catches {};
       };
       
-      template <class exception>
+      template <class Exception>
       struct was_exception
       {
-        typedef exception type;
+      private:
+        typedef mpllibs::error::get_data<Exception> _exception_data;
         
-        typedef mpllibs::error::get_data<exception> _exception_data;
+      public:
+        typedef Exception type;
         
-        template <class exception_tag, class name, class body>
+        template <class ExceptionTag, class Name, class Body>
         struct catch_ :
           boost::mpl::if_<
             boost::mpl::or_<
               boost::is_same<
-                exception_tag,
+                ExceptionTag,
                 typename boost::mpl::tag<typename _exception_data::type>::type
               >,
-              boost::is_same<exception_tag, mpllibs::error::catch_any>
+              boost::is_same<ExceptionTag, mpllibs::error::catch_any>
             >,
             mpllibs::error::impl::skip_further_catches<
               typename mpllibs::error::let<
-                name, typename _exception_data::type,
-                body
+                Name, typename _exception_data::type,
+                Body
               >::type
             >,
-            mpllibs::error::impl::was_exception<exception>
+            mpllibs::error::impl::was_exception<Exception>
           >::type
         {};
       };
@@ -73,32 +75,32 @@ namespace mpllibs
     template <
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         DO_MAX_ARGUMENT,
-        class e,
-        mpllibs::error::unused_do_argument
+        class E,
+        unused_do_argument
       )
     >
     struct try_ :
       boost::mpl::if_<
         typename boost::is_same<
-          mpllibs::error::Exception_tag,
+          exception_tag,
           typename boost::mpl::tag<
             typename
-              DO<mpllibs::error::ExceptionMonad>::template apply<
-                BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)
+              DO<exception_monad>::template apply<
+                BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
               >::type
           >::type
         >::type,
         mpllibs::error::impl::was_exception<
           typename
-            DO<mpllibs::error::ExceptionMonad>::template apply<
-              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)
+            DO<exception_monad>::template apply<
+              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
             >::type
         >,
         mpllibs::error::impl::skip_further_catches<
           // NoException evaluates to the wrapped value
           typename
-            DO<mpllibs::error::ExceptionMonad>::template apply<
-              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, e)
+            DO<exception_monad>::template apply<
+              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
             >::type
         >
       >::type

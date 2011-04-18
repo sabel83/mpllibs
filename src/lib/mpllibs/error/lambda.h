@@ -12,13 +12,13 @@ namespace mpllibs
 {
   namespace error
   {
-    template <class arg_name, class f>
+    template <class ArgName, class F>
     struct lambda
     {
-      typedef mpllibs::error::lambda<arg_name, f> type;
+      typedef lambda type;
 
-      template <class t>
-      struct apply : mpllibs::error::let<arg_name, t, f>::type {};
+      template <class T>
+      struct apply : let<ArgName, T, F>::type {};
     };
   }
 }

@@ -14,6 +14,14 @@
 
 #include "common.h"
 
+using boost::mpl::identity;
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::error::return_;
+
 namespace
 {
   struct test_tag
@@ -30,28 +38,25 @@ namespace mpllibs
     struct return__impl<test_tag>
     {
       template <class t>
-      struct apply : boost::mpl::identity<int13> {};
+      struct apply : identity<int13> {};
     };
   }
 }
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("return_");
+  const TestSuite suite("return_");
 
   typedef
-    boost::mpl::equal_to<
-      int13,
-      boost::mpl::apply<mpllibs::error::return_<test_tag>, int>::type
-    >
-    TestSpecialisationIsCalled;  
+    equal_to<int13, apply<return_<test_tag>, int>::type>
+    test_specialisation_is_called;  
 
   typedef
-    boost::mpl::equal_to<int13, mpllibs::error::return_<test_tag, int>::type>
-    TestUsingTwoArguments;  
+    equal_to<int13, return_<test_tag, int>::type>
+    test_using_two_arguments;
 }
 
-MPLLIBS_ADD_TEST(suite, TestSpecialisationIsCalled)
-MPLLIBS_ADD_TEST(suite, TestUsingTwoArguments)
+MPLLIBS_ADD_TEST(suite, test_specialisation_is_called)
+MPLLIBS_ADD_TEST(suite, test_using_two_arguments)
 
 

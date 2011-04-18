@@ -33,22 +33,22 @@ namespace
     typedef right_tag type;
   };
 
-  typedef either_tag Either;
+  typedef either_tag either;
   
-  template <class t>
-  struct Left
+  template <class T>
+  struct left
   {
     typedef left_tag tag;
-    typedef t value;
-    typedef Left<t> type;
+    typedef T value;
+    typedef left type;
   };
   
-  template <class t>
-  struct Right
+  template <class T>
+  struct right
   {
     typedef right_tag tag;
-    typedef t value;
-    typedef Right<t> type;
+    typedef T value;
+    typedef right type;
   };
 }
 
@@ -59,8 +59,8 @@ namespace mpllibs
     template <>
     struct return__impl<either_tag>
     {
-      template <class t>
-      struct apply : Right<t> {};
+      template <class T>
+      struct apply : right<T> {};
     };
   }
 }
@@ -72,9 +72,9 @@ namespace boost
     template <>
     struct equal_to_impl<left_tag, left_tag>
     {
-      template <class a, class b>
+      template <class A, class B>
       struct apply :
-        boost::mpl::equal_to<typename a::value, typename b::value>
+        boost::mpl::equal_to<typename A::value, typename B::value>
       {};
     };
 
@@ -86,7 +86,7 @@ namespace boost
     template <>
     struct equal_to_impl<right_tag, left_tag>
     {
-      template <class a, class b>
+      template <class A, class B>
       struct apply : boost::mpl::identity<boost::mpl::false_>
       {};
     };
@@ -105,15 +105,15 @@ namespace mpllibs
     template <>
     struct bind_impl<either_tag>
     {
-      template <class a, class f>
+      template <class A, class F>
       struct apply :
         boost::mpl::if_<
           typename boost::is_same<
             right_tag,
-            typename boost::mpl::tag<a>::type
+            typename boost::mpl::tag<A>::type
           >::type,
-          boost::mpl::apply<f, a>,
-          a
+          boost::mpl::apply<F, A>,
+          A
         >::type
       {};
     };

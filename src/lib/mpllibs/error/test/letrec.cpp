@@ -13,78 +13,96 @@
 
 #include <boost/mpl/minus.hpp>
 
+using boost::mpl::equal_to;
+using boost::mpl::minus;
+
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::error::letrec;
+using mpllibs::error::lambda;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("letrec");
+  const TestSuite suite("letrec");
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int13,
       // name is replaced with a nullary metafunction evaluating to the
       // substituted expression
-      mpllibs::error::letrec<x, int13, x>::type::type
-    >
-    TestLetrecName;
-
-  typedef
-    boost::mpl::equal_to<int11, mpllibs::error::letrec<x, int13, int11>::type>
-    TestLetrecNotName;
-  
-  typedef
-    boost::mpl::equal_to<
-      int26,
-      mpllibs::error::letrec<x, int13, lazy_double_value<x> >::type
-    >
-    TestTemplate;
-
-  typedef
-    boost::mpl::equal_to<
-      int24,
-      mpllibs::error::letrec<
+      letrec<
         x, int13,
-        mpllibs::error::letrec<y, int11, lazy_plus<x, y> >::type
+        x
       >::type::type
     >
-    TestNestedLetrec;
+    test_letrec_name;
+
+  typedef equal_to<int11, letrec<x, int13, int11>::type> test_letrec_not_name;
   
   typedef
-    boost::mpl::equal_to<
+    equal_to<
+      int26,
+      letrec<
+        x, int13,
+        lazy_double_value<x>
+      >::type
+    >
+    test_template;
+
+  typedef
+    equal_to<
+      int24,
+      letrec<
+        x, int13,
+        letrec<
+          y, int11,
+          lazy_plus<x, y>
+        >::type
+      >::type::type
+    >
+    test_nested_letrec;
+  
+  typedef
+    equal_to<
       int37,
-      mpllibs::error::letrec<
+      letrec<
         x, int13,
         double_lazy_plus<
           x,
-          mpllibs::error::letrec<x, int11, lazy_plus<x, int13> >
+          letrec<
+            x, int11,
+            lazy_plus<x, int13>
+          >
         >
       >::type::type
     >
-    TestShadowing;
+    test_shadowing;
   
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int24,
-      mpllibs::error::letrec<
+      letrec<
         x,
-        mpllibs::error::lambda<
+        lambda<
           y,
           lazy_eval_if<
             lazy_equal_to<y, int0>,
             int1,
-            lazy_times<lazy_apply<x, boost::mpl::minus<y, int1> >, y>
+            lazy_times<lazy_apply<x, minus<y, int1> >, y>
           >
         >,
         lazy_apply<x, int4>
       >::type::type
     >
-    TestRecursion;
+    test_recursion;
 }
 
-MPLLIBS_ADD_TEST(suite, TestLetrecName)
-MPLLIBS_ADD_TEST(suite, TestLetrecNotName)
-MPLLIBS_ADD_TEST(suite, TestTemplate)
-MPLLIBS_ADD_TEST(suite, TestNestedLetrec)
-MPLLIBS_ADD_TEST(suite, TestShadowing)
-MPLLIBS_ADD_TEST(suite, TestRecursion)
+MPLLIBS_ADD_TEST(suite, test_letrec_name)
+MPLLIBS_ADD_TEST(suite, test_letrec_not_name)
+MPLLIBS_ADD_TEST(suite, test_template)
+MPLLIBS_ADD_TEST(suite, test_nested_letrec)
+MPLLIBS_ADD_TEST(suite, test_shadowing)
+MPLLIBS_ADD_TEST(suite, test_recursion)
 
 
 

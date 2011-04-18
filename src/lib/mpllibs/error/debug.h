@@ -14,12 +14,12 @@ namespace mpllibs
 {
   namespace metatest
   {
-    template <class e>
+    template <class E>
     struct debug
     {
       debug()
       {
-        mpllibs::metatest::to_stream<typename e::type>::run(std::cout)
+        mpllibs::metatest::to_stream<typename E::type>::run(std::cout)
           << std::endl;
         exit(0);
       }

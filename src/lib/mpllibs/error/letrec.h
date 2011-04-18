@@ -12,10 +12,8 @@ namespace mpllibs
 {
   namespace error
   {
-    template <class a, class e1, class e2>
-    struct letrec :
-      mpllibs::error::let<a, mpllibs::error::letrec<a, e1, e1>, e2>
-    {};
+    template <class A, class E1, class E2>
+    struct letrec : let<A, letrec<A, E1, E1>, E2> {};
   }
 }
 
