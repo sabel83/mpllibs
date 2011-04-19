@@ -32,7 +32,7 @@ namespace mpllibs
   
     namespace grammar
     {
-      struct NormalChars :
+      struct normal_chars :
         mpllibs::metaparse::any<
           mpllibs::metaparse::last_of<
             mpllibs::metaparse::except<
@@ -45,7 +45,7 @@ namespace mpllibs
         >
       {};
 
-      struct Flag :
+      struct flag :
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::lit_c<'-'>,
           mpllibs::metaparse::lit_c<'+'>,
@@ -55,12 +55,12 @@ namespace mpllibs
         >
       {};
 
-      struct Integer : mpllibs::metaparse::any1<mpllibs::metaparse::digit> {};
+      struct integer : mpllibs::metaparse::any1<mpllibs::metaparse::digit> {};
     
       // Returns true_ or false_
-      struct Width :
+      struct width :
         mpllibs::metaparse::one_of<
-          mpllibs::metaparse::always<Integer, boost::mpl::false_>,
+          mpllibs::metaparse::always<integer, boost::mpl::false_>,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'*'>,
             boost::mpl::true_
@@ -70,205 +70,205 @@ namespace mpllibs
       {};
 
       // Returns true_ or false_
-      struct Precision :
+      struct precision :
         mpllibs::metaparse::one_of<
-          mpllibs::metaparse::last_of<mpllibs::metaparse::lit_c<'.'>, Width>,
+          mpllibs::metaparse::last_of<mpllibs::metaparse::lit_c<'.'>, width>,
           mpllibs::metaparse::return_<boost::mpl::false_>
         >
       {};
 
-      struct Format_NoFlag :
+      struct format_no_flag :
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'c'>,
-            ExpectCharacter
+            expect_character
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'d'>,
-            ExpectSignedInteger
+            expect_signed_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'i'>,
-            ExpectSignedInteger
+            expect_signed_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'e'>,
-            ExpectDouble
+            expect_double
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'E'>,
-            ExpectDouble
+            expect_double
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'f'>,
-            ExpectDouble
+            expect_double
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'g'>,
-            ExpectDouble
+            expect_double
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'G'>,
-            ExpectDouble
+            expect_double
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'o'>,
-            ExpectSignedInteger
+            expect_signed_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'s'>,
-            ExpectString
+            expect_string
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'u'>,
-            ExpectUnsignedInteger
+            expect_unsigned_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'x'>,
-            ExpectUnsignedInteger
+            expect_unsigned_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'X'>,
-            ExpectUnsignedInteger
+            expect_unsigned_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'p'>,
-            ExpectPointer
+            expect_pointer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'n'>,
-            ExpectSignedIntPointer
+            expect_signed_int_pointer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'%'>,
-            ExpectNothing
+            expect_nothing
           >
         >
       {};
 
-      struct Format_hFlag :
+      struct format_h_flag :
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'d'>,
-            ExpectShortSignedInteger
+            expect_short_signed_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'i'>,
-            ExpectShortSignedInteger
+            expect_short_signed_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'o'>,
-            ExpectShortSignedInteger
+            expect_short_signed_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'u'>,
-            ExpectShortUnsignedInteger
+            expect_short_unsigned_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'x'>,
-            ExpectShortUnsignedInteger
+            expect_short_unsigned_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'X'>,
-            ExpectShortUnsignedInteger
+            expect_short_unsigned_integer
           >
         >
       {};
 
-      struct Format_lFlag :
+      struct format_l_flag :
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'c'>,
-            ExpectWideCharacter
+            expect_wide_character
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'d'>,
-            ExpectLongSignedInteger
+            expect_long_signed_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'i'>,
-            ExpectLongSignedInteger
+            expect_long_signed_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'o'>,
-            ExpectLongSignedInteger
+            expect_long_signed_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'s'>,
-            ExpectWideCharacterString
+            expect_wide_character_string
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'u'>,
-            ExpectLongUnsignedInteger
+            expect_long_unsigned_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'x'>,
-            ExpectLongUnsignedInteger
+            expect_long_unsigned_integer
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'X'>,
-            ExpectLongUnsignedInteger
+            expect_long_unsigned_integer
           >
         >
       {};
 
-      struct Format_LFlag :
+      struct format_capital_l_flag :
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'e'>,
-            ExpectLongDouble
+            expect_long_double
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'E'>,
-            ExpectLongDouble
+            expect_long_double
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'f'>,
-            ExpectLongDouble
+            expect_long_double
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'g'>,
-            ExpectLongDouble
+            expect_long_double
           >,
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'G'>,
-            ExpectLongDouble
+            expect_long_double
           >
         >
       {};
 
-      struct Format :
+      struct format :
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::last_of<
             mpllibs::metaparse::lit_c<'h'>,
-            Format_hFlag
+            format_h_flag
           >,
           mpllibs::metaparse::last_of<
             mpllibs::metaparse::lit_c<'l'>,
-            Format_lFlag
+            format_l_flag
           >,
           mpllibs::metaparse::last_of<
             mpllibs::metaparse::lit_c<'L'>,
-            Format_LFlag
+            format_capital_l_flag
           >,
-          Format_NoFlag
+          format_no_flag
         >
       {};
 
       // returns deque<defined extra int, defined extra int, format>
-      struct Parameter :
+      struct parameter :
         mpllibs::metaparse::last_of<
           mpllibs::metaparse::lit_c<'%'>,
-          mpllibs::metaparse::any<Flag>,
-          mpllibs::metaparse::sequence<Width, Precision, Format>
+          mpllibs::metaparse::any<flag>,
+          mpllibs::metaparse::sequence<width, precision, format>
         >
       {};
 
       struct S :
         mpllibs::metaparse::last_of<
-          NormalChars,
+          normal_chars,
           mpllibs::metaparse::any<
-            mpllibs::metaparse::first_of<Parameter, NormalChars>
+            mpllibs::metaparse::first_of<parameter, normal_chars>
           >
         >
       {};

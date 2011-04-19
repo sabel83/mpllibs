@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/safe_printf/VerifyPrintfArguments.h>
+#include <mpllibs/safe_printf/verify_printf_arguments.h>
 
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/list.hpp>
@@ -59,17 +59,17 @@ namespace mpllibs
       #error PRINTF already defined
     #endif
     #define PRINTF(z, n, unused) \
-      template <class formatString BOOST_PP_REPEAT(n, PRINTF_CLASSES, ~)> \
+      template <class FormatString BOOST_PP_REPEAT(n, PRINTF_CLASSES, ~)> \
       int printf(BOOST_PP_REPEAT(n, PRINTF_ARGS, ~)) \
       { \
         BOOST_STATIC_ASSERT(( \
-          mpllibs::safe_printf::VerifyPrintfArguments< \
-            formatString, \
+          verify_printf_arguments< \
+            FormatString, \
             boost::mpl::list<BOOST_PP_REPEAT(n, PRINTF_CLASS_ARGS, ~)> \
           >::type::value \
         )); \
         return ::printf( \
-          boost::mpl::c_str<formatString>::type::value \
+          boost::mpl::c_str<FormatString>::type::value \
           BOOST_PP_REPEAT(n, PRINTF_NO_CLASS_ARGS, ~) \
         ); \
       }
@@ -78,18 +78,18 @@ namespace mpllibs
       #error FPRINTF already defined
     #endif
     #define FPRINTF(z, n, unused) \
-      template <class formatString BOOST_PP_REPEAT(n, PRINTF_CLASSES, ~)> \
+      template <class FormatString BOOST_PP_REPEAT(n, PRINTF_CLASSES, ~)> \
       int fprintf(FILE* stream BOOST_PP_COMMA_IF(n) BOOST_PP_REPEAT(n, PRINTF_ARGS, ~)) \
       { \
         BOOST_STATIC_ASSERT(( \
-          mpllibs::safe_printf::VerifyPrintfArguments< \
-            formatString, \
+          verify_printf_arguments< \
+            FormatString, \
             boost::mpl::list<BOOST_PP_REPEAT(n, PRINTF_CLASS_ARGS, ~)> \
           >::type::value \
         )); \
         return ::fprintf( \
           stream, \
-          boost::mpl::c_str<formatString>::type::value \
+          boost::mpl::c_str<FormatString>::type::value \
           BOOST_PP_REPEAT(n, PRINTF_NO_CLASS_ARGS, ~) \
         ); \
       }
@@ -98,18 +98,18 @@ namespace mpllibs
       #error SPRINTF already defined
     #endif
     #define SPRINTF(z, n, unused) \
-      template <class formatString BOOST_PP_REPEAT(n, PRINTF_CLASSES, ~)> \
+      template <class FormatString BOOST_PP_REPEAT(n, PRINTF_CLASSES, ~)> \
       int sprintf(char* s BOOST_PP_COMMA_IF(n) BOOST_PP_REPEAT(n, PRINTF_ARGS, ~)) \
       { \
         BOOST_STATIC_ASSERT(( \
-          mpllibs::safe_printf::VerifyPrintfArguments< \
-            formatString, \
+          verify_printf_arguments< \
+            FormatString, \
             boost::mpl::list<BOOST_PP_REPEAT(n, PRINTF_CLASS_ARGS, ~)> \
           >::type::value \
         )); \
         return ::sprintf( \
           s, \
-          boost::mpl::c_str<formatString>::type::value \
+          boost::mpl::c_str<FormatString>::type::value \
           BOOST_PP_REPEAT(n, PRINTF_NO_CLASS_ARGS, ~) \
         ); \
       }

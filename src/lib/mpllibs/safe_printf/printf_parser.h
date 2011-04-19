@@ -16,7 +16,7 @@ namespace mpllibs
   {
     typedef
       mpllibs::metaparse::build_parser<mpllibs::safe_printf::grammar::S>
-      PrintfParser;
+      printf_parser;
   }
 }
 
