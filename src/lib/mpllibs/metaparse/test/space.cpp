@@ -4,7 +4,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/space.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -23,42 +25,74 @@ namespace
   typedef boost::mpl::list_c<char, '\r', 'e', 'l', 'l', 'o'> str_with_r;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::space, str_hello>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::space,
+        str_hello,
+        mpllibs::metaparse::start
+      >
     >
     TestWithText;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::space, str__ello>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::space,
+          str__ello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::integral_c<char, ' '>
     >
     TestWithSpace;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::space, str_with_t>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::space,
+          str_with_t,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::integral_c<char, '\t'>
     >
     TestWithTab;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::space, str_with_n>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::space,
+          str_with_n,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::integral_c<char, '\n'>
     >
     TestWithLineFeed;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::space, str_with_r>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::space,
+          str_with_r,
+          mpllibs::metaparse::start
+        >
+      >::type,
       boost::mpl::integral_c<char, '\r'>
     >
     TestWithCReturn;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::space, str_>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::space,
+        str_,
+        mpllibs::metaparse::start
+      >
     >
     TestWithEmptyString;
 }

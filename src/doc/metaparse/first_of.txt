@@ -18,7 +18,7 @@ template <
 >
 struct first_of
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -44,7 +44,7 @@ Header
 Expression semantics
 --------------------
 
-For any +p1+, ... +pn+ parsers and +s+ compile-time string
+For any +p1+, ... +pn+ parsers
 
 --------------------------------------
 first_of<p1, ..., pn>

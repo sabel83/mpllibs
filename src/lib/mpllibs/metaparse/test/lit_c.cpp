@@ -3,7 +3,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
+#include <mpllibs/metaparse/get_remaining.h>
+#include <mpllibs/metaparse/get_position.h>
 
 #include "common.h"
 
@@ -19,25 +23,50 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<lit_c_h, str_hello>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          lit_c_h,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_h
     >
     TestAccept;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<boost::mpl::apply<lit_c_h, str_bello> >
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<lit_c_h, str_bello, mpllibs::metaparse::start>
+    >
     TestReject;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<boost::mpl::apply<lit_c_h, str_> >
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<lit_c_h, str_, mpllibs::metaparse::start>
+    >
     TestWithEmptyString;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        lit_c_e,
-        boost::mpl::apply<lit_c_h, str_hello>::type::second
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          lit_c_e,
+          mpllibs::metaparse::get_remaining<
+            boost::mpl::apply<
+              lit_c_h,
+              str_hello,
+              mpllibs::metaparse::start
+            >
+          >::type,
+          mpllibs::metaparse::get_position<
+            boost::mpl::apply<
+              lit_c_h,
+              str_hello,
+              mpllibs::metaparse::start
+            >
+          >::type
+        >
+      >::type,
       char_e
     >
     TestRemainingString;

@@ -9,8 +9,10 @@ include $(THIS_MAKEFILES_DIR)/common.mk
 EXECUTABLE ?= test
 LIBS += metatest
 
-check : $(EXECUTABLE)
+check : build
 	./$(EXECUTABLE)
+
+build : $(EXECUTABLE)
 
 $(EXECUTABLE) : $(OBJECTS)
 	g++ -o $(EXECUTABLE) $(OBJECTS) $(foreach l,$(LIBS), -l$(l) ) $(foreach l,$(LIB_DIRS), -L$(l) )

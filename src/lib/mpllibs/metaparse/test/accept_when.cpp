@@ -5,11 +5,13 @@
 
 #include <mpllibs/metaparse/accept_when.h>
 #include <mpllibs/metaparse/one_char.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
 
 #include "common.h"
 
 #include <mpllibs/metaparse/util/is_digit.h>
+#include <mpllibs/metaparse/util/define_data.h>
 
 #include <mpllibs/metatest/test.h>
 #include <mpllibs/metatest/TestSuite.h>
@@ -21,39 +23,49 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("accept_when");
 
+  MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
+
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::accept_when<
           mpllibs::metaparse::one_char,
-          mpllibs::metaparse::util::is_digit
+          mpllibs::metaparse::util::is_digit,
+          test_error
         >,
-        str_hello
+        str_hello,
+        mpllibs::metaparse::start
       >
     >
     TestWithText;
   
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::accept_when<
-          mpllibs::metaparse::one_char,
-          mpllibs::metaparse::util::is_digit
-        >,
-        str_1983
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::accept_when<
+            mpllibs::metaparse::one_char,
+            mpllibs::metaparse::util::is_digit,
+            test_error
+          >,
+          str_1983,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_1
     >
     TestWithNumber;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
+    mpllibs::metaparse::is_error<
       boost::mpl::apply<
         mpllibs::metaparse::accept_when<
           mpllibs::metaparse::one_char,
-          mpllibs::metaparse::util::is_digit
+          mpllibs::metaparse::util::is_digit,
+          test_error
         >,
-        str_
+        str_,
+        mpllibs::metaparse::start
       >
     >
     TestWithEmptyString;

@@ -4,7 +4,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/empty.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -20,14 +22,24 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::empty<int13>, str_>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::empty<int13>,
+          str_,
+          mpllibs::metaparse::start
+        >
+      >::type,
       int13
     >
     TestAcceptEmpty;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::empty<int13>, str_a>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::empty<int13>,
+        str_a,
+        mpllibs::metaparse::start
+      >
     >
     TestRejectNonEmpty;
 }

@@ -7,7 +7,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/tag.hpp>
 
 namespace mpllibs
 {
@@ -18,12 +17,10 @@ namespace mpllibs
     // No default implementation
     
     // bind evaluates arguments lazily
-    template <class a, class f>
+    template <class monadTag, class a, class f>
     struct bind :
       boost::mpl::apply<
-        mpllibs::error::bind_impl<
-          typename boost::mpl::tag<typename a::type>::type
-        >,
+        mpllibs::error::bind_impl<typename monadTag::type>,
         typename a::type,
         typename f::type
       >

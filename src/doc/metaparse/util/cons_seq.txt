@@ -29,6 +29,8 @@ Metafunction class taking a sequence with two elements as argument. The second
 element of the sequence has to be a sequence as well. +cons_seq+ pushes the
 first element of +s+ to the front of that sequence.
 
+It evaluates its argument lazily.
+
 Header
 ------
 

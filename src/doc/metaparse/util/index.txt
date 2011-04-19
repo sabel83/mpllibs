@@ -10,14 +10,6 @@ Abel Sinkovics
 This collection contains a number of metaprogramming utilities that
 are not available in +boost::mpl+, however are needed by +metaparse+.
 
-Data structures
----------------
-
-link:pair.html[pair] + 
-
-Metafunctions and metafunction classes
---------------------------------------
-
 link:compose.html[compose] + 
 link:cons.html[cons] + 
 link:cons_seq.html[cons_seq] + 
@@ -28,16 +20,16 @@ link:is_char.html[is_char] +
 link:is_digit.html[is_digit] + 
 link:is_lcase_letter.html[is_lcase_letter] + 
 link:is_letter.html[is_letter] + 
-link:is_nothing.html[is_nothing] + 
 link:is_ucase_letter.html[is_ucase_letter] + 
 link:is_whitespace.html[is_whitespace] + 
 link:lazy_equal_to.html[lazy_equal_to] + 
 link:lazy_eval_if.html[lazy_eval_if] + 
 link:lazy_if.html[lazy_if] + 
-link:make_pair.html[make_pair] + 
-link:swap.html[swap] + 
-link:unless_nothing.html[unless_nothing] + 
+link:unless_error.html[unless_error] + 
 
+Macros defined by the library:
+
+link:DEFINE_DATA.html[MPLLIBS_METAPARSE_DEFINE_DATA] + 
 
 include::../../copyright[]
 

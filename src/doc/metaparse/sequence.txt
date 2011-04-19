@@ -18,7 +18,7 @@ template <
 >
 struct sequence
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -47,31 +47,12 @@ Header
 Expression semantics
 --------------------
 
-For any +p0+, ..., +pn+ parsers, +s+ compile-time string and +k+ value, where
-+0 <= k < n+
+For any +n > 0+, +p0+, ..., +pn+ parsers the result of +sequence<p0, ..., p1>+
+is a compile-time sequence of the results of the parsers, applied after each
+other in order on the input string when none of them returns an error.
+The remaining string is the remaining string the last parser returns.
 
---------------------------------------
-boost::mpl::at_c<
-  boost::mpl::apply<sequence<p0, ..., pn>, s>::type,
-  k
->::type
---------------------------------------
-
-is equivalent to
-
---------------------------------------
-boost::mpl::apply<
-  pk,
-  // ...
-  boost::mpl::apply<
-    p1,
-    boost::mpl::apply<p0, s>::type::second
-  >::type::second
-  // ...
->::type::first
---------------------------------------
-
-when +p0+ ... +pn+ all accept the input. It is +nothing+ otherwise.
+When one of the parsers returns an error, the combinator returns that error.
 
 Example
 -------

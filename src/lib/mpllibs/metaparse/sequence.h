@@ -6,11 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/unless_nothing.h>
-#include <mpllibs/metaparse/util/pair.h>
-#include <mpllibs/metaparse/util/make_pair.h>
+#include <mpllibs/metaparse/util/unless_error.h>
+#include <mpllibs/metaparse/get_result.h>
+#include <mpllibs/metaparse/get_remaining.h>
+#include <mpllibs/metaparse/get_position.h>
+#include <mpllibs/metaparse/return.h>
+#include <mpllibs/metaparse/transform.h>
 
-#include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/deque.hpp>
@@ -29,25 +31,23 @@ namespace mpllibs
   {
     namespace impl
     {
-      template <class list_to_append, class pair>
-      struct append_to_first :
-        mpllibs::metaparse::util::make_pair<
-          boost::mpl::push_back<
-            list_to_append,
-            typename boost::mpl::first<pair>::type
-          >,
-          boost::mpl::second<pair>
-        >
-      {};
+      template <class list_to_append>
+      struct do_append
+      {
+        template <class item>
+        struct apply :boost::mpl::push_back<list_to_append, typename item::type>
+        {};
+      };
     
-      template <class accum, class s, class parser>
+      template <class accum, class s, class pos, class parser>
       struct apply_impl :
-        mpllibs::metaparse::util::unless_nothing<
-          boost::mpl::apply<parser, typename s::type>,
-          mpllibs::metaparse::impl::append_to_first<
-            typename accum::type,
-            typename boost::mpl::apply<parser, typename s::type>::type
-          >
+        boost::mpl::apply<
+          mpllibs::metaparse::transform<
+            parser,
+            mpllibs::metaparse::impl::do_append<typename accum::type>
+          >,
+          typename s::type,
+          typename pos::type
         >
       {};
     
@@ -55,22 +55,27 @@ namespace mpllibs
       {
         template <class state, class parser>
         struct apply :
-          mpllibs::metaparse::util::unless_nothing<
+          mpllibs::metaparse::util::unless_error<
             state,
             mpllibs::metaparse::impl::apply_impl<
-              boost::mpl::first<state>,
-              boost::mpl::second<state>,
+              mpllibs::metaparse::get_result<state>,
+              mpllibs::metaparse::get_remaining<state>,
+              mpllibs::metaparse::get_position<state>,
               parser
             >
           >
         {};
       };
-    
-      template <class ps, class s>
+      
+      template <class ps, class s, class pos>
       struct sequence_impl :
         boost::mpl::fold<
           ps,
-          mpllibs::metaparse::util::pair<boost::mpl::deque<>, s>,
+          typename boost::mpl::apply<
+            mpllibs::metaparse::return_<boost::mpl::deque<> >,
+            s,
+            pos
+          >::type,
           mpllibs::metaparse::impl::apply_parser
         >
       {};
@@ -92,11 +97,12 @@ namespace mpllibs
       > \
       struct sequence##n \
       { \
-        template <class s> \
+        template <class s, class pos> \
         struct apply : \
           mpllibs::metaparse::impl::sequence_impl< \
             boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, p)>, \
-            s \
+            s, \
+            pos \
           > \
         {}; \
       };

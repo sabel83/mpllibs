@@ -50,7 +50,7 @@ boost::mpl::apply<build_parser<p>, s>
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply<p, s>::type::first
+mpllibs::metaparse::get_result<boost::mpl::apply<p, s> >
 --------------------------------------
 
 Example

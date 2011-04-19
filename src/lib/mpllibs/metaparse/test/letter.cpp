@@ -4,7 +4,9 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/letter.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -20,20 +22,34 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::letter, str_hello>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::letter,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_h
     >
     TestWithText;
   
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::letter, str_1983>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::letter,
+        str_1983,
+        mpllibs::metaparse::start
+      >
     >
     TestWithNumber;
   
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::letter, str_>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::letter,
+        str_,
+        mpllibs::metaparse::start
+      >
     >
     TestWithEmptyString;
 }

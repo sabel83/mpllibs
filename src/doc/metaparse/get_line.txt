@@ -1,18 +1,18 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-is_nothing
-==========
+get_line
+========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class t>
-struct is_nothing
+template <class source_position>
+struct get_line
 {
   // unspecified
 };
@@ -22,42 +22,38 @@ struct is_nothing
 Description
 -----------
 
-Metafunction checking if a type is +mpllibs::metaparse::nothing+ or not. It
-returns a wrapped boolean value.
+Returns the line of a source position.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/get_line.h>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +t+ type
+For any +l+, +c+ compile-time wrapped integral values and +ch+ compile-time
+wrapped character the following are equivalent
 
 --------------------------------------
-is_nothing<t>
---------------------------------------
-
-is equivalent to
-
---------------------------------------
-boost::mpl::equal_to<mpllibs::metaparse::nothing, t>
+get_line<mpllibs::metaparse::source_position<l, c, ch> >::type
+l::type
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-is_nothing<mpllibs::metaparse::nothing>
+typedef
+  get_line<mpllibs::metaparse::start>::type
+  one;
 --------------------------------------
 
-include::../../copyright[]
+include::../copyright[]
 
 link:index.html[[up]]
-
 
 
 

@@ -16,9 +16,9 @@ include $(THIS_MAKEFILES_DIR)/common.mk
 $(LIB) : $(OBJECTS)
 	ar rcs $@ $^
 
-check : ; $(MAKE) -C test $(MAKECMDGOALS)
+check : ; $(MAKE) -C test check
 
 clean :
 	-rm $(LIB)
-	$(MAKE) -C test $(MAKECMDGOALS)
+	$(MAKE) -C test clean
 

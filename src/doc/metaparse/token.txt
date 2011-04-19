@@ -14,7 +14,7 @@ Synopsis
 template <class p>
 struct token
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -40,26 +40,19 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser and +s+ compile-time string
+For any +p+ parser
 
 --------------------------------------
-boost::mpl::apply<token<p>, s>
+token<p>
 --------------------------------------
 
-is equivalent to +nothing+ when +boost::mpl::apply<p, s>+
-is +nothing+. It is
+is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::util::pair<
-  boost::mpl::apply<p, s>::type::first,
-  boost::mpl::apply<
-    mpllibs::metaparse::spaces,
-    boost::mpl::apply<p, s>::type::second
-  >::type::second
->
+mpllibs::metaparse::first_of<p, mpllibs::metaparse::spaces>
 --------------------------------------
 
-otherwise.
+when +p+ doesn't return an error. The combinator returns the error otherwise.
 
 Example
 -------

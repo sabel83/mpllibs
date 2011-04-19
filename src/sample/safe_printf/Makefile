@@ -9,6 +9,8 @@ CTSTRANSFORM = ../../../tools/ctsTransform/ctsTransform
 SOURCES = $(wildcard *.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
 
+build : $(EXECUTABLE)
+
 $(EXECUTABLE) : $(OBJECTS)
 	g++ $< -o $(EXECUTABLE)
 
@@ -21,6 +23,6 @@ clean :
 	-rm $(EXECUTABLE) $(OBJECTS)
 
 all : clean
-	$(MAKE) $(EXECUTABLE)
+	$(MAKE) build
 
 

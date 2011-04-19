@@ -6,10 +6,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/fail.h>
 
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/equal_to.hpp>
+#include <mpllibs/metaparse/util/define_data.h>
+
+#include <mpllibs/metatest/to_stream.h>
+
+#include <boost/mpl/if.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply.hpp>
 
@@ -25,24 +29,28 @@ namespace mpllibs
 {
   namespace metaparse
   {
+    namespace errors
+    {
+      MPLLIBS_METAPARSE_DEFINE_DATA(none_of_the_expected_cases_found);
+    }
+  
     #ifdef PARSER_ONE_OF_BODY_PREFIX
       #error PARSER_ONE_OF_BODY_PREFIX already defined
     #endif
     #define PARSER_ONE_OF_BODY_PREFIX(z, n, unused) \
-      boost::mpl::eval_if< \
-        typename boost::mpl::not_< \
-          typename boost::mpl::equal_to< \
-            typename boost::mpl::apply<p##n, S>::type, \
-            mpllibs::metaparse::nothing \
+      typename boost::mpl::if_< \
+        boost::mpl::not_< \
+          typename mpllibs::metaparse::is_error< \
+            boost::mpl::apply<p##n, s, pos> \
           >::type \
-        >::type, \
-        boost::mpl::apply<p##n, S>, \
+        >, \
+        p##n, \
     
     #ifdef PARSER_ONE_OF_BODY_POSTFIX
       #error PARSER_ONE_OF_BODY_POSTFIX already defined
     #endif
     #define PARSER_ONE_OF_BODY_POSTFIX(z, n, unused) \
-      >
+      >::type
   
     #ifdef MPLLIBS_PARSER_ONE_OF
       #error MPLLIBS_PARSER_ONE_OF already defined
@@ -56,11 +64,17 @@ namespace mpllibs
       > \
       struct one_of_##n \
       { \
-        template <class S> \
+        template <class s, class pos> \
         struct apply : \
-          BOOST_PP_REPEAT(n, PARSER_ONE_OF_BODY_PREFIX, ~) \
-            mpllibs::metaparse::nothing \
-          BOOST_PP_REPEAT(n, PARSER_ONE_OF_BODY_POSTFIX, ~) \
+          boost::mpl::apply< \
+            BOOST_PP_REPEAT(n, PARSER_ONE_OF_BODY_PREFIX, ~) \
+              mpllibs::metaparse::fail< \
+                mpllibs::metaparse::errors::none_of_the_expected_cases_found \
+              > \
+            BOOST_PP_REPEAT(n, PARSER_ONE_OF_BODY_POSTFIX, ~), \
+            s, \
+            pos \
+          > \
         {}; \
       };
     
@@ -111,6 +125,11 @@ namespace mpllibs
     #undef PARSER_ONE_OF_UNUSED_PARAM
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::errors::none_of_the_expected_cases_found,
+  "None of the expected cases found"
+)
 
 #endif
 

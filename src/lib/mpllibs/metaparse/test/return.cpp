@@ -4,6 +4,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/return.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
 
 #include "common.h"
 
@@ -17,25 +19,61 @@ namespace
 {
   const mpllibs::metatest::TestSuite suite("return");
 
+  typedef boost::mpl::apply<mpllibs::metaparse::return_<int1>, int2, int3> Acc;
+
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::return_<char_x>,
-        str_hello
-      >::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::return_<char_x>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_x
     >
     TestForNonEmptyString;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::return_<char_x>, str_>::type::first,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::return_<char_x>,
+          str_,
+          mpllibs::metaparse::start
+        >
+      >::type,
       char_x
     >
     TestForEmptyString;
+
+ 
+  typedef
+    boost::mpl::equal_to<
+      int1,
+      mpllibs::metaparse::get_result<Acc>::type
+    >
+    TestGetResult;
+
+  typedef
+    boost::mpl::equal_to<
+      int2,
+      mpllibs::metaparse::get_remaining<Acc>::type
+    >
+    TestGetRemaining;
+
+  typedef
+    boost::mpl::equal_to<
+      int3,
+      mpllibs::metaparse::get_position<Acc>::type
+    >
+    TestGetPosition;
 }
 
 MPLLIBS_ADD_TEST(suite, TestForEmptyString)
 MPLLIBS_ADD_TEST(suite, TestForNonEmptyString)
 
+MPLLIBS_ADD_TEST(suite, TestGetResult)
+MPLLIBS_ADD_TEST(suite, TestGetRemaining)
+MPLLIBS_ADD_TEST(suite, TestGetPosition)
 

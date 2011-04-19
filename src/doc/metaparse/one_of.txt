@@ -19,7 +19,7 @@ template <
 >
 struct one_of
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -48,30 +48,24 @@ Header
 Expression semantics
 --------------------
 
-For any +p1+, ..., +pn+ parsers and +s+ compile-time string
+For any +p1+, ..., +pn+ parsers, +s+ compile-time string and +pos+ source
+position
 
 --------------------------------------
-boost::mpl::apply<
-  one_of<
-    p1,
-    // ...
-    pn
-  >,
-  s
->
+boost::mpl::apply<one_of<p1, ..., pn>, s, pos>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply<pk, s>
+boost::mpl::apply<pk, s, pos>
 --------------------------------------
 
-when there is a +k+, that +boost::mpl::apply<pi, s>::type+ is +nothing+ for
-every +i+ in the range +[1..k)+ and +boost::mpl::apply<pk, s>::type+ is not
-+nothing+.
+when there is a +k+, that +boost::mpl::apply<pi, s, pos>::type+ returns an error
+for every +i+ in the range +[1..k)+ and +boost::mpl::apply<pk, s, pos>::type+
+doesn't return an error.
 
-It is +nothing+ when there is no such +k+.
+The parser combinator returns an error when there is no such +k+.
 
 Example
 -------

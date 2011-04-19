@@ -12,9 +12,9 @@ Synopsis
 
 --------------------------------------
 template <
-  class F1,
+  class f1,
   // ...
-  class Fn
+  class fn
 >
 struct compose
 {
@@ -39,17 +39,17 @@ Header
 Expression semantics
 --------------------
 
-For any +F1+ ... +Fn+ metafunction classes taking 1 argument and
-+x+ class
+For any +f1+ ... +fn+ metafunction classes taking 1 argument and
++x1+, ..., +xk+ classes
 
 --------------------------------------
-boost::mpl::apply<compose<F1, .... Fn>, x>
+boost::mpl::apply<compose<f1, .... fn>, x1, ..., xk>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply<F1, ... boost::mpl::apply<Fn, x>::type ... >
+boost::mpl::apply<f1, ... boost::mpl::apply<fn, x1, ..., xk>::type ... >
 --------------------------------------
 
 Example
@@ -58,8 +58,8 @@ Example
 --------------------------------------
 struct make_pointer
 {
-  template <class T>
-  struct apply : boost::mpl::identity<T*> {};
+  template <class t>
+  struct apply : boost::mpl::identity<t*> {};
 };
 
 typedef

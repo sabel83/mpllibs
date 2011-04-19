@@ -39,14 +39,14 @@ namespace
   typedef
     boost::mpl::equal_to<
       Right<int11>,
-      mpllibs::error::bind<Right<int13>, minus_2>::type
+      mpllibs::error::bind<Either, Right<int13>, minus_2>::type
     >
     TestBindRight;
 
   typedef
     boost::mpl::equal_to<
       Left<int13>,
-      mpllibs::error::bind<Left<int13>, minus_2>::type
+      mpllibs::error::bind<Either, Left<int13>, minus_2>::type
     >
     TestBindLeft;
 
@@ -54,7 +54,9 @@ namespace
     boost::mpl::equal_to<
       Right<int9>,
       mpllibs::error::bind<
+        Either,
         mpllibs::error::bind<
+          Either,
           mpllibs::error::return_<Either, int13>,
           minus_2
         >,

@@ -11,18 +11,31 @@
 
 #include <mpllibs/metaparse/util/is_whitespace.h>
 
+#include <mpllibs/metatest/to_stream.h>
+
 namespace mpllibs
 {
   namespace metaparse
   {
+    namespace errors
+    {
+      MPLLIBS_METAPARSE_DEFINE_DATA(whitespace_expected);
+    }
+  
     typedef
       mpllibs::metaparse::accept_when<
         mpllibs::metaparse::one_char,
-        mpllibs::metaparse::util::is_whitespace
+        mpllibs::metaparse::util::is_whitespace,
+        mpllibs::metaparse::errors::whitespace_expected
       >
       space;
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::errors::whitespace_expected,
+  "Whitespace expected"
+)
 
 #endif
 

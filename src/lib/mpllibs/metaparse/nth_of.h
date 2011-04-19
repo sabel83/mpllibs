@@ -7,44 +7,131 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/sequence.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/return.h>
+#include <mpllibs/metaparse/fail.h>
 
-#include <mpllibs/metaparse/util/unless_nothing.h>
-
-#include <boost/mpl/at.hpp>
-#include <boost/mpl/pair.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/list.hpp>
+#include <boost/mpl/front.hpp>
+#include <boost/mpl/pop_front.hpp>
+#include <boost/mpl/fold.hpp>
 
-#include <boost/preprocessor/repetition.hpp>
-#include <boost/preprocessor/comma_if.hpp>
+#include <boost/preprocessor/repetition/repeat.hpp>
+#include <boost/preprocessor/punctuation/comma_if.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/arithmetic/sub.hpp>
+
+#include <iostream>
 
 namespace mpllibs
 {
   namespace metaparse
   {
+    namespace errors
+    {
+      template <int from, int to, int n>
+      struct index_out_of_range
+      {
+        typedef index_out_of_range type;
+      };
+    }
+  
     namespace impl
     {
-      template <int n, class seq>
-      struct get_nth :
-        boost::mpl::at_c<
-          typename boost::mpl::first<typename seq::type>::type,
-          n
-        >
-      {};
+      struct skip_seq
+      {
+      private:
+        template <class parsingResult, class newResultValue>
+        struct change_result :
+          boost::mpl::apply<
+            mpllibs::metaparse::return_<newResultValue>,
+            typename mpllibs::metaparse::get_remaining<parsingResult>::type,
+            typename mpllibs::metaparse::get_position<parsingResult>::type
+          >
+        {};
+      
+        template <class result, class p>
+        struct apply_unchecked :
+          boost::mpl::eval_if<
+            typename mpllibs::metaparse::is_error<
+              boost::mpl::apply<
+                p,
+                typename mpllibs::metaparse::get_remaining<result>::type,
+                typename mpllibs::metaparse::get_position<result>::type
+              >
+            >::type,
+            boost::mpl::apply<
+              p,
+              typename mpllibs::metaparse::get_remaining<result>::type,
+              typename mpllibs::metaparse::get_position<result>::type
+            >,
+            change_result<
+              boost::mpl::apply<
+                p,
+                typename mpllibs::metaparse::get_remaining<result>::type,
+                typename mpllibs::metaparse::get_position<result>::type
+              >,
+              typename mpllibs::metaparse::get_result<result>::type
+            >
+          >
+        {};
+        
+      public:
+        template <class result, class p>
+        struct apply :
+          boost::mpl::eval_if<
+            mpllibs::metaparse::is_error<result>,
+            result,
+            apply_unchecked<result, p>
+          >
+        {};
+      };
       
       template <int n, class seq>
       struct nth_of_c_impl
       {
-        template <class s>
+      private:
+        template <class nextResult>
+        struct apply_unchecked :
+          boost::mpl::apply<
+            mpllibs::metaparse::impl::nth_of_c_impl<
+              n - 1,
+              typename boost::mpl::pop_front<seq>::type
+            >,
+            typename mpllibs::metaparse::get_remaining<nextResult>::type,
+            typename mpllibs::metaparse::get_position<nextResult>::type
+          >
+        {};
+      public:
+        template <class s, class pos>
         struct apply :
-          mpllibs::metaparse::util::unless_nothing<
-            boost::mpl::apply<seq, s>,
-            mpllibs::metaparse::util::make_pair<
-              mpllibs::metaparse::impl::get_nth<n, boost::mpl::apply<seq, s> >,
-              boost::mpl::second<typename boost::mpl::apply<seq, s>::type>
+          boost::mpl::eval_if<
+            typename mpllibs::metaparse::is_error<
+              boost::mpl::apply<typename boost::mpl::front<seq>::type, s, pos>
+            >::type,
+            boost::mpl::apply<typename boost::mpl::front<seq>::type, s, pos>,
+            apply_unchecked<
+              boost::mpl::apply<typename boost::mpl::front<seq>::type, s, pos>
             >
+          >
+        {};
+      };
+      
+      template <class seq>
+      struct nth_of_c_impl<0, seq>
+      {
+        template <class s, class pos>
+        struct apply :
+          boost::mpl::fold<
+            typename boost::mpl::pop_front<seq>::type,
+            typename boost::mpl::apply<
+              typename boost::mpl::front<seq>::type,
+              s,
+              pos
+            >::type,
+            mpllibs::metaparse::impl::skip_seq
           >
         {};
       };
@@ -59,10 +146,16 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS(n, class p) \
       > \
       struct nth_of_c##n : \
-        mpllibs::metaparse::impl::nth_of_c_impl< \
-          k, \
-          mpllibs::metaparse::sequence<BOOST_PP_ENUM_PARAMS(n, p)> \
-        > \
+        boost::mpl::if_< \
+          boost::mpl::bool_<(0 <= k && k < n)>, \
+          mpllibs::metaparse::impl::nth_of_c_impl< \
+            k, \
+            boost::mpl::list<BOOST_PP_ENUM_PARAMS(n, p)> \
+          >, \
+          mpllibs::metaparse::fail< \
+            mpllibs::metaparse::errors::index_out_of_range<0, n - 1, k> \
+          > \
+        >::type \
       {};
     
     BOOST_PP_REPEAT(SEQUENCE_MAX_ARGUMENT, NTH_OF_CASE, ~)
@@ -132,6 +225,26 @@ namespace mpllibs
     struct nth_of :
       nth_of_c<k::type::value, BOOST_PP_ENUM_PARAMS(SEQUENCE_MAX_ARGUMENT, p)>
     {};
+  }
+  
+  namespace metatest
+  {
+    template <class>
+    struct to_stream;
+
+    template <int from, int to, int n>
+    struct to_stream<
+      mpllibs::metaparse::errors::index_out_of_range<from, to, n>
+    >
+    {
+      typedef to_stream type;
+      
+      static std::ostream& run(std::ostream& o_)
+      {
+        return o_
+          << "Index (" << n << ") out of range [" << from << ", "<< to << "]";
+      }
+    };
   }
 }
 

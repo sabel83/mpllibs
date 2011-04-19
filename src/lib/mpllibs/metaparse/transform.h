@@ -6,18 +6,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/nothing.h>
+#include <mpllibs/metaparse/return.h>
+#include <mpllibs/metaparse/get_result.h>
+#include <mpllibs/metaparse/get_remaining.h>
+#include <mpllibs/metaparse/get_position.h>
 
-#include <mpllibs/metaparse/util/pair.h>
-#include <mpllibs/metaparse/util/make_pair.h>
-#include <mpllibs/metaparse/util/compose.h>
-#include <mpllibs/metaparse/util/lazy_equal_to.h>
-#include <mpllibs/metaparse/util/lazy_eval_if.h>
+#include <mpllibs/metaparse/util/unless_error.h>
 
 #include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/quote.hpp>
 
 namespace mpllibs
 {
@@ -26,30 +23,19 @@ namespace mpllibs
     template <class p, class t>
     struct transform
     {
-      template <class S>
+      template <class s, class pos>
       struct apply :
-        boost::mpl::eval_if<
-          mpllibs::metaparse::util::lazy_equal_to<
-            boost::mpl::apply<p, S>,
-            mpllibs::metaparse::nothing
-          >,
-          mpllibs::metaparse::nothing,
-          mpllibs::metaparse::util::make_pair<
-            boost::mpl::apply<
-              mpllibs::metaparse::util::compose<
+        mpllibs::metaparse::util::unless_error<
+          boost::mpl::apply<p, s, pos>,
+          boost::mpl::apply<
+            mpllibs::metaparse::return_<
+              boost::mpl::apply<
                 t,
-                boost::mpl::quote1<boost::mpl::first>,
-                p
-              >,
-              S
+                mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
+              >
             >,
-            boost::mpl::apply<
-              mpllibs::metaparse::util::compose<
-                boost::mpl::quote1<boost::mpl::second>,
-                p
-              >,
-              S
-            >
+            mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
+            mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
           >
         >
       {};

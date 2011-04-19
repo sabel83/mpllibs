@@ -5,7 +5,10 @@
 
 #include <mpllibs/metaparse/token.h>
 #include <mpllibs/metaparse/keyword.h>
-#include <mpllibs/metaparse/util/is_nothing.h>
+#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/source_position.h>
+#include <mpllibs/metaparse/get_result.h>
+#include <mpllibs/metaparse/get_remaining.h>
 
 #include "common.h"
 
@@ -28,37 +31,54 @@ namespace
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::token<testParser>,
-        str_hello
-      >::type::first,
-      boost::mpl::apply<testParser, str_hello>::type::first
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::token<testParser>,
+          str_hello,
+          mpllibs::metaparse::start
+        >
+      >::type,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<testParser, str_hello, mpllibs::metaparse::start>
+      >::type
     >
     TestNoSpace;
 
   typedef
     boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::token<testParser>,
-        str_hello_t
-      >::type::first,
-      boost::mpl::apply<testParser, str_hello>::type::first
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<
+          mpllibs::metaparse::token<testParser>,
+          str_hello_t,
+          mpllibs::metaparse::start
+        >
+      >::type,
+      mpllibs::metaparse::get_result<
+        boost::mpl::apply<testParser, str_hello, mpllibs::metaparse::start>
+      >::type
     >
     TestSpaces;
 
   typedef
     boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::token<testParser>,
-        str_hello_t
-      >::type::second,
+      mpllibs::metaparse::get_remaining<
+        boost::mpl::apply<
+          mpllibs::metaparse::token<testParser>,
+          str_hello_t,
+          mpllibs::metaparse::start
+        >
+      >::type,
       str_
     >
     TestSpacesConsumed;
 
   typedef
-    mpllibs::metaparse::util::is_nothing<
-      boost::mpl::apply<mpllibs::metaparse::token<testParser>, str_>
+    mpllibs::metaparse::is_error<
+      boost::mpl::apply<
+        mpllibs::metaparse::token<testParser>,
+        str_,
+        mpllibs::metaparse::start
+      >
     >
     TestFail;
 }

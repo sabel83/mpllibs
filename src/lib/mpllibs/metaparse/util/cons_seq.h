@@ -21,8 +21,8 @@ namespace mpllibs
         template <class seq>
         struct apply :
           boost::mpl::push_front<
-            typename boost::mpl::back<seq>::type,
-            typename boost::mpl::front<seq>::type
+            typename boost::mpl::back<typename seq::type>::type,
+            typename boost::mpl::front<typename seq::type>::type
           >
         {};
       };

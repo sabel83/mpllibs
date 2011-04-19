@@ -10,19 +10,33 @@
 #include <mpllibs/metaparse/one_char.h>
 
 #include <mpllibs/metaparse/util/is_letter.h>
+#include <mpllibs/metaparse/util/define_data.h>
+
+#include <mpllibs/metatest/to_stream.h>
 
 namespace mpllibs
 {
   namespace metaparse
   {
+    namespace errors
+    {
+      MPLLIBS_METAPARSE_DEFINE_DATA(letter_expected);
+    }
+    
     typedef
       mpllibs::metaparse::accept_when<
         mpllibs::metaparse::one_char,
-        mpllibs::metaparse::util::is_letter
+        mpllibs::metaparse::util::is_letter,
+        mpllibs::metaparse::errors::letter_expected
       >
       letter;
   }
 }
+
+DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::errors::letter_expected,
+  "Letter expected"
+)
 
 #endif
 

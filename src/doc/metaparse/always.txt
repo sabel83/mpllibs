@@ -14,7 +14,7 @@ Synopsis
 template <class p, class t>
 struct always
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -40,14 +40,14 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +t+ class and +s+ compile-time string
+For any +p+ parser, +t+ class, +s+ compile-time string and +pos+ source position
 
 --------------------------------------
-boost::mpl::apply<always<p, t>, s>
+mpllibs::metaparse::get_result<boost::mpl::apply<always<p, t>, s, pos> >::type
 --------------------------------------
 
-is equivalent to +nothing+ when +boost::mpl::apply<p, s>+ is +nothing+.
-It is +t+ otherwise.
+is equivalent to +t+ when +boost::mpl::apply<p, s, pos>+ doesn't return an
+error.
 
 Example
 -------

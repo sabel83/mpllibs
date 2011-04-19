@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct digit_val
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -38,29 +38,26 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string
+For any +s+ compile-time string and +pos+ source position
 
 --------------------------------------
-boost::mpl::apply<digit, s>
+mpllibs::metaparse::get_result<boost::mpl::apply<digit, s, pos> >
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::util::pair<
-  mpllibs::metaparse::util::digit_to_int::apply<boost::mpl::front<s>::type>::type,
-  boost::mpl::pop_front<s>::type
->
+mpllibs::metaparse::util::digit_to_int::apply<boost::mpl::front<s>::type>,
 --------------------------------------
 
 when +boost::mpl::empty<s>::type+ is +false+ and +boost::mpl::front<s>::type+
-is in the range +0-9+. It is +nothing+ otherwise.
+is in the range +0-9+. The parser combinator returns an error otherwise.
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<mpllibs::metaparse::digit_val, boost::mpl::string<'13'> >
+boost::mpl::apply<mpllibs::metaparse::digit_val, boost::mpl::string<'13'>, mpllibs::metaparse::start>
 --------------------------------------
 
 include::../copyright[]

@@ -10,19 +10,18 @@
 
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/tag.hpp>
 
 namespace mpllibs
 {
   namespace error
   {
-    template <class monad>
+    template <class monadTag>
     struct bind__impl
     {
       template <class a, class b>
       struct apply :
         boost::mpl::apply<
-          mpllibs::error::bind_impl<monad>,
+          mpllibs::error::bind_impl<monadTag>,
           a,
           boost::mpl::always<b>
         >
@@ -30,12 +29,10 @@ namespace mpllibs
     };
 
     // bind_ evaluates its arguments lazily
-    template <class a, class b>
+    template <class monadTag, class a, class b>
     struct bind_ :
       boost::mpl::apply<
-        mpllibs::error::bind__impl<
-          typename boost::mpl::tag<typename a::type>::type
-        >,
+        mpllibs::error::bind__impl<typename monadTag::type>,
         typename a::type,
         typename b::type
       >

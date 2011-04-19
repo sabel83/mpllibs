@@ -14,7 +14,7 @@ Synopsis
 template <class result>
 struct empty
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -39,22 +39,10 @@ Header
 Expression semantics
 --------------------
 
-For any +t+ type and +s+ non-empty compile-time string
+For any +t+ type, +s+ empty compile-time string and +pos+ source position
 
 --------------------------------------
-boost::mpl::apply<empty<t>, s>::type
---------------------------------------
-
-is equivalent to
-
---------------------------------------
-mpllibs::metaparse::nothing
---------------------------------------
-
-For any +t+ type and +s+ empty compile-time string
-
---------------------------------------
-boost::mpl::apply<empty<t>, s>::type::first
+mpllibs::metaparse::get_result<boost::mpl::apply<empty<t>, s, pos> >::type
 --------------------------------------
 
 is equivalent to
@@ -62,6 +50,14 @@ is equivalent to
 --------------------------------------
 t
 --------------------------------------
+
+For any +t+ type, +s+ empty compile-time string and +pos+ source position
+
+--------------------------------------
+boost::mpl::apply<empty<t>, s>::type
+--------------------------------------
+
+returns an error.
 
 Example
 -------

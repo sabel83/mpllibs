@@ -14,7 +14,7 @@ Synopsis
 template <class p1, class p2, class p3>
 struct middle_of
 {
-  template <class s>
+  template <class s, class pos>
   struct apply
   {
     // unspecified
@@ -40,27 +40,17 @@ Header
 Expression semantics
 --------------------
 
-For any +p1+, +p2+ and +p3+ parsers and +s+ compile-time string
+For any +p1+, +p2+ and +p3+ parsers
 
 --------------------------------------
-boost::mpl::apply<middle_of<p1, p2, p3>, s>::type
+middle_of<p1, p2, p3>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::pair<
-  boost::mpl::apply<p2, boost::mpl::apply<p1, s>::type::second>::type::first,
-  boost::mpl::apply<
-    p3,
-    boost::mpl::apply<p2, boost::mpl::apply<p1, s>::type::second>::type::second
-  >::type::second
->
+mpllibs::metaparse::nth_of<1, p1, p2, p3>
 --------------------------------------
-
-when +p1+ accepts +s+, +p2+ accepts the string remaining after the
-application of +p1+ and +p3+ accepts the string remaining after the application
-of +p2+. It is +nothing+ otherwise.
 
 Example
 -------

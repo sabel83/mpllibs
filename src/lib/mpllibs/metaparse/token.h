@@ -6,10 +6,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/spaces.h>
+#include <mpllibs/metaparse/space.h>
+#include <mpllibs/metaparse/any.h>
 #include <mpllibs/metaparse/first_of.h>
-#include <mpllibs/metaparse/one_of.h>
-#include <mpllibs/metaparse/empty.h>
+
+#include <boost/mpl/void.hpp>
 
 namespace mpllibs
 {
@@ -19,10 +20,7 @@ namespace mpllibs
     struct token :
       mpllibs::metaparse::first_of<
         p,
-        mpllibs::metaparse::one_of<
-          mpllibs::metaparse::empty<int>,
-          mpllibs::metaparse::spaces
-        >
+        mpllibs::metaparse::any<mpllibs::metaparse::space>
       >
     {};
   }
