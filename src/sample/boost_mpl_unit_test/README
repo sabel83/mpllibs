@@ -1,2 +1,0 @@
-This example shows how to use metatest. It contains the unit tests of
-boost::mpl::map, but the tests have been changed to use metatest.
