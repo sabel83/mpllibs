@@ -6,20 +6,20 @@
 #include <mpllibs/error/let.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include "common.h"
 
 using boost::mpl::equal_to;
 using boost::mpl::plus;
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::error::let;
 
 namespace
 {
-  const TestSuite suite("let");
+  const test_suite suite("let");
 
   typedef
     equal_to<

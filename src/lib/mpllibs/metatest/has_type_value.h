@@ -15,10 +15,7 @@ namespace mpllibs
   {
     template <class T, class ValueType>
     struct has_type_value :
-      mpllibs::metatest::has_value<
-        typename mpllibs::metatest::get_type<T, int>::type,
-        ValueType
-      >
+      has_value<typename get_type<T, int>::type, ValueType>
     {};
   }
 }

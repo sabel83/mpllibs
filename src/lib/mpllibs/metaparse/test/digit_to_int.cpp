@@ -8,12 +8,12 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::util::digit_to_int;
 
@@ -22,7 +22,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const TestSuite suite("util::digit_to_int");
+  const test_suite suite("util::digit_to_int");
 
   typedef equal_to<apply<digit_to_int, char_0>::type, int0> test0;
 

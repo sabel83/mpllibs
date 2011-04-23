@@ -11,12 +11,12 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::middle_of;
@@ -28,7 +28,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const TestSuite suite("middle_of");
+  const test_suite suite("middle_of");
 
   typedef
     equal_to<

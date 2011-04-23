@@ -11,13 +11,13 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::iterate_c;
@@ -31,7 +31,7 @@ using boost::mpl::list;
 
 namespace
 {
-  const TestSuite suite("iterate_c");
+  const test_suite suite("iterate_c");
 
   typedef
     is_error<apply<iterate_c<one_char, 13>, str_, start> >

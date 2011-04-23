@@ -6,7 +6,7 @@
 #include <mpllibs/error/return_.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
@@ -18,7 +18,7 @@ using boost::mpl::identity;
 using boost::mpl::equal_to;
 using boost::mpl::apply;
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::error::return_;
 
@@ -45,7 +45,7 @@ namespace mpllibs
 
 namespace
 {
-  const TestSuite suite("return_");
+  const test_suite suite("return_");
 
   typedef
     equal_to<int13, apply<return_<test_tag>, int>::type>

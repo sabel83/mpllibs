@@ -15,12 +15,12 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::fail;
 using mpllibs::metaparse::is_error;
@@ -37,7 +37,7 @@ using boost::mpl::equal_to;
 
 namespace
 {
-  const TestSuite suite("one_of");
+  const test_suite suite("one_of");
   
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
   

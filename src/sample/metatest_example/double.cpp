@@ -15,7 +15,7 @@ struct double_ : boost::mpl::times<t, boost::mpl::int_<2> > {};
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("example");
+  const mpllibs::metatest::test_suite suite("example");
 
   typedef
     boost::mpl::equal_to<

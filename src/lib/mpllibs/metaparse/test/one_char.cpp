@@ -14,12 +14,12 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_char;
@@ -36,7 +36,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const TestSuite suite("one_char");
+  const test_suite suite("one_char");
 
   typedef list_c<char, 'a','\n','b'> unix_multi_line_text;
   typedef list_c<char, 'a','\r','\n','b'> dos_multi_line_text;

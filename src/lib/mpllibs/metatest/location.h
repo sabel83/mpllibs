@@ -13,20 +13,20 @@ namespace mpllibs
 {
   namespace metatest
   {
-    class Location
+    class location
     {
     public:
-      Location(const std::string& filename_, int lineNumber_);
+      location(const std::string& filename_, int line_number_);
       
       const std::string& filename() const;
       
-      int lineNumber() const;
+      int line_number() const;
     private:
       std::string _filename;
-      int _lineNumber;
+      int _line_number;
     };
     
-    std::ostream& operator<<(std::ostream& out_, const Location& l_);
+    std::ostream& operator<<(std::ostream& out_, const location& l_);
   }
 }
 

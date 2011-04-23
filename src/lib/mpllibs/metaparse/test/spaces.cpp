@@ -11,14 +11,14 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::spaces;
@@ -32,7 +32,7 @@ using boost::mpl::equal;
 
 namespace
 {
-  const TestSuite suite("spaces");
+  const test_suite suite("spaces");
   
   typedef list_c<char, 'e', 'l', 'l', 'o'> str_ello;
   typedef

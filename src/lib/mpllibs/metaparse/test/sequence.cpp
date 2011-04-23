@@ -11,7 +11,7 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
@@ -19,7 +19,7 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::sequence;
@@ -34,7 +34,7 @@ using boost::mpl::at_c;
 
 namespace
 {
-  const TestSuite suite("sequence");
+  const test_suite suite("sequence");
 
   typedef
     equal<get_result<apply<sequence<>, str_hello, start> >::type, list<> >

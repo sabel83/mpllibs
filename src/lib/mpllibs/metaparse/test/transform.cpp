@@ -11,13 +11,13 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::transform;
@@ -30,7 +30,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const TestSuite suite("transform");
+  const test_suite suite("transform");
 
   typedef always<char_x> f;
     

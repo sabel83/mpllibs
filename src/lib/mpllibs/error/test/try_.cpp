@@ -9,7 +9,7 @@
 #include <mpllibs/error/get_data.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -24,14 +24,14 @@ using boost::mpl::equal_to;
 using boost::mpl::identity;
 using boost::mpl::tag;
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::error::exception;
 using mpllibs::error::catch_any;
 
 namespace
 {
-  const TestSuite suite("try_");
+  const test_suite suite("try_");
   
   struct tag1
   {

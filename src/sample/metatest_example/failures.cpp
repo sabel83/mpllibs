@@ -27,7 +27,7 @@ struct bad2
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("example_failure");
+  const mpllibs::metatest::test_suite suite("example_failure");
 
   typedef bad<int> TestNoType;
 

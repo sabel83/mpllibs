@@ -14,12 +14,12 @@
 #include <mpllibs/metaparse/util/define_data.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::accept_when;
@@ -35,7 +35,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const TestSuite suite("accept_when");
+  const test_suite suite("accept_when");
 
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
 

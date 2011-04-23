@@ -8,14 +8,14 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/deque.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::util::cons_seq;
 
@@ -26,7 +26,7 @@ using boost::mpl::deque;
 
 namespace
 {
-  const TestSuite suite("util::cons_seq");
+  const test_suite suite("util::cons_seq");
   
   typedef
     equal<

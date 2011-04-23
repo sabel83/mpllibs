@@ -6,7 +6,7 @@
 #include <mpllibs/error/do_.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -17,7 +17,7 @@ using boost::mpl::apply;
 using boost::mpl::equal_to;
 using boost::mpl::minus;
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 /*
  * WrapperMonad
@@ -76,7 +76,7 @@ namespace boost
 
 namespace
 {
-  const TestSuite suite("do_");
+  const test_suite suite("do_");
   
   template <class A>
   struct minus_2 :

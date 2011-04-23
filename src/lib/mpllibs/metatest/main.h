@@ -7,7 +7,9 @@
 
 int main(int argc_, char* argv_[])
 {
-  return mpllibs::metatest::TestDriver::instance().main(argc_, argv_);
+  using mpllibs::metatest::test_driver;
+  
+  return test_driver::instance().main(argc_, argv_);
 }
 
 

@@ -6,7 +6,7 @@
 #include <mpllibs/error/lambda.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include "common.h"
 
@@ -18,13 +18,13 @@ using boost::mpl::apply;
 using boost::mpl::plus;
 using boost::mpl::equal_to;
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::error::lambda;
 
 namespace
 {
-  const TestSuite suite("lambda");
+  const test_suite suite("lambda");
 
   typedef
     equal_to<int13, apply<lambda<x, plus<x, int11> >, int2>::type>

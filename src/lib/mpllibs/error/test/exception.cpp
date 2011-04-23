@@ -9,7 +9,7 @@
 #include <mpllibs/error/get_data.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -25,7 +25,7 @@ using boost::mpl::always;
 using boost::mpl::apply;
 using boost::mpl::tag;
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::error::exception;
 using mpllibs::error::get_data;
@@ -35,7 +35,7 @@ using mpllibs::error::return_;
 
 namespace
 {
-  const TestSuite suite("Exception");
+  const test_suite suite("Exception");
   
   typedef exception<int13> e;
 

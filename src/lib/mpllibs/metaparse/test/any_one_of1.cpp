@@ -16,7 +16,7 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
@@ -24,7 +24,7 @@
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::fail;
 using mpllibs::metaparse::is_error;
@@ -41,7 +41,7 @@ using boost::mpl::string;
 
 namespace
 {
-  const TestSuite suite("any_one_of1");
+  const test_suite suite("any_one_of1");
   
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
   

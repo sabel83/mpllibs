@@ -12,13 +12,13 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::keyword;
@@ -33,7 +33,7 @@ using boost::mpl::equal;
 
 namespace
 {
-  const TestSuite suite("keyword");
+  const test_suite suite("keyword");
 
   typedef
     list_c<char, 'h','e','l','l','o',' ','w','o','r','l','d'>

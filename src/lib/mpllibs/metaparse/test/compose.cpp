@@ -8,7 +8,7 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/plus.hpp>
@@ -16,7 +16,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/type_traits/is_same.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::util::compose;
 
@@ -30,7 +30,7 @@ using boost::is_same;
 
 namespace
 {
-  const TestSuite suite("util::compose");
+  const test_suite suite("util::compose");
 
   struct make_pointer
   {

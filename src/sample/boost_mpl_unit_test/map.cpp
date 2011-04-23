@@ -35,7 +35,7 @@
 
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 using namespace boost;
 using namespace mpl;
@@ -53,7 +53,7 @@ using boost_mpl_test::incomplete;
 
 namespace s1
 {
-    const mpllibs::metatest::TestSuite suite("s1");
+    const mpllibs::metatest::test_suite suite("s1");
 
     typedef map2<
           mpl::pair<int,unsigned>
@@ -204,7 +204,7 @@ namespace s1
 
 namespace s2
 {
-    const mpllibs::metatest::TestSuite suite("s2");
+    const mpllibs::metatest::test_suite suite("s2");
 
     typedef map0<> m;
     
@@ -266,7 +266,7 @@ namespace s2
 
 namespace s3
 {
-    const mpllibs::metatest::TestSuite suite("s3");
+    const mpllibs::metatest::test_suite suite("s3");
 
     typedef map< mpl::pair<int,int*> > map_of_1_pair;
     typedef begin<map_of_1_pair>::type iter_to_1_pair;
@@ -316,7 +316,7 @@ namespace s3
 
 namespace s4
 {
-    const mpllibs::metatest::TestSuite suite("s4");
+    const mpllibs::metatest::test_suite suite("s4");
 
     typedef mpl::erase_key<
         mpl::map<

@@ -3,25 +3,25 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <iostream>
 
-using namespace mpllibs::metatest;
+using mpllibs::metatest::test_suite;
 
-TestSuite::TestSuite(const std::string& name_) :
+using std::string;
+using std::ostream;
+
+test_suite::test_suite(const string& name_) :
   _name(name_)
 {}
       
-const std::string& TestSuite::name() const
+const string& test_suite::name() const
 {
   return _name;
 }
 
-std::ostream& mpllibs::metatest::operator<<(
-  std::ostream& out_,
-  const TestSuite& s_
-)
+ostream& mpllibs::metatest::operator<<(ostream& out_, const test_suite& s_)
 {
   return out_ << s_.name();
 }

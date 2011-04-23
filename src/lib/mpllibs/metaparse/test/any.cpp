@@ -11,12 +11,12 @@
 #include "common.h"
  
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::any;
@@ -29,7 +29,7 @@ using boost::mpl::list;
 
 namespace
 { 
-  const TestSuite suite("any");
+  const test_suite suite("any");
   
   typedef any<letter> any_letter;
 

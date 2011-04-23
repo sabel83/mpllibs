@@ -8,11 +8,11 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::TestSuite;
+using mpllibs::metatest::test_suite;
 
 using mpllibs::metaparse::util::is_ucase_letter;
 
@@ -20,7 +20,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const TestSuite suite("util::is_ucase_letter");
+  const test_suite suite("util::is_ucase_letter");
 
   typedef apply<is_ucase_letter, char_K> test_letter;
   

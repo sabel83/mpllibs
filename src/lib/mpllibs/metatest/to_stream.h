@@ -86,10 +86,10 @@ namespace mpllibs
 {
   namespace metatest
   {
-    template <class t>
+    template <class T>
     struct to_stream_impl
     {
-      template <class T>
+      template <class V>
       struct apply
       {
         typedef apply type;
@@ -114,7 +114,7 @@ namespace mpllibs
       
       static std::ostream& run(std::ostream& o_)
       {
-        return mpllibs::metatest::to_stream<T>::run(o_) << "*";
+        return to_stream<T>::run(o_) << "*";
       }
     };
 
@@ -125,7 +125,7 @@ namespace mpllibs
       
       static std::ostream& run(std::ostream& o_)
       {
-        return mpllibs::metatest::to_stream<T>::run(o_) << "[]";
+        return to_stream<T>::run(o_) << "[]";
       }
     };
 
@@ -136,7 +136,7 @@ namespace mpllibs
       
       static std::ostream& run(std::ostream& o_)
       {
-        return mpllibs::metatest::to_stream<T>::run(o_) << "&";
+        return to_stream<T>::run(o_) << "&";
       }
     };
 
@@ -147,7 +147,7 @@ namespace mpllibs
       
       static std::ostream& run(std::ostream& o_)
       {
-        return mpllibs::metatest::to_stream<T>::run(o_ << "const ");
+        return to_stream<T>::run(o_ << "const ");
       }
     };
 
@@ -158,62 +158,61 @@ namespace mpllibs
       
       static std::ostream& run(std::ostream& o_)
       {
-        return mpllibs::metatest::to_stream<T>::run(o_) << "* const";
+        return to_stream<T>::run(o_) << "* const";
       }
     };
 
 
 
-    template <class ValueType, ValueType value>
+    template <class ValueType, ValueType Value>
     struct to_stream_integral_constant
     {
       typedef to_stream_integral_constant type;
         
       static std::ostream& run(std::ostream& o_)
       {
-        return
-          mpllibs::metatest::to_stream<ValueType>::run(o_ << "integral_c<")
-          << ", " << value << ">";
+        to_stream<ValueType>::run(o_ << "integral_c<");
+        return o_ << ", " << Value << ">";
       }
     };
 
-    template <bool value>
-    struct to_stream_integral_constant<bool, value>
+    template <bool Value>
+    struct to_stream_integral_constant<bool, Value>
     {
       typedef to_stream_integral_constant type;
         
       static std::ostream& run(std::ostream& o_)
       {
-        return o_ << (value ? "true_" : "false_");
+        return o_ << (Value ? "true_" : "false_");
       }
     };
 
-    template <int value>
-    struct to_stream_integral_constant<int, value>
+    template <int Value>
+    struct to_stream_integral_constant<int, Value>
     {
       typedef to_stream_integral_constant type;
         
       static std::ostream& run(std::ostream& o_)
       {
-        return o_ << "int_<" << value << ">";
+        return o_ << "int_<" << Value << ">";
       }
     };
 
-    template <long value>
-    struct to_stream_integral_constant<long, value>
+    template <long Value>
+    struct to_stream_integral_constant<long, Value>
     {
       typedef to_stream_integral_constant type;
         
       static std::ostream& run(std::ostream& o_)
       {
-        return o_ << "long_<" << value << ">";
+        return o_ << "long_<" << Value << ">";
       }
     };
     
-    class CharacterPrinter
+    class character_printer
     {
     public:
-      CharacterPrinter(std::ostream& o_) : _o(o_) {}
+      character_printer(std::ostream& o_) : _o(o_) {}
     
       void operator()(unsigned char c_)
       {
@@ -238,10 +237,13 @@ namespace mpllibs
           }
           else
           {
+            using std::ios_base;
+            using std::ios;
+            
             _o << "\\x";
             
-            const std::ios_base::fmtflags f = _o.flags();
-            _o.flags(std::ios::hex);
+            const ios_base::fmtflags f = _o.flags();
+            _o.flags(ios::hex);
             _o << (c_ & 0xf0) << (c_ & 0x0f);
             _o.flags(f);
           }
@@ -251,8 +253,8 @@ namespace mpllibs
       std::ostream& _o;
     };
 
-    template <char value>
-    struct to_stream_integral_constant<char, value>
+    template <char Value>
+    struct to_stream_integral_constant<char, Value>
     {
       typedef to_stream_integral_constant type;
         
@@ -261,7 +263,7 @@ namespace mpllibs
         assert(sizeof(char) == 1);
 
         o_ << "char_<\'";
-        mpllibs::metatest::CharacterPrinter(o_).operator()(value);
+        character_printer(o_).operator()(Value);
         return o_ << "\'>";
       }
     };
@@ -286,19 +288,19 @@ namespace mpllibs
       }
     };
 
-    template <class i, class end>
+    template <class I, class End>
     struct to_stream_sequence_impl;
 
-    template <class i, class end>
+    template <class I, class End>
     struct to_stream_sequence :
       boost::mpl::if_<
-        boost::is_same<i, end>,
-        mpllibs::metatest::to_stream_nothing,
-        mpllibs::metatest::to_stream_sequence_impl<i, end>
+        boost::is_same<I, End>,
+        to_stream_nothing,
+        to_stream_sequence_impl<I, End>
       >::type
     {};
     
-    template <class i, class end>
+    template <class I, class End>
     struct to_stream_sequence_impl
     {
       static std::ostream& run(std::ostream& o_)
@@ -307,30 +309,31 @@ namespace mpllibs
         using boost::mpl::deref;
         using boost::is_same;
         
-        typedef typename next<i>::type i_next;
+        typedef typename next<I>::type i_next;
+        typedef typename deref<I>::type deref_i;
+        const bool is_at_end = is_same<i_next, End>::type::value;
         
-        return
-          mpllibs::metatest::to_stream_sequence<i_next, end>::run(
-            mpllibs::metatest::to_stream<typename deref<i>::type>::run(o_)
-              << (is_same<i_next, end>::type::value ? "" : ", ")
-          );
+        to_stream<deref_i>::run(o_);
+        o_ << (is_at_end ? "" : ", ");
+        to_stream_sequence<i_next, End>::run(o_);
+        return o_;
       }
     };
     
 
-    template <class i, class end>
+    template <class I, class End>
     struct to_stream_sequence_values_impl;
 
-    template <class i, class end>
+    template <class I, class End>
     struct to_stream_sequence_values :
       boost::mpl::if_<
-        boost::is_same<i, end>,
-        mpllibs::metatest::to_stream_nothing,
-        mpllibs::metatest::to_stream_sequence_values_impl<i, end>
+        boost::is_same<I, End>,
+        to_stream_nothing,
+        to_stream_sequence_values_impl<I, End>
       >::type
     {};
     
-    template <class i, class end>
+    template <class I, class End>
     struct to_stream_sequence_values_impl
     {
       static std::ostream& run(std::ostream& o_)
@@ -339,14 +342,13 @@ namespace mpllibs
         using boost::mpl::deref;
         using boost::is_same;
         
-        typedef typename next<i>::type i_next;
+        typedef typename next<I>::type i_next;
+        typedef typename deref<I>::type deref_i;
+        const bool is_at_end = is_same<i_next, End>::type::value;
         
-        return
-          mpllibs::metatest::to_stream_sequence_values<i_next, end>::run(
-            o_
-              << deref<i>::type::value
-              << (is_same<i_next, end>::type::value ? "" : ", ")
-          );
+        o_ << deref_i::value << (is_at_end ? "" : ", ");
+        to_stream_sequence_values<i_next, End>::run(o_);
+        return o_;
       }
     };
 
@@ -358,26 +360,26 @@ namespace mpllibs
     // I can't use a lambda expression, because is_same is not lazy
     struct common_tag_compare
     {
-      template <class a, class b>
+      template <class A, class B>
       struct apply :
         boost::mpl::if_<
-          boost::is_same<a, typename boost::mpl::tag<b>::type>,
-          a,
-          mpllibs::metatest::no_common_tag
+          boost::is_same<A, typename boost::mpl::tag<B>::type>,
+          A,
+          no_common_tag
         >
       {};
     };
     
-    template <class seq>
+    template <class Seq>
     struct common_tag :
       boost::mpl::fold<
-        seq,
-        typename boost::mpl::tag<typename boost::mpl::front<seq>::type>::type,
-        mpllibs::metatest::common_tag_compare
+        Seq,
+        typename boost::mpl::tag<typename boost::mpl::front<Seq>::type>::type,
+        common_tag_compare
       >
     {};
     
-    template <class seq, class common_tag>
+    template <class Seq, class CommonTag>
     struct to_stream_sequence_begin
     {
       typedef to_stream_sequence_begin type;
@@ -387,17 +389,18 @@ namespace mpllibs
         using boost::mpl::begin;
         using boost::mpl::end;
         
-        return
-          mpllibs::metatest::to_stream_sequence<
-            typename begin<seq>::type,
-            typename end<seq>::type
-          >::run(o_ << "<") << ">";
+        typedef typename begin<Seq>::type b;
+        typedef typename end<Seq>::type e;
+        
+        o_  << "<";
+        to_stream_sequence<b, e>::run(o_);
+        return o_ << ">";
       }
     };
     
-    // pre-condition: !empty<seq>
-    template <class seq>
-    struct to_stream_sequence_begin<seq, boost::mpl::integral_c_tag>
+    // pre-condition: !empty<Seq>
+    template <class Seq>
+    struct to_stream_sequence_begin<Seq, boost::mpl::integral_c_tag>
     {
       typedef to_stream_sequence_begin type;
       
@@ -407,7 +410,7 @@ namespace mpllibs
         using boost::mpl::end;
         using boost::mpl::front;
         
-        typedef typename front<seq>::type::value_type v_type;
+        typedef typename front<Seq>::type::value_type v_type;
         
         o_ << "_c<";
         mpllibs::metatest::to_stream<v_type>::run(o_);
@@ -416,15 +419,15 @@ namespace mpllibs
         if (boost::is_same<char, v_type>::type::value)
         {
           o_ << '\"';
-          boost::mpl::for_each<seq>(mpllibs::metatest::CharacterPrinter(o_));
+          boost::mpl::for_each<Seq>(character_printer(o_));
           o_ << '\"';
         }
         else
         {
-          mpllibs::metatest::to_stream_sequence_values<
-            typename begin<seq>::type,
-            typename end<seq>::type
-          >::run(o_);
+          typedef typename begin<Seq>::type b;
+          typedef typename end<Seq>::type e;
+          
+          to_stream_sequence_values<b, e>::run(o_);
         }
           
         return o_ << ">";
@@ -438,7 +441,7 @@ namespace mpllibs
       template <> \
       struct to_stream_impl<tag> \
       { \
-        template <class seq> \
+        template <class Seq> \
         struct apply \
         { \
           typedef apply type; \
@@ -447,11 +450,11 @@ namespace mpllibs
           { \
             return \
               mpllibs::metatest::to_stream_sequence_begin< \
-                seq, \
+                Seq, \
                 typename boost::mpl::eval_if< \
-                  typename boost::mpl::empty<seq>::type, \
+                  typename boost::mpl::empty<Seq>::type, \
                   mpllibs::metatest::no_common_tag, \
-                  mpllibs::metatest::common_tag<seq> \
+                  mpllibs::metatest::common_tag<Seq> \
                 >::type \
               >::run(o_ << "mpl::" #name); \
           } \
@@ -467,13 +470,13 @@ namespace mpllibs
     template <>
     struct to_stream_impl<boost::mpl::string_tag>
     {
-      template <class s>
+      template <class S>
       struct apply
       {
         static std::ostream& run(std::ostream& o_)
         {
           o_ << "string<\"";
-          boost::mpl::for_each<s>(mpllibs::metatest::CharacterPrinter(o_));
+          boost::mpl::for_each<S>(character_printer(o_));
           return o_ << "\">";
         }
       };
@@ -501,14 +504,14 @@ namespace mpllibs
       }
     };
 
-    template <int n>
-    struct to_stream<boost::mpl::arg<n> >
+    template <int N>
+    struct to_stream<boost::mpl::arg<N> >
     {
       typedef to_stream type;
       
       static std::ostream& run(std::ostream& o_)
       {
-        return o_ << "_" << n;
+        return o_ << "_" << N;
       }
     };
   }
@@ -544,7 +547,7 @@ namespace mpllibs
   #error DEFINE_TO_STREAM_FOR_TEMPLATE_N already defined
 #endif
 #define DEFINE_TO_STREAM_FOR_TEMPLATE_N(z, n, unused) \
-  mpllibs::metatest::to_stream<a##n>::run(o_ << ", ");
+  mpllibs::metatest::to_stream<A##n>::run(o_ << ", ");
 
 #ifdef DEFINE_TO_STREAM_FOR_TEMPLATE
   #error DEFINE_TO_STREAM_FOR_TEMPLATE already defined
@@ -554,14 +557,14 @@ namespace mpllibs
   { \
     namespace metatest \
     { \
-      template <BOOST_PP_ENUM_PARAMS(n, class a)> \
-      struct to_stream<t<BOOST_PP_ENUM_PARAMS(n, a)> > \
+      template <BOOST_PP_ENUM_PARAMS(n, class A)> \
+      struct to_stream<t<BOOST_PP_ENUM_PARAMS(n, A)> > \
       { \
         typedef to_stream type; \
         \
         static std::ostream& run(std::ostream& o_) \
         { \
-          mpllibs::metatest::to_stream<a0>::run(o_ << name << "<"); \
+          mpllibs::metatest::to_stream<A0>::run(o_ << name << "<"); \
           BOOST_PP_REPEAT_FROM_TO(1, n, DEFINE_TO_STREAM_FOR_TEMPLATE_N, ~) \
           return o_ << ">"; \
         } \
@@ -577,8 +580,8 @@ namespace mpllibs
   { \
     namespace metatest \
     { \
-      template <BOOST_PP_ENUM_PARAMS(n, class a)> \
-      struct to_stream<t<BOOST_PP_ENUM_PARAMS(n, a)> > \
+      template <BOOST_PP_ENUM_PARAMS(n, class A)> \
+      struct to_stream<t<BOOST_PP_ENUM_PARAMS(n, A)> > \
       { \
         typedef to_stream type; \
         \
