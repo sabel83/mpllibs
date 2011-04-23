@@ -12,37 +12,38 @@
 
 #include <iostream>
 
-class CustomTestClass;
-class OtherCustomTestClass;
-class DefinedCustomTestClass {};
+class custom_test_class;
+class other_custom_test_class;
+class defined_custom_test_class {};
 
-class CustomTestClassWithLongName;
+class custom_test_class_with_long_name;
 
-DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(CustomTestClass)
-DEFINE_TO_STREAM_FOR_TYPE(CustomTestClassWithLongName, "short_name")
+DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(custom_test_class)
+DEFINE_TO_STREAM_FOR_TYPE(custom_test_class_with_long_name, "short_name")
 
 int main()
 {
   using std::cout;
   using std::endl;
+  using mpllibs::metatest::to_stream;
   
-  mpllibs::metatest::to_stream<OtherCustomTestClass>::run(cout) << endl;
-  mpllibs::metatest::to_stream<DefinedCustomTestClass>::run(cout) << endl;
-  mpllibs::metatest::to_stream<CustomTestClassWithLongName>::run(cout) << endl;
+  to_stream<other_custom_test_class>::run(cout) << endl;
+  to_stream<defined_custom_test_class>::run(cout) << endl;
+  to_stream<custom_test_class_with_long_name>::run(cout) << endl;
 
-  mpllibs::metatest::to_stream<int>::run(cout) << endl;
-  mpllibs::metatest::to_stream<double>::run(cout) << endl;
-  mpllibs::metatest::to_stream<CustomTestClass>::run(cout) << endl;
-  mpllibs::metatest::to_stream<const char*>::run(cout) << endl;
-  mpllibs::metatest::to_stream<char * const>::run(cout) << endl;
-  mpllibs::metatest::to_stream<double**>::run(cout) << endl;
-  mpllibs::metatest::to_stream<float* const *>::run(cout) << endl;
-  mpllibs::metatest::to_stream<long * const * const>::run(cout) << endl;
-  mpllibs::metatest::to_stream<short&>::run(cout) << endl;
-  mpllibs::metatest::to_stream<signed char[]>::run(cout) << endl;
-  mpllibs::metatest::to_stream<const char*[]>::run(cout) << endl;
-  mpllibs::metatest::to_stream<void>::run(cout) << endl;
-  mpllibs::metatest::to_stream<size_t>::run(cout) << endl;
+  to_stream<int>::run(cout) << endl;
+  to_stream<double>::run(cout) << endl;
+  to_stream<custom_test_class>::run(cout) << endl;
+  to_stream<const char*>::run(cout) << endl;
+  to_stream<char * const>::run(cout) << endl;
+  to_stream<double**>::run(cout) << endl;
+  to_stream<float* const *>::run(cout) << endl;
+  to_stream<long * const * const>::run(cout) << endl;
+  to_stream<short&>::run(cout) << endl;
+  to_stream<signed char[]>::run(cout) << endl;
+  to_stream<const char*[]>::run(cout) << endl;
+  to_stream<void>::run(cout) << endl;
+  to_stream<size_t>::run(cout) << endl;
   cout << endl;
   
   using boost::mpl::integral_c;
@@ -52,33 +53,34 @@ int main()
   using boost::mpl::long_;
   using boost::mpl::char_;
   using boost::mpl::void_;
+  using boost::mpl::string;
+  using boost::mpl::vector_c;
+  using boost::mpl::list_c;
+  using boost::mpl::deque;
+  using boost::mpl::range_c;
+  using boost::mpl::vector;
+  using boost::mpl::_1;
+  using boost::mpl::apply;
   
-  mpllibs::metatest::to_stream<integral_c<int, 13> >::run(cout) << endl;
-  mpllibs::metatest::to_stream<true_>::run(cout) << endl;
-  mpllibs::metatest::to_stream<int_<19> >::run(cout) << endl;
-  mpllibs::metatest::to_stream<long_<83> >::run(cout) << endl;
-  mpllibs::metatest::to_stream<char_<'\n'> >::run(cout) << endl;
-  mpllibs::metatest::to_stream<char_<'X'> >::run(cout) << endl;
-  mpllibs::metatest::to_stream<char_<'\x03'> >::run(cout) << endl;
-  mpllibs::metatest::to_stream<boost::mpl::size_t<13> >::run(cout) << endl;
-  mpllibs::metatest::to_stream<void_>::run(cout) << endl;
-  mpllibs::metatest::to_stream<boost::mpl::string<'s'> >::run(cout) << endl;
-  mpllibs::metatest::to_stream<boost::mpl::string<'\n'> >::run(cout) << endl;
+  to_stream<integral_c<int, 13> >::run(cout) << endl;
+  to_stream<true_>::run(cout) << endl;
+  to_stream<int_<19> >::run(cout) << endl;
+  to_stream<long_<83> >::run(cout) << endl;
+  to_stream<char_<'\n'> >::run(cout) << endl;
+  to_stream<char_<'X'> >::run(cout) << endl;
+  to_stream<char_<'\x03'> >::run(cout) << endl;
+  to_stream<boost::mpl::size_t<13> >::run(cout) << endl;
+  to_stream<void_>::run(cout) << endl;
+  to_stream<string<'s'> >::run(cout) << endl;
+  to_stream<string<'\n'> >::run(cout) << endl;
 
-  mpllibs::metatest::to_stream<boost::mpl::vector_c<int, 1, 2, 3> >::run(cout)
-    << endl;
-  mpllibs::metatest::to_stream<boost::mpl::list_c<int, 1, 2, 3> >::run(cout)
-    << endl;
-  mpllibs::metatest::to_stream<boost::mpl::deque<int, float, char> >::run(cout)
-    << endl;
-  mpllibs::metatest::to_stream<boost::mpl::range_c<int, 1, 10> >::run(cout)
-    << endl;
-  mpllibs::metatest::to_stream<
-    boost::mpl::vector_c<char, 'h', 'e', 'l', 'l', 'o'>
-  >::run(cout) << endl;
-  mpllibs::metatest::to_stream<boost::mpl::vector<> >::run(cout) << endl;
-  mpllibs::metatest::to_stream<boost::mpl::_1>::run(cout) << endl;
-  mpllibs::metatest::to_stream<boost::mpl::apply<int, double> >::run(cout)
-    << endl;
+  to_stream<vector_c<int, 1, 2, 3> >::run(cout) << endl;
+  to_stream<list_c<int, 1, 2, 3> >::run(cout) << endl;
+  to_stream<deque<int, float, char> >::run(cout) << endl;
+  to_stream<range_c<int, 1, 10> >::run(cout) << endl;
+  to_stream<vector_c<char, 'h', 'e', 'l', 'l', 'o'> >::run(cout) << endl;
+  to_stream<vector<> >::run(cout) << endl;
+  to_stream<_1>::run(cout) << endl;
+  to_stream<apply<int, double> >::run(cout) << endl;
 }
 
