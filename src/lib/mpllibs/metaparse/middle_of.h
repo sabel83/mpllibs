@@ -12,8 +12,8 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p1, class p2, class p3>
-    struct middle_of : mpllibs::metaparse::nth_of_c<1, p1, p2, p3> {};
+    template <class P1, class P2, class P3>
+    struct middle_of : nth_of_c<1, P1, P2, P3> {};
   }
 }
 

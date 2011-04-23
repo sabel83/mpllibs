@@ -15,12 +15,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    typedef
-      mpllibs::metaparse::transform<
-        mpllibs::metaparse::digit,
-        mpllibs::metaparse::util::digit_to_int
-      >
-      digit_val;
+    typedef transform<digit, mpllibs::metaparse::util::digit_to_int> digit_val;
   }
 }
 

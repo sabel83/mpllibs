@@ -13,26 +13,23 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::util::digit_to_int;
+
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::digit_to_int");
+  const TestSuite suite("util::digit_to_int");
 
-  typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::util::digit_to_int, char_0>::type,
-      int0
-    >
-    Test0;
+  typedef equal_to<apply<digit_to_int, char_0>::type, int0> test0;
 
-  typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<mpllibs::metaparse::util::digit_to_int, char_9>::type,
-      int9
-    >
-    Test9;
+  typedef equal_to<apply<digit_to_int, char_9>::type, int9> test9;
 }
 
-MPLLIBS_ADD_TEST(suite, Test0)
-MPLLIBS_ADD_TEST(suite, Test9)
+MPLLIBS_ADD_TEST(suite, test0)
+MPLLIBS_ADD_TEST(suite, test9)
 
 

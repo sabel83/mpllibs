@@ -31,52 +31,52 @@ namespace mpllibs
   {
     namespace impl
     {
-      template <class list_to_append>
+      template <class ListToAppend>
       struct do_append
       {
-        template <class item>
-        struct apply :boost::mpl::push_back<list_to_append, typename item::type>
+        template <class Item>
+        struct apply :
+          boost::mpl::push_back<ListToAppend, typename Item::type>
         {};
       };
     
-      template <class accum, class s, class pos, class parser>
+      template <class Accum, class S, class Pos, class Parser>
       struct apply_impl :
         boost::mpl::apply<
           mpllibs::metaparse::transform<
-            parser,
-            mpllibs::metaparse::impl::do_append<typename accum::type>
+            Parser,do_append<typename Accum::type>
           >,
-          typename s::type,
-          typename pos::type
+          typename S::type,
+          typename Pos::type
         >
       {};
     
       struct apply_parser
       {
-        template <class state, class parser>
+        template <class State, class Parser>
         struct apply :
           mpllibs::metaparse::util::unless_error<
-            state,
-            mpllibs::metaparse::impl::apply_impl<
-              mpllibs::metaparse::get_result<state>,
-              mpllibs::metaparse::get_remaining<state>,
-              mpllibs::metaparse::get_position<state>,
-              parser
+            State,
+            apply_impl<
+              mpllibs::metaparse::get_result<State>,
+              mpllibs::metaparse::get_remaining<State>,
+              mpllibs::metaparse::get_position<State>,
+              Parser
             >
           >
         {};
       };
       
-      template <class ps, class s, class pos>
+      template <class Ps, class S, class Pos>
       struct sequence_impl :
         boost::mpl::fold<
-          ps,
+          Ps,
           typename boost::mpl::apply<
             mpllibs::metaparse::return_<boost::mpl::deque<> >,
-            s,
-            pos
+            S,
+            Pos
           >::type,
-          mpllibs::metaparse::impl::apply_parser
+          apply_parser
         >
       {};
     }
@@ -91,18 +91,18 @@ namespace mpllibs
     // We need a mock argument to make the 0 case compile
     #define SEQUENCE_CASE(z, n, unused) \
       template < \
-        BOOST_PP_ENUM_PARAMS(n, class p) \
+        BOOST_PP_ENUM_PARAMS(n, class P) \
         BOOST_PP_COMMA_IF(n) \
-        class mock = int \
+        class Mock = int \
       > \
       struct sequence##n \
       { \
-        template <class s, class pos> \
+        template <class S, class Pos> \
         struct apply : \
           mpllibs::metaparse::impl::sequence_impl< \
-            boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, p)>, \
-            s, \
-            pos \
+            boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, P)>, \
+            S, \
+            Pos \
           > \
         {}; \
       };
@@ -123,10 +123,10 @@ namespace mpllibs
     template <
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         SEQUENCE_MAX_ARGUMENT,
-        class p,
+        class P,
         mpllibs::metaparse::impl::sequence_no_argument
       ),
-      class mock = int
+      class Mock = int
     >
     struct sequence;
 
@@ -141,9 +141,9 @@ namespace mpllibs
       #error SEQUENCE_N already defined
     #endif
     #define SEQUENCE_N(z, n, unused) \
-      template <BOOST_PP_ENUM_PARAMS(n, class p)> \
+      template <BOOST_PP_ENUM_PARAMS(n, class P)> \
       struct sequence< \
-        BOOST_PP_ENUM_PARAMS(n, p) \
+        BOOST_PP_ENUM_PARAMS(n, P) \
         BOOST_PP_COMMA_IF(n) \
         BOOST_PP_REPEAT( \
           BOOST_PP_SUB(SEQUENCE_MAX_ARGUMENT, n), \
@@ -151,7 +151,7 @@ namespace mpllibs
           ~ \
         ) \
       > : \
-        mpllibs::metaparse::sequence##n<BOOST_PP_ENUM_PARAMS(n, p)> \
+        sequence##n<BOOST_PP_ENUM_PARAMS(n, P)> \
       {};
     
     BOOST_PP_REPEAT(SEQUENCE_MAX_ARGUMENT, SEQUENCE_N, ~)

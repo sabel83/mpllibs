@@ -12,19 +12,21 @@
 
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::util::is_digit;
+
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::is_digit");
+  const TestSuite suite("util::is_digit");
 
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_digit, char_7>
-    TestDigit;
+  typedef apply<is_digit, char_7> test_digit;
   
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_digit, char_a>
-    TestNonDigit;
+  typedef apply<is_digit, char_a> test_non_digit;
 }
 
-MPLLIBS_ADD_TEST(suite, TestDigit)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, TestNonDigit)
+MPLLIBS_ADD_TEST(suite, test_digit)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, test_non_digit)
 

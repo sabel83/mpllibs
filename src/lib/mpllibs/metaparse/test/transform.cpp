@@ -17,48 +17,39 @@
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::transform;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::is_error;
+
+using boost::mpl::always;
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("transform");
+  const TestSuite suite("transform");
 
-  typedef boost::mpl::always<char_x> transform;
+  typedef always<char_x> f;
     
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::transform<lit_h, transform>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
+    equal_to<
+      get_result<apply<transform<lit_h, f>, str_hello, start> >::type,
       char_x
     >
-    TestNormalCase;
+    test_normal_case;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::transform<lit_x, transform>,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    TestParserFails;
+    is_error<apply<transform<lit_x, f>, str_hello, start> >
+    test_parser_fails;
 
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::transform<lit_h, transform>,
-        str_,
-        mpllibs::metaparse::start
-      >
-    >
-    TestEmptyInput;
+  typedef is_error<apply<transform<lit_h, f>, str_, start> > test_empty_input;
 }
 
-MPLLIBS_ADD_TEST(suite, TestNormalCase)
-MPLLIBS_ADD_TEST(suite, TestParserFails)
-MPLLIBS_ADD_TEST(suite, TestEmptyInput)
+MPLLIBS_ADD_TEST(suite, test_normal_case)
+MPLLIBS_ADD_TEST(suite, test_parser_fails)
+MPLLIBS_ADD_TEST(suite, test_empty_input)
 
 

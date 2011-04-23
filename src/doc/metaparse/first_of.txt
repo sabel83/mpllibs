@@ -12,13 +12,13 @@ Synopsis
 
 --------------------------------------
 template <
-  class p1,
+  class P1,
   // ...
-  class pn
+  class Pn
 >
 struct first_of
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified

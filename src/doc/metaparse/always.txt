@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p, class t>
+template <class P, class T>
 struct always
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -27,8 +27,8 @@ Description
 -----------
 
 Parser combinator taking a parser and a class as arguments. It accepts an input
-if and only if +p+ accepts it, but the result of parsing will be +t+ instead of
-the result +p+ returned.
+if and only if +P+ accepts it, but the result of parsing will be +T+ instead of
+the result +P+ returned.
 
 Header
 ------

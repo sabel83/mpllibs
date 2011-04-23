@@ -18,106 +18,74 @@
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::keyword;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::is_error;
+using mpllibs::metaparse::get_remaining;
+
+using boost::mpl::list_c;
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+using boost::mpl::equal;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("keyword");
-
-  typedef boost::mpl::list_c<
-    char,
-    'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'
-  > str_hello_world;
-  typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'x'> str_hellx;
-  typedef boost::mpl::list_c<char, 'h', 'x', 'l', 'l', 'o'> str_hxllo;
+  const TestSuite suite("keyword");
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::keyword<str_hello, char_l>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
+    list_c<char, 'h','e','l','l','o',' ','w','o','r','l','d'>
+    str_hello_world;
+    
+  typedef list_c<char, 'h','e','l','l','x'> str_hellx;
+  typedef list_c<char, 'h','x','l','l','o'> str_hxllo;
+  
+  typedef keyword<str_hello> keyword_hello;
+
+  typedef
+    equal_to<
+      get_result<apply<keyword<str_hello, char_l>, str_hello, start> >::type,
       char_l
     >
-    TestResultType;
+    test_result_type;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::keyword<str_, char_l>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
+    equal_to<
+      get_result<apply<keyword<str_, char_l>, str_hello, start> >::type,
       char_l
     >
-    TestEmptyKeyword;
+    test_empty_keyword;
+
+  typedef is_error<apply<keyword_hello, str_, start> > test_empty_input;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::keyword<str_hello>,
-        str_,
-        mpllibs::metaparse::start
-      >
-    >
-    TestEmptyInput;
+    equal<get_remaining<apply<keyword_hello, str_hello, start> >::type, str_>
+    test_itself;
 
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_remaining<
-        boost::mpl::apply<
-          mpllibs::metaparse::keyword<str_hello>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      str_
+    equal<
+      get_remaining<apply<keyword_hello, str_hello_world, start> >::type,
+      list_c<char, ' ', 'w', 'o', 'r', 'l', 'd'>
     >
-    TestItself;
+    test_more_than_itself;
 
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_remaining<
-        boost::mpl::apply<
-          mpllibs::metaparse::keyword<str_hello>,
-          str_hello_world,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list_c<char, ' ', 'w', 'o', 'r', 'l', 'd'>
-    >
-    TestMoreThanItself;
+    is_error<apply<keyword_hello, str_hellx, start> >
+    test_no_match_at_end;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::keyword<str_hello>,
-        str_hellx,
-        mpllibs::metaparse::start
-      >
-    >
-    TestNonMatchAtEnd;
-
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::keyword<str_hello>,
-        str_hxllo,
-        mpllibs::metaparse::start
-      >
-    >
-    TestNonMatchInTheMiddle;
+    is_error<apply<keyword_hello, str_hxllo, start> >
+    test_no_match_in_the_middle;
 }
 
-MPLLIBS_ADD_TEST(suite, TestResultType)
-MPLLIBS_ADD_TEST(suite, TestEmptyInput)
-MPLLIBS_ADD_TEST(suite, TestEmptyKeyword)
-MPLLIBS_ADD_TEST(suite, TestItself)
-MPLLIBS_ADD_TEST(suite, TestMoreThanItself)
-MPLLIBS_ADD_TEST(suite, TestNonMatchAtEnd)
-MPLLIBS_ADD_TEST(suite, TestNonMatchInTheMiddle)
+MPLLIBS_ADD_TEST(suite, test_result_type)
+MPLLIBS_ADD_TEST(suite, test_empty_input)
+MPLLIBS_ADD_TEST(suite, test_empty_keyword)
+MPLLIBS_ADD_TEST(suite, test_itself)
+MPLLIBS_ADD_TEST(suite, test_more_than_itself)
+MPLLIBS_ADD_TEST(suite, test_no_match_at_end)
+MPLLIBS_ADD_TEST(suite, test_no_match_in_the_middle)
 
 

@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <char c>
+template <char C>
 struct lit
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified

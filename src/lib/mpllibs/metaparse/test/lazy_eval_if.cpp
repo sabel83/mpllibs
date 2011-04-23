@@ -17,51 +17,40 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/equal_to.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::util::lazy_eval_if;
+
+using boost::mpl::equal_to;
+using boost::mpl::true_;
+using boost::mpl::false_;
+using boost::mpl::eval_if;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::lazy_eval_if");
+  const TestSuite suite("util::lazy_eval_if");
   
   typedef
-    mpllibs::metaparse::util::lazy_eval_if<
-      boost::mpl::equal_to<int13, int13>,
-      boost::mpl::true_,
-      boost::mpl::false_
-    >
-    EvaluatedCondition;
+    lazy_eval_if<equal_to<int13, int13>, true_, false_>
+    evaluated_condition;
   
   typedef
-    boost::mpl::eval_if<
-      boost::mpl::false_,
-      mpllibs::metaparse::util::lazy_eval_if<
-        can_not_be_instantiated,
-        int11,
-        int13
-      >,
-      boost::mpl::true_
-    >
-    NotEvaluatedCondition;
+    eval_if<false_, lazy_eval_if<can_not_be_instantiated, int11, int13>, true_>
+    not_evaluated_condition;
 
   typedef
-    mpllibs::metaparse::util::lazy_eval_if<
-      boost::mpl::equal_to<int11, int13>,
-      can_not_be_instantiated,
-      boost::mpl::true_
-    >
-    NotEvaluatedTrueCase;
+    lazy_eval_if<equal_to<int11, int13>, can_not_be_instantiated, true_>
+    not_evaluated_true_case;
 
   typedef
-    mpllibs::metaparse::util::lazy_eval_if<
-      boost::mpl::equal_to<int13, int13>,
-      boost::mpl::true_,
-      can_not_be_instantiated
-    >
-    NotEvaluatedFalseCase;
+    lazy_eval_if<equal_to<int13, int13>, true_, can_not_be_instantiated>
+    not_evaluated_false_case;
 }
 
-MPLLIBS_ADD_TEST(suite, EvaluatedCondition)
-MPLLIBS_ADD_TEST(suite, NotEvaluatedCondition)
-MPLLIBS_ADD_TEST(suite, NotEvaluatedTrueCase)
-MPLLIBS_ADD_TEST(suite, NotEvaluatedFalseCase)
+MPLLIBS_ADD_TEST(suite, evaluated_condition)
+MPLLIBS_ADD_TEST(suite, not_evaluated_condition)
+MPLLIBS_ADD_TEST(suite, not_evaluated_true_case)
+MPLLIBS_ADD_TEST(suite, not_evaluated_false_case)
 
 
 

@@ -16,19 +16,19 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p, class msg>
+    template <class P, class Msg>
     struct change_error_message
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::apply<
           typename boost::mpl::if_<
-            mpllibs::metaparse::is_error<boost::mpl::apply<p, s, pos> >,
-            mpllibs::metaparse::fail<msg>,
-            p
+            is_error<boost::mpl::apply<P, S, Pos> >,
+            fail<Msg>,
+            P
           >::type,
-          s,
-          pos
+          S,
+          Pos
         >
       {};
     };

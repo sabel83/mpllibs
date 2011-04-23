@@ -13,7 +13,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    typedef mpllibs::metaparse::any1<mpllibs::metaparse::space> spaces;
+    typedef any1<space> spaces;
   }
 }
 

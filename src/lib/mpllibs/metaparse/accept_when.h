@@ -17,41 +17,39 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p, class pred, class msg>
+    template <class P, class Pred, class Msg>
     struct accept_when_unchecked
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::apply<
           typename boost::mpl::if_<
             typename boost::mpl::apply<
-              pred,
-              typename mpllibs::metaparse::get_result<
-                boost::mpl::apply<p, s, pos>
-              >::type
+              Pred,
+              typename get_result<boost::mpl::apply<P, S, Pos> >::type
             >::type,
-            p,
-            mpllibs::metaparse::fail<msg>
+            P,
+            fail<Msg>
           >::type,
-          s,
-          pos
+          S,
+          Pos
         >
       {};
     };
   
-    template <class p, class pred, class msg>
+    template <class P, class Pred, class Msg>
     struct accept_when
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::apply<
           typename boost::mpl::if_<
-            mpllibs::metaparse::is_error<boost::mpl::apply<p, s, pos> >,
-            p,
-            mpllibs::metaparse::accept_when_unchecked<p, pred, msg>
+            is_error<boost::mpl::apply<P, S, Pos> >,
+            P,
+            accept_when_unchecked<P, Pred, Msg>
           >::type,
-          s,
-          pos
+          S,
+          Pos
         >
       {};
     };

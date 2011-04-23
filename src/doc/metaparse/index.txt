@@ -54,8 +54,8 @@ Error handling
 An error is described using a compile-time data-structure. It contains
 information about the source position, where the error was detected and some
 description about the error. The description is a compile-time data-structure
-without any restriction. link:DebugParsingError.html[DebugParsingError] can be
-used to display the error message.
+without any restriction. link:debug_parsing_error.html[debug_parsing_error] can
+be used to display the error message.
 
 Some examples of simple parsers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -182,7 +182,7 @@ link:build_parser.html[build_parser] +
 Utilities
 ---------
 
-link:DebugParsingError.html[DebugParsingError] +
+link:debug_parsing_error.html[debug_parsing_error] +
 
 +metaparse+ uses a number of small extensions to
 http://www.boost.org/doc/libs/1_43_0/libs/mpl/doc/index.html[boost::mpl].

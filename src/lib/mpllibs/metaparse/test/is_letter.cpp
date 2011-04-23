@@ -12,26 +12,26 @@
 
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::util::is_letter;
+
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::is_letter");
+  const TestSuite suite("util::is_letter");
 
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_letter, char_k>
-    TestLcaseLetter;
+  typedef apply<is_letter, char_k> test_lcase_letter;
   
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_letter, char_K>
-    TestUcaseLetter;
+  typedef apply<is_letter, char_K> test_ucase_letter;
     
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_letter, char_7>
-    TestNonLetter;
+  typedef apply<is_letter, char_7> test_not_letter;
 }
 
-MPLLIBS_ADD_TEST(suite, TestLcaseLetter)
-MPLLIBS_ADD_TEST(suite, TestUcaseLetter)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, TestNonLetter)
+MPLLIBS_ADD_TEST(suite, test_lcase_letter)
+MPLLIBS_ADD_TEST(suite, test_ucase_letter)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, test_not_letter)
 
 
 

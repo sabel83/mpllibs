@@ -16,23 +16,27 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/at.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::util::lazy_equal_to;
+
+using boost::mpl::eval_if;
+using boost::mpl::false_;
+using boost::mpl::true_;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::lazy_equal_to");
+  const TestSuite suite("util::lazy_equal_to");
   
-  typedef mpllibs::metaparse::util::lazy_equal_to<int13, int13> Evaluated;
+  typedef lazy_equal_to<int13, int13> test_evaluated;
   
   typedef
-    boost::mpl::eval_if<
-      boost::mpl::false_,
-      mpllibs::metaparse::util::lazy_equal_to<can_not_be_instantiated, int13>,
-      boost::mpl::true_
-    >
-    NotEvaluated;
+    eval_if<false_, lazy_equal_to<can_not_be_instantiated, int13>, true_>
+    test_not_evaluated;
 }
 
-MPLLIBS_ADD_TEST(suite, Evaluated)
-MPLLIBS_ADD_TEST(suite, NotEvaluated)
+MPLLIBS_ADD_TEST(suite, test_evaluated)
+MPLLIBS_ADD_TEST(suite, test_not_evaluated)
 
 
 

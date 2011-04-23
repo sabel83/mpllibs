@@ -18,102 +18,67 @@
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::any1;
+using mpllibs::metaparse::letter;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::is_error;
+
+using boost::mpl::equal;
+using boost::mpl::apply;
+using boost::mpl::list;
+
 namespace
 { 
-  const mpllibs::metatest::TestSuite suite("any1");
+  const TestSuite suite("any1");
+  
+  typedef any1<letter> any1_letter;
 
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
-        str_,
-        mpllibs::metaparse::start
-      >
-    >
-    TestEmptyInput;
+  typedef is_error<apply<any1_letter, str_, start> > test_empty_input;
+  
+  typedef is_error<apply<any1_letter, chars0, start> > test0;
   
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
-        chars0,
-        mpllibs::metaparse::start
-      >
-    >
-    Test0;
+    equal<get_result<apply<any1_letter, chars1, start> >::type, list<char_h> >
+    test1;
   
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
-          chars1,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<char_h>
+    equal<
+      get_result<apply<any1_letter, chars2, start> >::type,
+      list<char_h, char_e>
     >
-    Test1;
+    test2;
   
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
-          chars2,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<char_h, char_e>
+    equal<
+      get_result<apply<any1_letter, chars3, start> >::type,
+      list<char_h, char_e, char_l>
     >
-    Test2;
+    test3;
   
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
-          chars3,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<char_h, char_e, char_l>
+    equal<
+      get_result<apply<any1_letter, chars4, start> >::type,
+      list<char_h, char_e, char_l, char_l>
     >
-    Test3;
+    test4;
   
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
-          chars4,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<char_h, char_e, char_l, char_l>
+    equal<
+      get_result<apply<any1_letter, chars5, start> >::type,
+      list<char_h, char_e, char_l, char_l, char_o>
     >
-    Test4;
-  
-  typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::any1<mpllibs::metaparse::letter>,
-          chars5,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<char_h, char_e, char_l, char_l, char_o>
-    >
-    Test5;
+    test5;
 }
 
-MPLLIBS_ADD_TEST(suite, TestEmptyInput)
-MPLLIBS_ADD_TEST(suite, Test0)
-MPLLIBS_ADD_TEST(suite, Test1)
-MPLLIBS_ADD_TEST(suite, Test2)
-MPLLIBS_ADD_TEST(suite, Test3)
-MPLLIBS_ADD_TEST(suite, Test4)
-MPLLIBS_ADD_TEST(suite, Test5)
+MPLLIBS_ADD_TEST(suite, test_empty_input)
+MPLLIBS_ADD_TEST(suite, test0)
+MPLLIBS_ADD_TEST(suite, test1)
+MPLLIBS_ADD_TEST(suite, test2)
+MPLLIBS_ADD_TEST(suite, test3)
+MPLLIBS_ADD_TEST(suite, test4)
+MPLLIBS_ADD_TEST(suite, test5)
 
 

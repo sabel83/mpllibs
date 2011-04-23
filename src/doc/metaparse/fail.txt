@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class msg>
+template <class Msg>
 struct fail
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified

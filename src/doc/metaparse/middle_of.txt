@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p1, class p2, class p3>
+template <class P1, class P2, class P3>
 struct middle_of
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified

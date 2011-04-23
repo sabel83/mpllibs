@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class a, class b>
+template <class A, class B>
 struct lazy_equal_to
 {
   // unspecified

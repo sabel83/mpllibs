@@ -17,19 +17,19 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p, class result, class error_msg>
+    template <class P, class Result, class ErrorMsg>
     struct except
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::apply<
           typename boost::mpl::if_<
-            mpllibs::metaparse::is_error<boost::mpl::apply<p, s, pos> >,
-            mpllibs::metaparse::return_<result>,
-            mpllibs::metaparse::fail<error_msg>
+            is_error<boost::mpl::apply<P, S, Pos> >,
+            return_<Result>,
+            fail<ErrorMsg>
           >::type,
-          s,
-          pos
+          S,
+          Pos
         >
       {};
     };

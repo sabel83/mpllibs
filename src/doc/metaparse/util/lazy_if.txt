@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class c, class t, class f>
+template <class C, class T, class F>
 struct lazy_if
 {
   // unspecified

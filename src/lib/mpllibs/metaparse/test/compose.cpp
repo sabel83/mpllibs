@@ -16,48 +16,54 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/type_traits/is_same.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::util::compose;
+
+using boost::mpl::identity;
+using boost::mpl::plus;
+using boost::mpl::times;
+using boost::mpl::apply;
+using boost::mpl::equal_to;
+
+using boost::is_same;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::compose");
+  const TestSuite suite("util::compose");
 
   struct make_pointer
   {
-    template <class t>
-    struct apply : boost::mpl::identity<t*> {};
+    template <class T>
+    struct apply : identity<T*> {};
   };
   
   struct incr
   {
-    template <class t>
-    struct apply : boost::mpl::plus<int13, t> {};
+    template <class T>
+    struct apply : plus<int13, T> {};
   };
 
   struct double_value
   {
-    template <class t>
-    struct apply : boost::mpl::times<int2, t> {};
+    template <class T>
+    struct apply : times<int2, T> {};
   };
 
   struct take_first
   {
-    template <class a, class b>
-    struct apply : boost::mpl::identity<a> {};
+    template <class A, class B>
+    struct apply : identity<A> {};
   };
 
   typedef
-    boost::is_same<
-      boost::mpl::apply<
-        mpllibs::metaparse::util::compose<make_pointer, make_pointer>,
-        int
-      >::type,
-      int**
-    >
-    TestSameFunctionTwice;
+    is_same<apply<compose<make_pointer, make_pointer>, int>::type, int**>
+    test_same_function_twice;
 
   typedef
-    boost::is_same<
-      boost::mpl::apply<
-        mpllibs::metaparse::util::compose<
+    is_same<
+      apply<
+        compose<
           make_pointer,
           make_pointer,
           make_pointer,
@@ -68,33 +74,20 @@ namespace
       >::type,
       int*****
     >
-    TestSameFunctionFiveTimes;
+    test_same_function_five_times;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::util::compose<double_value, incr>,
-        int1
-      >::type,
-      int28
-    >
-    TestOrder;
+    equal_to<apply<compose<double_value, incr>, int1>::type, int28>
+    test_order;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<
-        mpllibs::metaparse::util::compose<double_value, take_first>,
-        int1,
-        int3
-      >::type,
-      int2
-    >
-    TestTwoArgumentsForTheFirstFunction;
+    equal_to<apply<compose<double_value, take_first>, int1, int3>::type, int2>
+    test_two_arguments_for_the_first_function;
 }
 
-MPLLIBS_ADD_TEST(suite, TestSameFunctionTwice)
-MPLLIBS_ADD_TEST(suite, TestSameFunctionFiveTimes)
-MPLLIBS_ADD_TEST(suite, TestOrder)
-MPLLIBS_ADD_TEST(suite, TestTwoArgumentsForTheFirstFunction)
+MPLLIBS_ADD_TEST(suite, test_same_function_twice)
+MPLLIBS_ADD_TEST(suite, test_same_function_five_times)
+MPLLIBS_ADD_TEST(suite, test_order)
+MPLLIBS_ADD_TEST(suite, test_two_arguments_for_the_first_function)
 
 

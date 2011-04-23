@@ -15,31 +15,28 @@
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/equal.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::util::cons;
+
+using boost::mpl::equal;
+using boost::mpl::apply;
+using boost::mpl::pair;
+using boost::mpl::list;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::cons");
+  const TestSuite suite("util::cons");
   
   typedef
-    boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::util::cons,
-        boost::mpl::pair<int11, boost::mpl::list<int13> >
-      >::type,
-      boost::mpl::list<int11, int13>
-    >
-    TestPushingToList;
+    equal<apply<cons, pair<int11, list<int13> > >::type, list<int11, int13> >
+    test_pushing_to_list;
 
   typedef
-    boost::mpl::equal<
-      boost::mpl::apply<
-        mpllibs::metaparse::util::cons,
-        boost::mpl::pair<int13, empty_list>
-      >::type,
-      boost::mpl::list<int13>
-    >
-    TestPushingToEmptyList;
+    equal<apply<cons, pair<int13, empty_list> >::type, list<int13> >
+    test_pushing_to_empty_list;
 }
 
-MPLLIBS_ADD_TEST(suite, TestPushingToList)
-MPLLIBS_ADD_TEST(suite, TestPushingToEmptyList)
+MPLLIBS_ADD_TEST(suite, test_pushing_to_list)
+MPLLIBS_ADD_TEST(suite, test_pushing_to_empty_list)
 

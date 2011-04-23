@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p, class pred, class msg>
+template <class P, class Pred, class Msg>
 struct accept_when
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -29,7 +29,7 @@ Description
 Parser combinator taking a parser, a predicate and an error message as
 arguments. It builds a parser that acccepts the input if and only if the
 original parsers accepts the input and the predicate is +true+ for the result of
-the original parser, otherwise it returns an error with +msg+ as the error
+the original parser, otherwise it returns an error with +Msg+ as the error
 message.
 
 Header

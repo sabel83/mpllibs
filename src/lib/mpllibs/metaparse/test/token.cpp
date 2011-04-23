@@ -19,73 +19,53 @@
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::keyword;
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::token;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::get_remaining;
+using mpllibs::metaparse::is_error;
+
+using boost::mpl::list_c;
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+using boost::mpl::equal;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("token");
+  const TestSuite suite("token");
 
-  typedef
-    boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o', ' ', '\t'>
-    str_hello_t;
+  typedef list_c<char, 'h', 'e', 'l', 'l', 'o', ' ', '\t'> str_hello_t;
       
-  typedef mpllibs::metaparse::keyword<str_hello, int13> testParser;
+  typedef keyword<str_hello, int13> test_parser;
+  typedef token<test_parser> test_token;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::token<testParser>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<testParser, str_hello, mpllibs::metaparse::start>
-      >::type
+    equal_to<
+      get_result<apply<test_token, str_hello, start> >::type,
+      get_result<apply<test_parser, str_hello, start> >::type
     >
-    TestNoSpace;
+    test_no_space;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::token<testParser>,
-          str_hello_t,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<testParser, str_hello, mpllibs::metaparse::start>
-      >::type
+    equal_to<
+      get_result<apply<test_token, str_hello_t, start> >::type,
+      get_result<apply<test_parser, str_hello, start> >::type
     >
-    TestSpaces;
+    test_spaces;
 
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_remaining<
-        boost::mpl::apply<
-          mpllibs::metaparse::token<testParser>,
-          str_hello_t,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      str_
-    >
-    TestSpacesConsumed;
+    equal<get_remaining<apply<test_token, str_hello_t, start> >::type, str_>
+    test_spaces_consumed;
 
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::token<testParser>,
-        str_,
-        mpllibs::metaparse::start
-      >
-    >
-    TestFail;
+  typedef is_error<apply<test_token, str_, start> > test_fail;
 }
 
-MPLLIBS_ADD_TEST(suite, TestNoSpace)
-MPLLIBS_ADD_TEST(suite, TestSpaces)
-MPLLIBS_ADD_TEST(suite, TestSpacesConsumed)
-MPLLIBS_ADD_TEST(suite, TestFail)
+MPLLIBS_ADD_TEST(suite, test_no_space)
+MPLLIBS_ADD_TEST(suite, test_spaces)
+MPLLIBS_ADD_TEST(suite, test_spaces_consumed)
+MPLLIBS_ADD_TEST(suite, test_fail)
 
 

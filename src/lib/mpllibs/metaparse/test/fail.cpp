@@ -17,23 +17,25 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::is_error;
+using mpllibs::metaparse::fail;
+using mpllibs::metaparse::start;
+
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("fail");
+  const TestSuite suite("fail");
 
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::fail<test_error>,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    TestFailForNonEmptyString;
+    is_error<apply<fail<test_error>, str_hello, start> >
+    test_fail_for_non_empty_string;
 }
 
-MPLLIBS_ADD_TEST(suite, TestFailForNonEmptyString)
+MPLLIBS_ADD_TEST(suite, test_fail_for_non_empty_string)
 
 

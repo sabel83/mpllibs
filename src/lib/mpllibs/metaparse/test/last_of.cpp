@@ -16,85 +16,54 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::last_of;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::is_error;
+
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("last_of");
+  const TestSuite suite("last_of");
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::last_of<lit_h>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      char_h
-    >
-    TestOneChar;
+    equal_to<get_result<apply<last_of<lit_h>, str_hello, start> >::type, char_h>
+    test_one_char;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::last_of<lit_h, lit_e>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
+    equal_to<
+      get_result<apply<last_of<lit_h, lit_e>, str_hello, start> >::type,
       char_e
     >
-    TestTwoChars;
+    test_two_chars;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::last_of<lit_x, lit_e>,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    TestFirstFails;
+    is_error<apply<last_of<lit_x, lit_e>, str_hello, start> >
+    test_first_fails;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::last_of<lit_h, lit_x>,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    TestSecondFails;
+    is_error<apply<last_of<lit_h, lit_x>, str_hello, start> >
+    test_second_fails;
+
+  typedef is_error<apply<last_of<lit_h, lit_e>, str_, start> > test_empty_input;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::last_of<lit_h, lit_e>,
-        str_,
-        mpllibs::metaparse::start
-      >
-    >
-    TestEmptyInput;
-
-  typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::last_of<lit_h, lit_e, lit_l>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
+    equal_to<
+      get_result<apply<last_of<lit_h, lit_e, lit_l>, str_hello, start> >::type,
       char_l
     >
-    TestThreeChars;
+    test_three_chars;
 }
 
-MPLLIBS_ADD_TEST(suite, TestOneChar)
-MPLLIBS_ADD_TEST(suite, TestTwoChars)
-MPLLIBS_ADD_TEST(suite, TestFirstFails)
-MPLLIBS_ADD_TEST(suite, TestSecondFails)
-MPLLIBS_ADD_TEST(suite, TestEmptyInput)
-MPLLIBS_ADD_TEST(suite, TestThreeChars)
+MPLLIBS_ADD_TEST(suite, test_one_char)
+MPLLIBS_ADD_TEST(suite, test_two_chars)
+MPLLIBS_ADD_TEST(suite, test_first_fails)
+MPLLIBS_ADD_TEST(suite, test_second_fails)
+MPLLIBS_ADD_TEST(suite, test_empty_input)
+MPLLIBS_ADD_TEST(suite, test_three_chars)
 
 

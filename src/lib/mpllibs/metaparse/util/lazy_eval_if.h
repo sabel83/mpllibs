@@ -15,8 +15,8 @@ namespace mpllibs
     namespace util
     {
       // Accepts nullary metafunction as condition
-      template <class c, class t, class f>
-      struct lazy_eval_if : boost::mpl::eval_if<typename c::type, t, f> {};
+      template <class C, class T, class F>
+      struct lazy_eval_if : boost::mpl::eval_if<typename C::type, T, F> {};
     }
   }
 }

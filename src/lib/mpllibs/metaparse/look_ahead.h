@@ -17,22 +17,18 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p>
+    template <class P>
     struct look_ahead
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::eval_if<
-          typename mpllibs::metaparse::is_error<
-            boost::mpl::apply<p, s, pos>
-          >::type,
-          boost::mpl::apply<p, s, pos>,
+          typename is_error<boost::mpl::apply<P, S, Pos> >::type,
+          boost::mpl::apply<P, S, Pos>,
           boost::mpl::apply<
-            mpllibs::metaparse::return_<
-              mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
-            >,
-            s,
-            pos
+            return_<get_result<boost::mpl::apply<P, S, Pos> > >,
+            S,
+            Pos
           >
         >
       {};

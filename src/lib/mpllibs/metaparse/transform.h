@@ -20,22 +20,19 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p, class t>
+    template <class P, class T>
     struct transform
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         mpllibs::metaparse::util::unless_error<
-          boost::mpl::apply<p, s, pos>,
+          boost::mpl::apply<P, S, Pos>,
           boost::mpl::apply<
-            mpllibs::metaparse::return_<
-              boost::mpl::apply<
-                t,
-                mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
-              >
+            return_<
+              boost::mpl::apply<T, get_result<boost::mpl::apply<P, S, Pos> > >
             >,
-            mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
-            mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
+            get_remaining<boost::mpl::apply<P, S, Pos> >,
+            get_position<boost::mpl::apply<P, S, Pos> >
           >
         >
       {};

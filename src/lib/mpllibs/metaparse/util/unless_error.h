@@ -17,12 +17,12 @@ namespace mpllibs
   {
     namespace util
     {
-      template <class t, class not_error_case>
+      template <class T, class NotErrorCase>
       struct unless_error :
         boost::mpl::eval_if<
-          typename mpllibs::metaparse::is_error<t>::type,
-          t,
-          not_error_case
+          typename mpllibs::metaparse::is_error<T>::type,
+          T,
+          NotErrorCase
         >
       {};
     }

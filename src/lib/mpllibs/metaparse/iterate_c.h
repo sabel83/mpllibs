@@ -23,53 +23,53 @@ namespace mpllibs
   {
     namespace impl
     {
-      template <int n, class p, class accum>
+      template <int N, class P, class Accum>
       struct iterate_impl;
       
-      template <int n, class p, class accum, class s, class pos>
+      template <int N, class P, class Accum, class S, class Pos>
       struct iterate_impl_unchecked :
         boost::mpl::apply<
-          mpllibs::metaparse::impl::iterate_impl<
-            n - 1,
-            p,
+          iterate_impl<
+            N - 1,
+            P,
             typename boost::mpl::push_back<
-              accum,
+              Accum,
               typename mpllibs::metaparse::get_result<
-                boost::mpl::apply<p, s, pos>
+                boost::mpl::apply<P, S, Pos>
               >::type
             >::type
           >,
           typename mpllibs::metaparse::get_remaining<
-            boost::mpl::apply<p, s, pos>
+            boost::mpl::apply<P, S, Pos>
           >::type,
           typename mpllibs::metaparse::get_position<
-            boost::mpl::apply<p, s, pos>
+            boost::mpl::apply<P, S, Pos>
           >::type
         >
       {};
 
-      template <int n, class p, class accum>
+      template <int N, class P, class Accum>
       struct iterate_impl
       {
-        template <class s, class pos>
+        template <class S, class Pos>
         struct apply :
           boost::mpl::eval_if<
             typename mpllibs::metaparse::is_error<
-              boost::mpl::apply<p, s, pos>
+              boost::mpl::apply<P, S, Pos>
             >::type,
-            boost::mpl::apply<p, s, pos>,
-            mpllibs::metaparse::impl::iterate_impl_unchecked<n,p, accum, s, pos>
+            boost::mpl::apply<P, S, Pos>,
+            iterate_impl_unchecked<N, P, Accum, S, Pos>
           >
         {};
       };
       
-      template <class p, class accum>
-      struct iterate_impl<0, p, accum> : mpllibs::metaparse::return_<accum> {};
+      template <class P, class Accum>
+      struct iterate_impl<0, P, Accum> : mpllibs::metaparse::return_<Accum> {};
     }
 
-    template <class p, int n>
+    template <class P, int N>
     struct iterate_c :
-      mpllibs::metaparse::impl::iterate_impl<n, p, boost::mpl::deque<> >
+      mpllibs::metaparse::impl::iterate_impl<N, P, boost::mpl::deque<> >
     {};
   }
 }

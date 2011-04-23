@@ -37,7 +37,7 @@ namespace mpllibs
           class ArgumentsLeft,
           class ArgumentList
         >
-        struct curryImpl;
+        struct curry_impl;
   
   
   
@@ -46,13 +46,13 @@ namespace mpllibs
           class ArgumentsLeft,
           class ArgumentList
         >
-        struct nextCurryingStep
+        struct next_currying_step
         {
-          typedef nextCurryingStep type;
+          typedef next_currying_step type;
       
           template <class T>
           struct apply :
-            mpllibs::metaparse::util::impl::curryImpl<
+            curry_impl<
               UnpackedMetafunctionClass,
               typename boost::mpl::minus<
                 ArgumentsLeft,
@@ -69,14 +69,14 @@ namespace mpllibs
           class ArgumentsLeft,
           class ArgumentList
         >
-        struct curryImpl :
+        struct curry_impl :
           boost::mpl::eval_if<
             typename boost::mpl::equal_to<
               ArgumentsLeft,
               boost::mpl::int_<0>
             >::type,
             boost::mpl::apply<UnpackedMetafunctionClass, ArgumentList>,
-            mpllibs::metaparse::util::impl::nextCurryingStep<
+            next_currying_step<
               UnpackedMetafunctionClass,
               ArgumentsLeft,
               ArgumentList
@@ -100,7 +100,7 @@ namespace mpllibs
       #define CURRY(z, n, unused) \
         template <template <BOOST_PP_REPEAT(n, CLASS_REPEAT, ~)> class T> \
         struct curry##n : \
-          mpllibs::metaparse::util::impl::curryImpl< \
+          mpllibs::metaparse::util::impl::curry_impl< \
             boost::mpl::unpack_args<boost::mpl::quote##n <T> >, \
             boost::mpl::int_<n>, \
             boost::mpl::deque<> \

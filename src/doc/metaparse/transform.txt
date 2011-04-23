@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p, class t>
+template <class P, class T>
 struct transform
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -27,8 +27,8 @@ Description
 -----------
 
 Parser combinator taking a parser and a transformation function as argument.
-It accepts the same inputs +p+ accepts, but transforms the result of +p+ using
-+t+.
+It accepts the same inputs +P+ accepts, but transforms the result of +P+ using
++T+.
 
 Header
 ------

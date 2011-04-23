@@ -16,46 +16,31 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::letter;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::is_error;
+
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("letter");
+  const TestSuite suite("letter");
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::letter,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      char_h
-    >
-    TestWithText;
+    equal_to<get_result<apply<letter, str_hello, start> >::type, char_h>
+    test_with_text;
   
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::letter,
-        str_1983,
-        mpllibs::metaparse::start
-      >
-    >
-    TestWithNumber;
+  typedef is_error<apply<letter, str_1983, start> > test_with_number;
   
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::letter,
-        str_,
-        mpllibs::metaparse::start
-      >
-    >
-    TestWithEmptyString;
+  typedef is_error<apply<letter, str_, start> > test_with_empty_string;
 }
 
-MPLLIBS_ADD_TEST(suite, TestWithText)
-MPLLIBS_ADD_TEST(suite, TestWithNumber)
-MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
+MPLLIBS_ADD_TEST(suite, test_with_text)
+MPLLIBS_ADD_TEST(suite, test_with_number)
+MPLLIBS_ADD_TEST(suite, test_with_empty_string)
 
 

@@ -12,9 +12,9 @@ Synopsis
 
 --------------------------------------
 template <
-  class f1,
+  class F1,
   // ...
-  class fn
+  class Fn
 >
 struct compose
 {
@@ -58,8 +58,8 @@ Example
 --------------------------------------
 struct make_pointer
 {
-  template <class t>
-  struct apply : boost::mpl::identity<t*> {};
+  template <class T>
+  struct apply : boost::mpl::identity<T*> {};
 };
 
 typedef

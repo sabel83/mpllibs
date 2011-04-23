@@ -15,9 +15,9 @@ namespace mpllibs
     namespace util
     {
       // Accepts nullary metafunctions
-      template <class a, class b>
+      template <class A, class B>
       struct lazy_equal_to :
-        boost::mpl::equal_to<typename a::type, typename b::type>
+        boost::mpl::equal_to<typename A::type, typename B::type>
       {};
     }
   }

@@ -15,7 +15,7 @@ namespace mpllibs
     template <
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         SEQUENCE_MAX_ARGUMENT,
-        class p,
+        class P,
         mpllibs::metaparse::impl::sequence_no_argument
       )
     >
@@ -32,9 +32,9 @@ namespace mpllibs
       #error LAST_OF_N already defined
     #endif
     #define LAST_OF_N(z, n, unused) \
-      template <BOOST_PP_ENUM_PARAMS(n, class p)> \
+      template <BOOST_PP_ENUM_PARAMS(n, class P)> \
       struct last_of< \
-        BOOST_PP_ENUM_PARAMS(n, p) \
+        BOOST_PP_ENUM_PARAMS(n, P) \
         BOOST_PP_COMMA_IF(n) \
         BOOST_PP_REPEAT( \
           BOOST_PP_SUB(SEQUENCE_MAX_ARGUMENT, n), \
@@ -42,10 +42,7 @@ namespace mpllibs
           ~ \
         ) \
       > : \
-        mpllibs::metaparse::nth_of_c##n< \
-          n - 1 BOOST_PP_COMMA_IF(n) \
-          BOOST_PP_ENUM_PARAMS(n, p) \
-        > \
+        nth_of_c##n<n - 1 BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, P)> \
       {};
     
     BOOST_PP_REPEAT(SEQUENCE_MAX_ARGUMENT, LAST_OF_N, ~)

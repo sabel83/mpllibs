@@ -16,11 +16,11 @@ namespace mpllibs
   {
     struct error_tag;
   
-    template <class t>
+    template <class T>
     struct is_error :
       boost::is_same<
-        mpllibs::metaparse::error_tag,
-        typename boost::mpl::tag<typename t::type>::type
+        error_tag,
+        typename boost::mpl::tag<typename T::type>::type
       >
     {};
   }

@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class s, class result_type>
+template <class S, class ResultType>
 struct keyword
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -26,7 +26,7 @@ struct keyword
 Description
 -----------
 
-Parser accepting a string. The result of parsing is +result_type+. +result_type+
+Parser accepting a string. The result of parsing is +ResultType+. +ResultType+
 is optional, when not given, the result of successful parsing is undefined.
 
 Header

@@ -26,21 +26,19 @@ namespace mpllibs
       MPLLIBS_METAPARSE_DEFINE_DATA(end_of_input_expected);
     }
     
-    template <class result>
+    template <class Result>
     struct empty
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::apply<
           typename boost::mpl::if_<
-            boost::mpl::empty<s>,
-            mpllibs::metaparse::return_<result>,
-            mpllibs::metaparse::fail<
-              mpllibs::metaparse::errors::end_of_input_expected
-            >
+            boost::mpl::empty<S>,
+            return_<Result>,
+            fail<mpllibs::metaparse::errors::end_of_input_expected>
           >::type,
-          s,
-          pos
+          S,
+          Pos
         >
       {};
     };

@@ -15,16 +15,14 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p>
+    template <class P>
     struct get_prev_char_impl;
     
-    template <class p>
+    template <class P>
     struct get_prev_char :
       boost::mpl::apply<
-        mpllibs::metaparse::get_prev_char_impl<
-          typename boost::mpl::tag<typename p::type>::type
-        >,
-        typename p::type
+        get_prev_char_impl<typename boost::mpl::tag<typename P::type>::type>,
+        typename P::type
       >
     {};
   }

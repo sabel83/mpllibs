@@ -17,45 +17,43 @@ namespace mpllibs
       typedef error_tag type;
     };
     
-    template <class msg>
+    template <class Msg>
     struct fail
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply
       {
-        typedef mpllibs::metaparse::error_tag tag;
+        typedef error_tag tag;
         typedef apply type;
 
-        typedef pos source_position;
-        typedef msg message;
+        typedef Pos source_position;
+        typedef Msg message;
       };
     };
   }
 
   namespace metatest
   {
-    template <class t>
+    template <class T>
     struct to_stream_impl;
     
-    template <class t>
+    template <class T>
     struct to_stream;
     
     template <>
     struct to_stream_impl<mpllibs::metaparse::error_tag>
     {
-      template <class e>
+      template <class E>
       struct apply
       {
         typedef apply type;
       
         static std::ostream& run(std::ostream& o_)
         {
-          using mpllibs::metatest::to_stream;
-        
           o_ << "Error at ";
-          to_stream<typename e::source_position::type>::run(o_);
+          to_stream<typename E::source_position::type>::run(o_);
           o_ << ": ";
-          to_stream<typename e::message::type>::run(o_);
+          to_stream<typename E::message::type>::run(o_);
           return o_;
         }
       };

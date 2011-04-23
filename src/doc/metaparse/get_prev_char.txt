@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class source_position>
+template <class SourcePosition>
 struct get_prev_char
 {
   // unspecified

@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p>
+template <class P>
 struct build_parser
 {
-  template <class s>
+  template <class S>
   struct apply
   {
     // unspecified

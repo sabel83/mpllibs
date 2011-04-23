@@ -28,59 +28,59 @@ namespace mpllibs
   {
     MPLLIBS_METAPARSE_DEFINE_DATA(accepted_keyword);
 
-    template <class s, class result_type>
+    template <class S, class ResultType>
     struct keyword;
     
     namespace impl
     {
-      template <class kw, class result_type>
-      struct nonemptyKeyword
+      template <class Kw, class ResultType>
+      struct nonempty_keyword
       {
       private:
         typedef
-          mpllibs::metaparse::lit<typename boost::mpl::front<kw>::type>
-          nextCharParser;
+          mpllibs::metaparse::lit<typename boost::mpl::front<Kw>::type>
+          next_char_parser;
 
         typedef
           mpllibs::metaparse::keyword<
-            typename boost::mpl::pop_front<kw>::type,
-            result_type
+            typename boost::mpl::pop_front<Kw>::type,
+            ResultType
           >
-          restParser;
+          rest_parser;
         
-        template <class s, class pos>
+        template <class S, class Pos>
         struct apply_unchecked :
           boost::mpl::apply<
-            restParser,
+            rest_parser,
             typename mpllibs::metaparse::get_remaining<
-              boost::mpl::apply<nextCharParser, s, pos>
+              boost::mpl::apply<next_char_parser, S, Pos>
             >::type,
             typename mpllibs::metaparse::get_position<
-              boost::mpl::apply<nextCharParser, s, pos>
+              boost::mpl::apply<next_char_parser, S, Pos>
             >::type
           >
         {};
       public:
-        template <class s, class pos>
+        template <class S, class Pos>
         struct apply :
           boost::mpl::eval_if<
             typename mpllibs::metaparse::is_error<
-              boost::mpl::apply<nextCharParser, s, pos>
+              boost::mpl::apply<next_char_parser, S, Pos>
             >::type,
-            boost::mpl::apply<nextCharParser, s, pos>,
-            apply_unchecked<s, pos>
+            boost::mpl::apply<next_char_parser, S, Pos>,
+            apply_unchecked<S, Pos>
           >
         {};
       };
     }
     
     // Does not consume/check anything after the keyword
-    template <class s, class result_type = mpllibs::metaparse::accepted_keyword>
+    template <class S, class ResultType = accepted_keyword>
     struct keyword :
       boost::mpl::if_<
-        boost::mpl::empty<s>,
-        mpllibs::metaparse::return_<result_type>,
-        mpllibs::metaparse::impl::nonemptyKeyword<s, result_type>
+        boost::mpl::empty<S>,
+        return_<ResultType>,
+        mpllibs::metaparse::impl::nonempty_keyword<S, ResultType>
       >::type
     {};
   }

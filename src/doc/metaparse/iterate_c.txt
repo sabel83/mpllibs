@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p, int n>
+template <class P, int N>
 struct iterate_c
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -27,9 +27,9 @@ Description
 -----------
 
 Parser combinator taking a parser and an integer as arguments.
-It applies the parser on the input string +n+ times. The result of parsing
+It applies the parser on the input string +N+ times. The result of parsing
 is a sequence of the results of the individual applications of the parser.
-+p+ has to accept the input +n+ times for +iterate_c+ to accept it.
++P+ has to accept the input +N+ times for +iterate_c+ to accept it.
 
 Header
 ------

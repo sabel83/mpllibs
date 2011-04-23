@@ -33,47 +33,47 @@ namespace mpllibs
     struct one_char
     {
     private:
-      template <class c, class pos>
+      template <class C, class Pos>
       struct next_pos :
         boost::mpl::eval_if<
           typename boost::mpl::or_<
             typename boost::mpl::equal_to<
               boost::mpl::integral_c<char, '\r'>,
-              typename c::type
+              typename C::type
             >::type,
             typename boost::mpl::and_<
               typename boost::mpl::equal_to<
                 boost::mpl::integral_c<char, '\n'>,
-                typename c::type
+                typename C::type
               >::type,
               typename boost::mpl::not_<
                 typename boost::mpl::equal_to<
                   boost::mpl::integral_c<char, '\r'>,
-                  typename mpllibs::metaparse::get_prev_char<pos>::type
+                  typename get_prev_char<Pos>::type
                 >::type
               >
             >::type
           >::type,
-          mpllibs::metaparse::next_line<pos, c>,
-          mpllibs::metaparse::next_char<pos, c>
+          next_line<Pos, C>,
+          next_char<Pos, C>
         >
       {};
     public:
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::eval_if<
-          typename boost::mpl::empty<s>::type,
+          typename boost::mpl::empty<S>::type,
           boost::mpl::apply<
-            mpllibs::metaparse::fail<
+            fail<
               mpllibs::metaparse::errors::unexpected_end_of_input
             >,
-            s,
-            pos
+            S,
+            Pos
           >,
           boost::mpl::apply<
-            mpllibs::metaparse::return_<boost::mpl::front<s> >,
-            boost::mpl::pop_front<s>,
-            next_pos<boost::mpl::front<s>, pos>
+            return_<boost::mpl::front<S> >,
+            boost::mpl::pop_front<S>,
+            next_pos<boost::mpl::front<S>, Pos>
           >
         >
       {};

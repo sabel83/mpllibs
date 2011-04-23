@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class result>
+template <class Result>
 struct empty
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -26,7 +26,7 @@ struct empty
 Description
 -----------
 
-Parser accepting empty input only. The result of parsing is the +result+
+Parser accepting empty input only. The result of parsing is the +Result+
 argument. This parser can detect the end of an input.
 
 Header

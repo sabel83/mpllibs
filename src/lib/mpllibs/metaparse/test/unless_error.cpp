@@ -13,26 +13,27 @@
 
 #include <boost/mpl/equal_to.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::fail;
+using mpllibs::metaparse::is_error;
+
+using mpllibs::metaparse::util::unless_error;
+
+using boost::mpl::apply;
+using boost::mpl::equal_to;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::unless_error");
+  const TestSuite suite("util::unless_error");
   
-  typedef boost::mpl::apply<mpllibs::metaparse::fail<int1>, int11, int2> err;
+  typedef apply<fail<int1>, int11, int2> err;
   
-  typedef
-    mpllibs::metaparse::is_error<
-      mpllibs::metaparse::util::unless_error<err, int13>
-    >
-    TestError;
+  typedef is_error<unless_error<err, int13> > test_error;
 
-  typedef
-    boost::mpl::equal_to<
-      int13,
-      mpllibs::metaparse::util::unless_error<int11, int13>::type
-    >
-    TestNotError;
+  typedef equal_to<int13, unless_error<int11, int13>::type> test_not_error;
 }
 
-MPLLIBS_ADD_TEST(suite, TestError)
-MPLLIBS_ADD_TEST(suite, TestNotError)
+MPLLIBS_ADD_TEST(suite, test_error)
+MPLLIBS_ADD_TEST(suite, test_not_error)
 

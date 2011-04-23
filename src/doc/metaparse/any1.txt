@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p>
+template <class P>
 struct any1
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -31,7 +31,7 @@ string repeatedly as long as the parser accepts the input. The result of parsing
 is a sequence of the results of the individual applications of the parser.
 
 When the parser rejects the input for the first time, +any1+ rejects it as well.
-At least one successful application of +p+ is required for +any1+ to accept the
+At least one successful application of +P+ is required for +any1+ to accept the
 input.
 
 Header

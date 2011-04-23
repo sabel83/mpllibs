@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class c>
+template <class C>
 struct is_error
 {
   // unspecified
@@ -22,7 +22,7 @@ struct is_error
 Description
 -----------
 
-Determines if +c+ is a parsing error or not.
+Determines if +C+ is a parsing error or not.
 
 Header
 ------

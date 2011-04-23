@@ -20,45 +20,39 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::TestSuite;
+
+using mpllibs::metaparse::is_error;
+using mpllibs::metaparse::except;
+using mpllibs::metaparse::one_char;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::fail;
+
+using boost::mpl::apply;
+using boost::mpl::equal_to;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("except");
+  const TestSuite suite("except");
 
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::except<
-          mpllibs::metaparse::one_char,
-          int13,
-          test_error
-        >,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    TestWithGood;
+    is_error<apply<except<one_char, int13, test_error>, str_hello, start> >
+    test_with_good;
   
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::except<
-            mpllibs::metaparse::fail<test_error>,
-            int13,
-            test_error
-          >,
-          str_hello,
-          mpllibs::metaparse::start
-        >
+    equal_to<
+      get_result<
+        apply<except<fail<test_error>, int13, test_error>, str_hello, start>
       >::type,
       int13
     >
-    TestWithBad;
+    test_with_bad;
 }
 
-MPLLIBS_ADD_TEST(suite, TestWithGood)
-MPLLIBS_ADD_TEST(suite, TestWithBad)
+MPLLIBS_ADD_TEST(suite, test_with_good)
+MPLLIBS_ADD_TEST(suite, test_with_bad)
 
 

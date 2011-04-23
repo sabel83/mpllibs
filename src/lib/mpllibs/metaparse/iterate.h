@@ -12,8 +12,8 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p, class n>
-    struct iterate : mpllibs::metaparse::iterate_c<p, n::type::value> {};
+    template <class P, class N>
+    struct iterate : iterate_c<P, N::type::value> {};
   }
 }
 
