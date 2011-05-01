@@ -61,7 +61,7 @@ namespace
       TRY<
         RETURN<int13>
       >
-      ::catch_<tag1, x, int11>
+      ::catch_<tag1, x, int11>::_
       ::type
     >
     test_no_exception;
@@ -72,7 +72,7 @@ namespace
       TRY<
         THROW<e1>
       >
-      ::catch_<tag1, x, identity<int11> >
+      ::catch_<tag1, x, identity<int11> >::_
       ::type
     >
     test_catch;
@@ -83,7 +83,7 @@ namespace
       TRY<
         THROW<int13>
       >
-      ::catch_<tag<int13>::type, x, identity<x> >
+      ::catch_<tag<int13>::type, x, identity<x> >::_
       ::type
     >
     test_exception_value_in_catch;
@@ -94,7 +94,7 @@ namespace
       TRY<
         THROW<int13>
       >
-      ::catch_<tag2, x, identity<int11> >
+      ::catch_<tag2, x, identity<int11> >::_
       ::type
     >
     test_not_catching;
@@ -105,8 +105,8 @@ namespace
       TRY<
         THROW<e2>
       >
-      ::catch_<tag1, x, identity<int11> >
-      ::catch_<tag2, x, identity<int13> >
+      ::catch_<tag1, x, identity<int11> >::_
+      ::catch_<tag2, x, identity<int13> >::_
       ::type
     >
     test_second_catch;
@@ -118,7 +118,7 @@ namespace
         THROW<e1>,
         RETURN<int1>
       >
-      ::catch_<tag1, x, identity<int11> >
+      ::catch_<tag1, x, identity<int11> >::_
       ::type
     >
     test_exception_propagation;
@@ -131,7 +131,7 @@ namespace
         RETURN<int13>,
         RETURN<int11>
       >
-      ::catch_<tag1, x, identity<int11> >
+      ::catch_<tag1, x, identity<int11> >::_
       ::type
     >
     test_execution_sequence;
@@ -143,7 +143,7 @@ namespace
         SET<x, THROW<e1> >,
         RETURN<int1>
       >
-      ::catch_<tag1, x, identity<int11> >
+      ::catch_<tag1, x, identity<int11> >::_
       ::type
     >
     test_exception_in_set;
@@ -155,10 +155,35 @@ namespace
         THROW<e1>,
         RETURN<int1>
       >
-      ::catch_<catch_any, x, identity<int13> >
+      ::catch_<catch_any, x, identity<int13> >::_
       ::type
     >
     test_catch_any;
+
+  typedef
+    equal_to<
+      exception<int13>,
+      TRY<
+        THROW<e1>,
+        RETURN<int1>
+      >
+      ::catch_<catch_any, x, THROW<int13> >::_
+      ::type
+    >
+    test_rethrowing;
+
+  typedef
+    equal_to<
+      exception<int13>,
+      TRY<
+        THROW<e1>,
+        RETURN<int1>
+      >
+      ::catch_<catch_any, x, THROW<int13> >::_
+      ::catch_<catch_any, x, THROW<int13> >::_
+      ::type
+    >
+    test_rethrowing_not_caught_by_next_catch;
 }
 
 MPLLIBS_ADD_TEST(suite, test_no_exception)
@@ -170,5 +195,7 @@ MPLLIBS_ADD_TEST(suite, test_exception_propagation)
 MPLLIBS_ADD_TEST(suite, test_execution_sequence)
 MPLLIBS_ADD_TEST(suite, test_exception_in_set)
 MPLLIBS_ADD_TEST(suite, test_catch_any)
+MPLLIBS_ADD_TEST(suite, test_rethrowing)
+MPLLIBS_ADD_TEST(suite, test_rethrowing_not_caught_by_next_catch)
 
 

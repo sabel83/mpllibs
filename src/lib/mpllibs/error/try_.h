@@ -37,6 +37,10 @@ namespace mpllibs
       template <class Result>
       struct skip_further_catches : Result
       {
+        // g++ 4.5.2 doesn't seem to accept ::catch_<...>::catch_<...> without
+        // an extra non-template class between catch_ elements
+        typedef skip_further_catches _;
+
         template <class ExceptionTag, class Name, class Body>
         struct catch_ : skip_further_catches {};
       };
@@ -45,28 +49,35 @@ namespace mpllibs
       struct was_exception
       {
       private:
-        typedef mpllibs::error::get_data<Exception> _exception_data;
+        typedef
+          typename mpllibs::error::get_data<Exception>::type
+          _exception_data;
+
+        typedef
+          typename boost::mpl::tag<_exception_data>::type
+          _exception_data_tag;
         
       public:
         typedef Exception type;
+        
+        // g++ 4.5.2 doesn't seem to accept ::catch_<...>::catch_<...> without
+        // an extra non-template class between catch_ elements
+        typedef was_exception _;
         
         template <class ExceptionTag, class Name, class Body>
         struct catch_ :
           boost::mpl::if_<
             boost::mpl::or_<
-              boost::is_same<
-                ExceptionTag,
-                typename boost::mpl::tag<typename _exception_data::type>::type
-              >,
+              boost::is_same<ExceptionTag, _exception_data_tag>,
               boost::is_same<ExceptionTag, mpllibs::error::catch_any>
             >,
-            mpllibs::error::impl::skip_further_catches<
+            skip_further_catches<
               typename mpllibs::error::let<
-                Name, typename _exception_data::type,
+                Name, _exception_data,
                 Body
               >::type
             >,
-            mpllibs::error::impl::was_exception<Exception>
+            was_exception
           >::type
         {};
       };
@@ -84,24 +95,20 @@ namespace mpllibs
         typename boost::is_same<
           exception_tag,
           typename boost::mpl::tag<
-            typename
-              DO<exception_monad>::template apply<
-                BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
-              >::type
+            typename DO<exception_monad>::template apply<
+              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
+            >::type
           >::type
         >::type,
         mpllibs::error::impl::was_exception<
-          typename
-            DO<exception_monad>::template apply<
-              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
-            >::type
+          typename DO<exception_monad>::template apply<
+            BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
+          >::type
         >,
         mpllibs::error::impl::skip_further_catches<
-          // NoException evaluates to the wrapped value
-          typename
-            DO<exception_monad>::template apply<
-              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
-            >::type
+          typename DO<exception_monad>::template apply<
+            BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
+          >::type
         >
       >::type
     {};
