@@ -8,7 +8,7 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
@@ -16,53 +16,39 @@
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/identity.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::util::curry0;
+using mpllibs::metaparse::util::curry2;
+
+using boost::mpl::identity;
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::curry");
+  const test_suite suite("util::curry");
   
-  template <class a, class b>
-  struct getFirst : boost::mpl::identity<a> {};
+  template <class A, class B>
+  struct get_first : identity<A> {};
   
-  template <class a, class b>
-  struct getSecond : boost::mpl::identity<b> {};
+  template <class A, class B>
+  struct get_second : identity<B> {};
   
-  struct nullaryMetafunction : boost::mpl::identity<int13> {};
+  struct nullary_metafunction : identity<int13> {};
   
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<
-        boost::mpl::apply<
-          mpllibs::metaparse::util::curry2<getFirst>,
-          int11
-        >::type,
-        int13
-      >::type,
-      int11
-    >
-    TestCurryingFirstArgument;
+    equal_to<apply<apply<curry2<get_first>, int11>::type, int13>::type, int11>
+    test_currying_first_argument;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::apply<
-        boost::mpl::apply<
-          mpllibs::metaparse::util::curry2<getSecond>,
-          int11
-        >::type,
-        int13
-      >::type,
-      int13
-    >
-    TestCurryingSecondArgument;
+    equal_to<apply<apply<curry2<get_second>, int11>::type, int13>::type, int13>
+    test_currying_second_argument;
 
-  typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::util::curry0<nullaryMetafunction>::type,
-      int13
-    >
-    TestNullary;
+  typedef equal_to<curry0<nullary_metafunction>::type, int13> test_nullary;
 }
 
-MPLLIBS_ADD_TEST(suite, TestCurryingFirstArgument)
-MPLLIBS_ADD_TEST(suite, TestCurryingSecondArgument)
-MPLLIBS_ADD_TEST(suite, TestNullary)
+MPLLIBS_ADD_TEST(suite, test_currying_first_argument)
+MPLLIBS_ADD_TEST(suite, test_currying_second_argument)
+MPLLIBS_ADD_TEST(suite, test_nullary)
 

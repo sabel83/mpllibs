@@ -18,27 +18,25 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p, class result>
+    template <class P, class Result>
     struct always
     {
     private:
-      template <class res>
+      template <class Res>
       struct apply_unchecked :
         boost::mpl::apply<
-          mpllibs::metaparse::return_<result>,
-          typename mpllibs::metaparse::get_remaining<res>::type,
-          typename mpllibs::metaparse::get_position<res>::type
+          return_<Result>,
+          typename get_remaining<Res>::type,
+          typename get_position<Res>::type
         >
       {};
     public:
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::eval_if<
-          typename mpllibs::metaparse::is_error<
-            boost::mpl::apply<p, s, pos>
-          >::type,
-          boost::mpl::apply<p, s, pos>,
-          apply_unchecked<boost::mpl::apply<p, s, pos> >
+          typename is_error<boost::mpl::apply<P, S, Pos> >::type,
+          boost::mpl::apply<P, S, Pos>,
+          apply_unchecked<boost::mpl::apply<P, S, Pos> >
         >
       {};
     };

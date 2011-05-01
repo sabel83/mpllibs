@@ -11,42 +11,40 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::if_;
+using mpllibs::metaparse::digit;
+using mpllibs::metaparse::start;
+
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("if");
+  const test_suite suite("if");
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::if_<mpllibs::metaparse::digit, int11, int13>,
-          str_1,
-          mpllibs::metaparse::start
-        >
-      >::type,
+    equal_to<
+      get_result<apply<if_<digit, int11, int13>, str_1, start> >::type,
       int11
     >
-    TestTrue;
+    test_true;
     
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::if_<mpllibs::metaparse::digit, int11, int13>,
-          str_a,
-          mpllibs::metaparse::start
-        >
-      >::type,
+    equal_to<
+      get_result<apply<if_<digit, int11, int13>, str_a, start> >::type,
       int13
     >
-    TestFalse;
+    test_false;
 }
 
-MPLLIBS_ADD_TEST(suite, TestTrue)
-MPLLIBS_ADD_TEST(suite, TestFalse)
+MPLLIBS_ADD_TEST(suite, test_true)
+MPLLIBS_ADD_TEST(suite, test_false)
 

@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class c>
+template <class C>
 struct return_
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -26,7 +26,7 @@ struct return_
 Description
 -----------
 
-Parser accepting every input. The result of parsing is +c+, the remaining string
+Parser accepting every input. The result of parsing is +C+, the remaining string
 is the input string.
 
 Header

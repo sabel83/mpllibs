@@ -24,19 +24,19 @@ namespace mpllibs
       typedef source_position_tag type;
     };
     
-    template <class line_, class col_, class prev_char_>
+    template <class Line, class Col, class PrevChar>
     struct source_position
     {
-      typedef mpllibs::metaparse::source_position_tag tag;
+      typedef source_position_tag tag;
       typedef source_position type;
       
-      typedef line_ line;
-      typedef col_ col;
-      typedef prev_char_ prev_char;
+      typedef Line line;
+      typedef Col col;
+      typedef PrevChar prev_char;
     };
     
     typedef
-      mpllibs::metaparse::source_position<
+      source_position<
         boost::mpl::int_<1>,
         boost::mpl::int_<1>,
         boost::mpl::integral_c<char, 0>
@@ -45,76 +45,76 @@ namespace mpllibs
 
 
     
-    template <class t>
+    template <class T>
     struct get_col_impl;
     
     template <>
-    struct get_col_impl<mpllibs::metaparse::source_position_tag>
+    struct get_col_impl<source_position_tag>
     {
-      template <class p>
-      struct apply : p::col {};
+      template <class P>
+      struct apply : P::col {};
     };
 
 
     
-    template <class t>
+    template <class T>
     struct get_line_impl;
     
     template <>
-    struct get_line_impl<mpllibs::metaparse::source_position_tag>
+    struct get_line_impl<source_position_tag>
     {
-      template <class p>
-      struct apply : p::line {};
+      template <class P>
+      struct apply : P::line {};
     };
 
     
-    template <class t>
+    template <class T>
     struct get_prev_char_impl;
     
     template <>
-    struct get_prev_char_impl<mpllibs::metaparse::source_position_tag>
+    struct get_prev_char_impl<source_position_tag>
     {
-      template <class p>
-      struct apply : p::prev_char {};
+      template <class P>
+      struct apply : P::prev_char {};
     };
     
     
-    template <class t>
+    template <class T>
     struct next_char_impl;
     
     template <>
-    struct next_char_impl<mpllibs::metaparse::source_position_tag>
+    struct next_char_impl<source_position_tag>
     {
-      template <class p, class ch>
+      template <class P, class Ch>
       struct apply :
-        mpllibs::metaparse::source_position<
-          typename mpllibs::metaparse::get_line<p>::type,
+        source_position<
+          typename get_line<P>::type,
           typename boost::mpl::plus<
-            typename mpllibs::metaparse::get_col<p>::type,
+            typename get_col<P>::type,
             boost::mpl::int_<1>
           >::type,
-          ch
+          Ch
         >
       {};
     };
 
 
 
-    template <class t>
+    template <class T>
     struct next_line_impl;
     
     template <>
-    struct next_line_impl<mpllibs::metaparse::source_position_tag>
+    struct next_line_impl<source_position_tag>
     {
-      template <class p, class ch>
+      template <class P, class Ch>
       struct apply :
-        mpllibs::metaparse::source_position<
+        source_position<
           typename boost::mpl::plus<
-            typename mpllibs::metaparse::get_line<p>::type,
+            typename get_line<P>::type,
             boost::mpl::int_<1>
           >::type,
           boost::mpl::int_<1>,
-          ch
+          Ch
         >
       {};
     };
@@ -122,26 +122,23 @@ namespace mpllibs
   
   namespace metatest
   {
-    template <class t>
+    template <class T>
     struct to_stream_impl;
     
     template <>
     struct to_stream_impl<mpllibs::metaparse::source_position_tag>
     {
-      template <class sp>
+      template <class Sp>
       struct apply
       {
         typedef apply type;
       
         static std::ostream& run(std::ostream& o_)
         {
-          using mpllibs::metaparse::get_line;
-          using mpllibs::metaparse::get_col;
+          typedef typename mpllibs::metaparse::get_line<Sp>::type line;
+          typedef typename mpllibs::metaparse::get_col<Sp>::type col;
           
-          return
-            o_
-              << "line " << get_line<sp>::type::value
-              << ", col " << get_col<sp>::type::value;
+          return o_ << "line " << line::value << ", col " << col::value;
         }
       };
     };

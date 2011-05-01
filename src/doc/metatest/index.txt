@@ -39,14 +39,14 @@ Include the following headers:
 
 --------------------------------------
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 --------------------------------------
 
-Create a test suite by creating a static +mpllibs::metatest::TestSuite+ object.
+Create a test suite by creating a static +mpllibs::metatest::test_suite+ object.
 It's constructor takes a +string+ argument, the name of the test suite.
 
 --------------------------------------
-mpllibs::metatest::TestSuite suite("foo");
+mpllibs::metatest::test_suite suite("foo");
 --------------------------------------
 
 Create your test cases. They are nullary template metafunctions, so create
@@ -75,10 +75,10 @@ typedef
 The unit testing framework can't figure out which metafunctions are test cases
 and which are not. Test cases need to be registered in the framework using the
 +MPLLIBS_ADD_TEST+ and +MPLLIBS_ADD_TEST_TO_FAIL+ macros. They take two
-arguments: the name of the +TestSuite+ object representing the test suite the
+arguments: the name of the +test_suite+ object representing the test suite the
 test is registered into and the name of the metafunction class. Note that
 
-* A static +TestSuite+ object has to be created and registered using the name of
+* A static +test_suite+ object has to be created and registered using the name of
   the object.
 * Every test case has to be named and registered using the name of the class.
 
@@ -99,7 +99,7 @@ recommended to implement +main+ the following way:
 
 int main(int argc, char* argv[])
 {
-  return mpllibs::metatest::TestDriver::instance().main(argc, argv);
+  return mpllibs::metatest::test_driver::instance().main(argc, argv);
 }
 --------------------------------------
 
@@ -117,7 +117,7 @@ Recommendations
 ---------------
 
 * Keep your test cases in different compilation units.
-* Create a static +TestSuite+ object called +suite+ in every compilation unit.
+* Create a static +test_suite+ object called +suite+ in every compilation unit.
   You'll be able to move around test cases easily in the future.
 * Keep every test-related object and class in the unnamed namespace to make
   them local to the compilation unit. This way there won't be name collisions

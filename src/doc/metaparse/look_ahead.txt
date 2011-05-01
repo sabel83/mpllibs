@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p>
+template <class P>
 struct look_ahead
 {
   // unspecified
@@ -22,7 +22,7 @@ struct look_ahead
 Description
 -----------
 
-Parses the input using parser +p+. When the parser returns an error, the
+Parses the input using parser +P+. When the parser returns an error, the
 combinator forwards the error. When the parser returns a result, the combinator
 returns the result without consuming anything from the input string.
 

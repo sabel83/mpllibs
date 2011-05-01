@@ -11,40 +11,35 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::empty;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::is_error;
+
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("empty");
+  const test_suite suite("empty");
+  
+  typedef empty<int13> empty13;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::empty<int13>,
-          str_,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      int13
-    >
-    TestAcceptEmpty;
+    equal_to<get_result<apply<empty13, str_, start> >::type, int13>
+    test_accept_empty;
 
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::empty<int13>,
-        str_a,
-        mpllibs::metaparse::start
-      >
-    >
-    TestRejectNonEmpty;
+  typedef is_error<apply<empty13, str_a, start> > test_reject_non_empty;
 }
 
-MPLLIBS_ADD_TEST(suite, TestAcceptEmpty)
-MPLLIBS_ADD_TEST(suite, TestRejectNonEmpty)
+MPLLIBS_ADD_TEST(suite, test_accept_empty)
+MPLLIBS_ADD_TEST(suite, test_reject_non_empty)
 
 

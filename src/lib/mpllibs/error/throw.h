@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/Exception.h>
+#include <mpllibs/error/exception.h>
 
 namespace mpllibs
 {
@@ -15,7 +15,7 @@ namespace mpllibs
     #ifdef THROW
       #error THROW already defined
     #endif
-    #define THROW mpllibs::error::Exception
+    #define THROW mpllibs::error::exception
   }
 }
 

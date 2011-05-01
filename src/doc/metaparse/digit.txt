@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct digit
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified

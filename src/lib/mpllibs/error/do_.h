@@ -49,10 +49,10 @@ namespace mpllibs
     struct unused_do_argument;
 
     template <
-      class monad,
+      class Monad,
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         DO_MAX_ARGUMENT,
-        class e,
+        class E,
         mpllibs::error::unused_do_argument
       )
     >
@@ -72,15 +72,15 @@ namespace mpllibs
     // accessing a nested apply template, and do_substitute doesn't
     // recurse into that.
     // Using boost::mpl::apply and do_ together is not supported
-    template <class monad, class t>
-    struct do_substitute : mpllibs::error::util::id<t> {};
+    template <class Monad, class T>
+    struct do_substitute : mpllibs::error::util::id<T> {};
 
-    template <class monad, class t>
-    struct do_substitute<monad, do_return<t> > :
+    template <class Monad, class T>
+    struct do_substitute<Monad, do_return<T> > :
       mpllibs::error::util::id<
         mpllibs::error::return_<
-          monad,
-          typename mpllibs::error::do_substitute<monad, t>::type
+          Monad,
+          typename mpllibs::error::do_substitute<Monad, T>::type
         >
       >
     {};
@@ -88,12 +88,12 @@ namespace mpllibs
     // When an outer do_ has already substituted this do_return,
     // we need to re-substitute it. I couldn't find a way of preventing
     // substitution of inner do_'s do_returns.
-    template <class monad1, class monad2, class t>
-    struct do_substitute<monad1, mpllibs::error::return_<monad2, t> > :
+    template <class Monad1, class Monad2, class T>
+    struct do_substitute<Monad1, mpllibs::error::return_<Monad2, T> > :
       mpllibs::error::util::id<
         mpllibs::error::return_<
-          monad1,
-          typename mpllibs::error::do_substitute<monad1, t>::type
+          Monad1,
+          typename mpllibs::error::do_substitute<Monad1, T>::type
         >
       >
     {};
@@ -109,19 +109,19 @@ namespace mpllibs
     #endif
     #define DO_REC_CASE(z, n, unused) \
       BOOST_PP_COMMA_IF(n) \
-      typename mpllibs::error::do_substitute<monad, x##n>::type
+      typename mpllibs::error::do_substitute<Monad, X##n>::type
 
     #ifdef DO_TEMPLATE_CASE
       #error DO_TEMPLATE_CASE already defined
     #endif
     #define DO_TEMPLATE_CASE(z, n, unused) \
       template < \
-        class monad, \
-        template<BOOST_PP_REPEAT(n, DO_CLASS, ~) > class t, \
-        BOOST_PP_ENUM_PARAMS(n, class x) \
+        class Monad, \
+        template<BOOST_PP_REPEAT(n, DO_CLASS, ~) > class T, \
+        BOOST_PP_ENUM_PARAMS(n, class X) \
       > \
-      struct do_substitute<monad, t<BOOST_PP_ENUM_PARAMS(n, x)> > : \
-        mpllibs::error::util::id< t< BOOST_PP_REPEAT(n, DO_REC_CASE, ~) > > \
+      struct do_substitute<Monad, T<BOOST_PP_ENUM_PARAMS(n, X)> > : \
+        mpllibs::error::util::id< T< BOOST_PP_REPEAT(n, DO_REC_CASE, ~) > > \
       {};
     
     BOOST_PP_REPEAT_FROM_TO(1, LET_MAX_TEMPLATE_ARGUMENT, DO_TEMPLATE_CASE, ~)
@@ -133,18 +133,18 @@ namespace mpllibs
     /*
      * set
      */
-    template <class name, class f>
+    template <class Name, class F>
     struct set;
 
     /*
      * do1
      */
     // This case handles nullary metafunction elements of the do
-    template <class monad, class e>
-    struct do1 : e {};
+    template <class Monad, class E>
+    struct do1 : E {};
 
-    template <class monad, class name, class f>
-    struct do1<monad, mpllibs::error::set<name, f> >;
+    template <class Monad, class Name, class F>
+    struct do1<Monad, mpllibs::error::set<Name, F> >;
       // Error: last statement in a 'do' construct must be an expression.
       // Current way of error handling is not having an implementation.
       // It may be improved.
@@ -157,13 +157,13 @@ namespace mpllibs
       #error DO_CLASS_CASE already defined
     #endif
     #define DO_CLASS_CASE(z, n, unused) \
-      , class e##n
+      , class E##n
     
     #ifdef DO_CLASS_USE_CASE
       #error DO_CLASS_USE_CASE already defined
     #endif
     #define DO_CLASS_USE_CASE(z, n, unused) \
-      BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) e##n
+      BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) E##n
 
     #ifdef DO_CASE
       #error DO_CASE already defined
@@ -171,40 +171,40 @@ namespace mpllibs
     // I need at least one template argument. The "n"th case handles n+1 args.
     #define DO_CASE(z, n, unused) \
       template < \
-        class monad, \
-        class t \
+        class Monad, \
+        class T \
         BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_CASE, ~) \
       > \
       struct do##n : \
         boost::mpl::apply< \
-          mpllibs::error::bind__impl<monad>, \
-          typename t::type, \
+          mpllibs::error::bind__impl<Monad>, \
+          typename T::type, \
           typename mpllibs::error::do_impl< \
-            monad, \
+            Monad, \
             BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
           >::type \
         > \
       {}; \
       \
       template < \
-        class monad, \
-        class name, \
-        class ex \
+        class Monad, \
+        class Name, \
+        class Ex \
         BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_CASE, ~) \
       > \
       struct do##n< \
-        monad, \
-        mpllibs::error::set<name, ex> \
+        Monad, \
+        mpllibs::error::set<Name, Ex> \
         BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
         BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
       > : \
         boost::mpl::apply< \
-          mpllibs::error::bind_impl<monad>, \
-          typename mpllibs::error::do1<monad, ex>::type, \
+          mpllibs::error::bind_impl<Monad>, \
+          typename mpllibs::error::do1<Monad, Ex>::type, \
           typename mpllibs::error::lambda< \
-            name, \
+            Name, \
             mpllibs::error::do_impl< \
-              monad, \
+              Monad, \
               BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
             > \
           >::type \
@@ -230,17 +230,17 @@ namespace mpllibs
       #error DO_CASE already defined
     #endif
     #define DO_CASE(z, n, unused) \
-      template <class monad, BOOST_PP_ENUM_PARAMS(n, class e)> \
+      template <class Monad, BOOST_PP_ENUM_PARAMS(n, class E)> \
       struct do_impl< \
-        monad, \
-        BOOST_PP_ENUM_PARAMS(n, e) BOOST_PP_COMMA_IF(n) \
+        Monad, \
+        BOOST_PP_ENUM_PARAMS(n, E) BOOST_PP_COMMA_IF(n) \
         BOOST_PP_REPEAT( \
           BOOST_PP_SUB(DO_MAX_ARGUMENT, n), \
           DO_UNUSED_PARAM, \
           ~ \
         ) \
       > : \
-        mpllibs::error::do##n<monad, BOOST_PP_ENUM_PARAMS(n, e)> \
+        mpllibs::error::do##n<Monad, BOOST_PP_ENUM_PARAMS(n, E)> \
       {};
   
     BOOST_PP_REPEAT_FROM_TO(1, DO_MAX_ARGUMENT, DO_CASE, ~)
@@ -254,21 +254,21 @@ namespace mpllibs
     #ifdef DO_ARG
       #error DO_ARG already defined
     #endif
-    #define DO_ARG(z, n, unused) , typename do_substitute<monad, e##n>::type
+    #define DO_ARG(z, n, unused) , typename do_substitute<Monad, E##n>::type
     
-    template <class monad>
+    template <class Monad>
     struct do_
     {
       template <
         BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
           DO_MAX_ARGUMENT,
-          class e,
+          class E,
           mpllibs::error::unused_do_argument
         )
       >
       struct apply :
         mpllibs::error::do_impl<
-          monad
+          Monad
           BOOST_PP_REPEAT(DO_MAX_ARGUMENT, DO_ARG, ~)
         >
       {};

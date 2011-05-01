@@ -25,8 +25,8 @@ namespace mpllibs
         template <class S>
         struct apply :
           boost::mpl::or_<
-            boost::mpl::apply<mpllibs::metaparse::util::is_lcase_letter, S>,
-            boost::mpl::apply<mpllibs::metaparse::util::is_ucase_letter, S>
+            boost::mpl::apply<is_lcase_letter, S>,
+            boost::mpl::apply<is_ucase_letter, S>
           >
         {};
       };

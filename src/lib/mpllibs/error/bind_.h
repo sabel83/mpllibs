@@ -15,26 +15,26 @@ namespace mpllibs
 {
   namespace error
   {
-    template <class monadTag>
+    template <class MonadTag>
     struct bind__impl
     {
-      template <class a, class b>
+      template <class A, class B>
       struct apply :
         boost::mpl::apply<
-          mpllibs::error::bind_impl<monadTag>,
-          a,
-          boost::mpl::always<b>
+          mpllibs::error::bind_impl<MonadTag>,
+          A,
+          boost::mpl::always<B>
         >
       {};
     };
 
     // bind_ evaluates its arguments lazily
-    template <class monadTag, class a, class b>
+    template <class MonadTag, class A, class B>
     struct bind_ :
       boost::mpl::apply<
-        mpllibs::error::bind__impl<typename monadTag::type>,
-        typename a::type,
-        typename b::type
+        mpllibs::error::bind__impl<typename MonadTag::type>,
+        typename A::type,
+        typename B::type
       >
     {};
   }

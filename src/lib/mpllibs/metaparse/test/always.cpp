@@ -12,38 +12,34 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::always;
+using mpllibs::metaparse::digit;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::is_error;
+
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("always");
+  const test_suite suite("always");
+  
+  typedef always<digit, int13> always_digit_13;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::always<mpllibs::metaparse::digit, int13>,
-          str_1,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      int13
-    >
-    TestResult;
+    equal_to<get_result<apply<always_digit_13, str_1, start> >::type, int13>
+    test_result;
   
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::always<mpllibs::metaparse::digit, int13>,
-        str_a,
-        mpllibs::metaparse::start
-      >
-    >
-    TestFail;
+  typedef is_error<apply<always_digit_13, str_a, start> > test_fail;
 }
 
-MPLLIBS_ADD_TEST(suite, TestResult)
-MPLLIBS_ADD_TEST(suite, TestFail)
+MPLLIBS_ADD_TEST(suite, test_result)
+MPLLIBS_ADD_TEST(suite, test_fail)
 

@@ -17,11 +17,8 @@ namespace mpllibs
   {
     template <class T, class Default>
     struct get_type_value :
-      mpllibs::metatest::get_value<
-        typename mpllibs::metatest::get_type<
-          T,
-          boost::mpl::identity<Default>
-        >::type,
+      get_value<
+        typename get_type<T, boost::mpl::identity<Default> >::type,
         Default
       >
     {};

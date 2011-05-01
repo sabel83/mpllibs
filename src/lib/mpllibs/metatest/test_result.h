@@ -6,43 +6,43 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/Location.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/location.h>
+#include <mpllibs/metatest/test_suite.h>
 
 namespace mpllibs
 {
   namespace metatest
   {
-    class TestResult
+    class test_result
     {
     public:
-      TestResult(
-        const mpllibs::metatest::TestSuite& suite_,
+      test_result(
+        const test_suite& suite_,
         const std::string& name_,
-        const mpllibs::metatest::Location& location_,
+        const location& location_,
         bool success_,
         const std::string& reason_
       );
       
-      const std::string& name() const;
-      const mpllibs::metatest::Location& location() const;
+      const std::string& get_name() const;
+      const location& get_location() const;
       
       bool success() const;
       
-      const std::string& reason() const;
+      const std::string& get_reason() const;
       
-      bool hasReason() const;
+      bool has_reason() const;
       
-      const mpllibs::metatest::TestSuite& testSuite() const;
+      const test_suite& get_suite() const;
     private:
-      mpllibs::metatest::TestSuite _suite;
+      test_suite _suite;
       std::string _name;
-      mpllibs::metatest::Location _location;
+      location _location;
       bool _success;
       std::string _reason;
     };
     
-    std::ostream& operator<<(std::ostream& out_, const TestResult& r_);
+    std::ostream& operator<<(std::ostream& out_, const test_result& r_);
   }
 }
 

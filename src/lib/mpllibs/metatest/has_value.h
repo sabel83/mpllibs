@@ -24,7 +24,7 @@ namespace mpllibs
     {
       struct type
       {
-        template <ValueType value_>
+        template <ValueType Value_>
         struct value_wrapper;
         
         // It needs an extra int argument to remove ambiguity between
@@ -33,24 +33,21 @@ namespace mpllibs
         static
           typename
             boost::mpl::apply<
-              boost::mpl::always<mpllibs::metatest::yes>,
+              boost::mpl::always<yes>,
               boost::mpl::integral_c<ValueType, T::value>
             >::type
           tester(T*, int);
       
         // I have to pass a T* argument to make Visual C++ accept it
         template <class T>
-        static mpllibs::metatest::no tester(T*, ...);
+        static no tester(T*, ...);
       
         static const bool
           value =
             sizeof(
-              mpllibs::metatest::has_value<F, ValueType>::type::tester(
-                static_cast<F*>(0),
-                13
-              )
+              has_value<F, ValueType>::type::tester(static_cast<F*>(0), 13)
             )
-            == sizeof(mpllibs::metatest::yes);
+            == sizeof(yes);
       };
     };
   }

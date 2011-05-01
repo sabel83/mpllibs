@@ -16,7 +16,7 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
@@ -24,101 +24,78 @@
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/equal.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::fail;
+using mpllibs::metaparse::is_error;
+using mpllibs::metaparse::any_one_of1;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::one_char;
+using mpllibs::metaparse::keyword;
+
+using boost::mpl::apply;
+using boost::mpl::equal;
+using boost::mpl::list;
+using boost::mpl::string;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("any_one_of1");
+  const test_suite suite("any_one_of1");
   
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
   
-  typedef mpllibs::metaparse::fail<test_error> test_fail;
+  typedef fail<test_error> test_fail;
 
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::any_one_of1< >,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    Test0;
+  typedef is_error<apply<any_one_of1< >, str_hello, start> > test0;
   
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::any_one_of1<mpllibs::metaparse::one_char>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<char_h, char_e, char_l, char_l, char_o>
+    equal<
+      get_result<apply<any_one_of1<one_char>, str_hello, start> >::type,
+      list<char_h, char_e, char_l, char_l, char_o>
     >
-    TestGoodSequence;
+    test_good_sequence;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::any_one_of1<test_fail>,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    Test1WithBad;
+    is_error<apply<any_one_of1<test_fail>, str_hello, start> >
+    test_1_with_bad;
 
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::any_one_of1<
-            mpllibs::metaparse::one_char,
-            test_fail
-          >,
-          str_hello,
-          mpllibs::metaparse::start
-        >
+    equal<
+      get_result<
+        apply<any_one_of1<one_char, test_fail>, str_hello, start>
       >::type,
-      boost::mpl::list<char_h, char_e, char_l, char_l, char_o>
+      list<char_h, char_e, char_l, char_l, char_o>
     >
-    Test2WithFirstGood;
+    test_2_with_first_good;
 
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::any_one_of1<
-            test_fail,
-            mpllibs::metaparse::one_char
-          >,
-          str_hello,
-          mpllibs::metaparse::start
-        >
+    equal<
+      get_result<
+        apply<any_one_of1<test_fail, one_char>, str_hello, start>
       >::type,
-      boost::mpl::list<char_h, char_e, char_l, char_l, char_o>
+      list<char_h, char_e, char_l, char_l, char_o>
     >
-    Test2WithSecondGood;
+    test_2_with_second_good;
+
+  typedef keyword<str_h, char_h> keyword_h;
+  typedef keyword<str_e, char_e> keyword_e;
+  typedef keyword<str_l, char_l> keyword_l;
 
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::any_one_of1<
-            mpllibs::metaparse::keyword<boost::mpl::string<'h'>, char_h>,
-            mpllibs::metaparse::keyword<boost::mpl::string<'e'>, char_e>,
-            mpllibs::metaparse::keyword<boost::mpl::string<'l'>, char_l>
-          >,
-          str_hello,
-          mpllibs::metaparse::start
-        >
+    equal<
+      get_result<
+        apply<any_one_of1<keyword_h, keyword_e, keyword_l>, str_hello, start>
       >::type,
-      boost::mpl::list<char_h, char_e, char_l, char_l>
+      list<char_h, char_e, char_l, char_l>
     >
-    TestAcceptAnyArgument;
+    test_accept_any_argument;
 }
 
-MPLLIBS_ADD_TEST(suite, Test0)
-MPLLIBS_ADD_TEST(suite, TestGoodSequence)
-MPLLIBS_ADD_TEST(suite, Test1WithBad)
-MPLLIBS_ADD_TEST(suite, Test2WithFirstGood)
-MPLLIBS_ADD_TEST(suite, Test2WithSecondGood)
-MPLLIBS_ADD_TEST(suite, TestAcceptAnyArgument)
+MPLLIBS_ADD_TEST(suite, test0)
+MPLLIBS_ADD_TEST(suite, test_good_sequence)
+MPLLIBS_ADD_TEST(suite, test_1_with_bad)
+MPLLIBS_ADD_TEST(suite, test_2_with_first_good)
+MPLLIBS_ADD_TEST(suite, test_2_with_second_good)
+MPLLIBS_ADD_TEST(suite, test_accept_any_argument)
 

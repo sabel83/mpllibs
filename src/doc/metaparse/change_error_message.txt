@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p, class msg>
+template <class P, class Msg>
 struct change_error_message
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -29,7 +29,7 @@ Description
 Parser combinator taking a parser and an error message as arguments.
 It applies the parser on the input. When the parser succeeds, the combinator
 returns the result of the parser, otherwise the combinator generates an error
-with the message +msg+.
+with the message +Msg+.
 
 Header
 ------

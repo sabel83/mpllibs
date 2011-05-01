@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct is_lcase_letter
 {
-  template <class c>
+  template <class C>
   struct apply
   {
     // unspecified

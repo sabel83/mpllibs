@@ -8,29 +8,29 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::util::is_whitespace;
+
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::is_whitespace");
+  const test_suite suite("util::is_whitespace");
 
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_whitespace, char_space>
-    TestSpace;
+  typedef apply<is_whitespace, char_space> test_space;
   
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_whitespace, char_tab>
-    TestTab;
+  typedef apply<is_whitespace, char_tab> test_tab;
   
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_whitespace, char_a>
-    TestNonWhitespace;
+  typedef apply<is_whitespace, char_a> test_non_whitespace;
 }
 
-MPLLIBS_ADD_TEST(suite, TestSpace)
-MPLLIBS_ADD_TEST(suite, TestTab)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, TestNonWhitespace)
+MPLLIBS_ADD_TEST(suite, test_space)
+MPLLIBS_ADD_TEST(suite, test_tab)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, test_non_whitespace)
 
 

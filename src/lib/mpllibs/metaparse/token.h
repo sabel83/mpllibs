@@ -16,13 +16,8 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p>
-    struct token :
-      mpllibs::metaparse::first_of<
-        p,
-        mpllibs::metaparse::any<mpllibs::metaparse::space>
-      >
-    {};
+    template <class P>
+    struct token : first_of<P, any<space> > {};
   }
 }
 

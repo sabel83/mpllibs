@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/safe_printf/VerifyArgumentImpl.h>
+#include <mpllibs/safe_printf/verify_argument_impl.h>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/or.hpp>
@@ -21,17 +21,14 @@ namespace mpllibs
   {
     // This function is lazy
     template <class Expected, class Actual>
-    struct VerifyArgument :
+    struct verify_argument :
       boost::mpl::eval_if<
         typename boost::mpl::or_<
           typename boost::mpl::front<typename Expected::type>::type,
           typename boost::mpl::at_c<typename Expected::type, 1>::type
         >::type,
-        mpllibs::safe_printf::VerifyArgumentImpl<
-          mpllibs::safe_printf::ExpectUnsignedInteger,
-          typename Actual::type
-        >,
-        mpllibs::safe_printf::VerifyArgumentImpl<
+        verify_argument_impl<expect_unsigned_integer, typename Actual::type>,
+        verify_argument_impl<
           typename boost::mpl::back<typename Expected::type>::type,
           typename Actual::type
         >

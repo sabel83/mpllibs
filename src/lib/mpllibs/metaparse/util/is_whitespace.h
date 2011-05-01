@@ -20,13 +20,13 @@ namespace mpllibs
     {
       struct is_whitespace
       {
-        template <class c>
+        template <class C>
         struct apply :
           boost::mpl::or_<
-            boost::mpl::equal_to<c, boost::mpl::integral_c<char, ' '> >,
-            boost::mpl::equal_to<c, boost::mpl::integral_c<char, '\r'> >,
-            boost::mpl::equal_to<c, boost::mpl::integral_c<char, '\n'> >,
-            boost::mpl::equal_to<c, boost::mpl::integral_c<char, '\t'> >
+            boost::mpl::equal_to<C, boost::mpl::integral_c<char, ' '> >,
+            boost::mpl::equal_to<C, boost::mpl::integral_c<char, '\r'> >,
+            boost::mpl::equal_to<C, boost::mpl::integral_c<char, '\n'> >,
+            boost::mpl::equal_to<C, boost::mpl::integral_c<char, '\t'> >
           >
         {};
       };

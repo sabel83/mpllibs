@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class t, class not_error_case>
+template <class T, class NotErrorCase>
 struct unless_error
 {
   // unspecified
@@ -22,8 +22,8 @@ struct unless_error
 Description
 -----------
 
-Checks if +t+ is a parsing error or not. When it is, the result is +t+. When it
-isn't, the result is +not_error_case+. Arguments are evaluated lazily.
+Checks if +T+ is a parsing error or not. When it is, the result is +T+. When it
+isn't, the result is +NotErrorCase+. Arguments are evaluated lazily.
 
 Header
 ------

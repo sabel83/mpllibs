@@ -5,7 +5,7 @@
 
 #include <mpllibs/error/try_.h>
 #include <mpllibs/error/throw.h>
-#include <mpllibs/error/Exception.h>
+#include <mpllibs/error/exception.h>
 #include <mpllibs/error/debug.h>
 
 #include <mpllibs/metatest/to_stream.h>
@@ -15,24 +15,32 @@
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/divides.hpp>
 
+using boost::mpl::int_;
+using boost::mpl::eval_if;
+using boost::mpl::equal_to;
+using boost::mpl::divides;
+
+using mpllibs::metatest::debug;
+
+typedef int_<0> int0;
+typedef int_<13> int13;
+
 struct division_by_zero;
 DEFINE_TO_STREAM_FOR_TYPE(division_by_zero, "division by zero")
 
-template <class a, class b>
+template <class A, class B>
 struct safe_divides :
   TRY<
-    boost::mpl::eval_if<
-      typename boost::mpl::equal_to<b, boost::mpl::int_<0> >::type,
+    eval_if<
+      typename equal_to<B, int0>::type,
       THROW<division_by_zero>,
-      RETURN<boost::mpl::divides<a, b> >
+      RETURN<divides<A, B> >
     >
   >
 {};
 
-typedef boost::mpl::int_<0> int0;
-typedef boost::mpl::int_<13> int13;
 
-mpllibs::metatest::debug<safe_divides<int13, int0> > d;
+debug<safe_divides<int13, int0> > d;
 
 int main()
 {

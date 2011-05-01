@@ -14,19 +14,19 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p>
+    template <class P>
     struct any1
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::apply<
           typename boost::mpl::if_<
-            mpllibs::metaparse::is_error<boost::mpl::apply<p, s, pos> >,
-            p,
-            mpllibs::metaparse::any<p>
+            is_error<boost::mpl::apply<P, S, Pos> >,
+            P,
+            any<P>
           >::type,
-          s,
-          pos
+          S,
+          Pos
         >
       {};
     };

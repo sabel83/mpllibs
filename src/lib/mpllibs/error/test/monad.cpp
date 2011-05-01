@@ -4,7 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
@@ -15,61 +15,48 @@
 
 #include "common.h"
 
+using boost::mpl::minus;
+using boost::mpl::equal_to;
+
+using mpllibs::metatest::test_suite;
+
+using mpllibs::error::return_;
+using mpllibs::error::bind;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("monad");
+  const test_suite suite("monad");
   
   struct minus_2
   {
     typedef minus_2 type;
   
-    template <class a>
-    struct apply :
-      Right<typename boost::mpl::minus<typename a::value, int2>::type>
-    {};
+    template <class A>
+    struct apply : right<typename minus<typename A::value, int2>::type> {};
   };
 
-  typedef
-    boost::mpl::equal_to<
-      Right<int13>,
-      mpllibs::error::return_<Either, int13>::type
-    >
-    TestReturn;
+  typedef equal_to<right<int13>, return_<either, int13>::type> test_return;
 
   typedef
-    boost::mpl::equal_to<
-      Right<int11>,
-      mpllibs::error::bind<Either, Right<int13>, minus_2>::type
-    >
-    TestBindRight;
+    equal_to<right<int11>, bind<either, right<int13>, minus_2>::type>
+    test_bind_right;
 
   typedef
-    boost::mpl::equal_to<
-      Left<int13>,
-      mpllibs::error::bind<Either, Left<int13>, minus_2>::type
-    >
-    TestBindLeft;
+    equal_to<left<int13>, bind<either, left<int13>, minus_2>::type>
+    test_bind_left;
 
   typedef
-    boost::mpl::equal_to<
-      Right<int9>,
-      mpllibs::error::bind<
-        Either,
-        mpllibs::error::bind<
-          Either,
-          mpllibs::error::return_<Either, int13>,
-          minus_2
-        >,
-        minus_2
-      >
+    equal_to<
+      right<int9>,
+      bind<either, bind<either, return_<either, int13>, minus_2>, minus_2>
     >
-    TestMultiStepChain;
+    test_multi_step_chain;
 }
 
-MPLLIBS_ADD_TEST(suite, TestReturn)
-MPLLIBS_ADD_TEST(suite, TestBindLeft)
-MPLLIBS_ADD_TEST(suite, TestBindRight)
-MPLLIBS_ADD_TEST(suite, TestMultiStepChain)
+MPLLIBS_ADD_TEST(suite, test_return)
+MPLLIBS_ADD_TEST(suite, test_bind_left)
+MPLLIBS_ADD_TEST(suite, test_bind_right)
+MPLLIBS_ADD_TEST(suite, test_multi_step_chain)
 
 
 

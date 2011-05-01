@@ -20,10 +20,10 @@ namespace mpllibs
     template <
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         PARSER_ONE_OF_MAX_ARGUMENT,
-        class p,
-        mpllibs::metaparse::unused_one_of_argument
+        class P,
+        unused_one_of_argument
       ),
-      class mock = int
+      class Mock = int
     >
     struct any_one_of1;
     
@@ -31,15 +31,15 @@ namespace mpllibs
       #error PARSER_ANY_ONE_OF1_UNUSED_PARAM already defined
     #endif
     #define PARSER_ANY_ONE_OF1_UNUSED_PARAM(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) mpllibs::metaparse::unused_one_of_argument
+      BOOST_PP_COMMA_IF(n) unused_one_of_argument
     
     #ifdef PARSER_ANY_ONE_OF1_CASE
       #error PARSER_ANY_ONE_OF1_CASE already defined
     #endif
     #define PARSER_ANY_ONE_OF1_CASE(z, n, unused) \
-      template <BOOST_PP_ENUM_PARAMS(n, class p)> \
+      template <BOOST_PP_ENUM_PARAMS(n, class P)> \
       struct any_one_of1< \
-        BOOST_PP_ENUM_PARAMS(n, p) \
+        BOOST_PP_ENUM_PARAMS(n, P) \
         BOOST_PP_COMMA_IF(n) \
         BOOST_PP_REPEAT( \
           BOOST_PP_SUB(PARSER_ONE_OF_MAX_ARGUMENT, n), \
@@ -47,9 +47,7 @@ namespace mpllibs
           ~ \
         ) \
       > : \
-        mpllibs::metaparse::any1< \
-          mpllibs::metaparse::one_of_##n<BOOST_PP_ENUM_PARAMS(n, p)> \
-        > \
+        any1<one_of_##n<BOOST_PP_ENUM_PARAMS(n, P)> > \
       {};
     
     BOOST_PP_REPEAT(PARSER_ONE_OF_MAX_ARGUMENT, PARSER_ANY_ONE_OF1_CASE, ~)

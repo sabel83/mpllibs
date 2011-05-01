@@ -31,7 +31,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      template <int from, int to, int n>
+      template <int From, int To, int N>
       struct index_out_of_range
       {
         typedef index_out_of_range type;
@@ -43,95 +43,95 @@ namespace mpllibs
       struct skip_seq
       {
       private:
-        template <class parsingResult, class newResultValue>
+        template <class ParsingResult, class NewResultValue>
         struct change_result :
           boost::mpl::apply<
-            mpllibs::metaparse::return_<newResultValue>,
-            typename mpllibs::metaparse::get_remaining<parsingResult>::type,
-            typename mpllibs::metaparse::get_position<parsingResult>::type
+            mpllibs::metaparse::return_<NewResultValue>,
+            typename mpllibs::metaparse::get_remaining<ParsingResult>::type,
+            typename mpllibs::metaparse::get_position<ParsingResult>::type
           >
         {};
       
-        template <class result, class p>
+        template <class Result, class P>
         struct apply_unchecked :
           boost::mpl::eval_if<
             typename mpllibs::metaparse::is_error<
               boost::mpl::apply<
-                p,
-                typename mpllibs::metaparse::get_remaining<result>::type,
-                typename mpllibs::metaparse::get_position<result>::type
+                P,
+                typename mpllibs::metaparse::get_remaining<Result>::type,
+                typename mpllibs::metaparse::get_position<Result>::type
               >
             >::type,
             boost::mpl::apply<
-              p,
-              typename mpllibs::metaparse::get_remaining<result>::type,
-              typename mpllibs::metaparse::get_position<result>::type
+              P,
+              typename mpllibs::metaparse::get_remaining<Result>::type,
+              typename mpllibs::metaparse::get_position<Result>::type
             >,
             change_result<
               boost::mpl::apply<
-                p,
-                typename mpllibs::metaparse::get_remaining<result>::type,
-                typename mpllibs::metaparse::get_position<result>::type
+                P,
+                typename mpllibs::metaparse::get_remaining<Result>::type,
+                typename mpllibs::metaparse::get_position<Result>::type
               >,
-              typename mpllibs::metaparse::get_result<result>::type
+              typename mpllibs::metaparse::get_result<Result>::type
             >
           >
         {};
         
       public:
-        template <class result, class p>
+        template <class Result, class P>
         struct apply :
           boost::mpl::eval_if<
-            mpllibs::metaparse::is_error<result>,
-            result,
-            apply_unchecked<result, p>
+            mpllibs::metaparse::is_error<Result>,
+            Result,
+            apply_unchecked<Result, P>
           >
         {};
       };
       
-      template <int n, class seq>
+      template <int N, class Seq>
       struct nth_of_c_impl
       {
       private:
-        template <class nextResult>
+        template <class NextResult>
         struct apply_unchecked :
           boost::mpl::apply<
-            mpllibs::metaparse::impl::nth_of_c_impl<
-              n - 1,
-              typename boost::mpl::pop_front<seq>::type
+            nth_of_c_impl<
+              N - 1,
+              typename boost::mpl::pop_front<Seq>::type
             >,
-            typename mpllibs::metaparse::get_remaining<nextResult>::type,
-            typename mpllibs::metaparse::get_position<nextResult>::type
+            typename mpllibs::metaparse::get_remaining<NextResult>::type,
+            typename mpllibs::metaparse::get_position<NextResult>::type
           >
         {};
       public:
-        template <class s, class pos>
+        template <class S, class Pos>
         struct apply :
           boost::mpl::eval_if<
             typename mpllibs::metaparse::is_error<
-              boost::mpl::apply<typename boost::mpl::front<seq>::type, s, pos>
+              boost::mpl::apply<typename boost::mpl::front<Seq>::type, S, Pos>
             >::type,
-            boost::mpl::apply<typename boost::mpl::front<seq>::type, s, pos>,
+            boost::mpl::apply<typename boost::mpl::front<Seq>::type, S, Pos>,
             apply_unchecked<
-              boost::mpl::apply<typename boost::mpl::front<seq>::type, s, pos>
+              boost::mpl::apply<typename boost::mpl::front<Seq>::type, S, Pos>
             >
           >
         {};
       };
       
-      template <class seq>
-      struct nth_of_c_impl<0, seq>
+      template <class Seq>
+      struct nth_of_c_impl<0, Seq>
       {
-        template <class s, class pos>
+        template <class S, class Pos>
         struct apply :
           boost::mpl::fold<
-            typename boost::mpl::pop_front<seq>::type,
+            typename boost::mpl::pop_front<Seq>::type,
             typename boost::mpl::apply<
-              typename boost::mpl::front<seq>::type,
-              s,
-              pos
+              typename boost::mpl::front<Seq>::type,
+              S,
+              Pos
             >::type,
-            mpllibs::metaparse::impl::skip_seq
+            skip_seq
           >
         {};
       };
@@ -142,18 +142,18 @@ namespace mpllibs
     #endif
     #define NTH_OF_CASE(z, n, unused) \
       template < \
-        int k BOOST_PP_COMMA_IF(n) \
-        BOOST_PP_ENUM_PARAMS(n, class p) \
+        int K BOOST_PP_COMMA_IF(n) \
+        BOOST_PP_ENUM_PARAMS(n, class P) \
       > \
       struct nth_of_c##n : \
         boost::mpl::if_< \
-          boost::mpl::bool_<(0 <= k && k < n)>, \
+          boost::mpl::bool_<(0 <= K && K < n)>, \
           mpllibs::metaparse::impl::nth_of_c_impl< \
-            k, \
-            boost::mpl::list<BOOST_PP_ENUM_PARAMS(n, p)> \
+            K, \
+            boost::mpl::list<BOOST_PP_ENUM_PARAMS(n, P)> \
           >, \
-          mpllibs::metaparse::fail< \
-            mpllibs::metaparse::errors::index_out_of_range<0, n - 1, k> \
+          fail< \
+            mpllibs::metaparse::errors::index_out_of_range<0, n - 1, K> \
           > \
         >::type \
       {};
@@ -168,10 +168,10 @@ namespace mpllibs
 
 
     template <
-      int n,
+      int N,
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         SEQUENCE_MAX_ARGUMENT,
-        class p,
+        class P,
         mpllibs::metaparse::impl::sequence_no_argument
       )
     >
@@ -188,10 +188,10 @@ namespace mpllibs
       #error NTH_OF_N already defined
     #endif
     #define NTH_OF_N(z, n, unused) \
-      template <int k BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, class p)> \
+      template <int K BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, class P)> \
       struct nth_of_c< \
-        k, \
-        BOOST_PP_ENUM_PARAMS(n, p) \
+        K, \
+        BOOST_PP_ENUM_PARAMS(n, P) \
         BOOST_PP_COMMA_IF(n) \
         BOOST_PP_REPEAT( \
           BOOST_PP_SUB(SEQUENCE_MAX_ARGUMENT, n), \
@@ -199,9 +199,9 @@ namespace mpllibs
           ~ \
         ) \
       > : \
-        mpllibs::metaparse::nth_of_c##n< \
-          k BOOST_PP_COMMA_IF(n) \
-          BOOST_PP_ENUM_PARAMS(n, p) \
+        nth_of_c##n< \
+          K BOOST_PP_COMMA_IF(n) \
+          BOOST_PP_ENUM_PARAMS(n, P) \
         > \
       {};
     
@@ -215,15 +215,15 @@ namespace mpllibs
     
     
     template <
-      class k,
+      class K,
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         SEQUENCE_MAX_ARGUMENT,
-        class p,
+        class P,
         mpllibs::metaparse::impl::sequence_no_argument
       )
     >
     struct nth_of :
-      nth_of_c<k::type::value, BOOST_PP_ENUM_PARAMS(SEQUENCE_MAX_ARGUMENT, p)>
+      nth_of_c<K::type::value, BOOST_PP_ENUM_PARAMS(SEQUENCE_MAX_ARGUMENT, P)>
     {};
   }
   
@@ -232,9 +232,9 @@ namespace mpllibs
     template <class>
     struct to_stream;
 
-    template <int from, int to, int n>
+    template <int From, int To, int N>
     struct to_stream<
-      mpllibs::metaparse::errors::index_out_of_range<from, to, n>
+      mpllibs::metaparse::errors::index_out_of_range<From, To, N>
     >
     {
       typedef to_stream type;
@@ -242,7 +242,7 @@ namespace mpllibs
       static std::ostream& run(std::ostream& o_)
       {
         return o_
-          << "Index (" << n << ") out of range [" << from << ", "<< to << "]";
+          << "Index (" << N << ") out of range [" << From << ", "<< To << "]";
       }
     };
   }

@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class c>
+template <class C>
 struct is_char
 {
-  template <class s>
+  template <class S>
   struct apply
   {
     // unspecified
@@ -26,7 +26,7 @@ struct is_char
 Description
 -----------
 
-Checks if +c+ and +s+ are the same characters.
+Checks if +C+ and +S+ are the same characters.
 
 Header
 ------

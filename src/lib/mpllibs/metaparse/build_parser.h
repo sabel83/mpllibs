@@ -15,15 +15,11 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p>
+    template <class P>
     struct build_parser
     {
-      template <class s>
-      struct apply :
-        mpllibs::metaparse::get_result<
-          boost::mpl::apply<p, s, mpllibs::metaparse::start>
-        >
-      {};
+      template <class S>
+      struct apply : get_result<boost::mpl::apply<P, S, start> > {};
     };
   }
 }

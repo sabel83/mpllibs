@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class p>
+template <class P>
 struct token
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -28,7 +28,7 @@ Description
 
 Parser combinator taking a parser as argument. It applies its argument and when
 it accepts the input, +token+ parsers white spaces that follow the accepted
-input. The result of parsing is the result of applying +p+.
+input. The result of parsing is the result of applying +P+.
 
 Header
 ------

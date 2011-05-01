@@ -9,7 +9,7 @@
 #include <mpllibs/error/get_data.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -20,9 +20,18 @@
 
 #include "common.h"
 
+using boost::mpl::equal_to;
+using boost::mpl::identity;
+using boost::mpl::tag;
+
+using mpllibs::metatest::test_suite;
+
+using mpllibs::error::exception;
+using mpllibs::error::catch_any;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("try_");
+  const test_suite suite("try_");
   
   struct tag1
   {
@@ -47,7 +56,7 @@ namespace
   };
   
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int13,
       TRY<
         RETURN<int13>
@@ -55,111 +64,111 @@ namespace
       ::catch_<tag1, x, int11>
       ::type
     >
-    TestNoException;
+    test_no_exception;
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int11,
       TRY<
         THROW<e1>
       >
-      ::catch_<tag1, x, boost::mpl::identity<int11> >
+      ::catch_<tag1, x, identity<int11> >
       ::type
     >
-    TestCatch;
+    test_catch;
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int13,
       TRY<
         THROW<int13>
       >
-      ::catch_<boost::mpl::tag<int13>::type, x, boost::mpl::identity<x> >
+      ::catch_<tag<int13>::type, x, identity<x> >
       ::type
     >
-    TestExceptionValueInCatch;
+    test_exception_value_in_catch;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::error::Exception<int13>,
+    equal_to<
+      exception<int13>,
       TRY<
         THROW<int13>
       >
-      ::catch_<tag2, x, boost::mpl::identity<int11> >
+      ::catch_<tag2, x, identity<int11> >
       ::type
     >
-    TestNotCatching;
+    test_not_catching;
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int13,
       TRY<
         THROW<e2>
       >
-      ::catch_<tag1, x, boost::mpl::identity<int11> >
-      ::catch_<tag2, x, boost::mpl::identity<int13> >
+      ::catch_<tag1, x, identity<int11> >
+      ::catch_<tag2, x, identity<int13> >
       ::type
     >
-    TestSecondCatch;
+    test_second_catch;
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int11,
       TRY<
         THROW<e1>,
         RETURN<int1>
       >
-      ::catch_<tag1, x, boost::mpl::identity<int11> >
+      ::catch_<tag1, x, identity<int11> >
       ::type
     >
-    TestExceptionPropagation;
+    test_exception_propagation;
 
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int11,
       TRY<
         RETURN<int13>,
         RETURN<int11>
       >
-      ::catch_<tag1, x, boost::mpl::identity<int11> >
+      ::catch_<tag1, x, identity<int11> >
       ::type
     >
-    TestExecutionSequence;
+    test_execution_sequence;
   
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int11,
       TRY<
         SET<x, THROW<e1> >,
         RETURN<int1>
       >
-      ::catch_<tag1, x, boost::mpl::identity<int11> >
+      ::catch_<tag1, x, identity<int11> >
       ::type
     >
-    TestExceptionInSet;
+    test_exception_in_set;
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int13,
       TRY<
         THROW<e1>,
         RETURN<int1>
       >
-      ::catch_<mpllibs::error::catch_any, x, boost::mpl::identity<int13> >
+      ::catch_<catch_any, x, identity<int13> >
       ::type
     >
-    TestCatchAny;
+    test_catch_any;
 }
 
-MPLLIBS_ADD_TEST(suite, TestNoException)
-MPLLIBS_ADD_TEST(suite, TestCatch)
-MPLLIBS_ADD_TEST(suite, TestExceptionValueInCatch)
-MPLLIBS_ADD_TEST(suite, TestNotCatching)
-MPLLIBS_ADD_TEST(suite, TestSecondCatch)
-MPLLIBS_ADD_TEST(suite, TestExceptionPropagation)
-MPLLIBS_ADD_TEST(suite, TestExecutionSequence)
-MPLLIBS_ADD_TEST(suite, TestExceptionInSet)
-MPLLIBS_ADD_TEST(suite, TestCatchAny)
+MPLLIBS_ADD_TEST(suite, test_no_exception)
+MPLLIBS_ADD_TEST(suite, test_catch)
+MPLLIBS_ADD_TEST(suite, test_exception_value_in_catch)
+MPLLIBS_ADD_TEST(suite, test_not_catching)
+MPLLIBS_ADD_TEST(suite, test_second_catch)
+MPLLIBS_ADD_TEST(suite, test_exception_propagation)
+MPLLIBS_ADD_TEST(suite, test_execution_sequence)
+MPLLIBS_ADD_TEST(suite, test_exception_in_set)
+MPLLIBS_ADD_TEST(suite, test_catch_any)
 
 

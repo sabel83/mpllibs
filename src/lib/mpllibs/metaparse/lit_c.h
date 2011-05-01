@@ -14,9 +14,8 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <char c>
-    struct lit_c : mpllibs::metaparse::lit<boost::mpl::integral_c<char, c> >
-    {};
+    template <char C>
+    struct lit_c : lit<boost::mpl::integral_c<char, C> > {};
   }
 }
 

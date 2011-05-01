@@ -15,12 +15,12 @@ namespace mpllibs
     template <
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         SEQUENCE_MAX_ARGUMENT,
-        class p,
+        class P,
         mpllibs::metaparse::impl::sequence_no_argument
       )
     >
     struct first_of :
-      nth_of_c<0, BOOST_PP_ENUM_PARAMS(SEQUENCE_MAX_ARGUMENT, p)>
+      nth_of_c<0, BOOST_PP_ENUM_PARAMS(SEQUENCE_MAX_ARGUMENT, P)>
     {};
   }
 }

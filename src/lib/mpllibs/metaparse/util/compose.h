@@ -44,24 +44,24 @@ namespace mpllibs
       #endif
       #define COMPOSE(z, n, unused) \
         template < \
-          BOOST_PP_ENUM_PARAMS(n, class f) \
-          BOOST_PP_COMMA_IF(n) class mock = int \
+          BOOST_PP_ENUM_PARAMS(n, class F) \
+          BOOST_PP_COMMA_IF(n) class Mock = int \
         > \
         struct compose##n \
         { \
           template < \
             BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT( \
               COMPOSE_MAX_INIT_ARGUMENT, \
-              class a, \
+              class A, \
               boost::mpl::na \
             ) \
           > \
           struct apply \
           { \
             typedef \
-              BOOST_PP_ENUM_PARAMS(n, typename boost::mpl::apply<f) \
+              BOOST_PP_ENUM_PARAMS(n, typename boost::mpl::apply<F) \
                 BOOST_PP_COMMA_IF(n) \
-                BOOST_PP_ENUM_PARAMS(COMPOSE_MAX_INIT_ARGUMENT, a) \
+                BOOST_PP_ENUM_PARAMS(COMPOSE_MAX_INIT_ARGUMENT, A) \
               BOOST_PP_REPEAT(n, REPEAT_CONSTANT, >::type) \
               type; \
           }; \
@@ -78,10 +78,10 @@ namespace mpllibs
       template <
         BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
           COMPOSE_MAX_ARGUMENT,
-          class f,
-          mpllibs::metaparse::util::unused_composed_argument
+          class F,
+          unused_composed_argument
         ),
-        class mock = int
+        class Mock = int
       >
       struct compose;
       
@@ -89,7 +89,7 @@ namespace mpllibs
         #error COMPOSE_UNUSED_PARAM already defined
       #endif
       #define COMPOSE_UNUSED_PARAM(z, n, unused) \
-        BOOST_PP_COMMA_IF(n) mpllibs::metaparse::util::unused_composed_argument
+        BOOST_PP_COMMA_IF(n) unused_composed_argument
 
       template <>
       struct compose<
@@ -97,10 +97,10 @@ namespace mpllibs
         int
       >
       {
-        template <class t>
+        template <class T>
         struct apply
         {
-          typedef t type;
+          typedef T type;
         };
       };
     
@@ -108,9 +108,9 @@ namespace mpllibs
         #error COMPOSE_CASE already defined
       #endif
       #define COMPOSE_CASE(z, n, unused) \
-        template <BOOST_PP_ENUM_PARAMS(n, class f)> \
+        template <BOOST_PP_ENUM_PARAMS(n, class F)> \
         struct compose< \
-          BOOST_PP_ENUM_PARAMS(n, f) \
+          BOOST_PP_ENUM_PARAMS(n, F) \
           BOOST_PP_COMMA_IF(n) \
           BOOST_PP_REPEAT( \
             BOOST_PP_SUB(COMPOSE_MAX_ARGUMENT, n), \
@@ -120,7 +120,7 @@ namespace mpllibs
           BOOST_PP_COMMA_IF(BOOST_PP_SUB(COMPOSE_MAX_ARGUMENT, n)) \
           int \
         > : \
-          mpllibs::metaparse::util::compose##n<BOOST_PP_ENUM_PARAMS(n, f)> \
+          mpllibs::metaparse::util::compose##n<BOOST_PP_ENUM_PARAMS(n, F)> \
         {};
     
       BOOST_PP_REPEAT_FROM_TO(1, COMPOSE_MAX_ARGUMENT, COMPOSE_CASE, ~)

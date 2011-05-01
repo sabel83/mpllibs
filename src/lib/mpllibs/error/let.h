@@ -16,31 +16,31 @@ namespace mpllibs
 {
   namespace error
   {
-    template <class a, class e1, class e2>
+    template <class A, class E1, class E2>
     struct let_impl;
 
-    template <class a, class e1, class e2>
-    struct let : let_impl<a, e1, e2> {};
+    template <class A, class E1, class E2>
+    struct let : let_impl<A, E1, E2> {};
 
-    template <class a, class e1>
-    struct let<a, e1, a> : mpllibs::error::util::id<e1> {};
+    template <class A, class E1>
+    struct let<A, E1, A> : mpllibs::error::util::id<E1> {};
 
     
-    // let_impl assumes, that let_impl<a, e1, a> is never instantiated
-    template <class a, class e1, class e2>
-    struct let_impl : mpllibs::error::util::id<e2> {};
+    // let_impl assumes, that let_impl<A, E1, A> is never instantiated
+    template <class A, class E1, class E2>
+    struct let_impl : mpllibs::error::util::id<E2> {};
 
-    template <class a, class e1a, class e1b, class e2>
-    struct let_impl<a, e1a, let<a, e1b, e2> > :
-      mpllibs::error::util::id<let<a, e1b, e2> >
+    template <class A, class E1a, class E1b, class E2>
+    struct let_impl<A, E1a, let<A, E1b, E2> > :
+      mpllibs::error::util::id<let<A, E1b, E2> >
     {};
 
-    template <class a, class e1, class e2>
+    template <class A, class E1, class E2>
     struct letrec;
 
-    template <class a, class e1a, class e1b, class e2>
-    struct let_impl<a, e1a, letrec<a, e1b, e2> > :
-      mpllibs::error::util::id<letrec<a, e1b, e2> >
+    template <class A, class E1a, class E1b, class E2>
+    struct let_impl<A, E1a, letrec<A, E1b, E2> > :
+      mpllibs::error::util::id<letrec<A, E1b, E2> >
     {};
 
     #ifndef LET_MAX_TEMPLATE_ARGUMENT
@@ -57,20 +57,20 @@ namespace mpllibs
       #error LET_REC_CASE alread defined
     #endif
     #define LET_REC_CASE(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) typename mpllibs::error::let<a, e1, x##n>::type
+      BOOST_PP_COMMA_IF(n) typename let<A, E1, X##n>::type
 
     #ifdef LET_TEMPLATE_CASE
       #error LET_TEMPLATE_CASE already defined
     #endif
     #define LET_TEMPLATE_CASE(z, n, unused) \
       template < \
-        class a, \
-        class e1, \
-        template<BOOST_PP_REPEAT(n, LET_CLASS, ~) > class t, \
-        BOOST_PP_ENUM_PARAMS(n, class x) \
+        class A, \
+        class E1, \
+        template<BOOST_PP_REPEAT(n, LET_CLASS, ~) > class T, \
+        BOOST_PP_ENUM_PARAMS(n, class X) \
       > \
-      struct let_impl<a, e1, t<BOOST_PP_ENUM_PARAMS(n, x)> > : \
-        mpllibs::error::util::id< t< BOOST_PP_REPEAT(n, LET_REC_CASE, ~) > > \
+      struct let_impl<A, E1, T<BOOST_PP_ENUM_PARAMS(n, X)> > : \
+        mpllibs::error::util::id< T< BOOST_PP_REPEAT(n, LET_REC_CASE, ~) > > \
       {};
     
     BOOST_PP_REPEAT_FROM_TO(1, LET_MAX_TEMPLATE_ARGUMENT, LET_TEMPLATE_CASE, ~)

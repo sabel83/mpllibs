@@ -19,7 +19,7 @@ namespace mpllibs
     namespace util
     {
       typedef
-        mpllibs::metaparse::util::in_range<
+        in_range<
           boost::mpl::integral_c<char, 'A'>,
           boost::mpl::integral_c<char, 'Z'>
         >

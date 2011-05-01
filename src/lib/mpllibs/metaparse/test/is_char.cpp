@@ -8,23 +8,27 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::util::is_char;
+
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::is_char");
+  const test_suite suite("util::is_char");
 
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_char<char_a>, char_a>
-    TestSame;
+  typedef is_char<char_a> is_char_a;
+
+  typedef apply<is_char_a, char_a> test_same;
   
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::is_char<char_a>, char_b>
-    TestDifferent;
+  typedef apply<is_char_a, char_b> test_different;
 }
 
-MPLLIBS_ADD_TEST(suite, TestSame)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, TestDifferent)
+MPLLIBS_ADD_TEST(suite, test_same)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, test_different)
 

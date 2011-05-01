@@ -13,17 +13,17 @@ namespace mpllibs
 {
   namespace metatest
   {
-    class TestSuite
+    class test_suite
     {
     public:
-      explicit TestSuite(const std::string& name_);
+      explicit test_suite(const std::string& name_);
       
       const std::string& name() const;
     private:
       std::string _name;
     };
     
-    std::ostream& operator<<(std::ostream& out_, const TestSuite& s_);
+    std::ostream& operator<<(std::ostream& out_, const test_suite& s_);
   }
 }
 

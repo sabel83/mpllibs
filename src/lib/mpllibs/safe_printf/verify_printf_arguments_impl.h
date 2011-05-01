@@ -6,8 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/safe_printf/PopExpected.h>
-#include <mpllibs/safe_printf/VerifyArgument.h>
+#include <mpllibs/safe_printf/pop_expected.h>
+#include <mpllibs/safe_printf/verify_argument.h>
 
 #include <mpllibs/metaparse/util/lazy_eval_if.h>
 
@@ -23,7 +23,7 @@ namespace mpllibs
   {
     // Lazy function
     template <class Expected, class Actual>
-    struct VerifyPrintfArgumentsImpl :
+    struct verify_printf_arguments_impl :
       boost::mpl::eval_if<
         typename boost::mpl::empty<typename Expected::type>::type,
         boost::mpl::empty<typename Actual::type>,
@@ -31,12 +31,12 @@ namespace mpllibs
           typename boost::mpl::empty<typename Actual::type>::type,
           boost::mpl::false_,
           mpllibs::metaparse::util::lazy_eval_if<
-            VerifyArgument<
+            verify_argument<
               boost::mpl::front<typename Expected::type>,
               boost::mpl::front<typename Actual::type>
             >,
-            VerifyPrintfArgumentsImpl<
-              mpllibs::safe_printf::PopExpected<typename Expected::type>,
+            verify_printf_arguments_impl<
+              pop_expected<typename Expected::type>,
               boost::mpl::pop_front<typename Actual::type>
             >,
             boost::mpl::false_

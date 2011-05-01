@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class source_position, class ch>
+template <class SourcePosition, class Ch>
 struct next_char
 {
   // unspecified

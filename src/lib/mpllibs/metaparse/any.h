@@ -18,57 +18,51 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p>
+    template <class P>
     struct any
     {
     private:
-      template <class res>
+      template <class Res>
       struct apply_unchecked :
         boost::mpl::apply<
-          mpllibs::metaparse::return_<
+          return_<
             typename boost::mpl::push_front<
-              typename mpllibs::metaparse::get_result<
+              typename get_result<
                 // any never returns error
                 boost::mpl::apply<
                   any,
-                  typename mpllibs::metaparse::get_remaining<res>::type,
-                  typename mpllibs::metaparse::get_position<res>::type
+                  typename get_remaining<Res>::type,
+                  typename get_position<Res>::type
                 >
               >::type,
-              typename mpllibs::metaparse::get_result<res>::type
+              typename get_result<Res>::type
             >::type
           >,
-          typename mpllibs::metaparse::get_remaining<
+          typename get_remaining<
             // any never returns error
             boost::mpl::apply<
               any,
-              typename mpllibs::metaparse::get_remaining<res>::type,
-              typename mpllibs::metaparse::get_position<res>::type
+              typename get_remaining<Res>::type,
+              typename get_position<Res>::type
             >
           >::type,
           typename mpllibs::metaparse::get_position<
             // any never returns error
             boost::mpl::apply<
               any,
-              typename mpllibs::metaparse::get_remaining<res>::type,
-              typename mpllibs::metaparse::get_position<res>::type
+              typename get_remaining<Res>::type,
+              typename get_position<Res>::type
             >
           >::type
         >
       {};
     public:
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::eval_if<
-          typename mpllibs::metaparse::is_error<
-            boost::mpl::apply<p, s, pos>
-          >::type,
-          boost::mpl::apply<
-            mpllibs::metaparse::return_<boost::mpl::list<> >,
-            s,
-            pos
-          >,
-          apply_unchecked<boost::mpl::apply<p, s, pos> >
+          typename is_error<boost::mpl::apply<P, S, Pos> >::type,
+          boost::mpl::apply<return_<boost::mpl::list<> >, S, Pos>,
+          apply_unchecked<boost::mpl::apply<P, S, Pos> >
         >
       {};
     };

@@ -12,14 +12,14 @@ Synopsis
 
 --------------------------------------
 template <
-  class p1,
-  class p2,
+  class P1,
+  class P2,
   // ...
-  class pn
+  class Pn
 >
 struct any_one_of1
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified

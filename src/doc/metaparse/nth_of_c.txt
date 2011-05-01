@@ -12,14 +12,14 @@ Synopsis
 
 --------------------------------------
 template <
-  int n,
-  class p0,
+  int N,
+  class P0,
   // ...
-  class pk
+  class Pk
 >
 struct nth_of_c
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified
@@ -33,7 +33,7 @@ Description
 
 Parser combinator applying a number of parsers after each other. It accepts an
 input when all parsers accept it. The result of parsing is the result of the
-+n+th parser.
++N+th parser.
 
 The maximum number of parsers +sequence+ accepts can be specified with the
 +SEQUENCE_MAX_ARGUMENT+ macro. Its default value is 5.

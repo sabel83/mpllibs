@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class d>
+template <class D>
 struct get_result
 {
   // unspecified

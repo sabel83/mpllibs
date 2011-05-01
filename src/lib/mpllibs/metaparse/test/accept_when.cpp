@@ -14,64 +14,54 @@
 #include <mpllibs/metaparse/util/define_data.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::is_error;
+using mpllibs::metaparse::accept_when;
+using mpllibs::metaparse::one_char;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::get_result;
+
+using mpllibs::metaparse::util::is_digit;
+
+using boost::mpl::apply;
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("accept_when");
+  const test_suite suite("accept_when");
 
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::accept_when<
-          mpllibs::metaparse::one_char,
-          mpllibs::metaparse::util::is_digit,
-          test_error
-        >,
-        str_hello,
-        mpllibs::metaparse::start
-      >
+    is_error<
+      apply<accept_when<one_char, is_digit, test_error>, str_hello, start>
     >
-    TestWithText;
+    test_with_text;
   
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::accept_when<
-            mpllibs::metaparse::one_char,
-            mpllibs::metaparse::util::is_digit,
-            test_error
-          >,
-          str_1983,
-          mpllibs::metaparse::start
-        >
+    equal_to<
+      get_result<
+        apply<accept_when<one_char, is_digit, test_error>, str_1983, start>
       >::type,
       char_1
     >
-    TestWithNumber;
+    test_with_number;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::accept_when<
-          mpllibs::metaparse::one_char,
-          mpllibs::metaparse::util::is_digit,
-          test_error
-        >,
-        str_,
-        mpllibs::metaparse::start
-      >
+    is_error<
+      apply<accept_when<one_char, is_digit, test_error>, str_, start>
     >
-    TestWithEmptyString;
+    test_with_empty_string;
 }
 
-MPLLIBS_ADD_TEST(suite, TestWithText)
-MPLLIBS_ADD_TEST(suite, TestWithNumber)
-MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
+MPLLIBS_ADD_TEST(suite, test_with_text)
+MPLLIBS_ADD_TEST(suite, test_with_number)
+MPLLIBS_ADD_TEST(suite, test_with_empty_string)
 

@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct cons_seq
 {
-  template <class s>
+  template <class S>
   struct apply
   {
     // unspecified
@@ -27,7 +27,7 @@ Description
 
 Metafunction class taking a sequence with two elements as argument. The second
 element of the sequence has to be a sequence as well. +cons_seq+ pushes the
-first element of +s+ to the front of that sequence.
+first element of +S+ to the front of that sequence.
 
 It evaluates its argument lazily.
 

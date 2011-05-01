@@ -16,21 +16,21 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p, class t, class f>
+    template <class P, class T, class F>
     struct if_
     {
-      template <class s, class pos>
+      template <class S, class Pos>
       struct apply :
         boost::mpl::apply<
-          mpllibs::metaparse::return_<
+          return_<
             typename boost::mpl::if_<
-              mpllibs::metaparse::is_error<boost::mpl::apply<p, s, pos> >,
-              f,
-              t
+              is_error<boost::mpl::apply<P, S, Pos> >,
+              F,
+              T
             >::type
           >,
-          s,
-          pos
+          S,
+          Pos
         >
       {};
     };

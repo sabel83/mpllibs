@@ -23,8 +23,8 @@ namespace mpllibs
     }
   
     typedef
-      mpllibs::metaparse::accept_when<
-        mpllibs::metaparse::one_char,
+      accept_when<
+        one_char,
         mpllibs::metaparse::util::is_whitespace,
         mpllibs::metaparse::errors::whitespace_expected
       >

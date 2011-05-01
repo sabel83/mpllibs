@@ -6,12 +6,18 @@
 #include <mpllibs/error/do_.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 #include "common.h"
+
+using boost::mpl::apply;
+using boost::mpl::equal_to;
+using boost::mpl::minus;
+
+using mpllibs::metatest::test_suite;
 
 /*
  * WrapperMonad
@@ -23,14 +29,14 @@ namespace
     typedef wrapper_tag type;
   };
 
-  typedef wrapper_tag WrapperMonad;
+  typedef wrapper_tag wrapper_monad;
 
-  template <class t>
-  struct Wrapped
+  template <class T>
+  struct wrapped
   {
     typedef wrapper_tag tag;
-    typedef t value;
-    typedef Wrapped<t> type;
+    typedef T value;
+    typedef wrapped type;
   };
 }
 
@@ -41,15 +47,15 @@ namespace mpllibs
     template <>
     struct return__impl<wrapper_tag>
     {
-      template <class t>
-      struct apply : Wrapped<t> {};
+      template <class T>
+      struct apply : wrapped<T> {};
     };
 
     template <>
     struct bind_impl<wrapper_tag>
     {
-      template <class a, class f>
-      struct apply : boost::mpl::apply<f, a> {};
+      template <class A, class F>
+      struct apply : apply<F, A> {};
     };
   }
 }
@@ -61,8 +67,8 @@ namespace boost
     template <>
     struct equal_to_impl<wrapper_tag, wrapper_tag>
     {
-      template <class a, class b>
-      struct apply : boost::mpl::equal_to<typename a::value, typename b::value>
+      template <class A, class B>
+      struct apply : equal_to<typename A::value, typename B::value>
       {};
     };
   }
@@ -70,102 +76,102 @@ namespace boost
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("do_");
+  const test_suite suite("do_");
   
-  template <class a>
+  template <class A>
   struct minus_2 :
-    Right<typename boost::mpl::minus<typename a::value, int2>::type>
+    right<typename minus<typename A::value, int2>::type>
   {};
   
-  template <class t>
-  struct eval_to_right : Right<typename t::type> {};
+  template <class T>
+  struct eval_to_right : right<typename T::type> {};
 
   typedef
-    boost::mpl::equal_to<
-      Right<int11>,
-      DO<Either>::apply<
+    equal_to<
+      right<int11>,
+      DO<either>::apply<
         SET<x, RETURN<int13> >,
         minus_2<x>
       >::type
     >
-    TestDo;
+    test_do;
 
   typedef
-    boost::mpl::equal_to<
-      Right<int9>,
-      DO<Either>::apply<
+    equal_to<
+      right<int9>,
+      DO<either>::apply<
         SET<x, RETURN<int13> >,
         SET<y, minus_2<x> >,
         minus_2<y>
       >::type
     >
-    TestDoThreeSteps;
+    test_do_three_steps;
 
   typedef
-    boost::mpl::equal_to<
-      Right<int9>,
-      DO<Either>::apply<
+    equal_to<
+      right<int9>,
+      DO<either>::apply<
         SET<x, RETURN<int13> >,
         SET<y, minus_2<x> >,
         minus_2<x>,
         minus_2<y>
       >::type
     >
-    TestDoTwoCalls;
+    test_do_two_calls;
 
   typedef
-    boost::mpl::equal_to<
-      Right<int13>,
-      DO<Either>::apply<
+    equal_to<
+      right<int13>,
+      DO<either>::apply<
         RETURN<int11>,
         RETURN<int13>
       >::type
     >
-    TestDoTwoReturns;
+    test_do_two_returns;
 
   typedef
-    boost::mpl::equal_to<
-      Right<Right<int13> >,
-      DO<Either>::apply<
+    equal_to<
+      right<right<int13> >,
+      DO<either>::apply<
         RETURN<
-          DO<Either>::apply<
+          DO<either>::apply<
             RETURN<int13>
           >
         >
       >::type
     >
-    TestNestedDoWithReturn;
+    test_nested_do_with_return;
 
   typedef
-    boost::mpl::equal_to<
-      Right<Right<int13> >,
-      DO<Either>::apply<
+    equal_to<
+      right<right<int13> >,
+      DO<either>::apply<
         RETURN<RETURN<int13> >
       >::type
     >
-    TestContentsOfReturnIsSubstituted;
+    test_contents_of_return_is_substituted;
 
   typedef
-    boost::mpl::equal_to<
-      Right<Wrapped<int13> >,
-      DO<Either>::apply<
+    equal_to<
+      right<wrapped<int13> >,
+      DO<either>::apply<
         eval_to_right<
-          DO<WrapperMonad>::apply<
+          DO<wrapper_monad>::apply<
             RETURN<int13>
           >
         >
       >::type
     >
-    TestNestedDoWithDifferentMonads;
+    test_nested_do_with_different_monads;
 }
 
-MPLLIBS_ADD_TEST(suite, TestDo)
-MPLLIBS_ADD_TEST(suite, TestDoThreeSteps)
-MPLLIBS_ADD_TEST(suite, TestDoTwoCalls)
-MPLLIBS_ADD_TEST(suite, TestDoTwoReturns)
-MPLLIBS_ADD_TEST(suite, TestNestedDoWithReturn)
-MPLLIBS_ADD_TEST(suite, TestContentsOfReturnIsSubstituted)
-MPLLIBS_ADD_TEST(suite, TestNestedDoWithDifferentMonads)
+MPLLIBS_ADD_TEST(suite, test_do)
+MPLLIBS_ADD_TEST(suite, test_do_three_steps)
+MPLLIBS_ADD_TEST(suite, test_do_two_calls)
+MPLLIBS_ADD_TEST(suite, test_do_two_returns)
+MPLLIBS_ADD_TEST(suite, test_nested_do_with_return)
+MPLLIBS_ADD_TEST(suite, test_contents_of_return_is_substituted)
+MPLLIBS_ADD_TEST(suite, test_nested_do_with_different_monads)
 
 
 

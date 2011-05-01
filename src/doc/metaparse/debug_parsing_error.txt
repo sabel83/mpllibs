@@ -11,10 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class parser, class string>
-struct DebugParsingError
+template <class Parser, class String>
+struct debug_parsing_error
 {
-  DebugParsingError()
+  debug_parsing_error()
   {
     // unspecified
   }
@@ -38,7 +38,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/DebugParsingError.h>
+#include <mpllibs/metaparse/debug_parsing_error.h>
 --------------------------------------
 
 Expression semantics
@@ -47,7 +47,7 @@ Expression semantics
 For any +p+ compile-time parser and +s+ compile-time string
 
 --------------------------------------
-DebugParsingError<p, s>()
+debug_parsing_error<p, s>()
 --------------------------------------
 
 Tries to parse +s+ using +p+ at compile-time. At run-time the constructor
@@ -57,7 +57,7 @@ Example
 -------
 
 --------------------------------------
-DebugParsingError<some_parser, boost::string<'abcd'> > do_debugging();
+debug_parsing_error<some_parser, boost::string<'abcd'> > do_debugging;
 --------------------------------------
 
 include::../copyright[]

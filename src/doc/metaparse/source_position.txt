@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class line, class col>
+template <class Line, class Col>
 struct source_position
 {
   // unspecified

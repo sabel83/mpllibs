@@ -12,13 +12,13 @@ Synopsis
 
 --------------------------------------
 template <
-  class p0,
+  class P0,
   // ...
-  class pn
+  class Pn
 >
 struct sequence
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified

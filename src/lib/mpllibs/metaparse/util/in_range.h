@@ -20,14 +20,14 @@ namespace mpllibs
   {
     namespace util
     {
-      template <class lowerBound, class upperBound>
+      template <class LowerBound, class UpperBound>
       struct in_range
       {
-        template <class item>
+        template <class Item>
         struct apply :
           boost::mpl::and_<
-            boost::mpl::less_equal<lowerBound, item>,
-            boost::mpl::less_equal<item, upperBound>
+            boost::mpl::less_equal<LowerBound, Item>,
+            boost::mpl::less_equal<Item, UpperBound>
           >
         {};
       };

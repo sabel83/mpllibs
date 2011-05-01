@@ -18,11 +18,11 @@ namespace mpllibs
     {
       struct cons_seq
       {
-        template <class seq>
+        template <class Seq>
         struct apply :
           boost::mpl::push_front<
-            typename boost::mpl::back<typename seq::type>::type,
-            typename boost::mpl::front<typename seq::type>::type
+            typename boost::mpl::back<typename Seq::type>::type,
+            typename boost::mpl::front<typename Seq::type>::type
           >
         {};
       };

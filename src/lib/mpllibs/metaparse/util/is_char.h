@@ -16,11 +16,11 @@ namespace mpllibs
   {
     namespace util
     {
-      template <class c>
+      template <class C>
       struct is_char
       {
-        template <class s>
-        struct apply : boost::mpl::equal_to<c, s> {};
+        template <class S>
+        struct apply : boost::mpl::equal_to<C, S> {};
       };
     }
   }

@@ -18,7 +18,7 @@ namespace mpllibs
     template <class T, class Default>
     struct get_type :
       boost::mpl::eval_if<
-        typename mpllibs::metatest::has_type<T>::type,
+        typename has_type<T>::type,
         T,
         boost::mpl::identity<Default>
       >

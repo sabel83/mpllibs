@@ -11,99 +11,89 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/int.hpp>
+
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::nth_of_c;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::nth_of;
+using mpllibs::metaparse::is_error;
+
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+using boost::mpl::int_;
 
 namespace mpl = boost::mpl;
 namespace mp = mpllibs::metaparse;
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("nth_of");
+  const test_suite suite("nth_of");
   
   typedef
-    mpl::equal_to<
-      mp::get_result<
-        mpl::apply<mp::nth_of_c<0, lit_h>, str_hello, mp::start>
-      >::type,
+    equal_to<
+      get_result<apply<nth_of_c<0, lit_h>, str_hello, start> >::type,
       char_h
     >
-    TestFirstOfOne;
+    test_first_of_one;
 
   typedef
-    mpl::equal_to<
-      mp::get_result<
-        mpl::apply<mp::nth_of_c<0, lit_h, lit_e>, str_hello, mp::start>
-      >::type,
+    equal_to<
+      get_result<apply<nth_of_c<0, lit_h, lit_e>, str_hello, start> >::type,
       char_h
     >
-    TestFirstOfTwo;
+    test_first_of_two;
 
   typedef
-    mpl::equal_to<
-      mp::get_result<
-        mpl::apply<mp::nth_of<mpl::int_<1>, lit_h, lit_e>, str_hello, mp::start>
-      >::type,
+    equal_to<
+      get_result<apply<nth_of<int_<1>, lit_h, lit_e>, str_hello, start> >::type,
       char_e
     >
-    TestSecondOfTwo;
+    test_second_of_two;
 
   typedef
-    mp::is_error<
-      mpl::apply<mp::nth_of_c<1, lit_x, lit_e>, str_hello, mp::start>
-    >
-    TestNothing;
+    is_error<apply<nth_of_c<1, lit_x, lit_e>, str_hello, start> >
+    test_nothing;
   
-  typedef
-    mp::is_error<
-      mpl::apply<mp::nth_of_c<0>, str_hello, mp::start>
-    >
-    TestFirstOfNone;
+  typedef is_error<apply<nth_of_c<0>, str_hello, start> > test_first_of_none;
 
   typedef
-    mp::is_error<
-      mpl::apply<mp::nth_of_c<-1, lit_h, lit_e>, str_hello, mp::start>
-    >
-    TestNIsLessThanZero;
+    is_error<apply<nth_of_c<-1, lit_h, lit_e>, str_hello, start> >
+    test_n_is_less_than_zero;
 
   typedef
-    mp::is_error<
-      mpl::apply<mp::nth_of_c<2, lit_h, lit_e>, str_hello, mp::start>
-    >
-    TestNIsGreaterThanTheNumberOfParsers;
+    is_error<apply<nth_of_c<2, lit_h, lit_e>, str_hello, start> >
+    test_n_is_greater_than_the_number_of_parsers;
 
   typedef
-    mp::is_error<
-      mpl::apply<mp::nth_of_c<1, lit_x, lit_e, lit_l>, str_hello, mp::start>
-    >
-    TestErrorBeforeTheNth;
+    is_error<apply<nth_of_c<1, lit_x, lit_e, lit_l>, str_hello, start> >
+    test_error_before_the_nth;
 
   typedef
-    mp::is_error<
-      mpl::apply<mp::nth_of_c<1, lit_h, lit_x, lit_l>, str_hello, mp::start>
-    >
-    TestErrorAtTheNth;
+    is_error<apply<nth_of_c<1, lit_h, lit_x, lit_l>, str_hello, start> >
+    test_error_at_the_nth;
 
   typedef
-    mp::is_error<
-      mpl::apply<mp::nth_of_c<1, lit_h, lit_e, lit_x>, str_hello, mp::start>
-    >
-    TestErrorAfterTheNth;
+    is_error<apply<nth_of_c<1, lit_h, lit_e, lit_x>, str_hello, start> >
+    test_error_after_the_nth;
 }
 
-MPLLIBS_ADD_TEST(suite, TestFirstOfOne)
-MPLLIBS_ADD_TEST(suite, TestFirstOfTwo)
-MPLLIBS_ADD_TEST(suite, TestSecondOfTwo)
-MPLLIBS_ADD_TEST(suite, TestNothing)
+MPLLIBS_ADD_TEST(suite, test_first_of_one)
+MPLLIBS_ADD_TEST(suite, test_first_of_two)
+MPLLIBS_ADD_TEST(suite, test_second_of_two)
+MPLLIBS_ADD_TEST(suite, test_nothing)
 
-MPLLIBS_ADD_TEST(suite, TestFirstOfNone)
-MPLLIBS_ADD_TEST(suite, TestNIsLessThanZero)
-MPLLIBS_ADD_TEST(suite, TestNIsGreaterThanTheNumberOfParsers)
-MPLLIBS_ADD_TEST(suite, TestErrorBeforeTheNth)
-MPLLIBS_ADD_TEST(suite, TestErrorAtTheNth)
-MPLLIBS_ADD_TEST(suite, TestErrorAfterTheNth)
+MPLLIBS_ADD_TEST(suite, test_first_of_none)
+MPLLIBS_ADD_TEST(suite, test_n_is_less_than_zero)
+MPLLIBS_ADD_TEST(suite, test_n_is_greater_than_the_number_of_parsers)
+MPLLIBS_ADD_TEST(suite, test_error_before_the_nth)
+MPLLIBS_ADD_TEST(suite, test_error_at_the_nth)
+MPLLIBS_ADD_TEST(suite, test_error_after_the_nth)
 
 

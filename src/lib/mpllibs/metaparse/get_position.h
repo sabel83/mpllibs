@@ -15,16 +15,14 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p>
+    template <class P>
     struct get_position_impl;
     
-    template <class p>
+    template <class P>
     struct get_position :
       boost::mpl::apply<
-        mpllibs::metaparse::get_position_impl<
-          typename boost::mpl::tag<typename p::type>::type
-        >,
-        typename p::type
+        get_position_impl<typename boost::mpl::tag<typename P::type>::type>,
+        typename P::type
       >
     {};
   }

@@ -18,17 +18,17 @@ namespace mpllibs
     {
       namespace impl
       {
-        struct INVALID_DIGIT {};
+        struct invalid_digit {};
     
-        template <char c>
-        struct digit_to_int : INVALID_DIGIT {};
+        template <char C>
+        struct digit_to_int : invalid_digit {};
       }
 
       struct digit_to_int
       {
-        template <class d>
+        template <class D>
         struct apply :
-          mpllibs::metaparse::util::impl::digit_to_int<d::type::value>
+          mpllibs::metaparse::util::impl::digit_to_int<D::type::value>
         {};
       };
     

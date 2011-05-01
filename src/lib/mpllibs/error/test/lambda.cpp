@@ -6,7 +6,7 @@
 #include <mpllibs/error/lambda.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include "common.h"
 
@@ -14,39 +14,32 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
 
+using boost::mpl::apply;
+using boost::mpl::plus;
+using boost::mpl::equal_to;
+
+using mpllibs::metatest::test_suite;
+
+using mpllibs::error::lambda;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("lambda");
+  const test_suite suite("lambda");
 
   typedef
-    boost::mpl::equal_to<
-      int13,
-      boost::mpl::apply<
-        mpllibs::error::lambda<x, boost::mpl::plus<x, int11> >,
-        int2
-      >::type
-    >
-    TestSimpleLambda;
+    equal_to<int13, apply<lambda<x, plus<x, int11> >, int2>::type>
+    test_simple_lambda;
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int13,
-      lazy_apply<
-        boost::mpl::apply<
-          mpllibs::error::lambda<
-            x,
-            mpllibs::error::lambda<y, boost::mpl::plus<x, y> >
-          >,
-          int2
-        >,
-        int11
-      >::type
+      lazy_apply<apply<lambda<x, lambda<y, plus<x, y> > >, int2>, int11>::type
     >
-    TestNestedLambda;
+    test_nested_lambda;
 }
 
-MPLLIBS_ADD_TEST(suite, TestSimpleLambda)
-MPLLIBS_ADD_TEST(suite, TestNestedLambda)
+MPLLIBS_ADD_TEST(suite, test_simple_lambda)
+MPLLIBS_ADD_TEST(suite, test_nested_lambda)
 
 
 

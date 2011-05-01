@@ -19,33 +19,33 @@ namespace mpllibs
   {
     namespace errors
     {
-      template <class c>
+      template <class C>
       struct literal_expected
       {
         typedef literal_expected type;
       };
     }
   
-    template <class c>
+    template <class C>
     struct lit :
-      mpllibs::metaparse::accept_when<
-        mpllibs::metaparse::one_char,
-        mpllibs::metaparse::util::is_char<c>,
-        mpllibs::metaparse::errors::literal_expected<c>
+      accept_when<
+        one_char,
+        mpllibs::metaparse::util::is_char<C>,
+        mpllibs::metaparse::errors::literal_expected<C>
       >
     {};
   }
   
   namespace metatest
   {
-    template <class c>
-    struct to_stream<mpllibs::metaparse::errors::literal_expected<c> >
+    template <class C>
+    struct to_stream<mpllibs::metaparse::errors::literal_expected<C> >
     {
       typedef to_stream type;
       
       static std::ostream& run(std::ostream& o_)
       {
-        return o_ << "'" << c::type::value << "' literal expected.";
+        return o_ << "'" << C::type::value << "' literal expected.";
       }
     };
   }

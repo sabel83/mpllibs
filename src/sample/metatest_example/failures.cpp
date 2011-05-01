@@ -14,12 +14,25 @@
 
 #include <boost/type_traits/is_same.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using boost::mpl::true_;
+using boost::mpl::false_;
+using boost::mpl::equal_to;
+using boost::mpl::int_;
+using boost::mpl::plus;
+using boost::mpl::not_;
+using boost::mpl::and_;
+using boost::mpl::or_;
+
+using boost::is_same;
+
 // Bad metafunction: no "type"
-template <class t>
+template <class T>
 struct bad {};
 
 // Bad metafunction for a test case: no "type::value"
-template <class t>
+template <class T>
 struct bad2
 {
   struct type {};
@@ -27,38 +40,28 @@ struct bad2
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("example_failure");
+  const test_suite suite("example_failure");
 
-  typedef bad<int> TestNoType;
+  typedef bad<int> test_no_type;
 
-  typedef bad2<int> TestNoTypeValue;
+  typedef bad2<int> test_no_type_value;
 
-  typedef boost::mpl::false_ TestFail;
+  typedef false_ test_fail;
   
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::int_<11>,
-      boost::mpl::plus<boost::mpl::int_<13>, boost::mpl::int_<27> >::type
-    >
-    TestFailWithToEqual;
+    equal_to<int_<11>, plus<int_<13>, int_<27> >::type>
+    test_fail_with_to_equal;
 
-  typedef boost::is_same<int, double> TestFailWithIsSame;
+  typedef is_same<int, double> test_fail_with_is_same;
 
-  typedef
-    boost::mpl::not_<
-      boost::mpl::and_<
-        boost::mpl::or_<boost::mpl::true_, boost::mpl::false_>,
-        boost::mpl::true_
-      >
-    >
-    TestFailComplexExpression;
+  typedef not_<and_<or_<true_, false_>, true_> > test_fail_complex_expression;
 }
 
-MPLLIBS_ADD_TEST(suite, TestNoType)
-MPLLIBS_ADD_TEST(suite, TestNoTypeValue)
-MPLLIBS_ADD_TEST(suite, TestFail)
-MPLLIBS_ADD_TEST(suite, TestFailWithToEqual)
-MPLLIBS_ADD_TEST(suite, TestFailWithIsSame)
-MPLLIBS_ADD_TEST(suite, TestFailComplexExpression)
+MPLLIBS_ADD_TEST(suite, test_no_type)
+MPLLIBS_ADD_TEST(suite, test_no_type_value)
+MPLLIBS_ADD_TEST(suite, test_fail)
+MPLLIBS_ADD_TEST(suite, test_fail_with_to_equal)
+MPLLIBS_ADD_TEST(suite, test_fail_with_is_same)
+MPLLIBS_ADD_TEST(suite, test_fail_complex_expression)
 
 

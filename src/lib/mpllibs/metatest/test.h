@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/TestDriver.h>
+#include <mpllibs/metatest/test_driver.h>
 
 #ifdef MPLLIBS_ADD_TEST_IMPL
   #error MPLLIBS_ADD_TEST_IMPL already defined
@@ -18,21 +18,21 @@
   { \
     namespace \
     { \
-      struct name##Executor \
+      struct name##_executor \
       { \
-        name##Executor() \
+        name##_executor() \
         { \
-          mpllibs::metatest::TestDriver::runTest<name, result>( \
+          mpllibs::metatest::test_driver::run_test<name, result>( \
             (suite), \
             #name, \
-            mpllibs::metatest::Location(__FILE__, __LINE__) \
+            mpllibs::metatest::location(__FILE__, __LINE__) \
           ); \
         } \
         \
-        static name##Executor instance; \
+        static name##_executor instance; \
       }; \
       \
-      name##Executor name##Executor::instance; \
+      name##_executor name##_executor::instance; \
     } \
   }
 

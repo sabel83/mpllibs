@@ -11,7 +11,7 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
@@ -19,127 +19,85 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/equal.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::sequence;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::is_error;
+
+using boost::mpl::equal;
+using boost::mpl::apply;
+using boost::mpl::list;
+using boost::mpl::equal_to;
+using boost::mpl::at_c;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("sequence");
+  const test_suite suite("sequence");
 
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::sequence<>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<>
-    >
-    TestNoParser;
+    equal<get_result<apply<sequence<>, str_hello, start> >::type, list<> >
+    test_no_parser;
 
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::sequence<lit_h>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<char_h>
+    equal<
+      get_result<apply<sequence<lit_h>, str_hello, start> >::type,
+      list<char_h>
     >
-    TestOneParser;
+    test_one_parser;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::sequence<lit_e>,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    TestOneFailingParser;
+    is_error<apply<sequence<lit_e>, str_hello, start> >
+    test_one_failing_parser;
   
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::sequence<lit_h, lit_e>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<char_h, char_e>
+    equal<
+      get_result<apply<sequence<lit_h, lit_e>, str_hello, start> >::type,
+      list<char_h, char_e>
     >
-    TestTwoChars;
+    test_two_chars;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::sequence<lit_x, lit_e>,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    TestFirstFails;
+    is_error<apply<sequence<lit_x, lit_e>, str_hello, start> >
+    test_first_fails;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::sequence<lit_h, lit_x>,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    TestSecondFails;
+    is_error<apply<sequence<lit_h, lit_x>, str_hello, start> >
+    test_second_fails;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::sequence<lit_h, lit_e>,
-        str_,
-        mpllibs::metaparse::start
-      >
-    >
-    TestEmptyInput;
+    is_error<apply<sequence<lit_h, lit_e>, str_, start> >
+    test_empty_input;
 
   typedef
-    boost::mpl::equal<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::sequence<lit_h, lit_e, lit_l>,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      boost::mpl::list<char_h, char_e, char_l>
+    equal<
+      get_result<apply<sequence<lit_h, lit_e, lit_l>, str_hello, start> >::type,
+      list<char_h, char_e, char_l>
     >
-    TestThreeChars;
+    test_three_chars;
 
   typedef
-    boost::mpl::equal_to<
-      boost::mpl::at_c<
-        mpllibs::metaparse::get_result<
-          boost::mpl::apply<
-            mpllibs::metaparse::sequence<lit_h, lit_e, lit_l>,
-            str_hello,
-            mpllibs::metaparse::start
-          >
+    equal_to<
+      at_c<
+        get_result<
+          apply<sequence<lit_h, lit_e, lit_l>, str_hello, start>
         >::type,
         1
       >::type,
       char_e
     >
-    TestIndexingInResult;
+    test_indexing_in_result;
 }
 
-MPLLIBS_ADD_TEST(suite, TestNoParser)
-MPLLIBS_ADD_TEST(suite, TestOneParser)
-MPLLIBS_ADD_TEST(suite, TestOneFailingParser)
-MPLLIBS_ADD_TEST(suite, TestTwoChars)
-MPLLIBS_ADD_TEST(suite, TestFirstFails)
-MPLLIBS_ADD_TEST(suite, TestSecondFails)
-MPLLIBS_ADD_TEST(suite, TestEmptyInput)
-MPLLIBS_ADD_TEST(suite, TestThreeChars)
-MPLLIBS_ADD_TEST(suite, TestIndexingInResult)
+MPLLIBS_ADD_TEST(suite, test_no_parser)
+MPLLIBS_ADD_TEST(suite, test_one_parser)
+MPLLIBS_ADD_TEST(suite, test_one_failing_parser)
+MPLLIBS_ADD_TEST(suite, test_two_chars)
+MPLLIBS_ADD_TEST(suite, test_first_fails)
+MPLLIBS_ADD_TEST(suite, test_second_fails)
+MPLLIBS_ADD_TEST(suite, test_empty_input)
+MPLLIBS_ADD_TEST(suite, test_three_chars)
+MPLLIBS_ADD_TEST(suite, test_indexing_in_result)
 
 

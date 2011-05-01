@@ -12,69 +12,51 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::is_error;
+using mpllibs::metaparse::get_remaining;
+using mpllibs::metaparse::get_position;
+
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("lit");
+  const test_suite suite("lit");
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          lit_h,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      char_h
-    >
-    TestAccept;
+    equal_to<get_result<apply<lit_h, str_hello, start> >::type, char_h>
+    test_accept;
+
+  typedef is_error<apply<lit_h, str_bello, start> > test_reject;
+
+  typedef is_error<apply<lit_h, str_, start> > test_with_empty_string;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<lit_h, str_bello, mpllibs::metaparse::start>
-    >
-    TestReject;
-
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<lit_h, str_, mpllibs::metaparse::start>
-    >
-    TestWithEmptyString;
-
-  typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
+    equal_to<
+      get_result<
+        apply<
           lit_e,
-          mpllibs::metaparse::get_remaining<
-            boost::mpl::apply<
-              lit_h,
-              str_hello,
-              mpllibs::metaparse::start
-            >
-          >::type,
-          mpllibs::metaparse::get_position<
-            boost::mpl::apply<
-              lit_h,
-              str_hello,
-              mpllibs::metaparse::start
-            >
-          >::type
+          get_remaining<apply<lit_h, str_hello, start> >::type,
+          get_position<apply<lit_h, str_hello, start> >::type
         >
       >::type,
       char_e
     >
-    TestRemainingString;
+    test_remaining_string;
 }
 
-MPLLIBS_ADD_TEST(suite, TestAccept)
-MPLLIBS_ADD_TEST(suite, TestReject)
-MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
-MPLLIBS_ADD_TEST(suite, TestRemainingString)
+MPLLIBS_ADD_TEST(suite, test_accept)
+MPLLIBS_ADD_TEST(suite, test_reject)
+MPLLIBS_ADD_TEST(suite, test_with_empty_string)
+MPLLIBS_ADD_TEST(suite, test_remaining_string)
 
 

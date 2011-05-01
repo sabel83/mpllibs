@@ -21,33 +21,32 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p, class s>
-    class DebugParsingError
+    template <class P, class S>
+    class debug_parsing_error
     {
     public:
-      DebugParsingError()
+      debug_parsing_error()
       {
         using std::cout;
         using std::endl;
         using boost::mpl::c_str;
+        using boost::mpl::apply;
       
-        typedef
-          Run<typename boost::mpl::apply<p, s, mpllibs::metaparse::start>::type>
-          Runner;
+        typedef display<typename apply<P, S, start>::type> runner;
           
         cout << "Compile-time parsing results" << endl;
         cout << "----------------------------" << endl;
         cout << "Input text:" << endl;
-        cout << c_str<s>::type::value << endl;
+        cout << c_str<S>::type::value << endl;
         cout << endl;
-        Runner::run();
+        runner::run();
         
         exit(0);
       }
     
     private:
-      template <class result>
-      struct RunError
+      template <class Result>
+      struct display_error
       {
         static void run()
         {
@@ -56,35 +55,34 @@ namespace mpllibs
           using mpllibs::metatest::to_stream;
           
           cout << "Parsing failed:" << endl;
-          to_stream<result>::run(cout);
+          to_stream<Result>::run(cout);
           cout << endl;
         }
       };
       
-      template <class result>
-      struct RunNoError
+      template <class Result>
+      struct display_no_error
       {
         static void run()
         {
           using std::cout;
           using std::endl;
-          using mpllibs::metaparse::get_remaining;
           using boost::mpl::c_str;
           
-          typedef typename get_remaining<result>::type RemainingString;
+          typedef typename get_remaining<Result>::type remaining_string;
           
           cout
             << "Parsing was successful. Remaining string is:" << endl
-            << c_str<RemainingString>::type::value << endl;
+            << c_str<remaining_string>::type::value << endl;
         }
       };
 
-      template <class result>
-      struct Run :
+      template <class Result>
+      struct display :
         boost::mpl::if_<
-          typename mpllibs::metaparse::is_error<result>::type,
-          RunError<result>,
-          RunNoError<result>
+          typename is_error<Result>::type,
+          display_error<Result>,
+          display_no_error<Result>
         >::type
       {};
     };
@@ -94,9 +92,9 @@ namespace mpllibs
     template <class>
     struct build_parser;
     
-    template <class p, class s>
-    struct DebugParsingError<mpllibs::metaparse::build_parser<p>, s> :
-      mpllibs::metaparse::DebugParsingError<p, s>
+    template <class P, class S>
+    struct debug_parsing_error<build_parser<P>, S> :
+      debug_parsing_error<P, S>
     {};
   }
 }

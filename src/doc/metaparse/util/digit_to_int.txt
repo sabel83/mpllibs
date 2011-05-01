@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct digit_to_int
 {
-  template <class d>
+  template <class D>
   struct apply
   {
     // unspecified

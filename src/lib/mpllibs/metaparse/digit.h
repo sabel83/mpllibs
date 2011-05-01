@@ -24,8 +24,8 @@ namespace mpllibs
     }
   
     typedef
-      mpllibs::metaparse::accept_when<
-        mpllibs::metaparse::one_char,
+      accept_when<
+        one_char,
         mpllibs::metaparse::util::is_digit,
         mpllibs::metaparse::errors::digit_expected
       >

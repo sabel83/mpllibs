@@ -13,7 +13,7 @@ Synopsis
 --------------------------------------
 struct one_char
 {
-  template <class s, class pos>
+  template <class S, class Pos>
   struct apply
   {
     // unspecified

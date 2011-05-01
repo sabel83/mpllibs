@@ -9,22 +9,22 @@
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using boost::mpl::equal_to;
+using boost::mpl::int_;
+
 // Metafunction to test
-template <class t>
-struct double_ : boost::mpl::times<t, boost::mpl::int_<2> > {};
+template <class T>
+struct double_ : boost::mpl::times<T, boost::mpl::int_<2> > {};
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("example");
+  const test_suite suite("example");
 
-  typedef
-    boost::mpl::equal_to<
-      double_<boost::mpl::int_<13> >::type,
-      boost::mpl::int_<26>
-    >
-    TestSuccess;
+  typedef equal_to<double_<int_<13> >::type, int_<26> > test_success;
 }
 
-MPLLIBS_ADD_TEST(suite, TestSuccess)
+MPLLIBS_ADD_TEST(suite, test_success)
 
 

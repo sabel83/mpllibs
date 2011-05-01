@@ -14,118 +14,98 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::one_char;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::get_remaining;
+using mpllibs::metaparse::get_position;
+using mpllibs::metaparse::is_error;
+using mpllibs::metaparse::iterate_c;
+using mpllibs::metaparse::get_line;
+
+using boost::mpl::list_c;
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("one_char");
+  const test_suite suite("one_char");
 
-  typedef boost::mpl::list_c<char, 'a','\n','b'> UnixMultiLineText;
-  typedef boost::mpl::list_c<char, 'a','\r','\n','b'> DOSMultiLineText;
-  typedef boost::mpl::list_c<char, 'a','\r','b'> MacMultiLineText;
+  typedef list_c<char, 'a','\n','b'> unix_multi_line_text;
+  typedef list_c<char, 'a','\r','\n','b'> dos_multi_line_text;
+  typedef list_c<char, 'a','\r','b'> mac_multi_line_text;
 
-  typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::one_char,
-          str_hello,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      char_h
-    >
-    TestOnceCharForNonEmptyString;
+  typedef apply<one_char, str_hello, start> parse_first_char;
 
   typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::one_char,
-          mpllibs::metaparse::get_remaining<
-            boost::mpl::apply<
-              mpllibs::metaparse::one_char,
-              str_hello,
-              mpllibs::metaparse::start
-            >
-          >::type,
-          mpllibs::metaparse::get_position<
-            boost::mpl::apply<
-              mpllibs::metaparse::one_char,
-              str_hello,
-              mpllibs::metaparse::start
-            >
-          >::type
+    equal_to<get_result<parse_first_char>::type, char_h>
+    test_one_char_for_non_empty_string;
+
+  typedef
+    equal_to<
+      get_result<
+        apply<
+          one_char,
+          get_remaining<parse_first_char>::type,
+          get_position<parse_first_char>::type
         >
       >::type,
       char_e
     >
-    TestOnceCharForNonEmptyStringSecond;
+    test_one_char_for_non_empty_string_second;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::one_char,
-        str_,
-        mpllibs::metaparse::start
-      >
+    is_error<
+      apply<one_char, str_, start>
     >
-    TestOnceCharForEmptyString;
+    test_one_char_for_empty_string;
   
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int2,
-      mpllibs::metaparse::get_line<
-        mpllibs::metaparse::get_position<
-          boost::mpl::apply<
-            mpllibs::metaparse::iterate_c<mpllibs::metaparse::one_char, 2>,
-            UnixMultiLineText,
-            mpllibs::metaparse::start
-          >
+      get_line<
+        get_position<
+          apply<iterate_c<one_char, 2>, unix_multi_line_text, start>
         >
       >
     >
-    TestUnixMultiLineText;
+    test_unix_multi_line_text;
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int2,
-      mpllibs::metaparse::get_line<
-        mpllibs::metaparse::get_position<
-          boost::mpl::apply<
-            mpllibs::metaparse::iterate_c<mpllibs::metaparse::one_char, 3>,
-            DOSMultiLineText,
-            mpllibs::metaparse::start
-          >
+      get_line<
+        get_position<
+          apply<iterate_c<one_char, 3>, dos_multi_line_text, start>
         >
       >
     >
-    TestDOSMultiLineText;
+    test_dos_multi_line_text;
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int2,
-      mpllibs::metaparse::get_line<
-        mpllibs::metaparse::get_position<
-          boost::mpl::apply<
-            mpllibs::metaparse::iterate_c<mpllibs::metaparse::one_char, 2>,
-            MacMultiLineText,
-            mpllibs::metaparse::start
-          >
+      get_line<
+        get_position<
+          apply<iterate_c<one_char, 2>, mac_multi_line_text, start>
         >
       >
     >
-    TestMacMultiLineText;
+    test_mac_multi_line_text;
 }
 
-MPLLIBS_ADD_TEST(suite, TestOnceCharForNonEmptyString)
-MPLLIBS_ADD_TEST(suite, TestOnceCharForNonEmptyStringSecond)
-MPLLIBS_ADD_TEST(suite, TestOnceCharForEmptyString)
+MPLLIBS_ADD_TEST(suite, test_one_char_for_non_empty_string)
+MPLLIBS_ADD_TEST(suite, test_one_char_for_non_empty_string_second)
+MPLLIBS_ADD_TEST(suite, test_one_char_for_empty_string)
 
-MPLLIBS_ADD_TEST(suite, TestUnixMultiLineText)
-MPLLIBS_ADD_TEST(suite, TestDOSMultiLineText)
-MPLLIBS_ADD_TEST(suite, TestMacMultiLineText)
+MPLLIBS_ADD_TEST(suite, test_unix_multi_line_text)
+MPLLIBS_ADD_TEST(suite, test_dos_multi_line_text)
+MPLLIBS_ADD_TEST(suite, test_mac_multi_line_text)
 

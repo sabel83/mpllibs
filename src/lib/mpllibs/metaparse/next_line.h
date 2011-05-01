@@ -16,17 +16,15 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class p>
+    template <class P>
     struct next_line_impl;
     
-    template <class p, class ch>
+    template <class P, class Ch>
     struct next_line :
       boost::mpl::apply<
-        mpllibs::metaparse::next_line_impl<
-          typename boost::mpl::tag<typename p::type>::type
-        >,
-        typename p::type,
-        typename ch::type
+        next_line_impl<typename boost::mpl::tag<typename P::type>::type>,
+        typename P::type,
+        typename Ch::type
       >
     {};
   }

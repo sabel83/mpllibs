@@ -19,7 +19,7 @@ namespace mpllibs
   namespace safe_printf
   {
     template <class Expected>
-    struct PopExpected :
+    struct pop_expected :
       boost::mpl::eval_if<
         typename boost::mpl::front<
           typename boost::mpl::front<Expected>::type

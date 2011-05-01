@@ -6,58 +6,86 @@
 #include <mpllibs/error/let.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include "common.h"
 
+using boost::mpl::equal_to;
+using boost::mpl::plus;
+
+using mpllibs::metatest::test_suite;
+
+using mpllibs::error::let;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("let");
+  const test_suite suite("let");
 
   typedef
-    boost::mpl::equal_to<int13, mpllibs::error::let<x, int13, x>::type>
-    TestLetName;
+    equal_to<
+      int13,
+      let<
+        x, int13,
+        x
+      >::type
+    >
+    test_let_name;
 
   typedef
-    boost::mpl::equal_to<int11, mpllibs::error::let<x, int13, int11>::type>
-    TestLetNotName;
+    equal_to<
+      int11,
+      let<
+        x, int13,
+        int11
+      >::type
+    >
+    test_let_not_name;
   
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int26,
-      mpllibs::error::let<x, int13, double_value<x> >::type
+      let<
+        x, int13,
+        double_value<x>
+      >::type
     >
-    TestTemplate;
+    test_template;
 
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int24,
-      mpllibs::error::let<
+      let<
         x, int13,
-        mpllibs::error::let<y, int11, boost::mpl::plus<x, y> >::type
+        let<
+          y, int11,
+          plus<x, y>
+        >::type
       >::type::type
     >
-    TestNestedLet;
+    test_nested_let;
   
   typedef
-    boost::mpl::equal_to<
+    equal_to<
       int37,
-      mpllibs::error::let<
+      let<
         x, int13,
         double_lazy_plus<
           x,
-          mpllibs::error::let<x, int11, boost::mpl::plus<x, int13> >
+          let<
+            x, int11,
+            plus<x, int13>
+          >
         >
       >::type::type
     >
-    TestShadowing;
+    test_shadowing;
 }
 
-MPLLIBS_ADD_TEST(suite, TestLetName)
-MPLLIBS_ADD_TEST(suite, TestLetNotName)
-MPLLIBS_ADD_TEST(suite, TestTemplate)
-MPLLIBS_ADD_TEST(suite, TestNestedLet)
-MPLLIBS_ADD_TEST(suite, TestShadowing)
+MPLLIBS_ADD_TEST(suite, test_let_name)
+MPLLIBS_ADD_TEST(suite, test_let_not_name)
+MPLLIBS_ADD_TEST(suite, test_template)
+MPLLIBS_ADD_TEST(suite, test_nested_let)
+MPLLIBS_ADD_TEST(suite, test_shadowing)
 
 
 

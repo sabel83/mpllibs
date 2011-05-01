@@ -8,33 +8,31 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::util::in_range;
+
+using boost::mpl::apply;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("util::in_range");
+  const test_suite suite("util::in_range");
 
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::in_range<int10, int13>, int12>
-    TestIntInRange;
+  typedef apply<in_range<int10, int13>, int12> test_int_in_range;
 
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::in_range<int10, int13>, int10>
-    TestLowerBound;
+  typedef apply<in_range<int10, int13>, int10> test_lower_bound;
 
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::in_range<int10, int13>, int13>
-    TestUpperBound;
+  typedef apply<in_range<int10, int13>, int13> test_upper_bound;
 
-  typedef
-    boost::mpl::apply<mpllibs::metaparse::util::in_range<int10, int13>, int14>
-    TestIntNotInRange;    
+  typedef apply<in_range<int10, int13>, int14> test_int_not_in_range;    
 }
 
-MPLLIBS_ADD_TEST(suite, TestIntInRange)
-MPLLIBS_ADD_TEST(suite, TestLowerBound)
-MPLLIBS_ADD_TEST(suite, TestUpperBound)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, TestIntNotInRange)
+MPLLIBS_ADD_TEST(suite, test_int_in_range)
+MPLLIBS_ADD_TEST(suite, test_lower_bound)
+MPLLIBS_ADD_TEST(suite, test_upper_bound)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, test_int_not_in_range)
 

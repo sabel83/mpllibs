@@ -11,52 +11,37 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/TestSuite.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
+using mpllibs::metatest::test_suite;
+
+using mpllibs::metaparse::is_error;
+using mpllibs::metaparse::digit_val;
+using mpllibs::metaparse::start;
+using mpllibs::metaparse::get_result;
+
+using boost::mpl::apply;
+using boost::mpl::equal_to;
+
 namespace
 {
-  const mpllibs::metatest::TestSuite suite("digit_val");
+  const test_suite suite("digit_val");
+
+  typedef is_error<apply<digit_val, str_hello, start> > test_with_text;
 
   typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::digit_val,
-        str_hello,
-        mpllibs::metaparse::start
-      >
-    >
-    TestWithText;
+    equal_to<get_result<apply<digit_val, str_1983, start> >::type, int1>
+    test_with_number;
 
-  typedef
-    boost::mpl::equal_to<
-      mpllibs::metaparse::get_result<
-        boost::mpl::apply<
-          mpllibs::metaparse::digit_val,
-          str_1983,
-          mpllibs::metaparse::start
-        >
-      >::type,
-      int1
-    >
-    TestWithNumber;
-
-  typedef
-    mpllibs::metaparse::is_error<
-      boost::mpl::apply<
-        mpllibs::metaparse::digit_val,
-        str_,
-        mpllibs::metaparse::start
-      >
-    >
-    TestWithEmptyString;
+  typedef is_error<apply<digit_val, str_, start> > test_with_empty_string;
 }
 
-MPLLIBS_ADD_TEST(suite, TestWithText)
-MPLLIBS_ADD_TEST(suite, TestWithNumber)
-MPLLIBS_ADD_TEST(suite, TestWithEmptyString)
+MPLLIBS_ADD_TEST(suite, test_with_text)
+MPLLIBS_ADD_TEST(suite, test_with_number)
+MPLLIBS_ADD_TEST(suite, test_with_empty_string)
 
 
 

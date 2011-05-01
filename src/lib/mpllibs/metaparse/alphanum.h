@@ -14,12 +14,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    typedef
-      mpllibs::metaparse::one_of<
-        mpllibs::metaparse::letter,
-        mpllibs::metaparse::digit
-      >
-      alphanum;
+    typedef one_of<letter, digit> alphanum;
   }
 }
 
