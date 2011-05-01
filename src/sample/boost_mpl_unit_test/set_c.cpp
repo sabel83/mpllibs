@@ -12,6 +12,11 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/type_traits/is_same.hpp>
 
+//
+// turns out set_c iterators not working is in fact a bug in boost
+// http://boost.2283326.n4.nabble.com/mpl-for-each-and-set-c-misunderstanding-or-bug-tt2565972.html
+//
+
 namespace
 {
   const mpllibs::metatest::TestSuite suite ("set_c");
