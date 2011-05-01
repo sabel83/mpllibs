@@ -19,7 +19,7 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite ("set_c");
+  const mpllibs::metatest::test_suite suite ("set_c");
 
   using namespace boost;
   using namespace mpl;

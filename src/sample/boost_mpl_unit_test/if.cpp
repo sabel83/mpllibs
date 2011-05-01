@@ -12,7 +12,7 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite ("if");
+  const mpllibs::metatest::test_suite suite ("if");
 
   using namespace boost::mpl;
 

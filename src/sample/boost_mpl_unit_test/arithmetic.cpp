@@ -10,7 +10,7 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite ("arithmetic");
+  const mpllibs::metatest::test_suite suite ("arithmetic");
 
   using namespace boost::mpl;
 

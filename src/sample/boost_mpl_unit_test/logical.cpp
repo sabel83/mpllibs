@@ -9,7 +9,7 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite ("logical");
+  const mpllibs::metatest::test_suite suite ("logical");
 
   using boost::mpl::equal_to;
   using boost::mpl::true_;

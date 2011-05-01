@@ -10,7 +10,7 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite ("quote");
+  const mpllibs::metatest::test_suite suite ("quote");
 
   using namespace boost::mpl;
   using boost::is_same;

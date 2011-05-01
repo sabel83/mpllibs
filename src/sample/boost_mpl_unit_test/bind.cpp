@@ -17,7 +17,7 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite ("bind");
+  const mpllibs::metatest::test_suite suite ("bind");
 
   using namespace boost::mpl;
   using boost::is_same;

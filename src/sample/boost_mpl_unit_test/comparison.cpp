@@ -10,7 +10,7 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite ("comparison");
+  const mpllibs::metatest::test_suite suite ("comparison");
 
   using namespace boost::mpl;
 

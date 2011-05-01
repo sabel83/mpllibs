@@ -19,7 +19,7 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite ("deque");
+  const mpllibs::metatest::test_suite suite ("deque");
 
   using namespace boost;
   using namespace mpl;

@@ -11,7 +11,7 @@
 
 namespace
 {
-  const mpllibs::metatest::TestSuite suite ("identity");
+  const mpllibs::metatest::test_suite suite ("identity");
 
   using boost::is_same;
   using boost::mpl::_1;
