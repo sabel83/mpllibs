@@ -21,7 +21,7 @@
 namespace mpl = boost::mpl;
 
 namespace {
-  const mpllibs::metatest::TestSuite suite ("99");
+  const mpllibs::metatest::test_suite suite ("99");
 }
 
 
