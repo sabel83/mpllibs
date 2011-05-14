@@ -63,6 +63,11 @@ namespace mpllibs
         };
       };
       
+      template <class Result>
+      struct lazy_skip_further_catches :
+        skip_further_catches<typename Result::type>
+      {};
+      
       template <class Exception>
       struct was_exception
       {
@@ -79,10 +84,6 @@ namespace mpllibs
           typedef
             typename boost::mpl::tag<_exception_data>::type
             _exception_data_tag;
-          
-          template <class Result>
-          struct skip_further : skip_further_catches<typename Result::type> {};
-          
         public:
           template <class Body>
           struct apply :
@@ -91,7 +92,7 @@ namespace mpllibs
                 boost::is_same<ExceptionTag, _exception_data_tag>,
                 boost::is_same<ExceptionTag, mpllibs::error::catch_any>
               >,
-              skip_further<
+              lazy_skip_further_catches<
                 typename mpllibs::error::let<Name, _exception_data, Body>::type
               >,
               was_exception
