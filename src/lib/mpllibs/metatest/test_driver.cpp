@@ -22,19 +22,22 @@ test_driver::~test_driver()
   
   // Print summary in the destructor to make sure it's executed after
   // the tests
-  cout << *this;
+
+  // cout << *this;
 }
 
-ptrdiff_t test_driver::failure_count() const
+size_t test_driver::failure_count() const
 {
   using std::count_if;
   using boost::bind;
   
   return
-    count_if(
-      _results.begin(),
-      _results.end(),
-      !bind(&test_result::success, _1)
+    static_cast<size_t>(
+      count_if(
+        _results.begin(),
+        _results.end(),
+        !bind(&test_result::success, _1)
+      )
     );
 }
 

@@ -4,12 +4,15 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/plaintext_report.h>
 
-int main(int argc_, char* argv_[])
+#include <ostream>
+
+int main()
 {
+  using mpllibs::metatest::plaintext_report;
   using mpllibs::metatest::test_driver;
-  
-  return test_driver::instance().main(argc_, argv_);
-}
 
+  return plaintext_report(std::cout) ? 0 : 1;
+}
 

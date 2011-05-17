@@ -71,7 +71,7 @@ namespace mpllibs
         );
       }
    
-      ptrdiff_t failure_count() const;
+      size_t failure_count() const;
       
       size_t total_count() const;
       
