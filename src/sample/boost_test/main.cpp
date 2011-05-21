@@ -3,16 +3,5 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/boost_report.h>
-
-#include <boost/test/included/unit_test.hpp>
-
-// To keep gcc with -Wmissing-declarations happy
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[]);
-
-boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
-{
-  return mpllibs::metatest::build_metatest_test_suite();
-}
-
+#include <mpllibs/metatest/main_boost.h>
 
