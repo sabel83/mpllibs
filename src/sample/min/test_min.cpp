@@ -10,7 +10,7 @@
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::error::exception;
 
@@ -19,7 +19,7 @@ using boost::mpl::equal_to;
 
 namespace
 {
-  const test_suite suite("min");
+  const suite_path suite("min");
   
   struct test_class
   {

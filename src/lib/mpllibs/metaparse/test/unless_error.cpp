@@ -9,11 +9,10 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::fail;
 using mpllibs::metaparse::is_error;
@@ -25,7 +24,7 @@ using boost::mpl::equal_to;
 
 namespace
 {
-  const test_suite suite("util::unless_error");
+  const suite_path suite = suite_path("util")("unless_error");
   
   typedef apply<fail<int1>, int11, int2> err;
   

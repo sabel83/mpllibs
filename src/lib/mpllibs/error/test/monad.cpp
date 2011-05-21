@@ -4,7 +4,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
@@ -18,14 +17,14 @@
 using boost::mpl::minus;
 using boost::mpl::equal_to;
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::error::return_;
 using mpllibs::error::bind;
 
 namespace
 {
-  const test_suite suite("monad");
+  const suite_path suite("monad");
   
   struct minus_2
   {

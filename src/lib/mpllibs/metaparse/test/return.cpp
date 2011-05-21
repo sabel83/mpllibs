@@ -10,12 +10,11 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::return_;
 using mpllibs::metaparse::get_result;
@@ -28,7 +27,7 @@ using boost::mpl::equal_to;
 
 namespace
 {
-  const test_suite suite("return");
+  const suite_path suite("return");
 
   typedef apply<return_<int1>, int2, int3> acc;
   

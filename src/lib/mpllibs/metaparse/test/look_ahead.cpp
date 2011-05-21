@@ -12,13 +12,12 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::look_ahead;
@@ -34,7 +33,7 @@ using boost::mpl::equal;
 
 namespace
 {
-  const test_suite suite("look_ahead");
+  const suite_path suite("look_ahead");
   
   typedef
     equal_to<

@@ -11,12 +11,11 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::digit_val;
@@ -28,7 +27,7 @@ using boost::mpl::equal_to;
 
 namespace
 {
-  const test_suite suite("digit_val");
+  const suite_path suite("digit_val");
 
   typedef is_error<apply<digit_val, str_hello, start> > test_with_text;
 

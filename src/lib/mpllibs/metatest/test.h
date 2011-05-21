@@ -39,12 +39,14 @@
 #ifdef MPLLIBS_ADD_TEST
   #error MPLLIBS_ADD_TEST already defined
 #endif
-#define MPLLIBS_ADD_TEST(suite, name) MPLLIBS_ADD_TEST_IMPL((suite), name, true)
+#define MPLLIBS_ADD_TEST(suite, name) \
+  MPLLIBS_ADD_TEST_IMPL((suite), name, true)
 
 #ifdef MPLLIBS_ADD_TEST_TO_FAIL
   #error MPLLIBS_ADD_TEST_TO_FAIL already defined
 #endif
-#define MPLLIBS_ADD_TEST_TO_FAIL(suite, name) MPLLIBS_ADD_TEST_IMPL((suite), name, false)
+#define MPLLIBS_ADD_TEST_TO_FAIL(suite, name) \
+  MPLLIBS_ADD_TEST_IMPL((suite), name, false)
 
 #endif
 

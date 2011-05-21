@@ -8,14 +8,13 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::util::cons;
 
@@ -26,7 +25,7 @@ using boost::mpl::list;
 
 namespace
 {
-  const test_suite suite("util::cons");
+  const suite_path suite = suite_path("util")("cons");
   
   typedef
     equal<apply<cons, pair<int11, list<int13> > >::type, list<int11, int13> >

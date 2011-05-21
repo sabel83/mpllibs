@@ -32,7 +32,7 @@ struct remove_parentheses_helper<void (T)>
 
 namespace
 {
-  const mpllibs::metatest::test_suite suite ("inline_test");
+  const mpllibs::metatest::suite_path suite ("inline_test");
   using namespace boost::mpl;
 }
 

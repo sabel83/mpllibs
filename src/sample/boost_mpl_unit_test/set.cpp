@@ -25,7 +25,7 @@
 
 namespace
 {
-  const mpllibs::metatest::test_suite suite ("set");
+  const mpllibs::metatest::suite_path suite ("set");
 
   using namespace boost::mpl;
   using boost::is_same;

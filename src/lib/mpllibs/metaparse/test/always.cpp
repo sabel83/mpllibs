@@ -12,11 +12,10 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::always;
@@ -29,7 +28,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const test_suite suite("always");
+  const suite_path suite("always");
   
   typedef always<digit, int13> always_digit_13;
 

@@ -11,6 +11,7 @@
 #include <mpllibs/metatest/has_type.h>
 #include <mpllibs/metatest/test_result.h>
 #include <mpllibs/metatest/to_stream.h>
+#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
@@ -26,16 +27,10 @@ namespace mpllibs
   {
     class test_driver
     {
-    private:
-      typedef std::list<test_result> result_list;
     public:
-      typedef result_list::const_iterator const_iterator;
-    
-      ~test_driver();
-    
       template <class TestFunctor, bool ExpectedResult>
       static void run_test(
-        const test_suite& suite_,
+        const suite_path& suite_,
         const std::string& name_,
         const location& location_
       )
@@ -53,41 +48,32 @@ namespace mpllibs
         ostringstream s;
         to_stream<TestFunctor>::run(s);
 
+        const bool success = has_t && has_v && result == ExpectedResult;
+
+        const string reason =
+          has_t ?
+            (
+              has_v ?
+                s.str() :
+                string("Result of test case has no nested boolean value")
+            )
+            :
+            string("Test case has no nested type");
+        
         test_driver::add(
-          test_result(
-            suite_,
-            name_,
-            location_,
-            has_t && has_v && result == ExpectedResult,
-            has_t ?
-              (
-                has_v ?
-                  s.str() :
-                  string("Result of test case has no nested boolean value")
-              )
-              :
-              string("Test case has no nested type")
-          )
+          suite_,
+          test_result(name_, location_, success, reason)
         );
       }
    
-      size_t failure_count() const;
-      
-      size_t total_count() const;
-      
       static test_driver& instance();
       
-      const_iterator begin() const;
-      const_iterator end() const;
-    
-      int main(int, char*[]) const;
+      const test_suite& suite() const;
     private:
-      result_list _results;
+      test_suite _suite;
       
-      static void add(const test_result& result_);
+      static void add(const suite_path& suite_, const test_result& result_);
     };
-    
-    std::ostream& operator<<(std::ostream& out_, const test_driver& d_);
   }
 }
 

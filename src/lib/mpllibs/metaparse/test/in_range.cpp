@@ -8,11 +8,10 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::util::in_range;
 
@@ -20,7 +19,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const test_suite suite("util::in_range");
+  const suite_path suite = suite_path("util")("in_range");
 
   typedef apply<in_range<int10, int13>, int12> test_int_in_range;
 

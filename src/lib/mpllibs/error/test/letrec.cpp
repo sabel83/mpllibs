@@ -7,7 +7,6 @@
 #include <mpllibs/error/lambda.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include "common.h"
 
@@ -16,14 +15,14 @@
 using boost::mpl::equal_to;
 using boost::mpl::minus;
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::error::letrec;
 using mpllibs::error::lambda;
 
 namespace
 {
-  const test_suite suite("letrec");
+  const suite_path suite("letrec");
 
   typedef
     equal_to<

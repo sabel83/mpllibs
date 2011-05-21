@@ -9,20 +9,64 @@ using namespace std;
 namespace mpllibs {
 namespace metatest {
 
-bool plaintext_report(std::ostream &os_)
+namespace
 {
-  test_driver &driver = test_driver::instance();
-
-  os_ << "The following tests have been executed:" << endl;
+  void display(ostream& out_, const string& path_, const test_suite& f_)
+  {
+    using std::endl;
     
-  copy(driver.begin(), driver.end(),
-      ostream_iterator<test_result>(os_, "  "));
-      
-  os_ << "========================" << std::endl;
-  os_ << "Number of tests: " << driver.total_count() << endl;
-  os_ << "Number of failures: " << driver.failure_count() << endl;
+    for (
+      test_suite::suite_map::const_iterator
+        i = f_.suites().begin(),
+        e = f_.suites().end();
+      i != e;
+      ++i
+    )
+    {
+      display(out_, path_ + i->first + "::", i->second);
+    }
+    
+    for (
+      test_suite::result_list::const_iterator
+        i = f_.results().begin(),
+        e = f_.results().end();
+      i != e;
+      ++i
+    )
+    {
+      out_ << "  " << path_ << i->get_name() << ": ";
+      if (i->success())
+      {
+        out_ << "OK";
+      }
+      else
+      {
+        out_ << "FAIL (" << i->get_location() << ")";
+        if (i->has_reason())
+        {
+          out_ << endl << "\t" << i->get_reason();
+        }
+      }
+      out_ << endl;
+    }
+  }
+}
 
-  return driver.failure_count() == 0;
+bool plaintext_report(std::ostream& out_)
+{
+  using std::endl;
+
+  const test_suite& suite = test_driver::instance().suite();
+
+  out_ << "The following tests have been executed:" << endl;
+  
+  display(out_, "", suite);
+      
+  out_ << "========================" << endl;
+  out_ << "Number of tests: " << suite.count() << endl;
+  out_ << "Number of failures: " << suite.failure_count() << endl;
+      
+  return out_;
 }
 
 } // namespace metatest

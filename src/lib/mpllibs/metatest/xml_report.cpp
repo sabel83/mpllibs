@@ -11,7 +11,9 @@ namespace metatest {
 
 bool xml_report(std::ostream &os_)
 {
-  using boost::lambda::_1;
+  os_ << "TODO" << endl;
+  return true;
+/*  using boost::lambda::_1;
   using boost::lambda::constant;
 
   test_driver &driver = test_driver::instance();
@@ -31,7 +33,7 @@ bool xml_report(std::ostream &os_)
 
   os_ << "</summary>\n";
 
-  return driver.failure_count() == 0;
+  return driver.failure_count() == 0;*/
 }
 
 } // namespace metatest

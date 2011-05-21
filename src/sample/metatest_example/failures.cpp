@@ -14,7 +14,7 @@
 
 #include <boost/type_traits/is_same.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using boost::mpl::true_;
 using boost::mpl::false_;
@@ -40,7 +40,7 @@ struct bad2
 
 namespace
 {
-  const test_suite suite("example_failure");
+  const suite_path suite("example_failure");
 
   typedef bad<int> test_no_type;
 

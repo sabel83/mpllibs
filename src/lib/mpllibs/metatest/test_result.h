@@ -7,7 +7,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metatest/location.h>
-#include <mpllibs/metatest/test_suite.h>
 
 namespace mpllibs
 {
@@ -17,7 +16,6 @@ namespace mpllibs
     {
     public:
       test_result(
-        const test_suite& suite_,
         const std::string& name_,
         const location& location_,
         bool success_,
@@ -32,17 +30,12 @@ namespace mpllibs
       const std::string& get_reason() const;
       
       bool has_reason() const;
-      
-      const test_suite& get_suite() const;
     private:
-      test_suite _suite;
       std::string _name;
       location _location;
       bool _success;
       std::string _reason;
     };
-    
-    std::ostream& operator<<(std::ostream& out_, const test_result& r_);
   }
 }
 

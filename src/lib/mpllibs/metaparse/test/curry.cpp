@@ -8,7 +8,6 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
@@ -16,7 +15,7 @@
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/identity.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::util::curry0;
 using mpllibs::metaparse::util::curry2;
@@ -27,7 +26,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const test_suite suite("util::curry");
+  const suite_path suite = suite_path("util")("curry");
   
   template <class A, class B>
   struct get_first : identity<A> {};

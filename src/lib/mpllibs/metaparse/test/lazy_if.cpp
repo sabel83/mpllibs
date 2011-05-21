@@ -8,7 +8,6 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
@@ -17,7 +16,7 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/equal_to.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::util::lazy_if;
 
@@ -28,7 +27,7 @@ using boost::mpl::eval_if;
 
 namespace
 {
-  const test_suite suite("util::lazy_if");
+  const suite_path suite = suite_path("util")("lazy_if");
   
   typedef lazy_if<equal_to<int13, int13>, true_, false_> evaluated_condition;
   

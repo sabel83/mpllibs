@@ -9,11 +9,10 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/not.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::fail;
@@ -23,7 +22,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const test_suite suite("is_error");
+  const suite_path suite("is_error");
   
   typedef not_<is_error<int13> > test_not_error;
 

@@ -12,7 +12,7 @@
 
 namespace
 {
-  const mpllibs::metatest::test_suite suite ("my_reverse");
+  const mpllibs::metatest::suite_path suite ("my_reverse");
 
   using namespace boost;
   using namespace mpl;

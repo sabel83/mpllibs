@@ -11,12 +11,11 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::empty;
@@ -28,7 +27,7 @@ using boost::mpl::apply;
 
 namespace
 {
-  const test_suite suite("empty");
+  const suite_path suite("empty");
   
   typedef empty<int13> empty13;
 

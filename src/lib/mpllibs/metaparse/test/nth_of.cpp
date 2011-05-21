@@ -11,13 +11,12 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/int.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::nth_of_c;
@@ -34,7 +33,7 @@ namespace mp = mpllibs::metaparse;
 
 namespace
 {
-  const test_suite suite("nth_of");
+  const suite_path suite("nth_of");
   
   typedef
     equal_to<

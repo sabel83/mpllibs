@@ -10,7 +10,6 @@
 #include <mpllibs/error/get_data.h>
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -21,14 +20,14 @@
 
 using boost::mpl::equal_to;
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::error::get_data;
 using mpllibs::error::exception_monad;
 
 namespace
 {
-  const test_suite suite("THROW");
+  const suite_path suite("THROW");
   
   typedef equal_to<int13, get_data<THROW<int13> >::type> test_get_data;
 

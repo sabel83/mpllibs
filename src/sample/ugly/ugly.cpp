@@ -16,7 +16,7 @@ using namespace mpl;
 
 namespace
 {
-  const mpllibs::metatest::test_suite suite ("ugly");
+  const mpllibs::metatest::suite_path suite ("ugly");
 
   namespace testcase_1
   {

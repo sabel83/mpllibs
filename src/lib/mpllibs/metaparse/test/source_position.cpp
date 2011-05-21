@@ -11,11 +11,10 @@
 #include "common.h"
 
 #include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
 
 #include <boost/mpl/equal_to.hpp>
 
-using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::get_line;
 using mpllibs::metaparse::get_col;
@@ -29,7 +28,7 @@ using boost::mpl::equal_to;
 
 namespace
 {
-  const test_suite suite("source_position");
+  const suite_path suite("source_position");
   
   typedef source_position<int11, int13, int1> sp;
   typedef next_char<start, char_0> next0;

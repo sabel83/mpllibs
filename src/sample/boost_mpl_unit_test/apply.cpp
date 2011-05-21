@@ -13,7 +13,7 @@
 
 namespace
 {
-  const mpllibs::metatest::test_suite suite ("apply");
+  const mpllibs::metatest::suite_path suite ("apply");
 
   using namespace boost::mpl;
   using boost::is_same;
