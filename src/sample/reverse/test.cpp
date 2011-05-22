@@ -3,12 +3,12 @@
 //    (See accompanying file LICENSE_2_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include "my_reverse.h"
+#include "my_reverse.hpp"
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/equal.hpp>
 
-#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/test.hpp>
 
 namespace
 {

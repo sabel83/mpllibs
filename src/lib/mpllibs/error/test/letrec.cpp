@@ -3,12 +3,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/letrec.h>
-#include <mpllibs/error/lambda.h>
+#include <mpllibs/error/letrec.hpp>
+#include <mpllibs/error/lambda.hpp>
 
-#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/test.hpp>
 
-#include "common.h"
+#include "common.hpp"
 
 #include <boost/mpl/minus.hpp>
 

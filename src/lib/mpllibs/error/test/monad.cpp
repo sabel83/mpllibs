@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/test.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
@@ -12,7 +12,7 @@
 
 #include <boost/static_assert.hpp>
 
-#include "common.h"
+#include "common.hpp"
 
 using boost::mpl::minus;
 using boost::mpl::equal_to;
