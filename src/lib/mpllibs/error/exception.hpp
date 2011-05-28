@@ -13,6 +13,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/identity.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
@@ -113,15 +114,6 @@ namespace mpllibs
     template <class>
     struct bind_impl;
 
-    namespace impl
-    {
-      template <class Exception>
-      struct propagate_exception
-      {
-        typedef Exception type;
-      };
-    }
-
     template <>
     struct bind_impl<exception_tag>
     {
@@ -129,7 +121,7 @@ namespace mpllibs
       struct apply :
         boost::mpl::if_<
           boost::is_same<exception_tag, typename boost::mpl::tag<A>::type>,
-          mpllibs::error::impl::propagate_exception<A>,
+          boost::mpl::identity<A>,
           boost::mpl::apply<F, A>
         >::type
       {};
