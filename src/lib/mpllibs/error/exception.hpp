@@ -120,9 +120,6 @@ namespace mpllibs
       {
         typedef Exception type;
       };
-      
-      template <class A, class F>
-      struct eval_next_step : boost::mpl::apply<F, A> {};
     }
 
     template <>
@@ -133,7 +130,7 @@ namespace mpllibs
         boost::mpl::if_<
           boost::is_same<exception_tag, typename boost::mpl::tag<A>::type>,
           mpllibs::error::impl::propagate_exception<A>,
-          mpllibs::error::impl::eval_next_step<A, F>
+          boost::mpl::apply<F, A>
         >::type
       {};
     };
