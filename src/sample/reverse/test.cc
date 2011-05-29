@@ -12,9 +12,14 @@
 
 MPL_TEST_CASE()
 {
-  typedef vector<char, short, int, long> types;
-  typedef vector<long, int, short, char> reversed;
+  typedef vector<> empty;
+  typedef vector<char> one;
+  typedef vector<char, short, int, long> four;
 
-  MPL_ASSERT(( equal< my_reverse<types>::type, reversed > ));
+  typedef vector<long, int, short, char> four_r;
+
+  MPL_ASSERT(( equal< my_reverse<empty>::type, empty > ));
+  MPL_ASSERT(( equal< my_reverse<one>::type, one > ));
+  MPL_ASSERT(( equal< my_reverse<four>::type, four_r > ));
 }
 

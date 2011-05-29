@@ -17,11 +17,18 @@ namespace
   using namespace boost;
   using namespace mpl;
 
-  typedef vector<char, short, int, long> types;
-  typedef vector<long, int, short, char> reversed;
+  typedef vector<> empty;
+  typedef vector<char> one;
+  typedef vector<char, short, int, long> four;
 
-  typedef equal< my_reverse<types>::type, reversed > test;
+  typedef vector<long, int, short, char> four_r;
+
+  typedef equal< my_reverse<empty>::type, empty > empty_test;
+  typedef equal< my_reverse<one>::type, one > one_test;
+  typedef equal< my_reverse<four>::type, four_r > four_test;
 }
 
-MPLLIBS_ADD_TEST(suite, test)
+MPLLIBS_ADD_TEST(suite, empty_test)
+MPLLIBS_ADD_TEST(suite, one_test)
+MPLLIBS_ADD_TEST(suite, four_test)
 
