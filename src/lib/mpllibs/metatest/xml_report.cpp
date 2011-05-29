@@ -1,5 +1,5 @@
-#include <mpllibs/metatest/xml_report.h>
-#include <mpllibs/metatest/test_driver.h>
+#include <mpllibs/metatest/xml_report.hpp>
+#include <mpllibs/metatest/test_driver.hpp>
 
 #include <algorithm>
 #include <boost/lambda/lambda.hpp>

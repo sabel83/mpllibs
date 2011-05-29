@@ -3,14 +3,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/source_position.h>
-#include <mpllibs/metaparse/next_char.h>
-#include <mpllibs/metaparse/next_line.h>
-#include <mpllibs/metaparse/get_prev_char.h>
+#include <mpllibs/metaparse/source_position.hpp>
+#include <mpllibs/metaparse/next_char.hpp>
+#include <mpllibs/metaparse/next_line.hpp>
+#include <mpllibs/metaparse/get_prev_char.hpp>
 
-#include "common.h"
+#include "common.hpp"
 
-#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 

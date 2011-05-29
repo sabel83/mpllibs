@@ -3,12 +3,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/exception.h>
-#include <mpllibs/error/do_.h>
+#include <mpllibs/error/exception.hpp>
+#include <mpllibs/error/do_.hpp>
 
-#include <mpllibs/error/get_data.h>
+#include <mpllibs/error/get_data.hpp>
 
-#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/test.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -17,7 +17,7 @@
 
 #include <boost/type_traits/is_same.hpp>
 
-#include "common.h"
+#include "common.hpp"
 
 using boost::is_same;
 

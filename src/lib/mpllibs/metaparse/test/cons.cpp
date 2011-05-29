@@ -3,11 +3,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/cons.h>
+#include <mpllibs/metaparse/util/cons.hpp>
 
-#include "common.h"
+#include "common.hpp"
 
-#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/test.hpp>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/apply.hpp>

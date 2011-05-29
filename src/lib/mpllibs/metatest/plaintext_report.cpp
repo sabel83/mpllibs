@@ -1,5 +1,5 @@
-#include <mpllibs/metatest/plaintext_report.h>
-#include <mpllibs/metatest/test_driver.h>
+#include <mpllibs/metatest/plaintext_report.hpp>
+#include <mpllibs/metatest/test_driver.hpp>
 
 #include <algorithm>
 #include <iterator>

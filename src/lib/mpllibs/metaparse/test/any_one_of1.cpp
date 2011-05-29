@@ -3,19 +3,19 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/any_one_of1.h>
-#include <mpllibs/metaparse/one_char.h>
-#include <mpllibs/metaparse/fail.h>
-#include <mpllibs/metaparse/keyword.h>
-#include <mpllibs/metaparse/is_error.h>
-#include <mpllibs/metaparse/source_position.h>
-#include <mpllibs/metaparse/get_result.h>
+#include <mpllibs/metaparse/any_one_of1.hpp>
+#include <mpllibs/metaparse/one_char.hpp>
+#include <mpllibs/metaparse/fail.hpp>
+#include <mpllibs/metaparse/keyword.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/source_position.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
 
-#include <mpllibs/metaparse/util/define_data.h>
+#include <mpllibs/metaparse/util/define_data.hpp>
 
-#include "common.h"
+#include "common.hpp"
 
-#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>

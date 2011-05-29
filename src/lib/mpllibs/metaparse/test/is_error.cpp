@@ -3,12 +3,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/is_error.h>
-#include <mpllibs/metaparse/fail.h>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/fail.hpp>
 
-#include "common.h"
+#include "common.hpp"
 
-#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/test.hpp>
 
 #include <boost/mpl/not.hpp>
 

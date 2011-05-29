@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/test_suite.h>
+#include <mpllibs/metatest/test_suite.hpp>
 
 #include <boost/lambda/lambda.hpp>
 #include <boost/bind.hpp>

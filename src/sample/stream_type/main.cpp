@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream.h>
+#include <mpllibs/metatest/to_stream.hpp>
 
 #include <boost/mpl/vector_c.hpp>
 #include <boost/mpl/list_c.hpp>

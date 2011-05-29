@@ -3,12 +3,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/any.h>
-#include <mpllibs/metaparse/sequence.h>
-#include <mpllibs/metaparse/lit_c.h>
-#include <mpllibs/metaparse/debug_parsing_error.h>
+#include <mpllibs/metaparse/any.hpp>
+#include <mpllibs/metaparse/sequence.hpp>
+#include <mpllibs/metaparse/lit_c.hpp>
+#include <mpllibs/metaparse/debug_parsing_error.hpp>
 
-#include <mpllibs/metaparse/build_parser.h>
+#include <mpllibs/metaparse/build_parser.hpp>
 
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/apply.hpp>
