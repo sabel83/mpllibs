@@ -28,7 +28,7 @@ namespace mpllibs
     {
       template <class A>
       struct apply :
-        boost::mpl::apply<return__impl<typename MonadTag::type>, A>
+        boost::mpl::apply<return__impl<MonadTag>, A>
       {};
     };
   }

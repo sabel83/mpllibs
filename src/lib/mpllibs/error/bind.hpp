@@ -19,11 +19,7 @@ namespace mpllibs
     // bind evaluates arguments lazily
     template <class MonadTag, class A, class F>
     struct bind :
-      boost::mpl::apply<
-        mpllibs::error::bind_impl<typename MonadTag::type>,
-        typename A::type,
-        typename F::type
-      >
+      boost::mpl::apply<mpllibs::error::bind_impl<MonadTag>, A, F>
     {};
   }
 }
