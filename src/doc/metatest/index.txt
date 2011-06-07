@@ -38,8 +38,8 @@ How to write tests
 Include the following headers:
 
 --------------------------------------
-#include <mpllibs/metatest/test.h>
-#include <mpllibs/metatest/test_suite.h>
+#include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/test_suite.hpp>
 --------------------------------------
 
 Create a test suite by creating a static +mpllibs::metatest::test_suite+ object.
@@ -95,7 +95,7 @@ the summary is printed regardless of the contents of +main()+. However, it is
 recommended to implement +main+ the following way:
 
 --------------------------------------
-#include <mpllibs/metatest/test.h>
+#include <mpllibs/metatest/test.hpp>
 
 int main(int argc, char* argv[])
 {
