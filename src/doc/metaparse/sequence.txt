@@ -41,7 +41,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/sequence.h>
+#include <mpllibs/metaparse/sequence.hpp>
 --------------------------------------
 
 Expression semantics

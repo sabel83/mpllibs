@@ -33,7 +33,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/except.h>
+#include <mpllibs/metaparse/except.hpp>
 --------------------------------------
 
 Expression semantics

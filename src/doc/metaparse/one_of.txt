@@ -42,7 +42,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/one_of.h>
+#include <mpllibs/metaparse/one_of.hpp>
 --------------------------------------
 
 Expression semantics

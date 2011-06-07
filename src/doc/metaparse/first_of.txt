@@ -38,7 +38,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/first_of.h>
+#include <mpllibs/metaparse/first_of.hpp>
 --------------------------------------
 
 Expression semantics

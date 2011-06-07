@@ -46,7 +46,7 @@ following functions can be used to query it:
 * link:get_line.html[get_line]
 
 The beginning of the input is +mpllibs::metaparse::start+, which requires
-+<mpllibs/metaparse/source_position.h>+ to be included.
++<mpllibs/metaparse/source_position.hpp>+ to be included.
 
 Error handling
 ~~~~~~~~~~~~~~

@@ -34,7 +34,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/always.h>
+#include <mpllibs/metaparse/always.hpp>
 --------------------------------------
 
 Expression semantics

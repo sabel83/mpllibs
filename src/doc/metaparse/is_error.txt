@@ -28,7 +28,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/is_error.h>
+#include <mpllibs/metaparse/is_error.hpp>
 --------------------------------------
 
 Expression semantics

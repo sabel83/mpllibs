@@ -38,7 +38,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/last_of.h>
+#include <mpllibs/metaparse/last_of.hpp>
 --------------------------------------
 
 Expression semantics

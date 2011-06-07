@@ -32,7 +32,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/alphanum.h>
+#include <mpllibs/metaparse/alphanum.hpp>
 --------------------------------------
 
 Expression semantics

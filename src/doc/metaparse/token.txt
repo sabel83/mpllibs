@@ -34,7 +34,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/token.h>
+#include <mpllibs/metaparse/token.hpp>
 --------------------------------------
 
 Expression semantics

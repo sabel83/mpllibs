@@ -33,7 +33,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/lit.h>
+#include <mpllibs/metaparse/lit.hpp>
 --------------------------------------
 
 Expression semantics

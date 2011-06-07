@@ -36,7 +36,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/accept_when.h>
+#include <mpllibs/metaparse/accept_when.hpp>
 --------------------------------------
 
 Expression semantics

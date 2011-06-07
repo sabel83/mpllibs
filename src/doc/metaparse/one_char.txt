@@ -32,7 +32,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/one_char.h>
+#include <mpllibs/metaparse/one_char.hpp>
 --------------------------------------
 
 Expression semantics

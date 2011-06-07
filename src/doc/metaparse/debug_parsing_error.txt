@@ -38,7 +38,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/debug_parsing_error.h>
+#include <mpllibs/metaparse/debug_parsing_error.hpp>
 --------------------------------------
 
 Expression semantics

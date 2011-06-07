@@ -32,7 +32,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/spaces.h>
+#include <mpllibs/metaparse/spaces.hpp>
 --------------------------------------
 
 Expression semantics

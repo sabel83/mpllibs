@@ -30,7 +30,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/look_ahead.h>
+#include <mpllibs/metaparse/look_ahead.hpp>
 --------------------------------------
 
 Expression semantics

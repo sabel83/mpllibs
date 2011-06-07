@@ -33,7 +33,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/keyword.h>
+#include <mpllibs/metaparse/keyword.hpp>
 --------------------------------------
 
 Expression semantics

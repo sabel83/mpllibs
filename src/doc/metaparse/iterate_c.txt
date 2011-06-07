@@ -35,7 +35,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/iterate_c.h>
+#include <mpllibs/metaparse/iterate_c.hpp>
 --------------------------------------
 
 Expression semantics

@@ -34,7 +34,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/middle_of.h>
+#include <mpllibs/metaparse/middle_of.hpp>
 --------------------------------------
 
 Expression semantics

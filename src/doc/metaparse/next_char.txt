@@ -28,7 +28,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/next_char.h>
+#include <mpllibs/metaparse/next_char.hpp>
 --------------------------------------
 
 Expression semantics

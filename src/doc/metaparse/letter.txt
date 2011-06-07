@@ -32,7 +32,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/letter.h>
+#include <mpllibs/metaparse/letter.hpp>
 --------------------------------------
 
 Expression semantics

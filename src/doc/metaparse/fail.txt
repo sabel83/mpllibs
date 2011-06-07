@@ -32,7 +32,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/fail.h>
+#include <mpllibs/metaparse/fail.hpp>
 --------------------------------------
 
 Expression semantics

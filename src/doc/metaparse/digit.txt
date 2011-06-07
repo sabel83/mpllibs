@@ -32,7 +32,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/digit.h>
+#include <mpllibs/metaparse/digit.hpp>
 --------------------------------------
 
 Expression semantics
