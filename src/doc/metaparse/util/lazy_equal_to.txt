@@ -28,7 +28,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/lazy_equal_to.h>
+#include <mpllibs/metaparse/util/lazy_equal_to.hpp>
 --------------------------------------
 
 Expression semantics

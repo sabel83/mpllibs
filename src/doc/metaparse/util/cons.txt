@@ -33,7 +33,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/cons.h>
+#include <mpllibs/metaparse/util/cons.hpp>
 --------------------------------------
 
 Expression semantics

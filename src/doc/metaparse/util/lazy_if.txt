@@ -28,7 +28,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/lazy_if.h>
+#include <mpllibs/metaparse/util/lazy_if.hpp>
 --------------------------------------
 
 Expression semantics

@@ -32,7 +32,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/is_whitespace.h>
+#include <mpllibs/metaparse/util/is_whitespace.hpp>
 --------------------------------------
 
 Expression semantics

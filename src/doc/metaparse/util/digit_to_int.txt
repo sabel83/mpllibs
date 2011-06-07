@@ -33,7 +33,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/digit_to_int.h>
+#include <mpllibs/metaparse/util/digit_to_int.hpp>
 --------------------------------------
 
 Expression semantics

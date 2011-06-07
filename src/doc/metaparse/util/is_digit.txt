@@ -31,7 +31,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/is_digit.h>
+#include <mpllibs/metaparse/util/is_digit.hpp>
 --------------------------------------
 
 Expression semantics

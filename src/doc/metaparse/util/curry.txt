@@ -35,7 +35,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/curry.h>
+#include <mpllibs/metaparse/util/curry.hpp>
 --------------------------------------
 
 Expression semantics

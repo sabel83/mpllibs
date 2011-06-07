@@ -33,7 +33,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/compose.h>
+#include <mpllibs/metaparse/util/compose.hpp>
 --------------------------------------
 
 Expression semantics

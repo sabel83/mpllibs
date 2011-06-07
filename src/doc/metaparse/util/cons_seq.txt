@@ -35,7 +35,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/cons_seq.h>
+#include <mpllibs/metaparse/util/cons_seq.hpp>
 --------------------------------------
 
 Expression semantics
