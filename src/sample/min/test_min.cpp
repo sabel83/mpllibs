@@ -12,7 +12,7 @@
 
 using mpllibs::metatest::suite_path;
 
-using mpllibs::error::exception;
+using mpllibs::metamonad::exception;
 
 using boost::mpl::int_;
 using boost::mpl::equal_to;

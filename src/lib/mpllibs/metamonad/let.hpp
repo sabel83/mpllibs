@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/util/id.hpp>
+#include <mpllibs/metamonad/util/id.hpp>
 
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
@@ -14,7 +14,7 @@
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <class A, class E1, class E2>
     struct let_impl;
@@ -23,16 +23,16 @@ namespace mpllibs
     struct let : let_impl<A, E1, E2> {};
 
     template <class A, class E1>
-    struct let<A, E1, A> : mpllibs::error::util::id<E1> {};
+    struct let<A, E1, A> : mpllibs::metamonad::util::id<E1> {};
 
     
     // let_impl assumes, that let_impl<A, E1, A> is never instantiated
     template <class A, class E1, class E2>
-    struct let_impl : mpllibs::error::util::id<E2> {};
+    struct let_impl : mpllibs::metamonad::util::id<E2> {};
 
     template <class A, class E1a, class E1b, class E2>
     struct let_impl<A, E1a, let<A, E1b, E2> > :
-      mpllibs::error::util::id<let<A, E1b, E2> >
+      mpllibs::metamonad::util::id<let<A, E1b, E2> >
     {};
 
     template <class A, class E1, class E2>
@@ -40,7 +40,7 @@ namespace mpllibs
 
     template <class A, class E1a, class E1b, class E2>
     struct let_impl<A, E1a, letrec<A, E1b, E2> > :
-      mpllibs::error::util::id<letrec<A, E1b, E2> >
+      mpllibs::metamonad::util::id<letrec<A, E1b, E2> >
     {};
 
     #ifndef LET_MAX_TEMPLATE_ARGUMENT
@@ -70,7 +70,9 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS(n, class X) \
       > \
       struct let_impl<A, E1, T<BOOST_PP_ENUM_PARAMS(n, X)> > : \
-        mpllibs::error::util::id< T< BOOST_PP_REPEAT(n, LET_REC_CASE, ~) > > \
+        mpllibs::metamonad::util::id< \
+          T<BOOST_PP_REPEAT(n, LET_REC_CASE, ~) > \
+        > \
       {};
     
     BOOST_PP_REPEAT_FROM_TO(1, LET_MAX_TEMPLATE_ARGUMENT, LET_TEMPLATE_CASE, ~)

@@ -8,7 +8,7 @@
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     namespace util
     {

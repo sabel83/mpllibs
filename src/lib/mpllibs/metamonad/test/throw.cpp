@@ -3,11 +3,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/throw.hpp>
-#include <mpllibs/error/exception.hpp>
-#include <mpllibs/error/do_.hpp>
-
-#include <mpllibs/error/get_data.hpp>
+#include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/exception.hpp>
+#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/get_data.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -22,8 +21,8 @@ using boost::mpl::equal_to;
 
 using mpllibs::metatest::suite_path;
 
-using mpllibs::error::get_data;
-using mpllibs::error::exception_monad;
+using mpllibs::metamonad::get_data;
+using mpllibs::metamonad::exception_monad;
 
 namespace
 {

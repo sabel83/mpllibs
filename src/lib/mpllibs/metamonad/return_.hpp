@@ -11,7 +11,7 @@
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <class>
     struct return__impl;
@@ -19,7 +19,6 @@ namespace mpllibs
     
     struct no_return_argument;
 
-    // monad_tag is lazy
     template <class MonadTag, class A = no_return_argument>
     struct return_ : boost::mpl::apply<return_<MonadTag>, A> {};
     
@@ -27,9 +26,7 @@ namespace mpllibs
     struct return_<MonadTag, no_return_argument>
     {
       template <class A>
-      struct apply :
-        boost::mpl::apply<return__impl<MonadTag>, A>
-      {};
+      struct apply : boost::mpl::apply<return__impl<MonadTag>, A> {};
     };
   }
 }

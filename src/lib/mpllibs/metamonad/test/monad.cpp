@@ -19,8 +19,8 @@ using boost::mpl::equal_to;
 
 using mpllibs::metatest::suite_path;
 
-using mpllibs::error::return_;
-using mpllibs::error::bind;
+using mpllibs::metamonad::return_;
+using mpllibs::metamonad::bind;
 
 namespace
 {

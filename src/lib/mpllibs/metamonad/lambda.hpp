@@ -6,11 +6,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/let.hpp>
+#include <mpllibs/metamonad/let.hpp>
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <class ArgName, class F>
     struct lambda

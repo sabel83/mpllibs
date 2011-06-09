@@ -5,8 +5,8 @@
 #ifndef EITHER_MONAD_H
 #define EITHER_MONAD_H
 
-#include <mpllibs/error/return_.hpp>
-#include <mpllibs/error/bind.hpp>
+#include <mpllibs/metamonad/return_.hpp>
+#include <mpllibs/metamonad/bind.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/tag.hpp>
@@ -54,7 +54,7 @@ namespace
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <>
     struct return__impl<either_tag>
@@ -100,7 +100,7 @@ namespace boost
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <>
     struct bind_impl<either_tag>
@@ -119,10 +119,10 @@ namespace mpllibs
     };
     
     template <>
-    struct bind_impl<right_tag> : mpllibs::error::bind_impl<either_tag> {};
+    struct bind_impl<right_tag> : bind_impl<either_tag> {};
   
     template <>
-    struct bind_impl<left_tag> : mpllibs::error::bind_impl<either_tag> {};
+    struct bind_impl<left_tag> : bind_impl<either_tag> {};
   }
 }
 

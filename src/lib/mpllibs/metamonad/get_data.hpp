@@ -11,7 +11,7 @@
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <class>
     struct get_data_impl;
@@ -19,9 +19,7 @@ namespace mpllibs
     template <class E>
     struct get_data :
       boost::mpl::apply<
-        get_data_impl<
-          typename boost::mpl::tag<typename E::type>::type
-        >,
+        get_data_impl<typename boost::mpl::tag<typename E::type>::type>,
         typename E::type
       >
     {};

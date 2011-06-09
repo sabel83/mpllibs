@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/letrec.hpp>
-#include <mpllibs/error/lambda.hpp>
+#include <mpllibs/metamonad/letrec.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -17,8 +17,8 @@ using boost::mpl::minus;
 
 using mpllibs::metatest::suite_path;
 
-using mpllibs::error::letrec;
-using mpllibs::error::lambda;
+using mpllibs::metamonad::letrec;
+using mpllibs::metamonad::lambda;
 
 namespace
 {

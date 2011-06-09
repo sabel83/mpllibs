@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/throw.hpp>
+#include <mpllibs/metamonad/throw.hpp>
 
 #include <boost/mpl/apply.hpp>
 

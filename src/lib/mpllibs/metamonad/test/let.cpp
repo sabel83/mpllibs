@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/let.hpp>
+#include <mpllibs/metamonad/let.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -14,7 +14,7 @@ using boost::mpl::plus;
 
 using mpllibs::metatest::suite_path;
 
-using mpllibs::error::let;
+using mpllibs::metamonad::let;
 
 namespace
 {

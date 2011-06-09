@@ -6,33 +6,27 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/bind.hpp>
+#include <mpllibs/metamonad/bind.hpp>
 
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply.hpp>
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <class MonadTag>
     struct bind__impl
     {
       template <class A, class B>
       struct apply :
-        boost::mpl::apply<
-          mpllibs::error::bind_impl<MonadTag>,
-          A,
-          boost::mpl::always<B>
-        >
+        boost::mpl::apply<bind_impl<MonadTag>, A, boost::mpl::always<B> >
       {};
     };
 
     // bind_ evaluates its arguments lazily
     template <class MonadTag, class A, class B>
-    struct bind_ :
-      boost::mpl::apply<mpllibs::error::bind__impl<MonadTag>, A, B>
-    {};
+    struct bind_ : boost::mpl::apply<bind__impl<MonadTag>, A, B> {};
   }
 }
 

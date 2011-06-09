@@ -6,19 +6,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/exception.hpp>
+#include <mpllibs/metamonad/exception.hpp>
 
-namespace mpllibs
-{
-  namespace error
-  {
-    #ifdef THROW
-      #error THROW already defined
-    #endif
-    #define THROW mpllibs::error::exception
-  }
-}
-
+#ifdef THROW
+  #error THROW already defined
+#endif
+#define THROW mpllibs::metamonad::exception
 
 #endif
 

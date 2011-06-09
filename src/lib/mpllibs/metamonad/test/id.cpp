@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/util/id.hpp>
+#include <mpllibs/metamonad/util/id.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -15,7 +15,7 @@ using boost::mpl::equal_to;
 
 using mpllibs::metatest::suite_path;
 
-using mpllibs::error::util::id;
+using mpllibs::metamonad::util::id;
 
 using std::string;
 

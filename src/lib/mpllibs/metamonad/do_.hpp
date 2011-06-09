@@ -6,11 +6,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/lambda.hpp>
-#include <mpllibs/error/bind_.hpp>
-#include <mpllibs/error/bind.hpp>
-#include <mpllibs/error/let.hpp>
-#include <mpllibs/error/return_.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/bind_.hpp>
+#include <mpllibs/metamonad/bind.hpp>
+#include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/return_.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
@@ -18,7 +18,7 @@
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     #ifndef DO_MAX_ARGUMENT
       #define DO_MAX_ARGUMENT 8
@@ -34,17 +34,17 @@ namespace mpllibs
     #ifdef DO
       #error DO already defined
     #endif
-    #define DO mpllibs::error::do_
+    #define DO mpllibs::metamonad::do_
     
     #ifdef SET
       #error SET already defined
     #endif
-    #define SET mpllibs::error::set
+    #define SET mpllibs::metamonad::set
   
     #ifdef RETURN
       #error RETURN already defined
     #endif
-    #define RETURN mpllibs::error::do_return
+    #define RETURN mpllibs::metamonad::do_return
 
     struct unused_do_argument;
 
@@ -53,7 +53,7 @@ namespace mpllibs
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         DO_MAX_ARGUMENT,
         class E,
-        mpllibs::error::unused_do_argument
+        unused_do_argument
       )
     >
     struct do_impl;
@@ -73,15 +73,12 @@ namespace mpllibs
     // recurse into that.
     // Using boost::mpl::apply and do_ together is not supported
     template <class Monad, class T>
-    struct do_substitute : mpllibs::error::util::id<T> {};
+    struct do_substitute : mpllibs::metamonad::util::id<T> {};
 
     template <class Monad, class T>
     struct do_substitute<Monad, do_return<T> > :
-      mpllibs::error::util::id<
-        mpllibs::error::return_<
-          Monad,
-          typename mpllibs::error::do_substitute<Monad, T>::type
-        >
+      mpllibs::metamonad::util::id<
+        return_<Monad, typename do_substitute<Monad, T>::type>
       >
     {};
     
@@ -89,12 +86,9 @@ namespace mpllibs
     // we need to re-substitute it. I couldn't find a way of preventing
     // substitution of inner do_'s do_returns.
     template <class Monad1, class Monad2, class T>
-    struct do_substitute<Monad1, mpllibs::error::return_<Monad2, T> > :
-      mpllibs::error::util::id<
-        mpllibs::error::return_<
-          Monad1,
-          typename mpllibs::error::do_substitute<Monad1, T>::type
-        >
+    struct do_substitute<Monad1, return_<Monad2, T> > :
+      mpllibs::metamonad::util::id<
+        return_<Monad1, typename do_substitute<Monad1, T>::type>
       >
     {};
 
@@ -109,7 +103,7 @@ namespace mpllibs
     #endif
     #define DO_REC_CASE(z, n, unused) \
       BOOST_PP_COMMA_IF(n) \
-      typename mpllibs::error::do_substitute<Monad, X##n>::type
+      typename do_substitute<Monad, X##n>::type
 
     #ifdef DO_TEMPLATE_CASE
       #error DO_TEMPLATE_CASE already defined
@@ -121,7 +115,9 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS(n, class X) \
       > \
       struct do_substitute<Monad, T<BOOST_PP_ENUM_PARAMS(n, X)> > : \
-        mpllibs::error::util::id< T< BOOST_PP_REPEAT(n, DO_REC_CASE, ~) > > \
+        mpllibs::metamonad::util::id< \
+          T< BOOST_PP_REPEAT(n, DO_REC_CASE, ~) > \
+        > \
       {};
     
     BOOST_PP_REPEAT_FROM_TO(1, LET_MAX_TEMPLATE_ARGUMENT, DO_TEMPLATE_CASE, ~)
@@ -144,7 +140,7 @@ namespace mpllibs
     struct do1 : E {};
 
     template <class Monad, class Name, class F>
-    struct do1<Monad, mpllibs::error::set<Name, F> >;
+    struct do1<Monad, set<Name, F> >;
       // Error: last statement in a 'do' construct must be an expression.
       // Current way of error handling is not having an implementation.
       // It may be improved.
@@ -177,9 +173,9 @@ namespace mpllibs
       > \
       struct do##n : \
         boost::mpl::apply< \
-          mpllibs::error::bind__impl<Monad>, \
+          bind__impl<Monad>, \
           typename T::type, \
-          typename mpllibs::error::do_impl< \
+          typename do_impl< \
             Monad, \
             BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
           >::type \
@@ -194,16 +190,16 @@ namespace mpllibs
       > \
       struct do##n< \
         Monad, \
-        mpllibs::error::set<Name, Ex> \
+        set<Name, Ex> \
         BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
         BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
       > : \
         boost::mpl::apply< \
-          mpllibs::error::bind_impl<Monad>, \
-          typename mpllibs::error::do1<Monad, Ex>::type, \
-          typename mpllibs::error::lambda< \
+          bind_impl<Monad>, \
+          typename do1<Monad, Ex>::type, \
+          typename lambda< \
             Name, \
-            mpllibs::error::do_impl< \
+            do_impl< \
               Monad, \
               BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
             > \
@@ -224,7 +220,7 @@ namespace mpllibs
       #error DO_UNUSED_PARAM already defined
     #endif
     #define DO_UNUSED_PARAM(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) mpllibs::error::unused_do_argument
+      BOOST_PP_COMMA_IF(n) unused_do_argument
     
     #ifdef DO_CASE
       #error DO_CASE already defined
@@ -240,7 +236,7 @@ namespace mpllibs
           ~ \
         ) \
       > : \
-        mpllibs::error::do##n<Monad, BOOST_PP_ENUM_PARAMS(n, E)> \
+        do##n<Monad, BOOST_PP_ENUM_PARAMS(n, E)> \
       {};
   
     BOOST_PP_REPEAT_FROM_TO(1, DO_MAX_ARGUMENT, DO_CASE, ~)
@@ -263,14 +259,11 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
           DO_MAX_ARGUMENT,
           class E,
-          mpllibs::error::unused_do_argument
+          unused_do_argument
         )
       >
       struct apply :
-        mpllibs::error::do_impl<
-          Monad
-          BOOST_PP_REPEAT(DO_MAX_ARGUMENT, DO_ARG, ~)
-        >
+        do_impl<Monad BOOST_PP_REPEAT(DO_MAX_ARGUMENT, DO_ARG, ~)>
       {};
     };
     

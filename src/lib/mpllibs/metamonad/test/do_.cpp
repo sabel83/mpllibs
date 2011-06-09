@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/do_.hpp>
+#include <mpllibs/metamonad/do_.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -41,7 +41,7 @@ namespace
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <>
     struct return__impl<wrapper_tag>

@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/return_.hpp>
+#include <mpllibs/metamonad/return_.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -19,7 +19,7 @@ using boost::mpl::apply;
 
 using mpllibs::metatest::suite_path;
 
-using mpllibs::error::return_;
+using mpllibs::metamonad::return_;
 
 namespace
 {
@@ -31,7 +31,7 @@ namespace
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <>
     struct return__impl<test_tag>

@@ -6,10 +6,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/do_.hpp>
-#include <mpllibs/error/let.hpp>
-#include <mpllibs/error/exception.hpp>
-#include <mpllibs/error/get_data.hpp>
+#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/exception.hpp>
+#include <mpllibs/metamonad/get_data.hpp>
 
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/if.hpp>
@@ -35,12 +35,12 @@
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     #ifdef TRY
       #error TRY already defined
     #endif
-    #define TRY mpllibs::error::try_
+    #define TRY mpllibs::metamonad::try_
 
     struct catch_any
     {
@@ -77,23 +77,20 @@ namespace mpllibs
         struct catch_
         {
         private:
-          typedef
-            typename mpllibs::error::get_data<Exception>::type
-            _exception_data;
+          typedef typename get_data<Exception>::type _exception_data;
 
           typedef
-            typename boost::mpl::tag<_exception_data>::type
-            _exception_data_tag;
+            typename boost::mpl::tag<_exception_data>::type _exception_data_tag;
         public:
           template <class Body>
           struct apply :
             boost::mpl::if_<
               boost::mpl::or_<
                 boost::is_same<ExceptionTag, _exception_data_tag>,
-                boost::is_same<ExceptionTag, mpllibs::error::catch_any>
+                boost::is_same<ExceptionTag, catch_any>
               >,
               lazy_skip_further_catches<
-                typename mpllibs::error::let<Name, _exception_data, Body>::type
+                typename let<Name, _exception_data, Body>::type
               >,
               was_exception
             >::type
@@ -119,12 +116,12 @@ namespace mpllibs
             >::type
           >::type
         >::type,
-        mpllibs::error::impl::was_exception<
+        mpllibs::metamonad::impl::was_exception<
           typename DO<exception_monad>::template apply<
             BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
           >::type
         >,
-        mpllibs::error::impl::skip_further_catches<
+        mpllibs::metamonad::impl::skip_further_catches<
           typename DO<exception_monad>::template apply<
             BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
           >::type

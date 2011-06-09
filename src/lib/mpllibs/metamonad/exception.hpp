@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/get_data.hpp>
+#include <mpllibs/metamonad/get_data.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/tag.hpp>
@@ -21,7 +21,7 @@
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     struct exception_tag
     {
@@ -60,7 +60,7 @@ namespace mpllibs
     struct to_stream_impl;
 
     template <>
-    struct to_stream_impl<mpllibs::error::exception_tag>
+    struct to_stream_impl<mpllibs::metamonad::exception_tag>
     {
       template <class E>
       struct apply
@@ -69,7 +69,7 @@ namespace mpllibs
       
         static std::ostream& run(std::ostream& o_)
         {
-          using mpllibs::error::get_data;
+          using mpllibs::metamonad::get_data;
 
           typedef typename get_data<E>::type edata;
           return to_stream<edata>::run(o_ << "exception<") << ">";
@@ -78,7 +78,7 @@ namespace mpllibs
     };
   }
   
-  namespace error
+  namespace metamonad
   {
     /*
      * The Exception monad
@@ -139,29 +139,29 @@ namespace boost
     template <>
     struct
       equal_to_impl<
-        mpllibs::error::exception_tag,
-        mpllibs::error::exception_tag
+        mpllibs::metamonad::exception_tag,
+        mpllibs::metamonad::exception_tag
       >
     {
       template <class A, class B>
       struct apply :
         equal_to<
-          typename mpllibs::error::get_data<A>::type,
-          typename mpllibs::error::get_data<B>::type
+          typename mpllibs::metamonad::get_data<A>::type,
+          typename mpllibs::metamonad::get_data<B>::type
         >
       {};
     };
 
     template <class T>
-    struct equal_to_impl<mpllibs::error::exception_tag, T>
+    struct equal_to_impl<mpllibs::metamonad::exception_tag, T>
     {
       template <class A, class B>
       struct apply : boost::mpl::false_ {};
     };
 
     template <class T>
-    struct equal_to_impl<T, mpllibs::error::exception_tag> :
-      equal_to_impl<mpllibs::error::exception_tag, T>
+    struct equal_to_impl<T, mpllibs::metamonad::exception_tag> :
+      equal_to_impl<mpllibs::metamonad::exception_tag, T>
     {};
   }
 }

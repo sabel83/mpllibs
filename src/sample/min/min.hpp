@@ -8,8 +8,8 @@
 
 #include "less.hpp"
 
-#include <mpllibs/error/throw.hpp>
-#include <mpllibs/error/try_.hpp>
+#include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/try_.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/if.hpp>

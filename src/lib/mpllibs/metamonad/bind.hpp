@@ -10,7 +10,7 @@
 
 namespace mpllibs
 {
-  namespace error
+  namespace metamonad
   {
     template <class>
     struct bind_impl;
@@ -18,9 +18,7 @@ namespace mpllibs
     
     // bind evaluates arguments lazily
     template <class MonadTag, class A, class F>
-    struct bind :
-      boost::mpl::apply<mpllibs::error::bind_impl<MonadTag>, A, F>
-    {};
+    struct bind : boost::mpl::apply<bind_impl<MonadTag>, A, F> {};
   }
 }
 
