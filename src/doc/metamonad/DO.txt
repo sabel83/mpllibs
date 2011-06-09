@@ -1,0 +1,64 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+DO
+==
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+#define DO do_
+
+template <class MonadTag>
+struct do_
+{
+  template <class Step1, ..., class Stepn>
+  struct apply
+    // unspecified...
+  ;
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Metafunction class for creating __do blocks__. It takes the steps of the do
+block as arguments. The maximum number of arguments is defined by the
++DO_MAX_ARGUMENT+ macro. Steps are either:
+
+* Nullary metafunctions returning a monadic value
+* link:SET.html[SET] constructs
+* link:RETURN.html[RETURN] constructs
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metamonad/do_.hpp>
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+using boost::mpl::int_;
+
+struct r;
+
+DO<exception_tag>::apply<
+  SET<r, may_fail1<int_<13> >,
+  may_fail2<r>
+>
+--------------------------------------
+
+include::../copyright[]
+
+link:index.html[[up]]
+
+
+

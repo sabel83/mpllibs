@@ -20,6 +20,8 @@ _mpllibs_ contains the following libraries:
 
 * link:metatest/index.html[metatest] -
     Unit testing framework for C++ template metaprograms
+* link:metamonad/index.html[metamonad] -
+    Library implementing monads and exceptions in C++ template metaprograms
 * link:metaparse/index.html[metaparse] -
     A library for generating compile time parsers parsing embedded
     DSL code as part of the C++ compilation process
