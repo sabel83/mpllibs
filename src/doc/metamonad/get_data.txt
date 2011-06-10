@@ -28,7 +28,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/get_data.hpp>
+#include <mpllibs/metamonad/get_data.hpp>
 --------------------------------------
 
 For any +d+ compile-time value, the following are equivalent

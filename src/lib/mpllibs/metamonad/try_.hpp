@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_TRY_H
-#define MPLLIBS_ERROR_TRY_H
+#ifndef MPLLIBS_METAMONAD_TRY_HPP
+#define MPLLIBS_METAMONAD_TRY_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
@@ -37,10 +37,10 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    #ifdef TRY
-      #error TRY already defined
+    #ifdef MPLLIBS_TRY
+      #error MPLLIBS_TRY already defined
     #endif
-    #define TRY mpllibs::metamonad::try_
+    #define MPLLIBS_TRY mpllibs::metamonad::try_
 
     struct catch_any
     {
@@ -101,7 +101,7 @@ namespace mpllibs
 
     template <
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-        DO_MAX_ARGUMENT,
+        MPLLIBS_DO_MAX_ARGUMENT,
         class E,
         unused_do_argument
       )
@@ -111,19 +111,19 @@ namespace mpllibs
         typename boost::is_same<
           exception_tag,
           typename boost::mpl::tag<
-            typename DO<exception_monad>::template apply<
-              BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
+            typename MPLLIBS_DO<exception_monad>::template apply<
+              BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
             >::type
           >::type
         >::type,
         mpllibs::metamonad::impl::was_exception<
-          typename DO<exception_monad>::template apply<
-            BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
+          typename MPLLIBS_DO<exception_monad>::template apply<
+            BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
           >::type
         >,
         mpllibs::metamonad::impl::skip_further_catches<
-          typename DO<exception_monad>::template apply<
-            BOOST_PP_ENUM_PARAMS(DO_MAX_ARGUMENT, E)
+          typename MPLLIBS_DO<exception_monad>::template apply<
+            BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
           >::type
         >
       >::type

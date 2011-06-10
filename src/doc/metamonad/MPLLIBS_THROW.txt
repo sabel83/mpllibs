@@ -3,15 +3,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-THROW
-=====
+MPLLIBS_THROW
+=============
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define THROW \
+#define MPLLIBS_THROW \
   // unspecified
 --------------------------------------
 
@@ -36,7 +36,7 @@ Expression semantics
 For any +d+ compile-time value, the following are equivalent
 
 --------------------------------------
-mpllibs::metamonad::get_data<THROW<d> >::type
+mpllibs::metamonad::get_data<MPLLIBS_THROW<d> >::type
 d::type
 --------------------------------------
 

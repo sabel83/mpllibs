@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_LET_H
-#define MPLLIBS_ERROR_LET_H
+#ifndef MPLLIBS_METAMONAD_LET_HPP
+#define MPLLIBS_METAMONAD_LET_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -43,43 +43,48 @@ namespace mpllibs
       mpllibs::metamonad::util::id<letrec<A, E1b, E2> >
     {};
 
-    #ifndef LET_MAX_TEMPLATE_ARGUMENT
-      #define LET_MAX_TEMPLATE_ARGUMENT 10
+    #ifndef MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT
+      #define MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT 10
     #endif
     
-    #ifdef LET_CLASS
-      #error LET_CLASS alread defined
+    #ifdef MPLLIBS_LET_CLASS
+      #error MPLLIBS_LET_CLASS alread defined
     #endif
-    #define LET_CLASS(z, n, unused) \
+    #define MPLLIBS_LET_CLASS(z, n, unused) \
       BOOST_PP_COMMA_IF(n) class
     
-    #ifdef LET_REC_CASE
-      #error LET_REC_CASE alread defined
+    #ifdef MPLLIBS_LET_REC_CASE
+      #error MPLLIBS_LET_REC_CASE alread defined
     #endif
-    #define LET_REC_CASE(z, n, unused) \
+    #define MPLLIBS_LET_REC_CASE(z, n, unused) \
       BOOST_PP_COMMA_IF(n) typename let<A, E1, X##n>::type
 
-    #ifdef LET_TEMPLATE_CASE
-      #error LET_TEMPLATE_CASE already defined
+    #ifdef MPLLIBS_LET_TEMPLATE_CASE
+      #error MPLLIBS_LET_TEMPLATE_CASE already defined
     #endif
-    #define LET_TEMPLATE_CASE(z, n, unused) \
+    #define MPLLIBS_LET_TEMPLATE_CASE(z, n, unused) \
       template < \
         class A, \
         class E1, \
-        template<BOOST_PP_REPEAT(n, LET_CLASS, ~) > class T, \
+        template<BOOST_PP_REPEAT(n, MPLLIBS_LET_CLASS, ~) > class T, \
         BOOST_PP_ENUM_PARAMS(n, class X) \
       > \
       struct let_impl<A, E1, T<BOOST_PP_ENUM_PARAMS(n, X)> > : \
         mpllibs::metamonad::util::id< \
-          T<BOOST_PP_REPEAT(n, LET_REC_CASE, ~) > \
+          T<BOOST_PP_REPEAT(n, MPLLIBS_LET_REC_CASE, ~) > \
         > \
       {};
     
-    BOOST_PP_REPEAT_FROM_TO(1, LET_MAX_TEMPLATE_ARGUMENT, LET_TEMPLATE_CASE, ~)
+    BOOST_PP_REPEAT_FROM_TO(
+      1,
+      MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT,
+      MPLLIBS_LET_TEMPLATE_CASE,
+      ~
+    )
 
-    #undef LET_TEMPLATE_CASE
-    #undef LET_CLASS
-    #undef LET_REC_CASE
+    #undef MPLLIBS_LET_TEMPLATE_CASE
+    #undef MPLLIBS_LET_CLASS
+    #undef MPLLIBS_LET_REC_CASE
   }
 }
 

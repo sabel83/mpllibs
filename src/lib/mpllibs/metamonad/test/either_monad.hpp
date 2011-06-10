@@ -2,8 +2,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
-#ifndef EITHER_MONAD_H
-#define EITHER_MONAD_H
+#ifndef MPLLIBS_METAMONAD_TEST_EITHER_MONAD_HPP
+#define MPLLIBS_METAMONAD_TEST_EITHER_MONAD_HPP
 
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>

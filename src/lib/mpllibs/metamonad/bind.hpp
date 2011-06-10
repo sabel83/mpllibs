@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_BIND_H
-#define MPLLIBS_ERROR_BIND_H
+#ifndef MPLLIBS_METAMONAD_BIND_HPP
+#define MPLLIBS_METAMONAD_BIND_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2010.
 // Distributed under the Boost Software License, Version 1.0.

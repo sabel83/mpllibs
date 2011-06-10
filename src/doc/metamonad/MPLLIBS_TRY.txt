@@ -3,15 +3,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-TRY
-===
+MPLLIBS_TRY
+===========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define TRY try_
+#define MPLLIBS_TRY try_
 
 template <class Step1, ..., class Stepn>
 struct try_
@@ -32,16 +32,16 @@ struct try_
 Description
 -----------
 
-+TRY+ implements a compile-time try-catch block. The body of the try block is a
-link:DO.html[DO]+<exception_tag>+ block, its steps are +Step1+, ..., +Stepn+.
-The +TRY+ block can be followed by any number of +catch_+ blocks, where +catch_+
-is a nested template metafunction class of +TRY+ parametrised by a +tag+ and an
-arbitrary class, +Name+. The metafunction class takes a nullary metafunction,
-which is the body of the catch block. When the result of the try block is a
-compile-time exception, and the +tag+ of the exception's data is the same as
-+Tag+, the exception is bound to the name +Name+ in +Body+ using a 
-link:let.html[let] expression and the result of this is evaluated. Otherwise
-the catch block is skipped.
++MPLLIBS_TRY+ implements a compile-time try-catch block. The body of the try
+block is a link:MPLLIBS_DO.html[MPLLIBS_DO]+<exception_tag>+ block, its steps
+are +Step1+, ..., +Stepn+. The +TRY+ block can be followed by any number of
++catch_+ blocks, where +catch_+ is a nested template metafunction class of
++MPLLIBS_TRY+ parametrised by a +tag+ and an arbitrary class, +Name+. The
+metafunction class takes a nullary metafunction, which is the body of the catch
+block. When the result of the try block is a compile-time exception, and the
++tag+ of the exception's data is the same as +Tag+, the exception is bound to
+the name +Name+ in +Body+ using a link:let.html[let] expression and the result
+of this is evaluated. Otherwise the catch block is skipped.
 
 The body of the +catch_+ metafunction classes contains another +catch_+
 template, thus any number of catch blocks can be chained together. They are
@@ -73,8 +73,8 @@ struct unknown_error_detected;
 struct r;
 struct e;
 
-TRY<
-  SET<r, may_fail1<int_<13> >,
+MPLLIBS_TRY<
+  MPLLIBS_SET<r, may_fail1<int_<13> >,
   may_fail2<r>
 >
   ::catch_<error_tag_1, e>

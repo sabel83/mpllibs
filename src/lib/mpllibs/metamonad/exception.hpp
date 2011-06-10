@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_EXCEPTION_H
-#define MPLLIBS_ERROR_EXCEPTION_H
+#ifndef MPLLIBS_METAMONAD_EXCEPTION_HPP
+#define MPLLIBS_METAMONAD_EXCEPTION_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2011.
 // Distributed under the Boost Software License, Version 1.0.

@@ -1,5 +1,5 @@
-#ifndef LESS_H
-#define LESS_H
+#ifndef LESS_HPP
+#define LESS_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
@@ -50,7 +50,7 @@ template <class TagA, class TagB>
 struct less_impl
 {
   template <class A, class B>
-  struct apply : THROW<non_comparable> {};
+  struct apply : MPLLIBS_THROW<non_comparable> {};
 };
 
 template <class A, class B>

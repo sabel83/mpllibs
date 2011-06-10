@@ -44,8 +44,8 @@ namespace
   typedef
     equal_to<
       int13,
-        DO<exception_monad>::apply<
-          RETURN<int13>
+        MPLLIBS_DO<exception_monad>::apply<
+          MPLLIBS_RETURN<int13>
         >::type
     >
     test_monadic_no_exception;
@@ -54,7 +54,7 @@ namespace
     equal_to<
       int13,
       get_data<
-        DO<exception_monad>::apply<
+        MPLLIBS_DO<exception_monad>::apply<
           apply<always<e>, int>
         >::type
       >::type
@@ -66,9 +66,9 @@ namespace
     equal_to<
       int13,
       get_data<
-        DO<exception_monad>::apply<
+        MPLLIBS_DO<exception_monad>::apply<
           apply<always<e>, int>,
-          RETURN<int13>
+          MPLLIBS_RETURN<int13>
         >::type
       >::type
     >
@@ -82,8 +82,8 @@ namespace
   typedef
     is_same<
       int11,
-      DO<exception_monad>::apply<
-        RETURN<int11>
+      MPLLIBS_DO<exception_monad>::apply<
+        MPLLIBS_RETURN<int11>
       >::type
     >
     test_return_with_1_element_do;
@@ -91,9 +91,9 @@ namespace
   typedef
     equal_to<
       int11,
-        DO<exception_monad>::apply<
-          RETURN<int13>,
-          RETURN<int11>
+        MPLLIBS_DO<exception_monad>::apply<
+          MPLLIBS_RETURN<int13>,
+          MPLLIBS_RETURN<int11>
         >::type
     >
     test_execution_sequence;
@@ -104,9 +104,9 @@ namespace
     equal_to<
       int13,
       get_data<
-        DO<exception_monad>::apply<
-          SET<x, apply<always<e>, int> >,
-          RETURN<int13>
+        MPLLIBS_DO<exception_monad>::apply<
+          MPLLIBS_SET<x, apply<always<e>, int> >,
+          MPLLIBS_RETURN<int13>
         >::type
       >::type
     >

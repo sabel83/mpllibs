@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_GET_DATA_H
-#define MPLLIBS_ERROR_GET_DATA_H
+#ifndef MPLLIBS_METAMONAD_GET_DATA_HPP
+#define MPLLIBS_METAMONAD_GET_DATA_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2011.
 // Distributed under the Boost Software License, Version 1.0.

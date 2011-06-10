@@ -3,30 +3,37 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-SET
-===
+MPLLIBS_DO
+==========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define SET set
+#define MPLLIBS_DO do_
 
-template <class Name, class F>
-struct set
-  // unspecified
-;
+template <class MonadTag>
+struct do_
+{
+  template <class Step1, ..., class Stepn>
+  struct apply
+    // unspecified...
+  ;
+};
 --------------------------------------
 
 
 Description
 -----------
 
-Template expression that can be used inside a link:DO.html[DO] block.
-+F+ is a nullary metafunction returning a monadic value. +SET+ binds the result
-of +F+ to +Name+ in the rest of the do block. On how the binding works, see
-link:let.html[let] expressions.
+Metafunction class for creating __do blocks__. It takes the steps of the do
+block as arguments. The maximum number of arguments is defined by the
++MPLLIBS_DO_MAX_ARGUMENT+ macro. Steps are either:
+
+* Nullary metafunctions returning a monadic value
+* link:MPLLIBS_SET.html[MPLLIBS_SET] constructs
+* link:MPLLIBS_RETURN.html[MPLLIBS_RETURN] constructs
 
 Header
 ------
@@ -43,8 +50,8 @@ using boost::mpl::int_;
 
 struct r;
 
-DO<exception_tag>::apply<
-  SET<r, may_fail1<int_<13> >,
+MPLLIBS_DO<exception_tag>::apply<
+  MPLLIBS_SET<r, may_fail1<int_<13> >,
   may_fail2<r>
 >
 --------------------------------------

@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_RETURN__H
-#define MPLLIBS_ERROR_RETURN__H
+#ifndef MPLLIBS_METAMONAD_RETURN__HPP
+#define MPLLIBS_METAMONAD_RETURN__HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2010.
 // Distributed under the Boost Software License, Version 1.0.

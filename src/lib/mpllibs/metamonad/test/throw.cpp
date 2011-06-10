@@ -28,15 +28,15 @@ namespace
 {
   const suite_path suite("THROW");
   
-  typedef equal_to<int13, get_data<THROW<int13> >::type> test_get_data;
+  typedef equal_to<int13, get_data<MPLLIBS_THROW<int13> >::type> test_get_data;
 
   
   typedef
     equal_to<
       int13,
       get_data<
-        DO<exception_monad>::apply<
-          THROW<int13>
+        MPLLIBS_DO<exception_monad>::apply<
+          MPLLIBS_THROW<int13>
         >::type
       >::type
     >
@@ -47,9 +47,9 @@ namespace
     equal_to<
       int11,
       get_data<
-        DO<exception_monad>::apply<
-          THROW<int11>,
-          RETURN<int13>
+        MPLLIBS_DO<exception_monad>::apply<
+          MPLLIBS_THROW<int11>,
+          MPLLIBS_RETURN<int13>
         >::type
       >::type
     >

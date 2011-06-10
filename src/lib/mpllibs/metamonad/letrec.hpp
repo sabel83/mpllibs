@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_LETREC_H
-#define MPLLIBS_ERROR_LETREC_H
+#ifndef MPLLIBS_METAMONAD_LETREC_HPP
+#define MPLLIBS_METAMONAD_LETREC_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2010.
 // Distributed under the Boost Software License, Version 1.0.

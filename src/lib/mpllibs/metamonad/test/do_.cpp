@@ -88,8 +88,8 @@ namespace
   typedef
     equal_to<
       right<int11>,
-      DO<either>::apply<
-        SET<x, RETURN<int13> >,
+      MPLLIBS_DO<either>::apply<
+        MPLLIBS_SET<x, MPLLIBS_RETURN<int13> >,
         minus_2<x>
       >::type
     >
@@ -98,9 +98,9 @@ namespace
   typedef
     equal_to<
       right<int9>,
-      DO<either>::apply<
-        SET<x, RETURN<int13> >,
-        SET<y, minus_2<x> >,
+      MPLLIBS_DO<either>::apply<
+        MPLLIBS_SET<x, MPLLIBS_RETURN<int13> >,
+        MPLLIBS_SET<y, minus_2<x> >,
         minus_2<y>
       >::type
     >
@@ -109,9 +109,9 @@ namespace
   typedef
     equal_to<
       right<int9>,
-      DO<either>::apply<
-        SET<x, RETURN<int13> >,
-        SET<y, minus_2<x> >,
+      MPLLIBS_DO<either>::apply<
+        MPLLIBS_SET<x, MPLLIBS_RETURN<int13> >,
+        MPLLIBS_SET<y, minus_2<x> >,
         minus_2<x>,
         minus_2<y>
       >::type
@@ -121,9 +121,9 @@ namespace
   typedef
     equal_to<
       right<int13>,
-      DO<either>::apply<
-        RETURN<int11>,
-        RETURN<int13>
+      MPLLIBS_DO<either>::apply<
+        MPLLIBS_RETURN<int11>,
+        MPLLIBS_RETURN<int13>
       >::type
     >
     test_do_two_returns;
@@ -131,10 +131,10 @@ namespace
   typedef
     equal_to<
       right<right<int13> >,
-      DO<either>::apply<
-        RETURN<
-          DO<either>::apply<
-            RETURN<int13>
+      MPLLIBS_DO<either>::apply<
+        MPLLIBS_RETURN<
+          MPLLIBS_DO<either>::apply<
+            MPLLIBS_RETURN<int13>
           >
         >
       >::type
@@ -144,8 +144,8 @@ namespace
   typedef
     equal_to<
       right<right<int13> >,
-      DO<either>::apply<
-        RETURN<RETURN<int13> >
+      MPLLIBS_DO<either>::apply<
+        MPLLIBS_RETURN<MPLLIBS_RETURN<int13> >
       >::type
     >
     test_contents_of_return_is_substituted;
@@ -153,10 +153,10 @@ namespace
   typedef
     equal_to<
       right<wrapped<int13> >,
-      DO<either>::apply<
+      MPLLIBS_DO<either>::apply<
         eval_to_right<
-          DO<wrapper_monad>::apply<
-            RETURN<int13>
+          MPLLIBS_DO<wrapper_monad>::apply<
+            MPLLIBS_RETURN<int13>
           >
         >
       >::type

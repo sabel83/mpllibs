@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_DO__H
-#define MPLLIBS_ERROR_DO__H
+#ifndef MPLLIBS_METAMONAD_DO__HPP
+#define MPLLIBS_METAMONAD_DO__HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -20,38 +20,38 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    #ifndef DO_MAX_ARGUMENT
-      #define DO_MAX_ARGUMENT 8
+    #ifndef MPLLIBS_DO_MAX_ARGUMENT
+      #define MPLLIBS_DO_MAX_ARGUMENT 8
     #endif
     
-    #if DO_MAX_ARGUMENT + 2 > LET_MAX_TEMPLATE_ARGUMENT
-      #error LET_MAX_TEMPLATE_ARGUMENT not big enough
+    #if MPLLIBS_DO_MAX_ARGUMENT + 2 > MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT
+      #error MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT not big enough
     #endif
     
     /*
      * Syntactic sugar
      */
-    #ifdef DO
-      #error DO already defined
+    #ifdef MPLLIBS_DO
+      #error MPLLIBS_DO already defined
     #endif
-    #define DO mpllibs::metamonad::do_
+    #define MPLLIBS_DO mpllibs::metamonad::do_
     
-    #ifdef SET
-      #error SET already defined
+    #ifdef MPLLIBS_SET
+      #error MPLLIBS_SET already defined
     #endif
-    #define SET mpllibs::metamonad::set
+    #define MPLLIBS_SET mpllibs::metamonad::set
   
-    #ifdef RETURN
-      #error RETURN already defined
+    #ifdef MPLLIBS_RETURN
+      #error MPLLIBS_RETURN already defined
     #endif
-    #define RETURN mpllibs::metamonad::do_return
+    #define MPLLIBS_RETURN mpllibs::metamonad::do_return
 
     struct unused_do_argument;
 
     template <
       class Monad,
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-        DO_MAX_ARGUMENT,
+        MPLLIBS_DO_MAX_ARGUMENT,
         class E,
         unused_do_argument
       )
@@ -92,39 +92,44 @@ namespace mpllibs
       >
     {};
 
-    #ifdef DO_CLASS
-      #error DO_CLASS alread defined
+    #ifdef MPLLIBS_DO_CLASS
+      #error MPLLIBS_DO_CLASS alread defined
     #endif
-    #define DO_CLASS(z, n, unused) \
+    #define MPLLIBS_DO_CLASS(z, n, unused) \
       BOOST_PP_COMMA_IF(n) class
     
-    #ifdef DO_REC_CASE
-      #error DO_REC_CASE alread defined
+    #ifdef MPLLIBS_DO_REC_CASE
+      #error MPLLIBS_DO_REC_CASE alread defined
     #endif
-    #define DO_REC_CASE(z, n, unused) \
+    #define MPLLIBS_DO_REC_CASE(z, n, unused) \
       BOOST_PP_COMMA_IF(n) \
       typename do_substitute<Monad, X##n>::type
 
-    #ifdef DO_TEMPLATE_CASE
-      #error DO_TEMPLATE_CASE already defined
+    #ifdef MPLLIBS_DO_TEMPLATE_CASE
+      #error MPLLIBS_DO_TEMPLATE_CASE already defined
     #endif
-    #define DO_TEMPLATE_CASE(z, n, unused) \
+    #define MPLLIBS_DO_TEMPLATE_CASE(z, n, unused) \
       template < \
         class Monad, \
-        template<BOOST_PP_REPEAT(n, DO_CLASS, ~) > class T, \
+        template<BOOST_PP_REPEAT(n, MPLLIBS_DO_CLASS, ~) > class T, \
         BOOST_PP_ENUM_PARAMS(n, class X) \
       > \
       struct do_substitute<Monad, T<BOOST_PP_ENUM_PARAMS(n, X)> > : \
         mpllibs::metamonad::util::id< \
-          T< BOOST_PP_REPEAT(n, DO_REC_CASE, ~) > \
+          T< BOOST_PP_REPEAT(n, MPLLIBS_DO_REC_CASE, ~) > \
         > \
       {};
     
-    BOOST_PP_REPEAT_FROM_TO(1, LET_MAX_TEMPLATE_ARGUMENT, DO_TEMPLATE_CASE, ~)
+    BOOST_PP_REPEAT_FROM_TO(
+      1,
+      MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT,
+      MPLLIBS_DO_TEMPLATE_CASE,
+      ~
+    )
 
-    #undef DO_TEMPLATE_CASE
-    #undef DO_CLASS
-    #undef DO_REC_CASE
+    #undef MPLLIBS_DO_TEMPLATE_CASE
+    #undef MPLLIBS_DO_CLASS
+    #undef MPLLIBS_DO_REC_CASE
 
     /*
      * set
@@ -149,27 +154,27 @@ namespace mpllibs
      * don
      */
      
-    #ifdef DO_CLASS_CASE
-      #error DO_CLASS_CASE already defined
+    #ifdef MPLLIBS_DO_CLASS_CASE
+      #error MPLLIBS_DO_CLASS_CASE already defined
     #endif
-    #define DO_CLASS_CASE(z, n, unused) \
+    #define MPLLIBS_DO_CLASS_CASE(z, n, unused) \
       , class E##n
     
-    #ifdef DO_CLASS_USE_CASE
-      #error DO_CLASS_USE_CASE already defined
+    #ifdef MPLLIBS_DO_CLASS_USE_CASE
+      #error MPLLIBS_DO_CLASS_USE_CASE already defined
     #endif
-    #define DO_CLASS_USE_CASE(z, n, unused) \
+    #define MPLLIBS_DO_CLASS_USE_CASE(z, n, unused) \
       BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) E##n
 
-    #ifdef DO_CASE
-      #error DO_CASE already defined
+    #ifdef MPLLIBS_DO_CASE
+      #error MPLLIBS_DO_CASE already defined
     #endif
     // I need at least one template argument. The "n"th case handles n+1 args.
-    #define DO_CASE(z, n, unused) \
+    #define MPLLIBS_DO_CASE(z, n, unused) \
       template < \
         class Monad, \
         class T \
-        BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_CASE, ~) \
+        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_CASE, ~) \
       > \
       struct do##n : \
         boost::mpl::apply< \
@@ -177,7 +182,7 @@ namespace mpllibs
           typename T::type, \
           typename do_impl< \
             Monad, \
-            BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
+            BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
           >::type \
         > \
       {}; \
@@ -186,13 +191,13 @@ namespace mpllibs
         class Monad, \
         class Name, \
         class Ex \
-        BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_CASE, ~) \
+        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_CASE, ~) \
       > \
       struct do##n< \
         Monad, \
         set<Name, Ex> \
         BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
-        BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
+        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
       > : \
         boost::mpl::apply< \
           bind_impl<Monad>, \
@@ -201,73 +206,76 @@ namespace mpllibs
             Name, \
             do_impl< \
               Monad, \
-              BOOST_PP_REPEAT_FROM_TO(1, n, DO_CLASS_USE_CASE, ~) \
+              BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
             > \
           >::type \
         > \
       {};
     
-    BOOST_PP_REPEAT_FROM_TO(2, DO_MAX_ARGUMENT, DO_CASE, ~)
+    BOOST_PP_REPEAT_FROM_TO(2, MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_CASE, ~)
     
-    #undef DO_CASE
-    #undef DO_CLASS_USE_CASE
-    #undef DO_CLASS_CASE
+    #undef MPLLIBS_DO_CASE
+    #undef MPLLIBS_DO_CLASS_USE_CASE
+    #undef MPLLIBS_DO_CLASS_CASE
         
     /*
      * do_impl
      */
-    #ifdef DO_UNUSED_PARAM
-      #error DO_UNUSED_PARAM already defined
+    #ifdef MPLLIBS_DO_UNUSED_PARAM
+      #error MPLLIBS_DO_UNUSED_PARAM already defined
     #endif
-    #define DO_UNUSED_PARAM(z, n, unused) \
+    #define MPLLIBS_DO_UNUSED_PARAM(z, n, unused) \
       BOOST_PP_COMMA_IF(n) unused_do_argument
     
-    #ifdef DO_CASE
-      #error DO_CASE already defined
+    #ifdef MPLLIBS_DO_CASE
+      #error MPLLIBS_DO_CASE already defined
     #endif
-    #define DO_CASE(z, n, unused) \
+    #define MPLLIBS_DO_CASE(z, n, unused) \
       template <class Monad, BOOST_PP_ENUM_PARAMS(n, class E)> \
       struct do_impl< \
         Monad, \
         BOOST_PP_ENUM_PARAMS(n, E) BOOST_PP_COMMA_IF(n) \
         BOOST_PP_REPEAT( \
-          BOOST_PP_SUB(DO_MAX_ARGUMENT, n), \
-          DO_UNUSED_PARAM, \
+          BOOST_PP_SUB(MPLLIBS_DO_MAX_ARGUMENT, n), \
+          MPLLIBS_DO_UNUSED_PARAM, \
           ~ \
         ) \
       > : \
         do##n<Monad, BOOST_PP_ENUM_PARAMS(n, E)> \
       {};
   
-    BOOST_PP_REPEAT_FROM_TO(1, DO_MAX_ARGUMENT, DO_CASE, ~)
+    BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_CASE, ~)
     
-    #undef DO_CASE
-    #undef DO_UNUSED_PARAM
+    #undef MPLLIBS_DO_CASE
+    #undef MPLLIBS_DO_UNUSED_PARAM
     
     /*
      * do_
      */
-    #ifdef DO_ARG
-      #error DO_ARG already defined
+    #ifdef MPLLIBS_DO_ARG
+      #error MPLLIBS_DO_ARG already defined
     #endif
-    #define DO_ARG(z, n, unused) , typename do_substitute<Monad, E##n>::type
+    #define MPLLIBS_DO_ARG(z, n, unused) \
+      , typename do_substitute<Monad, E##n>::type
     
     template <class Monad>
     struct do_
     {
       template <
         BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-          DO_MAX_ARGUMENT,
+          MPLLIBS_DO_MAX_ARGUMENT,
           class E,
           unused_do_argument
         )
       >
       struct apply :
-        do_impl<Monad BOOST_PP_REPEAT(DO_MAX_ARGUMENT, DO_ARG, ~)>
+        do_impl<
+          Monad BOOST_PP_REPEAT(MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_ARG, ~)
+        >
       {};
     };
     
-    #undef DO_ARG
+    #undef MPLLIBS_DO_ARG
   }
 }
 

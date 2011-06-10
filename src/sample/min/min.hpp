@@ -1,5 +1,5 @@
-#ifndef MIN_H
-#define MIN_H
+#ifndef MIN_HPP
+#define MIN_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
@@ -21,8 +21,8 @@ struct min_impl
 {
   template <class A, class B>
   struct apply :
-    TRY<
-      SET<c, less<A, B> >,
+    MPLLIBS_TRY<
+      MPLLIBS_SET<c, less<A, B> >,
       boost::mpl::if_<c, A, B>
     >
   {};

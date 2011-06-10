@@ -56,8 +56,8 @@ namespace
   typedef
     equal_to<
       int13,
-      TRY<
-        RETURN<int13>
+      MPLLIBS_TRY<
+        MPLLIBS_RETURN<int13>
       >
       ::catch_<tag1, x>
         ::apply<int11>
@@ -68,8 +68,8 @@ namespace
   typedef
     equal_to<
       int11,
-      TRY<
-        THROW<e1>
+      MPLLIBS_TRY<
+        MPLLIBS_THROW<e1>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -80,8 +80,8 @@ namespace
   typedef
     equal_to<
       int13,
-      TRY<
-        THROW<int13>
+      MPLLIBS_TRY<
+        MPLLIBS_THROW<int13>
       >
       ::catch_<tag<int13>::type, x>
         ::apply<identity<x> >
@@ -92,8 +92,8 @@ namespace
   typedef
     equal_to<
       exception<int13>,
-      TRY<
-        THROW<int13>
+      MPLLIBS_TRY<
+        MPLLIBS_THROW<int13>
       >
       ::catch_<tag2, x>
         ::apply<identity<int11> >
@@ -104,8 +104,8 @@ namespace
   typedef
     equal_to<
       int13,
-      TRY<
-        THROW<e2>
+      MPLLIBS_TRY<
+        MPLLIBS_THROW<e2>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -118,9 +118,9 @@ namespace
   typedef
     equal_to<
       int11,
-      TRY<
-        THROW<e1>,
-        RETURN<int1>
+      MPLLIBS_TRY<
+        MPLLIBS_THROW<e1>,
+        MPLLIBS_RETURN<int1>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -132,9 +132,9 @@ namespace
   typedef
     equal_to<
       int11,
-      TRY<
-        RETURN<int13>,
-        RETURN<int11>
+      MPLLIBS_TRY<
+        MPLLIBS_RETURN<int13>,
+        MPLLIBS_RETURN<int11>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -145,9 +145,9 @@ namespace
   typedef
     equal_to<
       int11,
-      TRY<
-        SET<x, THROW<e1> >,
-        RETURN<int1>
+      MPLLIBS_TRY<
+        MPLLIBS_SET<x, MPLLIBS_THROW<e1> >,
+        MPLLIBS_RETURN<int1>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -158,9 +158,9 @@ namespace
   typedef
     equal_to<
       int13,
-      TRY<
-        THROW<e1>,
-        RETURN<int1>
+      MPLLIBS_TRY<
+        MPLLIBS_THROW<e1>,
+        MPLLIBS_RETURN<int1>
       >
       ::catch_<catch_any, x>
         ::apply<identity<int13> >
@@ -171,12 +171,12 @@ namespace
   typedef
     equal_to<
       exception<int13>,
-      TRY<
-        THROW<e1>,
-        RETURN<int1>
+      MPLLIBS_TRY<
+        MPLLIBS_THROW<e1>,
+        MPLLIBS_RETURN<int1>
       >
       ::catch_<catch_any, x>
-        ::apply<THROW<int13> >
+        ::apply<MPLLIBS_THROW<int13> >
       ::type
     >
     test_rethrowing;
@@ -184,14 +184,14 @@ namespace
   typedef
     equal_to<
       exception<int13>,
-      TRY<
-        THROW<e1>,
-        RETURN<int1>
+      MPLLIBS_TRY<
+        MPLLIBS_THROW<e1>,
+        MPLLIBS_RETURN<int1>
       >
       ::catch_<catch_any, x>
-        ::apply<THROW<int13> >
+        ::apply<MPLLIBS_THROW<int13> >
       ::catch_<catch_any, x>
-        ::apply<THROW<int13> >
+        ::apply<MPLLIBS_THROW<int13> >
       ::type
     >
     test_rethrowing_not_caught_by_next_catch;

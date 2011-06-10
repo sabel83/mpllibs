@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_THROW_H
-#define MPLLIBS_ERROR_THROW_H
+#ifndef MPLLIBS_METAMONAD_THROW_HPP
+#define MPLLIBS_METAMONAD_THROW_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2011.
 // Distributed under the Boost Software License, Version 1.0.
@@ -8,10 +8,10 @@
 
 #include <mpllibs/metamonad/exception.hpp>
 
-#ifdef THROW
-  #error THROW already defined
+#ifdef MPLLIBS_THROW
+  #error MPLLIBS_THROW already defined
 #endif
-#define THROW mpllibs::metamonad::exception
+#define MPLLIBS_THROW mpllibs::metamonad::exception
 
 #endif
 

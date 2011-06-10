@@ -339,15 +339,17 @@ Using it, the above example can be written the following way:
 --------------------------------------
 struct r;
 
-DO<exception_tag>::apply<
-  SET<r, may_fail1<boost::mpl::int_<13> >,
+MPLLIBS_DO<exception_tag>::apply<
+  MPLLIBS_SET<r, may_fail1<MPLLIBS_RETURN<boost::mpl::int_<13> > >,
   may_fail2<r>
 >
 --------------------------------------
 
-This implementation uses +SET+ to bind the result of calling the
-+may_fail1+ metafunction to a name, +r+. This result can be passed to
-+may_fail2+ using the name +r+.
+This implementation uses +MPLLIBS_SET+ to bind the result of calling the
++may_fail1+ metafunction to a name, +r+. Instead of using +return_+ directly,
+it uses +MPLLIBS_RETURN+, which evaluates +return_+ with the monad +tag+ used
+by the do block, in this case +exception_tag+. The result of +may_fail1+ can be
+passed to +may_fail2+ using the name +r+.
 
 The next two sections present monads and the do notation in detail.
 
@@ -464,7 +466,7 @@ This evaluates +may_fail1 13+, binds +r+ to its result and evaluates
 template metaprograms. A do block using metamonad looks like the following:
 
 --------------------------------------
-DO<monad_tag>::apply<
+MPLLIBS_DO<monad_tag>::apply<
   step1,
   step2,
 
@@ -474,31 +476,31 @@ DO<monad_tag>::apply<
 >
 --------------------------------------
 
-+DO+ is a macro which expands to the name of a template class. +monad_tag+ is
-the +tag+ identifying the monad. This has to be passed to the +return_+ and
-+bind+ functions. +DO<monad_tag>+ is a metafunction class, taking the steps of
-the do block as arguments. A step is either a nullary metafunction returning a
-monadic value, or a binding of an expression to a name. A binding is expressed
-by the following structure:
++MPLLIBS_DO+ is a macro which expands to the name of a template class.
++monad_tag+ is the +tag+ identifying the monad. This has to be passed to the
++return_+ and +bind+ functions. +MPLLIBS_DO<monad_tag>+ is a metafunction class,
+taking the steps of the do block as arguments. A step is either a nullary
+metafunction returning a monadic value, or a binding of an expression to a name.
+A binding is expressed by the following structure:
 
 --------------------------------------
-SET<name, step>
+MPLLIBS_SET<name, step>
 --------------------------------------
 
-where +SET+ is a macro, expanding to the name of a template class. +step+ is a
-nullary metafunction returning a monadic value. +name+ is the name of a class,
-the binding binds the result of +step+ to this name. The bound name can be used
-in the steps of the do block following the binding.
+where +MPLLIBS_SET+ is a macro, expanding to the name of a template class.
++step+ is a nullary metafunction returning a monadic value. +name+ is the name
+of a class, the binding binds the result of +step+ to this name. The bound name
+can be used in the steps of the do block following the binding.
 
 Using +return_+ in do blocks directly is not convenient, since the +tag+ of the
 monad has to be passed to the +return_+ metafunction explicitly, thus every time
 +return_+ is used, the +tag+ of the monad needs to be repeated. For example:
 
 --------------------------------------
-DO<monad_tag>::apply<
+MPLLIBS_DO<monad_tag>::apply<
   step1,
   step2,
-  SET<some_name, return_<monad_tag, some_value> >,
+  MPLLIBS_SET<some_name, return_<monad_tag, some_value> >,
 
   // ...
 
@@ -507,13 +509,13 @@ DO<monad_tag>::apply<
 --------------------------------------
 
 To make using +return_+ in do blocks simpler, metamonad provides a macro,
-+RETURN+, that can be used in do blocks:
++MPLLIBS_RETURN+, that can be used in do blocks:
 
 --------------------------------------
-DO<monad_tag>::apply<
+MPLLIBS_DO<monad_tag>::apply<
   step1,
   step2,
-  SET<some_name, RETURN<some_value> >,
+  MPLLIBS_SET<some_name, MPLLIBS_RETURN<some_value> >,
 
   // ...
 
@@ -533,7 +535,7 @@ Exceptions handling happens by using a __try block__, which looks like the
 following:
 
 --------------------------------------
-TRY<
+MPLLIBS_TRY<
   step1,
   step2,
   
@@ -543,13 +545,13 @@ TRY<
 >
 --------------------------------------
 
-A try block is a special +DO<exception_tag>+ block, thus the body of it can be
-constructed the same way as the body of a do block. The main difference between
-a regular do block and a try block is how the result of it can be handled.
-Try blocks can be followed by exception handling blocks, dealing with error
-values returned by the body of the try block. These exception handling blocks
-are called __catch blocks__, since they are similar to the catch blocks of
-runtime C++ code. Here is an example try block with two catch blocks:
+A try block is a special +MPLLIBS_DO<exception_tag>+ block, thus the body of it
+can be constructed the same way as the body of a do block. The main difference
+between a regular do block and a try block is how the result of it can be
+handled. Try blocks can be followed by exception handling blocks, dealing with
+error values returned by the body of the try block. These exception handling
+blocks are called __catch blocks__, since they are similar to the catch blocks
+of runtime C++ code. Here is an example try block with two catch blocks:
 
 --------------------------------------
 struct e;
@@ -563,8 +565,8 @@ struct unknown_error;
 
 template <class A, class B>
 struct min :
-  TRY<
-    SET<c, less<A, B> >,
+  MPLLIBS_TRY<
+    MPLLIBS_SET<c, less<A, B> >,
     boost::mpl::if_<c, A, B>
   >
   ::template catch_<non_comparable_tag, e>
@@ -572,7 +574,7 @@ struct min :
       THROW<arguments_can_not_be_compared<e> >
     >
   ::template catch_<catch_any, e>
-    ::template apply<THROW<unknown_error> >
+    ::template apply<MPLLIBS_THROW<unknown_error> >
 {};
 --------------------------------------
 
@@ -597,8 +599,8 @@ returned no error, the result of the try block is the result of the whole
 structure.
 
 To narrow the gap between the syntax of C++ and compile-time exceptions, a
-metafunction +THROW+ is provided for constructing error values. It takes one
-argument, which is the error message.
+metafunction +MPLLIBS_THROW+ is provided for constructing error values. It takes
+one argument, which is the error message.
 
 Reference
 ---------
@@ -616,15 +618,15 @@ link:bind.html[bind] +
 link:return_.html[return_] +
 
 Do notation +
-link:DO.html[DO] +
-link:SET.html[SET] +
-link:RETURN.html[RETURN] +
+link:MPLLIBS_DO.html[MPLLIBS_DO] +
+link:MPLLIBS_SET.html[MPLLIBS_SET] +
+link:MPLLIBS_RETURN.html[MPLLIBS_RETURN] +
 
 Compile-time exceptions +
 link:exception.html[exception] +
 link:get_data.html[get_data] +
-link:THROW.html[THROW] +
-link:TRY.html[TRY] +
+link:MPLLIBS_THROW.html[MPLLIBS_THROW] +
+link:MPLLIBS_TRY.html[MPLLIBS_TRY] +
 
 
 
