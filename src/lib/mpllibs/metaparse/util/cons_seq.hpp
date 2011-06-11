@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_UTIL_CONS_SEQ_H
-#define MPLLIBS_UTIL_CONS_SEQ_H
+#ifndef MPLLIBS_METAPARSE_UTIL_CONS_SEQ_HPP
+#define MPLLIBS_METAPARSE_UTIL_CONS_SEQ_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2010.
 // Distributed under the Boost Software License, Version 1.0.

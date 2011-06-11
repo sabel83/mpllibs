@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PARSER_ANY1_H
-#define MPLLIBS_PARSER_ANY1_H
+#ifndef MPLLIBS_METAPARSE_ANY1_HPP
+#define MPLLIBS_METAPARSE_ANY1_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2010.
 // Distributed under the Boost Software License, Version 1.0.

@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PARSER_RETURN_H
-#define MPLLIBS_PARSER_RETURN_H
+#ifndef MPLLIBS_METAPARSE_RETURN_HPP
+#define MPLLIBS_METAPARSE_RETURN_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2010.
 // Distributed under the Boost Software License, Version 1.0.

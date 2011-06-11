@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PARSER_LETTER_H
-#define MPLLIBS_PARSER_LETTER_H
+#ifndef MPLLIBS_METAPARSE_LETTER_HPP
+#define MPLLIBS_METAPARSE_LETTER_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2010.
 // Distributed under the Boost Software License, Version 1.0.

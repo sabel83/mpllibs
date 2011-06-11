@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PARSER_ACCEPT_WHEN_H
-#define MPLLIBS_PARSER_ACCEPT_WHEN_H
+#ifndef MPLLIBS_METAPARSE_ACCEPT_WHEN_HPP
+#define MPLLIBS_METAPARSE_ACCEPT_WHEN_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2010.
 // Distributed under the Boost Software License, Version 1.0.

@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_UTIL_UNLESS_ERROR_H
-#define MPLLIBS_UTIL_UNLESS_ERROR_H
+#ifndef MPLLIBS_METAPARSE_UTIL_UNLESS_ERROR_HPP
+#define MPLLIBS_METAPARSE_UTIL_UNLESS_ERROR_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2011.
 // Distributed under the Boost Software License, Version 1.0.

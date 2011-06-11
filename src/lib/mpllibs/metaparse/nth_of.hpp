@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PARSER_NTH_OF_H
-#define MPLLIBS_PARSER_NTH_OF_H
+#ifndef MPLLIBS_METAPARSE_NTH_OF_HPP
+#define MPLLIBS_METAPARSE_NTH_OF_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -137,10 +137,10 @@ namespace mpllibs
       };
     }
   
-    #ifdef NTH_OF_CASE
-      #error NTH_OF_CASE already defined
+    #ifdef MPLLIBS_NTH_OF_CASE
+      #error MPLLIBS_NTH_OF_CASE already defined
     #endif
-    #define NTH_OF_CASE(z, n, unused) \
+    #define MPLLIBS_NTH_OF_CASE(z, n, unused) \
       template < \
         int K BOOST_PP_COMMA_IF(n) \
         BOOST_PP_ENUM_PARAMS(n, class P) \
@@ -158,9 +158,9 @@ namespace mpllibs
         >::type \
       {};
     
-    BOOST_PP_REPEAT(SEQUENCE_MAX_ARGUMENT, NTH_OF_CASE, ~)
+    BOOST_PP_REPEAT(MPLLIBS_SEQUENCE_MAX_ARGUMENT, MPLLIBS_NTH_OF_CASE, ~)
     
-    #undef NTH_OF_CASE
+    #undef MPLLIBS_NTH_OF_CASE
     
     
 
@@ -170,7 +170,7 @@ namespace mpllibs
     template <
       int N,
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-        SEQUENCE_MAX_ARGUMENT,
+        MPLLIBS_SEQUENCE_MAX_ARGUMENT,
         class P,
         mpllibs::metaparse::impl::sequence_no_argument
       )
@@ -178,24 +178,24 @@ namespace mpllibs
     struct nth_of_c;
 
 
-    #ifdef SEQUENCE_UNUSED_PARAM
-      #error SEQUENCE_UNUSED_PARAM already defined
+    #ifdef MPLLIBS_SEQUENCE_UNUSED_PARAM
+      #error MPLLIBS_SEQUENCE_UNUSED_PARAM already defined
     #endif
-    #define SEQUENCE_UNUSED_PARAM(z, n, unused) \
+    #define MPLLIBS_SEQUENCE_UNUSED_PARAM(z, n, unused) \
       BOOST_PP_COMMA_IF(n) mpllibs::metaparse::impl::sequence_no_argument
     
-    #ifdef NTH_OF_N
-      #error NTH_OF_N already defined
+    #ifdef MPLLIBS_NTH_OF_N
+      #error MPLLIBS_NTH_OF_N already defined
     #endif
-    #define NTH_OF_N(z, n, unused) \
+    #define MPLLIBS_NTH_OF_N(z, n, unused) \
       template <int K BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, class P)> \
       struct nth_of_c< \
         K, \
         BOOST_PP_ENUM_PARAMS(n, P) \
         BOOST_PP_COMMA_IF(n) \
         BOOST_PP_REPEAT( \
-          BOOST_PP_SUB(SEQUENCE_MAX_ARGUMENT, n), \
-          SEQUENCE_UNUSED_PARAM, \
+          BOOST_PP_SUB(MPLLIBS_SEQUENCE_MAX_ARGUMENT, n), \
+          MPLLIBS_SEQUENCE_UNUSED_PARAM, \
           ~ \
         ) \
       > : \
@@ -205,10 +205,10 @@ namespace mpllibs
         > \
       {};
     
-    BOOST_PP_REPEAT(SEQUENCE_MAX_ARGUMENT, NTH_OF_N, ~)
+    BOOST_PP_REPEAT(MPLLIBS_SEQUENCE_MAX_ARGUMENT, MPLLIBS_NTH_OF_N, ~)
     
-    #undef NTH_OF_N
-    #undef SEQUENCE_UNUSED_PARAM
+    #undef MPLLIBS_NTH_OF_N
+    #undef MPLLIBS_SEQUENCE_UNUSED_PARAM
     
     
     
@@ -217,13 +217,16 @@ namespace mpllibs
     template <
       class K,
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-        SEQUENCE_MAX_ARGUMENT,
+        MPLLIBS_SEQUENCE_MAX_ARGUMENT,
         class P,
         mpllibs::metaparse::impl::sequence_no_argument
       )
     >
     struct nth_of :
-      nth_of_c<K::type::value, BOOST_PP_ENUM_PARAMS(SEQUENCE_MAX_ARGUMENT, P)>
+      nth_of_c<
+        K::type::value,
+        BOOST_PP_ENUM_PARAMS(MPLLIBS_SEQUENCE_MAX_ARGUMENT, P)
+      >
     {};
   }
   

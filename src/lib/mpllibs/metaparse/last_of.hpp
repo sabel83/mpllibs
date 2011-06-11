@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PARSER_LAST_OF_H
-#define MPLLIBS_PARSER_LAST_OF_H
+#ifndef MPLLIBS_METAPARSE_LAST_OF_HPP
+#define MPLLIBS_METAPARSE_LAST_OF_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -14,7 +14,7 @@ namespace mpllibs
   {
     template <
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-        SEQUENCE_MAX_ARGUMENT,
+        MPLLIBS_SEQUENCE_MAX_ARGUMENT,
         class P,
         mpllibs::metaparse::impl::sequence_no_argument
       )
@@ -22,33 +22,33 @@ namespace mpllibs
     struct last_of;
 
 
-    #ifdef SEQUENCE_UNUSED_PARAM
-      #error SEQUENCE_UNUSED_PARAM already defined
+    #ifdef MPLLIBS_SEQUENCE_UNUSED_PARAM
+      #error MPLLIBS_SEQUENCE_UNUSED_PARAM already defined
     #endif
-    #define SEQUENCE_UNUSED_PARAM(z, n, unused) \
+    #define MPLLIBS_SEQUENCE_UNUSED_PARAM(z, n, unused) \
       BOOST_PP_COMMA_IF(n) mpllibs::metaparse::impl::sequence_no_argument
     
-    #ifdef LAST_OF_N
-      #error LAST_OF_N already defined
+    #ifdef MPLLIBS_LAST_OF_N
+      #error MPLLIBS_LAST_OF_N already defined
     #endif
-    #define LAST_OF_N(z, n, unused) \
+    #define MPLLIBS_LAST_OF_N(z, n, unused) \
       template <BOOST_PP_ENUM_PARAMS(n, class P)> \
       struct last_of< \
         BOOST_PP_ENUM_PARAMS(n, P) \
         BOOST_PP_COMMA_IF(n) \
         BOOST_PP_REPEAT( \
-          BOOST_PP_SUB(SEQUENCE_MAX_ARGUMENT, n), \
-          SEQUENCE_UNUSED_PARAM, \
+          BOOST_PP_SUB(MPLLIBS_SEQUENCE_MAX_ARGUMENT, n), \
+          MPLLIBS_SEQUENCE_UNUSED_PARAM, \
           ~ \
         ) \
       > : \
         nth_of_c##n<n - 1 BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, P)> \
       {};
     
-    BOOST_PP_REPEAT(SEQUENCE_MAX_ARGUMENT, LAST_OF_N, ~)
+    BOOST_PP_REPEAT(MPLLIBS_SEQUENCE_MAX_ARGUMENT, MPLLIBS_LAST_OF_N, ~)
     
-    #undef LAST_OF_N
-    #undef SEQUENCE_UNUSED_PARAM
+    #undef MPLLIBS_LAST_OF_N
+    #undef MPLLIBS_SEQUENCE_UNUSED_PARAM
   }
 }
 

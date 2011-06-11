@@ -40,7 +40,7 @@ is not possible, it rejects the input and returns
 +mpllibs::metaparse::undefined+.
 
 The maximum number of accepted parsers is defined by the
-+PARSER_ONE_OF_MAX_ARGUMENT+ macro. Its default value is 20.
++MPLLIBS_ONE_OF_MAX_ARGUMENT+ macro. Its default value is 20.
 
 Header
 ------

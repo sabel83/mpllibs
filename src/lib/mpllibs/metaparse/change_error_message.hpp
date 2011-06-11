@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PARSER_CHANGE_ERROR_MESSAGE_H
-#define MPLLIBS_PARSER_CHANGE_ERROR_MESSAGE_H
+#ifndef MPLLIBS_METAPARSE_CHANGE_ERROR_MESSAGE_HPP
+#define MPLLIBS_METAPARSE_CHANGE_ERROR_MESSAGE_HPP
 
 //    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.

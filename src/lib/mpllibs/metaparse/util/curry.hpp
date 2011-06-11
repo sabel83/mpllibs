@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_UTIL_CURRY_H
-#define MPLLIBS_UTIL_CURRY_H
+#ifndef MPLLIBS_METAPARSE_UTIL_CURRY_HPP
+#define MPLLIBS_METAPARSE_UTIL_CURRY_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -26,8 +26,8 @@ namespace mpllibs
   {
     namespace util
     {
-      #ifndef CURRY_MAX_ARGUMENT
-        #define CURRY_MAX_ARGUMENT 5
+      #ifndef MPLLIBS_CURRY_MAX_ARGUMENT
+        #define MPLLIBS_CURRY_MAX_ARGUMENT 5
       #endif
 
       namespace impl
@@ -89,16 +89,18 @@ namespace mpllibs
       template <class T>
       struct curry0 : T {};
 
-      #ifdef CLASS_REPEAT
-        #error CLASS_REPEAT already defined
+      #ifdef MPLLIBS_CLASS_REPEAT
+        #error MPLLIBS_CLASS_REPEAT already defined
       #endif
-      #define CLASS_REPEAT(z, n, unused) BOOST_PP_COMMA_IF(n) class
+      #define MPLLIBS_CLASS_REPEAT(z, n, unused) BOOST_PP_COMMA_IF(n) class
 
-      #ifdef CURRY
-        #error CURRY already defined
+      #ifdef MPLLIBS_CURRY
+        #error MPLLIBS_CURRY already defined
       #endif
-      #define CURRY(z, n, unused) \
-        template <template <BOOST_PP_REPEAT(n, CLASS_REPEAT, ~)> class T> \
+      #define MPLLIBS_CURRY(z, n, unused) \
+        template < \
+          template <BOOST_PP_REPEAT(n, MPLLIBS_CLASS_REPEAT, ~)> class T \
+        > \
         struct curry##n : \
           mpllibs::metaparse::util::impl::curry_impl< \
             boost::mpl::unpack_args<boost::mpl::quote##n <T> >, \
@@ -107,10 +109,10 @@ namespace mpllibs
           >::type \
           {};
     
-      BOOST_PP_REPEAT_FROM_TO(1, CURRY_MAX_ARGUMENT, CURRY, ~)
+      BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_CURRY_MAX_ARGUMENT, MPLLIBS_CURRY, ~)
     
-      #undef CURRY
-      #undef CLASS_REPEAT
+      #undef MPLLIBS_CURRY
+      #undef MPLLIBS_CLASS_REPEAT
     }
   }
 }

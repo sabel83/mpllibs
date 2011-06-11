@@ -37,7 +37,7 @@ remaining input again. +any_one_of+ stops when no parser accepts the input.
 The result of parsing is a sequence of the results of the individual parsings.
 
 The maximum number of accepted parsers is defined by the
-+PARSER_ONE_OF_MAX_ARGUMENT+ macro. Its default value is 20.
++MPLLIBS_ONE_OF_MAX_ARGUMENT+ macro. Its default value is 20.
 
 Header
 ------

@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PARSER_ITERATE_C_H
-#define MPLLIBS_PARSER_ITERATE_C_H
+#ifndef MPLLIBS_METAPARSE_ITERATE_C_HPP
+#define MPLLIBS_METAPARSE_ITERATE_C_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2011.
 // Distributed under the Boost Software License, Version 1.0.
