@@ -17,7 +17,7 @@ $(EXECUTABLE) : $(OBJECTS)
 $(OBJECTS): %.o : %.cpp
 	cat $< | \
 	$(CTSTRANSFORM) | \
-	g++ -Wall -Werror -ansi -pedantic -I../../lib -x c++ - -c -o $@
+	g++ -Wall -Werror -ansi -pedantic -I../../.. -x c++ - -c -o $@
 
 clean :
 	-rm $(EXECUTABLE) $(OBJECTS)

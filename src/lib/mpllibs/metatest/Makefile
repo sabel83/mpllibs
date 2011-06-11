@@ -5,7 +5,7 @@
 
 THIS_MAKEFILES_DIR = $(lastword $(dir $(MAKEFILE_LIST)))
 
-INCLUDES += ../..
+INCLUDES += ../../../..
 
 LIB = libmetatest.a
 

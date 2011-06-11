@@ -14,7 +14,7 @@ $(EXECUTABLE) : $(OBJECTS)
 	g++ $< -o $(EXECUTABLE)
 
 $(OBJECTS): %.o : %.cpp
-	g++ -Wall -Werror -ansi -pedantic -I../../lib $< -c -o $@
+	g++ -Wall -Werror -ansi -pedantic -I../../.. $< -c -o $@
 
 clean :
 	-rm $(EXECUTABLE) $(OBJECTS)

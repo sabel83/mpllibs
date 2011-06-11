@@ -3,11 +3,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/error/try_.hpp>
-#include <mpllibs/error/throw.hpp>
-#include <mpllibs/error/exception.hpp>
-#include <mpllibs/error/debug.hpp>
+#include <mpllibs/metamonad/try_.hpp>
+#include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/exception.hpp>
 
+#include <mpllibs/metatest/debug.hpp>
 #include <mpllibs/metatest/to_stream.hpp>
 
 #include <boost/mpl/eval_if.hpp>
@@ -26,15 +26,15 @@ typedef int_<0> int0;
 typedef int_<13> int13;
 
 struct division_by_zero;
-DEFINE_TO_STREAM_FOR_TYPE(division_by_zero, "division by zero")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(division_by_zero, "division by zero")
 
 template <class A, class B>
 struct safe_divides :
-  TRY<
+  MPLLIBS_TRY<
     eval_if<
       typename equal_to<B, int0>::type,
-      THROW<division_by_zero>,
-      RETURN<divides<A, B> >
+      MPLLIBS_THROW<division_by_zero>,
+      MPLLIBS_RETURN<divides<A, B> >
     >
   >
 {};

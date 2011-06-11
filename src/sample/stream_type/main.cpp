@@ -18,8 +18,11 @@ class defined_custom_test_class {};
 
 class custom_test_class_with_long_name;
 
-DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(custom_test_class)
-DEFINE_TO_STREAM_FOR_TYPE(custom_test_class_with_long_name, "short_name")
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(custom_test_class)
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  custom_test_class_with_long_name,
+  "short_name"
+)
 
 int main()
 {
