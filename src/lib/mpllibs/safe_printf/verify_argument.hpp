@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PRINTF_VERIFY_ARGUMENT_H
-#define MPLLIBS_PRINTF_VERIFY_ARGUMENT_H
+#ifndef MPLLIBS_SAFE_PRINTF_VERIFY_ARGUMENT_HPP
+#define MPLLIBS_SAFE_PRINTF_VERIFY_ARGUMENT_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2010.
 // Distributed under the Boost Software License, Version 1.0.

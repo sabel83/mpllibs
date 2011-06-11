@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_PRINTF_EXPECT_H
-#define MPLLIBS_PRINTF_EXPECT_H
+#ifndef MPLLIBS_SAFE_PRINTF_EXPECT_HPP
+#define MPLLIBS_SAFE_PRINTF_EXPECT_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2010.
 // Distributed under the Boost Software License, Version 1.0.
