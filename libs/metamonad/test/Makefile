@@ -3,8 +3,8 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-INCLUDES += ../../../../..
-LIB_DIRS += ../../../mpllibs/metatest
+INCLUDES += ../../..
+LIB_DIRS += ../../../src/lib/mpllibs/metatest
 
-include ../test.mk
+include ../../../src/lib/mpllibs/metatest/test.mk
 
