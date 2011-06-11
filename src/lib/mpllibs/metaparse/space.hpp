@@ -32,7 +32,7 @@ namespace mpllibs
   }
 }
 
-DEFINE_TO_STREAM_FOR_TYPE(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
   mpllibs::metaparse::errors::whitespace_expected,
   "Whitespace expected"
 )

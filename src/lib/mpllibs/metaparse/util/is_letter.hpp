@@ -34,7 +34,10 @@ namespace mpllibs
   }
 }
 
-DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::util::is_letter, "is_letter")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::util::is_letter,
+  "is_letter"
+)
 
 #endif
 

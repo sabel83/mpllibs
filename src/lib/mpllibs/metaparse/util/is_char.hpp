@@ -26,7 +26,11 @@ namespace mpllibs
   }
 }
 
-DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::util::is_char, "is_char")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  1,
+  mpllibs::metaparse::util::is_char,
+  "is_char"
+)
 
 #endif
 

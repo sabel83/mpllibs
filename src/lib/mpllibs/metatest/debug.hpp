@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_ERROR_DEBUG_H
-#define MPLLIBS_ERROR_DEBUG_H
+#ifndef MPLLIBS_METATEST_DEBUG_HPP
+#define MPLLIBS_METATEST_DEBUG_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2011.
 // Distributed under the Boost Software License, Version 1.0.

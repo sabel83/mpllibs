@@ -28,7 +28,7 @@ namespace mpllibs
   }
 }
 
-DEFINE_TO_STREAM_FOR_TYPE(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
   mpllibs::metaparse::util::is_ucase_letter,
   "is_ucase_letter"
 )

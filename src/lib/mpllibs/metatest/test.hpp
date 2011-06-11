@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_TEST_TEST_H
-#define MPLLIBS_TEST_TEST_H
+#ifndef MPLLIBS_METATEST_TEST_HPP
+#define MPLLIBS_METATEST_TEST_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2011.
 // Distributed under the Boost Software License, Version 1.0.

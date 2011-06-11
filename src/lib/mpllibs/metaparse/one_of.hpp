@@ -124,7 +124,7 @@ namespace mpllibs
   }
 }
 
-DEFINE_TO_STREAM_FOR_TYPE(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
   mpllibs::metaparse::errors::none_of_the_expected_cases_found,
   "None of the expected cases found"
 )
