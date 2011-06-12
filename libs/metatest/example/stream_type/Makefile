@@ -50,5 +50,5 @@ $(BIN) : $(OBJECTS)
 	$(CXX) -o $(BIN) $(OBJECTS) $(foreach l,$(LIBS), -l$(l) ) $(foreach l,$(LIB_DIRS), -L$(l) )
 
 clean :
-	-rm $(LIB)
+	-rm $(BIN)
 
