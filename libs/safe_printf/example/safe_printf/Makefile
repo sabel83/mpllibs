@@ -1,19 +1,21 @@
-# Copyright Abel Sinkovics (abel@sinkovics.hu)  2010-2011.
+# Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2010.
 # Distributed under the Boost Software License, Version 1.0.
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-SOURCE_ROOT = ../../..
+SOURCE_ROOT = ../../../..
+
+NAME = safe_printf
 
 INCLUDES += $(SOURCE_ROOT)
-BIN_DIR = $(SOURCE_ROOT)/bin/tests/metamonad
+BIN_DIR = $(SOURCE_ROOT)/bin/example/safe_printf/$(NAME)
 
-BIN = $(BIN_DIR)/test
+BIN = $(BIN_DIR)/$(NAME)
 
 LIBS += metatest
 LIB_DIRS += $(SOURCE_ROOT)/bin/libs/metatest
 
-check : $(BIN)
+run : $(BIN)
 	$(BIN)
 
 build : $(BIN)

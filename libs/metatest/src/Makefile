@@ -1,4 +1,4 @@
-# Copyright Abel Sinkovics (abel@sinkovics.hu)  2010-2011.
+# Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2011.
 # Distributed under the Boost Software License, Version 1.0.
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
@@ -6,17 +6,11 @@
 SOURCE_ROOT = ../../..
 
 INCLUDES += $(SOURCE_ROOT)
-BIN_DIR = $(SOURCE_ROOT)/bin/tests/metamonad
+BIN_DIR = $(SOURCE_ROOT)/bin/libs/metatest
 
-BIN = $(BIN_DIR)/test
+LIB = $(BIN_DIR)/libmetatest.a
 
-LIBS += metatest
-LIB_DIRS += $(SOURCE_ROOT)/bin/libs/metatest
-
-check : $(BIN)
-	$(BIN)
-
-build : $(BIN)
+build : $(LIB)
 
 SOURCES += $(wildcard *.cpp)
 OBJECTS += $(addprefix $(BIN_DIR)/, $(SOURCES:.cpp=.o))
@@ -44,8 +38,10 @@ all : clean
 
 -include $(DEPS)
 
-$(BIN) : $(OBJECTS)
-	$(CXX) -o $(BIN) $(OBJECTS) $(foreach l,$(LIBS), -l$(l) ) $(foreach l,$(LIB_DIRS), -L$(l) )
+$(LIB) : $(OBJECTS)
+	ar rcs $@ $^
+
+check : ; echo nothing to check
 
 clean :
 	-rm $(LIB)

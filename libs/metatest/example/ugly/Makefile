@@ -3,18 +3,20 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-SOURCE_ROOT = ../../..
+SOURCE_ROOT = ../../../..
+
+NAME = ugly
 
 INCLUDES += $(SOURCE_ROOT)
-BIN_DIR = $(SOURCE_ROOT)/bin/tests/metamonad
+BIN_DIR = $(SOURCE_ROOT)/bin/example/metatest/$(NAME)
 
-BIN = $(BIN_DIR)/test
+BIN = $(BIN_DIR)/$(NAME)
 
 LIBS += metatest
 LIB_DIRS += $(SOURCE_ROOT)/bin/libs/metatest
 
-check : $(BIN)
-	$(BIN)
+run : $(BIN)
+	-$(BIN)
 
 build : $(BIN)
 
