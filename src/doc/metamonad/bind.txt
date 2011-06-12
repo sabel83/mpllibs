@@ -51,7 +51,7 @@ typedef
   exception_one_error;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

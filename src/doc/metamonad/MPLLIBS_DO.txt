@@ -56,7 +56,7 @@ MPLLIBS_DO<exception_tag>::apply<
 >
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

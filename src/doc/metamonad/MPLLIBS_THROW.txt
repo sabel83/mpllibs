@@ -61,7 +61,7 @@ struct divide :
   {};
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

@@ -630,7 +630,7 @@ link:MPLLIBS_TRY.html[MPLLIBS_TRY] +
 
 
 
-include::../copyright[]
+include::copyright[]
 
 link:../index.html[[up]]
 

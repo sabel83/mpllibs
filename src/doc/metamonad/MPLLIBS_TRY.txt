@@ -85,7 +85,7 @@ MPLLIBS_TRY<
     ::apply<unknown_error_detected>
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

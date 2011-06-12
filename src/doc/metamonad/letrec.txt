@@ -77,7 +77,7 @@ typedef
   fact_3;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

@@ -52,7 +52,7 @@ Example
 typedef return_<exception_tag, int> lifted_int;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 
