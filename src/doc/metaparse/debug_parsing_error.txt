@@ -60,7 +60,7 @@ Example
 debug_parsing_error<some_parser, boost::string<'abcd'> > do_debugging;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

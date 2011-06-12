@@ -63,7 +63,7 @@ typedef
   one_digit_word;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

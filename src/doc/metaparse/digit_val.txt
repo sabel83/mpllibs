@@ -60,7 +60,7 @@ Example
 boost::mpl::apply<mpllibs::metaparse::digit_val, boost::mpl::string<'13'>, mpllibs::metaparse::start>
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

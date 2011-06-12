@@ -69,7 +69,7 @@ Example
 boost::mpl::apply<is_letter, boost::mpl::char_<'x'> >
 --------------------------------------
 
-include::../../copyright[]
+include::../copyright[]
 
 link:index.html[[up]]
 

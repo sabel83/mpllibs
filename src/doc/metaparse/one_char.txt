@@ -65,7 +65,7 @@ typedef
   first_character_of_some_string;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

@@ -65,7 +65,7 @@ typedef
   second_digit;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

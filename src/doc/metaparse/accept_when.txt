@@ -72,7 +72,7 @@ typedef
   accept_digit;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

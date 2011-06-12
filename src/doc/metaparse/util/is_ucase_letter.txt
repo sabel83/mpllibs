@@ -61,7 +61,7 @@ Example
 boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'X'> >
 --------------------------------------
 
-include::../../copyright[]
+include::../copyright[]
 
 link:index.html[[up]]
 

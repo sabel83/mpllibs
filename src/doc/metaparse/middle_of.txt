@@ -65,7 +65,7 @@ typedef
   middle_digit;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

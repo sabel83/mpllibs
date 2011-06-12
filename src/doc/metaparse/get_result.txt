@@ -41,7 +41,7 @@ get_position<mpllibs::metaparse::accept<a, b, c> >::type
 a::type
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

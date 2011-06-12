@@ -188,7 +188,7 @@ link:debug_parsing_error.html[debug_parsing_error] +
 http://www.boost.org/doc/libs/1_43_0/libs/mpl/doc/index.html[boost::mpl].
 They are in link:util/index.html[metaparse::util].
 
-include::../copyright[]
+include::copyright[]
 
 link:../index.html[[up]]
 

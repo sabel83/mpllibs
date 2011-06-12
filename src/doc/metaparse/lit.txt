@@ -61,7 +61,7 @@ Example
 typedef lit<boost::mpl::integral_c<char, 'a'> > accept_a;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

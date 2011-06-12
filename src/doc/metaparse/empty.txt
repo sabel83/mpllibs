@@ -66,7 +66,7 @@ Example
 typedef empty<int> end_of_input;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

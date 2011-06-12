@@ -64,7 +64,7 @@ Example
 typedef look_ahead<mpllibs::metaparse::digit> starts_with_digit;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

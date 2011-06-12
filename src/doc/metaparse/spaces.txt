@@ -63,7 +63,7 @@ typedef
   some_string_without_leading_whitespaces;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

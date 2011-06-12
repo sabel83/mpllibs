@@ -58,7 +58,7 @@ Example
 boost::mpl::apply<digit_to_int, boost::mpl::char_<'7'> >
 --------------------------------------
 
-include::../../copyright[]
+include::../copyright[]
 
 link:index.html[[up]]
 

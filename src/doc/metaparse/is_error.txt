@@ -38,7 +38,7 @@ For any +e+ parsing error +is_error<c>::type+ is a wrapped compile-time +true+
 value, for any other +c+ class +is_error<c>::type+ is a wrapped compile-time
 +false+ value.
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

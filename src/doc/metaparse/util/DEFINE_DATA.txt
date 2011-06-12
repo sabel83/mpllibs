@@ -55,7 +55,7 @@ Example
 MPLLIBS_METAPARSE_DEFINE_DATA(some_parsing_error_message);
 --------------------------------------
 
-include::../../copyright[]
+include::../copyright[]
 
 link:index.html[[up]]
 

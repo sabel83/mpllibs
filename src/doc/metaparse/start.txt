@@ -39,7 +39,7 @@ Example
 accept<boost::mpl::int_<13>, boost::mpl::string<>, mpllibs::metaparse::start>
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

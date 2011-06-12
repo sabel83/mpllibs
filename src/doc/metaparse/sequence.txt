@@ -63,7 +63,7 @@ typedef
   two_digits;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

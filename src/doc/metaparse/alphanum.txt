@@ -61,7 +61,7 @@ Example
 boost::mpl::apply<mpllibs::metaparse::alphanum, boost::mpl::string<'abcd'>, mpllibs::metaparse::start>
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

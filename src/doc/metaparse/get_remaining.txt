@@ -41,7 +41,7 @@ get_remaining<mpllibs::metaparse::accept<a, b, c> >::type
 b::type
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

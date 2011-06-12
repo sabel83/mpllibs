@@ -61,7 +61,7 @@ Example
 typedef lit_c<'a'> accept_a;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 

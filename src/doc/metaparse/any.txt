@@ -72,7 +72,7 @@ Example
 typedef any<mpllibs::metaparse::alphanum> parse_word;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 
