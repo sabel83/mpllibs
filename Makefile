@@ -15,10 +15,13 @@ build :
 check : build ; $(call recurse, $(LIBS), check)
 .PHONY : check
 
-clean : ; $(call recurse, $(LIBS), clean)
+clean : ; $(call recurse, $(LIBS) doc, clean)
 .PHONY : clean
 
-all : clean check
+html : ; $(call recurse, $(LIBS) doc, html)
+.PHONY : html
+
+all : clean check html
 .PHONY : all
 
 

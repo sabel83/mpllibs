@@ -5,18 +5,21 @@
 
 CODE_DIRS = $(foreach d, src test, $(wildcard $(d)) ) $(wildcard example/*)
 
-recurse = $(foreach d, $(CODE_DIRS), $(MAKE) -C $(d) $(1) && ) true
+recurse = $(foreach d, $(1), $(MAKE) -C $(d) $(2) && ) true
 
-build : ; $(call recurse, build)
+build : ; $(call recurse, $(CODE_DIRS), build)
 .PHONY : build
 
-check : ; $(MAKE) -C test check
+check : ; $(call recurse, test, check)
 .PHONY : check
 
-clean : ; $(call recurse, clean)
+clean : ; $(call recurse, $(CODE_DIRS) doc, clean)
 .PHONY : clean
 
-all : clean build check
+html : ; $(call recurse, doc, html)
+.PHONY : html
+
+all : clean build check html
 .PHONY : all
 
 
