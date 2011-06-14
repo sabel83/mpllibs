@@ -24,4 +24,11 @@ html : ; $(call recurse, $(LIBS) doc, html)
 all : clean check html
 .PHONY : all
 
+WEBSITE_DIR = website
+website : html
+	mkdir -p $(WEBSITE_DIR)
+	cp index.html style.css $(WEBSITE_DIR)
+	$(foreach d, $(notdir $(LIBS)), mkdir -p $(WEBSITE_DIR)/$(d) && cp libs/$(d)/html/* $(WEBSITE_DIR)/$(d) && sed -i 's/\/\.\.\/\.\.\/index\.html/\/index.html/g' $(WEBSITE_DIR)/$(d)/index.html &&) true
+	sed -i 's/\"libs\//"/g' $(WEBSITE_DIR)/index.html
+	sed -i 's/\/html\//\//g' $(WEBSITE_DIR)/index.html
 
