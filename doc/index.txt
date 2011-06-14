@@ -18,20 +18,20 @@ Components
 
 _mpllibs_ contains the following libraries:
 
-* link:metatest/index.html[metatest] -
+* link:libs/metatest/html/index.html[metatest] -
     Unit testing framework for C++ template metaprograms
-* link:metamonad/index.html[metamonad] -
+* link:libs/metamonad/html/index.html[metamonad] -
     Library implementing monads and exceptions in C++ template metaprograms
-* link:metaparse/index.html[metaparse] -
+* link:libs/metaparse/html/index.html[metaparse] -
     A library for generating compile time parsers parsing embedded
     DSL code as part of the C++ compilation process
-* link:safe_printf/index.html[safe_printf] -
+* link:libs/safe_printf/html/index.html[safe_printf] -
     A type-safe +printf+, +fprintf+ and +sprintf+ implementation
 
 Usage
 -----
 
-The +src+ directory of the source tree contains a +Makefile+. The following
+The root of the source tree contains a +Makefile+. The following
 targets are supported:
 
 * +make check+ builds and runs all unit tests of the project.

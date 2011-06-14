@@ -632,6 +632,6 @@ link:MPLLIBS_TRY.html[MPLLIBS_TRY] +
 
 include::copyright[]
 
-link:../index.html[[up]]
+link:../../../index.html[[up]]
 
 

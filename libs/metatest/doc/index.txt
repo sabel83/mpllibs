@@ -132,6 +132,6 @@ use this framework.
 
 include::copyright[]
 
-link:../index.html[[up]]
+link:../../../index.html[[up]]
 
 

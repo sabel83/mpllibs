@@ -190,6 +190,6 @@ They are in link:util_index.html[metaparse::util].
 
 include::copyright[]
 
-link:../index.html[[up]]
+link:../../../index.html[[up]]
 
 

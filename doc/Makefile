@@ -4,7 +4,7 @@
 #          http://www.boost.org/LICENSE_1_0.txt)
 
 
-OUT_DIR = ../html
+OUT_DIR = ..
 TXT_FILES = $(wildcard *.txt)
 HTML_FILES = $(addprefix $(OUT_DIR)/, $(TXT_FILES:.txt=.html))
 

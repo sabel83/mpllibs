@@ -20,12 +20,3 @@ $(HTML_FILES) : $(OUT_DIR)/%.html : %.txt
 	sed --in-place 's/<head>/<head>\n<link rel="stylesheet" type="text\/css" href="style.css" \/> /' $@
 	sed --in-place 's/<hr>//g' $@
 
-# Recursion
-
-html : recurse
-clean : recurse
-check : recurse
-
-recurse :
-	$(foreach d, $(SUBDIRS), $(MAKE) -C $(d) $(MAKECMDGOALS) && ) true
-

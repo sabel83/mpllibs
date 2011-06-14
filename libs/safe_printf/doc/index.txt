@@ -23,6 +23,6 @@ link:fprintf.html[fprintf] +
 
 include::copyright[]
 
-link:../index.html[[up]]
+link:../../../index.html[[up]]
 
 
