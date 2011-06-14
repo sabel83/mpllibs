@@ -130,7 +130,7 @@ The components of +mpllibs+ use this framework for unit testing. You can find
 the tests in the +test+ directory of every component. You can check how they
 use this framework.
 
-include::../copyright[]
+include::copyright[]
 
 link:../index.html[[up]]
 
