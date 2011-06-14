@@ -1,6 +1,6 @@
 *.o
 *.d
 bin
-index.html
+/index.html
 website
 
