@@ -3,18 +3,21 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-lazy_equal_to
-=============
+digit_to_int
+============
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class A, class B>
-struct lazy_equal_to
+struct digit_to_int
 {
-  // unspecified
+  template <class D>
+  struct apply
+  {
+    // unspecified
+  };
 };
 --------------------------------------
 
@@ -22,38 +25,43 @@ struct lazy_equal_to
 Description
 -----------
 
-Lazily evaluated +boost::mpl::equal_to+.
+Converts a character containing a value in the range +'0'..'9'+ to an integer.
+
+It evaluates its argument lazily.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/lazy_equal_to.hpp>
+#include <mpllibs/metaparse/util/digit_to_int.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +a+ and +b+ comparable classes:
+The following pairs of expressions are equivalent
 
 --------------------------------------
-lazy_equal_to<a, b>
---------------------------------------
+boost::mpl::apply<digit_to_int, boost::mpl::char_<'0'> >
+boost::mpl::int_<0>
 
-is equivalent to
+// ...
 
---------------------------------------
-boost::mpl::equal_to<a::type, b::type>
+boost::mpl::apply<digit_to_int, boost::mpl::char_<'9'> >
+boost::mpl::int_<9>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-lazy_equal_to<boost::mpl::int_<1>, boost::mpl::int_<2> >::type
+boost::mpl::apply<digit_to_int, boost::mpl::char_<'7'> >
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
+link:util_index.html[[up]]
+
+
+
 

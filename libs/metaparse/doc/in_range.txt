@@ -3,17 +3,18 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-digit_to_int
-============
+in_range
+========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-struct digit_to_int
+template <class LowerBound, class UpperBound>
+struct in_range
 {
-  template <class D>
+  template <class T>
   struct apply
   {
     // unspecified
@@ -25,43 +26,44 @@ struct digit_to_int
 Description
 -----------
 
-Converts a character containing a value in the range +'0'..'9'+ to an integer.
-
-It evaluates its argument lazily.
+Metafunction class verifying that a value is in a range or not.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/digit_to_int.hpp>
+#include <mpllibs/metaparse/util/in_range.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-The following pairs of expressions are equivalent
+For any _less or equal_ comparable +L+, +U+ and +T+
 
 --------------------------------------
-boost::mpl::apply<digit_to_int, boost::mpl::char_<'0'> >
-boost::mpl::int_<0>
+boost::mpl::apply<in_range<L, U>, T>
+--------------------------------------
 
-// ...
+is equivalent to
 
-boost::mpl::apply<digit_to_int, boost::mpl::char_<'9'> >
-boost::mpl::int_<9>
+--------------------------------------
+boost::mpl::and_<
+  boost::mpl::less_equal<L, T>,
+  boost::mpl::less_equal<T, U>
+>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<digit_to_int, boost::mpl::char_<'7'> >
+boost::mpl::apply<
+  in_range<boost::mpl::int_<11>, boost::mpl::int_<13> >,
+  boost::mpl::int_<12>
+>
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
-
-
-
+link:util_index.html[[up]]
 

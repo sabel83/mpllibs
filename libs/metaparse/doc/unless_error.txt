@@ -71,9 +71,9 @@ struct digit_char
 unless_error<boost::mpl::apply<is_digit, boost::mpl::char_<'7'> >, digit_char>::type;
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
+link:util_index.html[[up]]
 
 
 

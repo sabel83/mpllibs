@@ -3,17 +3,18 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-is_lcase_letter
-===============
+is_char
+=======
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-struct is_lcase_letter
+template <class C>
+struct is_char
 {
-  template <class C>
+  template <class S>
   struct apply
   {
     // unspecified
@@ -25,44 +26,43 @@ struct is_lcase_letter
 Description
 -----------
 
-Checks if a character is a lower case letter. Returns a wrapped boolean value.
+Checks if +C+ and +S+ are the same characters.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/is_lcase_letter.hpp>
+#include <mpllibs/metaparse/util/is_char.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-The following expressions are equivalent:
+For any +c+ and +s+ wrapped characters
 
 --------------------------------------
-boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'a'> >
-boost::mpl::true_
+boost::mpl::apply<is_char<c>, s>
+--------------------------------------
 
-// ...
+is equivalent to
 
-boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'z'> >
-boost::mpl::true_
-
-// For any other wrapped character c:
-
-boost::mpl::apply<is_lcase_letter, c>
-boost::mpl::false_
+--------------------------------------
+boost::mpl::equal_to<c, s>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'x'> >
+boost::mpl::apply<
+  is_char<boost::mpl::char_<'a'> >,
+  boost::mpl::char_<'a'>
+>
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
+link:util_index.html[[up]]
+
 
 

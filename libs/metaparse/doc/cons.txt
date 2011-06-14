@@ -3,17 +3,17 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-cons_seq
-========
+cons
+====
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-struct cons_seq
+struct cons
 {
-  template <class S>
+  template <class T>
   struct apply
   {
     // unspecified
@@ -25,32 +25,30 @@ struct cons_seq
 Description
 -----------
 
-Metafunction class taking a sequence with two elements as argument. The second
-element of the sequence has to be a sequence as well. +cons_seq+ pushes the
-first element of +S+ to the front of that sequence.
-
-It evaluates its argument lazily.
+Metafunction class taking a pair as argument. The second element of the pair
+has to be a sequence. +cons+ pushes the first element of the pair to the front
+of that sequence.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/cons_seq.hpp>
+#include <mpllibs/metaparse/util/cons.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +s+ sequence, where +boost::mpl::back<s>::type+ is a sequence
+For any +P+ pair, where +P::second+ is a sequence
 
 --------------------------------------
-boost::mpl::apply<cons_seq, p>
+boost::mpl::apply<cons, P>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::push_front<boost::mpl::back<p>::type, boost::mpl::front<p>::type>
+boost::mpl::push_front<typename P::second, typename P::first>
 --------------------------------------
 
 Example
@@ -58,14 +56,14 @@ Example
 
 --------------------------------------
 boost::mpl::apply<
-  cons_seq,
-  boost::mpl::deque<int, boost::mpl::list<double, char> >
+  cons,
+  boost::mpl::pair<int, boost::mpl::list<double, char> >
 >::type,
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
+link:util_index.html[[up]]
 
 
 

@@ -3,16 +3,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-lazy_eval_if
-============
+lazy_equal_to
+=============
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class C, class T, class F>
-struct lazy_eval_if
+template <class A, class B>
+struct lazy_equal_to
 {
   // unspecified
 };
@@ -22,45 +22,38 @@ struct lazy_eval_if
 Description
 -----------
 
-+boost::mpl::eval_if+ with lazily evaluated condition.
+Lazily evaluated +boost::mpl::equal_to+.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/lazy_eval_if.hpp>
+#include <mpllibs/metaparse/util/lazy_equal_to.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +c+, +t+ and +f+ nullary metafunctions, where +c+ evaluates to a
-wrapped boolean value:
+For any +a+ and +b+ comparable classes:
 
 --------------------------------------
-lazy_eval_if<c, t, f>
+lazy_equal_to<a, b>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::eval_if<c::type, t, f>
+boost::mpl::equal_to<a::type, b::type>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<
-  lazy_eval_if<
-    boost::mpl::equal_to<boost::mpl::int_<1>, boost::mpl::int_<2> >,
-    boost::mpl::int_<11>,
-    boost::mpl::int_<13>
-  >
->
+lazy_equal_to<boost::mpl::int_<1>, boost::mpl::int_<2> >::type
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
+link:util_index.html[[up]]
 

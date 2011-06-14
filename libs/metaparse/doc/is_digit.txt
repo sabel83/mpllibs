@@ -3,15 +3,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-is_letter
-=========
+is_digit
+========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-struct is_letter
+struct is_digit
 {
   template <class C>
   struct apply
@@ -25,13 +25,13 @@ struct is_letter
 Description
 -----------
 
-Checks if a character is a letter. Returns a wrapped boolean value.
+Checks if a character a digit value or not. Returns a wrapped boolean value.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/is_letter.hpp>
+#include <mpllibs/metaparse/util/is_digit.hpp>
 --------------------------------------
 
 Expression semantics
@@ -40,25 +40,17 @@ Expression semantics
 The following expressions are equivalent:
 
 --------------------------------------
-boost::mpl::apply<is_letter, boost::mpl::char_<'a'> >
+boost::mpl::apply<is_digit, boost::mpl::char_<'0'> >
 boost::mpl::true_
 
 // ...
 
-boost::mpl::apply<is_letter, boost::mpl::char_<'z'> >
-boost::mpl::true_
-
-boost::mpl::apply<is_letter, boost::mpl::char_<'A'> >
-boost::mpl::true_
-
-// ...
-
-boost::mpl::apply<is_letter, boost::mpl::char_<'Z'> >
+boost::mpl::apply<is_digit, boost::mpl::char_<'9'> >
 boost::mpl::true_
 
 // For any other wrapped character c:
 
-boost::mpl::apply<is_letter, c>
+boost::mpl::apply<is_digit, c>
 boost::mpl::false_
 --------------------------------------
 
@@ -66,11 +58,12 @@ Example
 -------
 
 --------------------------------------
-boost::mpl::apply<is_letter, boost::mpl::char_<'x'> >
+boost::mpl::apply<is_digit, boost::mpl::char_<'7'> >
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
+link:util_index.html[[up]]
+
 
 

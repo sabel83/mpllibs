@@ -3,18 +3,17 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-in_range
-========
+is_lcase_letter
+===============
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class LowerBound, class UpperBound>
-struct in_range
+struct is_lcase_letter
 {
-  template <class T>
+  template <class C>
   struct apply
   {
     // unspecified
@@ -26,44 +25,44 @@ struct in_range
 Description
 -----------
 
-Metafunction class verifying that a value is in a range or not.
+Checks if a character is a lower case letter. Returns a wrapped boolean value.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/in_range.hpp>
+#include <mpllibs/metaparse/util/is_lcase_letter.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any _less or equal_ comparable +L+, +U+ and +T+
+The following expressions are equivalent:
 
 --------------------------------------
-boost::mpl::apply<in_range<L, U>, T>
---------------------------------------
+boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'a'> >
+boost::mpl::true_
 
-is equivalent to
+// ...
 
---------------------------------------
-boost::mpl::and_<
-  boost::mpl::less_equal<L, T>,
-  boost::mpl::less_equal<T, U>
->
+boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'z'> >
+boost::mpl::true_
+
+// For any other wrapped character c:
+
+boost::mpl::apply<is_lcase_letter, c>
+boost::mpl::false_
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<
-  in_range<boost::mpl::int_<11>, boost::mpl::int_<13> >,
-  boost::mpl::int_<12>
->
+boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'x'> >
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
+link:util_index.html[[up]]
+
 

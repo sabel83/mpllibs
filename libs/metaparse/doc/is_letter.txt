@@ -3,17 +3,17 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-cons
-====
+is_letter
+=========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-struct cons
+struct is_letter
 {
-  template <class T>
+  template <class C>
   struct apply
   {
     // unspecified
@@ -25,46 +25,52 @@ struct cons
 Description
 -----------
 
-Metafunction class taking a pair as argument. The second element of the pair
-has to be a sequence. +cons+ pushes the first element of the pair to the front
-of that sequence.
+Checks if a character is a letter. Returns a wrapped boolean value.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/cons.hpp>
+#include <mpllibs/metaparse/util/is_letter.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +P+ pair, where +P::second+ is a sequence
+The following expressions are equivalent:
 
 --------------------------------------
-boost::mpl::apply<cons, P>
---------------------------------------
+boost::mpl::apply<is_letter, boost::mpl::char_<'a'> >
+boost::mpl::true_
 
-is equivalent to
+// ...
 
---------------------------------------
-boost::mpl::push_front<typename P::second, typename P::first>
+boost::mpl::apply<is_letter, boost::mpl::char_<'z'> >
+boost::mpl::true_
+
+boost::mpl::apply<is_letter, boost::mpl::char_<'A'> >
+boost::mpl::true_
+
+// ...
+
+boost::mpl::apply<is_letter, boost::mpl::char_<'Z'> >
+boost::mpl::true_
+
+// For any other wrapped character c:
+
+boost::mpl::apply<is_letter, c>
+boost::mpl::false_
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<
-  cons,
-  boost::mpl::pair<int, boost::mpl::list<double, char> >
->::type,
+boost::mpl::apply<is_letter, boost::mpl::char_<'x'> >
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
-
-
+link:util_index.html[[up]]
 
 

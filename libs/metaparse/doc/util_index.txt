@@ -30,8 +30,8 @@ Macros defined by the library:
 
 link:DEFINE_DATA.html[MPLLIBS_METAPARSE_DEFINE_DATA] + 
 
-include::../copyright[]
+include::copyright[]
 
-link:../index.html[[up]]
+link:index.html[[up]]
 
 

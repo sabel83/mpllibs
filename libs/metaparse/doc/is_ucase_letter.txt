@@ -3,15 +3,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-is_digit
-========
+is_ucase_letter
+===============
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-struct is_digit
+struct is_ucase_letter
 {
   template <class C>
   struct apply
@@ -25,13 +25,13 @@ struct is_digit
 Description
 -----------
 
-Checks if a character a digit value or not. Returns a wrapped boolean value.
+Checks if a character is an upper case letter. Returns a wrapped boolean value.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/is_digit.hpp>
+#include <mpllibs/metaparse/util/is_ucase_letter.hpp>
 --------------------------------------
 
 Expression semantics
@@ -40,17 +40,17 @@ Expression semantics
 The following expressions are equivalent:
 
 --------------------------------------
-boost::mpl::apply<is_digit, boost::mpl::char_<'0'> >
+boost::mpl::apply<is_ucase_letter, boost::mpl::char_<'A'> >
 boost::mpl::true_
 
 // ...
 
-boost::mpl::apply<is_digit, boost::mpl::char_<'9'> >
+boost::mpl::apply<is_ucase_letter, boost::mpl::char_<'Z'> >
 boost::mpl::true_
 
 // For any other wrapped character c:
 
-boost::mpl::apply<is_digit, c>
+boost::mpl::apply<is_ucase_letter, c>
 boost::mpl::false_
 --------------------------------------
 
@@ -58,12 +58,11 @@ Example
 -------
 
 --------------------------------------
-boost::mpl::apply<is_digit, boost::mpl::char_<'7'> >
+boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'X'> >
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
-
+link:util_index.html[[up]]
 
 

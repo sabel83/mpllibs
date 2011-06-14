@@ -3,16 +3,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-is_char
-=======
+cons_seq
+========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class C>
-struct is_char
+struct cons_seq
 {
   template <class S>
   struct apply
@@ -26,28 +25,32 @@ struct is_char
 Description
 -----------
 
-Checks if +C+ and +S+ are the same characters.
+Metafunction class taking a sequence with two elements as argument. The second
+element of the sequence has to be a sequence as well. +cons_seq+ pushes the
+first element of +S+ to the front of that sequence.
+
+It evaluates its argument lazily.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/is_char.hpp>
+#include <mpllibs/metaparse/util/cons_seq.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +c+ and +s+ wrapped characters
+For any +s+ sequence, where +boost::mpl::back<s>::type+ is a sequence
 
 --------------------------------------
-boost::mpl::apply<is_char<c>, s>
+boost::mpl::apply<cons_seq, p>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::equal_to<c, s>
+boost::mpl::push_front<boost::mpl::back<p>::type, boost::mpl::front<p>::type>
 --------------------------------------
 
 Example
@@ -55,14 +58,15 @@ Example
 
 --------------------------------------
 boost::mpl::apply<
-  is_char<boost::mpl::char_<'a'> >,
-  boost::mpl::char_<'a'>
->
+  cons_seq,
+  boost::mpl::deque<int, boost::mpl::list<double, char> >
+>::type,
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
-link:index.html[[up]]
+link:util_index.html[[up]]
+
 
 
 
