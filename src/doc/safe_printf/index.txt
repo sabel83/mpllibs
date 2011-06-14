@@ -21,7 +21,7 @@ link:printf.html[printf] +
 link:sprintf.html[sprintf] + 
 link:fprintf.html[fprintf] + 
 
-include::../copyright[]
+include::copyright[]
 
 link:../index.html[[up]]
 

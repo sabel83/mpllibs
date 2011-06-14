@@ -62,7 +62,7 @@ mpllibs::safe_printf::fprintf<boost::mpl::string<'%d %','d\n'> >(f, 11, 13);
 fclose(f);
 --------------------------------------
 
-include::../copyright[]
+include::copyright[]
 
 link:index.html[[up]]
 
