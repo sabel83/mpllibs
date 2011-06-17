@@ -1,0 +1,281 @@
+#ifndef MPLLIBS_METATEST_TO_STREAM_SEQUENCE_HPP
+#define MPLLIBS_METATEST_TO_STREAM_SEQUENCE_HPP
+
+// Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+#include <mpllibs/metatest/character_printer.hpp>
+#include <mpllibs/metatest/to_stream.hpp>
+
+#include <boost/mpl/accumulate.hpp>
+#include <boost/mpl/and.hpp>
+#include <boost/mpl/aux_/range_c/tag.hpp>
+#include <boost/mpl/base.hpp>
+#include <boost/mpl/begin.hpp>
+#include <boost/mpl/bitand.hpp>
+#include <boost/mpl/bitwise.hpp>
+#include <boost/mpl/contains.hpp>
+#include <boost/mpl/copy_if.hpp>
+#include <boost/mpl/count.hpp>
+#include <boost/mpl/count_if.hpp>
+#include <boost/mpl/deref.hpp>
+#include <boost/mpl/empty.hpp>
+#include <boost/mpl/empty_sequence.hpp>
+#include <boost/mpl/end.hpp>
+#include <boost/mpl/equal.hpp>
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/erase.hpp>
+#include <boost/mpl/erase_key.hpp>
+#include <boost/mpl/filter_view.hpp>
+#include <boost/mpl/find.hpp>
+#include <boost/mpl/find_if.hpp>
+#include <boost/mpl/fold.hpp>
+#include <boost/mpl/for_each.hpp>
+#include <boost/mpl/front.hpp>
+#include <boost/mpl/greater_equal.hpp>
+#include <boost/mpl/greater.hpp>
+#include <boost/mpl/identity.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/inherit.hpp>
+#include <boost/mpl/inherit_linearly.hpp>
+#include <boost/mpl/insert.hpp>
+#include <boost/mpl/insert_range.hpp>
+#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/iterator_category.hpp>
+#include <boost/mpl/key_type.hpp>
+#include <boost/mpl/less_equal.hpp>
+#include <boost/mpl/less.hpp>
+#include <boost/mpl/list.hpp>
+#include <boost/mpl/lower_bound.hpp>
+#include <boost/mpl/max_element.hpp>
+#include <boost/mpl/min_element.hpp>
+#include <boost/mpl/modulus.hpp>
+#include <boost/mpl/next.hpp>
+#include <boost/mpl/not_equal_to.hpp>
+#include <boost/mpl/not.hpp>
+#include <boost/mpl/order.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/mpl/partition.hpp>
+#include <boost/mpl/quote.hpp>
+#include <boost/mpl/remove.hpp>
+#include <boost/mpl/remove_if.hpp>
+#include <boost/mpl/replace.hpp>
+#include <boost/mpl/replace_if.hpp>
+#include <boost/mpl/reverse.hpp>
+#include <boost/mpl/reverse_iter_fold.hpp>
+#include <boost/mpl/sizeof.hpp>
+#include <boost/mpl/sort.hpp>
+#include <boost/mpl/string.hpp>
+#include <boost/mpl/times.hpp>
+#include <boost/mpl/transform.hpp>
+#include <boost/mpl/transform_view.hpp>
+#include <boost/mpl/unique.hpp>
+#include <boost/mpl/unpack_args.hpp>
+#include <boost/mpl/upper_bound.hpp>
+#include <boost/mpl/value_type.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/void.hpp>
+#include <boost/mpl/zip_view.hpp>
+
+#include <boost/type_traits/is_same.hpp>
+
+#include <cassert>
+
+namespace mpllibs
+{
+  namespace metatest
+  {
+    struct to_stream_nothing
+    {
+      static std::ostream& run(std::ostream& o_)
+      {
+        return o_;
+      }
+    };
+
+    template <class I, class End>
+    struct to_stream_sequence_impl;
+
+    template <class I, class End>
+    struct to_stream_sequence :
+      boost::mpl::if_<
+        boost::is_same<I, End>,
+        to_stream_nothing,
+        to_stream_sequence_impl<I, End>
+      >::type
+    {};
+    
+    template <class I, class End>
+    struct to_stream_sequence_impl
+    {
+      static std::ostream& run(std::ostream& o_)
+      {
+        using boost::mpl::next;
+        using boost::mpl::deref;
+        using boost::is_same;
+        
+        typedef typename next<I>::type i_next;
+        typedef typename deref<I>::type deref_i;
+        const bool is_at_end = is_same<i_next, End>::type::value;
+        
+        to_stream<deref_i>::run(o_);
+        o_ << (is_at_end ? "" : ", ");
+        to_stream_sequence<i_next, End>::run(o_);
+        return o_;
+      }
+    };
+    
+
+    template <class I, class End>
+    struct to_stream_sequence_values_impl;
+
+    template <class I, class End>
+    struct to_stream_sequence_values :
+      boost::mpl::if_<
+        boost::is_same<I, End>,
+        to_stream_nothing,
+        to_stream_sequence_values_impl<I, End>
+      >::type
+    {};
+    
+    template <class I, class End>
+    struct to_stream_sequence_values_impl
+    {
+      static std::ostream& run(std::ostream& o_)
+      {
+        using boost::mpl::next;
+        using boost::mpl::deref;
+        using boost::is_same;
+        
+        typedef typename next<I>::type i_next;
+        typedef typename deref<I>::type deref_i;
+        const bool is_at_end = is_same<i_next, End>::type::value;
+        
+        o_ << deref_i::value << (is_at_end ? "" : ", ");
+        to_stream_sequence_values<i_next, End>::run(o_);
+        return o_;
+      }
+    };
+
+    struct no_common_tag
+    {
+      typedef no_common_tag type;
+    };
+    
+    // I can't use a lambda expression, because is_same is not lazy
+    struct common_tag_compare
+    {
+      template <class A, class B>
+      struct apply :
+        boost::mpl::if_<
+          boost::is_same<A, typename boost::mpl::tag<B>::type>,
+          A,
+          no_common_tag
+        >
+      {};
+    };
+    
+    template <class Seq>
+    struct common_tag :
+      boost::mpl::fold<
+        Seq,
+        typename boost::mpl::tag<typename boost::mpl::front<Seq>::type>::type,
+        common_tag_compare
+      >
+    {};
+    
+    template <class Seq, class CommonTag>
+    struct to_stream_sequence_begin
+    {
+      typedef to_stream_sequence_begin type;
+      
+      static std::ostream& run(std::ostream& o_)
+      {
+        using boost::mpl::begin;
+        using boost::mpl::end;
+        
+        typedef typename begin<Seq>::type b;
+        typedef typename end<Seq>::type e;
+        
+        o_  << "<";
+        to_stream_sequence<b, e>::run(o_);
+        return o_ << ">";
+      }
+    };
+    
+    // pre-condition: !empty<Seq>
+    template <class Seq>
+    struct to_stream_sequence_begin<Seq, boost::mpl::integral_c_tag>
+    {
+      typedef to_stream_sequence_begin type;
+      
+      static std::ostream& run(std::ostream& o_)
+      {
+        using boost::mpl::begin;
+        using boost::mpl::end;
+        using boost::mpl::front;
+        
+        typedef typename front<Seq>::type::value_type v_type;
+        
+        o_ << "_c<";
+        mpllibs::metatest::to_stream<v_type>::run(o_);
+        o_ << ", ";
+        
+        if (boost::is_same<char, v_type>::type::value)
+        {
+          o_ << '\"';
+          boost::mpl::for_each<Seq>(character_printer(o_));
+          o_ << '\"';
+        }
+        else
+        {
+          typedef typename begin<Seq>::type b;
+          typedef typename end<Seq>::type e;
+          
+          to_stream_sequence_values<b, e>::run(o_);
+        }
+          
+        return o_ << ">";
+      }
+    };
+
+    #ifdef MPLLIBS_TO_STREAM_SEQUENCE
+      #error MPLLIBS_TO_STREAM_SEQUENCE already defined
+    #endif
+    #define MPLLIBS_TO_STREAM_SEQUENCE(tag, name) \
+      template <> \
+      struct to_stream_impl<tag> \
+      { \
+        template <class Seq> \
+        struct apply \
+        { \
+          typedef apply type; \
+          \
+          static std::ostream& run(std::ostream& o_) \
+          { \
+            return \
+              mpllibs::metatest::to_stream_sequence_begin< \
+                Seq, \
+                typename boost::mpl::eval_if< \
+                  typename boost::mpl::empty<Seq>::type, \
+                  mpllibs::metatest::no_common_tag, \
+                  mpllibs::metatest::common_tag<Seq> \
+                >::type \
+              >::run(o_ << "mpl::" #name); \
+          } \
+        }; \
+      };
+    
+    MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::vector_tag, vector)
+    MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::list_tag, list)
+    MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::half_open_range_tag, range)
+    
+    #undef MPLLIBS_TO_STREAM_SEQUENCE
+
+  }
+}    
+
+#endif
+

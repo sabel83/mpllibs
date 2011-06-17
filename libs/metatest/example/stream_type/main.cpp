@@ -9,8 +9,11 @@
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/deque.hpp>
 #include <boost/mpl/range_c.hpp>
+#include <boost/mpl/int.hpp>
 
 #include <iostream>
+
+using boost::mpl::int_;
 
 class custom_test_class;
 class other_custom_test_class;
@@ -18,11 +21,20 @@ class defined_custom_test_class {};
 
 class custom_test_class_with_long_name;
 
+struct metafunction_class
+{
+  typedef metafunction_class type;
+  
+  template <class T>
+  struct apply : int_<13> {};
+};
+
 MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(custom_test_class)
 MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
   custom_test_class_with_long_name,
   "short_name"
 )
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(metafunction_class)
 
 int main()
 {
@@ -84,6 +96,6 @@ int main()
   to_stream<vector_c<char, 'h', 'e', 'l', 'l', 'o'> >::run(cout) << endl;
   to_stream<vector<> >::run(cout) << endl;
   to_stream<_1>::run(cout) << endl;
-  to_stream<apply<int, double> >::run(cout) << endl;
+  to_stream<apply<metafunction_class, double> >::run(cout) << endl;
 }
 
