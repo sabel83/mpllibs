@@ -19,15 +19,11 @@ namespace mpllibs
     {
       template <class S, class Pos>
       struct apply :
-        boost::mpl::apply<
-          typename boost::mpl::if_<
-            is_error<boost::mpl::apply<P, S, Pos> >,
-            P,
-            any_fold<P, State, ForwardOp>
-          >::type,
-          S,
-          Pos
-        >
+        boost::mpl::if_<
+          is_error<boost::mpl::apply<P, S, Pos> >,
+          P,
+          any_fold<P, State, ForwardOp>
+        >::type::template apply<S, Pos>
       {};
     };
   }
