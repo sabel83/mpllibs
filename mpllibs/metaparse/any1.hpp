@@ -6,30 +6,24 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/any.hpp>
+#include <mpllibs/metaparse/any_fold1.hpp>
 
-#include <boost/mpl/if.hpp>
+#include <boost/mpl/list.hpp>
+#include <boost/mpl/push_front.hpp>
+#include <boost/mpl/quote.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
     template <class P>
-    struct any1
-    {
-      template <class S, class Pos>
-      struct apply :
-        boost::mpl::apply<
-          typename boost::mpl::if_<
-            is_error<boost::mpl::apply<P, S, Pos> >,
-            P,
-            any<P>
-          >::type,
-          S,
-          Pos
-        >
-      {};
-    };
+    struct any1 :
+      any_fold1<
+        P,
+        boost::mpl::list<>,
+        boost::mpl::quote2<boost::mpl::push_front>
+      >
+    {};
   }
 }
 
