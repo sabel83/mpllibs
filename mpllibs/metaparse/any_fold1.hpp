@@ -14,7 +14,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class P, class State, class ForwardOp>
+    template <class P, class State, class BackwardOp>
     struct any_fold1
     {
       template <class S, class Pos>
@@ -22,7 +22,7 @@ namespace mpllibs
         boost::mpl::if_<
           is_error<boost::mpl::apply<P, S, Pos> >,
           P,
-          any_fold<P, State, ForwardOp>
+          any_fold<P, State, BackwardOp>
         >::type::template apply<S, Pos>
       {};
     };

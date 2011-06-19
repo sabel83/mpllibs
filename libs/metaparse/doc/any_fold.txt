@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class P, class State, class ForwardOp>
+template <class P, class State, class BackwardOp>
 struct any_fold
 {
   template <class S, class Pos>
@@ -28,8 +28,8 @@ Description
 
 Parser combinator taking a parser argument. It applies the parser on the input
 string repeatedly as long as the parser accepts the input. The result of parsing
-is equivalent to +boost::fold<Sequence, State, ForwardOp>+, where +Sequence+ is
-the sequence of the results of the applications of +P+.
+is equivalent to +boost::reverse_fold<Sequence, State, BackwardOp>+, where
++Sequence+ is the sequence of the results of the applications of +P+.
 
 When the parser rejects the input for the first time, +any+ still accepts the
 input and the result of parsing is +State+.
@@ -57,12 +57,12 @@ returns an error. It is
 --------------------------------------
 boost::mpl::apply<
   f,
-  boost::mpl::apply<
+  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type,
+  boost::mpl::apply_wrap2<
     any_fold<p, t, f>,
     mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
     mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
-  >::type,
-  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
+  >::type
 >
 --------------------------------------
 
@@ -73,7 +73,7 @@ Example
 
 --------------------------------------
 typedef boost::mpl::list<> empty_list;
-typedef boost::mpl::quote2<boost::mpl::push_front> push_front;
+typedef boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1> push_front;
 
 template <class P>
 struct any :

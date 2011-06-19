@@ -10,7 +10,7 @@
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/push_front.hpp>
-#include <boost/mpl/quote.hpp>
+#include <boost/mpl/lambda.hpp>
 
 namespace mpllibs
 {
@@ -21,7 +21,7 @@ namespace mpllibs
       any_fold1<
         P,
         boost::mpl::list<>,
-        boost::mpl::quote2<boost::mpl::push_front>
+        boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1>
       >
     {};
   }

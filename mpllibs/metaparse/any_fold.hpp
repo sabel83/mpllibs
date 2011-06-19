@@ -17,7 +17,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    template <class P, class State, class ForwardOp>
+    template <class P, class State, class BackwardOp>
     struct any_fold
     {
     private:
@@ -28,8 +28,8 @@ namespace mpllibs
         typedef
           // any_fold never returns error
           // I need to use apply_wrap, and not apply, because apply would
-          // build a metafunction class from any_fold<P, State, ForwardOp>
-          // when ForwardOp is a lambda expression.
+          // build a metafunction class from any_fold<P, State, BackwardOp>
+          // when BackwardOp is a lambda expression.
           boost::mpl::apply_wrap2<
             any_fold,
             typename get_remaining<Res>::type,
@@ -41,9 +41,9 @@ namespace mpllibs
           boost::mpl::apply<
             return_<
               typename boost::mpl::apply<
-                ForwardOp,
-                typename get_result<parsed_remaining>::type,
-                typename get_result<Res>::type
+                BackwardOp,
+                typename get_result<Res>::type,
+                typename get_result<parsed_remaining>::type
               >::type
             >,
             typename get_remaining<parsed_remaining>::type,
