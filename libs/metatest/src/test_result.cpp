@@ -5,7 +5,7 @@
 
 #include <mpllibs/metatest/test_result.hpp>
 
-#include <cassert>
+#include <boost/assert.hpp>
 
 using mpllibs::metatest::test_result;
 using mpllibs::metatest::location;
@@ -41,7 +41,7 @@ bool test_result::success() const
       
 const string& test_result::get_reason() const
 {
-  assert(has_reason());
+  BOOST_ASSERT(has_reason());
         
   return _reason;
 }

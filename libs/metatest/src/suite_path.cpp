@@ -5,8 +5,6 @@
 
 #include <mpllibs/metatest/suite_path.hpp>
 
-#include <cassert>
-
 using mpllibs::metatest::suite_path;
 
 using std::string;

@@ -8,7 +8,7 @@
 
 #include <mpllibs/metatest/character_printer.hpp>
 
-#include <cassert>
+#include <boost/assert.hpp>
 
 namespace mpllibs
 {
@@ -69,7 +69,7 @@ namespace mpllibs
         
       static std::ostream& run(std::ostream& o_)
       {
-        assert(sizeof(char) == 1);
+        BOOST_ASSERT(sizeof(char) == 1);
 
         o_ << "char_<\'";
         character_printer(o_).operator()(Value);
