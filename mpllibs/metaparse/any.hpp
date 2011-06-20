@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/any_fold.hpp>
+#include <mpllibs/metaparse/any_foldr.hpp>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/push_front.hpp>
@@ -18,7 +18,7 @@ namespace mpllibs
   {
     template <class P>
     struct any :
-      any_fold<
+      any_foldr<
         P,
         boost::mpl::list<>,
         boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1>

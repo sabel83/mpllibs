@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_METAPARSE_ANY_FOLD_HPP
-#define MPLLIBS_METAPARSE_ANY_FOLD_HPP
+#ifndef MPLLIBS_METAPARSE_ANY_FOLDR_HPP
+#define MPLLIBS_METAPARSE_ANY_FOLDR_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2011.
 // Distributed under the Boost Software License, Version 1.0.
@@ -18,7 +18,7 @@ namespace mpllibs
   namespace metaparse
   {
     template <class P, class State, class BackwardOp>
-    struct any_fold
+    struct any_foldr
     {
     private:
       template <class Res>
@@ -26,12 +26,12 @@ namespace mpllibs
       {
       private:
         typedef
-          // any_fold never returns error
+          // any_foldr never returns error
           // I need to use apply_wrap, and not apply, because apply would
           // build a metafunction class from any_fold<P, State, BackwardOp>
           // when BackwardOp is a lambda expression.
           boost::mpl::apply_wrap2<
-            any_fold,
+            any_foldr,
             typename get_remaining<Res>::type,
             typename get_position<Res>::type
           >

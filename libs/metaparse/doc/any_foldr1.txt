@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-any_fold
-========
+any_foldr1
+==========
 Abel Sinkovics
 
 Synopsis
@@ -12,7 +12,7 @@ Synopsis
 
 --------------------------------------
 template <class P, class State, class BackwardOp>
-struct any_fold
+struct any_foldr1
 {
   template <class S, class Pos>
   struct apply
@@ -28,17 +28,18 @@ Description
 
 Parser combinator taking a parser argument. It applies the parser on the input
 string repeatedly as long as the parser accepts the input. The result of parsing
-is equivalent to +boost::reverse_fold<Sequence, State, BackwardOp>+, where
-+Sequence+ is the sequence of the results of the applications of +P+.
+is equivalent to +boost::fold<Sequence, State, BackwardOp>+, where +Sequence+ is
+the sequence of the results of the applications of +P+.
 
-When the parser rejects the input for the first time, +any+ still accepts the
-input and the result of parsing is +State+.
+When the parser rejects the input for the first time, +any_foldr1+ rejects it as
+well. At least one successful application of +P+ is required for +any_foldr1+ to
+accept the input.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/any_fold.hpp>
+#include <mpllibs/metaparse/any_foldr1.hpp>
 --------------------------------------
 
 Expression semantics
@@ -48,25 +49,27 @@ For any +p+ parser, +t+ class, +f+ metafunction class taking two arguments,
 +s+ compile-time string and +pos+ source position
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<any_fold<p, t, f>, s, pos> >::type
+mpllibs::metaparse::get_result<
+  boost::mpl::apply<any_foldr1<p, t, f>, s, pos>
+>::type
 --------------------------------------
 
-is equivalent to +t+ when +boost::mpl::apply<p, s, pos>+
-returns an error. It is
+is equivalent to the following, when +boost::mpl::apply<p, s, pos>+ doesn't
+return an error:
 
 --------------------------------------
 boost::mpl::apply<
   f,
   mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type,
   boost::mpl::apply_wrap2<
-    any_fold<p, t, f>,
+    any_foldr<p, t, f>,
     mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
     mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
   >::type
 >
 --------------------------------------
 
-otherwise.
+It forwards the error +boost::mpl::apply<p, s, pos>+ returned otherwise.
 
 Example
 -------
@@ -76,8 +79,8 @@ typedef boost::mpl::list<> empty_list;
 typedef boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1> push_front;
 
 template <class P>
-struct any :
-  mpllibs::metaparse::any_fold<P, empty_list, push_front>
+struct any1 :
+  mpllibs::metaparse::any_foldr1<P, empty_list, push_front>
 {};
 --------------------------------------
 
