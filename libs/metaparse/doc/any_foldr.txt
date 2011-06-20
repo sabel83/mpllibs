@@ -31,8 +31,8 @@ string repeatedly as long as the parser accepts the input. The result of parsing
 is equivalent to +boost::reverse_fold<Sequence, State, BackwardOp>+, where
 +Sequence+ is the sequence of the results of the applications of +P+.
 
-When the parser rejects the input for the first time, +any+ still accepts the
-input and the result of parsing is +State+.
+When the parser rejects the input for the first time, +any_foldr+ still accepts
+the input and the result of parsing is +State+.
 
 Header
 ------
@@ -78,9 +78,7 @@ typedef boost::mpl::list<> empty_list;
 typedef boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1> push_front;
 
 template <class P>
-struct any :
-  mpllibs::metaparse::any_foldr<P, empty_list, push_front>
-{};
+struct any : any_foldr<P, empty_list, push_front> {};
 --------------------------------------
 
 include::copyright[]

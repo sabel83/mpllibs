@@ -28,7 +28,7 @@ namespace mpllibs
         typedef
           // any_foldr never returns error
           // I need to use apply_wrap, and not apply, because apply would
-          // build a metafunction class from any_fold<P, State, BackwardOp>
+          // build a metafunction class from any_foldr<P, State, BackwardOp>
           // when BackwardOp is a lambda expression.
           boost::mpl::apply_wrap2<
             any_foldr,
