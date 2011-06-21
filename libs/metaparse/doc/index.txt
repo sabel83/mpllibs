@@ -140,6 +140,7 @@ link:except.html[except] +
 link:fail.html[fail] +
 link:first_of.html[first_of] +
 link:if.html[if] +
+link:int.html[int_] +
 link:iterate.html[iterate] +
 link:iterate_c.html[iterate_c] +
 link:keyword.html[keyword] +

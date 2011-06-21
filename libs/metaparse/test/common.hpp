@@ -17,6 +17,7 @@
 #include <boost/mpl/at.hpp>
 
 typedef boost::mpl::list_c<char> str_;
+typedef boost::mpl::list_c<char, '0'> str_0;
 typedef boost::mpl::list_c<char, '1'> str_1;
 typedef boost::mpl::list_c<char, '1', '9', '8', '3'> str_1983;
 typedef boost::mpl::list_c<char, 'a'> str_a;

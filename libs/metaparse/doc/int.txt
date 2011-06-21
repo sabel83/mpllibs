@@ -1,17 +1,17 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-digit_val
-=========
+int_
+====
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-struct digit_val
+struct int_
 {
   template <class S, class Pos>
   struct apply
@@ -25,14 +25,15 @@ struct digit_val
 Description
 -----------
 
-Parser accepting one character in the range +0-9+. The result of the parser is
-the value represented by the accepted character.
+Parser accepting a non-empty sequence of characters in the range +0-9+. The
+result of the parser is the decimal value represented by the accepted character
+sequence.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/digit_val.hpp>
+#include <mpllibs/metaparse/int.hpp>
 --------------------------------------
 
 Expression semantics
@@ -41,23 +42,29 @@ Expression semantics
 For any +s+ compile-time string and +pos+ source position
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<digit, s, pos> >
+boost::mpl::apply<int_, s, pos>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::util::digit_to_int::apply<boost::mpl::front<s>::type>,
+mpllibs::metaparse::any_foldl1<
+  mpllibs::metaparse::digit_val,
+  boost::mpl::int_<0>,
+  boost::mpl::lambda<
+    boost::mpl::plus<
+      boost::mpl::times<boost::mpl::_2, boost::mpl::int_<10> >,
+      boost::mpl::_1
+    >
+  >::type
+>
 --------------------------------------
-
-when +boost::mpl::empty<s>::type+ is +false+ and +boost::mpl::front<s>::type+
-is in the range +0-9+. The parser combinator returns an error otherwise.
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<digit_val, boost::mpl::string<'13'>, mpllibs::metaparse::start>
+boost::mpl::apply<int_, boost::mpl::string<'13'>, mpllibs::metaparse::start>
 --------------------------------------
 
 include::copyright[]
