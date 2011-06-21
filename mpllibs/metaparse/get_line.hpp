@@ -6,7 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/mpl/apply.hpp>
 #include <boost/mpl/tag.hpp>
 
 #include <iostream>
@@ -20,10 +19,8 @@ namespace mpllibs
     
     template <class P>
     struct get_line :
-      boost::mpl::apply<
-        get_line_impl<typename boost::mpl::tag<typename P::type>::type>,
-        typename P::type
-      >
+      get_line_impl<typename boost::mpl::tag<typename P::type>::type>::
+        template apply<typename P::type>
     {};
   }
 }
