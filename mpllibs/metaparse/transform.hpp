@@ -15,6 +15,7 @@
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -23,13 +24,22 @@ namespace mpllibs
     template <class P, class T>
     struct transform
     {
+    private:
+      template <class R>
+      struct apply_transformation_function :
+        boost::mpl::apply<T, typename R::type>
+      {};
+      
+    public:
       template <class S, class Pos>
       struct apply :
         mpllibs::metaparse::util::unless_error<
           boost::mpl::apply<P, S, Pos>,
-          boost::mpl::apply<
+          boost::mpl::apply_wrap2<
             return_<
-              boost::mpl::apply<T, get_result<boost::mpl::apply<P, S, Pos> > >
+              apply_transformation_function<
+                get_result<boost::mpl::apply<P, S, Pos> >
+              >
             >,
             get_remaining<boost::mpl::apply<P, S, Pos> >,
             get_position<boost::mpl::apply<P, S, Pos> >
