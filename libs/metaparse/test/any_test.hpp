@@ -13,14 +13,18 @@
  
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/size.hpp>
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::letter;
 using mpllibs::metaparse::start;
 
 using boost::mpl::equal;
+using boost::mpl::equal_to;
 using boost::mpl::apply;
 using boost::mpl::list;
+using boost::mpl::size;
 
 namespace
 { 
@@ -65,6 +69,13 @@ namespace
       list<char_h, char_e, char_l, char_l, char_o>
     >
     test5;
+  
+  typedef
+    equal_to<
+      size<get_result<apply<any_letter, chars3, start> >::type>::type,
+      int3
+    >
+    test_length;
 }
 
 MPLLIBS_ADD_TEST(suite, test_empty_input)
@@ -74,4 +85,5 @@ MPLLIBS_ADD_TEST(suite, test2)
 MPLLIBS_ADD_TEST(suite, test3)
 MPLLIBS_ADD_TEST(suite, test4)
 MPLLIBS_ADD_TEST(suite, test5)
+MPLLIBS_ADD_TEST(suite, test_length)
 
