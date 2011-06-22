@@ -17,6 +17,8 @@ namespace mpllibs
     template <class P, class State, class BackwardOp>
     struct any_foldr1
     {
+      typedef any_foldr1 type;
+      
       template <class S, class Pos>
       struct apply :
         boost::mpl::if_<

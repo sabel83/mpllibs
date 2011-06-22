@@ -42,6 +42,8 @@ namespace mpllibs
         >
       {};
     public:
+      typedef any_foldl type;
+    
       template <class S, class Pos>
       struct apply :
         boost::mpl::eval_if<
