@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/any_foldr1.hpp>
 
-#include <boost/mpl/list.hpp>
+#include <boost/mpl/vector.hpp>
 #include <boost/mpl/push_front.hpp>
 #include <boost/mpl/lambda.hpp>
 
@@ -20,7 +20,7 @@ namespace mpllibs
     struct any1 :
       any_foldr1<
         P,
-        boost::mpl::list<>,
+        boost::mpl::vector<>,
         boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1>
       >
     {};
