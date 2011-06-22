@@ -30,11 +30,11 @@ namespace mpllibs
         boost::mpl::apply_wrap2<
           any_foldl<
             P,
-            typename boost::mpl::apply<
+            boost::mpl::apply<
               ForwardOp,
               typename get_result<Res>::type,
-              State
-            >::type,
+              typename State::type
+            >,
             ForwardOp
           >,
           typename get_remaining<Res>::type,
@@ -46,7 +46,7 @@ namespace mpllibs
       struct apply :
         boost::mpl::eval_if<
           typename is_error<boost::mpl::apply<P, S, Pos> >::type,
-          boost::mpl::apply<return_<State>, S, Pos>,
+          boost::mpl::apply<return_<typename State::type>, S, Pos>,
           apply_unchecked<boost::mpl::apply<P, S, Pos> >
         >
       {};
