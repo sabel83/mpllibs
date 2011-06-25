@@ -11,7 +11,7 @@
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/try_.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
 
 struct c;
@@ -30,7 +30,7 @@ struct min_impl
 
 template <class A, class B>
 struct min :
-  boost::mpl::apply<
+  boost::mpl::apply_wrap2<
     min_impl<
       typename boost::mpl::tag<typename A::type>::type,
       typename boost::mpl::tag<typename B::type>::type

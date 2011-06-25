@@ -13,6 +13,8 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/not.hpp>
+#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
@@ -23,6 +25,7 @@ using boost::is_same;
 using boost::mpl::equal_to;
 using boost::mpl::always;
 using boost::mpl::apply;
+using boost::mpl::apply_wrap1;
 using boost::mpl::tag;
 using boost::mpl::not_;
 
@@ -55,7 +58,7 @@ namespace
       int13,
       get_data<
         MPLLIBS_DO<exception_monad>::apply<
-          apply<always<e>, int>
+          apply_wrap1<always<e>, int>
         >::type
       >::type
     >
@@ -67,7 +70,7 @@ namespace
       int13,
       get_data<
         MPLLIBS_DO<exception_monad>::apply<
-          apply<always<e>, int>,
+          apply_wrap1<always<e>, int>,
           MPLLIBS_RETURN<int13>
         >::type
       >::type
@@ -105,7 +108,7 @@ namespace
       int13,
       get_data<
         MPLLIBS_DO<exception_monad>::apply<
-          MPLLIBS_SET<x, apply<always<e>, int> >,
+          MPLLIBS_SET<x, apply_wrap1<always<e>, int> >,
           MPLLIBS_RETURN<int13>
         >::type
       >::type

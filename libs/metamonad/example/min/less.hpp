@@ -8,7 +8,7 @@
 
 #include <mpllibs/metamonad/throw.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 struct non_comparable_tag
 {
@@ -29,14 +29,14 @@ namespace boost
     struct equal_to_impl<non_comparable_tag, non_comparable_tag>
     {
       template <class A, class B>
-      struct apply :  boost::mpl::true_ {};
+      struct apply : boost::mpl::true_ {};
     };
     
     template <class T>
     struct equal_to_impl<non_comparable_tag, T>
     {
       template <class A, class B>
-      struct apply :  boost::mpl::false_ {};
+      struct apply : boost::mpl::false_ {};
     };
 
     template <class T>
@@ -55,7 +55,7 @@ struct less_impl
 
 template <class A, class B>
 struct less :
-  boost::mpl::apply<
+  boost::mpl::apply_wrap2<
     less_impl<
       typename boost::mpl::tag<typename A::type>::type,
       typename boost::mpl::tag<typename B::type>::type

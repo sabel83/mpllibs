@@ -9,7 +9,7 @@
 #include <mpllibs/metatest/yes.hpp>
 #include <mpllibs/metatest/no.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/integral_c.hpp>
@@ -32,7 +32,7 @@ namespace mpllibs
         template <class T>
         static
           typename
-            boost::mpl::apply<
+            boost::mpl::apply_wrap1<
               boost::mpl::always<yes>,
               boost::mpl::integral_c<ValueType, T::value>
             >::type

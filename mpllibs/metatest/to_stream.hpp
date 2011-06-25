@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/tag.hpp>
 
 #include <iostream>
@@ -33,7 +33,10 @@ namespace mpllibs
     
     template <class T>
     struct to_stream :
-      boost::mpl::apply<to_stream_impl<typename boost::mpl::tag<T>::type>, T>
+      boost::mpl::apply_wrap1<
+        to_stream_impl<typename boost::mpl::tag<T>::type>,
+        T
+      >
     {};
     
     template <class T>

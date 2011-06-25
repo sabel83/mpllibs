@@ -8,14 +8,14 @@
 #include <mpllibs/metatest/test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/identity.hpp>
 
 #include "common.hpp"
 
 using boost::mpl::identity;
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap1;
 
 using mpllibs::metatest::suite_path;
 
@@ -47,7 +47,7 @@ namespace
   const suite_path suite("return_");
 
   typedef
-    equal_to<int13, apply<return_<test_tag>, int>::type>
+    equal_to<int13, apply_wrap1<return_<test_tag>, int>::type>
     test_specialisation_is_called;  
 
   typedef

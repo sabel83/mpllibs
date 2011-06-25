@@ -9,7 +9,7 @@
 #include <mpllibs/safe_printf/printf_parser.hpp>
 #include <mpllibs/safe_printf/verify_printf_arguments_impl.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -18,7 +18,7 @@ namespace mpllibs
     template <class F, class ArgTypes>
     struct verify_printf_arguments :
       verify_printf_arguments_impl<
-        boost::mpl::apply<printf_parser, F>,
+        boost::mpl::apply_wrap1<printf_parser, F>,
         ArgTypes
       >
     {};
