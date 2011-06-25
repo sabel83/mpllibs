@@ -118,6 +118,22 @@ parser combinator for this, +mpllibs::metaparse::any<Parser>+. It uses +Parser+
 repeatedly as long as +Parser+ succeeds. The result of parsing is a sequence,
 the results we got by repeatedly applying +Parser+.
 
+Monadic parsing
+---------------
+
++metaparse+ provides a parsing monad implementation based on +metamonad+'s
+monadic framework. The overloads of +bind+ and +return_+ can be loaded by
+including +mpllibs/metaparse/parser_monad.hpp+.
+
+Monadic values are parsers. The monadic +return_+ operation constructs a 
++link:return.html[return_]+ parser. The arguments of the monadic +bind+ are a
+parser +P+ and a function +F+, taking a value and buliding a parser. +bind+
+constructs the following parser:
+
+* It parses the input using +P+.
+* When +P+ fails, the error is propagated.
+* When +P+ succeeds, the result is passed to +F+ and the remaining input is parsed using the parser returned by +F+.
+
 Parsers and combinators provided by the library
 -----------------------------------------------
 
