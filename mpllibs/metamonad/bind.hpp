@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -18,7 +18,7 @@ namespace mpllibs
     
     // bind evaluates arguments lazily
     template <class MonadTag, class A, class F>
-    struct bind : boost::mpl::apply<bind_impl<MonadTag>, A, F> {};
+    struct bind : boost::mpl::apply_wrap2<bind_impl<MonadTag>, A, F> {};
   }
 }
 

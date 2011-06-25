@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/tag.hpp>
 
 namespace mpllibs
@@ -18,7 +18,7 @@ namespace mpllibs
     
     template <class E>
     struct get_data :
-      boost::mpl::apply<
+      boost::mpl::apply_wrap1<
         get_data_impl<typename boost::mpl::tag<typename E::type>::type>,
         typename E::type
       >

@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/tag.hpp>
 
 namespace mpllibs
@@ -20,13 +20,13 @@ namespace mpllibs
     struct no_return_argument;
 
     template <class MonadTag, class A = no_return_argument>
-    struct return_ : boost::mpl::apply<return_<MonadTag>, A> {};
+    struct return_ : boost::mpl::apply_wrap1<return_<MonadTag>, A> {};
     
     template <class MonadTag>
     struct return_<MonadTag, no_return_argument>
     {
       template <class A>
-      struct apply : boost::mpl::apply<return__impl<MonadTag>, A> {};
+      struct apply : boost::mpl::apply_wrap1<return__impl<MonadTag>, A> {};
     };
   }
 }

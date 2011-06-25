@@ -9,7 +9,7 @@
 #include <mpllibs/metamonad/bind.hpp>
 
 #include <boost/mpl/always.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -20,13 +20,13 @@ namespace mpllibs
     {
       template <class A, class B>
       struct apply :
-        boost::mpl::apply<bind_impl<MonadTag>, A, boost::mpl::always<B> >
+        boost::mpl::apply_wrap2<bind_impl<MonadTag>, A, boost::mpl::always<B> >
       {};
     };
 
     // bind_ evaluates its arguments lazily
     template <class MonadTag, class A, class B>
-    struct bind_ : boost::mpl::apply<bind__impl<MonadTag>, A, B> {};
+    struct bind_ : boost::mpl::apply_wrap2<bind__impl<MonadTag>, A, B> {};
   }
 }
 
