@@ -12,7 +12,7 @@
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/arithmetic/dec.hpp>
 
@@ -177,7 +177,7 @@ namespace mpllibs
         BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_CASE, ~) \
       > \
       struct do##n : \
-        boost::mpl::apply< \
+        boost::mpl::apply_wrap2< \
           bind__impl<Monad>, \
           typename T::type, \
           typename do_impl< \
@@ -199,7 +199,7 @@ namespace mpllibs
         BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
         BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
       > : \
-        boost::mpl::apply< \
+        boost::mpl::apply_wrap2< \
           bind_impl<Monad>, \
           typename do1<Monad, Ex>::type, \
           typename lambda< \
