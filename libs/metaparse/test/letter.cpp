@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -25,7 +25,7 @@ using mpllibs::metaparse::start;
 using mpllibs::metaparse::is_error;
 
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 
 namespace
 {
@@ -34,12 +34,12 @@ namespace
   typedef has_type<letter> test_has_type;
 
   typedef
-    equal_to<get_result<apply<letter, str_hello, start> >::type, char_h>
+    equal_to<get_result<apply_wrap2<letter, str_hello, start> >::type, char_h>
     test_with_text;
   
-  typedef is_error<apply<letter, str_1983, start> > test_with_number;
+  typedef is_error<apply_wrap2<letter, str_1983, start> > test_with_number;
   
-  typedef is_error<apply<letter, str_, start> > test_with_empty_string;
+  typedef is_error<apply_wrap2<letter, str_, start> > test_with_empty_string;
 }
 
 MPLLIBS_ADD_TEST(suite, test_has_type)

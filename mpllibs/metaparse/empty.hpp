@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/to_stream.hpp>
 
 #include <boost/mpl/empty.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
 
 namespace mpllibs
@@ -33,7 +33,7 @@ namespace mpllibs
       
       template <class S, class Pos>
       struct apply :
-        boost::mpl::apply<
+        boost::mpl::apply_wrap2<
           typename boost::mpl::if_<
             boost::mpl::empty<S>,
             return_<Result>,

@@ -12,6 +12,7 @@
 
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -24,7 +25,7 @@ namespace mpllibs
       
       template <class S, class Pos>
       struct apply :
-        boost::mpl::apply<
+        boost::mpl::apply_wrap2<
           typename boost::mpl::if_<
             is_error<boost::mpl::apply<P, S, Pos> >,
             return_<Result>,

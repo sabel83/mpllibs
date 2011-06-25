@@ -20,7 +20,7 @@
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/front.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -47,13 +47,13 @@ namespace mpllibs
         
         template <class S, class Pos>
         struct apply_unchecked :
-          boost::mpl::apply<
+          boost::mpl::apply_wrap2<
             rest_parser,
             typename get_remaining<
-              boost::mpl::apply<next_char_parser, S, Pos>
+              boost::mpl::apply_wrap2<next_char_parser, S, Pos>
             >::type,
             typename get_position<
-              boost::mpl::apply<next_char_parser, S, Pos>
+              boost::mpl::apply_wrap2<next_char_parser, S, Pos>
             >::type
           >
         {};
@@ -62,9 +62,9 @@ namespace mpllibs
         struct apply :
           boost::mpl::eval_if<
             typename is_error<
-              boost::mpl::apply<next_char_parser, S, Pos>
+              boost::mpl::apply_wrap2<next_char_parser, S, Pos>
             >::type,
-            boost::mpl::apply<next_char_parser, S, Pos>,
+            boost::mpl::apply_wrap2<next_char_parser, S, Pos>,
             apply_unchecked<S, Pos>
           >
         {};

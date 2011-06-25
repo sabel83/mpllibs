@@ -20,6 +20,7 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/pop_front.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -65,14 +66,14 @@ namespace mpllibs
       struct apply :
         boost::mpl::eval_if<
           typename boost::mpl::empty<S>::type,
-          boost::mpl::apply<
+          boost::mpl::apply_wrap2<
             fail<
               mpllibs::metaparse::errors::unexpected_end_of_input
             >,
             S,
             Pos
           >,
-          boost::mpl::apply<
+          boost::mpl::apply_wrap2<
             return_<boost::mpl::front<S> >,
             boost::mpl::pop_front<S>,
             next_pos<boost::mpl::front<S>, Pos>

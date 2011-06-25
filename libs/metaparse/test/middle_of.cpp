@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -25,7 +25,7 @@ using mpllibs::metaparse::start;
 using mpllibs::metaparse::is_error;
 
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 
 namespace
 {
@@ -36,26 +36,26 @@ namespace
   typedef
     equal_to<
       get_result<
-        apply<middle_of<lit_h, lit_e, lit_l>, str_hello, start>
+        apply_wrap2<middle_of<lit_h, lit_e, lit_l>, str_hello, start>
       >::type,
       char_e
     >
     test_three_chars;
 
   typedef
-    is_error<apply<middle_of<lit_x, lit_e, lit_l>, str_hello, start> >
+    is_error<apply_wrap2<middle_of<lit_x, lit_e, lit_l>, str_hello, start> >
     test_first_fails;
 
   typedef
-    is_error<apply<middle_of<lit_h, lit_x, lit_l>, str_hello, start> >
+    is_error<apply_wrap2<middle_of<lit_h, lit_x, lit_l>, str_hello, start> >
     test_second_fails;
 
   typedef
-    is_error<apply<middle_of<lit_h, lit_e, lit_x>, str_hello, start> >
+    is_error<apply_wrap2<middle_of<lit_h, lit_e, lit_x>, str_hello, start> >
     test_third_fails;
 
   typedef
-    is_error<apply<middle_of<lit_h, lit_e, lit_l>, str_, start> >
+    is_error<apply_wrap2<middle_of<lit_h, lit_e, lit_l>, str_, start> >
     test_empty_input;
 }
 

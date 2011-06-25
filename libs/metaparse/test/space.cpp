@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -25,7 +25,7 @@ using mpllibs::metaparse::start;
 using mpllibs::metaparse::get_result;
 
 using boost::mpl::list_c;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::equal_to;
 using boost::mpl::integral_c;
 
@@ -39,37 +39,37 @@ namespace
 
   typedef has_type<space> test_has_type;
 
-  typedef is_error<apply<space, str_hello, start> > test_with_text;
+  typedef is_error<apply_wrap2<space, str_hello, start> > test_with_text;
 
   typedef
     equal_to<
-      get_result<apply<space, str__ello, start> >::type,
+      get_result<apply_wrap2<space, str__ello, start> >::type,
       integral_c<char, ' '>
     >
     test_with_space;
 
   typedef
     equal_to<
-      get_result<apply<space, str_with_t, start> >::type,
+      get_result<apply_wrap2<space, str_with_t, start> >::type,
       integral_c<char, '\t'>
     >
     test_with_tab;
 
   typedef
     equal_to<
-      get_result<apply<space, str_with_n, start> >::type,
+      get_result<apply_wrap2<space, str_with_n, start> >::type,
       integral_c<char, '\n'>
     >
     test_with_line_feed;
 
   typedef
     equal_to<
-      get_result<apply<space, str_with_r, start> >::type,
+      get_result<apply_wrap2<space, str_with_r, start> >::type,
       integral_c<char, '\r'>
     >
     test_with_c_return;
 
-  typedef is_error<apply<space, str_, start> > test_with_empty_string;
+  typedef is_error<apply_wrap2<space, str_, start> > test_with_empty_string;
 }
 
 MPLLIBS_ADD_TEST(suite, test_has_type)

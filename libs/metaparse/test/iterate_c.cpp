@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal.hpp>
 
 using mpllibs::metatest::suite_path;
@@ -26,7 +26,7 @@ using mpllibs::metaparse::one_char;
 using mpllibs::metaparse::start;
 using mpllibs::metaparse::get_result;
 
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::equal;
 using boost::mpl::list;
 
@@ -37,33 +37,33 @@ namespace
   typedef has_type<iterate_c<one_char, 0> > test_has_type;
 
   typedef
-    is_error<apply<iterate_c<one_char, 13>, str_, start> >
+    is_error<apply_wrap2<iterate_c<one_char, 13>, str_, start> >
     test_empty_input;
 
   typedef
     equal<
-      get_result<apply<iterate_c<one_char, 0>, str_hello, start> >::type,
+      get_result<apply_wrap2<iterate_c<one_char, 0>, str_hello, start> >::type,
       list<>
     >
     test0;
 
   typedef
     equal<
-      get_result<apply<iterate_c<one_char, 1>, str_hello, start> >::type,
+      get_result<apply_wrap2<iterate_c<one_char, 1>, str_hello, start> >::type,
       list<char_h>
     >
     test1;
 
   typedef
     equal<
-      get_result<apply<iterate_c<one_char, 2>, str_hello, start> >::type,
+      get_result<apply_wrap2<iterate_c<one_char, 2>, str_hello, start> >::type,
       list<char_h, char_e>
     >
     test2;
 
   typedef
     equal<
-      get_result<apply<iterate_c<one_char, 3>, str_hello, start> >::type,
+      get_result<apply_wrap2<iterate_c<one_char, 3>, str_hello, start> >::type,
       list<char_h, char_e, char_l>
     >
     test3;

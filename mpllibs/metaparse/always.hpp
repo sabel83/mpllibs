@@ -12,6 +12,7 @@
 #include <mpllibs/metaparse/get_position.hpp>
 
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/eval_if.hpp>
 
 namespace mpllibs
@@ -24,7 +25,7 @@ namespace mpllibs
     private:
       template <class Res>
       struct apply_unchecked :
-        boost::mpl::apply<
+        boost::mpl::apply_wrap2<
           return_<Result>,
           typename get_remaining<Res>::type,
           typename get_position<Res>::type

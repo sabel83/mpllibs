@@ -15,7 +15,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -27,7 +27,7 @@ using mpllibs::metaparse::get_remaining;
 using mpllibs::metaparse::get_position;
 
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 
 namespace
 {
@@ -36,20 +36,20 @@ namespace
   typedef has_type<lit_c_h> test_has_type;
 
   typedef
-    equal_to<get_result<apply<lit_c_h, str_hello, start> >::type, char_h>
+    equal_to<get_result<apply_wrap2<lit_c_h, str_hello, start> >::type, char_h>
     test_accept;
 
-  typedef is_error<apply<lit_c_h, str_bello, start> > test_reject;
+  typedef is_error<apply_wrap2<lit_c_h, str_bello, start> > test_reject;
 
-  typedef is_error< apply<lit_c_h, str_, start> > test_with_empty_string;
+  typedef is_error< apply_wrap2<lit_c_h, str_, start> > test_with_empty_string;
 
   typedef
     equal_to<
       get_result<
-        apply<
+        apply_wrap2<
           lit_c_e,
-          get_remaining<apply<lit_c_h, str_hello, start> >::type,
-          get_position<apply<lit_c_h, str_hello, start> >::type
+          get_remaining<apply_wrap2<lit_c_h, str_hello, start> >::type,
+          get_position<apply_wrap2<lit_c_h, str_hello, start> >::type
         >
       >::type,
       char_e

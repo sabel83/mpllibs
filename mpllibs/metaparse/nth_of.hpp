@@ -12,6 +12,7 @@
 #include <mpllibs/metaparse/fail.hpp>
 
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/pop_front.hpp>
@@ -45,7 +46,7 @@ namespace mpllibs
       private:
         template <class ParsingResult, class NewResultValue>
         struct change_result :
-          boost::mpl::apply<
+          boost::mpl::apply_wrap2<
             mpllibs::metaparse::return_<NewResultValue>,
             typename mpllibs::metaparse::get_remaining<ParsingResult>::type,
             typename mpllibs::metaparse::get_position<ParsingResult>::type
@@ -95,7 +96,7 @@ namespace mpllibs
       private:
         template <class NextResult>
         struct apply_unchecked :
-          boost::mpl::apply<
+          boost::mpl::apply_wrap2<
             nth_of_c_impl<
               N - 1,
               typename boost::mpl::pop_front<Seq>::type

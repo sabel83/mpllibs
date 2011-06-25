@@ -17,7 +17,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -33,7 +33,7 @@ using mpllibs::metaparse::get_line;
 
 using boost::mpl::list_c;
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 
 namespace
 {
@@ -43,7 +43,7 @@ namespace
   typedef list_c<char, 'a','\r','\n','b'> dos_multi_line_text;
   typedef list_c<char, 'a','\r','b'> mac_multi_line_text;
 
-  typedef apply<one_char, str_hello, start> parse_first_char;
+  typedef apply_wrap2<one_char, str_hello, start> parse_first_char;
 
   typedef has_type<one_char> test_has_type;
 
@@ -54,7 +54,7 @@ namespace
   typedef
     equal_to<
       get_result<
-        apply<
+        apply_wrap2<
           one_char,
           get_remaining<parse_first_char>::type,
           get_position<parse_first_char>::type
@@ -65,9 +65,7 @@ namespace
     test_one_char_for_non_empty_string_second;
 
   typedef
-    is_error<
-      apply<one_char, str_, start>
-    >
+    is_error<apply_wrap2<one_char, str_, start> >
     test_one_char_for_empty_string;
   
   typedef
@@ -75,7 +73,7 @@ namespace
       int2,
       get_line<
         get_position<
-          apply<iterate_c<one_char, 2>, unix_multi_line_text, start>
+          apply_wrap2<iterate_c<one_char, 2>, unix_multi_line_text, start>
         >
       >
     >
@@ -86,7 +84,7 @@ namespace
       int2,
       get_line<
         get_position<
-          apply<iterate_c<one_char, 3>, dos_multi_line_text, start>
+          apply_wrap2<iterate_c<one_char, 3>, dos_multi_line_text, start>
         >
       >
     >
@@ -97,7 +95,7 @@ namespace
       int2,
       get_line<
         get_position<
-          apply<iterate_c<one_char, 2>, mac_multi_line_text, start>
+          apply_wrap2<iterate_c<one_char, 2>, mac_multi_line_text, start>
         >
       >
     >

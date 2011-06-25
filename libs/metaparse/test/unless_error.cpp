@@ -12,6 +12,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -21,14 +22,14 @@ using mpllibs::metaparse::is_error;
 
 using mpllibs::metaparse::util::unless_error;
 
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::equal_to;
 
 namespace
 {
   const suite_path suite = suite_path("util")("unless_error");
   
-  typedef apply<fail<int1>, int11, int2> err;
+  typedef apply_wrap2<fail<int1>, int11, int2> err;
   
   typedef has_type<unless_error<err, int13> > test_has_type;
 

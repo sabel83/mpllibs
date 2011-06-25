@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -25,7 +25,7 @@ using mpllibs::metaparse::digit;
 using mpllibs::metaparse::start;
 
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 
 namespace
 {
@@ -35,14 +35,14 @@ namespace
 
   typedef
     equal_to<
-      get_result<apply<if_<digit, int11, int13>, str_1, start> >::type,
+      get_result<apply_wrap2<if_<digit, int11, int13>, str_1, start> >::type,
       int11
     >
     test_true;
     
   typedef
     equal_to<
-      get_result<apply<if_<digit, int11, int13>, str_a, start> >::type,
+      get_result<apply_wrap2<if_<digit, int11, int13>, str_a, start> >::type,
       int13
     >
     test_false;

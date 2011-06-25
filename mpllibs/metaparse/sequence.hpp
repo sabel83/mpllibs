@@ -13,7 +13,7 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/transform.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/deque.hpp>
 #include <boost/mpl/push_back.hpp>
@@ -45,7 +45,7 @@ namespace mpllibs
 
         template <class Accum, class S, class Pos, class Parser>
         struct apply_unchecked :
-          boost::mpl::apply<
+          boost::mpl::apply_wrap2<
             mpllibs::metaparse::transform<
               Parser,do_append<typename Accum::type>
             >,
@@ -73,7 +73,7 @@ namespace mpllibs
       struct sequence_impl :
         boost::mpl::fold<
           Ps,
-          typename boost::mpl::apply<
+          typename boost::mpl::apply_wrap2<
             mpllibs::metaparse::return_<boost::mpl::deque<> >,
             S,
             Pos

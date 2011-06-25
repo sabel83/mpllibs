@@ -17,7 +17,6 @@
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/always.hpp>
-#include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/lambda.hpp>
@@ -34,7 +33,6 @@ using mpllibs::metaparse::one_char;
 
 using boost::mpl::always;
 using boost::mpl::equal_to;
-using boost::mpl::apply;
 using boost::mpl::apply_wrap2;
 using boost::mpl::front;
 using boost::mpl::_1;
@@ -50,16 +48,18 @@ namespace
 
   typedef
     equal_to<
-      get_result<apply<transform<lit_h, f>, str_hello, start> >::type,
+      get_result<apply_wrap2<transform<lit_h, f>, str_hello, start> >::type,
       char_x
     >
     test_normal_case;
 
   typedef
-    is_error<apply<transform<lit_x, f>, str_hello, start> >
+    is_error<apply_wrap2<transform<lit_x, f>, str_hello, start> >
     test_parser_fails;
 
-  typedef is_error<apply<transform<lit_h, f>, str_, start> > test_empty_input;
+  typedef
+    is_error<apply_wrap2<transform<lit_h, f>, str_, start> >
+    test_empty_input;
   
   typedef
     equal_to<

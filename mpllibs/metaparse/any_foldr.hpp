@@ -38,7 +38,7 @@ namespace mpllibs
           parsed_remaining;
       public:
         typedef
-          boost::mpl::apply<
+          boost::mpl::apply_wrap2<
             return_<
               typename boost::mpl::apply<
                 BackwardOp,
@@ -58,7 +58,7 @@ namespace mpllibs
       struct apply :
         boost::mpl::eval_if<
           typename is_error<boost::mpl::apply<P, S, Pos> >::type,
-          boost::mpl::apply<return_<typename State::type>, S, Pos>,
+          boost::mpl::apply_wrap2<return_<typename State::type>, S, Pos>,
           apply_unchecked<boost::mpl::apply<P, S, Pos> >
         >
       {};

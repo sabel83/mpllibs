@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/equal.hpp>
 
@@ -27,7 +27,7 @@ using mpllibs::metaparse::start;
 using mpllibs::metaparse::get_remaining;
 
 using boost::mpl::list_c;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::not_;
 using boost::mpl::equal;
 
@@ -42,22 +42,25 @@ namespace
 
   typedef has_type<spaces> test_has_type;
 
-  typedef is_error<apply<spaces, str_hello, start> > test_reject_no_space;
+  typedef is_error<apply_wrap2<spaces, str_hello, start> > test_reject_no_space;
 
   typedef
-    not_<is_error<apply<spaces, str__ello, start> > >
+    not_<is_error<apply_wrap2<spaces, str__ello, start> > >
     test_accept_one_space;
 
   typedef
-    equal<get_remaining<apply<spaces, str__ello, start> >::type, str_ello>
+    equal<get_remaining<apply_wrap2<spaces, str__ello, start> >::type, str_ello>
     test_accept_only_space;
 
   typedef
-    not_<is_error<apply<spaces, str_____ello, start> > >
+    not_<is_error<apply_wrap2<spaces, str_____ello, start> > >
     test_accept_all_spaces;
 
   typedef
-    equal<get_remaining<apply<spaces, str_____ello, start> >::type, str_ello>
+    equal<
+      get_remaining<apply_wrap2<spaces, str_____ello, start> >::type,
+      str_ello
+    >
     test_consume_all_spaces;
 }
 

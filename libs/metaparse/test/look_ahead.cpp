@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/equal.hpp>
 
@@ -30,7 +30,7 @@ using mpllibs::metaparse::fail;
 using mpllibs::metaparse::get_remaining;
 
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::equal;
 
 namespace
@@ -42,18 +42,18 @@ namespace
   typedef
     equal_to<
       int1,
-      get_result<apply<look_ahead<digit_val>, str_1983, start> >::type
+      get_result<apply_wrap2<look_ahead<digit_val>, str_1983, start> >::type
     >
     test_returns_result;
 
   typedef
-    is_error<apply<look_ahead<fail<int13> >, str_1983, start> >
+    is_error<apply_wrap2<look_ahead<fail<int13> >, str_1983, start> >
     test_returns_error;
 
   typedef
     equal<
       str_1983,
-      get_remaining<apply<look_ahead<digit_val>, str_1983, start> >::type
+      get_remaining<apply_wrap2<look_ahead<digit_val>, str_1983, start> >::type
     >
     test_doesnt_process_input;
 }

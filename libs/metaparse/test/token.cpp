@@ -31,7 +31,7 @@ using mpllibs::metaparse::is_error;
 
 using boost::mpl::list_c;
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::equal;
 
 namespace
@@ -47,23 +47,26 @@ namespace
 
   typedef
     equal_to<
-      get_result<apply<test_token, str_hello, start> >::type,
-      get_result<apply<test_parser, str_hello, start> >::type
+      get_result<apply_wrap2<test_token, str_hello, start> >::type,
+      get_result<apply_wrap2<test_parser, str_hello, start> >::type
     >
     test_no_space;
 
   typedef
     equal_to<
-      get_result<apply<test_token, str_hello_t, start> >::type,
-      get_result<apply<test_parser, str_hello, start> >::type
+      get_result<apply_wrap2<test_token, str_hello_t, start> >::type,
+      get_result<apply_wrap2<test_parser, str_hello, start> >::type
     >
     test_spaces;
 
   typedef
-    equal<get_remaining<apply<test_token, str_hello_t, start> >::type, str_>
+    equal<
+      get_remaining<apply_wrap2<test_token, str_hello_t, start> >::type,
+      str_
+    >
     test_spaces_consumed;
 
-  typedef is_error<apply<test_token, str_, start> > test_fail;
+  typedef is_error<apply_wrap2<test_token, str_, start> > test_fail;
 }
 
 MPLLIBS_ADD_TEST(suite, test_has_type)

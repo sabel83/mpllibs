@@ -15,6 +15,7 @@
 #include <boost/mpl/deque.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/push_back.hpp>
 
 namespace mpllibs
@@ -28,7 +29,7 @@ namespace mpllibs
       
       template <int N, class P, class Accum, class S, class Pos>
       struct iterate_impl_unchecked :
-        boost::mpl::apply<
+        boost::mpl::apply_wrap2<
           iterate_impl<
             N - 1,
             P,

@@ -12,7 +12,7 @@
 #include <mpllibs/metatest/to_stream.hpp>
 
 #include <boost/mpl/or.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -27,8 +27,8 @@ namespace mpllibs
         template <class S>
         struct apply :
           boost::mpl::or_<
-            boost::mpl::apply<is_lcase_letter, S>,
-            boost::mpl::apply<is_ucase_letter, S>
+            boost::mpl::apply_wrap1<is_lcase_letter, S>,
+            boost::mpl::apply_wrap1<is_ucase_letter, S>
           >
         {};
       };

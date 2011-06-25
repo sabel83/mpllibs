@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -26,7 +26,7 @@ using mpllibs::metaparse::nth_of;
 using mpllibs::metaparse::is_error;
 
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 
 namespace mpl = boost::mpl;
 namespace mp = mpllibs::metaparse;
@@ -40,49 +40,55 @@ namespace
 
   typedef
     equal_to<
-      get_result<apply<nth_of_c<0, lit_h>, str_hello, start> >::type,
+      get_result<apply_wrap2<nth_of_c<0, lit_h>, str_hello, start> >::type,
       char_h
     >
     test_first_of_one;
 
   typedef
     equal_to<
-      get_result<apply<nth_of_c<0, lit_h, lit_e>, str_hello, start> >::type,
+      get_result<
+        apply_wrap2<nth_of_c<0, lit_h, lit_e>, str_hello, start>
+      >::type,
       char_h
     >
     test_first_of_two;
 
   typedef
     equal_to<
-      get_result<apply<nth_of<int1, lit_h, lit_e>, str_hello, start> >::type,
+      get_result<
+        apply_wrap2<nth_of<int1, lit_h, lit_e>, str_hello, start>
+      >::type,
       char_e
     >
     test_second_of_two;
 
   typedef
-    is_error<apply<nth_of_c<1, lit_x, lit_e>, str_hello, start> >
+    is_error<apply_wrap2<nth_of_c<1, lit_x, lit_e>, str_hello, start> >
     test_nothing;
   
-  typedef is_error<apply<nth_of_c<0>, str_hello, start> > test_first_of_none;
+  typedef
+    is_error<apply_wrap2<nth_of_c<0>, str_hello, start> >
+    test_first_of_none;
 
   typedef
-    is_error<apply<nth_of_c<-1, lit_h, lit_e>, str_hello, start> >
+    is_error<apply_wrap2<nth_of_c<-1, lit_h, lit_e>, str_hello, start> >
     test_n_is_less_than_zero;
 
   typedef
-    is_error<apply<nth_of_c<2, lit_h, lit_e>, str_hello, start> >
+    is_error<apply_wrap2<nth_of_c<2, lit_h, lit_e>, str_hello, start> >
     test_n_is_greater_than_the_number_of_parsers;
 
   typedef
-    is_error<apply<nth_of_c<1, lit_x, lit_e, lit_l>, str_hello, start> >
+    is_error<apply_wrap2<nth_of_c<1, lit_x, lit_e, lit_l>, str_hello, start> >
     test_error_before_the_nth;
 
   typedef
-    is_error<apply<nth_of_c<1, lit_h, lit_x, lit_l>, str_hello, start> >
+    is_error<apply_wrap2<nth_of_c<1, lit_h, lit_x, lit_l>, str_hello, start> >
     test_error_at_the_nth;
 
   typedef
-    is_error<apply<nth_of_c<1, lit_h, lit_e, lit_x>, str_hello, start> >
+    is_error<apply_wrap2<nth_of_c<1, lit_h, lit_e, lit_x>, str_hello, start> >
     test_error_after_the_nth;
 }
 

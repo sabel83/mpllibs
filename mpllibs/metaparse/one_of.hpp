@@ -16,6 +16,7 @@
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
@@ -66,7 +67,7 @@ namespace mpllibs
         \
         template <class S, class Pos> \
         struct apply : \
-          boost::mpl::apply< \
+          boost::mpl::apply_wrap2< \
             BOOST_PP_REPEAT(n, MPLLIBS_ONE_OF_BODY_PREFIX, ~) \
               fail< \
                 mpllibs::metaparse::errors::none_of_the_expected_cases_found \

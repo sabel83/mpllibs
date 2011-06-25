@@ -14,7 +14,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/equal.hpp>
@@ -28,7 +28,7 @@ using mpllibs::metaparse::start;
 using mpllibs::metaparse::is_error;
 
 using boost::mpl::equal;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::list;
 using boost::mpl::equal_to;
 using boost::mpl::at_c;
@@ -40,42 +40,44 @@ namespace
   typedef has_type<sequence<lit_h> > test_has_type;
 
   typedef
-    equal<get_result<apply<sequence<>, str_hello, start> >::type, list<> >
+    equal<get_result<apply_wrap2<sequence<>, str_hello, start> >::type, list<> >
     test_no_parser;
 
   typedef
     equal<
-      get_result<apply<sequence<lit_h>, str_hello, start> >::type,
+      get_result<apply_wrap2<sequence<lit_h>, str_hello, start> >::type,
       list<char_h>
     >
     test_one_parser;
 
   typedef
-    is_error<apply<sequence<lit_e>, str_hello, start> >
+    is_error<apply_wrap2<sequence<lit_e>, str_hello, start> >
     test_one_failing_parser;
   
   typedef
     equal<
-      get_result<apply<sequence<lit_h, lit_e>, str_hello, start> >::type,
+      get_result<apply_wrap2<sequence<lit_h, lit_e>, str_hello, start> >::type,
       list<char_h, char_e>
     >
     test_two_chars;
 
   typedef
-    is_error<apply<sequence<lit_x, lit_e>, str_hello, start> >
+    is_error<apply_wrap2<sequence<lit_x, lit_e>, str_hello, start> >
     test_first_fails;
 
   typedef
-    is_error<apply<sequence<lit_h, lit_x>, str_hello, start> >
+    is_error<apply_wrap2<sequence<lit_h, lit_x>, str_hello, start> >
     test_second_fails;
 
   typedef
-    is_error<apply<sequence<lit_h, lit_e>, str_, start> >
+    is_error<apply_wrap2<sequence<lit_h, lit_e>, str_, start> >
     test_empty_input;
 
   typedef
     equal<
-      get_result<apply<sequence<lit_h, lit_e, lit_l>, str_hello, start> >::type,
+      get_result<
+        apply_wrap2<sequence<lit_h, lit_e, lit_l>, str_hello, start>
+      >::type,
       list<char_h, char_e, char_l>
     >
     test_three_chars;
@@ -84,7 +86,7 @@ namespace
     equal_to<
       at_c<
         get_result<
-          apply<sequence<lit_h, lit_e, lit_l>, str_hello, start>
+          apply_wrap2<sequence<lit_h, lit_e, lit_l>, str_hello, start>
         >::type,
         1
       >::type,

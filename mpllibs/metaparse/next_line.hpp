@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/mpl/int.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/tag.hpp>
 
 #include <iostream>
@@ -21,7 +21,7 @@ namespace mpllibs
     
     template <class P, class Ch>
     struct next_line :
-      boost::mpl::apply<
+      boost::mpl::apply_wrap2<
         next_line_impl<typename boost::mpl::tag<typename P::type>::type>,
         typename P::type,
         typename Ch::type
