@@ -8,14 +8,16 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::util::is_char;
 
-using boost::mpl::apply;
+using boost::mpl::apply_wrap1;
 
 namespace
 {
@@ -23,11 +25,14 @@ namespace
 
   typedef is_char<char_a> is_char_a;
 
-  typedef apply<is_char_a, char_a> test_same;
+  typedef has_type<is_char_a> test_has_type;
+
+  typedef apply_wrap1<is_char_a, char_a> test_same;
   
-  typedef apply<is_char_a, char_b> test_different;
+  typedef apply_wrap1<is_char_a, char_b> test_different;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_same)
 MPLLIBS_ADD_TEST_TO_FAIL(suite, test_different)
 

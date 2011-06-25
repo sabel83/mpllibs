@@ -11,6 +11,7 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
@@ -18,6 +19,7 @@
 #include <boost/mpl/equal.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::spaces;
@@ -38,6 +40,8 @@ namespace
     list_c<char, ' ', '\t', '\n', '\r', 'e', 'l', 'l', 'o'>
     str_____ello;
 
+  typedef has_type<spaces> test_has_type;
+
   typedef is_error<apply<spaces, str_hello, start> > test_reject_no_space;
 
   typedef
@@ -57,6 +61,7 @@ namespace
     test_consume_all_spaces;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_reject_no_space)
 MPLLIBS_ADD_TEST(suite, test_accept_one_space)
 MPLLIBS_ADD_TEST(suite, test_accept_only_space)

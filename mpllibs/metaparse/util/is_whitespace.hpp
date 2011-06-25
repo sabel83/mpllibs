@@ -20,6 +20,8 @@ namespace mpllibs
     {
       struct is_whitespace
       {
+        typedef is_whitespace type;
+        
         template <class C>
         struct apply :
           boost::mpl::or_<

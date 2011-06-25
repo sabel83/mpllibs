@@ -16,6 +16,8 @@ namespace mpllibs
     {
       struct cons
       {
+        typedef cons type;
+        
         template <class P>
         struct apply :
           boost::mpl::push_front<typename P::second, typename P::first>

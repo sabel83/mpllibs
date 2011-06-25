@@ -12,12 +12,14 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/equal.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::look_ahead;
@@ -35,6 +37,8 @@ namespace
 {
   const suite_path suite("look_ahead");
   
+  typedef has_type<look_ahead<digit_val> > test_has_type;
+
   typedef
     equal_to<
       int1,
@@ -54,6 +58,7 @@ namespace
     test_doesnt_process_input;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_returns_result)
 MPLLIBS_ADD_TEST(suite, test_returns_error)
 MPLLIBS_ADD_TEST(suite, test_doesnt_process_input)

@@ -31,33 +31,35 @@ namespace mpllibs
   {
     namespace impl
     {
-      template <class ListToAppend>
-      struct do_append
-      {
-        template <class Item>
-        struct apply :
-          boost::mpl::push_back<ListToAppend, typename Item::type>
-        {};
-      };
-    
-      template <class Accum, class S, class Pos, class Parser>
-      struct apply_impl :
-        boost::mpl::apply<
-          mpllibs::metaparse::transform<
-            Parser,do_append<typename Accum::type>
-          >,
-          typename S::type,
-          typename Pos::type
-        >
-      {};
-    
       struct apply_parser
       {
+      private:
+        template <class ListToAppend>
+        struct do_append
+        {
+          template <class Item>
+          struct apply :
+            boost::mpl::push_back<ListToAppend, typename Item::type>
+          {};
+        };
+
+        template <class Accum, class S, class Pos, class Parser>
+        struct apply_unchecked :
+          boost::mpl::apply<
+            mpllibs::metaparse::transform<
+              Parser,do_append<typename Accum::type>
+            >,
+            typename S::type,
+            typename Pos::type
+          >
+        {};
+        
+      public:
         template <class State, class Parser>
         struct apply :
           mpllibs::metaparse::util::unless_error<
             State,
-            apply_impl<
+            apply_unchecked<
               mpllibs::metaparse::get_result<State>,
               mpllibs::metaparse::get_remaining<State>,
               mpllibs::metaparse::get_position<State>,
@@ -97,6 +99,8 @@ namespace mpllibs
       > \
       struct sequence##n \
       { \
+        typedef sequence##n type; \
+        \
         template <class S, class Pos> \
         struct apply : \
           mpllibs::metaparse::impl::sequence_impl< \

@@ -62,6 +62,8 @@ namespace mpllibs
       > \
       struct one_of_##n \
       { \
+        typedef one_of_##n type; \
+        \
         template <class S, class Pos> \
         struct apply : \
           boost::mpl::apply< \

@@ -22,6 +22,8 @@ namespace mpllibs
     {
       struct is_letter
       {
+        typedef is_letter type;
+        
         template <class S>
         struct apply :
           boost::mpl::or_<

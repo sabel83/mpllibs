@@ -24,6 +24,8 @@ namespace mpllibs
     template <class C>
     struct return_
     {
+      typedef return_ type;
+      
       template <class S, class Pos>
       struct apply
       {

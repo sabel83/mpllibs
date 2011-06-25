@@ -11,6 +11,7 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
@@ -19,6 +20,7 @@
 #include <boost/mpl/equal.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::sequence;
@@ -34,6 +36,8 @@ using boost::mpl::at_c;
 namespace
 {
   const suite_path suite("sequence");
+
+  typedef has_type<sequence<lit_h> > test_has_type;
 
   typedef
     equal<get_result<apply<sequence<>, str_hello, start> >::type, list<> >
@@ -89,6 +93,7 @@ namespace
     test_indexing_in_result;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_no_parser)
 MPLLIBS_ADD_TEST(suite, test_one_parser)
 MPLLIBS_ADD_TEST(suite, test_one_failing_parser)

@@ -12,10 +12,12 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::always;
@@ -24,7 +26,7 @@ using mpllibs::metaparse::start;
 using mpllibs::metaparse::is_error;
 
 using boost::mpl::equal_to;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 
 namespace
 {
@@ -32,13 +34,19 @@ namespace
   
   typedef always<digit, int13> always_digit_13;
 
+  typedef has_type<always_digit_13> test_has_type;
+
   typedef
-    equal_to<get_result<apply<always_digit_13, str_1, start> >::type, int13>
+    equal_to<
+      get_result<apply_wrap2<always_digit_13, str_1, start> >::type,
+      int13
+    >
     test_result;
   
-  typedef is_error<apply<always_digit_13, str_a, start> > test_fail;
+  typedef is_error<apply_wrap2<always_digit_13, str_a, start> > test_fail;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_result)
 MPLLIBS_ADD_TEST(suite, test_fail)
 

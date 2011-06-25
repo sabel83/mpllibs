@@ -105,6 +105,8 @@ namespace mpllibs
           >
         {};
       public:
+        typedef nth_of_c_impl type;
+        
         template <class S, class Pos>
         struct apply :
           boost::mpl::eval_if<
@@ -122,6 +124,8 @@ namespace mpllibs
       template <class Seq>
       struct nth_of_c_impl<0, Seq>
       {
+        typedef nth_of_c_impl type;
+        
         template <class S, class Pos>
         struct apply :
           boost::mpl::fold<

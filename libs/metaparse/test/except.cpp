@@ -15,11 +15,13 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::except;
@@ -28,7 +30,7 @@ using mpllibs::metaparse::start;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::fail;
 
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::equal_to;
 
 namespace
@@ -37,20 +39,29 @@ namespace
 
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
 
+  typedef has_type<except<one_char, int13, test_error> > test_has_type;
+
   typedef
-    is_error<apply<except<one_char, int13, test_error>, str_hello, start> >
+    is_error<
+      apply_wrap2<except<one_char, int13, test_error>, str_hello, start>
+    >
     test_with_good;
   
   typedef
     equal_to<
       get_result<
-        apply<except<fail<test_error>, int13, test_error>, str_hello, start>
+        apply_wrap2<
+          except<fail<test_error>, int13, test_error>,
+          str_hello,
+          start
+        >
       >::type,
       int13
     >
     test_with_bad;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_with_good)
 MPLLIBS_ADD_TEST(suite, test_with_bad)
 

@@ -51,6 +51,8 @@ namespace mpllibs
       template <int N, class P, class Accum>
       struct iterate_impl
       {
+        typedef iterate_impl type;
+        
         template <class S, class Pos>
         struct apply :
           boost::mpl::eval_if<

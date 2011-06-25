@@ -8,21 +8,26 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/apply_wrap.hpp>
+
 #include <boost/type_traits/is_same.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::util::compose;
 
 using boost::mpl::identity;
 using boost::mpl::plus;
 using boost::mpl::times;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap1;
+using boost::mpl::apply_wrap2;
 using boost::mpl::equal_to;
 
 using boost::is_same;
@@ -55,13 +60,15 @@ namespace
     struct apply : identity<A> {};
   };
 
+  typedef has_type<compose<make_pointer, make_pointer> > test_has_type;
+
   typedef
-    is_same<apply<compose<make_pointer, make_pointer>, int>::type, int**>
+    is_same<apply_wrap1<compose<make_pointer, make_pointer>, int>::type, int**>
     test_same_function_twice;
 
   typedef
     is_same<
-      apply<
+      apply_wrap1<
         compose<
           make_pointer,
           make_pointer,
@@ -76,14 +83,18 @@ namespace
     test_same_function_five_times;
 
   typedef
-    equal_to<apply<compose<double_value, incr>, int1>::type, int28>
+    equal_to<apply_wrap1<compose<double_value, incr>, int1>::type, int28>
     test_order;
 
   typedef
-    equal_to<apply<compose<double_value, take_first>, int1, int3>::type, int2>
+    equal_to<
+      apply_wrap2<compose<double_value, take_first>, int1, int3>::type,
+      int2
+    >
     test_two_arguments_for_the_first_function;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_same_function_twice)
 MPLLIBS_ADD_TEST(suite, test_same_function_five_times)
 MPLLIBS_ADD_TEST(suite, test_order)

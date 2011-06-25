@@ -11,11 +11,13 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::last_of;
@@ -28,6 +30,8 @@ using boost::mpl::apply;
 namespace
 {
   const suite_path suite("last_of");
+
+  typedef has_type<last_of<lit_h, lit_e> > test_has_type;
 
   typedef
     equal_to<get_result<apply<last_of<lit_h>, str_hello, start> >::type, char_h>
@@ -58,6 +62,7 @@ namespace
     test_three_chars;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_one_char)
 MPLLIBS_ADD_TEST(suite, test_two_chars)
 MPLLIBS_ADD_TEST(suite, test_first_fails)

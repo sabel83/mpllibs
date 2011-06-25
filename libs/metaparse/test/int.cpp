@@ -11,44 +11,49 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::int_;
 using mpllibs::metaparse::start;
 using mpllibs::metaparse::get_result;
 
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::equal_to;
 
 namespace
 {
   const suite_path suite("int");
 
-  typedef is_error<apply<int_, str_hello, start> > test_with_text;
+  typedef has_type<int_> test_has_type;
+
+  typedef is_error<apply_wrap2<int_, str_hello, start> > test_with_text;
   
   typedef
-    equal_to<get_result<apply<int_, str_0, start> >::type, int0>
+    equal_to<get_result<apply_wrap2<int_, str_0, start> >::type, int0>
     test_with_zero;
 
   typedef
-    equal_to<get_result<apply<int_, str_1, start> >::type, int1>
+    equal_to<get_result<apply_wrap2<int_, str_1, start> >::type, int1>
     test_with_one_digit;
 
   typedef
     equal_to<
-      get_result<apply<int_, str_1983, start> >::type,
+      get_result<apply_wrap2<int_, str_1983, start> >::type,
       boost::mpl::int_<1983>
     >
     test_with_big_number;
   
-  typedef is_error<apply<int_, str_, start> > test_with_empty_string;
+  typedef is_error<apply_wrap2<int_, str_, start> > test_with_empty_string;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_with_text)
 MPLLIBS_ADD_TEST(suite, test_with_zero)
 MPLLIBS_ADD_TEST(suite, test_with_one_digit)

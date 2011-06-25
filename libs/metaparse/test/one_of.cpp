@@ -15,11 +15,13 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::fail;
 using mpllibs::metaparse::is_error;
@@ -40,6 +42,8 @@ namespace
   
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
   
+  typedef has_type<one_of<one_char> > test_has_type;
+
   typedef fail<test_error> test_fail;
 
   typedef is_error<apply<one_of_0< >, str_hello, start> > test0;
@@ -122,6 +126,8 @@ namespace
     is_error<apply<one_of<test_fail, test_fail>, str_hello, start> >
     test_with_two_bad;
 }
+
+MPLLIBS_ADD_TEST(suite, test_has_type)
 
 MPLLIBS_ADD_TEST(suite, test0)
 MPLLIBS_ADD_TEST(suite, test_1_with_good)

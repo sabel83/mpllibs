@@ -20,6 +20,8 @@ namespace mpllibs
     template <class P, class Result, class ErrorMsg>
     struct except
     {
+      typedef except type;
+      
       template <class S, class Pos>
       struct apply :
         boost::mpl::apply<

@@ -19,6 +19,8 @@ namespace mpllibs
     template <class P, class T, class F>
     struct if_
     {
+      typedef if_ type;
+      
       template <class S, class Pos>
       struct apply :
         boost::mpl::apply<

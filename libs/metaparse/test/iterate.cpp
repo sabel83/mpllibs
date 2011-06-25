@@ -11,12 +11,14 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::iterate;
@@ -31,6 +33,8 @@ using boost::mpl::list;
 namespace
 {
   const suite_path suite("iterate");
+
+  typedef has_type<iterate<one_char, int0> > test_has_type;
 
   typedef
     is_error<apply<iterate<one_char, int13>, str_, start> >
@@ -65,6 +69,7 @@ namespace
     test3;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_empty_input)
 MPLLIBS_ADD_TEST(suite, test0)
 MPLLIBS_ADD_TEST(suite, test1)

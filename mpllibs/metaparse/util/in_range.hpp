@@ -23,6 +23,8 @@ namespace mpllibs
       template <class LowerBound, class UpperBound>
       struct in_range
       {
+        typedef in_range type;
+      
         template <class Item>
         struct apply :
           boost::mpl::and_<

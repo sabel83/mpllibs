@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/throw.hpp>
+
 #include <boost/mpl/int.hpp>
 
 #include <boost/mpl/integral_c.hpp>
@@ -16,16 +18,29 @@ namespace mpllibs
   {
     namespace util
     {
+      struct invalid_digit_tag
+      {
+        typedef invalid_digit_tag type;
+      };
+      
+      struct invalid_digit
+      {
+        typedef invalid_digit type;
+        typedef invalid_digit_tag tag;
+      };
+      
       namespace impl
       {
-        struct invalid_digit {};
-    
         template <char C>
-        struct digit_to_int : invalid_digit {};
+        struct digit_to_int :
+          MPLLIBS_THROW<mpllibs::metaparse::util::invalid_digit>
+        {};
       }
 
       struct digit_to_int
       {
+        typedef digit_to_int type;
+        
         template <class D>
         struct apply :
           mpllibs::metaparse::util::impl::digit_to_int<D::type::value>

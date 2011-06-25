@@ -31,6 +31,8 @@ namespace mpllibs
       {};
       
     public:
+      typedef transform type;
+      
       template <class S, class Pos>
       struct apply :
         mpllibs::metaparse::util::unless_error<

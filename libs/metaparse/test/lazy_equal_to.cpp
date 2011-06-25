@@ -8,6 +8,7 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
@@ -16,6 +17,7 @@
 #include <boost/mpl/at.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::util::lazy_equal_to;
 
@@ -27,6 +29,8 @@ namespace
 {
   const suite_path suite = suite_path("util")("lazy_equal_to");
   
+  typedef has_type<lazy_equal_to<int13, int13> > test_has_type;
+
   typedef lazy_equal_to<int13, int13> test_evaluated;
   
   typedef
@@ -34,6 +38,7 @@ namespace
     test_not_evaluated;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_evaluated)
 MPLLIBS_ADD_TEST(suite, test_not_evaluated)
 

@@ -20,6 +20,8 @@ namespace mpllibs
     template <class Msg>
     struct fail
     {
+      typedef fail type;
+      
       template <class S, class Pos>
       struct apply
       {

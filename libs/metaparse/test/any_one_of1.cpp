@@ -16,14 +16,16 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/equal.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::fail;
 using mpllibs::metaparse::is_error;
@@ -33,7 +35,7 @@ using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_char;
 using mpllibs::metaparse::keyword;
 
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::equal;
 using boost::mpl::list;
 using boost::mpl::string;
@@ -44,25 +46,27 @@ namespace
   
   MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
   
+  typedef has_type<any_one_of1<one_char> > test_has_type;
+
   typedef fail<test_error> test_fail;
 
-  typedef is_error<apply<any_one_of1< >, str_hello, start> > test0;
+  typedef is_error<apply_wrap2<any_one_of1< >, str_hello, start> > test0;
   
   typedef
     equal<
-      get_result<apply<any_one_of1<one_char>, str_hello, start> >::type,
+      get_result<apply_wrap2<any_one_of1<one_char>, str_hello, start> >::type,
       list<char_h, char_e, char_l, char_l, char_o>
     >
     test_good_sequence;
 
   typedef
-    is_error<apply<any_one_of1<test_fail>, str_hello, start> >
+    is_error<apply_wrap2<any_one_of1<test_fail>, str_hello, start> >
     test_1_with_bad;
 
   typedef
     equal<
       get_result<
-        apply<any_one_of1<one_char, test_fail>, str_hello, start>
+        apply_wrap2<any_one_of1<one_char, test_fail>, str_hello, start>
       >::type,
       list<char_h, char_e, char_l, char_l, char_o>
     >
@@ -71,7 +75,7 @@ namespace
   typedef
     equal<
       get_result<
-        apply<any_one_of1<test_fail, one_char>, str_hello, start>
+        apply_wrap2<any_one_of1<test_fail, one_char>, str_hello, start>
       >::type,
       list<char_h, char_e, char_l, char_l, char_o>
     >
@@ -84,13 +88,18 @@ namespace
   typedef
     equal<
       get_result<
-        apply<any_one_of1<keyword_h, keyword_e, keyword_l>, str_hello, start>
+        apply_wrap2<
+          any_one_of1<keyword_h, keyword_e, keyword_l>,
+          str_hello,
+          start
+        >
       >::type,
       list<char_h, char_e, char_l, char_l>
     >
     test_accept_any_argument;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test0)
 MPLLIBS_ADD_TEST(suite, test_good_sequence)
 MPLLIBS_ADD_TEST(suite, test_1_with_bad)

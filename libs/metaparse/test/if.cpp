@@ -11,11 +11,13 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::if_;
@@ -28,6 +30,8 @@ using boost::mpl::apply;
 namespace
 {
   const suite_path suite("if");
+
+  typedef has_type<if_<digit, int11, int13> > test_has_type;
 
   typedef
     equal_to<
@@ -44,6 +48,7 @@ namespace
     test_false;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_true)
 MPLLIBS_ADD_TEST(suite, test_false)
 

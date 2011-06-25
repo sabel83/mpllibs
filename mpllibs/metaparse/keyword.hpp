@@ -31,31 +31,28 @@ namespace mpllibs
     template <class S, class ResultType>
     struct keyword;
     
-    namespace impl
+    // Does not consume/check anything after the keyword
+    template <class Kw, class ResultType = accepted_keyword>
+    struct keyword
     {
-      template <class Kw, class ResultType>
-      struct nonempty_keyword
+    private:
+      struct nonempty
       {
       private:
-        typedef
-          mpllibs::metaparse::lit<typename boost::mpl::front<Kw>::type>
-          next_char_parser;
+        typedef lit<typename boost::mpl::front<Kw>::type> next_char_parser;
 
         typedef
-          mpllibs::metaparse::keyword<
-            typename boost::mpl::pop_front<Kw>::type,
-            ResultType
-          >
+          keyword<typename boost::mpl::pop_front<Kw>::type, ResultType>
           rest_parser;
         
         template <class S, class Pos>
         struct apply_unchecked :
           boost::mpl::apply<
             rest_parser,
-            typename mpllibs::metaparse::get_remaining<
+            typename get_remaining<
               boost::mpl::apply<next_char_parser, S, Pos>
             >::type,
-            typename mpllibs::metaparse::get_position<
+            typename get_position<
               boost::mpl::apply<next_char_parser, S, Pos>
             >::type
           >
@@ -64,7 +61,7 @@ namespace mpllibs
         template <class S, class Pos>
         struct apply :
           boost::mpl::eval_if<
-            typename mpllibs::metaparse::is_error<
+            typename is_error<
               boost::mpl::apply<next_char_parser, S, Pos>
             >::type,
             boost::mpl::apply<next_char_parser, S, Pos>,
@@ -72,17 +69,22 @@ namespace mpllibs
           >
         {};
       };
-    }
-    
-    // Does not consume/check anything after the keyword
-    template <class S, class ResultType = accepted_keyword>
-    struct keyword :
-      boost::mpl::if_<
-        boost::mpl::empty<S>,
-        return_<ResultType>,
-        mpllibs::metaparse::impl::nonempty_keyword<S, ResultType>
-      >::type
-    {};
+    public:
+      typedef keyword type;
+      
+      template <class S, class Pos>
+      struct apply :
+        boost::mpl::apply_wrap2<
+          typename boost::mpl::if_<
+            boost::mpl::empty<Kw>,
+            return_<ResultType>,
+            nonempty
+          >::type,
+          S,
+          Pos
+        >
+      {};
+    };
   }
 }
 

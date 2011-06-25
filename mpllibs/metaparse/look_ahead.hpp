@@ -20,6 +20,8 @@ namespace mpllibs
     template <class P>
     struct look_ahead
     {
+      typedef look_ahead type;
+      
       template <class S, class Pos>
       struct apply :
         boost::mpl::eval_if<

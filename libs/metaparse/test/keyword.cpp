@@ -12,12 +12,14 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::keyword;
@@ -42,6 +44,8 @@ namespace
   typedef list_c<char, 'h','x','l','l','o'> str_hxllo;
   
   typedef keyword<str_hello> keyword_hello;
+
+  typedef has_type<keyword_hello> test_has_type;
 
   typedef
     equal_to<
@@ -79,6 +83,7 @@ namespace
     test_no_match_in_the_middle;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_result_type)
 MPLLIBS_ADD_TEST(suite, test_empty_input)
 MPLLIBS_ADD_TEST(suite, test_empty_keyword)

@@ -13,12 +13,14 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::keyword;
 using mpllibs::metaparse::get_result;
@@ -41,6 +43,8 @@ namespace
   typedef keyword<str_hello, int13> test_parser;
   typedef token<test_parser> test_token;
 
+  typedef has_type<test_token> test_has_type;
+
   typedef
     equal_to<
       get_result<apply<test_token, str_hello, start> >::type,
@@ -62,6 +66,7 @@ namespace
   typedef is_error<apply<test_token, str_, start> > test_fail;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_no_space)
 MPLLIBS_ADD_TEST(suite, test_spaces)
 MPLLIBS_ADD_TEST(suite, test_spaces_consumed)

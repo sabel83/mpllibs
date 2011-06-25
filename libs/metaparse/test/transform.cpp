@@ -13,6 +13,7 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/always.hpp>
@@ -22,6 +23,7 @@
 #include <boost/mpl/lambda.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::transform;
@@ -44,6 +46,8 @@ namespace
   typedef always<char_x> f;
   typedef any<one_char> any_one_char;
     
+  typedef has_type<transform<lit_h, f> > test_has_type;
+
   typedef
     equal_to<
       get_result<apply<transform<lit_h, f>, str_hello, start> >::type,
@@ -67,6 +71,7 @@ namespace
     test_tranformation_functions_arg;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_normal_case)
 MPLLIBS_ADD_TEST(suite, test_parser_fails)
 MPLLIBS_ADD_TEST(suite, test_empty_input)

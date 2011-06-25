@@ -9,16 +9,19 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/not.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::fail;
 
 using boost::mpl::not_;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 
 namespace
 {
@@ -26,7 +29,7 @@ namespace
   
   typedef not_<is_error<int13> > test_not_error;
 
-  typedef is_error<apply<fail<int11>, int1, int13> > test_error;
+  typedef is_error<apply_wrap2<fail<int11>, int1, int13> > test_error;
 }
 
 MPLLIBS_ADD_TEST(suite, test_not_error)

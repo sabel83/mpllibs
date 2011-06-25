@@ -11,11 +11,13 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::middle_of;
@@ -28,6 +30,8 @@ using boost::mpl::apply;
 namespace
 {
   const suite_path suite("middle_of");
+
+  typedef has_type<middle_of<lit_h, lit_e, lit_l> > test_has_type;
 
   typedef
     equal_to<
@@ -55,6 +59,7 @@ namespace
     test_empty_input;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_three_chars)
 MPLLIBS_ADD_TEST(suite, test_first_fails)
 MPLLIBS_ADD_TEST(suite, test_second_fails)

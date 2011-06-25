@@ -12,11 +12,13 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::start;
@@ -30,6 +32,8 @@ using boost::mpl::apply;
 namespace
 {
   const suite_path suite("lit");
+
+  typedef has_type<lit_h> test_has_type;
 
   typedef
     equal_to<get_result<apply<lit_h, str_hello, start> >::type, char_h>
@@ -53,6 +57,7 @@ namespace
     test_remaining_string;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_accept)
 MPLLIBS_ADD_TEST(suite, test_reject)
 MPLLIBS_ADD_TEST(suite, test_with_empty_string)

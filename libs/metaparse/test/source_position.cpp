@@ -11,10 +11,12 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_line;
 using mpllibs::metaparse::get_col;
@@ -34,6 +36,8 @@ namespace
   typedef next_char<start, char_0> next0;
   
   
+  typedef has_type<sp> test_has_type;
+
   typedef equal_to<int11, get_line<sp>::type> test_get_line;
 
   typedef equal_to<int13, get_col<sp>::type> test_get_col;
@@ -64,6 +68,8 @@ namespace
     equal_to<char_1, get_prev_char<next_line<start, char_1> >::type>
     test_next_lines_prev_char;
 }
+
+MPLLIBS_ADD_TEST(suite, test_has_type)
 
 MPLLIBS_ADD_TEST(suite, test_get_line)
 MPLLIBS_ADD_TEST(suite, test_get_col)

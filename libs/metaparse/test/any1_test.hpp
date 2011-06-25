@@ -10,11 +10,15 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 
+#include <mpllibs/metatest/has_type.hpp>
+
 #include "common.hpp"
  
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal.hpp>
+
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::letter;
@@ -22,50 +26,56 @@ using mpllibs::metaparse::start;
 using mpllibs::metaparse::is_error;
 
 using boost::mpl::equal;
-using boost::mpl::apply;
+using boost::mpl::apply_wrap2;
 using boost::mpl::list;
 
 namespace
 { 
   typedef any1<letter> any1_letter;
 
-  typedef is_error<apply<any1_letter, str_, start> > test_empty_input;
+  typedef has_type<any1_letter> test_has_type;
+
+  typedef is_error<apply_wrap2<any1_letter, str_, start> > test_empty_input;
   
-  typedef is_error<apply<any1_letter, chars0, start> > test0;
+  typedef is_error<apply_wrap2<any1_letter, chars0, start> > test0;
   
   typedef
-    equal<get_result<apply<any1_letter, chars1, start> >::type, list<char_h> >
+    equal<
+      get_result<apply_wrap2<any1_letter, chars1, start> >::type,
+      list<char_h>
+    >
     test1;
   
   typedef
     equal<
-      get_result<apply<any1_letter, chars2, start> >::type,
+      get_result<apply_wrap2<any1_letter, chars2, start> >::type,
       list<char_h, char_e>
     >
     test2;
   
   typedef
     equal<
-      get_result<apply<any1_letter, chars3, start> >::type,
+      get_result<apply_wrap2<any1_letter, chars3, start> >::type,
       list<char_h, char_e, char_l>
     >
     test3;
   
   typedef
     equal<
-      get_result<apply<any1_letter, chars4, start> >::type,
+      get_result<apply_wrap2<any1_letter, chars4, start> >::type,
       list<char_h, char_e, char_l, char_l>
     >
     test4;
   
   typedef
     equal<
-      get_result<apply<any1_letter, chars5, start> >::type,
+      get_result<apply_wrap2<any1_letter, chars5, start> >::type,
       list<char_h, char_e, char_l, char_l, char_o>
     >
     test5;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_empty_input)
 MPLLIBS_ADD_TEST(suite, test0)
 MPLLIBS_ADD_TEST(suite, test1)

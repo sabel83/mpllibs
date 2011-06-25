@@ -11,12 +11,13 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/int.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::nth_of_c;
@@ -26,7 +27,6 @@ using mpllibs::metaparse::is_error;
 
 using boost::mpl::equal_to;
 using boost::mpl::apply;
-using boost::mpl::int_;
 
 namespace mpl = boost::mpl;
 namespace mp = mpllibs::metaparse;
@@ -35,6 +35,9 @@ namespace
 {
   const suite_path suite("nth_of");
   
+  typedef has_type<nth_of_c<0, lit_h> > test_has_type_c;
+  typedef has_type<nth_of<int0, lit_h> > test_has_type;
+
   typedef
     equal_to<
       get_result<apply<nth_of_c<0, lit_h>, str_hello, start> >::type,
@@ -51,7 +54,7 @@ namespace
 
   typedef
     equal_to<
-      get_result<apply<nth_of<int_<1>, lit_h, lit_e>, str_hello, start> >::type,
+      get_result<apply<nth_of<int1, lit_h, lit_e>, str_hello, start> >::type,
       char_e
     >
     test_second_of_two;
@@ -82,6 +85,9 @@ namespace
     is_error<apply<nth_of_c<1, lit_h, lit_e, lit_x>, str_hello, start> >
     test_error_after_the_nth;
 }
+
+MPLLIBS_ADD_TEST(suite, test_has_type_c)
+MPLLIBS_ADD_TEST(suite, test_has_type)
 
 MPLLIBS_ADD_TEST(suite, test_first_of_one)
 MPLLIBS_ADD_TEST(suite, test_first_of_two)

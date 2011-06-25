@@ -11,6 +11,7 @@
 #include <mpllibs/metaparse/is_error.hpp>
 
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
 
 namespace mpllibs
@@ -18,35 +19,37 @@ namespace mpllibs
   namespace metaparse
   {
     template <class P, class Pred, class Msg>
-    struct accept_when_unchecked
-    {
-      template <class S, class Pos>
-      struct apply :
-        boost::mpl::apply<
-          typename boost::mpl::if_<
-            typename boost::mpl::apply<
-              Pred,
-              typename get_result<boost::mpl::apply<P, S, Pos> >::type
-            >::type,
-            P,
-            fail<Msg>
-          >::type,
-          S,
-          Pos
-        >
-      {};
-    };
-  
-    template <class P, class Pred, class Msg>
     struct accept_when
     {
+    private:
+      struct unchecked
+      {
+        template <class S, class Pos>
+        struct apply :
+          boost::mpl::apply_wrap2<
+            typename boost::mpl::if_<
+              typename boost::mpl::apply<
+                Pred,
+                typename get_result<boost::mpl::apply<P, S, Pos> >::type
+              >::type,
+              P,
+              fail<Msg>
+            >::type,
+            S,
+            Pos
+          >
+        {};
+      };
+    public:
+      typedef accept_when type;
+      
       template <class S, class Pos>
       struct apply :
         boost::mpl::apply<
           typename boost::mpl::if_<
             is_error<boost::mpl::apply<P, S, Pos> >,
             P,
-            accept_when_unchecked<P, Pred, Msg>
+            unchecked
           >::type,
           S,
           Pos

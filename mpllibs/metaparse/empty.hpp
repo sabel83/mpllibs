@@ -29,6 +29,8 @@ namespace mpllibs
     template <class Result>
     struct empty
     {
+      typedef empty type;
+      
       template <class S, class Pos>
       struct apply :
         boost::mpl::apply<

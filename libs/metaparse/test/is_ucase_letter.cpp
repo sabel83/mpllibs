@@ -8,24 +8,29 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::util::is_ucase_letter;
 
-using boost::mpl::apply;
+using boost::mpl::apply_wrap1;
 
 namespace
 {
   const suite_path suite = suite_path("util")("is_ucase_letter");
 
-  typedef apply<is_ucase_letter, char_K> test_letter;
+  typedef has_type<is_ucase_letter> test_has_type;
+
+  typedef apply_wrap1<is_ucase_letter, char_K> test_letter;
   
-  typedef apply<is_ucase_letter, char_k> test_non_letter;
+  typedef apply_wrap1<is_ucase_letter, char_k> test_non_letter;
 }
 
+MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_letter)
 MPLLIBS_ADD_TEST_TO_FAIL(suite, test_non_letter)
 

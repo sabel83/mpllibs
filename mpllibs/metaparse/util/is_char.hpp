@@ -19,6 +19,8 @@ namespace mpllibs
       template <class C>
       struct is_char
       {
+        typedef is_char type;
+        
         template <class S>
         struct apply : boost::mpl::equal_to<C, S> {};
       };

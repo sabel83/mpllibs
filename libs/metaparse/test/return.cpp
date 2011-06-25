@@ -10,11 +10,13 @@
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 
 using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::return_;
 using mpllibs::metaparse::get_result;
@@ -33,6 +35,8 @@ namespace
   
   typedef return_<char_x> return_x;
 
+  typedef has_type<return_x> test_has_type;
+
   typedef
     equal_to<get_result<apply<return_x, str_hello, start> >::type, char_x>
     test_for_non_empty_string;
@@ -48,6 +52,8 @@ namespace
 
   typedef equal_to<int3, get_position<acc>::type> test_get_position;
 }
+
+MPLLIBS_ADD_TEST(suite, test_has_type)
 
 MPLLIBS_ADD_TEST(suite, test_for_empty_string)
 MPLLIBS_ADD_TEST(suite, test_for_non_empty_string)

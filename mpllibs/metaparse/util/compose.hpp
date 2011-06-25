@@ -49,6 +49,8 @@ namespace mpllibs
         > \
         struct compose##n \
         { \
+          typedef compose##n type; \
+          \
           template < \
             BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT( \
               MPLLIBS_COMPOSE_MAX_INIT_ARGUMENT, \
