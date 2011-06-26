@@ -11,7 +11,7 @@
 
 #include <mpllibs/metaparse/util/is_char.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 namespace mpllibs
 {
@@ -50,6 +50,8 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::lit, "lit");
 
 #endif
 

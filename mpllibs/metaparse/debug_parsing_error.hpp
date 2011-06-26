@@ -99,6 +99,12 @@ namespace mpllibs
   }
 }
 
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metaparse::debug_parsing_error,
+  "debug_parsing_error"
+);
+
 #endif
 
 

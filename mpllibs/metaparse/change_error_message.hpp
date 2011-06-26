@@ -9,6 +9,8 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/if.hpp>
 
@@ -34,6 +36,12 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metaparse::change_error_message,
+  "change_error_message"
+);
 
 #endif
 

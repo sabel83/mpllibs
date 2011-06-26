@@ -8,6 +8,8 @@
 
 #include <mpllibs/metaparse/is_error.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
 
@@ -28,6 +30,12 @@ namespace mpllibs
     }
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metaparse::util::unless_error,
+  "unless_error"
+);
 
 #endif
 

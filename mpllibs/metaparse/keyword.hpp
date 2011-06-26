@@ -93,5 +93,12 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
   "Accepted keyword"
 )
 
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
+  1,
+  2,
+  mpllibs::metaparse::keyword,
+  "keyword"
+);
+
 #endif
 

@@ -9,6 +9,8 @@
 #include <mpllibs/metaparse/digit_val.hpp>
 #include <mpllibs/metaparse/foldl1.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/lambda.hpp>
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/plus.hpp>
@@ -33,6 +35,8 @@ namespace mpllibs
       int_;
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::int_, "int_");
 
 #endif
 

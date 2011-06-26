@@ -9,6 +9,8 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -55,6 +57,8 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metaparse::foldl, "foldl");
 
 #endif
 

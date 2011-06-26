@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/int.hpp>
@@ -114,6 +116,28 @@ namespace mpllibs
       #undef MPLLIBS_CURRY
       #undef MPLLIBS_CLASS_REPEAT
     }
+  }
+
+  namespace metatest
+  {
+    #ifdef MPLLIBS_CURRY
+      #error MPLLIBS_CURRY already defined
+    #endif
+    #define MPLLIBS_CURRY(z, n, unused) \
+      template <template <BOOST_PP_ENUM_PARAMS(n, class A)> class T> \
+      struct to_stream<mpllibs::metaparse::util::curry##n<T> > \
+      { \
+        typedef to_stream type; \
+        \
+        static std::ostream& run(std::ostream& o_) \
+        { \
+          o_ << "curry" << n << "<" "???" ">"; \
+        } \
+      };
+      
+    BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_CURRY_MAX_ARGUMENT, MPLLIBS_CURRY, ~)
+    
+    #undef MPLLIBS_CURRY
   }
 }
 

@@ -157,123 +157,43 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
 )
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::zip_view, "zip_view")
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::at, "at")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::back, "back")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::begin,
-  "begin"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::clear,
-  "clear"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::empty,
-  "empty"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::end, "end")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::erase,
-  "erase"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::erase_key,
-  "erase_key"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::front,
-  "front"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::has_key,
-  "has_key"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::insert,
-  "insert"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::at, "at")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::back, "back")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::begin, "begin")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::clear, "clear")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::empty, "empty")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::end, "end")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::erase, "erase")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::erase_key, "erase_key")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::front, "front")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::has_key, "has_key")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::insert, "insert")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   boost::mpl::insert_range,
   "insert_range"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::is_sequence,
-  "is_sequence"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::key_type,
-  "key_type"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::order,
-  "order"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::pop_back,
-  "pop_back"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::pop_front,
-  "pop_front"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::push_back,
-  "push_back"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::push_front,
-  "push_front"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::is_sequence, "is_sequence")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::key_type, "key_type")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::order, "order")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::pop_back, "pop_back")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::pop_front, "pop_front")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::push_back, "push_back")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::push_front, "push_front")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   1,
   boost::mpl::sequence_tag,
   "sequence_tag"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::size, "size")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::value_type,
-  "value_type"
-)
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::size, "size")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::value_type, "value_type")
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::advance,
-  "advance"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::distance,
-  "distance"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(1, boost::mpl::next, "next")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::prior,
-  "prior"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::deref,
-  "deref"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::advance, "advance")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::distance, "distance")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::next, "next")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::prior, "prior")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::deref, "deref")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   1,
   boost::mpl::iterator_category,
   "iterator_category"
@@ -291,181 +211,105 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
 )
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::inserter, "inserter")
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::fold, "fold")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::iter_fold,
-  "iter_fold"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::fold, "fold")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::iter_fold, "iter_fold")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   boost::mpl::reverse_fold,
   "reverse_fold"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   boost::mpl::reverse_iter_fold,
   "reverse_iter_fold"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::accumulate,
-  "accumulate"
-)
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::accumulate, "accumulate")
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::find, "find")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::find_if,
-  "find_if"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::contains,
-  "contains"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::count,
-  "count"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::count_if,
-  "count_if"
-)
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::find, "find")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::find_if, "find_if")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::contains, "contains")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::count, "count")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::count_if, "count_if")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::lower_bound, "lower_bound")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::upper_bound, "upper_bound")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::min_element, "min_element")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::max_element, "max_element")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::equal, "equal")
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(2, boost::mpl::copy, "copy")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::copy_if,
-  "copy_if"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::transform,
-  "transform"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  4,
-  boost::mpl::replace,
-  "replace"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  4,
-  boost::mpl::replace_if,
-  "replace_if"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::remove,
-  "remove"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::remove_if,
-  "remove_if"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::unique,
-  "unique"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  4,
-  boost::mpl::partition,
-  "partition"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::copy, "copy")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::copy_if, "copy_if")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::transform, "transform")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::replace, "replace")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::replace_if, "replace_if")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::remove, "remove")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::remove_if, "remove_if")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::unique, "unique")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(4, boost::mpl::partition, "partition")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   4,
   boost::mpl::stable_partition,
   "stable_partition"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::sort, "sort")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::reverse,
-  "reverse"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::sort, "sort")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::reverse, "reverse")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   2,
   boost::mpl::reverse_copy,
   "reverse_copy"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   boost::mpl::reverse_copy_if,
   "reverse_copy_if"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   boost::mpl::reverse_transform,
   "reverse_transform"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   4,
   boost::mpl::reverse_replace,
   "reverse_replace"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   boost::mpl::reverse_replace_if,
   "reverse_replace_if"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   boost::mpl::reverse_remove,
   "reverse_remove"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   boost::mpl::reverse_remove_if,
   "reverse_remove_if"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   boost::mpl::reverse_unique,
   "reverse_unique"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   4,
   boost::mpl::reverse_partition,
   "reverse_partition"
 )
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   4,
   boost::mpl::reverse_stable_partition,
   "reverse_stable_partition"
 )
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(3, boost::mpl::if_, "if_")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  3,
-  boost::mpl::eval_if,
-  "eval_if"
-)
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::if_, "if_")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, boost::mpl::eval_if, "eval_if")
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::unpack_args,
-  "unpack_args"
-)
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::unpack_args, "unpack_args")
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  2,
-  boost::mpl::lambda,
-  "lambda"
-)
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::protect,
-  "protect"
-)
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::lambda, "lambda")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::protect, "protect")
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::modulus, "modulus")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::negate, "negate")
@@ -496,11 +340,7 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::base, "base")
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::c_str, "c_str")
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_NO_RECURSION(
-  1,
-  boost::mpl::identity,
-  "identity"
-)
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::identity, "identity")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, boost::mpl::always, "always")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::inherit, "inherit")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(

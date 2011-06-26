@@ -38,5 +38,7 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
   "Digit expected"
 )
 
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::digit, "digit");
+
 #endif
 

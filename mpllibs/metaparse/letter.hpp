@@ -12,7 +12,7 @@
 #include <mpllibs/metaparse/util/is_letter.hpp>
 #include <mpllibs/metaparse/util/define_data.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 namespace mpllibs
 {
@@ -37,6 +37,8 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
   mpllibs::metaparse::errors::letter_expected,
   "Letter expected"
 )
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::letter, "letter");
 
 #endif
 

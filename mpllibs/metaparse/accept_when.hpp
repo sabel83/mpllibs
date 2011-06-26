@@ -10,6 +10,8 @@
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
@@ -58,6 +60,12 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  3,
+  mpllibs::metaparse::accept_when,
+  "accept_when"
+);
 
 #endif
 

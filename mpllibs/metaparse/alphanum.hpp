@@ -10,6 +10,8 @@
 #include <mpllibs/metaparse/digit.hpp>
 #include <mpllibs/metaparse/letter.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -17,6 +19,8 @@ namespace mpllibs
     typedef one_of<letter, digit> alphanum;
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::alphanum, "alphanum");
 
 #endif
 

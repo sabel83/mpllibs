@@ -8,6 +8,8 @@
 
 #include <mpllibs/metamonad/throw.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/int.hpp>
 
 #include <boost/mpl/integral_c.hpp>
@@ -72,6 +74,16 @@ namespace mpllibs
     }
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::util::digit_to_int,
+  "digit_to_int"
+);
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::util::invalid_digit,
+  "invalid_digit"
+);
 
 #endif
 

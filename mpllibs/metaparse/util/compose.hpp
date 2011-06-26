@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
@@ -148,6 +150,13 @@ namespace mpllibs
     }
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
+  0,
+  MPLLIBS_COMPOSE_MAX_ARGUMENT,
+  mpllibs::metaparse::util::compose,
+  "compose"
+);
 
 #endif
 

@@ -10,6 +10,8 @@
 #include <mpllibs/metaparse/any.hpp>
 #include <mpllibs/metaparse/first_of.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/void.hpp>
 
 namespace mpllibs
@@ -20,6 +22,8 @@ namespace mpllibs
     struct token : first_of<P, any<space> > {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::token, "token");
 
 #endif
 

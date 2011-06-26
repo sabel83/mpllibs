@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <iostream>
 
 namespace mpllibs
@@ -36,12 +38,6 @@ namespace mpllibs
 
   namespace metatest
   {
-    template <class T>
-    struct to_stream_impl;
-    
-    template <class T>
-    struct to_stream;
-    
     template <>
     struct to_stream_impl<mpllibs::metaparse::error_tag>
     {
@@ -62,6 +58,8 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::fail, "fail");
 
 #endif
 

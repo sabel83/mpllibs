@@ -165,5 +165,12 @@ namespace mpllibs
   }
 }
 
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
+  0,
+  MPLLIBS_SEQUENCE_MAX_ARGUMENT,
+  mpllibs::metaparse::sequence,
+  "sequence"
+);
+
 #endif
 

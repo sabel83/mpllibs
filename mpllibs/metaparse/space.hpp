@@ -11,7 +11,7 @@
 
 #include <mpllibs/metaparse/util/is_whitespace.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 namespace mpllibs
 {
@@ -36,6 +36,8 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
   mpllibs::metaparse::errors::whitespace_expected,
   "Whitespace expected"
 )
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::space, "space");
 
 #endif
 

@@ -11,6 +11,8 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
@@ -23,6 +25,7 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/arithmetic/sub.hpp>
+#include <boost/preprocessor/arithmetic/inc.hpp>
 
 #include <iostream>
 
@@ -237,9 +240,6 @@ namespace mpllibs
   
   namespace metatest
   {
-    template <class>
-    struct to_stream;
-
     template <int From, int To, int N>
     struct to_stream<
       mpllibs::metaparse::errors::index_out_of_range<From, To, N>
@@ -253,8 +253,49 @@ namespace mpllibs
           << "Index (" << N << ") out of range [" << From << ", "<< To << "]";
       }
     };
+
+    #ifdef MPLLIBS_STREAM_N
+      #error MPLLIBS_STREAM_N already defined
+    #endif
+    #define MPLLIBS_STREAM_N(z, n, unused) \
+      to_stream<A##n>::run(o_ << ", ");
+
+    #ifdef MPLLIBS_NTH_OF_N
+      #error MPLLIBS_NTH_OF_N already defined
+    #endif
+    #define MPLLIBS_NTH_OF_N(z, n, unused) \
+      template <int K BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, class A)> \
+      struct to_stream< \
+        mpllibs::metaparse::nth_of_c< \
+          K BOOST_PP_COMMA_IF(n) \
+          BOOST_PP_ENUM_PARAMS(n, A) \
+        > \
+      > \
+      { \
+        typedef to_stream type; \
+        \
+        static std::ostream& run(std::ostream& o_) \
+        { \
+          o_ << "nth_of_c<" << K; \
+          BOOST_PP_REPEAT(n, MPLLIBS_STREAM_N, ~) \
+          return o_ << ">"; \
+        } \
+      };
+
+    BOOST_PP_REPEAT(MPLLIBS_SEQUENCE_MAX_ARGUMENT, MPLLIBS_NTH_OF_N, ~)
+
+    #undef MPLLIBS_NTH_OF_N
+    #undef MPLLIBS_STREAM_N
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
+  2,
+  BOOST_PP_INC(MPLLIBS_SEQUENCE_MAX_ARGUMENT),
+  mpllibs::metaparse::nth_of,
+  "nth_of"
+);
+
 
 #endif
 

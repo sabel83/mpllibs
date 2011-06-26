@@ -8,6 +8,8 @@
 
 #include <mpllibs/metaparse/foldr.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/if.hpp>
 
 namespace mpllibs
@@ -30,6 +32,8 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metaparse::foldr1, "foldr1");
 
 #endif
 

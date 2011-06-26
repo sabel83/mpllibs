@@ -10,6 +10,7 @@
 #include <boost/mpl/deque.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/int.hpp>
+#include <boost/mpl/lambda.hpp>
 
 #include <iostream>
 
@@ -76,6 +77,7 @@ int main()
   using boost::mpl::vector;
   using boost::mpl::_1;
   using boost::mpl::apply;
+  using boost::mpl::lambda;
   
   to_stream<integral_c<int, 13> >::run(cout) << endl;
   to_stream<true_>::run(cout) << endl;
@@ -96,6 +98,7 @@ int main()
   to_stream<vector_c<char, 'h', 'e', 'l', 'l', 'o'> >::run(cout) << endl;
   to_stream<vector<> >::run(cout) << endl;
   to_stream<_1>::run(cout) << endl;
+  to_stream<lambda<_1> >::run(cout) << endl;
   to_stream<apply<metafunction_class, double> >::run(cout) << endl;
 }
 
