@@ -142,10 +142,6 @@ link:alphanum.html[alphanum] +
 link:always.html[always] +
 link:any.html[any] +
 link:any1.html[any1] +
-link:foldl.html[foldl] +
-link:foldl1.html[foldl1] +
-link:foldr.html[foldr] +
-link:foldr1.html[foldr1] +
 link:any_one_of.html[any_one_of] +
 link:any_one_of1.html[any_one_of1] +
 link:change_error_message.html[change_error_message] +
@@ -155,6 +151,10 @@ link:empty.html[empty] +
 link:except.html[except] +
 link:fail.html[fail] +
 link:first_of.html[first_of] +
+link:foldl.html[foldl] +
+link:foldl1.html[foldl1] +
+link:foldr.html[foldr] +
+link:foldr1.html[foldr1] +
 link:if.html[if] +
 link:int.html[int_] +
 link:iterate.html[iterate] +
