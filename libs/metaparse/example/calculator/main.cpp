@@ -14,6 +14,7 @@
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/parser_monad.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
+#include <mpllibs/metaparse/token.hpp>
 
 #include <mpllibs/metaparse/util/lazy_equal_to.hpp>
 
@@ -50,6 +51,7 @@ using mpllibs::metaparse::foldr;
 using mpllibs::metaparse::parser_tag;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
+using mpllibs::metaparse::token;
 
 using mpllibs::metaparse::util::lazy_equal_to;
 
@@ -76,9 +78,6 @@ using boost::mpl::char_;
  * plus_exp ::= prod_exp ((plus_token | minus_token) prod_exp)*
  * prod_exp ::= int_token ((mult_token | div_token) int_token)*
  */
-
-template <class P>
-struct token : first_of<P, any<space> > {};
 
 typedef token<lit_c<'+'> > plus_token;
 typedef token<lit_c<'-'> > minus_token;
