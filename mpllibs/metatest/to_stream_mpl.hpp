@@ -69,6 +69,8 @@
 
 #include <boost/type_traits/is_same.hpp>
 
+#include <boost/preprocessor/arithmetic/inc.hpp>
+
 namespace mpllibs
 {
   namespace metatest
@@ -362,6 +364,26 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::pair, "pair")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(boost::mpl::empty_base, "empty_base")
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::is_same, "is_same")
+
+
+
+
+#ifdef MPLLIBS_DEFINE_APPLY_N
+  #error MPLLIBS_DEFINE_APPLY_N already defined
+#endif
+#define MPLLIBS_DEFINE_APPLY_N(z, n, unused) \
+  MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE( \
+    BOOST_PP_INC(n), \
+    boost::mpl::apply##n, \
+    "apply" #n \
+  )
+
+BOOST_PP_REPEAT(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, MPLLIBS_DEFINE_APPLY_N, ~)
+
+#undef MPLLIBS_DEFINE_APPLY_N
+
+
+
 
 #ifdef MPLLIBS_MULTI_ARG_METAFUNCTION
   #error MPLLIBS_MULTI_ARG_METAFUNCTION already defined

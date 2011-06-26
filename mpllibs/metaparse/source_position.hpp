@@ -9,6 +9,8 @@
 #include <mpllibs/metaparse/get_col.hpp>
 #include <mpllibs/metaparse/get_line.hpp>
 
+#include <mpllibs/metamonad/tag_tag.hpp>
+
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/plus.hpp>
@@ -19,10 +21,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    struct source_position_tag
-    {
-      typedef source_position_tag type;
-    };
+    MPLLIBS_DEFINE_TAG(source_position_tag);
     
     template <class Line, class Col, class PrevChar>
     struct source_position

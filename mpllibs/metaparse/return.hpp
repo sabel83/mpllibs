@@ -10,16 +10,15 @@
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
 
+#include <mpllibs/metamonad/tag_tag.hpp>
+
 #include <iostream>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    struct accept_tag
-    {
-      typedef accept_tag type;
-    };
+    MPLLIBS_DEFINE_TAG(accept_tag);
     
     template <class C>
     struct return_

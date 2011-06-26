@@ -31,6 +31,8 @@ namespace mpllibs
   {
     struct to_stream_nothing
     {
+      typedef to_stream_nothing type;
+      
       static std::ostream& run(std::ostream& o_)
       {
         return o_;
@@ -52,6 +54,8 @@ namespace mpllibs
     template <class I, class End>
     struct to_stream_sequence_impl
     {
+      typedef to_stream_sequence_impl type;
+      
       static std::ostream& run(std::ostream& o_)
       {
         using boost::mpl::next;
@@ -85,6 +89,8 @@ namespace mpllibs
     template <class I, class End>
     struct to_stream_sequence_values_impl
     {
+      typedef to_stream_sequence_values_impl type;
+      
       static std::ostream& run(std::ostream& o_)
       {
         using boost::mpl::next;
@@ -109,6 +115,8 @@ namespace mpllibs
     // I can't use a lambda expression, because is_same is not lazy
     struct common_tag_compare
     {
+      typedef common_tag_compare type;
+      
       template <class A, class B>
       struct apply :
         boost::mpl::if_<
@@ -190,6 +198,8 @@ namespace mpllibs
       template <> \
       struct to_stream_impl<tag> \
       { \
+        typedef to_stream_impl type; \
+        \
         template <class Seq> \
         struct apply \
         { \

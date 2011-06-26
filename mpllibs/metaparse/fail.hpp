@@ -8,16 +8,15 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
+#include <mpllibs/metamonad/tag_tag.hpp>
+
 #include <iostream>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    struct error_tag
-    {
-      typedef error_tag type;
-    };
+    MPLLIBS_DEFINE_TAG(error_tag);
     
     template <class Msg>
     struct fail

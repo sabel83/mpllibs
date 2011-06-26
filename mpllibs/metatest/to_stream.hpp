@@ -8,8 +8,11 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
+#include <mpllibs/metatest/has_name_of_class.hpp>
+
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/tag.hpp>
+#include <boost/mpl/eval_if.hpp>
 
 namespace mpllibs
 {
@@ -31,12 +34,35 @@ namespace mpllibs
       };
     };
     
+    namespace impl
+    {
+      template <class T>
+      struct to_stream_using_name_of_class
+      {
+        typedef to_stream_using_name_of_class type;
+        
+        static std::ostream& run(std::ostream& o_)
+        {
+          return o_ << T::name_of_class::value;
+        }
+      };
+
+      template <class T>
+      struct to_stream_using_tag :
+        boost::mpl::apply_wrap1<
+          mpllibs::metatest::to_stream_impl<typename boost::mpl::tag<T>::type>,
+          T
+        >
+      {};
+    }
+    
     template <class T>
     struct to_stream :
-      boost::mpl::apply_wrap1<
-        to_stream_impl<typename boost::mpl::tag<T>::type>,
-        T
-      >
+      boost::mpl::if_<
+        typename has_name_of_class<T>::type,
+        mpllibs::metatest::impl::to_stream_using_name_of_class<T>,
+        mpllibs::metatest::impl::to_stream_using_tag<T>
+      >::type
     {};
     
     template <class T>

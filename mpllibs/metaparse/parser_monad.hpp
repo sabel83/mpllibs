@@ -13,6 +13,7 @@
 #include <mpllibs/metaparse/get_position.hpp>
 
 #include <mpllibs/metamonad/try_.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
 
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -23,10 +24,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    struct parser_tag
-    {
-      typedef parser_tag type;
-    };
+    MPLLIBS_DEFINE_TAG(parser_tag);
   }
   
   namespace metamonad

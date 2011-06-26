@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -20,10 +21,7 @@ namespace mpllibs
   {
     namespace util
     {
-      struct invalid_digit_tag
-      {
-        typedef invalid_digit_tag type;
-      };
+      MPLLIBS_DEFINE_TAG(invalid_digit_tag);
       
       struct invalid_digit
       {
