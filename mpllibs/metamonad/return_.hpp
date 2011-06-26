@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/tag.hpp>
 
@@ -30,6 +32,13 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
+  1,
+  2,
+  mpllibs::metamonad::return_,
+  "return_"
+);
 
 #endif
 

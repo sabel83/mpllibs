@@ -8,6 +8,8 @@
 
 #include <mpllibs/metamonad/util/id.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
@@ -87,6 +89,8 @@ namespace mpllibs
     #undef MPLLIBS_LET_REC_CASE
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metamonad::let, "let");
 
 #endif
 

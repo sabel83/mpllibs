@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
@@ -21,6 +23,8 @@ namespace mpllibs
     struct bind : boost::mpl::apply_wrap2<bind_impl<MonadTag>, A, F> {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metamonad::bind, "bind");
 
 #endif
 

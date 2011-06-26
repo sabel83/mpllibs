@@ -12,6 +12,8 @@
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/arithmetic/dec.hpp>
@@ -278,6 +280,8 @@ namespace mpllibs
     #undef MPLLIBS_DO_ARG
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metamonad::do_, "MPLLIBS_DO");
 
 #endif
 

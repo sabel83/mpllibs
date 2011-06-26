@@ -8,6 +8,8 @@
 
 #include <mpllibs/metamonad/let.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 namespace mpllibs
 {
   namespace metamonad
@@ -16,6 +18,8 @@ namespace mpllibs
     struct letrec : let<A, letrec<A, E1, E1>, E2> {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metamonad::letrec, "letrec");
 
 #endif
 

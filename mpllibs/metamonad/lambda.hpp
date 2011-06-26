@@ -8,6 +8,8 @@
 
 #include <mpllibs/metamonad/let.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 namespace mpllibs
 {
   namespace metamonad
@@ -22,6 +24,12 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metamonad::lambda,
+  "metamonad::lambda" // avoid confusion with mpl::lambda
+);
 
 #endif
 

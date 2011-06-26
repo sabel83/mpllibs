@@ -8,6 +8,8 @@
 
 #include <mpllibs/metamonad/get_data.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/bool.hpp>
@@ -53,12 +55,6 @@ namespace mpllibs
   
   namespace metatest
   {
-    template <class T>
-    struct to_stream;
-    
-    template <class T>
-    struct to_stream_impl;
-
     template <>
     struct to_stream_impl<mpllibs::metamonad::exception_tag>
     {
