@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/any_foldl.hpp>
+#include <mpllibs/metaparse/foldl1.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -13,7 +13,7 @@
 
 using mpllibs::metatest::suite_path;
 
-using mpllibs::metaparse::any_foldl;
+using mpllibs::metaparse::foldl1;
 
 using boost::mpl::vector;
 using boost::mpl::push_back;
@@ -22,11 +22,11 @@ using boost::mpl::_2;
 
 namespace
 { 
-  const suite_path suite("any_foldl");
+  const suite_path suite("foldl1");
   
   template <class P>
-  struct any : any_foldl<P, vector<>, push_back<_2, _1> > {};
+  struct any1 : foldl1<P, vector<>, push_back<_2, _1> > {};
 }
 
-#include "any_test.hpp"  
+#include "any1_test.hpp"  
 

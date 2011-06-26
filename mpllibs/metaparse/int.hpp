@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/digit_val.hpp>
-#include <mpllibs/metaparse/any_foldl1.hpp>
+#include <mpllibs/metaparse/foldl1.hpp>
 
 #include <boost/mpl/lambda.hpp>
 #include <boost/mpl/times.hpp>
@@ -18,7 +18,7 @@ namespace mpllibs
   namespace metaparse
   {
     typedef
-      any_foldl1<
+      foldl1<
         digit_val,
         boost::mpl::int_<0>,
         // I need to wrap it with lambda, because int_ may be used

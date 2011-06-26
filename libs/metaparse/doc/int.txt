@@ -48,7 +48,7 @@ boost::mpl::apply<int_, s, pos>
 is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::any_foldl1<
+mpllibs::metaparse::foldl1<
   mpllibs::metaparse::digit_val,
   boost::mpl::int_<0>,
   boost::mpl::lambda<

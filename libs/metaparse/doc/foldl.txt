@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-any_foldl
-=========
+foldl
+=====
 Abel Sinkovics
 
 Synopsis
@@ -12,7 +12,7 @@ Synopsis
 
 --------------------------------------
 template <class P, class State, class ForwardOp>
-struct any_foldl
+struct foldl
 {
   template <class S, class Pos>
   struct apply
@@ -31,14 +31,14 @@ string repeatedly as long as the parser accepts the input. The result of parsing
 is equivalent to +boost::fold<Sequence, State, ForwardOp>+, where
 +Sequence+ is the sequence of the results of the applications of +P+.
 
-When the parser rejects the input for the first time, +any_foldl+ still accepts
+When the parser rejects the input for the first time, +foldl+ still accepts
 the input and the result of parsing is +State+.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/any_foldl.hpp>
+#include <mpllibs/metaparse/foldl.hpp>
 --------------------------------------
 
 Expression semantics
@@ -49,7 +49,7 @@ For any +p+ parser, +t+ class, +f+ metafunction class taking two arguments,
 
 --------------------------------------
 mpllibs::metaparse::get_result<
-  boost::mpl::apply<any_foldl<p, t, f>, s, pos>
+  boost::mpl::apply<foldl<p, t, f>, s, pos>
 >::type
 --------------------------------------
 
@@ -58,7 +58,7 @@ returns an error. It is
 
 --------------------------------------
 boost::mpl::apply_wrap2<
-  any_foldl<
+  foldl<
     p,
     boost::mpl::apply<
       f,
@@ -82,7 +82,7 @@ typedef boost::mpl::list<> empty_list;
 typedef boost::mpl::push_back<boost::mpl::_2, boost::mpl::_1> push_back;
 
 template <class P>
-struct any : any_foldl<P, empty_list, push_back> {};
+struct any : foldl<P, empty_list, push_back> {};
 --------------------------------------
 
 include::copyright[]

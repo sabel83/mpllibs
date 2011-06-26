@@ -10,7 +10,7 @@
 #include <mpllibs/metaparse/first_of.hpp>
 #include <mpllibs/metaparse/space.hpp>
 #include <mpllibs/metaparse/int.hpp>
-#include <mpllibs/metaparse/any_foldr.hpp>
+#include <mpllibs/metaparse/foldr.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/parser_monad.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
@@ -46,7 +46,7 @@ using mpllibs::metaparse::space;
 using mpllibs::metaparse::any;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::int_;
-using mpllibs::metaparse::any_foldr;
+using mpllibs::metaparse::foldr;
 using mpllibs::metaparse::parser_tag;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
@@ -144,7 +144,7 @@ struct eval_mult
 typedef
   MPLLIBS_DO<parser_tag>::apply<
     MPLLIBS_SET<x, int_token>,
-    any_foldr<
+    foldr<
       sequence<one_of<mult_token, div_token>, int_token>,
       get_result<x>,
       eval_mult
@@ -155,7 +155,7 @@ typedef
 typedef
   MPLLIBS_DO<parser_tag>::apply<
     MPLLIBS_SET<x, prod_exp>,
-    any_foldr<
+    foldr<
       sequence<one_of<plus_token, minus_token>, prod_exp>,
       get_result<x>,
       eval_plus

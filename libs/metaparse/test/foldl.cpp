@@ -3,29 +3,29 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/any_foldr.hpp>
+#include <mpllibs/metaparse/foldl.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
-#include <boost/mpl/list.hpp>
-#include <boost/mpl/push_front.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/push_back.hpp>
 #include <boost/mpl/lambda.hpp>
 
 using mpllibs::metatest::suite_path;
 
-using mpllibs::metaparse::any_foldr;
+using mpllibs::metaparse::foldl;
 
-using boost::mpl::list;
-using boost::mpl::push_front;
+using boost::mpl::vector;
+using boost::mpl::push_back;
 using boost::mpl::_1;
 using boost::mpl::_2;
 
 namespace
 { 
-  const suite_path suite("any_foldr");
+  const suite_path suite("foldl");
   
   template <class P>
-  struct any : any_foldr<P, list<>, push_front<_2, _1> > {};
+  struct any : foldl<P, vector<>, push_back<_2, _1> > {};
 }
 
 #include "any_test.hpp"  

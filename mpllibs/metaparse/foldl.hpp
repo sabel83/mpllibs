@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_METAPARSE_ANY_FOLDL_HPP
-#define MPLLIBS_METAPARSE_ANY_FOLDL_HPP
+#ifndef MPLLIBS_METAPARSE_FOLDL_HPP
+#define MPLLIBS_METAPARSE_FOLDL_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2011.
 // Distributed under the Boost Software License, Version 1.0.
@@ -18,17 +18,17 @@ namespace mpllibs
   namespace metaparse
   {
     template <class P, class State, class ForwardOp>
-    struct any_foldl
+    struct foldl
     {
     private:
       template <class Res>
       struct apply_unchecked :
-        // any_foldl never returns error
+        // foldl never returns error
         // I need to use apply_wrap, and not apply, because apply would
-        // build a metafunction class from any_foldl<P, State, ForwardOp>
+        // build a metafunction class from foldl<P, State, ForwardOp>
         // when ForwardOp is a lambda expression.
         boost::mpl::apply_wrap2<
-          any_foldl<
+          foldl<
             P,
             boost::mpl::apply<
               ForwardOp,
@@ -42,7 +42,7 @@ namespace mpllibs
         >
       {};
     public:
-      typedef any_foldl type;
+      typedef foldl type;
     
       template <class S, class Pos>
       struct apply :
