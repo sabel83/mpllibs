@@ -1,5 +1,5 @@
-#ifndef LESS_HPP
-#define LESS_HPP
+#ifndef MPLLIBS_METATEST_LESS_HPP
+#define MPLLIBS_METATEST_LESS_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.

@@ -1,5 +1,5 @@
-#ifndef MIN_HPP
-#define MIN_HPP
+#ifndef MPLLIBS_METATEST_MIN_HPP
+#define MPLLIBS_METATEST_MIN_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
