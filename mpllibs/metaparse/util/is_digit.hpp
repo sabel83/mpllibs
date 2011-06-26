@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/util/in_range.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/integral_c.hpp>
 

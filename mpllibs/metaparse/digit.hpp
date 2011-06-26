@@ -12,7 +12,7 @@
 #include <mpllibs/metaparse/util/define_data.hpp>
 #include <mpllibs/metaparse/util/is_digit.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 namespace mpllibs
 {

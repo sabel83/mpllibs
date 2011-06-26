@@ -8,7 +8,7 @@
 
 #include <boost/mpl/equal_to.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 namespace mpllibs
 {

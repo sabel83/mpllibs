@@ -14,13 +14,17 @@
 
 #include <mpllibs/metaparse/util/define_data.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/and.hpp>
+#include <boost/mpl/not.hpp>
 
 namespace mpllibs
 {
