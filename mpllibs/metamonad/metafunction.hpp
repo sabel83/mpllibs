@@ -17,14 +17,13 @@
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
 
-#include <string>
-#include <sstream>
+#include <iostream>
 
 #ifdef MPLLIBS_DEFINE_METAFUNCTION_FORMAT_ARG
   #error MPLLIBS_DEFINE_METAFUNCTION_FORMAT_ARG already defined
 #endif
 #define MPLLIBS_DEFINE_METAFUNCTION_FORMAT_ARG(z, n, unused) \
-  mpllibs::metatest::to_stream<T##n>::run(s);
+  mpllibs::metatest::to_stream<T##n>::run(o);
 
 #ifdef MPLLIBS_DEFINE_METAFUNCTION_GET_TAG
   #error MPLLIBS_DEFINE_METAFUNCTION_GET_TAG already defined
@@ -65,15 +64,13 @@
         BOOST_PP_REPEAT(arg_num, MPLLIBS_DEFINE_METAFUNCTION_EVAL_ARG, ~) \
       > \
   { \
-    struct name_of_class \
+    struct to_stream \
     { \
-      static std::string run() \
+      static std::ostream& run(std::ostream& o) \
       { \
-        std::ostringstream s; \
-        s << #name "<"; \
+        o << #name "<"; \
         BOOST_PP_REPEAT(arg_num, MPLLIBS_DEFINE_METAFUNCTION_FORMAT_ARG, ~) \
-        s << ">"; \
-        return s.str(); \
+        return o << ">"; \
       } \
     }; \
   };

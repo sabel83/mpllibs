@@ -37,13 +37,13 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
 )
 MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(metafunction_class)
 
-struct class_with_name_of_class
+struct class_with_to_stream
 {
-  struct name_of_class
+  struct to_stream
   {
-    static const char* run()
+    static std::ostream& run(std::ostream& o)
     {
-      return "this is a class with name_of_class";
+      return o << "this is a class with to_stream";
     }
   };
 };
@@ -111,6 +111,6 @@ int main()
   to_stream<_1>::run(cout) << endl;
   to_stream<lambda<_1> >::run(cout) << endl;
   to_stream<apply<metafunction_class, double> >::run(cout) << endl;
-  to_stream<class_with_name_of_class>::run(cout) << endl;
+  to_stream<class_with_to_stream>::run(cout) << endl;
 }
 

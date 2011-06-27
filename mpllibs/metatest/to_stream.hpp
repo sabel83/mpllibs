@@ -8,7 +8,7 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <mpllibs/metatest/has_name_of_class.hpp>
+#include <mpllibs/metatest/has_to_stream.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/tag.hpp>
@@ -37,15 +37,13 @@ namespace mpllibs
     namespace impl
     {
       template <class T>
-      struct to_stream_using_name_of_class
+      struct to_stream_using_to_stream
       {
-        typedef to_stream_using_name_of_class type;
+        typedef to_stream_using_to_stream type;
         
-        static std::ostream& run(std::ostream& o_)
+        static std::ostream& run(std::ostream& o)
         {
-          // I use run instead of value(), to avoid issues with
-          // static initialisation
-          return o_ << T::name_of_class::run();
+          return T::to_stream::run(o);
         }
       };
 
@@ -61,8 +59,8 @@ namespace mpllibs
     template <class T>
     struct to_stream :
       boost::mpl::if_<
-        typename has_name_of_class<T>::type,
-        mpllibs::metatest::impl::to_stream_using_name_of_class<T>,
+        typename has_to_stream<T>::type,
+        mpllibs::metatest::impl::to_stream_using_to_stream<T>,
         mpllibs::metatest::impl::to_stream_using_tag<T>
       >::type
     {};

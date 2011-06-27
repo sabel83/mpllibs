@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-// I use a template class to avoid linking issues
+#include <iostream>
 
 #ifdef MPLLIBS_DEFINE_META_ATOM
   #error MPLLIBS_DEFINE_META_ATOM already defined
@@ -17,11 +17,11 @@
     typedef name type; \
     typedef tag_type tag; \
     \
-    struct name_of_class \
+    struct to_stream \
     { \
-      static const char* run() \
+      static std::ostream& run(std::ostream& o) \
       { \
-        return #name; \
+        return o << #name; \
       } \
     }; \
   }
