@@ -41,12 +41,12 @@ struct class_with_name_of_class
 {
   struct name_of_class
   {
-    static const char* value;
+    static const char* run()
+    {
+      return "this is a class with name_of_class";
+    }
   };
 };
-
-const char* class_with_name_of_class::name_of_class::value =
-  "this is a class with name_of_class";
 
 int main()
 {

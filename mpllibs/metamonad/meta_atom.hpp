@@ -14,20 +14,17 @@
 #define MPLLIBS_DEFINE_META_ATOM(tag_type, name) \
   struct name \
   { \
-  private: \
-    template <class> \
-    struct name_of_class_impl \
-    { \
-      static const char* value; \
-    }; \
-  public: \
     typedef name type; \
     typedef tag_type tag; \
-    typedef name_of_class_impl<int> name_of_class; \
-  }; \
-  \
-  template <class T> \
-  const char* name::name_of_class_impl<T>::value = #name
+    \
+    struct name_of_class \
+    { \
+      static const char* run() \
+      { \
+        return #name; \
+      } \
+    }; \
+  }
 
 #endif
 

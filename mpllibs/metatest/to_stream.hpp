@@ -43,7 +43,9 @@ namespace mpllibs
         
         static std::ostream& run(std::ostream& o_)
         {
-          return o_ << T::name_of_class::value;
+          // I use run instead of value(), to avoid issues with
+          // static initialisation
+          return o_ << T::name_of_class::run();
         }
       };
 

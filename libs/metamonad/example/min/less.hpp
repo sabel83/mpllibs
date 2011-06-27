@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/throw.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 struct non_comparable_tag
 {

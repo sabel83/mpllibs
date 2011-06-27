@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/exception.hpp>
+#include <mpllibs/metamonad/exception_core.hpp>
 
 #ifdef MPLLIBS_THROW
   #error MPLLIBS_THROW already defined

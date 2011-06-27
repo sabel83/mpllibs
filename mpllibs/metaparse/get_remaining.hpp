@@ -6,32 +6,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
-#include <boost/mpl/tag.hpp>
-
-#include <iostream>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    template <class P>
-    struct get_remaining_impl;
-    
-    template <class P>
-    struct get_remaining :
-      get_remaining_impl<typename boost::mpl::tag<typename P::type>::type>::
-        template apply<typename P::type>
-    {};
+    MPLLIBS_DEFINE_METAFUNCTION(get_remaining, 1);
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metaparse::get_remaining,
-  "get_remaining"
-);
 
 #endif
 

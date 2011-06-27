@@ -6,8 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -24,33 +24,6 @@
 
 namespace mpllibs
 {
-  namespace metamonad
-  {
-    MPLLIBS_DEFINE_TAG(exception_tag);
-  
-    template <class Data>
-    struct exception
-    {
-      typedef exception_tag tag;
-      typedef exception type;
-
-      typedef Data data;
-    };
-    
-    template <class>
-    struct get_data_impl;
-    
-    template <>
-    struct get_data_impl<exception_tag>
-    {
-      template <class E>
-      struct apply
-      {
-        typedef typename E::data type;
-      };
-    };
-  }
-  
   namespace metatest
   {
     template <>
@@ -71,9 +44,19 @@ namespace mpllibs
       };
     };
   }
-  
+
   namespace metamonad
   {
+    template <>
+    struct get_data_impl<exception_tag>
+    {
+      template <class E>
+      struct apply
+      {
+        typedef typename E::data type;
+      };
+    };
+
     /*
      * The Exception monad
      * This is modeled along the Either monad of Haskell
