@@ -628,7 +628,14 @@ link:get_data.html[get_data] +
 link:MPLLIBS_THROW.html[MPLLIBS_THROW] +
 link:MPLLIBS_TRY.html[MPLLIBS_TRY] +
 
+Tags +
+link:tag_tag.html[tag_tag] +
+link:overloading_error_tag.html[overloading_error_tag] +
 
+Convenience functions and macros +
+link:MPLLIBS_DEFINE_TAG.html[MPLLIBS_DEFINE_TAG] +
+link:MPLLIBS_DEFINE_META_ATOM.html[MPLLIBS_DEFINE_META_ATOM] +
+link:MPLLIBS_DEFINE_METAFUNCTION.html[MPLLIBS_DEFINE_METAFUNCTION] +
 
 include::copyright[]
 
