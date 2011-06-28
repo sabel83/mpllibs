@@ -29,15 +29,18 @@ namespace mpllibs
             typename boost::mpl::front<typename Seq::type>::type
           >
         {};
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o)
+          {
+            return o << "con_seq";
+          }
+        };
       };
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::util::cons_seq,
-  "cons_seq"
-);
 
 #endif
 

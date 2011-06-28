@@ -10,7 +10,7 @@
 #include <mpllibs/metaparse/any.hpp>
 #include <mpllibs/metaparse/first_of.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/void.hpp>
 
@@ -19,11 +19,20 @@ namespace mpllibs
   namespace metaparse
   {
     template <class P>
-    struct token : first_of<P, any<space> > {};
+    struct token : first_of<P, any<space> >
+    {
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "token<";
+          mpllibs::metatest::to_stream_argument_list<P>::run(o);
+          return o << ">";
+        }
+      };
+    };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::token, "token");
 
 #endif
 

@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -21,6 +21,7 @@
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
 #include <boost/preprocessor/repeat_from_to.hpp>
+#include <boost/preprocessor/repetition/enum_params.hpp>
 
 namespace mpllibs
 {
@@ -89,7 +90,18 @@ namespace mpllibs
 
     
       template <class T>
-      struct curry0 : T {};
+      struct curry0 : T
+      {
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o)
+          {
+            o << "curry0<";
+            mpllibs::metatest::to_stream<T>::run(o);
+            return o << ">";
+          }
+        };
+      };
 
       #ifdef MPLLIBS_CLASS_REPEAT
         #error MPLLIBS_CLASS_REPEAT already defined
@@ -109,35 +121,21 @@ namespace mpllibs
             boost::mpl::int_<n>, \
             boost::mpl::deque<> \
           >::type \
-          {};
+        { \
+          struct to_stream \
+          { \
+            static std::ostream& run(std::ostream& o) \
+            { \
+              return o << "curry" << n << "<?" "??" ">"; \
+            } \
+          }; \
+        };
     
       BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_CURRY_MAX_ARGUMENT, MPLLIBS_CURRY, ~)
     
       #undef MPLLIBS_CURRY
       #undef MPLLIBS_CLASS_REPEAT
     }
-  }
-
-  namespace metatest
-  {
-    #ifdef MPLLIBS_CURRY
-      #error MPLLIBS_CURRY already defined
-    #endif
-    #define MPLLIBS_CURRY(z, n, unused) \
-      template <template <BOOST_PP_ENUM_PARAMS(n, class A)> class T> \
-      struct to_stream<mpllibs::metaparse::util::curry##n<T> > \
-      { \
-        typedef to_stream type; \
-        \
-        static std::ostream& run(std::ostream& o_) \
-        { \
-          o_ << "curry" << n << "<" "???" ">"; \
-        } \
-      };
-      
-    BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_CURRY_MAX_ARGUMENT, MPLLIBS_CURRY, ~)
-    
-    #undef MPLLIBS_CURRY
   }
 }
 

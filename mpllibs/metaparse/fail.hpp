@@ -6,7 +6,9 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metaparse/error.hpp>
+
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <mpllibs/metamonad/tag_tag.hpp>
 
@@ -16,8 +18,6 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(error_tag);
-    
     template <class Msg>
     struct fail
     {
@@ -31,6 +31,16 @@ namespace mpllibs
 
         typedef Pos source_position;
         typedef Msg message;
+      };
+
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "fail<";
+          mpllibs::metatest::to_stream_argument_list<Msg>::run(o);
+          return o << ">";
+        }
       };
     };
   }
@@ -57,8 +67,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::fail, "fail");
 
 #endif
 

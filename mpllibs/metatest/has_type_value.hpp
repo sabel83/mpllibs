@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
+
 #include <mpllibs/metatest/has_value.hpp>
 #include <mpllibs/metatest/get_type.hpp>
 
@@ -16,7 +18,17 @@ namespace mpllibs
     template <class T, class ValueType>
     struct has_type_value :
       has_value<typename get_type<T, int>::type, ValueType>
-    {};
+    {
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "has_type_value<";
+          to_stream_argument_list<T, ValueType>::run(o);
+          return o << ">";
+        }
+      };
+    };
   }
 }
 

@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/return_.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -23,10 +24,7 @@ using mpllibs::metamonad::return_;
 
 namespace
 {
-  struct test_tag
-  {
-    typedef test_tag type;
-  };
+  MPLLIBS_DEFINE_TAG(test_tag);
 }
 
 namespace mpllibs

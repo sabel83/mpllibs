@@ -88,7 +88,9 @@ namespace
   }
 }
 
-boost::unit_test::test_suite* mpllibs::metatest::build_metatest_test_suite(const string& name_)
+boost::unit_test::test_suite* mpllibs::metatest::build_metatest_test_suite(
+  const string& name_
+)
 {
   return ::build_metatest_test_suite(name_, test_driver::instance().suite());
 }

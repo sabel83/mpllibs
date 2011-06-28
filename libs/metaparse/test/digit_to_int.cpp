@@ -19,7 +19,7 @@ using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
 
 using mpllibs::metaparse::util::digit_to_int;
-using mpllibs::metaparse::util::invalid_digit_tag;
+using mpllibs::metaparse::error_tag;
 
 using boost::mpl::equal_to;
 using boost::mpl::apply_wrap1;
@@ -41,7 +41,7 @@ namespace
       MPLLIBS_TRY<
         apply_wrap1<digit_to_int, char_x>
       >
-      ::catch_<invalid_digit_tag, x>::apply<int13>
+      ::catch_<error_tag, x>::apply<int13>
       ::type,
       int13
     >

@@ -24,12 +24,18 @@ namespace mpllibs
         struct apply :
           boost::mpl::push_front<typename P::second, typename P::first>
         {};
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o)
+          {
+            return o << "cons";
+          }
+        };
       };
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::util::cons, "cons");
 
 #endif
 

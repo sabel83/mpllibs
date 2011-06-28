@@ -10,7 +10,7 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/char.hpp>
 
 namespace mpllibs
 {
@@ -19,10 +19,7 @@ namespace mpllibs
     namespace util
     {
       typedef
-        in_range<
-          boost::mpl::integral_c<char, '0'>,
-          boost::mpl::integral_c<char, '9'>
-        >
+        in_range<boost::mpl::char_<'0'>, boost::mpl::char_<'9'> >
         is_digit;
     }
   }

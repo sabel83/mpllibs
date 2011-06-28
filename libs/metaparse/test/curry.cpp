@@ -9,6 +9,7 @@
 
 #include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -31,10 +32,32 @@ namespace
   const suite_path suite = suite_path("util")("curry");
   
   template <class A, class B>
-  struct get_first : identity<A> {};
+  struct get_first : identity<A>
+  {
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        o << "get_first<";
+        mpllibs::metatest::to_stream_argument_list<A, B>::run(o);
+        return o << ">";
+      }
+    };
+  };
   
   template <class A, class B>
-  struct get_second : identity<B> {};
+  struct get_second : identity<B>
+  {
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        o << "get_second<";
+        mpllibs::metatest::to_stream_argument_list<A, B>::run(o);
+        return o << ">";
+      }
+    };
+  };
   
   typedef identity<int13> nullary_metafunction;
   

@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/has_xxx.hpp>
 
 namespace mpllibs
@@ -15,6 +17,12 @@ namespace mpllibs
     BOOST_MPL_HAS_XXX_TRAIT_DEF(type)
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  1,
+  mpllibs::metatest::has_type,
+  "has_type"
+);
 
 #endif
 

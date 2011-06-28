@@ -11,10 +11,9 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/get_prev_char.hpp>
+#include <mpllibs/metaparse/error.hpp>
 
-#include <mpllibs/metaparse/util/define_data.hpp>
-
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -25,6 +24,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
+#include <boost/mpl/char.hpp>
 
 namespace mpllibs
 {
@@ -32,7 +32,10 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_METAPARSE_DEFINE_DATA(unexpected_end_of_input);
+      MPLLIBS_DEFINE_META_ATOM(
+        mpllibs::metaparse::error_tag,
+        unexpected_end_of_input
+      );
     }
     
     struct one_char
@@ -43,17 +46,17 @@ namespace mpllibs
         boost::mpl::eval_if<
           typename boost::mpl::or_<
             typename boost::mpl::equal_to<
-              boost::mpl::integral_c<char, '\r'>,
+              boost::mpl::char_<'\r'>,
               typename C::type
             >::type,
             typename boost::mpl::and_<
               typename boost::mpl::equal_to<
-                boost::mpl::integral_c<char, '\n'>,
+                boost::mpl::char_<'\n'>,
                 typename C::type
               >::type,
               typename boost::mpl::not_<
                 typename boost::mpl::equal_to<
-                  boost::mpl::integral_c<char, '\r'>,
+                  boost::mpl::char_<'\r'>,
                   typename get_prev_char<Pos>::type
                 >::type
               >
@@ -84,16 +87,18 @@ namespace mpllibs
           >
         >
       {};
+
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "one_char";
+        }
+      };
     };
   }
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::errors::unexpected_end_of_input,
-  "Unexpected end of input"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::one_char, "one_char");
-
 #endif
+
 

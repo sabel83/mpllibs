@@ -9,8 +9,6 @@
 #include <mpllibs/safe_printf/pop_expected.hpp>
 #include <mpllibs/safe_printf/verify_argument.hpp>
 
-#include <mpllibs/metaparse/util/lazy_eval_if.hpp>
-
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -23,27 +21,40 @@ namespace mpllibs
   {
     // Lazy function
     template <class Expected, class Actual>
-    struct verify_printf_arguments_impl :
-      boost::mpl::eval_if<
-        typename boost::mpl::empty<typename Expected::type>::type,
-        boost::mpl::empty<typename Actual::type>,
+    struct verify_printf_arguments_impl
+    {
+    private:
+      typedef typename Expected::type ExpectedValue;
+      typedef typename Actual::type ActualValue;
+    
+      template <class E, class A>
+      struct nonempty :
         boost::mpl::eval_if<
-          typename boost::mpl::empty<typename Actual::type>::type,
-          boost::mpl::false_,
-          mpllibs::metaparse::util::lazy_eval_if<
-            verify_argument<
-              boost::mpl::front<typename Expected::type>,
-              boost::mpl::front<typename Actual::type>
-            >,
-            verify_printf_arguments_impl<
-              pop_expected<typename Expected::type>,
-              boost::mpl::pop_front<typename Actual::type>
-            >,
-            boost::mpl::false_
-          >
+          typename verify_argument<
+            boost::mpl::front<E>,
+            boost::mpl::front<A>
+          >::type,
+          verify_printf_arguments_impl<
+            pop_expected<E>,
+            boost::mpl::pop_front<A>
+          >,
+          boost::mpl::false_
         >
-      >
-    {};
+      {};
+
+    public:
+      typedef
+        typename boost::mpl::eval_if<
+          typename boost::mpl::empty<ExpectedValue>::type,
+          boost::mpl::empty<ActualValue>,
+          boost::mpl::eval_if<
+            typename boost::mpl::empty<ActualValue>::type,
+            boost::mpl::false_,
+            nonempty<ExpectedValue, ActualValue>
+          >
+        >::type
+        type;
+    };
   }
 }
 

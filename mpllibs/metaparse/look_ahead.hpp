@@ -10,7 +10,7 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -37,15 +37,19 @@ namespace mpllibs
           >
         >
       {};
+
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "look_ahead<";
+          mpllibs::metatest::to_stream_argument_list<P>::run(o);
+          return o << ">";
+        }
+      };
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metaparse::look_ahead,
-  "look_ahead"
-);
 
 #endif
 

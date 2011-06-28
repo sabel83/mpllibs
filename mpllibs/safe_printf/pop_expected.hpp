@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
+
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/back.hpp>
@@ -51,7 +53,17 @@ namespace mpllibs
           boost::mpl::pop_front<Expected>
         >
       >
-    {};
+    {
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "pop_expected<";
+          mpllibs::metatest::to_stream_argument_list<Expected>::run(o);
+          return o << ">";
+        }
+      };
+    };
   }
 }
 

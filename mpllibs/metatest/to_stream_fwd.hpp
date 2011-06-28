@@ -110,5 +110,11 @@ namespace mpllibs
     (2, (t, name))\
   )
 
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  1,
+  mpllibs::metatest::to_stream,
+  "to_stream"
+);
+
 #endif
 

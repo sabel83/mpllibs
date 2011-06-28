@@ -58,7 +58,7 @@ Example
 -------
 
 --------------------------------------
-typedef lit<boost::mpl::integral_c<char, 'a'> > accept_a;
+typedef lit<boost::mpl::char_<'a'> > accept_a;
 --------------------------------------
 
 include::copyright[]

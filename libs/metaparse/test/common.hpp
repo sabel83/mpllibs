@@ -11,7 +11,7 @@
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/list_c.hpp>
-#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/char.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/at.hpp>
@@ -35,24 +35,24 @@ typedef boost::mpl::list_c<char, 'h', 'e', 'l', '0', 'o'> chars3;
 typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', '0'> chars4;
 typedef boost::mpl::list_c<char, 'h', 'e', 'l', 'l', 'o'> chars5;
 
-typedef boost::mpl::integral_c<char, '0'> char_0;
-typedef boost::mpl::integral_c<char, '1'> char_1;
-typedef boost::mpl::integral_c<char, '7'> char_7;
-typedef boost::mpl::integral_c<char, '9'> char_9;
-typedef boost::mpl::integral_c<char, 'a'> char_a;
-typedef boost::mpl::integral_c<char, 'b'> char_b;
-typedef boost::mpl::integral_c<char, 'e'> char_e;
-typedef boost::mpl::integral_c<char, 'h'> char_h;
-typedef boost::mpl::integral_c<char, 'k'> char_k;
-typedef boost::mpl::integral_c<char, 'K'> char_K;
-typedef boost::mpl::integral_c<char, 'l'> char_l;
-typedef boost::mpl::integral_c<char, 'o'> char_o;
-typedef boost::mpl::integral_c<char, 'x'> char_x;
+typedef boost::mpl::char_<'0'> char_0;
+typedef boost::mpl::char_<'1'> char_1;
+typedef boost::mpl::char_<'7'> char_7;
+typedef boost::mpl::char_<'9'> char_9;
+typedef boost::mpl::char_<'a'> char_a;
+typedef boost::mpl::char_<'b'> char_b;
+typedef boost::mpl::char_<'e'> char_e;
+typedef boost::mpl::char_<'h'> char_h;
+typedef boost::mpl::char_<'k'> char_k;
+typedef boost::mpl::char_<'K'> char_K;
+typedef boost::mpl::char_<'l'> char_l;
+typedef boost::mpl::char_<'o'> char_o;
+typedef boost::mpl::char_<'x'> char_x;
 
-typedef boost::mpl::integral_c<char, ' '> char_space;
-typedef boost::mpl::integral_c<char, '\t'> char_tab;
-typedef boost::mpl::integral_c<char, '\n'> char_new_line;
-typedef boost::mpl::integral_c<char, '\r'> char_cret;
+typedef boost::mpl::char_<' '> char_space;
+typedef boost::mpl::char_<'\t'> char_tab;
+typedef boost::mpl::char_<'\n'> char_new_line;
+typedef boost::mpl::char_<'\r'> char_cret;
 
 typedef boost::mpl::int_<0> int0;
 typedef boost::mpl::int_<1> int1;

@@ -11,7 +11,7 @@
 #include <mpllibs/metaparse/get_remaining.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -44,11 +44,19 @@ namespace mpllibs
           apply_unchecked<boost::mpl::apply<P, S, Pos> >
         >
       {};
+      
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "always<";
+          mpllibs::metatest::to_stream_argument_list<P, Result>::run(o);
+          return o << ">";
+        }
+      };
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, mpllibs::metaparse::always, "always");
 
 #endif
 

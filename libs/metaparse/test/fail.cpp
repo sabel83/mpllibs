@@ -7,7 +7,7 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/source_position.hpp>
 
-#include <mpllibs/metaparse/util/define_data.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include "common.hpp"
 
@@ -23,6 +23,7 @@ using mpllibs::metatest::has_type;
 using mpllibs::metaparse::is_error;
 using mpllibs::metaparse::fail;
 using mpllibs::metaparse::start;
+using mpllibs::metaparse::error_tag;
 
 using boost::mpl::apply_wrap2;
 
@@ -30,7 +31,7 @@ namespace
 {
   const suite_path suite("fail");
 
-  MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
+  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error);
 
   typedef has_type<fail<test_error> > test_has_type;
 

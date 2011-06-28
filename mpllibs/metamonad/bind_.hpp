@@ -28,11 +28,21 @@ namespace mpllibs
 
     // bind_ evaluates its arguments lazily
     template <class MonadTag, class A, class B>
-    struct bind_ : boost::mpl::apply_wrap2<bind__impl<MonadTag>, A, B> {};
+    struct bind_ :
+      boost::mpl::apply_wrap2<bind__impl<MonadTag>, A, B>
+    {
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "bind_<";
+          mpllibs::metatest::to_stream_argument_list<MonadTag, A, B>::run(o);
+          return o << ">";
+        }
+      };
+    };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metamonad::bind_, "bind_");
 
 #endif
 

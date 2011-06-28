@@ -8,7 +8,7 @@
 
 #include <boost/mpl/equal_to.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 namespace mpllibs
 {
@@ -23,16 +23,20 @@ namespace mpllibs
         
         template <class S>
         struct apply : boost::mpl::equal_to<C, S> {};
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o)
+          {
+            o << "is_char<";
+            mpllibs::metatest::to_stream_argument_list<C>::run(o);
+            return o << ">";
+          }
+        };
       };
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metaparse::util::is_char,
-  "is_char"
-)
 
 #endif
 

@@ -9,7 +9,7 @@
 #include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/tag.hpp>
@@ -34,12 +34,13 @@ namespace mpllibs
       {
         typedef apply type;
       
-        static std::ostream& run(std::ostream& o_)
+        static std::ostream& run(std::ostream& o)
         {
           using mpllibs::metamonad::get_data;
-
-          typedef typename get_data<E>::type edata;
-          return to_stream<edata>::run(o_ << "exception<") << ">";
+          
+          o << "exception<";
+          to_stream_argument_list<typename get_data<E>::type>::run(o);
+          return o << ">";
         }
       };
     };

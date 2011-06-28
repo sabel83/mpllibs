@@ -19,7 +19,8 @@
 #include <mpllibs/metaparse/one_char.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 
-#include <mpllibs/metaparse/util/define_data.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
 
 namespace mpllibs
 {
@@ -27,12 +28,13 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_METAPARSE_DEFINE_DATA(no_percentage_char_expected);
+      MPLLIBS_DEFINE_TAG(printf_error_tag);
+      MPLLIBS_DEFINE_META_ATOM(printf_error_tag, no_percentage_char_expected);
     }
   
     namespace grammar
     {
-      struct normal_chars :
+      typedef
         mpllibs::metaparse::any<
           mpllibs::metaparse::last_of<
             mpllibs::metaparse::except<
@@ -43,9 +45,9 @@ namespace mpllibs
             mpllibs::metaparse::one_char
           >
         >
-      {};
+        normal_chars;
 
-      struct flag :
+      typedef
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::lit_c<'-'>,
           mpllibs::metaparse::lit_c<'+'>,
@@ -53,12 +55,12 @@ namespace mpllibs
           mpllibs::metaparse::lit_c<'#'>,
           mpllibs::metaparse::lit_c<'0'>
         >
-      {};
+        flag;
 
-      struct integer : mpllibs::metaparse::any1<mpllibs::metaparse::digit> {};
+      typedef mpllibs::metaparse::any1<mpllibs::metaparse::digit> integer;
     
       // Returns true_ or false_
-      struct width :
+      typedef
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::always<integer, boost::mpl::false_>,
           mpllibs::metaparse::always<
@@ -67,17 +69,17 @@ namespace mpllibs
           >,
           mpllibs::metaparse::return_<boost::mpl::false_>
         >
-      {};
+        width;
 
       // Returns true_ or false_
-      struct precision :
+      typedef
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::last_of<mpllibs::metaparse::lit_c<'.'>, width>,
           mpllibs::metaparse::return_<boost::mpl::false_>
         >
-      {};
+        precision;
 
-      struct format_no_flag :
+      typedef
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'c'>,
@@ -144,9 +146,9 @@ namespace mpllibs
             expect_nothing
           >
         >
-      {};
+        format_no_flag;
 
-      struct format_h_flag :
+      typedef
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'d'>,
@@ -173,9 +175,9 @@ namespace mpllibs
             expect_short_unsigned_integer
           >
         >
-      {};
+        format_h_flag;
 
-      struct format_l_flag :
+      typedef
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'c'>,
@@ -210,9 +212,9 @@ namespace mpllibs
             expect_long_unsigned_integer
           >
         >
-      {};
+        format_l_flag;
 
-      struct format_capital_l_flag :
+      typedef
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::always<
             mpllibs::metaparse::lit_c<'e'>,
@@ -235,9 +237,9 @@ namespace mpllibs
             expect_long_double
           >
         >
-      {};
+        format_capital_l_flag;
 
-      struct format :
+      typedef
         mpllibs::metaparse::one_of<
           mpllibs::metaparse::last_of<
             mpllibs::metaparse::lit_c<'h'>,
@@ -253,25 +255,25 @@ namespace mpllibs
           >,
           format_no_flag
         >
-      {};
+        format;
 
       // returns deque<defined extra int, defined extra int, format>
-      struct parameter :
+      typedef
         mpllibs::metaparse::last_of<
           mpllibs::metaparse::lit_c<'%'>,
           mpllibs::metaparse::any<flag>,
           mpllibs::metaparse::sequence<width, precision, format>
         >
-      {};
+        parameter;
 
-      struct S :
+      typedef
         mpllibs::metaparse::last_of<
           normal_chars,
           mpllibs::metaparse::any<
             mpllibs::metaparse::first_of<parameter, normal_chars>
           >
         >
-      {};
+        S;
     }
   }
 }

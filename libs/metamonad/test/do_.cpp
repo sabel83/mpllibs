@@ -4,8 +4,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -23,10 +25,7 @@ using mpllibs::metatest::suite_path;
  */
 namespace
 {
-  struct wrapper_tag
-  {
-    typedef wrapper_tag type;
-  };
+  MPLLIBS_DEFINE_TAG(wrapper_tag);
 
   typedef wrapper_tag wrapper_monad;
 
@@ -36,6 +35,16 @@ namespace
     typedef wrapper_tag tag;
     typedef T value;
     typedef wrapped type;
+    
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        o << "wrapped<";
+        mpllibs::metatest::to_stream_argument_list<T>::run(o);
+        return o << ">";
+      }
+    };    
   };
 }
 
@@ -78,12 +87,32 @@ namespace
   const suite_path suite("do_");
   
   template <class A>
-  struct minus_2 :
-    right<typename minus<typename A::value, int2>::type>
-  {};
+  struct minus_2 : right<typename minus<typename A::value, int2>::type>
+  {
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        o << "minus_2<";
+        mpllibs::metatest::to_stream_argument_list<A>::run(o);
+        return o << ">";
+      }
+    };    
+  };
   
   template <class T>
-  struct eval_to_right : right<typename T::type> {};
+  struct eval_to_right : right<typename T::type>
+  {
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        o << "eval_to_right<";
+        mpllibs::metatest::to_stream_argument_list<T>::run(o);
+        return o << ">";
+      }
+    };    
+  };
 
   typedef
     equal_to<

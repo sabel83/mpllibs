@@ -9,6 +9,7 @@
 
 #include <mpllibs/metatest/debug.hpp>
 #include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -37,7 +38,17 @@ struct safe_divides :
       MPLLIBS_RETURN<divides<A, B> >
     >
   >
-{};
+{
+  struct to_stream
+  {
+    static std::ostream& run(std::ostream& o)
+    {
+      o << "safe_divides";
+      mpllibs::metatest::to_stream_argument_list<A, B>::run(o);
+      return o << ">";
+    }
+  };
+};
 
 
 debug<safe_divides<int13, int0> > d;

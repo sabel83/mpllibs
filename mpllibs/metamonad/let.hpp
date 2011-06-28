@@ -8,7 +8,7 @@
 
 #include <mpllibs/metamonad/util/id.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
@@ -22,7 +22,18 @@ namespace mpllibs
     struct let_impl;
 
     template <class A, class E1, class E2>
-    struct let : let_impl<A, E1, E2> {};
+    struct let : let_impl<A, E1, E2>
+    {
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "let<";
+          mpllibs::metatest::to_stream_argument_list<A, E1, E2>::run(o);
+          return o << ">";
+        }
+      };
+    };
 
     template <class A, class E1>
     struct let<A, E1, A> : mpllibs::metamonad::util::id<E1> {};
@@ -89,8 +100,6 @@ namespace mpllibs
     #undef MPLLIBS_LET_REC_CASE
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metamonad::let, "let");
 
 #endif
 

@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
@@ -79,13 +79,11 @@ namespace mpllibs
     
 
 
-      struct unused_composed_argument;
-    
       template <
         BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
           MPLLIBS_COMPOSE_MAX_ARGUMENT,
           class F,
-          unused_composed_argument
+          boost::mpl::na
         )
       >
       struct compose;
@@ -94,7 +92,7 @@ namespace mpllibs
         #error MPLLIBS_COMPOSE_UNUSED_PARAM already defined
       #endif
       #define MPLLIBS_COMPOSE_UNUSED_PARAM(z, n, unused) \
-        BOOST_PP_COMMA_IF(n) unused_composed_argument
+        BOOST_PP_COMMA_IF(n) boost::mpl::na
 
       template <>
       struct compose<
@@ -125,9 +123,20 @@ namespace mpllibs
             MPLLIBS_COMPOSE_UNUSED_PARAM, \
             ~ \
           ) \
-        > : \
-          compose##n<BOOST_PP_ENUM_PARAMS(n, F)> \
-        {};
+        > : compose##n<BOOST_PP_ENUM_PARAMS(n, F)> \
+        { \
+          struct to_stream \
+          { \
+            static std::ostream& run(std::ostream& o) \
+            { \
+              o << "compose<"; \
+              mpllibs::metatest::to_stream_argument_list< \
+                BOOST_PP_ENUM_PARAMS(n, F) \
+              >::run(o); \
+              return o << ">"; \
+            } \
+          }; \
+        };
     
       BOOST_PP_REPEAT_FROM_TO(
         1,
@@ -143,13 +152,6 @@ namespace mpllibs
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  0,
-  MPLLIBS_COMPOSE_MAX_ARGUMENT,
-  mpllibs::metaparse::util::compose,
-  "compose"
-);
 
 #endif
 

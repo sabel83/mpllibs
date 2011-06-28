@@ -6,6 +6,7 @@
 #include <mpllibs/metaparse/foldr.hpp>
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/push_front.hpp>
@@ -25,7 +26,18 @@ namespace
   const suite_path suite("foldr");
   
   template <class P>
-  struct any : foldr<P, list<>, push_front<_2, _1> > {};
+  struct any : foldr<P, list<>, push_front<_2, _1> >
+  {
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        o << "foldr__any<";
+        mpllibs::metatest::to_stream_argument_list<P>::run(o);
+        return o << ">";
+      }
+    };
+  };
 }
 
 #include "any_test.hpp"  

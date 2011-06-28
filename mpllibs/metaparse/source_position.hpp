@@ -11,8 +11,10 @@
 
 #include <mpllibs/metamonad/tag_tag.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/int.hpp>
-#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/char.hpp>
 #include <boost/mpl/plus.hpp>
 
 #include <iostream>
@@ -38,7 +40,7 @@ namespace mpllibs
       source_position<
         boost::mpl::int_<1>,
         boost::mpl::int_<1>,
-        boost::mpl::integral_c<char, 0>
+        boost::mpl::char_<0>
       >
       start;
 

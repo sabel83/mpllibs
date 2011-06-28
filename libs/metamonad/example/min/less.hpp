@@ -7,20 +7,14 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal_to.hpp>
 
-struct non_comparable_tag
-{
-  typedef non_comparable_tag type;
-};
-
-struct non_comparable
-{
-  typedef non_comparable_tag tag;
-  typedef non_comparable type;
-};
+MPLLIBS_DEFINE_TAG(non_comparable_tag);
+MPLLIBS_DEFINE_META_ATOM(non_comparable_tag, non_comparable);
 
 namespace boost
 {

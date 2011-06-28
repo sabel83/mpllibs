@@ -11,7 +11,8 @@
 #include "common.hpp"
 
 #include <mpllibs/metaparse/util/is_digit.hpp>
-#include <mpllibs/metaparse/util/define_data.hpp>
+
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
@@ -27,6 +28,7 @@ using mpllibs::metaparse::accept_when;
 using mpllibs::metaparse::one_char;
 using mpllibs::metaparse::start;
 using mpllibs::metaparse::get_result;
+using mpllibs::metaparse::error_tag;
 
 using mpllibs::metaparse::util::is_digit;
 
@@ -38,7 +40,7 @@ namespace
 {
   const suite_path suite("accept_when");
 
-  MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
+  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error);
 
   typedef has_type<accept_when<one_char, is_digit, test_error> > test_has_type;
 

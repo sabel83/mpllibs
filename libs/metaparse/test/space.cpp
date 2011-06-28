@@ -15,6 +15,7 @@
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/char.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -27,7 +28,7 @@ using mpllibs::metaparse::get_result;
 using boost::mpl::list_c;
 using boost::mpl::apply_wrap2;
 using boost::mpl::equal_to;
-using boost::mpl::integral_c;
+using boost::mpl::char_;
 
 namespace
 {
@@ -44,28 +45,28 @@ namespace
   typedef
     equal_to<
       get_result<apply_wrap2<space, str__ello, start> >::type,
-      integral_c<char, ' '>
+      char_<' '>
     >
     test_with_space;
 
   typedef
     equal_to<
       get_result<apply_wrap2<space, str_with_t, start> >::type,
-      integral_c<char, '\t'>
+      char_<'\t'>
     >
     test_with_tab;
 
   typedef
     equal_to<
       get_result<apply_wrap2<space, str_with_n, start> >::type,
-      integral_c<char, '\n'>
+      char_<'\n'>
     >
     test_with_line_feed;
 
   typedef
     equal_to<
       get_result<apply_wrap2<space, str_with_r, start> >::type,
-      integral_c<char, '\r'>
+      char_<'\r'>
     >
     test_with_c_return;
 

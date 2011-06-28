@@ -8,6 +8,9 @@
 
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
+
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/tag.hpp>
@@ -19,20 +22,9 @@ namespace
   /*
    * Either monad for testing
    */
-  struct either_tag
-  {
-    typedef either_tag type;
-  };
-  
-  struct left_tag
-  {
-    typedef left_tag type;
-  };
-  
-  struct right_tag
-  {
-    typedef right_tag type;
-  };
+  MPLLIBS_DEFINE_TAG(either_tag);
+  MPLLIBS_DEFINE_TAG(left_tag);
+  MPLLIBS_DEFINE_TAG(right_tag);
 
   typedef either_tag either;
   
@@ -42,6 +34,16 @@ namespace
     typedef left_tag tag;
     typedef T value;
     typedef left type;
+    
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        o << "left<";
+        mpllibs::metatest::to_stream_argument_list<T>::run(o);
+        return o << ">";
+      }
+    };
   };
   
   template <class T>
@@ -50,6 +52,16 @@ namespace
     typedef right_tag tag;
     typedef T value;
     typedef right type;
+    
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        o << "right<";
+        mpllibs::metatest::to_stream_argument_list<T>::run(o);
+        return o << ">";
+      }
+    };
   };
 }
 

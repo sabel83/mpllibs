@@ -8,9 +8,11 @@
 
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
+#include <mpllibs/metaparse/error.hpp>
 
-#include <mpllibs/metaparse/util/define_data.hpp>
 #include <mpllibs/metaparse/util/is_digit.hpp>
+
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -20,7 +22,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_METAPARSE_DEFINE_DATA(digit_expected);
+      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, digit_expected);
     }
   
     typedef
@@ -32,11 +34,6 @@ namespace mpllibs
       digit;
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::errors::digit_expected,
-  "Digit expected"
-)
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::digit, "digit");
 

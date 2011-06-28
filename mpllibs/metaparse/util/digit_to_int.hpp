@@ -6,34 +6,29 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/throw.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metaparse/error.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <boost/mpl/int.hpp>
-
-#include <boost/mpl/integral_c.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
+    namespace errors
+    {
+      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, invalid_digit);
+    }
+    
     namespace util
     {
-      MPLLIBS_DEFINE_TAG(invalid_digit_tag);
-      
-      struct invalid_digit
-      {
-        typedef invalid_digit type;
-        typedef invalid_digit_tag tag;
-      };
-      
       namespace impl
       {
         template <char C>
         struct digit_to_int :
-          MPLLIBS_THROW<mpllibs::metaparse::util::invalid_digit>
+          MPLLIBS_THROW<mpllibs::metaparse::errors::invalid_digit>
         {};
       }
 
@@ -45,6 +40,14 @@ namespace mpllibs
         struct apply :
           mpllibs::metaparse::util::impl::digit_to_int<D::type::value>
         {};
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o)
+          {
+            return o << "digit_to_int";
+          }
+        };
       };
     
       namespace impl
@@ -72,16 +75,6 @@ namespace mpllibs
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::util::digit_to_int,
-  "digit_to_int"
-);
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::util::invalid_digit,
-  "invalid_digit"
-);
 
 #endif
 

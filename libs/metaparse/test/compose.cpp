@@ -40,24 +40,56 @@ namespace
   {
     template <class T>
     struct apply : identity<T*> {};
+    
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        return o << "make_pointer";
+      }
+    };
   };
   
   struct incr
   {
     template <class T>
     struct apply : plus<int13, T> {};
+    
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        return o << "incr";
+      }
+    };
   };
 
   struct double_value
   {
     template <class T>
     struct apply : times<int2, T> {};
+    
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        return o << "double_value";
+      }
+    };
   };
 
   struct take_first
   {
     template <class A, class B>
     struct apply : identity<A> {};
+    
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        return o << "take_first";
+      }
+    };
   };
 
   typedef has_type<compose<make_pointer, make_pointer> > test_has_type;

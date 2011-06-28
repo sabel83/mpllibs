@@ -11,7 +11,7 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 
-#include <mpllibs/metaparse/util/define_data.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include "common.hpp"
 
@@ -34,6 +34,7 @@ using mpllibs::metaparse::start;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_char;
 using mpllibs::metaparse::keyword;
+using mpllibs::metaparse::error_tag;
 
 using boost::mpl::apply_wrap2;
 using boost::mpl::equal;
@@ -44,7 +45,7 @@ namespace
 {
   const suite_path suite("any_one_of1");
   
-  MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
+  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error);
   
   typedef has_type<any_one_of1<one_char> > test_has_type;
 

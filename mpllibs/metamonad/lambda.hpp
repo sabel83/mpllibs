@@ -8,7 +8,7 @@
 
 #include <mpllibs/metamonad/let.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 namespace mpllibs
 {
@@ -21,6 +21,16 @@ namespace mpllibs
 
       template <class T>
       struct apply : let<ArgName, T, F>::type {};
+      
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "lambda<";
+          mpllibs::metatest::to_stream_argument_list<ArgName, F>::run(o);
+          return o << ">";
+        }
+      };
     };
   }
 }

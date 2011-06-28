@@ -8,10 +8,11 @@
 
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
+#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metaparse/util/is_char.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 namespace mpllibs
 {
@@ -23,6 +24,15 @@ namespace mpllibs
       struct literal_expected
       {
         typedef literal_expected type;
+        typedef mpllibs::metaparse::error_tag tag;
+
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o)
+          {
+            return o << "'" << C::type::value << "' literal expected.";
+          }
+        };
       };
     }
   
@@ -33,25 +43,19 @@ namespace mpllibs
         mpllibs::metaparse::util::is_char<C>,
         mpllibs::metaparse::errors::literal_expected<C>
       >
-    {};
-  }
-  
-  namespace metatest
-  {
-    template <class C>
-    struct to_stream<mpllibs::metaparse::errors::literal_expected<C> >
     {
-      typedef to_stream type;
-      
-      static std::ostream& run(std::ostream& o_)
+      struct to_stream_impl
       {
-        return o_ << "'" << C::type::value << "' literal expected.";
-      }
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "lit<";
+          mpllibs::metatest::to_stream_argument_list<C>::run(o);
+          return o << ">";
+        }
+      };
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::lit, "lit");
 
 #endif
 

@@ -14,6 +14,7 @@
 
 using boost::mpl::equal_to;
 using boost::mpl::minus;
+using boost::mpl::eval_if;
 
 using mpllibs::metatest::suite_path;
 
@@ -84,7 +85,7 @@ namespace
         x,
         lambda<
           y,
-          lazy_eval_if<
+          eval_if<
             lazy_equal_to<y, int0>,
             int1,
             lazy_times<lazy_apply<x, minus<y, int1> >, y>

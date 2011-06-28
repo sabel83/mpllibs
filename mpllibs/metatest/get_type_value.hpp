@@ -11,6 +11,8 @@
 
 #include <boost/mpl/identity.hpp>
 
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
+
 namespace mpllibs
 {
   namespace metatest
@@ -21,7 +23,17 @@ namespace mpllibs
         typename get_type<T, boost::mpl::identity<Default> >::type,
         Default
       >
-    {};
+    {
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "get_type_value<";
+          to_stream_argument_list<T, Default>::run(o);
+          return o << ">";
+        }
+      };
+    };
   }
 }
 

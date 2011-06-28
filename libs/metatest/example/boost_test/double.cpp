@@ -5,6 +5,8 @@
 
 #include <mpllibs/metatest/test.hpp>
 
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
+
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -16,7 +18,18 @@ using boost::mpl::int_;
 
 // Metafunction to test
 template <class T>
-struct double_ : boost::mpl::times<T, boost::mpl::int_<2> > {};
+struct double_ : boost::mpl::times<T, boost::mpl::int_<2> >
+{
+  struct to_stream
+  {
+    static std::ostream& run(std::ostream& o)
+    {
+      o << "double_";
+      mpllibs::metatest::to_stream_argument_list<T>::run(o);
+      return o << ">";
+    }
+  };
+};
 
 namespace
 {

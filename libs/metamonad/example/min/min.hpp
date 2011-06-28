@@ -11,6 +11,8 @@
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/try_.hpp>
 
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
+
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
 
@@ -38,7 +40,17 @@ struct min :
     typename A::type,
     typename B::type
   >
-{};
+{
+  struct to_stream
+  {
+    static std::ostream& run(std::ostream& o)
+    {
+      o << "min<";
+      mpllibs::metatest::to_stream_argument_list<A, B>::run(o);
+      return o << ">";
+    }
+  };
+};
 
 #endif
 

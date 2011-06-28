@@ -12,6 +12,8 @@
 
 #include <mpllibs/metamonad/tag_tag.hpp>
 
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
+
 #include <iostream>
 
 namespace mpllibs
@@ -34,6 +36,16 @@ namespace mpllibs
         typedef C result;
         typedef S remaining;
         typedef Pos source_position;
+      };
+
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "return_<";
+          mpllibs::metatest::to_stream_argument_list<C>::run(o);
+          return o << ">";
+        }
       };
     };
     
@@ -105,12 +117,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metaparse::return_,
-  "metaparse::return_" // to avoid confusion with metamonad::return_
-);
 
 #endif
 

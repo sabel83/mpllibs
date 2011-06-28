@@ -22,13 +22,7 @@ link:is_lcase_letter.html[is_lcase_letter] +
 link:is_letter.html[is_letter] + 
 link:is_ucase_letter.html[is_ucase_letter] + 
 link:is_whitespace.html[is_whitespace] + 
-link:lazy_equal_to.html[lazy_equal_to] + 
-link:lazy_eval_if.html[lazy_eval_if] + 
 link:unless_error.html[unless_error] + 
-
-Macros defined by the library:
-
-link:DEFINE_DATA.html[MPLLIBS_METAPARSE_DEFINE_DATA] + 
 
 include::copyright[]
 

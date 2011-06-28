@@ -9,9 +9,9 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 
-#include <mpllibs/metaparse/util/define_data.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/not.hpp>
@@ -32,7 +32,10 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_METAPARSE_DEFINE_DATA(none_of_the_expected_cases_found);
+      MPLLIBS_DEFINE_META_ATOM(
+        mpllibs::metaparse::error_tag,
+        none_of_the_expected_cases_found
+      );
     }
   
     #ifdef MPLLIBS_ONE_OF_BODY_PREFIX
@@ -116,9 +119,20 @@ namespace mpllibs
           MPLLIBS_ONE_OF_UNUSED_PARAM, \
           ~ \
         ) \
-      > : \
-        one_of_##n<BOOST_PP_ENUM_PARAMS(n, P)> \
-      {};
+      > : one_of_##n<BOOST_PP_ENUM_PARAMS(n, P)> \
+      { \
+        struct to_stream \
+        { \
+          static std::ostream& run(std::ostream& o) \
+          { \
+            o << "one_of<"; \
+            mpllibs::metatest::to_stream_argument_list< \
+              BOOST_PP_ENUM_PARAMS(n, P) \
+            >::run(o); \
+            return o << ">"; \
+          } \
+        }; \
+      };
     
     BOOST_PP_REPEAT(MPLLIBS_ONE_OF_MAX_ARGUMENT, MPLLIBS_ONE_OF_CASE, ~)
     
@@ -126,18 +140,6 @@ namespace mpllibs
     #undef MPLLIBS_ONE_OF_UNUSED_PARAM
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::errors::none_of_the_expected_cases_found,
-  "None of the expected cases found"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  0,
-  MPLLIBS_ONE_OF_MAX_ARGUMENT,
-  mpllibs::metaparse::one_of,
-  "one_of"
-);
 
 #endif
 

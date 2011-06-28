@@ -8,10 +8,13 @@
 
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
+#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metaparse/util/is_whitespace.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
+
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 namespace mpllibs
 {
@@ -19,7 +22,10 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_METAPARSE_DEFINE_DATA(whitespace_expected);
+      MPLLIBS_DEFINE_META_ATOM(
+        mpllibs::metaparse::error_tag,
+        whitespace_expected
+      );
     }
   
     typedef
@@ -32,12 +38,8 @@ namespace mpllibs
   }
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::errors::whitespace_expected,
-  "Whitespace expected"
-)
-
 MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::space, "space");
 
 #endif
+
 

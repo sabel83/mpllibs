@@ -8,10 +8,11 @@
 
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/return.hpp>
+#include <mpllibs/metaparse/error.hpp>
 
-#include <mpllibs/metaparse/util/define_data.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -23,7 +24,10 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_METAPARSE_DEFINE_DATA(end_of_input_expected);
+      MPLLIBS_DEFINE_META_ATOM(
+        mpllibs::metaparse::error_tag,
+        end_of_input_expected
+      );
     }
     
     template <class Result>
@@ -43,16 +47,19 @@ namespace mpllibs
           Pos
         >
       {};
+
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "empty<";
+          mpllibs::metatest::to_stream_argument_list<Result>::run(o);
+          return o << ">";
+        }
+      };
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::errors::end_of_input_expected,
-  "End of input expected"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::empty, "empty");
 
 #endif
 

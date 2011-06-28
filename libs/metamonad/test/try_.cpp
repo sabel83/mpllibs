@@ -6,6 +6,8 @@
 #include <mpllibs/metamonad/try_.hpp>
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -31,28 +33,12 @@ namespace
 {
   const suite_path suite("try_");
   
-  struct tag1
-  {
-    typedef tag1 type;
-  };
+  MPLLIBS_DEFINE_TAG(tag1);
+  MPLLIBS_DEFINE_META_ATOM(tag1, e1);
   
-  struct e1
-  {
-    typedef tag1 tag;
-    typedef e1 type;
-  };
-  
-  struct tag2
-  {
-    typedef tag1 type;
-  };
-  
-  struct e2
-  {
-    typedef tag2 tag;
-    typedef e2 type;
-  };
-  
+  MPLLIBS_DEFINE_TAG(tag2);
+  MPLLIBS_DEFINE_META_ATOM(tag2, e2);
+
   typedef
     equal_to<
       int13,

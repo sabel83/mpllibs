@@ -64,7 +64,7 @@ Example
 --------------------------------------
 typedef
   mpllibs::metaparse::get_line<
-    next_line<mpllibs::metaparse::start, boost::mpl::integral_c<char, 'b'> >
+    next_line<mpllibs::metaparse::start, boost::mpl::char_<'b'> >
   >::type
   two;
 --------------------------------------

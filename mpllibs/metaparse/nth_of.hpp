@@ -11,7 +11,7 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -38,7 +38,19 @@ namespace mpllibs
       template <int From, int To, int N>
       struct index_out_of_range
       {
+        typedef mpllibs::metaparse::error_tag tag;
         typedef index_out_of_range type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o)
+          {
+            return
+              o
+                << "Index (" << N << ") out of range ["
+                << From << ", "<< To << "]";
+          }
+        };
       };
     }
   
@@ -211,7 +223,22 @@ namespace mpllibs
           K BOOST_PP_COMMA_IF(n) \
           BOOST_PP_ENUM_PARAMS(n, P) \
         > \
-      {};
+      { \
+        struct to_stream \
+        { \
+          static std::ostream& run(std::ostream& o) \
+          { \
+            o << "nth_of_c<" << K; \
+            if (n > 0) { \
+              o << ", "; \
+            } \
+            mpllibs::metatest::to_stream_argument_list< \
+              BOOST_PP_ENUM_PARAMS(n, P) \
+            >::run(o); \
+            return o << ">"; \
+          } \
+        }; \
+      };
     
     BOOST_PP_REPEAT(MPLLIBS_SEQUENCE_MAX_ARGUMENT, MPLLIBS_NTH_OF_N, ~)
     
@@ -235,66 +262,22 @@ namespace mpllibs
         K::type::value,
         BOOST_PP_ENUM_PARAMS(MPLLIBS_SEQUENCE_MAX_ARGUMENT, P)
       >
-    {};
-  }
-  
-  namespace metatest
-  {
-    template <int From, int To, int N>
-    struct to_stream<
-      mpllibs::metaparse::errors::index_out_of_range<From, To, N>
-    >
     {
-      typedef to_stream type;
-      
-      static std::ostream& run(std::ostream& o_)
+      struct to_stream
       {
-        return o_
-          << "Index (" << N << ") out of range [" << From << ", "<< To << "]";
-      }
-    };
-
-    #ifdef MPLLIBS_STREAM_N
-      #error MPLLIBS_STREAM_N already defined
-    #endif
-    #define MPLLIBS_STREAM_N(z, n, unused) \
-      to_stream<A##n>::run(o_ << ", ");
-
-    #ifdef MPLLIBS_NTH_OF_N
-      #error MPLLIBS_NTH_OF_N already defined
-    #endif
-    #define MPLLIBS_NTH_OF_N(z, n, unused) \
-      template <int K BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, class A)> \
-      struct to_stream< \
-        mpllibs::metaparse::nth_of_c< \
-          K BOOST_PP_COMMA_IF(n) \
-          BOOST_PP_ENUM_PARAMS(n, A) \
-        > \
-      > \
-      { \
-        typedef to_stream type; \
-        \
-        static std::ostream& run(std::ostream& o_) \
-        { \
-          o_ << "nth_of_c<" << K; \
-          BOOST_PP_REPEAT(n, MPLLIBS_STREAM_N, ~) \
-          return o_ << ">"; \
-        } \
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "nth_of<";
+          mpllibs::metatest::to_stream_argument_list<
+            K,
+            BOOST_PP_ENUM_PARAMS(MPLLIBS_SEQUENCE_MAX_ARGUMENT, P)
+          >::run(o);
+          return o << ">";
+        }
       };
-
-    BOOST_PP_REPEAT(MPLLIBS_SEQUENCE_MAX_ARGUMENT, MPLLIBS_NTH_OF_N, ~)
-
-    #undef MPLLIBS_NTH_OF_N
-    #undef MPLLIBS_STREAM_N
+    };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  2,
-  BOOST_PP_INC(MPLLIBS_SEQUENCE_MAX_ARGUMENT),
-  mpllibs::metaparse::nth_of,
-  "nth_of"
-);
 
 
 #endif

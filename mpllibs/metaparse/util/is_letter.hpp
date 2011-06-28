@@ -9,10 +9,10 @@
 #include <mpllibs/metaparse/util/is_ucase_letter.hpp>
 #include <mpllibs/metaparse/util/is_lcase_letter.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+
+#include <iostream>
 
 namespace mpllibs
 {
@@ -31,15 +31,18 @@ namespace mpllibs
             boost::mpl::apply_wrap1<is_ucase_letter, S>
           >
         {};
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o)
+          {
+            return o << "is_letter";
+          }
+        };
       };
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::util::is_letter,
-  "is_letter"
-)
 
 #endif
 

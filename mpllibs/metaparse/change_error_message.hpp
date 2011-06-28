@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/if.hpp>
@@ -33,15 +33,21 @@ namespace mpllibs
           Pos
         >
       {};
+      
+      typedef change_error_message type;
+      
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "change_error_message<";
+          mpllibs::metatest::to_stream_argument_list<P, Msg>::run(o);
+          return o << ">";
+        }
+      };
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  2,
-  mpllibs::metaparse::change_error_message,
-  "change_error_message"
-);
 
 #endif
 

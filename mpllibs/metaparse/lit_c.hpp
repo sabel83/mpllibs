@@ -10,30 +10,22 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/char.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
     template <char C>
-    struct lit_c : lit<boost::mpl::integral_c<char, C> > {};
-  }
-}
-
-namespace mpllibs
-{
-  namespace metatest
-  {
-    template <char C>
-    struct to_stream<mpllibs::metaparse::lit_c<C> >
+    struct lit_c : lit<boost::mpl::char_<C> >
     {
-      typedef to_stream type;
-      
-      static std::ostream& run(std::ostream& o_)
+      struct to_stream
       {
-        return o_ << "lit_c<" << C << ">";
-      }
+        static std::ostream& run(std::ostream& o)
+        {
+          return o << "lit_c<" << C << ">";
+        }
+      };
     };
   }
 }

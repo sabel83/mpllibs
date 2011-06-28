@@ -10,7 +10,7 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 
-#include <mpllibs/metaparse/util/define_data.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include "common.hpp"
 
@@ -29,6 +29,7 @@ using mpllibs::metaparse::one_char;
 using mpllibs::metaparse::start;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::fail;
+using mpllibs::metaparse::error_tag;
 
 using boost::mpl::apply_wrap2;
 using boost::mpl::equal_to;
@@ -37,7 +38,7 @@ namespace
 {
   const suite_path suite("except");
 
-  MPLLIBS_METAPARSE_DEFINE_DATA(test_error);
+  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error);
 
   typedef has_type<except<one_char, int13, test_error> > test_has_type;
 
@@ -64,5 +65,6 @@ namespace
 MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_with_good)
 MPLLIBS_ADD_TEST(suite, test_with_bad)
+
 
 

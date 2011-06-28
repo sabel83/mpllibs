@@ -16,14 +16,15 @@
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/token.hpp>
 
-#include <mpllibs/metaparse/util/lazy_equal_to.hpp>
-
 #include <mpllibs/metaparse/build_parser.hpp>
 
 #include <mpllibs/metamonad/do_.hpp>
 #include <mpllibs/metamonad/try_.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/fold.hpp>
@@ -38,6 +39,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/char.hpp>
+#include <boost/mpl/bool.hpp>
 
 using mpllibs::metaparse::sequence;
 using mpllibs::metaparse::lit_c;
@@ -52,8 +54,6 @@ using mpllibs::metaparse::parser_tag;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
 using mpllibs::metaparse::token;
-
-using mpllibs::metaparse::util::lazy_equal_to;
 
 using mpllibs::metatest::to_stream;
 
@@ -70,6 +70,7 @@ using boost::mpl::bool_;
 using boost::mpl::string;
 using boost::mpl::equal_to;
 using boost::mpl::char_;
+using boost::mpl::bool_;
 
 /*
  * The grammar
@@ -88,21 +89,25 @@ typedef token<int_> int_token;
 
 struct x;
 
-struct division_by_zero_tag
-{
-  typedef division_by_zero_tag type;
-};
-
-struct division_by_zero
-{
-  typedef division_by_zero type;
-  typedef division_by_zero_tag tag;
-};
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(division_by_zero);
+MPLLIBS_DEFINE_TAG(division_by_zero_tag);
+MPLLIBS_DEFINE_META_ATOM(division_by_zero_tag, division_by_zero);
 
 struct new_value;
 struct state;
+
+template <class T, char C>
+struct is_c : bool_<T::type::value == C>
+{
+  struct to_stream
+  {
+    static std::ostream& run(std::ostream& o)
+    {
+      o << "is_c";
+      mpllibs::metatest::to_stream_argument_list<T>::run(o);
+      return o << ", " << C << ">";
+    }
+  };
+};
 
 struct eval_plus
 {
@@ -112,12 +117,20 @@ struct eval_plus
       MPLLIBS_SET<state, State>,
       MPLLIBS_SET<new_value, back<C> >,
       eval_if<
-        lazy_equal_to<front<C>, char_<'+'> >,
+        is_c<front<C>, '+'>,
         plus<state, new_value>,
         minus<state, new_value>
       >
     >
   {};
+
+  struct to_stream
+  {
+    static std::ostream& run(std::ostream& o)
+    {
+      return o << "eval_plus";
+    }
+  };
 };
   
 struct eval_mult
@@ -128,7 +141,7 @@ struct eval_mult
       MPLLIBS_SET<state, State>,
       MPLLIBS_SET<new_value, back<C> >,
       eval_if<
-        lazy_equal_to<front<C>, char_<'*'> >,
+        is_c<front<C>, '*'>,
         times<state, new_value>,
         eval_if<
           equal_to<new_value, boost::mpl::int_<0> >,
@@ -138,6 +151,14 @@ struct eval_mult
       >
     >
   {};
+
+  struct to_stream
+  {
+    static std::ostream& run(std::ostream& o)
+    {
+      return o << "eval_mult";
+    }
+  };
 };
 
 typedef

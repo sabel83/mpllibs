@@ -14,6 +14,8 @@
 
 #include "common.hpp"
 
+#include <iostream>
+
 using boost::mpl::minus;
 using boost::mpl::equal_to;
 
@@ -32,6 +34,14 @@ namespace
   
     template <class A>
     struct apply : right<typename minus<typename A::value, int2>::type> {};
+    
+    struct to_stream
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        return o << "minus_2";
+      }
+    };
   };
 
   typedef equal_to<right<int13>, return_<either, int13>::type> test_return;

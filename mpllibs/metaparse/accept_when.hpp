@@ -10,7 +10,7 @@
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -57,15 +57,19 @@ namespace mpllibs
           Pos
         >
       {};
+      
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "accept_when<";
+          mpllibs::metatest::to_stream_argument_list<P, Pred, Msg>::run(o);
+          return o << ">";
+        }
+      };
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  3,
-  mpllibs::metaparse::accept_when,
-  "accept_when"
-);
 
 #endif
 

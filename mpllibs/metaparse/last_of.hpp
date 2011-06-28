@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/nth_of.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 namespace mpllibs
 {
@@ -43,9 +43,20 @@ namespace mpllibs
           MPLLIBS_SEQUENCE_UNUSED_PARAM, \
           ~ \
         ) \
-      > : \
-        nth_of_c##n<n - 1 BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, P)> \
-      {};
+      > : nth_of_c##n<n - 1 BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, P)> \
+      { \
+        struct to_stream \
+        { \
+          static std::ostream& run(std::ostream& o) \
+          { \
+            o << "<"; \
+            mpllibs::metatest::to_stream_argument_list< \
+              BOOST_PP_ENUM_PARAMS(n, P) \
+            >::run(o); \
+            return o << ">"; \
+          } \
+        }; \
+      };
     
     BOOST_PP_REPEAT(MPLLIBS_SEQUENCE_MAX_ARGUMENT, MPLLIBS_LAST_OF_N, ~)
     
@@ -53,13 +64,6 @@ namespace mpllibs
     #undef MPLLIBS_SEQUENCE_UNUSED_PARAM
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  0,
-  MPLLIBS_SEQUENCE_MAX_ARGUMENT,
-  mpllibs::metaparse::last_of,
-  "last_of"
-);
 
 #endif
 

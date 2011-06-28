@@ -11,7 +11,7 @@
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/if.hpp>
@@ -129,16 +129,21 @@ namespace mpllibs
           >::type
         >
       >::type
-    {};
+    {
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "MPLLIBS_TRY<";
+          mpllibs::metatest::to_stream_argument_list<
+            BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
+          >::run(o);
+          return o << ">";
+        }
+      };
+    };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  0,
-  MPLLIBS_DO_MAX_ARGUMENT,
-  mpllibs::metamonad::try_,
-  "MPLLIBS_TRY"
-);
 
 #endif
 

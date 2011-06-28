@@ -11,9 +11,11 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/get_remaining.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
-#include <mpllibs/metaparse/util/define_data.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
+
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -26,11 +28,10 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_METAPARSE_DEFINE_DATA(accepted_keyword);
-
-    template <class S, class ResultType>
-    struct keyword;
+    MPLLIBS_DEFINE_TAG(accepted_keyword_tag);
     
+    MPLLIBS_DEFINE_META_ATOM(accepted_keyword_tag, accepted_keyword);
+
     // Does not consume/check anything after the keyword
     template <class Kw, class ResultType = accepted_keyword>
     struct keyword
@@ -84,21 +85,19 @@ namespace mpllibs
           Pos
         >
       {};
+
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "keyword<";
+          mpllibs::metatest::to_stream_argument_list<Kw, ResultType>::run(o);
+          return o << ">";
+        }
+      };
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::accepted_keyword,
-  "Accepted keyword"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  1,
-  2,
-  mpllibs::metaparse::keyword,
-  "keyword"
-);
 
 #endif
 

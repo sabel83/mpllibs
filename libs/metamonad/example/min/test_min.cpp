@@ -5,6 +5,9 @@
 
 #include "min.hpp"
 
+#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
+
 #include <mpllibs/metatest/test.hpp>
 
 #include <boost/mpl/int.hpp>
@@ -21,10 +24,8 @@ namespace
 {
   const suite_path suite("min");
   
-  struct test_class
-  {
-    typedef test_class type;
-  };
+  MPLLIBS_DEFINE_TAG(test_class_tag);
+  MPLLIBS_DEFINE_META_ATOM(test_class_tag, test_class);
   
   typedef equal_to<int_<11>, min<int_<11>, int_<13> >::type> test_integers;
 

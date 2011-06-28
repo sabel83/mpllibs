@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/foldr.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/if.hpp>
 
@@ -29,11 +29,23 @@ namespace mpllibs
           foldr<P, State, BackwardOp>
         >::type::template apply<S, Pos>
       {};
+
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "foldr1<";
+          mpllibs::metatest::to_stream_argument_list<
+            P,
+            State,
+            BackwardOp
+          >::run(o);
+          return o << ">";
+        }
+      };
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metaparse::foldr1, "foldr1");
 
 #endif
 
