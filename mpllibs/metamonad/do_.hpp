@@ -48,14 +48,12 @@ namespace mpllibs
     #endif
     #define MPLLIBS_RETURN mpllibs::metamonad::do_return
 
-    struct unused_do_argument;
-
     template <
       class Monad,
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         MPLLIBS_DO_MAX_ARGUMENT,
         class E,
-        unused_do_argument
+        boost::mpl::na
       )
     >
     struct do_impl;
@@ -227,7 +225,7 @@ namespace mpllibs
       #error MPLLIBS_DO_UNUSED_PARAM already defined
     #endif
     #define MPLLIBS_DO_UNUSED_PARAM(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) unused_do_argument
+      BOOST_PP_COMMA_IF(n) boost::mpl::na
     
     #ifdef MPLLIBS_DO_CASE
       #error MPLLIBS_DO_CASE already defined
@@ -267,7 +265,7 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
           MPLLIBS_DO_MAX_ARGUMENT,
           class E,
-          unused_do_argument
+          boost::mpl::na
         )
       >
       struct apply :

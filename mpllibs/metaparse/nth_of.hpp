@@ -192,7 +192,7 @@ namespace mpllibs
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         MPLLIBS_SEQUENCE_MAX_ARGUMENT,
         class P,
-        mpllibs::metaparse::impl::sequence_no_argument
+        boost::mpl::na
       )
     >
     struct nth_of_c;
@@ -202,7 +202,7 @@ namespace mpllibs
       #error MPLLIBS_SEQUENCE_UNUSED_PARAM already defined
     #endif
     #define MPLLIBS_SEQUENCE_UNUSED_PARAM(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) mpllibs::metaparse::impl::sequence_no_argument
+      BOOST_PP_COMMA_IF(n) boost::mpl::na
     
     #ifdef MPLLIBS_NTH_OF_N
       #error MPLLIBS_NTH_OF_N already defined
@@ -254,7 +254,7 @@ namespace mpllibs
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         MPLLIBS_SEQUENCE_MAX_ARGUMENT,
         class P,
-        mpllibs::metaparse::impl::sequence_no_argument
+        boost::mpl::na
       )
     >
     struct nth_of :

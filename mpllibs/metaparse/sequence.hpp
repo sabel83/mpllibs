@@ -121,16 +121,12 @@ namespace mpllibs
 
 
 
-    namespace impl
-    {
-      struct sequence_no_argument;
-    }
 
     template <
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         MPLLIBS_SEQUENCE_MAX_ARGUMENT,
         class P,
-        mpllibs::metaparse::impl::sequence_no_argument
+        boost::mpl::na
       ),
       class Mock = int
     >
@@ -141,7 +137,7 @@ namespace mpllibs
       #error MPLLIBS_SEQUENCE_UNUSED_PARAM already defined
     #endif
     #define MPLLIBS_SEQUENCE_UNUSED_PARAM(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) mpllibs::metaparse::impl::sequence_no_argument
+      BOOST_PP_COMMA_IF(n) boost::mpl::na
     
     #ifdef MPLLIBS_SEQUENCE_N
       #error MPLLIBS_SEQUENCE_N already defined

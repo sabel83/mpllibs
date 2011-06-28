@@ -105,7 +105,7 @@ namespace mpllibs
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         MPLLIBS_DO_MAX_ARGUMENT,
         class E,
-        unused_do_argument
+        boost::mpl::na
       )
     >
     struct try_ :

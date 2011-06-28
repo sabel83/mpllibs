@@ -88,13 +88,11 @@ namespace mpllibs
     #undef MPLLIBS_ONE_OF_BODY_POSTFIX
     #undef MPLLIBS_ONE_OF_BODY_PREFIX
     
-    struct unused_one_of_argument;
-  
     template <
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         MPLLIBS_ONE_OF_MAX_ARGUMENT,
         class P,
-        unused_one_of_argument
+        boost::mpl::na
       ),
       class Mock = int
     >
@@ -104,7 +102,7 @@ namespace mpllibs
       #error MPLLIBS_ONE_OF_UNUSED_PARAM already defined
     #endif
     #define MPLLIBS_ONE_OF_UNUSED_PARAM(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) unused_one_of_argument
+      BOOST_PP_COMMA_IF(n) boost::mpl::na
     
     #ifdef MPLLIBS_ONE_OF_CASE
       #error MPLLIBS_ONE_OF_CASE already defined

@@ -18,7 +18,7 @@ namespace mpllibs
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         MPLLIBS_SEQUENCE_MAX_ARGUMENT,
         class P,
-        mpllibs::metaparse::impl::sequence_no_argument
+        boost::mpl::na
       )
     >
     struct first_of :
