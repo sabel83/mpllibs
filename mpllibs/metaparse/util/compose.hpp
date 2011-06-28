@@ -45,10 +45,7 @@ namespace mpllibs
         #error MPLLIBS_COMPOSE already defined
       #endif
       #define MPLLIBS_COMPOSE(z, n, unused) \
-        template < \
-          BOOST_PP_ENUM_PARAMS(n, class F) \
-          BOOST_PP_COMMA_IF(n) class Mock = int \
-        > \
+        template <BOOST_PP_ENUM_PARAMS(n, class F)> \
         struct compose##n \
         { \
           typedef compose##n type; \
@@ -89,8 +86,7 @@ namespace mpllibs
           MPLLIBS_COMPOSE_MAX_ARGUMENT,
           class F,
           unused_composed_argument
-        ),
-        class Mock = int
+        )
       >
       struct compose;
       
@@ -106,8 +102,7 @@ namespace mpllibs
           MPLLIBS_COMPOSE_MAX_ARGUMENT,
           MPLLIBS_COMPOSE_UNUSED_PARAM,
           ~
-        ),
-        int
+        )
       >
       {
         template <class T>
@@ -130,8 +125,6 @@ namespace mpllibs
             MPLLIBS_COMPOSE_UNUSED_PARAM, \
             ~ \
           ) \
-          BOOST_PP_COMMA_IF(BOOST_PP_SUB(MPLLIBS_COMPOSE_MAX_ARGUMENT, n)) \
-          int \
         > : \
           compose##n<BOOST_PP_ENUM_PARAMS(n, F)> \
         {};
