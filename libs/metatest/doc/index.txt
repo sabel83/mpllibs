@@ -1,134 +1,506 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+//    Copyright Endre Tamas SAJO (baja@inf.elte.hu),
+//              Abel Sinkovics (abel@sinkovics.hu) 2010.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 mpllibs::metatest
 =================
-Abel Sinkovics
+Endre Sajo, Abel Sinkovics
 
-This is a unit testing framework for C\++ template metaprograms. The framework
-consists of a header-only library and a makefile that simplifies test
-compilation. Using the makefile is optional, there are no special steps in
-the compilation of unit tests compared to other C\++ code.
+This is a unit testing framework for C\++ template metaprograms. It can be
+integrated into other C\++ unit testing frameworks and has its own reporting
+capabilities as well. There are no special steps in the compilation of unit
+tests compared to other C\++ code.
 
-How it works
+Introduction
 ------------
 
-This framework supports testing C++ template metaprograms, that are evaluated
-at compile time, thus test code has to be evaluated at compile time as well.
-The main idea behind this framework is that it evaluates the tests at compile
-time and generates runtime code that prints the results out.
-Thus testing happens the following way:
+The basic principle of Metatest is to compile the source, evaluate test cases
+at compile time and generate an executable that outputs a detailed and
+customizable report on the results.
 
-* Code is compiled, tests are executed
-* Object codes are linked, an executable is created
-* The executable is executed, results of tests are displayed
+The exact procedure is as follows:  Test cases are written as nullary
+metafunctions returning wrapped boolean values.  These metafunctions are
+evaluated and, depending on the fail/success statuses, report items are
+generated utilizing the framework's own type pretty-printing facility.
+Pretty-printing is needed to display detailed error messages.  For example
+when a test case compares the result of a metafunction evaluation with the
+expected value and they differ, the test framework should display the result
+and the expected value in the report.  Our solution achieves this by
+generating a string at compile-time containing all these details.  To be able
+to generate such strings, we need to be able to convert classes --- data,
+metaprograms operate on --- into strings.
 
-How tests are organised
------------------------
+Test results are then collected in STL containers in a test suite hierarchy,
+the root of which is located in a global test driver object.  This hierarchy
+is accessible through an iterator interface.  Test result objects provide
+their own methods via which fail/success statuses, test names and detailed
+descriptions can be queried.
+  
+The test cases are collected into *test suites*.  A test suite can
+contain test cases and other test suites, thus the tests are collected in a
+tree structure of nested suites.  This hierarchy is built at runtime, by the
+constructors of global objects.  This tree can be processed by regular C++
+code, the root can be accessed as a singleton object.  The tree provides
+STL-like iterators to process the children of each node.  This data-structure
+can be used to either generate a report directly or to integrate compile-time
+tests into runtime testing frameworks.  In our implementation we provide a
+number of report generators and a tool that adds compile-time tests to the
+Boost unit testing framework's test suite hierarchy.
 
-The smallest unit of testing is a _test case_. It is a nullary template
-metafunction returning a wrapped boolean value. Test cases are grouped into
-_test suite_s. A test suite is a collection of test cases.
+Test cases are registered in the driver by constructors of global objects.
+Our implementation provides a convenient macro for creating these global
+objects.  It takes two parameters --- an object representing the location of
+the test case in the test suite hierarchy and the name of the metafunction.
 
-How to write tests
-------------------
+Basic usage
+-----------
 
-Include the following headers:
+First, the following header must be included.
 
 --------------------------------------
 #include <mpllibs/metatest/test.hpp>
+--------------------------------------
+
+Individual tests are organised in a test suite hierarchy.  To create a suite,
+first, a suite path must be declared.  +suite_path+ is an ordinary
+run-time class; +string+ and +list+ in the table below refer to the
+C++ Standard Library's +std::string+ and +std::list+.
+
+|=============================================================================================
+|+suite_path()+                               |construct an empty path
+|+suite_path(const string &)+                 |construct a single element path
+|+suite_path(const list<string> &)+           |construct a path with multiple elements
+|+const_iterator begin() const+               |iterator to the first element
+|+const_iterator end() const+                 |iterator pointing after the last element
+|+suite_path operator()(const string &) const+|add element and step into it, thus creating a subpath
+|=============================================================================================
+
+Using +operator()+ suite paths can be constructed the following way:
+
+--------------------------------------
+const suite_path my_suite_path = suite_path("a")("b")("c");
+--------------------------------------
+
+Test cases are written as nullary template metafunctions, each returning a
+wrapped boolean value.  They are added to the test suites by registering them
+using the supplied +MPLLIBS_ADD_TEST+ macro
+  
+|===================================================================================
+|+MPLLIBS_ADD_TEST(path, test)+|add test case +test+ to test suite under suite path +path+
+|===================================================================================
+
+The root of the test suite hierarchy is added to a global test driver
+singleton object through which the hierarchy can be traversed at runtime.
+A number of default +main+ functions are provided building different
+(plain text, xml, Boost test, etc.) reports.
+
+A default +main+ generating plain text report on the standard output is
+available by including the following header.
+
+--------------------------------------
+#include <mpllibs/metatest/main.hpp>
+--------------------------------------
+
+Example
+~~~~~~~
+
+In this section we assume, that we have a template metafunction, +my_reverse+,
+reversing +boost::mpl::vector+ values. 
+With the above applied, we get the following test suite for +my_reverse+.
+
+--------------------------------------
+const suite_path suite = suite_path("my_suite")("my_reverse");
+
+typedef vector<> empty;
+typedef vector<char> one;
+typedef vector<char, short, int, long> four;
+
+typedef vector<long, int, short, char> four_r;
+
+typedef equal< my_reverse<empty>::type, empty > empty_test;
+typedef equal< my_reverse<one>::type, one > one_test;
+typedef equal< my_reverse<four>::type, four_r > four_test;
+
+MPLLIBS_ADD_TEST(suite, empty_test)
+MPLLIBS_ADD_TEST(suite, one_test)
+MPLLIBS_ADD_TEST(suite, four_test)
+--------------------------------------
+
+By compiling it, the unit tests are executed. Assuming, that our +my_reverse+
+implementation is correct, the default plain text reporter outputs the following
+report.
+
+--------------------------------------
+The following tests have been executed:
+  my_suite::my_reverse::empty_test: OK
+  my_suite::my_reverse::one_test: OK
+  my_suite::my_reverse::four_test: OK
+========================
+Number of tests: 3
+Number of failures: 0
+--------------------------------------
+
+To simulate library bugs, we modify the suite.
+
+--------------------------------------
+const suite_path suite = suite_path("my_suite")("my_reverse");
+
+typedef vector<> empty;
+typedef vector<char> one;
+typedef vector<char, short, int, long> four;
+
+typedef vector<long, int, short, char> four_r;
+
+typedef equal< my_reverse<empty>::type, one > empty_test;
+typedef equal< my_reverse<one>::type, empty > one_test;
+typedef equal< my_reverse<four>::type, four > four_test;
+
+MPLLIBS_ADD_TEST(suite, empty_test)
+MPLLIBS_ADD_TEST(suite, one_test)
+MPLLIBS_ADD_TEST(suite, four_test)
+--------------------------------------
+
+When run, this yields the following summary.
+
+--------------------------------------
+The following tests have been executed:
+  my_suite::my_reverse::empty_test: FAIL (test.cpp:31)
+        equal<mpl::vector<>, mpl::vector<char>, is_same<_, _>>
+  my_suite::my_reverse::one_test: FAIL (test.cpp:32)
+        equal<mpl::vector<char>, mpl::vector<>, is_same<_, _>>
+  my_suite::my_reverse::four_test: FAIL (test.cpp:33)
+        equal<mpl::vector<long, int, short, char>, mpl::vector<char, short, int, long>, is_same<_, _>>
+========================
+Number of tests: 3
+Number of failures: 3
+--------------------------------------
+
+Besides being concise, this output also no longer depends on the compiler.
+The format is standard, but also customisable.
+
+This example can be found in the +example/reverse+ directory of the library.
+
+Customising test reports
+------------------------
+
+The framework offers facilities for customisation in two ways --- first,
+report formats can be customised, and second, custom types can be registered
+for pretty printing.
+
+Customising reports
+~~~~~~~~~~~~~~~~~~~
+
+Test results are collected by a +test_driver+ singleton object.  This
+object provides means to access the root of the test suite hierarchy from
+which test suites, and individual test results can be acquired.  This whole
+system comprises run-time structures that provide iterators for traversal.
+
+To use the +test_driver+ class, the following header needs to be included:
+
+--------------------------------------
+#include <mpllibs/metatest/test_driver.hpp>
+--------------------------------------
+
+The test driver has the following methods:
+
+|=================
+|+static test_driver& instance()+|The singleton +test_driver+ instance
+|+const test_suite& suite()+     |root of the test suite hierarchy
+|=================
+
+A +test_suite+ object represents one node of the test suite hierarchy. It
+contains zero or more nested +test_suite+ objects and zero or more
++test_result+ objects, representing test results.
+To use +test_suite+ objects, the following header needs to be included:
+
+--------------------------------------
 #include <mpllibs/metatest/test_suite.hpp>
 --------------------------------------
 
-Create a test suite by creating a static +mpllibs::metatest::test_suite+ object.
-It's constructor takes a +string+ argument, the name of the test suite.
++test_suite+ has the following methods:
+
+|=================
+|+size_t failure_count() const+          |number of failed tests
+|+size_t count() const+                  |number of all tests
+|+const suite_map& suites() const+       |suites which have the current suite as parent
+|+const result_list& results() const+    |result objects corresponding to the tests within the current suite
+|=================
+
+A +test_result+ object represents the result of one compile-time test. It either
+succeeded or failed, and in case it failed, the +test_result+ object can tell
+the reason as an +std::string+.
+To use +test_result+ objects, the following header needs to be included:
 
 --------------------------------------
-mpllibs::metatest::test_suite suite("foo");
+#include <mpllibs/metatest/test_result.hpp>
 --------------------------------------
 
-Create your test cases. They are nullary template metafunctions, so create
-nullary template metafunctions. Note that name of the metafunction is the name
-of the test case. It will appear in the report at the end.
++test_result+ has the following methods:
 
-You may create new classes as test cases or +typedef+ already existing ones:
+|=================
+|+const std::string& get_name() const+  |name of the current test
+|+const location& get_location() const+ |location of the test body within the source
+|+bool success() const+                 |success/fail status
+|+bool has_reason() const+              |whether the result object has a description
+|+const std::string& get_reason() const+|description of the test result
+|=================
+
+A +location+ object represents a location in the source code. It can used to
+display in the report, where a specific test case comes from.
+To use +location+ objects, the following header needs to be included:
 
 --------------------------------------
-struct always_failing_test
+#include <mpllibs/metatest/location.hpp>
+--------------------------------------
+
++location+ has the following methods:
+
+|=================
+|+const std::string& filename() const+|name of the file, where the test case was registered
+|+int line_number() const+            |line number, where the test case was registered
+|=================
+
+As an example, test results in the first tier of the test suite hierarchy can
+be printed as follows:
+
+--------------------------------------
+int main()
 {
-  typedef boost::mpl::false_ type;
-};
+  using std::cout;
+  
+  const test_suite &results = test_driver::instance().suite().results();
 
-typedef
-  boost::mpl::equal_to<
-    boost::mpl::int_<13>,
-    boost::mpl::plus<
-      boost::mpl::int_<11>,
-      boost::mpl::int_<2>
-    >::type
-  >
-  verifier_test;
---------------------------------------
-
-The unit testing framework can't figure out which metafunctions are test cases
-and which are not. Test cases need to be registered in the framework using the
-+MPLLIBS_ADD_TEST+ and +MPLLIBS_ADD_TEST_TO_FAIL+ macros. They take two
-arguments: the name of the +test_suite+ object representing the test suite the
-test is registered into and the name of the metafunction class. Note that
-
-* A static +test_suite+ object has to be created and registered using the name of
-  the object.
-* Every test case has to be named and registered using the name of the class.
-
-Creation of test suites and test cases as part of registration is not supported.
-
---------------------------------------
-MPLLIBS_ADD_TEST_TO_FAIL(always_failing_test)
-MPLLIBS_ADD_TEST(verifier_test)
---------------------------------------
-
-You can create test cases in multiple compilation units, the framework runs the
-result displaying code in constructors/destructors of static objects, thus
-the summary is printed regardless of the contents of +main()+. However, it is
-recommended to implement +main+ the following way:
-
---------------------------------------
-#include <mpllibs/metatest/test.hpp>
-
-int main(int argc, char* argv[])
-{
-  return mpllibs::metatest::test_driver::instance().main(argc, argv);
+  for (test_suite::result_list::const_iterator it =
+          results.begin();
+        it != results.end();
+        ++it)
+  {
+    if (it->success())
+    {
+      cout << "OK";
+    }
+    else
+    {
+      cout << "FAIL (" << it->get_location() << ")";
+      if (it->has_reason())
+      {
+        cout << "\n\t" << it->get_reason();
+      }
+    }
+  }
 }
 --------------------------------------
 
-This returns 0 as exit code when all tests succeeded and returns a non-zero
-value when there were failing tests. It is useful when test case execution is
-integrated into a build system.
+Pretty printing custom types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-How to compile and run the tests
---------------------------------
+For pretty printing types, the framework provides a metafunction,
++to_stream+, which, as a class, provides a static +run+ method taking an output
+stream as its parameter and pretty printing the type to the stream:
 
-All you need to do is compiling your code and running the executable you got.
-There are no additional libraries you need to link against.
+--------------------------------------
+template <class T>
+struct to_stream
+{
+  // unspecified
+
+  static std::ostream& run(std::ostream&);
+};
+--------------------------------------
+
+To use +to_stream+ with a custom type, one has the following options:
+
+* +to_stream+ can be specialised directly and can make use of pattern matching
+  through template specialisation.
+* when +T+ has a nested type called +to_stream+, the +to_stream+ metafunction
+  calls the +run+ method of the nested class. This +run+ method is expected to
+  have the same signature as the +run+ method of +to_stream+ above. This
+  solution can be used to add pretty-printing support to a compile-time value
+  without explicitly changing (or even including) the +to_stream+ metafunction.
+* when +to_stream+ is not specialised and +T+ has no nested +to_stream+ class,
+  the +to_stream+ works as overloaded metafunctions of the Boost metaprogramming
+  library: it applies +T+ on the +to_stream_impl<tag of T>+ metafunction class,
+  which can be specialised. This method can be used to define pretty printing
+  for types based on their +tag+.
+
+We demonstrate the above options for specialisation for user-defined types in
+the following example.
+
+--------------------------------------
+struct UDT {};
+struct UDT_tag;
+struct tagged_UDT { typedef UDT_tag tag; };
+
+struct UDT_with_nested_to_stream
+{
+  struct to_stream
+  {
+    static std::ostream& run(std::ostream& o)
+    {
+      return o << "UDT_with_nested_to_stream";
+    }
+  };
+};
+
+template<>
+struct to_stream<UDT>
+{
+  typedef to_stream type;
+
+  static std::ostream& run(std::ostream& os)
+  { os << "UDT"; }
+}
+
+template<>
+struct to_stream_impl<UDT_tag>
+{
+  template <typename Type>
+  struct apply
+  {
+    typedef apply type;
+  
+    static std::ostream& run(std::ostream& os)
+    { os << "tagged_UDT"; }
+};
+--------------------------------------
+
+The +to_stream+ metafunction is defined in the following header:
+
+--------------------------------------
+#include <mpllibs/metatest/to_stream.hpp>
+--------------------------------------
+
+This header defines +to_stream+ and adds pretty printing to metafunctions,
+metafunction classes and data types of Boost mpl. Unfortunately, in order to
+do this, it has to include every public header of mpl. This feature can be
+disabled (and re-enabled when needed) by defining the +MPLLIBS_NO_TO_STREAM_MPL+
+macro before including the +to_stream.hpp+ header.
+
+To include the declaration of +to_stream+ only, the following header is
+provided:
+
+--------------------------------------
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+--------------------------------------
+
+A number of convenience utilities are provided for pretty printing. After
+including +to_stream_fwd.hpp+ the following macros can be used to define
+specialisations of +to_stream+ for classes and template instances:
+
+|=================
+|+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(name, display_name)+                                            |define a specialisation of +to_stream+ for type +name+, that displays +display_name+
+|+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(name)+                                                   |same as MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(name, "name")
+|+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(arg_num, name, display_name)+                               |define a specialisation of +to_stream+ for instances of template +name+ with +arg_num+ arguments. The result is displayed as +display_name<arg1, arg2, ...>+, where the arguments are pretty-printed recursively
+|+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(min_arg_num, max_arg_num, name, display_name)+|define a specialisation of +to_stream+ for instances of template +name+ with +min_arg_num+, +min_arg_num+ + +1+, ..., +max_arg_num+ arguments. The result is displayed as +display_name<arg1, arg2, ...>+, where the arguments are pretty-printed recursively
+|=================
+
+These macros expect that they are not used in any namespace.
+
+When pretty-printing compile-time data-types and metafunctions, a recurring
+task is pretty-printing arguments of a templates recursively. After including
+
+--------------------------------------
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
+--------------------------------------
+
+the following metafunction is provided:
+
+--------------------------------------
+template <
+  class T1,
+  // ...
+  class Tn
+>
+struct to_stream_argument_list
+{
+  static std::ostream& run(std::ostream&);
+  // unspecified
+};
+--------------------------------------
+
+It uses +to_stream+ to write +<T1, ..., Tn>+ to the stream. Here is an example
+usage:
+
+--------------------------------------
+template <class A, class B>
+struct plus
+{
+  // implementation of the plus metafunction
+  
+  struct to_stream
+  {
+    // display "plus<A, B>"
+    static std::ostream& run(std::ostream& o)
+    {
+      o << "plus<";
+      to_stream_argument_list<A, B>::run(o);
+      return o << ">";
+    }
+  };
+}
+--------------------------------------
+
+This code displays the name of the metafunction and the +<+, +>+ characters and
+uses +to_stream_argument_list+ to display the arguments.
+
+Pre-defined reporting tools
+---------------------------
+
+The library provides the following report generating functions:
+
+|=================
+|+bool plaintext_report(std::ostream &os)+|generates a plain-text report. Declared in +<mpllibs/metatest/plaintext_report.hpp>+
+|+bool xml_report(std::ostream &os)+      |generates an xml report. Declared in +<mpllibs/metatest/xml_report.hpp>+
+|=================
+
+The library provides different headers that can be included in a compilation
+unit to define a +main+ function doing some sort of pretty printing. Using them,
+the contents of the +main.cpp+ can be one +include+. The following headers are
+available:
+
+|=================
+|+<mpllibs/metatest/main.hpp>+|calls +plaintext_report+
+|+<mpllibs/metatest/main_boost.hpp>+|calls +build_metatest_test_suite+
+|=================
+
+Integration with other unit testing libraries
+---------------------------------------------
+
+Test hiearchy can be traversed at runtime and the results can be integrated into
+other unit testing tools by asserting the success of the compile-time test at
+runtime. The following header
+
+--------------------------------------
+#include <mpllibs/metatest/boost_report.hpp>
+--------------------------------------
+
+provides the following function:
+
+--------------------------------------
+boost::unit_test::test_suite* build_metatest_test_suite(
+  const std::string& name = "metatest"
+);
+--------------------------------------
+
+This function builds a Boost test +test_suite+, the root of which is called
++name+. It reconstructs the hierarchy of compile-time test cases as a Boost test
+test suite hierarchy.
+
+Integration with other unit testing frameworks has to be implemented by the
+user.
 
 Recommendations
 ---------------
 
 * Keep your test cases in different compilation units.
-* Create a static +test_suite+ object called +suite+ in every compilation unit.
-  You'll be able to move around test cases easily in the future.
+* Create a static +test_suite+ object called +suite+ in every compilation unit
+  and use that for test cases. You'll be able to move around test cases easily
+  in the future.
 * Keep every test-related object and class in the unnamed namespace to make
   them local to the compilation unit. This way there won't be name collisions
   between tests in different test suites.
-
-Examples
---------
-
-The components of +mpllibs+ use this framework for unit testing. You can find
-the tests in the +test+ directory of every component. You can check how they
-use this framework.
 
 include::copyright[]
 
