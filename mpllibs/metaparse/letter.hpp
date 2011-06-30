@@ -22,7 +22,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, letter_expected);
+      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, letter_expected)
     }
     
     typedef
@@ -35,7 +35,7 @@ namespace mpllibs
   }
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::letter, "letter");
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::letter, "letter")
 
 #endif
 

@@ -14,7 +14,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_META_ATOM(tag_tag, tag_tag);
+    MPLLIBS_DEFINE_META_ATOM(tag_tag, tag_tag)
     
     #ifdef MPLLIBS_DEFINE_TAG
       #error MPLLIBS_DEFINE_TAG already defined

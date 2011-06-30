@@ -41,7 +41,7 @@ namespace
 {
   const suite_path suite("one_of");
   
-  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error);
+  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
   
   typedef has_type<one_of<one_char> > test_has_type;
 

@@ -13,8 +13,8 @@
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal_to.hpp>
 
-MPLLIBS_DEFINE_TAG(non_comparable_tag);
-MPLLIBS_DEFINE_META_ATOM(non_comparable_tag, non_comparable);
+MPLLIBS_DEFINE_TAG(non_comparable_tag)
+MPLLIBS_DEFINE_META_ATOM(non_comparable_tag, non_comparable)
 
 namespace boost
 {

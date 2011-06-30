@@ -24,7 +24,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(parser_tag);
+    MPLLIBS_DEFINE_TAG(parser_tag)
   }
   
   namespace metamonad

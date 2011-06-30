@@ -92,7 +92,7 @@ namespace mpllibs
     n, \
     BOOST_PP_ARRAY_ELEM(0, args), \
     BOOST_PP_ARRAY_ELEM(1, args) \
-  );
+  )
 
 #ifdef MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS
   #error MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS already defined
@@ -110,11 +110,12 @@ namespace mpllibs
     (2, (t, name))\
   )
 
+
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   1,
   mpllibs::metatest::to_stream,
   "to_stream"
-);
+)
 
 #endif
 

@@ -289,7 +289,7 @@ namespace mpllibs
   }
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metamonad::do_, "MPLLIBS_DO");
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metamonad::do_, "MPLLIBS_DO")
 
 #endif
 

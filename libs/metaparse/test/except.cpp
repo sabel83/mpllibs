@@ -38,7 +38,7 @@ namespace
 {
   const suite_path suite("except");
 
-  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error);
+  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
 
   typedef has_type<except<one_char, int13, test_error> > test_has_type;
 

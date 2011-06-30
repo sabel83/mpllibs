@@ -19,7 +19,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, invalid_digit);
+      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, invalid_digit)
     }
     
     namespace util

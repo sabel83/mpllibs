@@ -12,7 +12,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_TAG(overloading_error_tag);
+    MPLLIBS_DEFINE_TAG(overloading_error_tag)
   }
 }
 

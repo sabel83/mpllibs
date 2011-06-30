@@ -35,7 +35,7 @@ namespace mpllibs
       MPLLIBS_DEFINE_META_ATOM(
         mpllibs::metaparse::error_tag,
         unexpected_end_of_input
-      );
+      )
     }
     
     struct one_char
@@ -92,7 +92,7 @@ namespace mpllibs
       {
         static std::ostream& run(std::ostream& o)
         {
-          o << "one_char";
+          return o << "one_char";
         }
       };
     };

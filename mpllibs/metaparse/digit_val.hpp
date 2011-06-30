@@ -21,7 +21,7 @@ namespace mpllibs
   }
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::digit_val, "digit_val");
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::digit_val, "digit_val")
 
 #endif
 

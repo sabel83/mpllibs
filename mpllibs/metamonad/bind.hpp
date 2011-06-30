@@ -18,7 +18,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_META_ATOM(overloading_error_tag, bind_not_defined);
+    MPLLIBS_DEFINE_META_ATOM(overloading_error_tag, bind_not_defined)
   
     template <class>
     struct bind_impl : MPLLIBS_THROW<bind_not_defined> {};

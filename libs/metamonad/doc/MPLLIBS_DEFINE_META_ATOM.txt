@@ -41,7 +41,7 @@ Expression semantics
 The following
 
 --------------------------------------
-MPLLIBS_DEFINE_META_ATOM(example_tag, example_atom);
+MPLLIBS_DEFINE_META_ATOM(example_tag, example_atom)
 --------------------------------------
 
 is equivalent to
@@ -65,8 +65,8 @@ Example
 -------
 
 --------------------------------------
-MPLLIBS_DEFINE_TAG(example_tag);
-MPLLIBS_DEFINE_META_ATOM(example_tag, example_atom);
+MPLLIBS_DEFINE_TAG(example_tag)
+MPLLIBS_DEFINE_META_ATOM(example_tag, example_atom)
 --------------------------------------
 
 include::copyright[]

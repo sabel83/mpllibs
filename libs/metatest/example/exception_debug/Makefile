@@ -25,6 +25,11 @@ DEPS += $(OBJECTS:.o=.d)
 CXXFLAGS += -MMD
 CXXFLAGS += -MP
 
+CXXFLAGS += -Wall
+CXXFLAGS += -Werror
+CXXFLAGS += -ansi
+CXXFLAGS += -pedantic
+
 $(OBJECTS) : $(BIN_DIR)/%.o : %.cpp
 	mkdir -p $(BIN_DIR)
 	$(CXX) -c $(CFLAGS) $(CXXFLAGS) $(foreach i,$(INCLUDES), -I$(i) ) -o $@ $<

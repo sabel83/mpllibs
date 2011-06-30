@@ -13,7 +13,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_METAFUNCTION(get_data, 1);
+    MPLLIBS_DEFINE_METAFUNCTION(get_data, 1)
   }
 }
 

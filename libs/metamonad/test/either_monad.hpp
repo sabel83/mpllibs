@@ -22,9 +22,9 @@ namespace
   /*
    * Either monad for testing
    */
-  MPLLIBS_DEFINE_TAG(either_tag);
-  MPLLIBS_DEFINE_TAG(left_tag);
-  MPLLIBS_DEFINE_TAG(right_tag);
+  MPLLIBS_DEFINE_TAG(either_tag)
+  MPLLIBS_DEFINE_TAG(left_tag)
+  MPLLIBS_DEFINE_TAG(right_tag)
 
   typedef either_tag either;
   

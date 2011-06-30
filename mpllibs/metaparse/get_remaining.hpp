@@ -12,7 +12,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_METAFUNCTION(get_remaining, 1);
+    MPLLIBS_DEFINE_METAFUNCTION(get_remaining, 1)
   }
 }
 

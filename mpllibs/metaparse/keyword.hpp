@@ -28,9 +28,9 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(accepted_keyword_tag);
+    MPLLIBS_DEFINE_TAG(accepted_keyword_tag)
     
-    MPLLIBS_DEFINE_META_ATOM(accepted_keyword_tag, accepted_keyword);
+    MPLLIBS_DEFINE_META_ATOM(accepted_keyword_tag, accepted_keyword)
 
     // Does not consume/check anything after the keyword
     template <class Kw, class ResultType = accepted_keyword>

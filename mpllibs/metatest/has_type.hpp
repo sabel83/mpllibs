@@ -22,7 +22,7 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   1,
   mpllibs::metatest::has_type,
   "has_type"
-);
+)
 
 #endif
 

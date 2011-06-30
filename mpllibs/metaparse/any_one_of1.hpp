@@ -75,7 +75,7 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
   MPLLIBS_ONE_OF_MAX_ARGUMENT,
   mpllibs::metaparse::any_one_of1,
   "any_one_of1"
-);
+)
 
 #endif
 

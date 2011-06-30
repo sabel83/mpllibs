@@ -12,7 +12,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_TAG(exception_tag);
+    MPLLIBS_DEFINE_TAG(exception_tag)
   
     template <class Data>
     struct exception

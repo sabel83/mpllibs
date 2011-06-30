@@ -33,11 +33,11 @@ namespace
 {
   const suite_path suite("try_");
   
-  MPLLIBS_DEFINE_TAG(tag1);
-  MPLLIBS_DEFINE_META_ATOM(tag1, e1);
+  MPLLIBS_DEFINE_TAG(tag1)
+  MPLLIBS_DEFINE_META_ATOM(tag1, e1)
   
-  MPLLIBS_DEFINE_TAG(tag2);
-  MPLLIBS_DEFINE_META_ATOM(tag2, e2);
+  MPLLIBS_DEFINE_TAG(tag2)
+  MPLLIBS_DEFINE_META_ATOM(tag2, e2)
 
   typedef
     equal_to<

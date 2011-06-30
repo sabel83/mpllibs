@@ -25,7 +25,7 @@ namespace mpllibs
       MPLLIBS_DEFINE_META_ATOM(
         mpllibs::metaparse::error_tag,
         whitespace_expected
-      );
+      )
     }
   
     typedef
@@ -38,7 +38,7 @@ namespace mpllibs
   }
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::space, "space");
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::space, "space")
 
 #endif
 

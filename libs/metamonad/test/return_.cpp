@@ -24,7 +24,7 @@ using mpllibs::metamonad::return_;
 
 namespace
 {
-  MPLLIBS_DEFINE_TAG(test_tag);
+  MPLLIBS_DEFINE_TAG(test_tag)
 }
 
 namespace mpllibs

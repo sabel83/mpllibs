@@ -20,7 +20,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(accept_tag);
+    MPLLIBS_DEFINE_TAG(accept_tag)
     
     template <class C>
     struct return_

@@ -31,7 +31,7 @@ namespace
 {
   const suite_path suite("fail");
 
-  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error);
+  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
 
   typedef has_type<fail<test_error> > test_has_type;
 

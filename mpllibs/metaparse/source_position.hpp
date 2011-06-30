@@ -23,7 +23,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(source_position_tag);
+    MPLLIBS_DEFINE_TAG(source_position_tag)
     
     template <class Line, class Col, class PrevChar>
     struct source_position
@@ -150,9 +150,9 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
   3,
   mpllibs::metaparse::source_position,
   "source_position"
-);
+)
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::start, "start");
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::start, "start")
 
 #endif
 

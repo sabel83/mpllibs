@@ -44,7 +44,7 @@
   MPLLIBS_DEFINE_META_ATOM( \
     mpllibs::metamonad::overloading_error_tag, \
     invalid_args_for_##name \
-  ); \
+  ) \
   \
   template <BOOST_PP_ENUM_PARAMS(arg_num, class Tag)> \
   struct name##_impl \

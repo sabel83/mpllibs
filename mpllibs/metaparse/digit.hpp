@@ -22,7 +22,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, digit_expected);
+      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, digit_expected)
     }
   
     typedef
@@ -35,7 +35,7 @@ namespace mpllibs
   }
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::digit, "digit");
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::digit, "digit")
 
 #endif
 

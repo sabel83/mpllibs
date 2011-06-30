@@ -24,7 +24,7 @@
         return o << #name; \
       } \
     }; \
-  }
+  };
 
 #endif
 

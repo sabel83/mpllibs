@@ -35,7 +35,7 @@ namespace mpllibs
       MPLLIBS_DEFINE_META_ATOM(
         mpllibs::metaparse::error_tag,
         none_of_the_expected_cases_found
-      );
+      )
     }
   
     #ifdef MPLLIBS_ONE_OF_BODY_PREFIX

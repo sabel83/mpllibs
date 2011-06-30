@@ -28,8 +28,8 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_TAG(printf_error_tag);
-      MPLLIBS_DEFINE_META_ATOM(printf_error_tag, no_percentage_char_expected);
+      MPLLIBS_DEFINE_TAG(printf_error_tag)
+      MPLLIBS_DEFINE_META_ATOM(printf_error_tag, no_percentage_char_expected)
     }
   
     namespace grammar

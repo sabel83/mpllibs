@@ -25,7 +25,7 @@ using mpllibs::metatest::suite_path;
  */
 namespace
 {
-  MPLLIBS_DEFINE_TAG(wrapper_tag);
+  MPLLIBS_DEFINE_TAG(wrapper_tag)
 
   typedef wrapper_tag wrapper_monad;
 

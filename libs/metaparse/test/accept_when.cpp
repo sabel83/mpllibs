@@ -40,7 +40,7 @@ namespace
 {
   const suite_path suite("accept_when");
 
-  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error);
+  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
 
   typedef has_type<accept_when<one_char, is_digit, test_error> > test_has_type;
 

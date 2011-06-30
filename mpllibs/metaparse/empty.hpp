@@ -27,7 +27,7 @@ namespace mpllibs
       MPLLIBS_DEFINE_META_ATOM(
         mpllibs::metaparse::error_tag,
         end_of_input_expected
-      );
+      )
     }
     
     template <class Result>

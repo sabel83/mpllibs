@@ -12,7 +12,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(error_tag);
+    MPLLIBS_DEFINE_TAG(error_tag)
   }
 }
 

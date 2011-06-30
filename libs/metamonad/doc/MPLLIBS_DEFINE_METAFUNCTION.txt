@@ -37,7 +37,7 @@ Expression semantics
 The following
 
 --------------------------------------
-MPLLIBS_DEFINE_METAFUNCTION(name, 3);
+MPLLIBS_DEFINE_METAFUNCTION(name, 3)
 --------------------------------------
 
 is equivalent to
@@ -72,7 +72,7 @@ Example
 -------
 
 --------------------------------------
-MPLLIBS_DEFINE_METAFUNCTION(f, 3);
+MPLLIBS_DEFINE_METAFUNCTION(f, 3)
 --------------------------------------
 
 include::copyright[]
