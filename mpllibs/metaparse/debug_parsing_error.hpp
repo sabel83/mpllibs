@@ -105,7 +105,7 @@ namespace mpllibs
     struct build_parser;
     
     template <class P, class S>
-    struct debug_parsing_error<build_parser<P>, S> :
+    class debug_parsing_error<build_parser<P>, S> :
       debug_parsing_error<P, S>
     {};
   }
