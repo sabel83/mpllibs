@@ -23,6 +23,16 @@ namespace mpllibs
     template <class F, class ValueType>
     struct has_value
     {
+      struct to_stream
+      {
+        static std::ostream& run(std::ostream& o)
+        {
+          o << "has_value<";
+          to_stream_argument_list<F, ValueType>::run(o);
+          return o << ">";
+        }
+      };
+
       struct type
       {
         template <ValueType Value_>
@@ -51,16 +61,6 @@ namespace mpllibs
             == sizeof(yes);
 
         typedef typename has_value<F, ValueType>::to_stream to_stream;
-      };
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "has_value<";
-          to_stream_argument_list<F, ValueType>::run(o);
-          return o << ">";
-        }
       };
     };
   }
