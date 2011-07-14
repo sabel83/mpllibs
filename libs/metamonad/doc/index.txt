@@ -637,6 +637,9 @@ link:MPLLIBS_DEFINE_TAG.html[MPLLIBS_DEFINE_TAG] +
 link:MPLLIBS_DEFINE_META_ATOM.html[MPLLIBS_DEFINE_META_ATOM] +
 link:MPLLIBS_DEFINE_METAFUNCTION.html[MPLLIBS_DEFINE_METAFUNCTION] +
 
+Monads implemented by the library +
+link:exception_monad.html[exception monad] +
+
 include::copyright[]
 
 link:../../../index.html[[up]]
