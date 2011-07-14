@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_METAMONAD_TRY_HPP
-#define MPLLIBS_METAMONAD_TRY_HPP
+#ifndef MPLLIBS_METAMONAD_DO_TRY_HPP
+#define MPLLIBS_METAMONAD_DO_TRY_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
@@ -21,28 +21,28 @@
 
 /*
  * Catching exceptions happens by using
- *   TRY<...>
+ *   MPLLIBS_DO_TRY<...>
  *     ::catch_<Tag1, Name1>
  *       ::apply<Body1>
  *     ::catch_<Tag2, Name2>
  *       ::apply<Body2>
  * instead of
- *   TRY<...>
+ *   MPLLIBS_DO_TRY<...>
  *     ::catch_<Tag1, Name1, Body1>
  *     ::catch_<Tag2, Name2, Body2>
  * to avoid ambiguity related to
  *  http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_defects.html#147
- * caused by TRY<...>::catch_<...>::catch_<...> patterns.
+ * caused by MPLLIBS_DO_TRY<...>::catch_<...>::catch_<...> patterns.
  */
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    #ifdef MPLLIBS_TRY
-      #error MPLLIBS_TRY already defined
+    #ifdef MPLLIBS_DO_TRY
+      #error MPLLIBS_DO_TRY already defined
     #endif
-    #define MPLLIBS_TRY mpllibs::metamonad::try_
+    #define MPLLIBS_DO_TRY mpllibs::metamonad::do_try
 
     struct catch_any
     {
@@ -108,7 +108,7 @@ namespace mpllibs
         boost::mpl::na
       )
     >
-    struct try_ :
+    struct do_try :
       boost::mpl::if_<
         typename boost::is_same<
           exception_tag,
@@ -134,7 +134,7 @@ namespace mpllibs
       {
         static std::ostream& run(std::ostream& o)
         {
-          o << "MPLLIBS_TRY<";
+          o << "MPLLIBS_DO_TRY<";
           mpllibs::metatest::to_stream_argument_list<
             BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
           >::run(o);

@@ -12,7 +12,7 @@
 #include <mpllibs/metaparse/get_remaining.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
 
-#include <mpllibs/metamonad/try_.hpp>
+#include <mpllibs/metamonad/do_try.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 
 #include <boost/mpl/always.hpp>

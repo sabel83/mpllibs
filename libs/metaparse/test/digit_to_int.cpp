@@ -10,7 +10,7 @@
 #include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
 
-#include <mpllibs/metamonad/try_.hpp>
+#include <mpllibs/metamonad/do_try.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -38,7 +38,7 @@ namespace
   
   typedef
     equal_to<
-      MPLLIBS_TRY<
+      MPLLIBS_DO_TRY<
         apply_wrap1<digit_to_int, char_x>
       >
       ::catch_<error_tag, x>::apply<int13>

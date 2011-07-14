@@ -19,7 +19,7 @@
 #include <mpllibs/metaparse/build_parser.hpp>
 
 #include <mpllibs/metamonad/do_.hpp>
-#include <mpllibs/metamonad/try_.hpp>
+#include <mpllibs/metamonad/do_try.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/meta_atom.hpp>
 
@@ -113,7 +113,7 @@ struct eval_plus
 {
   template <class C, class State>
   struct apply :
-    MPLLIBS_TRY<
+    MPLLIBS_DO_TRY<
       MPLLIBS_SET<state, State>,
       MPLLIBS_SET<new_value, back<C> >,
       eval_if<
@@ -137,7 +137,7 @@ struct eval_mult
 {
   template <class C, class State>
   struct apply :
-    MPLLIBS_TRY<
+    MPLLIBS_DO_TRY<
       MPLLIBS_SET<state, State>,
       MPLLIBS_SET<new_value, back<C> >,
       eval_if<

@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/try_.hpp>
+#include <mpllibs/metamonad/do_try.hpp>
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 
@@ -31,7 +31,7 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(division_by_zero, "division by zero")
 
 template <class A, class B>
 struct safe_divides :
-  MPLLIBS_TRY<
+  MPLLIBS_DO_TRY<
     eval_if<
       typename equal_to<B, int0>::type,
       MPLLIBS_THROW<division_by_zero>,

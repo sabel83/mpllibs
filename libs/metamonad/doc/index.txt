@@ -535,7 +535,7 @@ Exceptions handling happens by using a __try block__, which looks like the
 following:
 
 --------------------------------------
-MPLLIBS_TRY<
+MPLLIBS_DO_TRY<
   step1,
   step2,
   
@@ -565,7 +565,7 @@ struct unknown_error;
 
 template <class A, class B>
 struct min :
-  MPLLIBS_TRY<
+  MPLLIBS_DO_TRY<
     MPLLIBS_SET<c, less<A, B> >,
     boost::mpl::if_<c, A, B>
   >
@@ -626,7 +626,7 @@ Compile-time exceptions +
 link:exception.html[exception] +
 link:get_data.html[get_data] +
 link:MPLLIBS_THROW.html[MPLLIBS_THROW] +
-link:MPLLIBS_TRY.html[MPLLIBS_TRY] +
+link:MPLLIBS_DO_TRY.html[MPLLIBS_DO_TRY] +
 
 Tags +
 link:tag_tag.html[tag_tag] +
