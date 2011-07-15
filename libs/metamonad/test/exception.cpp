@@ -47,9 +47,9 @@ namespace
   typedef
     equal_to<
       int13,
-        MPLLIBS_DO<exception_monad>::apply<
-          MPLLIBS_RETURN<int13>
-        >::type
+      MPLLIBS_DO<exception_monad>::apply<
+        MPLLIBS_RETURN<int13>
+      >::type
     >
     test_monadic_no_exception;
 
