@@ -11,8 +11,6 @@
 #include "common.hpp"
 
 #include <boost/mpl/not.hpp>
-#include <boost/mpl/plus.hpp>
-#include <boost/mpl/lambda.hpp>
 
 using mpllibs::metatest::suite_path;
 
@@ -22,8 +20,6 @@ using mpllibs::metamonad::is_nothing;
 
 using boost::mpl::equal_to;
 using boost::mpl::not_;
-using boost::mpl::plus;
-using boost::mpl::_1;
 
 namespace
 {
@@ -32,11 +28,9 @@ namespace
   typedef just<int13> just13;
   typedef just<int11> just11;
   
-  typedef just<plus<_1, int2> > maybe_add_2;
-  
   typedef equal_to<get_data<just13>::type, int13> test_get_data;
 
-  typedef equal_to<int13, int13> test_compare_with_same_data;
+  typedef equal_to<just13, just13> test_compare_with_same_data;
 
   typedef not_<equal_to<just13, just11> > test_compare_with_different_data;
 

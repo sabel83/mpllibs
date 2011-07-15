@@ -35,11 +35,11 @@ Header
 Expression semantics
 --------------------
 
-For any +d+ nullary metafunction, the following are equivalent
+For any +d+ nullary metafunction, the following evaluate to +true+
 
 --------------------------------------
-mpllibs::metamonad::is_nothing<d>
-boost::is_same<boost::mpl::tag<d::type>::type, nothing_tag>
+is_nothing<nothing>
+boost::mpl::not_<is_nothing<just<d> > >
 --------------------------------------
 
 Example

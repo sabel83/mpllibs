@@ -14,7 +14,7 @@ link:exception_monad.html[exception monad].
 
 Monadic values consist of +nothing+ and +just<T>+, where +T+ is a nullary
 metafunction. +just+ evaluates its argument. +nothing+ represents error,
-+just+ represents normal result
++just+ represents normal result.
 
 general information
 -------------------
