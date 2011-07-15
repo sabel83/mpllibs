@@ -1,0 +1,59 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+nothing
+=======
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+struct nothing
+{
+  typedef nothing_tag tag;
+
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Compile-time data-structure representing a failure in the
+link:maybe_monad.html[maybe monad].
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metamonad/nothing.hpp>
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+using boost::mpl::eval_if;
+using boost::mpl::equal_to;
+using boost::mpl::int_;
+
+template <class A, class B>
+struct divide :
+  eval_if<
+    equal_to<A, int_<0> >,
+    mpllibs::metamonad::nothing,
+    just<divides<A, B> >
+  >
+  {};
+--------------------------------------
+
+include::copyright[]
+
+link:index.html[[up]]
+
+
+
