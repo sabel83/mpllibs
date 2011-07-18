@@ -649,9 +649,10 @@ link:is_left.html[is_left] +
 link:is_right.html[is_right] +
 
 Monads implemented by the library +
-link:exception_monad.html[exception monad] +
-link:maybe_monad.html[maybe monad] +
 link:either_monad.html[either monad] +
+link:exception_monad.html[exception monad] +
+link:list_monad.html[list monad] +
+link:maybe_monad.html[maybe monad] +
 
 include::copyright[]
 
