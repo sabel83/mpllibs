@@ -675,6 +675,9 @@ link:lambda.html[lambda] +
 Typeclasses +
 link:MPLLIBS_TYPECLASS_EXPECT.html[MPLLIBS_TYPECLASS_EXPECT] +
 
+Monoids +
+link:monoid.html[monoid] +
+
 Monads +
 link:bind_.html[bind_] +
 link:bind.html[bind] +
