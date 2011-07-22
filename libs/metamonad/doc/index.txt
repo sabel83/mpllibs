@@ -714,6 +714,8 @@ link:either_monad.html[either monad] +
 link:exception_monad.html[exception monad] +
 link:list_monad.html[list monad] +
 link:maybe_monad.html[maybe monad] +
+link:reader_monad.html[reader monad] +
+link:state_monad.html[state monad] +
 
 include::copyright[]
 
