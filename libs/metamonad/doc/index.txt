@@ -672,6 +672,9 @@ link:letrec.html[letrec] +
 Lambda expressions +
 link:lambda.html[lambda] +
 
+Typeclasses +
+link:MPLLIBS_TYPECLASS_EXPECT.html[MPLLIBS_TYPECLASS_EXPECT] +
+
 Monads +
 link:bind_.html[bind_] +
 link:bind.html[bind] +

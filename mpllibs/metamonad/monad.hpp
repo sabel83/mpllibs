@@ -6,6 +6,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/typeclass.hpp>
+
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/always.hpp>
 
@@ -13,19 +17,18 @@
 
 namespace mpllibs
 {
-  namespace metatest
-  {
-    template <class T>
-    struct to_stream;
-  }
-  
   namespace metamonad
   {
     template <class Tag>
-    struct monad;
+    struct monad
+    {
+      MPLLIBS_TYPECLASS_EXPECT(return_)
+      MPLLIBS_TYPECLASS_EXPECT(bind)
+      MPLLIBS_TYPECLASS_EXPECT(bind_)
+    };
     
     template <class Tag>
-    struct monad_defaults
+    struct monad_defaults : monad<typeclass_expectations>
     {
       struct bind_
       {
