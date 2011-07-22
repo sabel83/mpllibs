@@ -11,6 +11,7 @@
 #include <mpllibs/metamonad/nothing.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/if.hpp>
@@ -22,41 +23,49 @@ namespace mpllibs
   {
     MPLLIBS_DEFINE_TAG(maybe_tag)
     
-    /*
-     * return
-     */
-    template <class>
-    struct return__impl;
-    
     template <>
-    struct return__impl<maybe_tag>
+    struct monad<maybe_tag> : monad_defaults<maybe_tag>
     {
-      template <class T>
-      struct apply : just<T> {};
-    };
+      struct return_
+      {
+        typedef return_ type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<maybe_tag>::return_";
+          }
+        };
 
-
-    /*
-     * bind
-     */
-    template <class>
-    struct bind_impl;
-
-    template <>
-    struct bind_impl<maybe_tag>
-    {
-    private:
-      template <class A, class F>
-      struct call_F : boost::mpl::apply<F, typename get_data<A>::type> {};
-    public:
-      template <class A, class F>
-      struct apply :
-        boost::mpl::if_<
-          is_nothing<A>,
-          boost::mpl::identity<A>,
-          call_F<A, F>
-        >::type
-      {};
+        template <class T>
+        struct apply : just<T> {};
+      };
+      
+      struct bind
+      {
+      private:
+        template <class A, class F>
+        struct call_F : boost::mpl::apply<F, typename get_data<A>::type> {};
+      public:
+        template <class A, class F>
+        struct apply :
+          boost::mpl::if_<
+            is_nothing<A>,
+            boost::mpl::identity<A>,
+            call_F<A, F>
+          >::type
+        {};
+        typedef bind type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<maybe_tag>::bind";
+          }
+        };
+      };
     };
   }
 }

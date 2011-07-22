@@ -21,6 +21,7 @@ using boost::mpl::apply_wrap1;
 using mpllibs::metatest::suite_path;
 
 using mpllibs::metamonad::return_;
+using mpllibs::metamonad::monad;
 
 namespace
 {
@@ -32,10 +33,17 @@ namespace mpllibs
   namespace metamonad
   {
     template <>
-    struct return__impl<test_tag>
+    struct monad<test_tag> : monad_defaults<test_tag>
     {
-      template <class t>
-      struct apply : identity<int13> {};
+      struct return_
+      {
+        typedef return_ type;
+        
+        template <class T>
+        struct apply : identity<int13> {};
+      };
+      
+      // no bind is needed for this test
     };
   }
 }
@@ -45,7 +53,7 @@ namespace
   const suite_path suite("return_");
 
   typedef
-    equal_to<int13, apply_wrap1<return_<test_tag>, int>::type>
+    equal_to<int13, apply_wrap1<monad<test_tag>::return_, int>::type>
     test_specialisation_is_called;  
 
   typedef

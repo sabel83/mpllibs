@@ -6,30 +6,23 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/bind.hpp>
+#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 
-#include <boost/mpl/always.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    template <class MonadTag>
-    struct bind__impl
-    {
-      template <class A, class B>
-      struct apply :
-        boost::mpl::apply_wrap2<bind_impl<MonadTag>, A, boost::mpl::always<B> >
-      {};
-    };
-
-    // bind_ evaluates its arguments lazily
     template <class MonadTag, class A, class B>
     struct bind_ :
-      boost::mpl::apply_wrap2<bind__impl<MonadTag>, A, B>
+      boost::mpl::apply_wrap2<
+        typename mpllibs::metamonad::monad<MonadTag>::bind_,
+        A,
+        B
+      >
     {
       struct to_stream
       {

@@ -14,6 +14,7 @@
 
 #include <mpllibs/metamonad/do_try.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -29,56 +30,73 @@ namespace mpllibs
   
   namespace metamonad
   {
-    template <class Tag>
-    struct return__impl;
-    
     template <>
-    struct return__impl<mpllibs::metaparse::parser_tag>
+    struct monad<mpllibs::metaparse::parser_tag> :
+      monad_defaults<mpllibs::metaparse::parser_tag>
     {
-      template <class T>
-      struct apply : mpllibs::metaparse::return_<T> {};
-    };
-    
-    template <class Tag>
-    struct bind_impl;
-    
-    template <>
-    struct bind_impl<mpllibs::metaparse::parser_tag>
-    {
-    private:
-      template <class P, class F>
-      struct apply_impl
+      struct return_
+      {
+        typedef return_ type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<parser_tag>::return_";
+          }
+        };
+        
+        template <class T>
+        struct apply : mpllibs::metaparse::return_<T> {};
+      };
+      
+      struct bind
       {
       private:
-        template <class PrevResult>
-        struct apply_unchecked :
-          boost::mpl::apply_wrap2<
-            typename boost::mpl::apply<F, PrevResult>::type,
-            typename mpllibs::metaparse::get_remaining<PrevResult>::type,
-            typename mpllibs::metaparse::get_position<PrevResult>::type
-          >
-        {};
-      public:
-        typedef apply_impl type;
+        template <class P, class F>
+        struct apply_impl
+        {
+        private:
+          template <class PrevResult>
+          struct apply_unchecked :
+            boost::mpl::apply_wrap2<
+              typename boost::mpl::apply<F, PrevResult>::type,
+              typename mpllibs::metaparse::get_remaining<PrevResult>::type,
+              typename mpllibs::metaparse::get_position<PrevResult>::type
+            >
+          {};
+        public:
+          typedef apply_impl type;
       
-        template <class S, class Pos>
-        struct apply :
-          boost::mpl::eval_if<
-            typename mpllibs::metaparse::is_error<
-              boost::mpl::apply_wrap2<P, S, Pos>
-            >::type,
-            boost::mpl::apply_wrap2<P, S, Pos>,
-            apply_unchecked<boost::mpl::apply_wrap2<P, S, Pos> >
-          >
-        {};
-      };
-    public:
-      // P :: Parser
-      // F :: previous_result -> Parser
-      template <class P, class F>
-      struct apply
-      {
-        typedef apply_impl<P, F> type;
+          template <class S, class Pos>
+          struct apply :
+            boost::mpl::eval_if<
+              typename mpllibs::metaparse::is_error<
+                boost::mpl::apply_wrap2<P, S, Pos>
+              >::type,
+              boost::mpl::apply_wrap2<P, S, Pos>,
+              apply_unchecked<boost::mpl::apply_wrap2<P, S, Pos> >
+            >
+          {};
+        };
+      public:
+        // P :: Parser
+        // F :: previous_result -> Parser
+        template <class P, class F>
+        struct apply
+        {
+          typedef apply_impl<P, F> type;
+        };
+        
+        typedef bind type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<parser_tag>::bind";
+          }
+        };
       };
     };
   }

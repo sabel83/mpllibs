@@ -4,6 +4,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metamonad/return_.hpp>
+#include <mpllibs/metamonad/bind.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>

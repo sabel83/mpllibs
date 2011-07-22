@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 
@@ -72,37 +73,49 @@ namespace mpllibs
     /*
      * return
      */
-    template <class>
-    struct return__impl;
-    
     template <>
-    struct return__impl<exception_tag>
+    struct monad<exception_tag> : monad_defaults<exception_tag>
     {
-      template <class T>
-      struct apply
+      struct return_
       {
-        typedef T type;
+        typedef return_ type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<exception_tag>::return_";
+          }
+        };
+
+        template <class T>
+        struct apply
+        {
+          typedef T type;
+        };
       };
-    };
+      
+      struct bind
+      {
+        typedef bind type;
 
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<exception_tag>::bind";
+          }
+        };
 
-    /*
-     * bind
-     */
-    template <class>
-    struct bind_impl;
-
-    template <>
-    struct bind_impl<exception_tag>
-    {
-      template <class A, class F>
-      struct apply :
-        boost::mpl::if_<
-          boost::is_same<exception_tag, typename boost::mpl::tag<A>::type>,
-          boost::mpl::identity<A>,
-          boost::mpl::apply<F, A>
-        >::type
-      {};
+        template <class A, class F>
+        struct apply :
+          boost::mpl::if_<
+            boost::is_same<exception_tag, typename boost::mpl::tag<A>::type>,
+            boost::mpl::identity<A>,
+            boost::mpl::apply<F, A>
+          >::type
+        {};
+      };
     };
   }
 }

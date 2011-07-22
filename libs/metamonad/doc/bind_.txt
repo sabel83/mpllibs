@@ -22,16 +22,29 @@ struct bind_
 Description
 -----------
 
-Takes a monad tag and two monadic values as arguments, returns a new monadic
-value. It can be overloaded by +MonadTag+, its behaviour is dependent on it.
-The default behaviour calls link:bind.html[bind] with +A+ as its monadic value
-argument and a the constant +B+ function as its function argument.
++bind_+ is a metafunction for the +bind_+ operation of the
+link:monad.html[monad] typeclass.
 
 Header
 ------
 
 --------------------------------------
 #include <mpllibs/metamonad/bind_.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +Tag+ tag and +A+, +B+ values:
+
+--------------------------------------
+bind_<MonadTag, A, B>
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+monad<MonadTag>::bind_<A, B>
 --------------------------------------
 
 Example

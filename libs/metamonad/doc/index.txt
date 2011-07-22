@@ -14,6 +14,7 @@ The library contains the following components:
 
 * Let expressions
 * Lambda expressions
+* Haskell typeclasses in template metaprograms
 * Monads for template metaprograms
 * The do notation
 * Compile-time exceptions
@@ -34,15 +35,15 @@ Introduction
 
 This library is built on top of boost::mpl, thus the reader is expected to be
 familiar with that library and its concepts.
-Tutorial introduces the different components of metamonad using examples. Since
-the tools of the library extend each other, it is recommended to read this
+This tutorial introduces the different components of metamonad using examples.
+Since the tools of the library extend each other, it is recommended to read this
 tutorial in order.
 
 Tags
 ----
 
 The concept of +tags+ needs to be introduced first. This comes from boost::mpl,
-however metamonad is heavily dependent on it.
+metamonad is heavily dependent on it.
 
 In boost::mpl every compile-time value has a member type called +tag+ that
 is used to determine whether that value is a wrapped integral, a list, a vector,
@@ -172,6 +173,86 @@ letrec<
   >,
   boost::mpl::apply<fact, boost::mpl::int_<3> >
 >
+--------------------------------------
+
+Haskell typeclasses in template metaprograms
+--------------------------------------------
+
+We need to introduce an equivalent of the Haskell typeclass in template
+metaprogramming. It can be implemented using traits:
+
+* The typeclass is a trait, the template argument is a +tag+
+* Instances of the typeclass are specialisations of the trait
+* Functions required by the typeclass are implemented as template metafunction
+  classes in the specialisations
+* For a typeclass X, a template class called X_defaults implements the functions
+  with default implementations. Every instance of the typeclass is expected to
+  publicly inherit from this template class with the same template argument.
+
+There is no way of expressing which functions instances of the typeclass have
+to implement. This solution makes the usage of typeclasses explicit in the code.
+
+Example:
+~~~~~~~~
+
+Typeclass in Haskell:
+
+--------------------------------------
+class Monad m where
+  bind :: m a -> (a -> m b) -> m b
+  bind_ :: m a -> m b -> m b
+  return :: a -> m a
+
+  bind m k = bind m (\_ -> k)
+--------------------------------------
+
+Its template metaprogramming equivalent:
+
+--------------------------------------
+using boost::mpl;
+
+template <class Tag>
+struct monad;
+// Requires:
+//   struct return_ { template <class> struct apply; };
+//   struct bind { template <class> struct apply; };
+
+template <class Tag>
+struct monad_defaults
+{
+  template <class A, class B>
+  struct apply : apply_wrap2<typename monad<Tag>::bind, A, always<B> > {};
+};
+--------------------------------------
+
+An instance of this class in Haskell:
+
+--------------------------------------
+instance Monad M where
+  return a = ...
+  bind (M a) f = ...
+--------------------------------------
+
+An instance of this class in template metaprogramming:
+
+--------------------------------------
+struct m_tag;
+
+template <>
+struct monad<m_tag> : monad_defaults<m_tag>
+{
+  struct return
+  {
+    template <class T>
+    struct apply { ... };
+  };
+
+  struct bind
+  {
+    template <class T, class F>
+    struct apply { ... };
+  };
+};
 --------------------------------------
 
 Reporting errors
@@ -356,16 +437,28 @@ The next two sections present monads and the do notation in detail.
 Monads
 ------
 
-Haskell's approach depends heavily on the language's complex type system. In C++
-template metaprogramming this is not available, thus many things had to be
-simplified. In metamonad a monad is a set of compile-time values with two
-operations. This set of values is identified by the +Monad+ typeclass in
-Haskell, however template metaprogramming is weakly typed, thus this set is
-specified by an informal description in a comment or the documentation.
+A monad consists of the following:
+
+* A +tag+, identifying the monad itself
+* A set of metaprogramming values (which are types)
+* Two operations:
+** +return_<class>+ taking some value and returning an element of the set
+** +bind<class, class>+ taking an element of the set and a function, taking
+   some value and returning an element of the set. +bind+ returns an element of
+   the set.
+
+In Haskell the set of values is identified by the type system, in template
+metaprogramming it is identified by an informal description in the
+documentation.
+
+Similarly to Haskell, metamonad provides the link:monad.html[monad] typeclass
+for implementing monads. It requires +return_+ and +bind+ to be implemented as
+metafunction classes.
+
 metamonad uses +tags+ to identify monads themselves, but not to identify the set
 of values. +tags+ are used as a replacement of Haskell's value constructors and
-pattern matching. For example Haskell's +Maybe+ would be implemented the
-following way to support metafunction overloading:
+pattern matching. For example Haskell's +Maybe+ is implemented the following
+way to support metafunction overloading:
 
 --------------------------------------
 struct nothing_tag;
@@ -377,21 +470,14 @@ template <class T>
 struct just { typedef just_tag tag; };
 --------------------------------------
 
-The +Maybe+ monad consists of +nothing+ and +just+ values, which have different
-+tags+. Because of this, +tags+ cannot be used to identify the set of values
-belonging to a monad.
+The +Maybe+ monad consists of the +nothing+ and +just+ values, which have
+different +tags+. Because of this, +tags+ cannot be used to identify the set of
+values belonging to a monad.
 
-In Haskell the +Monad+ typeclass requires two functions operating on the monadic
-values: the +>>=+ operator and +return+. +>>=+ is an operator taking a monadic
-value and a function mapping non-monadic values to monadic values as arguments.
-+return+ takes a non-monadic value and returns a monadic one. In template 
-metaprogramming these functions need to be implemented as metafunctions:
-
-* +return_+ taking an arbitrary value and returning an element of the set of values.
-* +bind+ taking an element of the set of values and a metafunction class, whose return value is an element of the set, as well. +bind+ should return an element of the set of values.
-
-The monad is identified using a +tag+. metamonad contains template metafunctions
-for the two operations taking the monad's +tag+ as their first argument:
+metamonad provides metafunctions for the operations implemented by the
+typeclass to hide the typeclass itself behind monads. These functions take the
++tag+ of the monad as their first argument and call the same operation of the
+typeclass:
 
 --------------------------------------
 template <class MonadTag, class SomeValue>
@@ -405,44 +491,18 @@ template <
 struct bind;
 --------------------------------------
 
-These metafunctions can be overloaded using the monad's +tag+.
-The implementation of these metafunctions use helper metafunction classes,
-+return\__impl+ and +bind_impl+. Note that unlike for regular
-metafunctions, these helper metafunction classes take only the +MonadTag+
-as template arguments, thus +return__impl+ and +bind_impl+
-can be overloaded by the +MonadTag+ only. The implementation of 
-+return_+ looks like the following:
-
---------------------------------------
-template <class MonadTag, class SomeValue>
-struct return_ :
-  boost::mpl::apply<return__impl<MonadTag>, SomeValue>
-{};
---------------------------------------
-
-The implementation of +bind+:
-
---------------------------------------
-template <class MonadTag, class A, class F>
-struct bind :
-  boost::mpl::apply<bind_impl<MonadTag>, A, F>
-{};
---------------------------------------
-
 Haskell has semantic expectations for monads that are
 documented but can not be verified by the compiler. The C++ template
-metaprogramming equivalent of these expectations are the following:
+metaprogramming equivalent of these expectations are the following.
 
 * left identity:
-    +bind<MonadTag, return_<MonadTag, X>, F>+ is equivalent to
+    +monad<Tag>::bind<monad<Tag>::return_<X>, F>+ is equivalent to
     +boost::mpl::apply<F, X>+.
 * right identity:
-    +bind<MonadTag, M, return_<MonadTag> >+ is equivalent to +M+.
-    +return_<MonadTag>+ is a metafunction class taking 1 argument, +X+, and
-    evaluating +return_<MonadTag, X>+.
+    +monad<Tag>::bind<M, monad<Tag>::return_>+ is equivalent to +M+.
 * associativity:
-    +bind<MonadTag, M, lambda<x, bind<MonadTag, boost::mpl::apply<F, x>, G> > >+
-    is equivalent to +bind<MonadTag, bind<MonadTag, M, F>, G>+. +lambda+ is
+    +monad<Tag>::bind<M, lambda<x, monad<Tag>::bind<boost::mpl::apply<F, x>, G> > >+
+    is equivalent to +monad<Tag>::bind<monad<Tag>::bind<M, F>, G>+. +lambda+ is
     metamonad's lambda expression implementation.
 
 Similarly to Haskell, metamonad cannot verify these expectations. It is the
@@ -615,6 +675,7 @@ link:lambda.html[lambda] +
 Monads +
 link:bind_.html[bind_] +
 link:bind.html[bind] +
+link:monad.html[monad] +
 link:return_.html[return_] +
 
 Do notation +

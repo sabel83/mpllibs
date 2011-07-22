@@ -5,6 +5,8 @@
 
 #include <mpllibs/metamonad/maybe.hpp>
 #include <mpllibs/metamonad/is_nothing.hpp>
+#include <mpllibs/metamonad/return_.hpp>
+#include <mpllibs/metamonad/bind.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 

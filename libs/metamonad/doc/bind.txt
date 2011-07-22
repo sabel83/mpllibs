@@ -22,15 +22,29 @@ struct bind
 Description
 -----------
 
-Takes a monad tag, a monadic value and a function mapping any value to a monadic
-value as arguments, returns a new monadic value. It can be overloaded by
-+MonadTag+, its behaviour is dependent on it.
++bind+ is a metafunction for the +bind+ operation of the link:monad.html[monad]
+typeclass.
 
 Header
 ------
 
 --------------------------------------
 #include <mpllibs/metamonad/bind.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +Tag+ tag, +A+ value and +F+ nullary metafunction taking one argument:
+
+--------------------------------------
+bind<MonadTag, A, F>
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+monad<MonadTag>::bind<A, F>
 --------------------------------------
 
 Example

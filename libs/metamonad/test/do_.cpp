@@ -53,17 +53,23 @@ namespace mpllibs
   namespace metamonad
   {
     template <>
-    struct return__impl<wrapper_tag>
+    struct monad<wrapper_tag>
     {
-      template <class T>
-      struct apply : wrapped<T> {};
-    };
+      struct return_
+      {
+        typedef return_ type;
 
-    template <>
-    struct bind_impl<wrapper_tag>
-    {
-      template <class A, class F>
-      struct apply : apply<F, A> {};
+        template <class T>
+        struct apply : wrapped<T> {};
+      };
+      
+      struct bind
+      {
+        typedef bind type;
+
+        template <class A, class F>
+        struct apply : apply<F, A> {};
+      };
     };
   }
 }

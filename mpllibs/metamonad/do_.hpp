@@ -7,8 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/lambda.hpp>
-#include <mpllibs/metamonad/bind_.hpp>
-#include <mpllibs/metamonad/bind.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 
@@ -178,7 +177,7 @@ namespace mpllibs
       > \
       struct do##n : \
         boost::mpl::apply_wrap2< \
-          bind__impl<Monad>, \
+          typename monad<Monad>::bind_, \
           typename T::type, \
           typename do_impl< \
             Monad, \
@@ -200,7 +199,7 @@ namespace mpllibs
         BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
       > : \
         boost::mpl::apply_wrap2< \
-          bind_impl<Monad>, \
+          typename monad<Monad>::bind, \
           typename do1<Monad, Ex>::type, \
           typename lambda< \
             Name, \

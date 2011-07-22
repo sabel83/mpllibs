@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/list.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 
 #include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/list.hpp>
@@ -19,26 +20,6 @@ namespace mpllibs
   namespace metamonad
   {
     MPLLIBS_DEFINE_TAG(list_tag)
-    
-    /*
-     * return
-     */
-    template <class>
-    struct return__impl;
-    
-    template <>
-    struct return__impl<list_tag>
-    {
-      template <class T>
-      struct apply : boost::mpl::list<T> {};
-    };
-
-
-    /*
-     * bind
-     */
-    template <class>
-    struct bind_impl;
     
     namespace impl
     {
@@ -56,16 +37,45 @@ namespace mpllibs
     }
 
     template <>
-    struct bind_impl<list_tag>
+    struct monad<list_tag> : monad_defaults<list_tag>
     {
-      template <class A, class F>
-      struct apply :
-        boost::mpl::fold<
-          typename boost::mpl::transform<A, F>::type,
-          boost::mpl::list<>,
-          mpllibs::metamonad::impl::join_lists
-        >
-      {};
+      struct return_
+      {
+        typedef return_ type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<list_tag>::return_";
+          }
+        };
+
+        template <class T>
+        struct apply : boost::mpl::list<T> {};
+      };
+      
+      struct bind
+      {
+        typedef bind type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<list_tag>::bind";
+          }
+        };
+
+        template <class A, class F>
+        struct apply :
+          boost::mpl::fold<
+            typename boost::mpl::transform<A, F>::type,
+            boost::mpl::list<>,
+            mpllibs::metamonad::impl::join_lists
+          >
+        {};
+      };
     };
   }
 }

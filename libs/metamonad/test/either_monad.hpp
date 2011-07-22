@@ -6,8 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/return_.hpp>
-#include <mpllibs/metamonad/bind.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
@@ -65,19 +64,6 @@ namespace
   };
 }
 
-namespace mpllibs
-{
-  namespace metamonad
-  {
-    template <>
-    struct return__impl<either_tag>
-    {
-      template <class T>
-      struct apply : right<T> {};
-    };
-  }
-}
-
 namespace boost
 {
   namespace mpl
@@ -116,26 +102,33 @@ namespace mpllibs
   namespace metamonad
   {
     template <>
-    struct bind_impl<either_tag>
+    struct monad<either_tag> : monad_defaults<either_tag>
     {
-      template <class A, class F>
-      struct apply :
-        boost::mpl::if_<
-          typename boost::is_same<
-            right_tag,
-            typename boost::mpl::tag<A>::type
-          >::type,
-          boost::mpl::apply<F, A>,
-          A
-        >::type
-      {};
+      struct return_
+      {
+        typedef return_ type;
+        
+        template <class T>
+        struct apply : right<T> {};
+      };
+      
+      struct bind
+      {
+        typedef bind type;
+        
+        template <class A, class F>
+        struct apply :
+          boost::mpl::if_<
+            typename boost::is_same<
+              right_tag,
+              typename boost::mpl::tag<A>::type
+            >::type,
+            boost::mpl::apply<F, A>,
+            A
+          >::type
+        {};
+      };
     };
-    
-    template <>
-    struct bind_impl<right_tag> : bind_impl<either_tag> {};
-  
-    template <>
-    struct bind_impl<left_tag> : bind_impl<either_tag> {};
   }
 }
 

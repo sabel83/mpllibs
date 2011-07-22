@@ -6,6 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/left.hpp>
 #include <mpllibs/metamonad/right.hpp>
 #include <mpllibs/metamonad/is_left.hpp>
@@ -22,41 +23,50 @@ namespace mpllibs
   {
     MPLLIBS_DEFINE_TAG(either_tag)
     
-    /*
-     * return
-     */
-    template <class>
-    struct return__impl;
-    
     template <>
-    struct return__impl<either_tag>
+    struct monad<either_tag> : monad_defaults<either_tag>
     {
-      template <class T>
-      struct apply : right<T> {};
-    };
+      struct return_
+      {
+        typedef return_ type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<either_tag>::return_";
+          }
+        };
+        
+        template <class T>
+        struct apply : right<T> {};
+      };
+      
+      struct bind
+      {
+      private:
+        template <class A, class F>
+        struct call_F : boost::mpl::apply<F, typename get_data<A>::type> {};
+      public:
+        template <class A, class F>
+        struct apply :
+          boost::mpl::if_<
+            is_left<A>,
+            boost::mpl::identity<A>,
+            call_F<A, F>
+          >::type
+        {};
+        
+        typedef bind type;
 
-
-    /*
-     * bind
-     */
-    template <class>
-    struct bind_impl;
-
-    template <>
-    struct bind_impl<either_tag>
-    {
-    private:
-      template <class A, class F>
-      struct call_F : boost::mpl::apply<F, typename get_data<A>::type> {};
-    public:
-      template <class A, class F>
-      struct apply :
-        boost::mpl::if_<
-          is_left<A>,
-          boost::mpl::identity<A>,
-          call_F<A, F>
-        >::type
-      {};
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<either_tag>::bind";
+          }
+        };
+      };
     };
   }
 }

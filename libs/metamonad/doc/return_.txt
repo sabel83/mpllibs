@@ -11,16 +11,6 @@ Synopsis
 --------
 
 --------------------------------------
-template <class MonadTag>
-struct return_
-{
-  template <class T>
-  struct apply
-  {
-    // unspecified
-  };
-};
-
 template <class MonadTag, class T>
 struct return_
 {
@@ -32,17 +22,29 @@ struct return_
 Description
 -----------
 
-+return_+ takes an arbitrary class and returns its monadic equivalent. It can be
-overloaded by the monad the return value belongs to. This monad is specified by
-+MonadTag+. It can used in two forms: either as a metafunction class
-parametrised by the +tag+ of the monad or as a metafunction taking the +tag+ and
-the value to lift into the monad as arguments.
++return_+ is a metafunction for the +return_+ operation of the
+link:monad.html[monad] typeclass.
 
 Header
 ------
 
 --------------------------------------
 #include <mpllibs/metamonad/return_.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +Tag+ tag and +T+ value
+
+--------------------------------------
+return_<MonadTag, T>
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+monad<MonadTag>::return_<T>
 --------------------------------------
 
 Example
