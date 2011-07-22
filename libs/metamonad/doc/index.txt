@@ -725,6 +725,7 @@ link:list_monad.html[list monad] +
 link:maybe_monad.html[maybe monad] +
 link:reader_monad.html[reader monad] +
 link:state_monad.html[state monad] +
+link:writer_monad.html[writer monad] +
 
 include::copyright[]
 
