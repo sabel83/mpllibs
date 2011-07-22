@@ -9,11 +9,14 @@
 #include <mpllibs/metamonad/list.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/monad.hpp>
+#include <mpllibs/metamonad/monoid.hpp>
 
 #include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/transform.hpp>
+#include <boost/mpl/lambda.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -76,6 +79,21 @@ namespace mpllibs
           >
         {};
       };
+    };
+    
+    template <>
+    struct monoid<list_tag> : monoid_defaults<list_tag>
+    {
+      typedef boost::mpl::list<> empty;
+      typedef
+        boost::mpl::lambda<
+          boost::mpl::apply_wrap2<
+            mpllibs::metamonad::impl::join_lists,
+            boost::mpl::_1,
+            boost::mpl::_2
+          >
+        >
+        append;
     };
   }
 }

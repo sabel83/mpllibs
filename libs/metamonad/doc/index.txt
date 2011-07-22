@@ -715,6 +715,9 @@ link:right.html[right] +
 link:is_left.html[is_left] +
 link:is_right.html[is_right] +
 
+Monoids implemented by the library +
+link:list_monoid.html[list monoid] +
+
 Monads implemented by the library +
 link:either_monad.html[either monad] +
 link:exception_monad.html[exception monad] +

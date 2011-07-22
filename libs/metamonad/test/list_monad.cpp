@@ -24,7 +24,7 @@ using boost::mpl::list;
 
 namespace
 {
-  const suite_path suite("list");
+  const suite_path suite = suite_path("list")("monad");
   
   struct twice
   {
