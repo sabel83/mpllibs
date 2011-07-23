@@ -22,6 +22,7 @@
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/vector_c.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -37,6 +38,7 @@ using mpllibs::metaparse::error_tag;
 using boost::mpl::equal;
 using boost::mpl::apply_wrap2;
 using boost::mpl::list;
+using boost::mpl::vector_c;
 using boost::mpl::string;
 
 namespace
@@ -59,7 +61,7 @@ namespace
   typedef
     equal<
       get_result<apply_wrap2<any_one_of<one_char>, str_hello, start> >::type,
-      list<char_h, char_e, char_l, char_l, char_o>
+      vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
     test_good_sequence;
 
@@ -75,7 +77,7 @@ namespace
       get_result<
         apply_wrap2<any_one_of<one_char, test_fail>, str_hello, start>
       >::type,
-      list<char_h, char_e, char_l, char_l, char_o>
+      vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
     test_2_with_first_good;
 
@@ -84,7 +86,7 @@ namespace
       get_result<
         apply_wrap2<any_one_of<test_fail, one_char>, str_hello, start>
       >::type,
-      list<char_h, char_e, char_l, char_l, char_o>
+      vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
     test_2_with_second_good;
 

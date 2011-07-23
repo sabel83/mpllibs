@@ -18,6 +18,7 @@
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/vector_c.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -32,6 +33,7 @@ using boost::mpl::apply_wrap2;
 using boost::mpl::list;
 using boost::mpl::equal_to;
 using boost::mpl::at_c;
+using boost::mpl::vector_c;
 
 namespace
 {
@@ -46,7 +48,7 @@ namespace
   typedef
     equal<
       get_result<apply_wrap2<sequence<lit_h>, str_hello, start> >::type,
-      list<char_h>
+      vector_c<char, 'h'>
     >
     test_one_parser;
 
@@ -57,7 +59,7 @@ namespace
   typedef
     equal<
       get_result<apply_wrap2<sequence<lit_h, lit_e>, str_hello, start> >::type,
-      list<char_h, char_e>
+      vector_c<char, 'h', 'e'>
     >
     test_two_chars;
 
@@ -78,7 +80,7 @@ namespace
       get_result<
         apply_wrap2<sequence<lit_h, lit_e, lit_l>, str_hello, start>
       >::type,
-      list<char_h, char_e, char_l>
+      vector_c<char, 'h', 'e', 'l'>
     >
     test_three_chars;
 

@@ -17,6 +17,7 @@
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/size.hpp>
+#include <boost/mpl/vector_c.hpp>
 
 using mpllibs::metatest::has_type;
 
@@ -27,6 +28,7 @@ using mpllibs::metaparse::start;
 using boost::mpl::equal;
 using boost::mpl::equal_to;
 using boost::mpl::apply_wrap2;
+using boost::mpl::vector_c;
 using boost::mpl::list;
 using boost::mpl::size;
 
@@ -47,35 +49,35 @@ namespace
   typedef
     equal<
       get_result<apply_wrap2<any_letter, chars1, start> >::type,
-      list<char_h>
+      vector_c<char, 'h'>
     >
     test1;
   
   typedef
     equal<
       get_result<apply_wrap2<any_letter, chars2, start> >::type,
-      list<char_h, char_e>
+      vector_c<char, 'h', 'e'>
     >
     test2;
   
   typedef
     equal<
       get_result<apply_wrap2<any_letter, chars3, start> >::type,
-      list<char_h, char_e, char_l>
+      vector_c<char, 'h', 'e', 'l'>
     >
     test3;
   
   typedef
     equal<
       get_result<apply_wrap2<any_letter, chars4, start> >::type,
-      list<char_h, char_e, char_l, char_l>
+      vector_c<char, 'h', 'e', 'l', 'l'>
     >
     test4;
   
   typedef
     equal<
       get_result<apply_wrap2<any_letter, chars5, start> >::type,
-      list<char_h, char_e, char_l, char_l, char_o>
+      vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
     test5;
   

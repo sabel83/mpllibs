@@ -21,6 +21,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
+#include <boost/mpl/vector_c.hpp>
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/equal.hpp>
 
@@ -40,6 +41,7 @@ using boost::mpl::apply_wrap2;
 using boost::mpl::equal;
 using boost::mpl::list;
 using boost::mpl::string;
+using boost::mpl::vector_c;
 
 namespace
 {
@@ -56,7 +58,7 @@ namespace
   typedef
     equal<
       get_result<apply_wrap2<any_one_of1<one_char>, str_hello, start> >::type,
-      list<char_h, char_e, char_l, char_l, char_o>
+      vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
     test_good_sequence;
 
@@ -69,7 +71,7 @@ namespace
       get_result<
         apply_wrap2<any_one_of1<one_char, test_fail>, str_hello, start>
       >::type,
-      list<char_h, char_e, char_l, char_l, char_o>
+      vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
     test_2_with_first_good;
 
@@ -78,7 +80,7 @@ namespace
       get_result<
         apply_wrap2<any_one_of1<test_fail, one_char>, str_hello, start>
       >::type,
-      list<char_h, char_e, char_l, char_l, char_o>
+      vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
     test_2_with_second_good;
 
