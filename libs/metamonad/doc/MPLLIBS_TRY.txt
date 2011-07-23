@@ -1,0 +1,82 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+MPLLIBS_TRY
+===========
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+#define MPLLIBS_TRY try_
+
+template <class F>
+struct try_
+{
+  template <class Tag, class Name>
+  struct catch_
+  {
+    template <class Body>
+    struct apply
+    {
+      // unspecified...
+    };
+  }
+};
+--------------------------------------
+
+
+Description
+-----------
+
++MPLLIBS_TRY+ implements a compile-time try-catch block. The body of the try
+block is a nullary metafunction. The +TRY+ block can be followed by any number
+of +catch_+ blocks the same way as in
++link:MPLLIBS_DO_TRY.html[MPLLIBS_DO_TRY]+.
+
+When a subexpression of the nullary metafunction evaluates to a
+link:exception.html[compile-time exception], the rest of the nullary
+metafunction is not evaluated and the result of the +MPLLIBS_TRY+ block is the
+exception, which may or may not be handeled by the +catch_+ blocks.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metamonad/try.hpp>
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+using boost::mpl::int_;
+
+struct error_tag_1;
+struct error_tag_2;
+
+struct unknown_error_detected;
+
+struct r;
+struct e;
+
+MPLLIBS_TRY<
+  may_fail2<may_fail1<int_<13> > >
+>
+::catch_<error_tag_1, e>
+  ::apply<int_<11> >
+::catch_<error_tag_2, e>
+  ::apply<e>
+::catch_<catch_any, e>
+  ::apply<unknown_error_detected>
+--------------------------------------
+
+include::copyright[]
+
+link:index.html[[up]]
+
+
+

@@ -662,6 +662,44 @@ To narrow the gap between the syntax of C++ and compile-time exceptions, a
 metafunction +MPLLIBS_THROW+ is provided for constructing error values. It takes
 one argument, which is the error message.
 
+Advanced compile-time exceptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We have seen so far how to handle exceptions using do-blocks, but we can handle
+exceptions in regular template metaprogramming code as well -- we don't need to
+know about monads and do-blocks. metamonad provides
+link:MPLLIBS_TRY.html[MPLLIBS_TRY] blocks, which work the same way as
+link:MPLLIBS_DO_TRY.html[MPLLIBS_DO_TRY] blocks except that the body of the
++TRY+ block is a nullary metafunction instead of a do-block. When a
+sub-expression of the +TRY+ block evaluates to an exception the evaluation of
+the entire nullary metafunction stops and the result of the +TRY+ block is the
+exception. It may be handled by the +catch_+ blocks or it is the result of the
+try-catch block.
+
+Here is an example of this:
+--------------------------------------
+using boost::mpl;
+
+struct e;
+
+template <class T>
+struct always_throw : MPLLIBS_THROW<int_<13> > {};
+
+typedef
+  MPLLIBS_TRY<
+    plus<int_<1>, always_throw<int_<2> > >
+  >
+  ::catch_<catch_any, e>
+    ::apply<e>
+  ::type
+  this_is_13;
+--------------------------------------
+
+In this example one of the arguments of +plus+ throws a compile-time exception.
+Since +plus+ is used in an +MPLLIBS_TRY+ block, +plus+ itself is never called
+with an exception as its argument. +MPLLIBS_TRY+ delegates the exception to the
++catch_+ block which handels it.
+
 Reference
 ---------
 
@@ -694,6 +732,7 @@ link:exception.html[exception] +
 link:get_data.html[get_data] +
 link:MPLLIBS_THROW.html[MPLLIBS_THROW] +
 link:MPLLIBS_DO_TRY.html[MPLLIBS_DO_TRY] +
+link:MPLLIBS_TRY.html[MPLLIBS_TRY] +
 
 Tags +
 link:tag_tag.html[tag_tag] +
