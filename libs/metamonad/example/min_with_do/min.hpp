@@ -9,18 +9,25 @@
 #include "less.hpp"
 
 #include <mpllibs/metamonad/throw.hpp>
-#include <mpllibs/metamonad/try.hpp>
+#include <mpllibs/metamonad/do_try.hpp>
 
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
 
+struct c;
+
 template <class TagA, class TagB>
 struct min_impl
 {
   template <class A, class B>
-  struct apply : MPLLIBS_TRY<boost::mpl::if_<less<A, B>, A, B> > {};
+  struct apply :
+    MPLLIBS_DO_TRY<
+      MPLLIBS_SET<c, less<A, B> >,
+      boost::mpl::if_<c, A, B>
+    >
+  {};
 };
 
 template <class A, class B>
