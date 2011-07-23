@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/typeclass.hpp>
+#include <mpllibs/metamonad/throw.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -50,6 +51,24 @@ namespace mpllibs
             o_ << "monad<";
             mpllibs::metatest::to_stream<Tag>::run(o_);
             return o_ << ">::bind_";
+          }
+        };
+      };
+
+      struct fail
+      {
+        typedef fail type;
+      
+        template <class S>
+        struct apply : MPLLIBS_THROW<S> {};
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            o_ << "monad<";
+            mpllibs::metatest::to_stream<Tag>::run(o_);
+            return o_ << ">::fail";
           }
         };
       };

@@ -6,6 +6,7 @@
 #include <mpllibs/metamonad/either.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
+#include <mpllibs/metamonad/fail.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -22,6 +23,7 @@ using mpllibs::metamonad::get_data;
 using mpllibs::metamonad::return_;
 using mpllibs::metamonad::bind;
 using mpllibs::metamonad::either_tag;
+using mpllibs::metamonad::fail;
 
 using boost::mpl::equal_to;
 using boost::mpl::not_;
@@ -52,10 +54,18 @@ namespace
   typedef
     equal_to<bind<either_tag, left11, either_add_2>::type, left11>
     test_bind_with_left;
+
+  typedef
+    equal_to<
+      bind<either_tag, fail<either_tag, int13>, either_add_2>::type,
+      left<int13>
+    >
+    test_fail;
 }
 
 MPLLIBS_ADD_TEST(suite, test_return)
 MPLLIBS_ADD_TEST(suite, test_bind_with_right)
 MPLLIBS_ADD_TEST(suite, test_bind_with_left)
+MPLLIBS_ADD_TEST(suite, test_fail)
 
 

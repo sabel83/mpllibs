@@ -27,6 +27,7 @@ general information
 * bind's logic: when the first argument is +left+, +bind+ returns it as it
   is. When it is +right+, +bind+ passes the wrapped value to the continuation,
   the last argument of +bind+.
+* fail's logic: wrap its argument with +left+
 
 include::copyright[]
 

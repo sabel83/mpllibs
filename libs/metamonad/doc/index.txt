@@ -188,6 +188,8 @@ metaprogramming. It can be implemented using traits:
 * For a typeclass X, a template class called X_defaults implements the functions
   with default implementations. Every instance of the typeclass is expected to
   publicly inherit from this template class with the same template argument.
+* The specialisation of the trait inheriting from the +_defaults+ class can
+  override any of the default implementations.
 
 There is no way of expressing which functions instances of the typeclass have
 to implement. This solution makes the usage of typeclasses explicit in the code.
@@ -441,11 +443,18 @@ A monad consists of the following:
 
 * A +tag+, identifying the monad itself
 * A set of metaprogramming values (which are types)
-* Two operations:
+* Two basic operations:
 ** +return_<class>+ taking some value and returning an element of the set
 ** +bind<class, class>+ taking an element of the set and a function, taking
    some value and returning an element of the set. +bind+ returns an element of
    the set.
+* Two further operations:
+** +bind_+ taking two monadic values and returning a new monadic value. It has a
+   default implementation that calls +bind+ with the first value and a
+   metafunction class that always returns the second argument of +bind_+.
+** +fail+ taking a value and returning a monadic value that breaks the
+   execution of the monad. It has a default implementation that throws a
+   compile-time exception.
 
 In Haskell the set of values is identified by the type system, in template
 metaprogramming it is identified by an informal description in the
@@ -719,6 +728,7 @@ link:monoid.html[monoid] +
 Monads +
 link:bind_.html[bind_] +
 link:bind.html[bind] +
+link:fail.html[fail] +
 link:monad.html[monad] +
 link:return_.html[return_] +
 

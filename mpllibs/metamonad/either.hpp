@@ -67,6 +67,22 @@ namespace mpllibs
           }
         };
       };
+
+      struct fail
+      {
+        typedef fail type;
+        
+        struct to_stream
+        {
+          static std::ostream& run(std::ostream& o_)
+          {
+            return o_ << "monad<either_tag>::fail";
+          }
+        };
+        
+        template <class S>
+        struct apply : left<S> {};
+      };
     };
   }
 }
