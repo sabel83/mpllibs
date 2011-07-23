@@ -31,7 +31,7 @@ namespace
   const suite_path suite("reader");
   
   typedef int_<22> int22;
-  typedef apply<monad<reader_tag>::return_, int13>::type return11;
+  typedef apply<monad<reader_tag>::return_, int11>::type return11;
   
   template <class A>
   struct fplus

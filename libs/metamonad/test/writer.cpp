@@ -34,7 +34,7 @@ namespace
   
   typedef writer_tag<list_tag> list_writer_tag;
   
-  typedef apply<monad<list_writer_tag>::return_, int13>::type return11;
+  typedef apply<monad<list_writer_tag>::return_, int11>::type return11;
   
   template <class A>
   struct log_plus

@@ -32,7 +32,7 @@ namespace
   
   typedef int_<24> int24;
   typedef int_<14> int14;
-  typedef apply<monad<state_tag>::return_, int13>::type return11;
+  typedef apply<monad<state_tag>::return_, int11>::type return11;
   
   template <class N>
   struct plusn
