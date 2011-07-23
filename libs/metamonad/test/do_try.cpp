@@ -15,6 +15,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/plus.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
@@ -23,6 +24,7 @@
 using boost::mpl::equal_to;
 using boost::mpl::identity;
 using boost::mpl::tag;
+using boost::mpl::plus;
 
 using mpllibs::metatest::suite_path;
 
@@ -38,6 +40,9 @@ namespace
   
   MPLLIBS_DEFINE_TAG(tag2)
   MPLLIBS_DEFINE_META_ATOM(tag2, e2)
+  
+  struct t1;
+  struct t2;
 
   typedef
     equal_to<
@@ -50,6 +55,17 @@ namespace
       ::type
     >
     test_no_exception;
+
+  typedef
+    equal_to<
+      int2,
+      MPLLIBS_DO_TRY<
+        MPLLIBS_SET<t1, int1>,
+        MPLLIBS_SET<t2, int1>,
+        plus<t1, t2>
+      >::type
+    >
+    test_no_exception_no_catch;
 
   typedef
     equal_to<
@@ -184,6 +200,7 @@ namespace
 }
 
 MPLLIBS_ADD_TEST(suite, test_no_exception)
+MPLLIBS_ADD_TEST(suite, test_no_exception_no_catch)
 MPLLIBS_ADD_TEST(suite, test_catch)
 MPLLIBS_ADD_TEST(suite, test_exception_value_in_catch)
 MPLLIBS_ADD_TEST(suite, test_not_catching)

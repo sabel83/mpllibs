@@ -112,7 +112,7 @@ namespace mpllibs
           boost::mpl::if_<
             boost::is_same<exception_tag, typename boost::mpl::tag<A>::type>,
             boost::mpl::identity<A>,
-            boost::mpl::apply<F, A>
+            boost::mpl::apply1<F, A>
           >::type
         {};
       };

@@ -44,9 +44,7 @@ namespace
   typedef
     equal_to<
       int13,
-      MPLLIBS_TRY<
-        int13
-      >
+      MPLLIBS_TRY<int13>
       ::catch_<tag1, x>
         ::apply<int11>
       ::type
@@ -54,11 +52,13 @@ namespace
     test_no_exception;
 
   typedef
+    equal_to<int2, MPLLIBS_TRY<plus<int1, int1> >::type>
+    test_no_exception_no_catch;
+
+  typedef
     equal_to<
       int11,
-      MPLLIBS_TRY<
-        MPLLIBS_THROW<e1>
-      >
+      MPLLIBS_TRY<MPLLIBS_THROW<e1> >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
       ::type
@@ -68,9 +68,7 @@ namespace
   typedef
     equal_to<
       int13,
-      MPLLIBS_TRY<
-        MPLLIBS_THROW<int13>
-      >
+      MPLLIBS_TRY<MPLLIBS_THROW<int13> >
       ::catch_<tag<int13>::type, x>
         ::apply<identity<x> >
       ::type
@@ -80,9 +78,7 @@ namespace
   typedef
     equal_to<
       exception<int13>,
-      MPLLIBS_TRY<
-        MPLLIBS_THROW<int13>
-      >
+      MPLLIBS_TRY<MPLLIBS_THROW<int13> >
       ::catch_<tag2, x>
         ::apply<identity<int11> >
       ::type
@@ -92,9 +88,7 @@ namespace
   typedef
     equal_to<
       int13,
-      MPLLIBS_TRY<
-        MPLLIBS_THROW<e2>
-      >
+      MPLLIBS_TRY<MPLLIBS_THROW<e2> >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
       ::catch_<tag2, x>
@@ -106,9 +100,7 @@ namespace
   typedef
     equal_to<
       MPLLIBS_THROW<int2>,
-      MPLLIBS_TRY<
-        plus<int1, MPLLIBS_THROW<int2> >
-      >
+      MPLLIBS_TRY<plus<int1, MPLLIBS_THROW<int2> > >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
       ::type
@@ -119,9 +111,7 @@ namespace
   typedef
     equal_to<
       int13,
-      MPLLIBS_TRY<
-        MPLLIBS_THROW<e1>
-      >
+      MPLLIBS_TRY<MPLLIBS_THROW<e1> >
       ::catch_<catch_any, x>
         ::apply<identity<int13> >
       ::type
@@ -131,9 +121,7 @@ namespace
   typedef
     equal_to<
       exception<int13>,
-      MPLLIBS_TRY<
-        MPLLIBS_THROW<e1>
-      >
+      MPLLIBS_TRY<MPLLIBS_THROW<e1> >
       ::catch_<catch_any, x>
         ::apply<MPLLIBS_THROW<int13> >
       ::type
@@ -143,9 +131,7 @@ namespace
   typedef
     equal_to<
       exception<int13>,
-      MPLLIBS_TRY<
-        MPLLIBS_THROW<e1>
-      >
+      MPLLIBS_TRY<MPLLIBS_THROW<e1> >
       ::catch_<catch_any, x>
         ::apply<MPLLIBS_THROW<int13> >
       ::catch_<catch_any, x>
@@ -156,6 +142,7 @@ namespace
 }
 
 MPLLIBS_ADD_TEST(suite, test_no_exception)
+MPLLIBS_ADD_TEST(suite, test_no_exception_no_catch)
 MPLLIBS_ADD_TEST(suite, test_catch)
 MPLLIBS_ADD_TEST(suite, test_exception_value_in_catch)
 MPLLIBS_ADD_TEST(suite, test_not_catching)
