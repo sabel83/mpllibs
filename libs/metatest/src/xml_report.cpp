@@ -80,7 +80,7 @@ bool xml_report(std::ostream& out_)
       
   out_ << "</summary>\n";
 
-  return out_;
+  return suite.failure_count() == 0;
 }
 
 } // namespace metatest

@@ -11,8 +11,8 @@
 int main()
 {
   using mpllibs::metatest::plaintext_report;
-  using mpllibs::metatest::test_driver;
+  using std::cout;
 
-  return plaintext_report(std::cout) ? 0 : 1;
+  return plaintext_report(cout) ? 0 : 1;
 }
 

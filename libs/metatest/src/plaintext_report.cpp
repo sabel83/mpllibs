@@ -66,7 +66,7 @@ bool plaintext_report(std::ostream& out_)
   out_ << "Number of tests: " << suite.count() << endl;
   out_ << "Number of failures: " << suite.failure_count() << endl;
       
-  return out_;
+  return suite.failure_count() == 0;
 }
 
 } // namespace metatest
