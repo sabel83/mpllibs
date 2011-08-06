@@ -23,16 +23,16 @@ struct set
 Description
 -----------
 
-Template expression that can be used inside a link:MPLLIBS_DO.html[MPLLIBS_DO]
-block. +F+ is a nullary metafunction returning a monadic value. +MPLLIBS_SET+
-binds the result of +F+ to +Name+ in the rest of the do block. On how the
-binding works, see link:let.html[let] expressions.
+Template expression that can be used inside a link:do_.html[do_] block. +F+ is
+a nullary metafunction returning a monadic value. +MPLLIBS_SET+ binds the result
+of +F+ to +Name+ in the rest of the do block. On how the binding works, see
+link:let.html[let] expressions.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/do.hpp>
 --------------------------------------
 
 Example
@@ -43,7 +43,7 @@ using boost::mpl::int_;
 
 struct r;
 
-MPLLIBS_DO<exception_tag>::apply<
+do_<exception_tag>::apply<
   MPLLIBS_SET<r, may_fail1<int_<13> >,
   may_fail2<r>
 >

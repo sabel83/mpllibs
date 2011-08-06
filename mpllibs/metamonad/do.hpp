@@ -32,11 +32,6 @@ namespace mpllibs
     /*
      * Syntactic sugar
      */
-    #ifdef MPLLIBS_DO
-      #error MPLLIBS_DO already defined
-    #endif
-    #define MPLLIBS_DO mpllibs::metamonad::do_
-    
     #ifdef MPLLIBS_SET
       #error MPLLIBS_SET already defined
     #endif
@@ -277,7 +272,7 @@ namespace mpllibs
       {
         static std::ostream& run(std::ostream& o)
         {
-          o << "MPLLIBS_DO<";
+          o << "do_<";
           mpllibs::metatest::to_stream_argument_list<Monad>::run(o);
           return o << ">";
         }

@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 
 #include <mpllibs/metatest/test.hpp>
@@ -19,6 +19,8 @@ using boost::mpl::equal_to;
 using boost::mpl::minus;
 
 using mpllibs::metatest::suite_path;
+
+using mpllibs::metamonad::do_;
 
 /*
  * WrapperMonad
@@ -123,7 +125,7 @@ namespace
   typedef
     equal_to<
       right<int11>,
-      MPLLIBS_DO<either>::apply<
+      do_<either>::apply<
         MPLLIBS_SET<x, MPLLIBS_RETURN<int13> >,
         minus_2<x>
       >::type
@@ -133,7 +135,7 @@ namespace
   typedef
     equal_to<
       right<int9>,
-      MPLLIBS_DO<either>::apply<
+      do_<either>::apply<
         MPLLIBS_SET<x, MPLLIBS_RETURN<int13> >,
         MPLLIBS_SET<y, minus_2<x> >,
         minus_2<y>
@@ -144,7 +146,7 @@ namespace
   typedef
     equal_to<
       right<int9>,
-      MPLLIBS_DO<either>::apply<
+      do_<either>::apply<
         MPLLIBS_SET<x, MPLLIBS_RETURN<int13> >,
         MPLLIBS_SET<y, minus_2<x> >,
         minus_2<x>,
@@ -156,7 +158,7 @@ namespace
   typedef
     equal_to<
       right<int13>,
-      MPLLIBS_DO<either>::apply<
+      do_<either>::apply<
         MPLLIBS_RETURN<int11>,
         MPLLIBS_RETURN<int13>
       >::type
@@ -166,9 +168,9 @@ namespace
   typedef
     equal_to<
       right<right<int13> >,
-      MPLLIBS_DO<either>::apply<
+      do_<either>::apply<
         MPLLIBS_RETURN<
-          MPLLIBS_DO<either>::apply<
+          do_<either>::apply<
             MPLLIBS_RETURN<int13>
           >
         >
@@ -179,7 +181,7 @@ namespace
   typedef
     equal_to<
       right<right<int13> >,
-      MPLLIBS_DO<either>::apply<
+      do_<either>::apply<
         MPLLIBS_RETURN<MPLLIBS_RETURN<int13> >
       >::type
     >
@@ -188,9 +190,9 @@ namespace
   typedef
     equal_to<
       right<wrapped<int13> >,
-      MPLLIBS_DO<either>::apply<
+      do_<either>::apply<
         eval_to_right<
-          MPLLIBS_DO<wrapper_monad>::apply<
+          do_<wrapper_monad>::apply<
             MPLLIBS_RETURN<int13>
           >
         >

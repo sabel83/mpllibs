@@ -422,7 +422,7 @@ Using it, the above example can be written the following way:
 --------------------------------------
 struct r;
 
-MPLLIBS_DO<exception_tag>::apply<
+do_<exception_tag>::apply<
   MPLLIBS_SET<r, may_fail1<MPLLIBS_RETURN<boost::mpl::int_<13> > >,
   may_fail2<r>
 >
@@ -535,7 +535,7 @@ This evaluates +may_fail1 13+, binds +r+ to its result and evaluates
 template metaprograms. A do block using metamonad looks like the following:
 
 --------------------------------------
-MPLLIBS_DO<monad_tag>::apply<
+do_<monad_tag>::apply<
   step1,
   step2,
 
@@ -545,9 +545,8 @@ MPLLIBS_DO<monad_tag>::apply<
 >
 --------------------------------------
 
-+MPLLIBS_DO+ is a macro which expands to the name of a template class.
 +monad_tag+ is the +tag+ identifying the monad. This has to be passed to the
-+return_+ and +bind+ functions. +MPLLIBS_DO<monad_tag>+ is a metafunction class,
++return_+ and +bind+ functions. +do_<monad_tag>+ is a metafunction class,
 taking the steps of the do block as arguments. A step is either a nullary
 metafunction returning a monadic value, or a binding of an expression to a name.
 A binding is expressed by the following structure:
@@ -566,7 +565,7 @@ monad has to be passed to the +return_+ metafunction explicitly, thus every time
 +return_+ is used, the +tag+ of the monad needs to be repeated. For example:
 
 --------------------------------------
-MPLLIBS_DO<monad_tag>::apply<
+do_<monad_tag>::apply<
   step1,
   step2,
   MPLLIBS_SET<some_name, return_<monad_tag, some_value> >,
@@ -581,7 +580,7 @@ To make using +return_+ in do blocks simpler, metamonad provides a macro,
 +MPLLIBS_RETURN+, that can be used in do blocks:
 
 --------------------------------------
-MPLLIBS_DO<monad_tag>::apply<
+do_<monad_tag>::apply<
   step1,
   step2,
   MPLLIBS_SET<some_name, MPLLIBS_RETURN<some_value> >,
@@ -614,7 +613,7 @@ do_try<
 >
 --------------------------------------
 
-A try block is a special +MPLLIBS_DO<exception_tag>+ block, thus the body of it
+A try block is a special +do_<exception_tag>+ block, thus the body of it
 can be constructed the same way as the body of a do block. The main difference
 between a regular do block and a try block is how the result of it can be
 handled. Try blocks can be followed by exception handling blocks, dealing with
@@ -733,7 +732,7 @@ link:monad.html[monad] +
 link:return_.html[return_] +
 
 Do notation +
-link:MPLLIBS_DO.html[MPLLIBS_DO] +
+link:do_.html[do_] +
 link:MPLLIBS_SET.html[MPLLIBS_SET] +
 link:MPLLIBS_RETURN.html[MPLLIBS_RETURN] +
 

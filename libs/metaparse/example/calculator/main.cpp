@@ -18,7 +18,7 @@
 
 #include <mpllibs/metaparse/build_parser.hpp>
 
-#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/do_try.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/meta_atom.hpp>
@@ -59,6 +59,7 @@ using mpllibs::metatest::to_stream;
 
 using mpllibs::metamonad::do_try;
 using mpllibs::metamonad::throw_;
+using mpllibs::metamonad::do_;
 
 using boost::mpl::apply_wrap1;
 using boost::mpl::fold;
@@ -165,7 +166,7 @@ struct eval_mult
 };
 
 typedef
-  MPLLIBS_DO<parser_tag>::apply<
+  do_<parser_tag>::apply<
     MPLLIBS_SET<x, int_token>,
     foldr<
       sequence<one_of<mult_token, div_token>, int_token>,
@@ -176,7 +177,7 @@ typedef
   prod_exp;
   
 typedef
-  MPLLIBS_DO<parser_tag>::apply<
+  do_<parser_tag>::apply<
     MPLLIBS_SET<x, prod_exp>,
     foldr<
       sequence<one_of<plus_token, minus_token>, prod_exp>,

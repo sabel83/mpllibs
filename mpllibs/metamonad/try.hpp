@@ -9,7 +9,7 @@
 #include <mpllibs/metamonad/util/id.hpp>
 
 #include <mpllibs/metamonad/do_try.hpp>
-#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/do.hpp>
 
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>

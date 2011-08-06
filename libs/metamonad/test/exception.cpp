@@ -4,7 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/exception.hpp>
-#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 
 #include <mpllibs/metatest/test.hpp>
@@ -35,6 +35,7 @@ using mpllibs::metamonad::exception;
 using mpllibs::metamonad::get_data;
 using mpllibs::metamonad::exception_monad;
 using mpllibs::metamonad::return_;
+using mpllibs::metamonad::do_;
 
 namespace
 {
@@ -47,7 +48,7 @@ namespace
   typedef
     equal_to<
       int13,
-      MPLLIBS_DO<exception_monad>::apply<
+      do_<exception_monad>::apply<
         MPLLIBS_RETURN<int13>
       >::type
     >
@@ -57,7 +58,7 @@ namespace
     equal_to<
       int13,
       get_data<
-        MPLLIBS_DO<exception_monad>::apply<
+        do_<exception_monad>::apply<
           apply_wrap1<always<e>, int>
         >::type
       >::type
@@ -69,7 +70,7 @@ namespace
     equal_to<
       int13,
       get_data<
-        MPLLIBS_DO<exception_monad>::apply<
+        do_<exception_monad>::apply<
           apply_wrap1<always<e>, int>,
           MPLLIBS_RETURN<int13>
         >::type
@@ -85,7 +86,7 @@ namespace
   typedef
     is_same<
       int11,
-      MPLLIBS_DO<exception_monad>::apply<
+      do_<exception_monad>::apply<
         MPLLIBS_RETURN<int11>
       >::type
     >
@@ -94,7 +95,7 @@ namespace
   typedef
     equal_to<
       int11,
-        MPLLIBS_DO<exception_monad>::apply<
+        do_<exception_monad>::apply<
           MPLLIBS_RETURN<int13>,
           MPLLIBS_RETURN<int11>
         >::type
@@ -107,7 +108,7 @@ namespace
     equal_to<
       int13,
       get_data<
-        MPLLIBS_DO<exception_monad>::apply<
+        do_<exception_monad>::apply<
           MPLLIBS_SET<x, apply_wrap1<always<e>, int> >,
           MPLLIBS_RETURN<int13>
         >::type

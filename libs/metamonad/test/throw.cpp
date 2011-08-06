@@ -5,7 +5,7 @@
 
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/exception.hpp>
-#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 
 #include <mpllibs/metatest/test.hpp>
@@ -24,6 +24,7 @@ using mpllibs::metatest::suite_path;
 using mpllibs::metamonad::get_data;
 using mpllibs::metamonad::exception_monad;
 using mpllibs::metamonad::throw_;
+using mpllibs::metamonad::do_;
 
 namespace
 {
@@ -36,7 +37,7 @@ namespace
     equal_to<
       int13,
       get_data<
-        MPLLIBS_DO<exception_monad>::apply<
+        do_<exception_monad>::apply<
           throw_<int13>
         >::type
       >::type
@@ -48,7 +49,7 @@ namespace
     equal_to<
       int11,
       get_data<
-        MPLLIBS_DO<exception_monad>::apply<
+        do_<exception_monad>::apply<
           throw_<int11>,
           MPLLIBS_RETURN<int13>
         >::type

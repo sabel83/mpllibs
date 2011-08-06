@@ -23,7 +23,7 @@ struct do_return
 Description
 -----------
 
-Template expression that can be used inside a link:MPLLIBS_DO.html[MPLLIBS_DO]
+Template expression that can be used inside a link:do_.html[do_]
 block. +MPLLIBS_RETURN+ evaluates link:return_.html[return_]+<MonadTag, Value>+
 using the +MonadTag+ of the do block containing +MPLLIBS_RETURN+.
 
@@ -31,7 +31,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/do.hpp>
 --------------------------------------
 
 Example
@@ -42,7 +42,7 @@ using boost::mpl::int_;
 
 struct r;
 
-MPLLIBS_DO<exception_tag>::apply<
+do_<exception_tag>::apply<
   MPLLIBS_RETURN<int_<13> >
 >
 --------------------------------------

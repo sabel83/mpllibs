@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/do_.hpp>
+#include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
@@ -108,18 +108,18 @@ namespace mpllibs
         typename boost::is_same<
           exception_tag,
           typename boost::mpl::tag<
-            typename MPLLIBS_DO<exception_monad>::template apply<
+            typename do_<exception_monad>::template apply<
               BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
             >::type
           >::type
         >::type,
         mpllibs::metamonad::impl::was_exception<
-          typename MPLLIBS_DO<exception_monad>::template apply<
+          typename do_<exception_monad>::template apply<
             BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
           >::type
         >,
         mpllibs::metamonad::impl::skip_further_catches<
-          typename MPLLIBS_DO<exception_monad>::template apply<
+          typename do_<exception_monad>::template apply<
             BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
           >::type
         >
