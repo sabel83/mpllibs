@@ -24,7 +24,7 @@ struct min_impl
   template <class A, class B>
   struct apply :
     do_try<
-      MPLLIBS_SET<c, less<A, B> >,
+      mpllibs::metamonad::set<c, less<A, B> >,
       boost::mpl::if_<c, A, B>
     >
   {};

@@ -60,6 +60,7 @@ using mpllibs::metatest::to_stream;
 using mpllibs::metamonad::do_try;
 using mpllibs::metamonad::throw_;
 using mpllibs::metamonad::do_;
+using mpllibs::metamonad::set;
 
 using boost::mpl::apply_wrap1;
 using boost::mpl::fold;
@@ -118,8 +119,8 @@ struct eval_plus
   template <class C, class State>
   struct apply :
     do_try<
-      MPLLIBS_SET<state, State>,
-      MPLLIBS_SET<new_value, back<C> >,
+      set<state, State>,
+      set<new_value, back<C> >,
       eval_if<
         is_c<front<C>, '+'>,
         plus<state, new_value>,
@@ -142,8 +143,8 @@ struct eval_mult
   template <class C, class State>
   struct apply :
     do_try<
-      MPLLIBS_SET<state, State>,
-      MPLLIBS_SET<new_value, back<C> >,
+      set<state, State>,
+      set<new_value, back<C> >,
       eval_if<
         is_c<front<C>, '*'>,
         times<state, new_value>,
@@ -167,7 +168,7 @@ struct eval_mult
 
 typedef
   do_<parser_tag>::apply<
-    MPLLIBS_SET<x, int_token>,
+    set<x, int_token>,
     foldr<
       sequence<one_of<mult_token, div_token>, int_token>,
       get_result<x>,
@@ -178,7 +179,7 @@ typedef
   
 typedef
   do_<parser_tag>::apply<
-    MPLLIBS_SET<x, prod_exp>,
+    set<x, prod_exp>,
     foldr<
       sequence<one_of<plus_token, minus_token>, prod_exp>,
       get_result<x>,

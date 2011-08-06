@@ -42,7 +42,7 @@ namespace mpllibs
       #error MPLLIBS_SET_T already defined
     #endif
     #define MPLLIBS_SET_T(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) MPLLIBS_SET<t##n, T##n>
+      BOOST_PP_COMMA_IF(n) mpllibs::metamonad::set<t##n, T##n>
     
     #ifdef MPLLIBS_TRY_CASE
       #error MPLLIBS_TRY_CASE already defined

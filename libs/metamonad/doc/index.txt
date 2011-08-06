@@ -423,16 +423,16 @@ Using it, the above example can be written the following way:
 struct r;
 
 do_<exception_tag>::apply<
-  MPLLIBS_SET<r, may_fail1<MPLLIBS_RETURN<boost::mpl::int_<13> > >,
+  set<r, may_fail1<MPLLIBS_RETURN<boost::mpl::int_<13> > >,
   may_fail2<r>
 >
 --------------------------------------
 
-This implementation uses +MPLLIBS_SET+ to bind the result of calling the
-+may_fail1+ metafunction to a name, +r+. Instead of using +return_+ directly,
-it uses +MPLLIBS_RETURN+, which evaluates +return_+ with the monad +tag+ used
-by the do block, in this case +exception_tag+. The result of +may_fail1+ can be
-passed to +may_fail2+ using the name +r+.
+This implementation uses +set+ to bind the result of calling the +may_fail1+
+metafunction to a name, +r+. Instead of using +return_+ directly, it uses
++MPLLIBS_RETURN+, which evaluates +return_+ with the monad +tag+ used by the do
+block, in this case +exception_tag+. The result of +may_fail1+ can be passed to
++may_fail2+ using the name +r+.
 
 The next two sections present monads and the do notation in detail.
 
@@ -546,19 +546,19 @@ do_<monad_tag>::apply<
 --------------------------------------
 
 +monad_tag+ is the +tag+ identifying the monad. This has to be passed to the
-+return_+ and +bind+ functions. +do_<monad_tag>+ is a metafunction class,
-taking the steps of the do block as arguments. A step is either a nullary
-metafunction returning a monadic value, or a binding of an expression to a name.
-A binding is expressed by the following structure:
++return_+ and +bind+ functions. +do_<monad_tag>+ is a metafunction class, taking
+the steps of the do block as arguments. A step is either a nullary metafunction
+returning a monadic value, or a binding of an expression to a name. A binding is
+expressed by the following structure:
 
 --------------------------------------
-MPLLIBS_SET<name, step>
+set<name, step>
 --------------------------------------
 
-where +MPLLIBS_SET+ is a macro, expanding to the name of a template class.
-+step+ is a nullary metafunction returning a monadic value. +name+ is the name
-of a class, the binding binds the result of +step+ to this name. The bound name
-can be used in the steps of the do block following the binding.
+where +set+ is a template class. +step+ is a nullary metafunction returning a
+monadic value. +name+ is the name of a class, the binding binds the result of
++step+ to this name. The bound name can be used in the steps of the do block
+following the binding.
 
 Using +return_+ in do blocks directly is not convenient, since the +tag+ of the
 monad has to be passed to the +return_+ metafunction explicitly, thus every time
@@ -568,7 +568,7 @@ monad has to be passed to the +return_+ metafunction explicitly, thus every time
 do_<monad_tag>::apply<
   step1,
   step2,
-  MPLLIBS_SET<some_name, return_<monad_tag, some_value> >,
+  set<some_name, return_<monad_tag, some_value> >,
 
   // ...
 
@@ -583,7 +583,7 @@ To make using +return_+ in do blocks simpler, metamonad provides a macro,
 do_<monad_tag>::apply<
   step1,
   step2,
-  MPLLIBS_SET<some_name, MPLLIBS_RETURN<some_value> >,
+  set<some_name, MPLLIBS_RETURN<some_value> >,
 
   // ...
 
@@ -634,7 +634,7 @@ struct unknown_error;
 template <class A, class B>
 struct min :
   do_try<
-    MPLLIBS_SET<c, less<A, B> >,
+    set<c, less<A, B> >,
     boost::mpl::if_<c, A, B>
   >
   ::template catch_<non_comparable_tag, e>
@@ -733,7 +733,7 @@ link:return_.html[return_] +
 
 Do notation +
 link:do_.html[do_] +
-link:MPLLIBS_SET.html[MPLLIBS_SET] +
+link:set.html[set] +
 link:MPLLIBS_RETURN.html[MPLLIBS_RETURN] +
 
 Compile-time exceptions +

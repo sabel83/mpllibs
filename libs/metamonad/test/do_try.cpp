@@ -32,6 +32,7 @@ using mpllibs::metamonad::exception;
 using mpllibs::metamonad::catch_any;
 using mpllibs::metamonad::do_try;
 using mpllibs::metamonad::throw_;
+using mpllibs::metamonad::set;
 
 namespace
 {
@@ -62,8 +63,8 @@ namespace
     equal_to<
       int2,
       do_try<
-        MPLLIBS_SET<t1, int1>,
-        MPLLIBS_SET<t2, int1>,
+        set<t1, int1>,
+        set<t2, int1>,
         plus<t1, t2>
       >::type
     >
@@ -150,7 +151,7 @@ namespace
     equal_to<
       int11,
       do_try<
-        MPLLIBS_SET<x, throw_<e1> >,
+        set<x, throw_<e1> >,
         MPLLIBS_RETURN<int1>
       >
       ::catch_<tag1, x>

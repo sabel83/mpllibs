@@ -3,16 +3,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-MPLLIBS_SET
-===========
+set
+===
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_SET set
-
 template <class Name, class F>
 struct set
   // unspecified
@@ -24,8 +22,8 @@ Description
 -----------
 
 Template expression that can be used inside a link:do_.html[do_] block. +F+ is
-a nullary metafunction returning a monadic value. +MPLLIBS_SET+ binds the result
-of +F+ to +Name+ in the rest of the do block. On how the binding works, see
+a nullary metafunction returning a monadic value. +set+ binds the result of +F+
+to +Name+ in the rest of the do block. On how the binding works, see
 link:let.html[let] expressions.
 
 Header
@@ -44,7 +42,7 @@ using boost::mpl::int_;
 struct r;
 
 do_<exception_tag>::apply<
-  MPLLIBS_SET<r, may_fail1<int_<13> >,
+  set<r, may_fail1<int_<13> >,
   may_fail2<r>
 >
 --------------------------------------

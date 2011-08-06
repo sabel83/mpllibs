@@ -21,6 +21,7 @@ using boost::mpl::minus;
 using mpllibs::metatest::suite_path;
 
 using mpllibs::metamonad::do_;
+using mpllibs::metamonad::set;
 
 /*
  * WrapperMonad
@@ -126,7 +127,7 @@ namespace
     equal_to<
       right<int11>,
       do_<either>::apply<
-        MPLLIBS_SET<x, MPLLIBS_RETURN<int13> >,
+        set<x, MPLLIBS_RETURN<int13> >,
         minus_2<x>
       >::type
     >
@@ -136,8 +137,8 @@ namespace
     equal_to<
       right<int9>,
       do_<either>::apply<
-        MPLLIBS_SET<x, MPLLIBS_RETURN<int13> >,
-        MPLLIBS_SET<y, minus_2<x> >,
+        set<x, MPLLIBS_RETURN<int13> >,
+        set<y, minus_2<x> >,
         minus_2<y>
       >::type
     >
@@ -147,8 +148,8 @@ namespace
     equal_to<
       right<int9>,
       do_<either>::apply<
-        MPLLIBS_SET<x, MPLLIBS_RETURN<int13> >,
-        MPLLIBS_SET<y, minus_2<x> >,
+        set<x, MPLLIBS_RETURN<int13> >,
+        set<y, minus_2<x> >,
         minus_2<x>,
         minus_2<y>
       >::type

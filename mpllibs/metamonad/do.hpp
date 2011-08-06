@@ -32,11 +32,6 @@ namespace mpllibs
     /*
      * Syntactic sugar
      */
-    #ifdef MPLLIBS_SET
-      #error MPLLIBS_SET already defined
-    #endif
-    #define MPLLIBS_SET mpllibs::metamonad::set
-  
     #ifdef MPLLIBS_RETURN
       #error MPLLIBS_RETURN already defined
     #endif

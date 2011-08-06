@@ -72,7 +72,7 @@ struct r;
 struct e;
 
 do_try<
-  MPLLIBS_SET<r, may_fail1<int_<13> >,
+  set<r, may_fail1<int_<13> >,
   may_fail2<r>
 >
   ::catch_<error_tag_1, e>

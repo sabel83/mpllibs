@@ -30,7 +30,7 @@ block as arguments. The maximum number of arguments is defined by the
 +MPLLIBS_DO_MAX_ARGUMENT+ macro. Steps are either:
 
 * Nullary metafunctions returning a monadic value
-* link:MPLLIBS_SET.html[MPLLIBS_SET] constructs
+* link:set.html[set] constructs
 * link:MPLLIBS_RETURN.html[MPLLIBS_RETURN] constructs
 
 Header
@@ -49,7 +49,7 @@ using boost::mpl::int_;
 struct r;
 
 do_<exception_tag>::apply<
-  MPLLIBS_SET<r, may_fail1<int_<13> >,
+  set<r, may_fail1<int_<13> >,
   may_fail2<r>
 >
 --------------------------------------

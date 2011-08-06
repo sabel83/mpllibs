@@ -36,6 +36,7 @@ using mpllibs::metamonad::get_data;
 using mpllibs::metamonad::exception_monad;
 using mpllibs::metamonad::return_;
 using mpllibs::metamonad::do_;
+using mpllibs::metamonad::set;
 
 namespace
 {
@@ -109,7 +110,7 @@ namespace
       int13,
       get_data<
         do_<exception_monad>::apply<
-          MPLLIBS_SET<x, apply_wrap1<always<e>, int> >,
+          set<x, apply_wrap1<always<e>, int> >,
           MPLLIBS_RETURN<int13>
         >::type
       >::type
