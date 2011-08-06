@@ -31,7 +31,7 @@ block as arguments. The maximum number of arguments is defined by the
 
 * Nullary metafunctions returning a monadic value
 * link:set.html[set] constructs
-* link:MPLLIBS_RETURN.html[MPLLIBS_RETURN] constructs
+* link:do_return.html[do_return] constructs
 
 Header
 ------

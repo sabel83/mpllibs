@@ -22,6 +22,7 @@ using mpllibs::metatest::suite_path;
 
 using mpllibs::metamonad::do_;
 using mpllibs::metamonad::set;
+using mpllibs::metamonad::do_return;
 
 /*
  * WrapperMonad
@@ -127,7 +128,7 @@ namespace
     equal_to<
       right<int11>,
       do_<either>::apply<
-        set<x, MPLLIBS_RETURN<int13> >,
+        set<x, do_return<int13> >,
         minus_2<x>
       >::type
     >
@@ -137,7 +138,7 @@ namespace
     equal_to<
       right<int9>,
       do_<either>::apply<
-        set<x, MPLLIBS_RETURN<int13> >,
+        set<x, do_return<int13> >,
         set<y, minus_2<x> >,
         minus_2<y>
       >::type
@@ -148,7 +149,7 @@ namespace
     equal_to<
       right<int9>,
       do_<either>::apply<
-        set<x, MPLLIBS_RETURN<int13> >,
+        set<x, do_return<int13> >,
         set<y, minus_2<x> >,
         minus_2<x>,
         minus_2<y>
@@ -160,8 +161,8 @@ namespace
     equal_to<
       right<int13>,
       do_<either>::apply<
-        MPLLIBS_RETURN<int11>,
-        MPLLIBS_RETURN<int13>
+        do_return<int11>,
+        do_return<int13>
       >::type
     >
     test_do_two_returns;
@@ -170,9 +171,9 @@ namespace
     equal_to<
       right<right<int13> >,
       do_<either>::apply<
-        MPLLIBS_RETURN<
+        do_return<
           do_<either>::apply<
-            MPLLIBS_RETURN<int13>
+            do_return<int13>
           >
         >
       >::type
@@ -183,7 +184,7 @@ namespace
     equal_to<
       right<right<int13> >,
       do_<either>::apply<
-        MPLLIBS_RETURN<MPLLIBS_RETURN<int13> >
+        do_return<do_return<int13> >
       >::type
     >
     test_contents_of_return_is_substituted;
@@ -194,7 +195,7 @@ namespace
       do_<either>::apply<
         eval_to_right<
           do_<wrapper_monad>::apply<
-            MPLLIBS_RETURN<int13>
+            do_return<int13>
           >
         >
       >::type

@@ -423,14 +423,14 @@ Using it, the above example can be written the following way:
 struct r;
 
 do_<exception_tag>::apply<
-  set<r, may_fail1<MPLLIBS_RETURN<boost::mpl::int_<13> > >,
+  set<r, may_fail1<do_return<boost::mpl::int_<13> > >,
   may_fail2<r>
 >
 --------------------------------------
 
 This implementation uses +set+ to bind the result of calling the +may_fail1+
 metafunction to a name, +r+. Instead of using +return_+ directly, it uses
-+MPLLIBS_RETURN+, which evaluates +return_+ with the monad +tag+ used by the do
++do_return+, which evaluates +return_+ with the monad +tag+ used by the do
 block, in this case +exception_tag+. The result of +may_fail1+ can be passed to
 +may_fail2+ using the name +r+.
 
@@ -576,20 +576,23 @@ do_<monad_tag>::apply<
 >
 --------------------------------------
 
-To make using +return_+ in do blocks simpler, metamonad provides a macro,
-+MPLLIBS_RETURN+, that can be used in do blocks:
+To make using +return_+ in do blocks simpler, metamonad provides a template
+class, +do_return+, that can be used in do blocks:
 
 --------------------------------------
 do_<monad_tag>::apply<
   step1,
   step2,
-  set<some_name, MPLLIBS_RETURN<some_value> >,
+  set<some_name, do_return<some_value> >,
 
   // ...
 
   stepn
 >
 --------------------------------------
+
+A +do_return<X>+ instance of this template class gets automatically translated
+to +return_<Tag, X>+ inside a do block with +Tag+ as tag;
 
 Compile-time exceptions
 -----------------------
@@ -734,7 +737,7 @@ link:return_.html[return_] +
 Do notation +
 link:do_.html[do_] +
 link:set.html[set] +
-link:MPLLIBS_RETURN.html[MPLLIBS_RETURN] +
+link:do_return.html[do_return] +
 
 Compile-time exceptions +
 link:exception.html[exception] +

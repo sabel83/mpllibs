@@ -32,11 +32,6 @@ namespace mpllibs
     /*
      * Syntactic sugar
      */
-    #ifdef MPLLIBS_RETURN
-      #error MPLLIBS_RETURN already defined
-    #endif
-    #define MPLLIBS_RETURN mpllibs::metamonad::do_return
-
     template <
       class Monad,
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(

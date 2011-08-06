@@ -25,6 +25,7 @@ using mpllibs::metamonad::get_data;
 using mpllibs::metamonad::exception_monad;
 using mpllibs::metamonad::throw_;
 using mpllibs::metamonad::do_;
+using mpllibs::metamonad::do_return;
 
 namespace
 {
@@ -51,7 +52,7 @@ namespace
       get_data<
         do_<exception_monad>::apply<
           throw_<int11>,
-          MPLLIBS_RETURN<int13>
+          do_return<int13>
         >::type
       >::type
     >

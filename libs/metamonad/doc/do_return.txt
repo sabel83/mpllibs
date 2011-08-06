@@ -3,16 +3,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-MPLLIBS_RETURN
-==============
+do_return
+=========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_RETURN do_return
-
 template <class Value>
 struct do_return
   // unspecified
@@ -24,8 +22,8 @@ Description
 -----------
 
 Template expression that can be used inside a link:do_.html[do_]
-block. +MPLLIBS_RETURN+ evaluates link:return_.html[return_]+<MonadTag, Value>+
-using the +MonadTag+ of the do block containing +MPLLIBS_RETURN+.
+block. +do_return+ evaluates link:return_.html[return_]+<MonadTag, Value>+
+using the +MonadTag+ of the do block containing +do_return+.
 
 Header
 ------
@@ -43,7 +41,7 @@ using boost::mpl::int_;
 struct r;
 
 do_<exception_tag>::apply<
-  MPLLIBS_RETURN<int_<13> >
+  do_return<int_<13> >
 >
 --------------------------------------
 

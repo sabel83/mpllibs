@@ -33,6 +33,7 @@ using mpllibs::metamonad::catch_any;
 using mpllibs::metamonad::do_try;
 using mpllibs::metamonad::throw_;
 using mpllibs::metamonad::set;
+using mpllibs::metamonad::do_return;
 
 namespace
 {
@@ -51,7 +52,7 @@ namespace
     equal_to<
       int13,
       do_try<
-        MPLLIBS_RETURN<int13>
+        do_return<int13>
       >
       ::catch_<tag1, x>
         ::apply<int11>
@@ -125,7 +126,7 @@ namespace
       int11,
       do_try<
         throw_<e1>,
-        MPLLIBS_RETURN<int1>
+        do_return<int1>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -138,8 +139,8 @@ namespace
     equal_to<
       int11,
       do_try<
-        MPLLIBS_RETURN<int13>,
-        MPLLIBS_RETURN<int11>
+        do_return<int13>,
+        do_return<int11>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -152,7 +153,7 @@ namespace
       int11,
       do_try<
         set<x, throw_<e1> >,
-        MPLLIBS_RETURN<int1>
+        do_return<int1>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -165,7 +166,7 @@ namespace
       int13,
       do_try<
         throw_<e1>,
-        MPLLIBS_RETURN<int1>
+        do_return<int1>
       >
       ::catch_<catch_any, x>
         ::apply<identity<int13> >
@@ -178,7 +179,7 @@ namespace
       exception<int13>,
       do_try<
         throw_<e1>,
-        MPLLIBS_RETURN<int1>
+        do_return<int1>
       >
       ::catch_<catch_any, x>
         ::apply<throw_<int13> >
@@ -191,7 +192,7 @@ namespace
       exception<int13>,
       do_try<
         throw_<e1>,
-        MPLLIBS_RETURN<int1>
+        do_return<int1>
       >
       ::catch_<catch_any, x>
         ::apply<throw_<int13> >

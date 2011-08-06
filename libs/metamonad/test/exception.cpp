@@ -37,6 +37,7 @@ using mpllibs::metamonad::exception_monad;
 using mpllibs::metamonad::return_;
 using mpllibs::metamonad::do_;
 using mpllibs::metamonad::set;
+using mpllibs::metamonad::do_return;
 
 namespace
 {
@@ -50,7 +51,7 @@ namespace
     equal_to<
       int13,
       do_<exception_monad>::apply<
-        MPLLIBS_RETURN<int13>
+        do_return<int13>
       >::type
     >
     test_monadic_no_exception;
@@ -73,7 +74,7 @@ namespace
       get_data<
         do_<exception_monad>::apply<
           apply_wrap1<always<e>, int>,
-          MPLLIBS_RETURN<int13>
+          do_return<int13>
         >::type
       >::type
     >
@@ -88,7 +89,7 @@ namespace
     is_same<
       int11,
       do_<exception_monad>::apply<
-        MPLLIBS_RETURN<int11>
+        do_return<int11>
       >::type
     >
     test_return_with_1_element_do;
@@ -97,8 +98,8 @@ namespace
     equal_to<
       int11,
         do_<exception_monad>::apply<
-          MPLLIBS_RETURN<int13>,
-          MPLLIBS_RETURN<int11>
+          do_return<int13>,
+          do_return<int11>
         >::type
     >
     test_execution_sequence;
@@ -111,7 +112,7 @@ namespace
       get_data<
         do_<exception_monad>::apply<
           set<x, apply_wrap1<always<e>, int> >,
-          MPLLIBS_RETURN<int13>
+          do_return<int13>
         >::type
       >::type
     >
