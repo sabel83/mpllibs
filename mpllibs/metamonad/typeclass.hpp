@@ -21,7 +21,8 @@ namespace mpllibs
       #error MPLLIBS_TYPECLASS_EXPECT already defined
     #endif
     #define MPLLIBS_TYPECLASS_EXPECT(name) \
-      typedef MPLLIBS_THROW<mpllibs::metamonad::invalid_typeclass> name;
+      typedef \
+        mpllibs::metamonad::throw_<mpllibs::metamonad::invalid_typeclass> name;
   
     MPLLIBS_DEFINE_TAG(typeclass_expectations)
   }

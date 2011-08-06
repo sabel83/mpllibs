@@ -60,7 +60,7 @@ namespace mpllibs
         typedef fail type;
       
         template <class S>
-        struct apply : MPLLIBS_THROW<S> {};
+        struct apply : throw_<S> {};
         
         struct to_stream
         {

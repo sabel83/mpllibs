@@ -23,12 +23,13 @@ using mpllibs::metatest::suite_path;
 
 using mpllibs::metamonad::get_data;
 using mpllibs::metamonad::exception_monad;
+using mpllibs::metamonad::throw_;
 
 namespace
 {
-  const suite_path suite("THROW");
+  const suite_path suite("throw_");
   
-  typedef equal_to<int13, get_data<MPLLIBS_THROW<int13> >::type> test_get_data;
+  typedef equal_to<int13, get_data<throw_<int13> >::type> test_get_data;
 
   
   typedef
@@ -36,7 +37,7 @@ namespace
       int13,
       get_data<
         MPLLIBS_DO<exception_monad>::apply<
-          MPLLIBS_THROW<int13>
+          throw_<int13>
         >::type
       >::type
     >
@@ -48,7 +49,7 @@ namespace
       int11,
       get_data<
         MPLLIBS_DO<exception_monad>::apply<
-          MPLLIBS_THROW<int11>,
+          throw_<int11>,
           MPLLIBS_RETURN<int13>
         >::type
       >::type

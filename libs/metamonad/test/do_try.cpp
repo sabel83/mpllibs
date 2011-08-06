@@ -31,6 +31,7 @@ using mpllibs::metatest::suite_path;
 using mpllibs::metamonad::exception;
 using mpllibs::metamonad::catch_any;
 using mpllibs::metamonad::do_try;
+using mpllibs::metamonad::throw_;
 
 namespace
 {
@@ -72,7 +73,7 @@ namespace
     equal_to<
       int11,
       do_try<
-        MPLLIBS_THROW<e1>
+        throw_<e1>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -84,7 +85,7 @@ namespace
     equal_to<
       int13,
       do_try<
-        MPLLIBS_THROW<int13>
+        throw_<int13>
       >
       ::catch_<tag<int13>::type, x>
         ::apply<identity<x> >
@@ -96,7 +97,7 @@ namespace
     equal_to<
       exception<int13>,
       do_try<
-        MPLLIBS_THROW<int13>
+        throw_<int13>
       >
       ::catch_<tag2, x>
         ::apply<identity<int11> >
@@ -108,7 +109,7 @@ namespace
     equal_to<
       int13,
       do_try<
-        MPLLIBS_THROW<e2>
+        throw_<e2>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -122,7 +123,7 @@ namespace
     equal_to<
       int11,
       do_try<
-        MPLLIBS_THROW<e1>,
+        throw_<e1>,
         MPLLIBS_RETURN<int1>
       >
       ::catch_<tag1, x>
@@ -149,7 +150,7 @@ namespace
     equal_to<
       int11,
       do_try<
-        MPLLIBS_SET<x, MPLLIBS_THROW<e1> >,
+        MPLLIBS_SET<x, throw_<e1> >,
         MPLLIBS_RETURN<int1>
       >
       ::catch_<tag1, x>
@@ -162,7 +163,7 @@ namespace
     equal_to<
       int13,
       do_try<
-        MPLLIBS_THROW<e1>,
+        throw_<e1>,
         MPLLIBS_RETURN<int1>
       >
       ::catch_<catch_any, x>
@@ -175,11 +176,11 @@ namespace
     equal_to<
       exception<int13>,
       do_try<
-        MPLLIBS_THROW<e1>,
+        throw_<e1>,
         MPLLIBS_RETURN<int1>
       >
       ::catch_<catch_any, x>
-        ::apply<MPLLIBS_THROW<int13> >
+        ::apply<throw_<int13> >
       ::type
     >
     test_rethrowing;
@@ -188,13 +189,13 @@ namespace
     equal_to<
       exception<int13>,
       do_try<
-        MPLLIBS_THROW<e1>,
+        throw_<e1>,
         MPLLIBS_RETURN<int1>
       >
       ::catch_<catch_any, x>
-        ::apply<MPLLIBS_THROW<int13> >
+        ::apply<throw_<int13> >
       ::catch_<catch_any, x>
-        ::apply<MPLLIBS_THROW<int13> >
+        ::apply<throw_<int13> >
       ::type
     >
     test_rethrowing_not_caught_by_next_catch;

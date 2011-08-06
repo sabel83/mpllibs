@@ -58,6 +58,7 @@ using mpllibs::metaparse::token;
 using mpllibs::metatest::to_stream;
 
 using mpllibs::metamonad::do_try;
+using mpllibs::metamonad::throw_;
 
 using boost::mpl::apply_wrap1;
 using boost::mpl::fold;
@@ -147,7 +148,7 @@ struct eval_mult
         times<state, new_value>,
         eval_if<
           equal_to<new_value, boost::mpl::int_<0> >,
-          MPLLIBS_THROW<division_by_zero>,
+          throw_<division_by_zero>,
           divides<state, new_value>
         >
       >

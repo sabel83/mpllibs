@@ -45,7 +45,7 @@ template <class TagA, class TagB>
 struct less_impl
 {
   template <class A, class B>
-  struct apply : MPLLIBS_THROW<non_comparable> {};
+  struct apply : mpllibs::metamonad::throw_<non_comparable> {};
 };
 
 template <class A, class B>

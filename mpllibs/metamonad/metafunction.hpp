@@ -52,7 +52,7 @@
     typedef name##_impl type; \
     \
     template <BOOST_PP_ENUM_PARAMS(arg_num, class T)> \
-    struct apply : MPLLIBS_THROW<invalid_args_for_##name> {}; \
+    struct apply : mpllibs::metamonad::throw_<invalid_args_for_##name> {}; \
   }; \
   \
   template <BOOST_PP_ENUM_PARAMS(arg_num, class T)> \

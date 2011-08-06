@@ -8,10 +8,14 @@
 
 #include <mpllibs/metamonad/exception_core.hpp>
 
-#ifdef MPLLIBS_THROW
-  #error MPLLIBS_THROW already defined
-#endif
-#define MPLLIBS_THROW mpllibs::metamonad::exception
+namespace mpllibs
+{
+  namespace metamonad
+  {
+    template <class Msg>
+    struct throw_ : exception<Msg> {};
+  }
+}
 
 #endif
 

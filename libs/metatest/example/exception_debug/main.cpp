@@ -24,6 +24,7 @@ using boost::mpl::divides;
 using mpllibs::metatest::debug;
 
 using mpllibs::metamonad::do_try;
+using mpllibs::metamonad::throw_;
 
 typedef int_<0> int0;
 typedef int_<13> int13;
@@ -36,7 +37,7 @@ struct safe_divides :
   do_try<
     eval_if<
       typename equal_to<B, int0>::type,
-      MPLLIBS_THROW<division_by_zero>,
+      throw_<division_by_zero>,
       MPLLIBS_RETURN<divides<A, B> >
     >
   >

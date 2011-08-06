@@ -3,25 +3,28 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-MPLLIBS_THROW
-=============
+throw_
+======
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_THROW \
+template <class Msg>
+struct throw_
+{
   // unspecified
+};
 --------------------------------------
 
 
 Description
 -----------
 
-Macro evaluating to the name of a template class taking one argument. Instances
-of the class can be used as values of the exception monad, representing
-exceptions. The +tag+ of these exceptions is +exception_tag+.
+Compile-time data value taking one argument. Instances of this template class
+can be used as values of the exception monad, representing exceptions.
+The +tag+ of these exceptions is +exception_tag+.
 
 Header
 ------
@@ -36,7 +39,7 @@ Expression semantics
 For any +d+ compile-time value, the following are equivalent
 
 --------------------------------------
-mpllibs::metamonad::get_data<MPLLIBS_THROW<d> >::type
+mpllibs::metamonad::get_data<throw_<d> >::type
 d::type
 --------------------------------------
 
@@ -55,7 +58,7 @@ template <class A, class B>
 struct divide :
   eval_if<
     equal_to<A, int_<0> >,
-    THROW<division_by_zero>,
+    throw_<division_by_zero>,
     divides<A, B>
   >
   {};

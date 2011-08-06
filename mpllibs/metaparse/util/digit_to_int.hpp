@@ -28,7 +28,7 @@ namespace mpllibs
       {
         template <char C>
         struct digit_to_int :
-          MPLLIBS_THROW<mpllibs::metaparse::errors::invalid_digit>
+          mpllibs::metamonad::throw_<mpllibs::metaparse::errors::invalid_digit>
         {};
       }
 

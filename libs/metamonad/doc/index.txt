@@ -643,7 +643,7 @@ struct min :
       THROW<arguments_can_not_be_compared<e> >
     >
   ::template catch_<catch_any, e>
-    ::template apply<MPLLIBS_THROW<unknown_error> >
+    ::template apply<throw_<unknown_error> >
 {};
 --------------------------------------
 
@@ -668,8 +668,8 @@ returned no error, the result of the try block is the result of the whole
 structure.
 
 To narrow the gap between the syntax of C++ and compile-time exceptions, a
-metafunction +MPLLIBS_THROW+ is provided for constructing error values. It takes
-one argument, which is the error message.
+metafunction +throw_+ is provided for constructing error values. It takes one
+argument, which is the error message.
 
 Advanced compile-time exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -692,7 +692,7 @@ using boost::mpl;
 struct e;
 
 template <class T>
-struct always_throw : MPLLIBS_THROW<int_<13> > {};
+struct always_throw : throw_<int_<13> > {};
 
 typedef
   try_<
@@ -740,7 +740,7 @@ link:MPLLIBS_RETURN.html[MPLLIBS_RETURN] +
 Compile-time exceptions +
 link:exception.html[exception] +
 link:get_data.html[get_data] +
-link:MPLLIBS_THROW.html[MPLLIBS_THROW] +
+link:throw_.html[throw_] +
 link:do_try.html[do_try] +
 link:try_.html[try_] +
 
