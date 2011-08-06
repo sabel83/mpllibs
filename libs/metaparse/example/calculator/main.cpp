@@ -57,6 +57,8 @@ using mpllibs::metaparse::token;
 
 using mpllibs::metatest::to_stream;
 
+using mpllibs::metamonad::do_try;
+
 using boost::mpl::apply_wrap1;
 using boost::mpl::fold;
 using boost::mpl::front;
@@ -113,7 +115,7 @@ struct eval_plus
 {
   template <class C, class State>
   struct apply :
-    MPLLIBS_DO_TRY<
+    do_try<
       MPLLIBS_SET<state, State>,
       MPLLIBS_SET<new_value, back<C> >,
       eval_if<
@@ -137,7 +139,7 @@ struct eval_mult
 {
   template <class C, class State>
   struct apply :
-    MPLLIBS_DO_TRY<
+    do_try<
       MPLLIBS_SET<state, State>,
       MPLLIBS_SET<new_value, back<C> >,
       eval_if<

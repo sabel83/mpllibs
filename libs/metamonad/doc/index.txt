@@ -604,7 +604,7 @@ Exceptions handling happens by using a __try block__, which looks like the
 following:
 
 --------------------------------------
-MPLLIBS_DO_TRY<
+do_try<
   step1,
   step2,
   
@@ -634,7 +634,7 @@ struct unknown_error;
 
 template <class A, class B>
 struct min :
-  MPLLIBS_DO_TRY<
+  do_try<
     MPLLIBS_SET<c, less<A, B> >,
     boost::mpl::if_<c, A, B>
   >
@@ -678,7 +678,7 @@ We have seen so far how to handle exceptions using do-blocks, but we can handle
 exceptions in regular template metaprogramming code as well -- we don't need to
 know about monads and do-blocks. metamonad provides
 link:MPLLIBS_TRY.html[MPLLIBS_TRY] blocks, which work the same way as
-link:MPLLIBS_DO_TRY.html[MPLLIBS_DO_TRY] blocks except that the body of the
+link:do_try.html[do_try] blocks except that the body of the
 +TRY+ block is a nullary metafunction instead of a do-block. When a
 sub-expression of the +TRY+ block evaluates to an exception the evaluation of
 the entire nullary metafunction stops and the result of the +TRY+ block is the
@@ -741,7 +741,7 @@ Compile-time exceptions +
 link:exception.html[exception] +
 link:get_data.html[get_data] +
 link:MPLLIBS_THROW.html[MPLLIBS_THROW] +
-link:MPLLIBS_DO_TRY.html[MPLLIBS_DO_TRY] +
+link:do_try.html[do_try] +
 link:MPLLIBS_TRY.html[MPLLIBS_TRY] +
 
 Tags +

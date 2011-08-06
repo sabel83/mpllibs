@@ -21,29 +21,24 @@
 
 /*
  * Catching exceptions happens by using
- *   MPLLIBS_DO_TRY<...>
+ *   do_try<...>
  *     ::catch_<Tag1, Name1>
  *       ::apply<Body1>
  *     ::catch_<Tag2, Name2>
  *       ::apply<Body2>
  * instead of
- *   MPLLIBS_DO_TRY<...>
+ *   do_try<...>
  *     ::catch_<Tag1, Name1, Body1>
  *     ::catch_<Tag2, Name2, Body2>
  * to avoid ambiguity related to
  *  http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_defects.html#147
- * caused by MPLLIBS_DO_TRY<...>::catch_<...>::catch_<...> patterns.
+ * caused by do_try<...>::catch_<...>::catch_<...> patterns.
  */
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    #ifdef MPLLIBS_DO_TRY
-      #error MPLLIBS_DO_TRY already defined
-    #endif
-    #define MPLLIBS_DO_TRY mpllibs::metamonad::do_try
-
     struct catch_any
     {
       typedef catch_any type;
@@ -134,7 +129,7 @@ namespace mpllibs
       {
         static std::ostream& run(std::ostream& o)
         {
-          o << "MPLLIBS_DO_TRY<";
+          o << "do_try<";
           mpllibs::metatest::to_stream_argument_list<
             BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
           >::run(o);

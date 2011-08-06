@@ -21,6 +21,8 @@ using mpllibs::metatest::has_type;
 using mpllibs::metaparse::util::digit_to_int;
 using mpllibs::metaparse::error_tag;
 
+using mpllibs::metamonad::do_try;
+
 using boost::mpl::equal_to;
 using boost::mpl::apply_wrap1;
 
@@ -38,7 +40,7 @@ namespace
   
   typedef
     equal_to<
-      MPLLIBS_DO_TRY<
+      do_try<
         apply_wrap1<digit_to_int, char_x>
       >
       ::catch_<error_tag, x>::apply<int13>

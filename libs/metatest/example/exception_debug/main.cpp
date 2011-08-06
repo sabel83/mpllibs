@@ -23,6 +23,8 @@ using boost::mpl::divides;
 
 using mpllibs::metatest::debug;
 
+using mpllibs::metamonad::do_try;
+
 typedef int_<0> int0;
 typedef int_<13> int13;
 
@@ -31,7 +33,7 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(division_by_zero, "division by zero")
 
 template <class A, class B>
 struct safe_divides :
-  MPLLIBS_DO_TRY<
+  do_try<
     eval_if<
       typename equal_to<B, int0>::type,
       MPLLIBS_THROW<division_by_zero>,

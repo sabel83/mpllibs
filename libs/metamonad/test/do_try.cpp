@@ -30,6 +30,7 @@ using mpllibs::metatest::suite_path;
 
 using mpllibs::metamonad::exception;
 using mpllibs::metamonad::catch_any;
+using mpllibs::metamonad::do_try;
 
 namespace
 {
@@ -47,7 +48,7 @@ namespace
   typedef
     equal_to<
       int13,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_RETURN<int13>
       >
       ::catch_<tag1, x>
@@ -59,7 +60,7 @@ namespace
   typedef
     equal_to<
       int2,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_SET<t1, int1>,
         MPLLIBS_SET<t2, int1>,
         plus<t1, t2>
@@ -70,7 +71,7 @@ namespace
   typedef
     equal_to<
       int11,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_THROW<e1>
       >
       ::catch_<tag1, x>
@@ -82,7 +83,7 @@ namespace
   typedef
     equal_to<
       int13,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_THROW<int13>
       >
       ::catch_<tag<int13>::type, x>
@@ -94,7 +95,7 @@ namespace
   typedef
     equal_to<
       exception<int13>,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_THROW<int13>
       >
       ::catch_<tag2, x>
@@ -106,7 +107,7 @@ namespace
   typedef
     equal_to<
       int13,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_THROW<e2>
       >
       ::catch_<tag1, x>
@@ -120,7 +121,7 @@ namespace
   typedef
     equal_to<
       int11,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_THROW<e1>,
         MPLLIBS_RETURN<int1>
       >
@@ -134,7 +135,7 @@ namespace
   typedef
     equal_to<
       int11,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_RETURN<int13>,
         MPLLIBS_RETURN<int11>
       >
@@ -147,7 +148,7 @@ namespace
   typedef
     equal_to<
       int11,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_SET<x, MPLLIBS_THROW<e1> >,
         MPLLIBS_RETURN<int1>
       >
@@ -160,7 +161,7 @@ namespace
   typedef
     equal_to<
       int13,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_THROW<e1>,
         MPLLIBS_RETURN<int1>
       >
@@ -173,7 +174,7 @@ namespace
   typedef
     equal_to<
       exception<int13>,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_THROW<e1>,
         MPLLIBS_RETURN<int1>
       >
@@ -186,7 +187,7 @@ namespace
   typedef
     equal_to<
       exception<int13>,
-      MPLLIBS_DO_TRY<
+      do_try<
         MPLLIBS_THROW<e1>,
         MPLLIBS_RETURN<int1>
       >

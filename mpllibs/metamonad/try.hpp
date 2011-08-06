@@ -30,7 +30,7 @@ namespace mpllibs
     #undef MPLLBIS_DEFINE_NAME
   
     template <class F>
-    struct try_ : MPLLIBS_DO_TRY<F> {};
+    struct try_ : do_try<F> {};
     
     #ifdef MPLLIBS_CLASS
       #error MPLLIBS_CLASS already defined
@@ -53,7 +53,7 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS(n, class T) \
       > \
       struct try_<F<BOOST_PP_ENUM_PARAMS(n, T)> > : \
-        MPLLIBS_DO_TRY< \
+        do_try< \
           BOOST_PP_REPEAT(n, MPLLIBS_SET_T, ~) \
           BOOST_PP_COMMA_IF(n) \
           F<BOOST_PP_ENUM_PARAMS(n, t)> \

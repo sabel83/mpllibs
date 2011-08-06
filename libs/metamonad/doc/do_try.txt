@@ -3,16 +3,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-MPLLIBS_DO_TRY
-==============
+do_try
+======
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_DO_TRY do_try
-
 template <class Step1, ..., class Stepn>
 struct do_try
 {
@@ -32,11 +30,11 @@ struct do_try
 Description
 -----------
 
-+MPLLIBS_DO_TRY+ implements a compile-time try-catch block. The body of the try
++do_try+ implements a compile-time try-catch block. The body of the try
 block is a link:MPLLIBS_DO.html[MPLLIBS_DO]+<exception_tag>+ block, its steps
 are +Step1+, ..., +Stepn+. The +TRY+ block can be followed by any number of
 +catch_+ blocks, where +catch_+ is a nested template metafunction class of
-+MPLLIBS_DO_TRY+ parametrised by a +tag+ and an arbitrary class, +Name+. The
++do_try+ parametrised by a +tag+ and an arbitrary class, +Name+. The
 metafunction class takes a nullary metafunction, which is the body of the catch
 block. When the result of the try block is a compile-time exception, and the
 +tag+ of the exception's data is the same as +Tag+, the exception is bound to
@@ -73,7 +71,7 @@ struct unknown_error_detected;
 struct r;
 struct e;
 
-MPLLIBS_DO_TRY<
+do_try<
   MPLLIBS_SET<r, may_fail1<int_<13> >,
   may_fail2<r>
 >

@@ -35,7 +35,7 @@ Description
 +MPLLIBS_TRY+ implements a compile-time try-catch block. The body of the try
 block is a nullary metafunction. The +TRY+ block can be followed by any number
 of +catch_+ blocks the same way as in
-+link:MPLLIBS_DO_TRY.html[MPLLIBS_DO_TRY]+.
++link:do_try.html[do_try]+.
 
 When a subexpression of the nullary metafunction evaluates to a
 link:exception.html[compile-time exception], the rest of the nullary
