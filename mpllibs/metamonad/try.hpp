@@ -70,11 +70,6 @@ namespace mpllibs
     #undef MPLLIBS_SET_T
     #undef MPLLIBS_TRY_CASE
     #undef MPLLIBS_CLASS
-    
-    #ifdef MPLLIBS_TRY
-      #error MPLLIBS_TRY already defined
-    #endif
-    #define MPLLIBS_TRY mpllibs::metamonad::try_
   }
 }
 

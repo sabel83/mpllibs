@@ -20,7 +20,9 @@ template <class TagA, class TagB>
 struct min_impl
 {
   template <class A, class B>
-  struct apply : MPLLIBS_TRY<boost::mpl::if_<less<A, B>, A, B> > {};
+  struct apply :
+    mpllibs::metamonad::try_<boost::mpl::if_<less<A, B>, A, B> >
+  {};
 };
 
 template <class A, class B>
