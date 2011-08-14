@@ -18,10 +18,17 @@ template< typename Tag > struct my_reverse_impl {};
 template< typename First, typename Last, typename Accum >
 struct my_accum_reverse_impl;
 
+#if defined(BOOST_MPL_CFG_TYPEOF_BASED_SEQUENCES)
 template<>
 struct my_reverse_impl<
-      boost::mpl::sequence_tag< boost::mpl::vector<> >::type
+      boost::mpl::aux::vector_tag
   >
+#else
+template<long N>
+struct my_reverse_impl<
+      boost::mpl::aux::vector_tag<N>
+  >
+#endif
 {
   template< typename Vector > struct apply
     : my_accum_reverse_impl<

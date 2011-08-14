@@ -10,6 +10,8 @@
 
 using mpllibs::metatest::test_driver;
 using mpllibs::metatest::test_suite;
+using mpllibs::metatest::test_result;
+using mpllibs::metatest::suite_path;
 
 test_driver& test_driver::instance()
 {

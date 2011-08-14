@@ -5,7 +5,7 @@
 
 SOURCE_ROOT = ../../../..
 
-NAME = min
+NAME = min_with_do
 
 INCLUDES += $(SOURCE_ROOT)
 BIN_DIR = $(SOURCE_ROOT)/bin/example/metamonad/$(NAME)

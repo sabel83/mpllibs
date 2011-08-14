@@ -66,7 +66,12 @@ template <>
 struct less_impl<int_tag, int_tag>
 {
   template <class A, class B>
-  struct apply : boost::mpl::bool_<(A::value < B::value)> {};
+  struct apply
+  {
+    static const int value = A::value < B::value;
+
+    typedef boost::mpl::bool_<value> type;
+  };
 };
 
 #endif

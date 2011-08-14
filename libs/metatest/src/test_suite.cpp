@@ -11,6 +11,8 @@
 #include <algorithm>
 
 using mpllibs::metatest::test_suite;
+using mpllibs::metatest::suite_path;
+using mpllibs::metatest::test_result;
 
 size_t test_suite::failure_count() const
 {

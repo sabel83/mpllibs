@@ -220,10 +220,44 @@ namespace mpllibs
         }; \
       };
     
-    MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::vector_tag, vector)
+    #ifdef MPLLIBS_TO_STREAM_SEQUENCE_
+      #error MPLLIBS_TO_STREAM_SEQUENCE_ already defined
+    #endif
+    #define MPLLIBS_TO_STREAM_SEQUENCE_(tag, name) \
+      template <long N> \
+      struct to_stream_impl<tag<N> > \
+      { \
+        typedef to_stream_impl type; \
+        \
+        template <class Seq> \
+        struct apply \
+        { \
+          typedef apply type; \
+          \
+          static std::ostream& run(std::ostream& o_) \
+          { \
+            return \
+              mpllibs::metatest::to_stream_sequence_begin< \
+                Seq, \
+                typename boost::mpl::eval_if< \
+                  typename boost::mpl::empty<Seq>::type, \
+                  mpllibs::metatest::no_common_tag, \
+                  mpllibs::metatest::common_tag<Seq> \
+                >::type \
+              >::run(o_ << "mpl::" #name); \
+          } \
+        }; \
+      };
+    
+    #if defined(BOOST_MPL_CFG_TYPEOF_BASED_SEQUENCES)
+      MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::vector_tag, vector)
+    #else
+      MPLLIBS_TO_STREAM_SEQUENCE_(boost::mpl::aux::vector_tag, vector)
+    #endif
     MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::list_tag, list)
     MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::half_open_range_tag, range)
     
+    #undef MPLLIBS_TO_STREAM_SEQUENCE_
     #undef MPLLIBS_TO_STREAM_SEQUENCE
 
   }
