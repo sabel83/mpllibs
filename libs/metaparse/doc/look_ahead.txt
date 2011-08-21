@@ -1,0 +1,72 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+look_ahead
+==========
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class P>
+struct look_ahead
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Parses the input using parser +P+. When the parser returns an error, the
+combinator forwards the error. When the parser returns a result, the combinator
+returns the result without consuming anything from the input string.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/look_ahead.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +p+ parser, +s+ compile-time string and +pos+ source position the
+following are equivalent
+
+--------------------------------------
+mpllibs::metaparse::get_result<boost::mpl::apply<look_ahead<p>, s, pos> >::type
+mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type
+--------------------------------------
+
+--------------------------------------
+mpllibs::metaparse::get_position<boost::mpl::apply<look_ahead<p>, s, pos> >::type
+pos
+--------------------------------------
+
+--------------------------------------
+mpllibs::metaparse::get_remaining<boost::mpl::apply<look_ahead<p>, s, pos> >::type
+s
+--------------------------------------
+
+when +boost::mpl::apply<p, s, pos>+ doesn't return an error. +p+ and
++look_ahead<p>+ are equivavlent otherwise.
+
+Example
+-------
+
+--------------------------------------
+typedef look_ahead<mpllibs::metaparse::digit> starts_with_digit;
+--------------------------------------
+
+include::copyright[]
+
+link:index.html[[up]]
+
+
+

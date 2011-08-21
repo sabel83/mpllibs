@@ -1,3 +1,6 @@
 *.o
 *.d
-/doc
+bin
+/index.html
+website
+

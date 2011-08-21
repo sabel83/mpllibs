@@ -1,0 +1,79 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+unless_error
+============
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class T, class NotErrorCase>
+struct unless_error
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Checks if +T+ is a parsing error or not. When it is, the result is +T+. When it
+isn't, the result is +NotErrorCase+. Arguments are evaluated lazily.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/util/unless_error.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +e+ parsing error and +c+ nullary metafunction
+
+--------------------------------------
+unless_error<e, c>::type
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+e::type
+--------------------------------------
+
+For any +t+ type, that is not a parsing error and +c+ nullary metafunction
+
+--------------------------------------
+unless_error<t, c>::type
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+c::type
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+struct digit_char
+{
+  typedef digit_char type;
+};
+
+unless_error<boost::mpl::apply<is_digit, boost::mpl::char_<'7'> >, digit_char>::type;
+--------------------------------------
+
+include::copyright[]
+
+link:util_index.html[[up]]
+
+
+

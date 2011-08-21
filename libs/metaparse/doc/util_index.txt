@@ -1,0 +1,31 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+mpllibs::metaparse::util
+========================
+Abel Sinkovics
+
+This collection contains a number of metaprogramming utilities that
+are not available in +boost::mpl+, however are needed by +metaparse+.
+
+link:compose.html[compose] + 
+link:cons.html[cons] + 
+link:cons_seq.html[cons_seq] + 
+link:curry.html[curry] + 
+link:digit_to_int.html[digit_to_int] + 
+link:in_range.html[in_range] + 
+link:is_char.html[is_char] + 
+link:is_digit.html[is_digit] + 
+link:is_lcase_letter.html[is_lcase_letter] + 
+link:is_letter.html[is_letter] + 
+link:is_ucase_letter.html[is_ucase_letter] + 
+link:is_whitespace.html[is_whitespace] + 
+link:unless_error.html[unless_error] + 
+
+include::copyright[]
+
+link:index.html[[up]]
+
+

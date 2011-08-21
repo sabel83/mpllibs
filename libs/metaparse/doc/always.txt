@@ -1,0 +1,67 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+always
+======
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class P, class T>
+struct always
+{
+  template <class S, class Pos>
+  struct apply
+  {
+    // unspecified
+  };
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Parser combinator taking a parser and a class as arguments. It accepts an input
+if and only if +P+ accepts it, but the result of parsing will be +T+ instead of
+the result +P+ returned.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/always.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +p+ parser, +t+ class, +s+ compile-time string and +pos+ source position
+
+--------------------------------------
+mpllibs::metaparse::get_result<boost::mpl::apply<always<p, t>, s, pos> >::type
+--------------------------------------
+
+is equivalent to +t+ when +boost::mpl::apply<p, s, pos>+ doesn't return an
+error.
+
+Example
+-------
+
+--------------------------------------
+class alphanum_char {};
+
+typedef
+  always<mpllibs::metaparse::alphanum, alphanum_char>
+  ignore_alphanum_value;
+--------------------------------------
+
+include::copyright[]
+
+link:index.html[[up]]
+
+

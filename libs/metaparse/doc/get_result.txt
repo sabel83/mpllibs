@@ -1,0 +1,49 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+get_result
+==========
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class D>
+struct get_result
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Returns the result information of a parsing result.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/get_result.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +a+, +b+ and +c+ classes, the following are equivalent
+
+--------------------------------------
+get_position<mpllibs::metaparse::accept<a, b, c> >::type
+a::type
+--------------------------------------
+
+include::copyright[]
+
+link:index.html[[up]]
+
+
+

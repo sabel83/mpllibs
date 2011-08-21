@@ -1,0 +1,54 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+mpllibs
+=======
+Abel Sinkovics
+
+Introduction
+------------
+
+Welcome to the website of _mpllibs_. This is a collection of C++ template
+metaprogramming libraries.
+
+Components
+----------
+
+_mpllibs_ contains the following libraries:
+
+* link:libs/metatest/html/index.html[metatest] -
+    Unit testing framework for C++ template metaprograms
+* link:libs/metamonad/html/index.html[metamonad] -
+    Library implementing monads and exceptions in C++ template metaprograms
+* link:libs/metaparse/html/index.html[metaparse] -
+    A library for generating compile time parsers parsing embedded
+    DSL code as part of the C++ compilation process
+* link:libs/safe_printf/html/index.html[safe_printf] -
+    A type-safe +printf+, +fprintf+ and +sprintf+ implementation
+
+Usage
+-----
+
+The root of the source tree contains a +Makefile+. The following
+targets are supported:
+
+* +make check+ builds and runs all unit tests of the project.
+* +make html+ generates all HTML documentation to the +doc+ directory of the
+  source tree.
+* +make clean+ deletes all generated files.
+* +make all+ rebuilds everything.
+
+License
+-------
+
+The libraries are published under the
+http://www.boost.org/LICENSE_1_0.txt[Boost Software License].
+
+Download
+--------
+
+The libraries are available at http://github.com/sabel83/mpllibs[github].
+
+

@@ -1,0 +1,38 @@
+// Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+#include <mpllibs/metaparse/util/is_ucase_letter.hpp>
+
+#include "common.hpp"
+
+#include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/has_type.hpp>
+
+#include <boost/mpl/apply_wrap.hpp>
+
+using mpllibs::metatest::suite_path;
+using mpllibs::metatest::has_type;
+
+using mpllibs::metaparse::util::is_ucase_letter;
+
+using boost::mpl::apply_wrap1;
+
+namespace
+{
+  const suite_path suite = suite_path("util")("is_ucase_letter");
+
+  typedef has_type<is_ucase_letter> test_has_type;
+
+  typedef apply_wrap1<is_ucase_letter, char_K> test_letter;
+  
+  typedef apply_wrap1<is_ucase_letter, char_k> test_non_letter;
+}
+
+MPLLIBS_ADD_TEST(suite, test_has_type)
+MPLLIBS_ADD_TEST(suite, test_letter)
+MPLLIBS_ADD_TEST_TO_FAIL(suite, test_non_letter)
+
+
+

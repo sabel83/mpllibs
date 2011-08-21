@@ -1,0 +1,85 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+letrec
+======
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class Name, class Exp, class Body>
+struct letrec
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Recursive version of link:let.html[let]. It does the binding in +Body+ and in
++Exp+ as well, thus +Exp+ can refer to itself recursively by +Name+.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metamonad/letrec.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +n+, +x+ and +f+ classes, where none of them are the same and +t+
+template:
+
+--------------------------------------
+letrec<n, x, f>
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+let<n, letrec<n, x, f>, f>
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+using boost::mpl::times;
+using boost::mpl::plus;
+using boost::mpl::minus;
+using boost::mpl::int_;
+using boost::mpl::eval_if;
+using boost::mpl::equal_to;
+using boost::mpl::apply;
+
+struct fact;
+
+typedef
+  letrec<
+    fact,
+    lambda<
+      n,
+      eval_if<
+        equal_to<n, int_<0> >,
+        int_<1>,
+        times<apply<fact, minus<n, int_<1> > >, n > >
+      >,
+    apply<fact, int_<3> >
+  >::type
+  fact_3;
+--------------------------------------
+
+include::copyright[]
+
+link:index.html[[up]]
+
+
+
