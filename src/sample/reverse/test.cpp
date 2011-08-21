@@ -26,9 +26,17 @@ namespace
   typedef equal< my_reverse<empty>::type, empty > empty_test;
   typedef equal< my_reverse<one>::type, one > one_test;
   typedef equal< my_reverse<four>::type, four_r > four_test;
+
+  typedef equal< my_reverse<empty>::type, one > empty_test_failing;
+  typedef equal< my_reverse<one>::type, empty > one_test_failing;
+  typedef equal< my_reverse<four>::type, four > four_test_failing;
 }
 
 MPLLIBS_ADD_TEST(suite, empty_test)
 MPLLIBS_ADD_TEST(suite, one_test)
 MPLLIBS_ADD_TEST(suite, four_test)
+
+MPLLIBS_ADD_TEST(suite, empty_test_failing)
+MPLLIBS_ADD_TEST(suite, one_test_failing)
+MPLLIBS_ADD_TEST(suite, four_test_failing)
 
