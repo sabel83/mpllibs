@@ -7,8 +7,8 @@ mpllibs::metaparse
 ==================
 Abel Sinkovics
 
-This is parser generator library for template metaprograms. The purpose of this
-library is supporting the creation of parsers that parse at compile time. This
+Metaparse is parser generator library for template metaprograms. The purpose of this
+library is to support the creation of parsers that parse at compile time. This
 library is inteded to be used for embedded domain specific language creation
 for C\++. The input of the generated parser is a compile time string, see
 +boost::mpl::string+. The result of the parsing process is either an error or
@@ -19,7 +19,7 @@ http://www.cs.lth.se/eda120/assignment4/parser.pdf[L. Andersson].
 What is a parser
 ----------------
 
-A parser is a template metafunction taking the following arguments:
+A parser is a template metafunction that takes the following arguments:
 
 * a postfix of the input text, a compile time string
 * a structure describing at which position of the entire input text the postfix begins at
@@ -39,7 +39,7 @@ When there is a parsing error, the parser returns a structure with the tag
 Source positions
 ~~~~~~~~~~~~~~~~
 
-A source position is described using a compile-time data-structure. The
+A source position is described using a compile-time data structure. The
 following functions can be used to query it:
 
 * link:get_col.html[get_col]
@@ -51,9 +51,9 @@ The beginning of the input is +mpllibs::metaparse::start+, which requires
 Error handling
 ~~~~~~~~~~~~~~
 
-An error is described using a compile-time data-structure. It contains
-information about the source position, where the error was detected and some
-description about the error. The description is a compile-time data-structure
+An error is described using a compile-time data structure. It contains
+information about the source position where the error was detected and some
+description about the error. The description is a compile-time data structure
 without any restriction. link:debug_parsing_error.html[debug_parsing_error] can
 be used to display the error message.
 
@@ -68,13 +68,13 @@ Combining parsers
 -----------------
 
 Complex parsers can be built by combining simple parsers. The parser library
-contains a number of parser combinators, that build new parsers from already
+contains a number of parser combinators that build new parsers from already
 existing ones.
 
 For example +mpllibs::metaparse::accept_when<Parser, Predicate, RejectErrorMsg>+
 is a parser. It uses +Parser+ to parse the input. When +Parser+ rejects the
 input, the combinator forwards the error +Parser+ emitted. When +Parser+
-is successfull, the combinator valiadtes the result using +Predicate+. If the
+is successful, the combinator validates the result using +Predicate+. If the
 predicate returns true, the combinator accepts the input, otherwise it generates
 an error with the message +RejectErrorMsg+.
 
@@ -95,7 +95,7 @@ typedef
 Sequence
 ~~~~~~~~
 
-The result of a successful parsing is some value and the remaining string, that
+The result of a successful parsing is some value and the remaining string that
 was not parsed. The remaining string can be processed by another parser. The
 parser library provides a parser combinator, +mpllibs::metaparse::sequence+,
 that takes a number of parsers as arguments and builds a new parser from them

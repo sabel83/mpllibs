@@ -11,8 +11,8 @@ This library contains type-safe implementations of the +printf+ functions.
 It requires the format string to be available at compile time and typechecks
 the rest of the arguments based on that as part of the compilation process.
 In case of invalid usage, it emits compliation errors. These functions are
-wrappers of the C functions without runtime overhead. They only have compile
-time overhead.
+wrappers of the C functions without runtime overhead (they do have compile
+time overhead, however).
 
 Functions
 ---------

@@ -23,7 +23,7 @@ Description
 -----------
 
 Checks if +T+ is a parsing error or not. When it is, the result is +T+. When it
-isn't, the result is +NotErrorCase+. Arguments are evaluated lazily.
+is not, the result is +NotErrorCase+. Arguments are evaluated lazily.
 
 Header
 ------

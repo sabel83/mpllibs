@@ -31,7 +31,7 @@ struct any_one_of
 Description
 -----------
 
-Parser combinator taking a number of parsers as arguments. It tries using the
+Parser combinator taking a number of parsers as arguments. It tries to use the
 parsers. When any of them accepts the input, it tries all parsers with the
 remaining input again. +any_one_of+ stops when no parser accepts the input.
 The result of parsing is a sequence of the results of the individual parsings.

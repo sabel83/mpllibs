@@ -12,7 +12,7 @@ The purpose of this monad is to provide basic error handling for pure code.
 Note that metamonad offers a higher level error handling monad, the
 link:exception_monad.html[exception monad].
 
-Monadic values consist of +nothing+ and +just<T>+, where +T+ is a nullary
+Monadic values comprise +nothing+ and +just<T>+, where +T+ is a nullary
 metafunction. +just+ evaluates its argument. +nothing+ represents error,
 +just+ represents normal result.
 

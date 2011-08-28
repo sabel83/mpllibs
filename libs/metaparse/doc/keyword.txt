@@ -27,7 +27,7 @@ Description
 -----------
 
 Parser accepting a string. The result of parsing is +ResultType+. +ResultType+
-is optional, when not given, the result of successful parsing is undefined.
+is optional; when not given, the result of successful parsing is undefined.
 
 Header
 ------

@@ -27,7 +27,7 @@ Description
 -----------
 
 This function can generate the external interface of a parser. It takes a
-parser as argument and builds a metafunction class, that accepts an input
+parser as argument and builds a metafunction class that accepts an input
 string and returns the result of parsing. It generates a compilation error
 when parsing fails.
 

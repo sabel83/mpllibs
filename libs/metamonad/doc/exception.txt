@@ -24,7 +24,7 @@ struct exception
 Description
 -----------
 
-Compile-time data-structure representing an error, that occured during the
+Compile-time data-structure representing an error that occured during the
 evaluation of template metaprograms. +Data+ is a compile-time data-structure
 describing the error. This data can be queried by link:get_data.html[get_data].
 

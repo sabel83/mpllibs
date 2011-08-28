@@ -35,8 +35,8 @@ block is a link:MPLLIBS_DO.html[MPLLIBS_DO]+<exception_tag>+ block, its steps
 are +Step1+, ..., +Stepn+. The +TRY+ block can be followed by any number of
 +catch_+ blocks, where +catch_+ is a nested template metafunction class of
 +do_try+ parametrised by a +tag+ and an arbitrary class, +Name+. The
-metafunction class takes a nullary metafunction, which is the body of the catch
-block. When the result of the try block is a compile-time exception, and the
+metafunction class takes a nullary metafunction which is the body of the catch
+block. When the result of the try block is a compile-time exception and the
 +tag+ of the exception's data is the same as +Tag+, the exception is bound to
 the name +Name+ in +Body+ using a link:let.html[let] expression and the result
 of this is evaluated. Otherwise the catch block is skipped.

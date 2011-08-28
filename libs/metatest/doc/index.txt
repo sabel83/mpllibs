@@ -8,7 +8,7 @@ mpllibs::metatest
 =================
 Endre Sajo, Abel Sinkovics
 
-This is a unit testing framework for C\++ template metaprograms. It can be
+Metatest is a unit testing framework for C\++ template metaprograms. It can be
 integrated into other C\++ unit testing frameworks and has its own reporting
 capabilities as well. There are no special steps in the compilation of unit
 tests compared to other C\++ code.
@@ -28,18 +28,18 @@ Pretty-printing is needed to display detailed error messages.  For example
 when a test case compares the result of a metafunction evaluation with the
 expected value and they differ, the test framework should display the result
 and the expected value in the report.  Our solution achieves this by
-generating a string at compile-time containing all these details.  To be able
-to generate such strings, we need to be able to convert classes --- data,
-metaprograms operate on --- into strings.
+generating a string at compile-time containing all these details.  In order for
+classes --- data, metaprograms operate on --- to be usable with the framework,
+we need to be able to convert them into strings.
 
 Test results are then collected in STL containers in a test suite hierarchy,
 the root of which is located in a global test driver object.  This hierarchy
 is accessible through an iterator interface.  Test result objects provide
 their own methods via which fail/success statuses, test names and detailed
-descriptions can be queried.
+descriptions can be accessed.
   
 The test cases are collected into *test suites*.  A test suite can
-contain test cases and other test suites, thus the tests are collected in a
+contain test cases and further test suites, thus the tests are collected in a
 tree structure of nested suites.  This hierarchy is built at runtime, by the
 constructors of global objects.  This tree can be processed by regular C++
 code, the root can be accessed as a singleton object.  The tree provides
@@ -63,7 +63,7 @@ First, the following header must be included.
 #include <mpllibs/metatest/test.hpp>
 --------------------------------------
 
-Individual tests are organised in a test suite hierarchy.  To create a suite,
+Individual tests are organized in a test suite hierarchy.  To create a suite,
 first, a suite path must be declared.  +suite_path+ is an ordinary
 run-time class; +string+ and +list+ in the table below refer to the
 C++ Standard Library's +std::string+ and +std::list+.
@@ -106,8 +106,8 @@ available by including the following header.
 Example
 ~~~~~~~
 
-In this section we assume, that we have a template metafunction, +my_reverse+,
-reversing +boost::mpl::vector+ values. 
+In this section we assume that we have a template metafunction, +my_reverse+,
+that reverses +boost::mpl::vector+ values. 
 With the above applied, we get the following test suite for +my_reverse+.
 
 --------------------------------------
@@ -128,7 +128,7 @@ MPLLIBS_ADD_TEST(suite, one_test)
 MPLLIBS_ADD_TEST(suite, four_test)
 --------------------------------------
 
-By compiling it, the unit tests are executed. Assuming, that our +my_reverse+
+By compiling it, the unit tests are executed. Assuming that our +my_reverse+
 implementation is correct, the default plain text reporter outputs the following
 report.
 
@@ -177,19 +177,19 @@ Number of tests: 3
 Number of failures: 3
 --------------------------------------
 
-Besides being concise, this output also no longer depends on the compiler.
-The format is standard, but also customisable.
+Besides being concise, this output does not depend on the compiler.  The format
+is standard, but also customizable.
 
 This example can be found in the +example/reverse+ directory of the library.
 
-Customising test reports
+Customizing test reports
 ------------------------
 
-The framework offers facilities for customisation in two ways --- first,
-report formats can be customised, and second, custom types can be registered
+The framework offers facilities for customization in two ways --- first,
+report formats can be customized, and second, custom types can be registered
 for pretty printing.
 
-Customising reports
+Customizing reports
 ~~~~~~~~~~~~~~~~~~~
 
 Test results are collected by a +test_driver+ singleton object.  This
@@ -229,8 +229,8 @@ To use +test_suite+ objects, the following header needs to be included:
 |=================
 
 A +test_result+ object represents the result of one compile-time test. It either
-succeeded or failed, and in case it failed, the +test_result+ object can tell
-the reason as an +std::string+.
+succeeds or fails, and in case it fails, the +test_result+ object will provide
+a reason in the form of an +std::string+.
 To use +test_result+ objects, the following header needs to be included:
 
 --------------------------------------
@@ -312,20 +312,20 @@ struct to_stream
 
 To use +to_stream+ with a custom type, one has the following options:
 
-* +to_stream+ can be specialised directly and can make use of pattern matching
-  through template specialisation.
+* +to_stream+ can be specialized directly and can make use of pattern matching
+  through template specialization.
 * when +T+ has a nested type called +to_stream+, the +to_stream+ metafunction
   calls the +run+ method of the nested class. This +run+ method is expected to
   have the same signature as the +run+ method of +to_stream+ above. This
   solution can be used to add pretty-printing support to a compile-time value
   without explicitly changing (or even including) the +to_stream+ metafunction.
-* when +to_stream+ is not specialised and +T+ has no nested +to_stream+ class,
+* when +to_stream+ is not specialized and +T+ has no nested +to_stream+ class,
   the +to_stream+ works as overloaded metafunctions of the Boost metaprogramming
   library: it applies +T+ on the +to_stream_impl<tag of T>+ metafunction class,
-  which can be specialised. This method can be used to define pretty printing
+  which can be specialized. This method can be used to define pretty printing
   for types based on their +tag+.
 
-We demonstrate the above options for specialisation for user-defined types in
+We demonstrate the above options for specialization for user-defined types in
 the following example.
 
 --------------------------------------
@@ -387,13 +387,13 @@ provided:
 
 A number of convenience utilities are provided for pretty printing. After
 including +to_stream_fwd.hpp+ the following macros can be used to define
-specialisations of +to_stream+ for classes and template instances:
+specializations of +to_stream+ for classes and template instances:
 
 |=================
-|+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(name, display_name)+                                            |define a specialisation of +to_stream+ for type +name+, that displays +display_name+
+|+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(name, display_name)+                                            |define a specialization of +to_stream+ for type +name+ that displays +display_name+
 |+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(name)+                                                   |same as MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(name, "name")
-|+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(arg_num, name, display_name)+                               |define a specialisation of +to_stream+ for instances of template +name+ with +arg_num+ arguments. The result is displayed as +display_name<arg1, arg2, ...>+, where the arguments are pretty-printed recursively
-|+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(min_arg_num, max_arg_num, name, display_name)+|define a specialisation of +to_stream+ for instances of template +name+ with +min_arg_num+, +min_arg_num+ + +1+, ..., +max_arg_num+ arguments. The result is displayed as +display_name<arg1, arg2, ...>+, where the arguments are pretty-printed recursively
+|+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(arg_num, name, display_name)+                               |define a specialization of +to_stream+ for instances of template +name+ with +arg_num+ arguments. The result is displayed as +display_name<arg1, arg2, ...>+, where the arguments are pretty-printed recursively
+|+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(min_arg_num, max_arg_num, name, display_name)+|define a specialization of +to_stream+ for instances of template +name+ with +min_arg_num+, +min_arg_num+ + +1+, ..., +max_arg_num+ arguments. The result is displayed as +display_name<arg1, arg2, ...>+, where the arguments are pretty-printed recursively
 |=================
 
 These macros expect that they are not used in any namespace.
@@ -491,16 +491,16 @@ test suite hierarchy.
 Integration with other unit testing frameworks has to be implemented by the
 user.
 
-Recommendations
----------------
+Best practices
+--------------
 
 * Keep your test cases in different compilation units.
 * Create a static +test_suite+ object called +suite+ in every compilation unit
-  and use that for test cases. You'll be able to move around test cases easily
+  and use that for test cases. You will be able to move around test cases easily
   in the future.
 * Keep every test-related object and class in the unnamed namespace to make
-  them local to the compilation unit. This way there won't be name collisions
-  between tests in different test suites.
+  them local to the compilation unit. This way name collisions between tests in
+  different test suites are avoided.
 
 include::copyright[]
 

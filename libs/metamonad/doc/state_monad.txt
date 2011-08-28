@@ -9,7 +9,7 @@ Abel Sinkovics
 
 This is the C++ template metaprogramming equivalent of Haskell's State monad.
 Monadic values are metafunctions classes taking the state as argument and
-returning (value, state) pairs. The purpose of this monad is combining such
+returning (value, state) pairs. The purpose of this monad is to combine such
 functions.
 
 general information

@@ -25,7 +25,7 @@ Description
 -----------
 
 Compile-time data-structure representing an error in the
-link:either_monad.html[either monad]. Its argument is a nullary metafunction,
+link:either_monad.html[either monad]. Its argument is a nullary metafunction
 which +left+ evaluates. The data can be queried using
 link:get_data.html[get_data].
 

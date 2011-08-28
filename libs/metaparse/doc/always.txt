@@ -46,7 +46,7 @@ For any +p+ parser, +t+ class, +s+ compile-time string and +pos+ source position
 mpllibs::metaparse::get_result<boost::mpl::apply<always<p, t>, s, pos> >::type
 --------------------------------------
 
-is equivalent to +t+ when +boost::mpl::apply<p, s, pos>+ doesn't return an
+is equivalent to +t+ when +boost::mpl::apply<p, s, pos>+ does not return an
 error.
 
 Example
