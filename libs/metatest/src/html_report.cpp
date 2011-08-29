@@ -18,55 +18,99 @@ namespace
 {
   void display(ostream& out_, const string& path_, const test_suite& f_)
   {
-    using std::endl;
-    
-    for (
-      test_suite::suite_map::const_iterator
-        i = f_.suites().begin(),
-        e = f_.suites().end();
-      i != e;
-      ++i
-    )
+    for (test_suite::result_list::const_iterator i = f_.results().begin();
+        i != f_.results().end();
+        ++i)
     {
-      display(out_, path_ + i->first + "::", i->second);
-    }
-    
-    for (
-      test_suite::result_list::const_iterator
-        i = f_.results().begin(),
-        e = f_.results().end();
-      i != e;
-      ++i
-    )
-    {
-      out_ << "<p class=\"caseName\">"
-           <<   path_ << i->get_name()
-           <<   (i->success()
-                   ? " <span class=\"ok\">OK</span>"
-                   : " <span class=\"fail\">FAIL</span>")
-           << "</p>"
-      ;
+      out_
+        << "<p class=\"caseName\">"
+        << path_ << i->get_name()
+        << (i->success() ? " <span class=\"ok\">OK</span>"
+                         : " <span class=\"fail\">FAILED</span>")
+        << "</p>";
 
       out_ << "<div class=\"caseDetails\">";
 
       if (i->has_reason())
       {
-        const std::string &reason = i->get_reason();
+        const string &reason = i->get_reason();
 
-        for (std::string::const_iterator it = reason.begin();
-            it != reason.end();
-            ++it)
+        for (string::const_iterator c = reason.begin();
+            c != reason.end();
+            ++c)
         {
-          if ('<' == *it)      out_ << "&lt;";
-          else if ('>' == *it) out_ << "&gt;";
-          else if ('&' == *it) out_ << "&amp;";
-          else out_ << *it;
+          switch (*c)
+          {
+            case '<': out_ << "&lt;"; break;
+            case '>': out_ << "&gt;"; break;
+            case '&': out_ << "&amp;"; break;
+            default: out_ << *c;
+          }
         }
+      }
+
+      for (test_suite::suite_map::const_iterator s = f_.suites().begin();
+          s != f_.suites().end();
+          ++s)
+      {
+        display(out_, path_ + s->first + "::", s->second);
       }
 
       out_ << "</div>";
     }
   }
+
+  //void display(ostream& out_, const string& path_, const test_suite& f_)
+  //{
+  //  using std::endl;
+  //  
+  //  for (
+  //    test_suite::suite_map::const_iterator
+  //      i = f_.suites().begin(),
+  //      e = f_.suites().end();
+  //    i != e;
+  //    ++i
+  //  )
+  //  {
+  //    display(out_, path_ + i->first + "::", i->second);
+  //  }
+  //  
+  //  for (
+  //    test_suite::result_list::const_iterator
+  //      i = f_.results().begin(),
+  //      e = f_.results().end();
+  //    i != e;
+  //    ++i
+  //  )
+  //  {
+  //    out_ << "<p class=\"caseName\">"
+  //         <<   path_ << i->get_name()
+  //         <<   (i->success()
+  //                 ? " <span class=\"ok\">OK</span>"
+  //                 : " <span class=\"fail\">FAIL</span>")
+  //         << "</p>"
+  //    ;
+
+  //    out_ << "<div class=\"caseDetails\">";
+
+  //    if (i->has_reason())
+  //    {
+  //      const std::string &reason = i->get_reason();
+
+  //      for (std::string::const_iterator it = reason.begin();
+  //          it != reason.end();
+  //          ++it)
+  //      {
+  //        if ('<' == *it)      out_ << "&lt;";
+  //        else if ('>' == *it) out_ << "&gt;";
+  //        else if ('&' == *it) out_ << "&amp;";
+  //        else out_ << *it;
+  //      }
+  //    }
+
+  //    out_ << "</div>";
+  //  }
+  //}
 }
 
 bool html_report(std::ostream& out_)
@@ -109,6 +153,7 @@ bool html_report(std::ostream& out_)
               "</style>"
             "</head>"
             "<body>"
+              "<h1>Metatest report</h1>"
     ;
 
   display(out_, "", suite);
