@@ -452,7 +452,8 @@ The library provides the following report generating functions:
 
 |=================
 |+bool plaintext_report(std::ostream &os)+|generates a plain-text report. Declared in +<mpllibs/metatest/plaintext_report.hpp>+
-|+bool xml_report(std::ostream &os)+      |generates an xml report. Declared in +<mpllibs/metatest/xml_report.hpp>+
+|+bool xml_report(std::ostream &os)+|generates an xml report. Declared in +<mpllibs/metatest/xml_report.hpp>+
+|+bool html_report(std::ostream &os)+|generates an html/javascript report. Declared in +<mpllibs/metatest/html_report.hpp>+. The generated report assumes that +jquery.js+ is in the same directory.
 |=================
 
 The library provides different headers that can be included in a compilation
@@ -462,6 +463,7 @@ available:
 
 |=================
 |+<mpllibs/metatest/main.hpp>+|calls +plaintext_report+
+|+<mpllibs/metatest/main_html.hpp>+|calls +html_report+
 |+<mpllibs/metatest/main_boost.hpp>+|calls +build_metatest_test_suite+
 |=================
 
