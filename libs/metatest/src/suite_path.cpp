@@ -20,12 +20,12 @@ suite_path::suite_path(const std::list<std::string>& p_) :
   _elements(p_)
 {}
 
-suite_path::const_iterator suite_path::begin() const
+suite_path::iterator suite_path::begin() const
 {
   return _elements.begin();
 }
 
-suite_path::const_iterator suite_path::end() const
+suite_path::iterator suite_path::end() const
 {
   return _elements.end();
 }

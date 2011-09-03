@@ -72,8 +72,8 @@ const test_suite::result_list& test_suite::results() const
 }
 
 void test_suite::add(
-  suite_path::const_iterator begin_,
-  suite_path::const_iterator end_,
+  suite_path::iterator begin_,
+  suite_path::iterator end_,
   const test_result& result_
 )
 {
@@ -83,7 +83,7 @@ void test_suite::add(
   }
   else
   {
-    suite_path::const_iterator tail_begin(begin_);
+    suite_path::iterator tail_begin(begin_);
     ++tail_begin;
     _suites[*begin_].add(tail_begin, end_, result_);
   }

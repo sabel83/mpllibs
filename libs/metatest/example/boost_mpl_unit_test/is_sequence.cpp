@@ -10,6 +10,7 @@
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/range_c.hpp>
+#include <boost/mpl/not.hpp>
 
 namespace
 {
@@ -24,12 +25,12 @@ namespace
 
   struct UDT {};
 
-  typedef is_sequence< std_vector<int> > test1;
-  typedef is_sequence< int_<0> > test2;
-  typedef is_sequence< int > test3;
-  typedef is_sequence< int& > test4;
-  typedef is_sequence< UDT > test5;
-  typedef is_sequence< UDT* > test6;
+  typedef not_<is_sequence< std_vector<int> > > test1;
+  typedef not_<is_sequence< int_<0> > > test2;
+  typedef not_<is_sequence< int > > test3;
+  typedef not_<is_sequence< int& > > test4;
+  typedef not_<is_sequence< UDT > >  test5;
+  typedef not_<is_sequence< UDT* > > test6;
   typedef is_sequence< range_c<int,0,0> > test7;
   typedef is_sequence< list<> > test8;
   typedef is_sequence< list<int> > test9;
@@ -37,12 +38,12 @@ namespace
   typedef is_sequence< vector<int> > test11;
 }
 
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test1)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test2)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test3)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test4)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test5)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test6)
+MPLLIBS_ADD_TEST(suite, test1)
+MPLLIBS_ADD_TEST(suite, test2)
+MPLLIBS_ADD_TEST(suite, test3)
+MPLLIBS_ADD_TEST(suite, test4)
+MPLLIBS_ADD_TEST(suite, test5)
+MPLLIBS_ADD_TEST(suite, test6)
 MPLLIBS_ADD_TEST(suite, test7)
 MPLLIBS_ADD_TEST(suite, test8)
 MPLLIBS_ADD_TEST(suite, test9)

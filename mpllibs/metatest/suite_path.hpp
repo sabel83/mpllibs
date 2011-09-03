@@ -18,14 +18,14 @@ namespace mpllibs
     private:
       typedef std::list<std::string> elements;
     public:
-      typedef elements::const_iterator const_iterator;
+      typedef elements::const_iterator iterator;
       
       suite_path();
       suite_path(const std::string& p_);
       suite_path(const std::list<std::string>& p_);
       
-      const_iterator begin() const;
-      const_iterator end() const;
+      iterator begin() const;
+      iterator end() const;
       
       suite_path operator()(const std::string& e_) const;
     private:

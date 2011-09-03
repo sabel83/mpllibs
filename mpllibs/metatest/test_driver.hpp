@@ -28,7 +28,7 @@ namespace mpllibs
     class test_driver
     {
     public:
-      template <class TestFunctor, bool ExpectedResult>
+      template <class TestFunctor>
       static void run_test(
         const suite_path& suite_,
         const std::string& name_,
@@ -48,7 +48,7 @@ namespace mpllibs
         ostringstream s;
         to_stream<TestFunctor>::run(s);
 
-        const bool success = has_t && has_v && result == ExpectedResult;
+        const bool success = has_t && has_v && result;
 
         const string reason =
           has_t ?

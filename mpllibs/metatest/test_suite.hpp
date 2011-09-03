@@ -25,8 +25,8 @@ namespace mpllibs
       typedef std::list<test_result> result_list;
       
       void add(
-        suite_path::const_iterator begin_,
-        suite_path::const_iterator end_,
+        suite_path::iterator begin_,
+        suite_path::iterator end_,
         const test_result& result_
       );
       

@@ -11,6 +11,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/not.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -18,6 +19,7 @@ using mpllibs::metatest::has_type;
 using mpllibs::metaparse::util::is_digit;
 
 using boost::mpl::apply_wrap1;
+using boost::mpl::not_;
 
 namespace
 {
@@ -27,10 +29,10 @@ namespace
 
   typedef apply_wrap1<is_digit, char_7> test_digit;
   
-  typedef apply_wrap1<is_digit, char_a> test_non_digit;
+  typedef not_<apply_wrap1<is_digit, char_a> > test_non_digit;
 }
 
 MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_digit)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test_non_digit)
+MPLLIBS_ADD_TEST(suite, test_non_digit)
 

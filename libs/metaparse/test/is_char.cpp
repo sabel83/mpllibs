@@ -11,6 +11,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/not.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -18,6 +19,7 @@ using mpllibs::metatest::has_type;
 using mpllibs::metaparse::util::is_char;
 
 using boost::mpl::apply_wrap1;
+using boost::mpl::not_;
 
 namespace
 {
@@ -29,10 +31,10 @@ namespace
 
   typedef apply_wrap1<is_char_a, char_a> test_same;
   
-  typedef apply_wrap1<is_char_a, char_b> test_different;
+  typedef not_<apply_wrap1<is_char_a, char_b> > test_different;
 }
 
 MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_same)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test_different)
+MPLLIBS_ADD_TEST(suite, test_different)
 

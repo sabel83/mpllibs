@@ -18,6 +18,7 @@
 #include <boost/mpl/empty.hpp>
 
 #include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/not.hpp>
 
 namespace
 {
@@ -47,9 +48,9 @@ namespace
   typedef equal_to< size<v9>::type, int_<9> > test_size_4;
 
   typedef empty<v0> test_empty_1;
-  typedef empty<v1> test_empty_2;
-  typedef empty<v2> test_empty_3;
-  typedef empty<v9> test_empty_4;
+  typedef not_<empty<v1> > test_empty_2;
+  typedef not_<empty<v2> > test_empty_3;
+  typedef not_<empty<v9> > test_empty_4;
 
   typedef is_same< front<v1>::type, char > test_front_1;
   typedef is_same< front<v2>::type, char > test_front_2;
@@ -205,9 +206,9 @@ MPLLIBS_ADD_TEST(suite, test_size_3)
 MPLLIBS_ADD_TEST(suite, test_size_4)
 
 MPLLIBS_ADD_TEST(suite, test_empty_1)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test_empty_2)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test_empty_3)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test_empty_4)
+MPLLIBS_ADD_TEST(suite, test_empty_2)
+MPLLIBS_ADD_TEST(suite, test_empty_3)
+MPLLIBS_ADD_TEST(suite, test_empty_4)
 
 MPLLIBS_ADD_TEST(suite, test_front_1)
 MPLLIBS_ADD_TEST(suite, test_front_2)

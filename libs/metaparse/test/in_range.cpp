@@ -11,6 +11,7 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/not.hpp>
 
 using mpllibs::metatest::suite_path;
 using mpllibs::metatest::has_type;
@@ -18,6 +19,7 @@ using mpllibs::metatest::has_type;
 using mpllibs::metaparse::util::in_range;
 
 using boost::mpl::apply_wrap1;
+using boost::mpl::not_;
 
 namespace
 {
@@ -31,12 +33,14 @@ namespace
 
   typedef apply_wrap1<in_range<int10, int13>, int13> test_upper_bound;
 
-  typedef apply_wrap1<in_range<int10, int13>, int14> test_int_not_in_range;    
+  typedef
+    not_<apply_wrap1<in_range<int10, int13>, int14> >
+    test_int_not_in_range;
 }
 
 MPLLIBS_ADD_TEST(suite, test_has_type)
 MPLLIBS_ADD_TEST(suite, test_int_in_range)
 MPLLIBS_ADD_TEST(suite, test_lower_bound)
 MPLLIBS_ADD_TEST(suite, test_upper_bound)
-MPLLIBS_ADD_TEST_TO_FAIL(suite, test_int_not_in_range)
+MPLLIBS_ADD_TEST(suite, test_int_not_in_range)
 
