@@ -16,9 +16,9 @@
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/empty.hpp>
+#include <boost/mpl/not.hpp>
 
 #include <boost/type_traits/is_same.hpp>
-#include <boost/type_traits/not.hpp>
 
 namespace
 {
