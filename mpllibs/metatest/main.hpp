@@ -1,3 +1,6 @@
+#ifndef MPLLIBS_METATEST_MAIN_HPP
+#define MPLLIBS_METATEST_MAIN_HPP
+
 // Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -15,4 +18,6 @@ int main()
 
   return plaintext_report(cout) ? 0 : 1;
 }
+
+#endif
 
