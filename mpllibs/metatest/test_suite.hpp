@@ -18,17 +18,15 @@ namespace mpllibs
 {
   namespace metatest
   {
+    class test_driver;
+
     class test_suite
     {
     public:
+      friend class test_driver;
+
       typedef std::map<std::string, test_suite> suite_map;
       typedef std::list<test_result> result_list;
-      
-      void add(
-        suite_path::iterator begin_,
-        suite_path::iterator end_,
-        const test_result& result_
-      );
       
       size_t failure_count() const;
       size_t count() const;
@@ -38,7 +36,13 @@ namespace mpllibs
     private:
       suite_map _suites;
       result_list _results;
-    };
+
+      void add(
+        suite_path::iterator begin_,
+        suite_path::iterator end_,
+        const test_result& result_
+      );
+     };
   }
 }
 
