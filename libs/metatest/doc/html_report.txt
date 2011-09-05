@@ -20,7 +20,7 @@ Description
 
 Displays the test results as an HTML document. Returns +true+ when there
 was no failed test case.
-The HTML document assumes that link:TODO[+jquery.js+] is in the same directory
+The HTML document assumes that link:http://jquery.com/[+jquery.js+] is in the same directory
 as the generated HTML document itself.
 
 Header

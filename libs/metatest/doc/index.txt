@@ -454,9 +454,9 @@ link:MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULT.html[SMPLLIBS_DEFINE_TO_
 
 Report generators provided by the library:
 
-link:plaintext_report.html[+plaintext_report+] +
-link:xml_report.html[+xml_report+] +
-link:html_report.html[+html_report+] +
+link:plaintext_report.html[plaintext_report] +
+link:xml_report.html[xml_report] +
+link:html_report.html[html_report] +
 
 include::copyright[]
 
