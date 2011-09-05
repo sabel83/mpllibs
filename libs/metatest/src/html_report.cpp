@@ -139,7 +139,7 @@ bool html_report(std::ostream& out_)
     << i << "<script src=\"" << jquery << "\"></script>\n"
     << i << "<script>" "<!--\n"
     << ii << "$(document).ready(function() {\n"
-    << iii << "$(\"div.caseDetails\").toggle();\n"
+    << iii << "$($(\"div.caseDetails\").get().reverse()).toggle();\n"
     << iii << "$(\"p.caseName\").click(function() {\n"
     << iiii << "$(this).next(\"div.caseDetails\").slideToggle();\n"
     << iii << "});\n"
