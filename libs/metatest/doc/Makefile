@@ -3,6 +3,7 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
+ASCIIDOC ?= asciidoc
 
 OUT_DIR = ../html
 TXT_FILES = $(wildcard *.txt)
@@ -16,7 +17,7 @@ clean :
 	-rm $(HTML_FILES)
 
 $(HTML_FILES) : $(OUT_DIR)/%.html : %.txt 
-	asciidoc -o $@ -b html4 $<
+	$(ASCIIDOC) -o $@ -b html4 $<
 	sed --in-place 's/<head>/<head>\n<link rel="stylesheet" type="text\/css" href="style.css" \/> /' $@
 	sed --in-place 's/<hr>//g' $@
 
