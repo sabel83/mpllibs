@@ -13,6 +13,11 @@ namespace mpllibs
 {
   namespace metatest
   {
+    #ifdef MPLLIBS_HERE
+      #error MPLLIBS_HERE already defined
+    #endif
+    #define MPLLIBS_HERE (mpllibs::metatest::location(__FILE__, __LINE__))
+
     class location
     {
     public:

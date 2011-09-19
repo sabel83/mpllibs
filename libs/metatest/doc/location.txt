@@ -12,6 +12,9 @@ Endre Sajo, Abel Sinkovics
 Instances are immutable, thus their state can not be changed after
 construction.
 
+A special macro, link:MPLLIBS_HERE.html[+MPLLIBS_HERE+] represents the
+current location.
+
 Header
 ------
 

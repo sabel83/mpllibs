@@ -25,7 +25,7 @@
           mpllibs::metatest::test_driver::run_test<name>( \
             (suite), \
             #name, \
-            mpllibs::metatest::location(__FILE__, __LINE__) \
+            MPLLIBS_HERE \
           ); \
         } \
         \
