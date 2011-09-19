@@ -23,8 +23,8 @@ Description
 -----------
 
 Compile-time data-structure describing a position in the input text. It
-can be queried using link:get_col.html[get_result] and
-link:get_line.html[get_remaining].
+can be queried using link:get_col.html[get_col] and
+link:get_line.html[get_line].
 
 The following operations are also supported: link:next_char.html[next_char] and
 link:next_line.html[next_line].
