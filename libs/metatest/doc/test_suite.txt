@@ -79,6 +79,6 @@ int process_results(const test_suite& root_)
 
 include::copyright[]
 
-link:../../../index.html[[up]]
+link:index.html[[up]]
 
 

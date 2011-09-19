@@ -68,8 +68,18 @@ const std::string& test_result::get_reason() const
 
 Description of the test result.
 
+--------------------------------------
+template <class Pred>
+static test_result test_result::build(
+  const std::string& name_,
+  const location& location_
+)
+--------------------------------------
+
+Builds a +test_result+ instance by evaluating the predicate.
+
 include::copyright[]
 
-link:../../../index.html[[up]]
+link:index.html[[up]]
 
 

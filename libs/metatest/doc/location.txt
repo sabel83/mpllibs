@@ -50,6 +50,6 @@ Line number, where the test case was registered.
 
 include::copyright[]
 
-link:../../../index.html[[up]]
+link:index.html[[up]]
 
 
