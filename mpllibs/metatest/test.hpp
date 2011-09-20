@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metatest/test_driver.hpp>
+#include <mpllibs/metatest/test_result.hpp>
 
 #ifdef MPLLIBS_ADD_TEST
   #error MPLLIBS_ADD_TEST already defined
@@ -22,10 +23,9 @@
       { \
         name##_executor() \
         { \
-          mpllibs::metatest::test_driver::run_test<name>( \
+          mpllibs::metatest::test_driver::instance().add( \
             (suite), \
-            #name, \
-            MPLLIBS_HERE \
+            mpllibs::metatest::test_result::build<name>(#name, MPLLIBS_HERE) \
           ); \
         } \
         \

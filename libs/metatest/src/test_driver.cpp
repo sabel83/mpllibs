@@ -20,11 +20,7 @@ test_driver& test_driver::instance()
 
 void test_driver::add(const suite_path& suite_, const test_result& result_)
 {
-  test_driver::instance()._suite.add(
-    suite_.begin(),
-    suite_.end(),
-    result_
-  );
+  _suite.add(suite_.begin(), suite_.end(), result_);
 }
 
 const test_suite& test_driver::suite() const

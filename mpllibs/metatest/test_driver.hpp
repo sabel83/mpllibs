@@ -22,23 +22,13 @@ namespace mpllibs
     class test_driver
     {
     public:
-      template <class Pred>
-      static void run_test(
-        const suite_path& suite_,
-        const std::string& name_,
-        const location& location_
-      )
-      {
-        test_driver::add(suite_, test_result::build<Pred>(name_, location_));
-      }
-   
       static test_driver& instance();
       
       const test_suite& suite() const;
+
+      void add(const suite_path& suite_, const test_result& result_);
     private:
       test_suite _suite;
-      
-      static void add(const suite_path& suite_, const test_result& result_);
     };
   }
 }

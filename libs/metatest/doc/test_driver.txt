@@ -35,6 +35,15 @@ const test_suite& test_driver::suite() const
 
 Root of the test suite hierarchy.
 
+--------------------------------------
+void test_driver::add(
+  const suite_path& suite_,
+  const test_result& result_
+)
+--------------------------------------
+
+Add a new test result to a test suite.
+
 Example
 -------
 
