@@ -27,21 +27,47 @@ namespace mpllibs
         const location& location_,
         bool success_,
         const std::string& reason_
-      );
+      ) :
+        _name(name_),
+        _location(location_),
+        _success(success_),
+        _reason(reason_)
+      {}
+
+      bool has_name() const
+      {
+        return _name != "";
+      }
       
-      const std::string& get_name() const;
-      const location& get_location() const;
+      const std::string& get_name() const
+      {
+        return _name;
+      }
+
+      const location& get_location() const
+      {
+        return _location;
+      }
       
-      bool success() const;
+      bool success() const
+      {
+        return _success;
+      }
       
-      const std::string& get_reason() const;
+      const std::string& get_reason() const
+      {
+        return _reason;
+      }
       
-      bool has_reason() const;
+      bool has_reason() const
+      {
+        return _reason != "";
+      }
       
       template <class Pred>
       static test_result build(
-        const std::string& name_,
-        const location& location_
+        const location& location_,
+        const std::string& name_
       )
       {
         using std::ostringstream;
@@ -75,6 +101,15 @@ namespace mpllibs
       bool _success;
       std::string _reason;
     };
+
+    inline std::ostream& operator<<(std::ostream& o_, const test_result& r_)
+    {
+      return o_
+        << r_.get_location() << ": "
+        << r_.get_name() << " "
+        << (r_.success() ? "ok " : "failed ")
+        << (r_.has_reason() ? "(" + r_.get_reason() + ")" : std::string());
+    }
   }
 }
 

@@ -39,6 +39,12 @@ Methods
 None of the methods throws an exception.
 
 --------------------------------------
+bool test_result::has_name() const
+--------------------------------------
+
+Whether the result object has a name.
+
+--------------------------------------
 const std::string& test_result::get_name() const
 --------------------------------------
 
@@ -77,6 +83,15 @@ static test_result test_result::build(
 --------------------------------------
 
 Builds a +test_result+ instance by evaluating the predicate.
+
+Operators
+---------
+
+--------------------------------------
+std::ostream& operator<<(std::ostream& o_, const test_result& result_);
+--------------------------------------
+
+Pretty-prints the test result to the stream.
 
 include::copyright[]
 

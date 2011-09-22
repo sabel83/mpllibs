@@ -25,7 +25,7 @@
         { \
           mpllibs::metatest::test_driver::instance().add( \
             (suite), \
-            mpllibs::metatest::test_result::build<name>(#name, MPLLIBS_HERE) \
+            mpllibs::metatest::test_result::build<name>(MPLLIBS_HERE, #name) \
           ); \
         } \
         \
