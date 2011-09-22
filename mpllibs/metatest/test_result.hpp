@@ -67,7 +67,7 @@ namespace mpllibs
       template <class Pred>
       static test_result build(
         const location& location_,
-        const std::string& name_
+        const std::string& name_ = std::string()
       )
       {
         using std::ostringstream;
@@ -104,11 +104,13 @@ namespace mpllibs
 
     inline std::ostream& operator<<(std::ostream& o_, const test_result& r_)
     {
+      using std::string;
+
       return o_
         << r_.get_location() << ": "
-        << r_.get_name() << " "
+        << (r_.has_name() ? r_.get_name() + " " : string())
         << (r_.success() ? "ok " : "failed ")
-        << (r_.has_reason() ? "(" + r_.get_reason() + ")" : std::string());
+        << (r_.has_reason() ? "(" + r_.get_reason() + ")" : string());
     }
   }
 }

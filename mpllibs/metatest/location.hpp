@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <string>
-#include <iosfwd>
+#include <iostream>
 
 namespace mpllibs
 {
@@ -21,17 +21,29 @@ namespace mpllibs
     class location
     {
     public:
-      location(const std::string& filename_, int line_number_);
+      location(const std::string& filename_, int line_number_) :
+        _filename(filename_),
+        _line_number(line_number_)
+      {}
       
-      const std::string& filename() const;
+      const std::string& filename() const
+      {
+        return _filename;
+      }
       
-      int line_number() const;
+      int line_number() const
+      {
+        return _line_number;
+      }
     private:
       std::string _filename;
       int _line_number;
     };
     
-    std::ostream& operator<<(std::ostream& out_, const location& l_);
+    inline std::ostream& operator<<(std::ostream& out_, const location& l_)
+    {
+      return out_ << l_.filename() << ":" << l_.line_number();
+    }
   }
 }
 
