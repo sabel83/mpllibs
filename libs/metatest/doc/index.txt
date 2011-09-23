@@ -459,6 +459,12 @@ link:plaintext_report.html[plaintext_report] +
 link:xml_report.html[xml_report] +
 link:html_report.html[html_report] +
 
+Integration with Boost.Test:
+
+link:meta_warn.html[meta_warn] +
+link:meta_check.html[meta_check] +
+link:meta_require.html[meta_require] +
+
 include::copyright[]
 
 link:../../../index.html[[up]]
