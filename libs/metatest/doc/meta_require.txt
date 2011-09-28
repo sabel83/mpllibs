@@ -37,7 +37,7 @@ Example
 --------------------------------------
 BOOST_AUTO_TEST_CASE(example)
 {
-  meta_check_require<
+  meta_require<
     boost::mpl::equal_to<boost::mpl::int_<13>, function_to_test<int>::type>
   >(MPLLIBS_HERE);
 }
