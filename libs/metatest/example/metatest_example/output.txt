@@ -1,0 +1,17 @@
+The following tests have been executed:
+  example::test_success: OK
+  example_failure::test_no_type: FAIL (failures.cpp:81)
+	Test case has no nested type
+  example_failure::test_no_type_value: FAIL (failures.cpp:82)
+	Result of test case has no nested boolean value
+  example_failure::test_fail: FAIL (failures.cpp:83)
+	false_
+  example_failure::test_fail_with_to_equal: FAIL (failures.cpp:84)
+	equal_to<int_<11>, int_<40>>
+  example_failure::test_fail_with_is_same: FAIL (failures.cpp:85)
+	is_same<int, double>
+  example_failure::test_fail_complex_expression: FAIL (failures.cpp:86)
+	not_<and_<or_<true_, false_>, true_>>
+========================
+Number of tests: 7
+Number of failures: 6
