@@ -26,6 +26,9 @@ DEPS += $(OBJECTS:.o=.d)
 
 LIBS += boost_unit_test_framework
 
+LIBS += metatest
+LIB_DIRS += $(SOURCE_ROOT)/bin/libs/metatest
+
 # We need it for dependency file generation
 CXXFLAGS += -MMD
 CXXFLAGS += -MP
