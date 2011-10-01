@@ -9,14 +9,17 @@ NAME = ugly
 
 INCLUDES += $(SOURCE_ROOT)
 BIN_DIR = $(SOURCE_ROOT)/bin/example/metatest/$(NAME)
+OUTPUT = output.html
 
 BIN = $(BIN_DIR)/$(NAME)
 
 LIBS += metatest
 LIB_DIRS += $(SOURCE_ROOT)/bin/libs/metatest
 
-run : $(BIN)
-	-$(BIN)
+run : $(OUTPUT)
+
+$(OUTPUT) : $(BIN)
+	-$(BIN) > $@
 
 build : $(BIN)
 

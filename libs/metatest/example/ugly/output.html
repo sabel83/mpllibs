@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+  <title>Metatest report</title>
+  <script src="jquery.js"></script>
+  <script><!--
+    $(document).ready(function() {
+      $($("div.caseDetails").get().reverse()).toggle();
+      $("p.caseName").click(function() {
+        $(this).next("div.caseDetails").slideToggle();
+      });
+    });
+  --></script>
+  <style type="text/css"><!--
+    p.caseName {
+      font-family:monospace;
+      cursor:pointer;
+      background:#ddd;
+    }
+    p.caseName:hover { text-decoration:underline; }
+    span.ok { color:#0c0; }
+    span.fail { color:#f00; }
+    div.caseDetails {
+      font-family:monospace;
+      margin-left:30px
+    }
+  --></style>
+</head>
+<body>
+  <h1>Metatest report</h1>
+  <p class="caseName">ugly <span class="fail">FAILED</span></p>
+  <div class="caseDetails">
+    <p class="caseName">test1 <span class="fail">FAILED</span></p>
+    <div class="caseDetails">is_same&lt;front&lt;mpl::vector&lt;char, short, int&gt;&gt;, char&gt;</div>
+    <p class="caseName">test2 <span class="ok">OK</span></p>
+    <div class="caseDetails">equal_to&lt;size&lt;mpl::vector&lt;char, short, int&gt;&gt;, int_&lt;3&gt;&gt;</div>
+    <p class="caseName">test3 <span class="fail">FAILED</span></p>
+    <div class="caseDetails">is_same&lt;mpl::vector&lt;short&gt;, mpl::vector&lt;short&gt;&gt;</div>
+  </div>
+</body>
+</html>
