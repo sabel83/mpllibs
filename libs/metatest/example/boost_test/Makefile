@@ -9,14 +9,14 @@ NAME = boost_test
 
 INCLUDES += $(SOURCE_ROOT)
 BIN_DIR = $(SOURCE_ROOT)/bin/example/metatest/$(NAME)
+OUTPUT = output.txt
 
 BIN = $(BIN_DIR)/$(NAME)
 
-LIBS += metatest
-LIB_DIRS += $(SOURCE_ROOT)/bin/libs/metatest
+run : $(OUTPUT)
 
-run : $(BIN)
-	-$(BIN)
+$(OUTPUT) : $(BIN)
+	-$(BIN) --log_sink=$@
 
 build : $(BIN)
 
