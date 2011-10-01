@@ -9,11 +9,14 @@ NAME = exception_debug
 
 INCLUDES += $(SOURCE_ROOT)
 BIN_DIR = $(SOURCE_ROOT)/bin/example/metatest/$(NAME)
+OUTPUT = output.txt
 
 BIN = $(BIN_DIR)/$(NAME)
 
-run : $(BIN)
-	$(BIN)
+run : $(OUTPUT)
+
+$(OUTPUT) : $(BIN)
+	$(BIN) > $@
 
 build : $(BIN)
 
