@@ -1,0 +1,38 @@
+???
+???
+short_name
+int
+double
+custom_test_class
+const char*
+char* const
+double**
+float* const*
+long* const* const
+short&
+signed char[]
+const char*[]
+void
+unsigned int
+
+int_<13>
+true_
+int_<19>
+long_<83>
+char_<'\n'>
+char_<'X'>
+char_<'\x03'>
+integral_c<unsigned int, 13>
+void_
+string<"s">
+string<"\n">
+mpl::vector_c<int, 1, 2, 3>
+mpl::list_c<int, 1, 2, 3>
+mpl::vector<int, float, char>
+mpl::range_c<int, 1, 2, 3, 4, 5, 6, 7, 8, 9>
+mpl::vector_c<char, "hello">
+mpl::vector<>
+_1
+lambda<_1, void_>
+apply<metafunction_class, double>
+this is a class with to_stream
