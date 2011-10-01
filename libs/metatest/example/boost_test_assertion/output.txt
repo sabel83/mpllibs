@@ -1,0 +1,7 @@
+Running 2 test cases...
+../../../../mpllibs/metatest/boost_test.hpp(33): error in "example_failure": failures.cpp:67: test_no_type failed (Test case has no nested type)
+../../../../mpllibs/metatest/boost_test.hpp(33): error in "example_failure": failures.cpp:69: test_no_type_value failed (Result of test case has no nested boolean value)
+../../../../mpllibs/metatest/boost_test.hpp(40): error in "example_failure": failures.cpp:71: failed (false_)
+../../../../mpllibs/metatest/boost_test.hpp(40): error in "example_failure": failures.cpp:73: failed (equal_to<int_<1>, int_<5>>)
+../../../../mpllibs/metatest/boost_test.hpp(40): error in "example_failure": failures.cpp:75: failed (is_same<int, double>)
+../../../../mpllibs/metatest/boost_test.hpp(40): error in "example_failure": failures.cpp:77: failed (not_<and_<or_<true_, false_>, true_>>)
