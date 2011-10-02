@@ -3,7 +3,8 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-SOURCE_ROOT = ../../../..
+LIB_ROOT = ../..
+SOURCE_ROOT = $(LIB_ROOT)/../..
 
 NAME = boost_test
 
@@ -61,4 +62,13 @@ $(BIN) : $(OBJECTS)
 
 clean :
 	-rm $(BIN)
+
+html : $(LIB_ROOT)/html/example_$(NAME).html
+
+$(LIB_ROOT)/html/example_$(NAME).html : $(OUTPUT)
+	-mkdir -p $(LIB_ROOT)/html
+	echo '<html><head><title>$(NAME)</title></head><body style="font-family: Monaco, Courier; font-weight: 900;">' > $@
+	cat $(OUTPUT) | sed 's/\&/\&amp;/g' | sed 's/ /\&nbsp;/g' | sed 's/</\&lt;/g' | sed 's/>/\&gt;/g' | sed 's/$$/<br\/>/' >> $@
+	echo '</body></html>' >> $@
+
 

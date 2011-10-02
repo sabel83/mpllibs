@@ -3,7 +3,8 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-SOURCE_ROOT = ../../../..
+LIB_ROOT = ../..
+SOURCE_ROOT = $(LIB_ROOT)/../..
 
 NAME = reverse
 
@@ -59,4 +60,20 @@ $(BIN) : $(OBJECTS)
 
 clean :
 	-rm $(BIN)
+
+html : $(LIB_ROOT)/html/example_$(NAME)_metatest.html $(LIB_ROOT)/html/example_$(NAME)_static_assert.html
+
+TO_HTML = sed 's/\&/\&amp;/g' | sed 's/ /\&nbsp;/g' | sed 's/</\&lt;/g' | sed 's/>/\&gt;/g' | sed 's/$$/<br\/>/'
+
+$(LIB_ROOT)/html/example_$(NAME)_metatest.html : $(OUTPUT)
+	-mkdir -p $(LIB_ROOT)/html
+	echo '<html><head><title>$(NAME)</title></head><body style="font-family: Monaco, Courier; font-weight: 900;">' > $@
+	cat $(OUTPUT) | $(TO_HTML) >> $@
+	echo '</body></html>' >> $@
+
+$(LIB_ROOT)/html/example_$(NAME)_static_assert.html : test.cc
+	-mkdir -p $(LIB_ROOT)/html
+	echo '<html><head><title>$(NAME)</title></head><body style="font-family: Monaco, Courier; font-weight: 900;">' > $@
+	-$(CXX) test.cc 2>&1 | $(TO_HTML) >> $@
+	echo '</body></html>' >> $@
 

@@ -3,7 +3,8 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-SOURCE_ROOT = ../../../..
+LIB_ROOT = ../..
+SOURCE_ROOT = $(LIB_ROOT)/../..
 
 NAME = boost_mpl_unit_test
 
@@ -59,4 +60,10 @@ $(BIN) : $(OBJECTS)
 
 clean :
 	-rm $(BIN)
+
+html : $(LIB_ROOT)/html/example_$(NAME).html
+
+$(LIB_ROOT)/html/example_$(NAME).html : $(OUTPUT)
+	-mkdir -p $(LIB_ROOT)/html
+	cp $(OUTPUT) $@
 

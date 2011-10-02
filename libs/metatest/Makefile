@@ -3,7 +3,8 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-CODE_DIRS = $(foreach d, src test, $(wildcard $(d)) ) $(wildcard example/*)
+EXAMPLE_DIRS = $(wildcard example/*)
+CODE_DIRS = $(foreach d, src test, $(wildcard $(d)) ) $(EXAMPLE_DIRS)
 
 recurse = $(foreach d, $(1), $(MAKE) -C $(d) $(2) && ) true
 
@@ -16,7 +17,7 @@ check : ; $(call recurse, test, check)
 clean : ; $(call recurse, $(CODE_DIRS) doc, clean)
 .PHONY : clean
 
-html : ; $(call recurse, doc, html)
+html : ; $(call recurse, doc $(EXAMPLE_DIRS), html)
 .PHONY : html
 
 all : clean build check html
