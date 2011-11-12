@@ -5,14 +5,11 @@
 
 #include <mpllibs/metaparse/foldr.hpp>
 
-#include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/push_front.hpp>
 #include <boost/mpl/lambda.hpp>
-
-using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::foldr;
 
@@ -23,8 +20,6 @@ using boost::mpl::_2;
 
 namespace
 { 
-  const suite_path suite("foldr");
-  
   template <class P>
   struct any : foldr<P, list<>, push_front<_2, _1> >
   {
@@ -39,6 +34,8 @@ namespace
     };
   };
 }
+
+#define DEFINE_TEST_CASE BOOST_AUTO_TEST_CASE(test_foldr)
 
 #include "any_test.hpp"  
 

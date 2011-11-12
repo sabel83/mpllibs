@@ -16,35 +16,35 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::letter;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::is_error;
-
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_letter)
 {
-  const suite_path suite("letter");
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
+  
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::letter;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::is_error;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap2;
 
-  typedef has_type<letter> test_has_type;
+  meta_require<has_type<letter> >(MPLLIBS_HERE, "test_has_type");
 
-  typedef
+  meta_require<
     equal_to<get_result<apply_wrap2<letter, str_hello, start> >::type, char_h>
-    test_with_text;
+  >(MPLLIBS_HERE, "test_with_text");
   
-  typedef is_error<apply_wrap2<letter, str_1983, start> > test_with_number;
+  meta_require<
+    is_error<apply_wrap2<letter, str_1983, start> >
+  >(MPLLIBS_HERE, "test_with_number");
   
-  typedef is_error<apply_wrap2<letter, str_, start> > test_with_empty_string;
+  meta_require<
+    is_error<apply_wrap2<letter, str_, start> >
+  >(MPLLIBS_HERE, "test_with_empty_string");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_with_text)
-MPLLIBS_ADD_TEST(suite, test_with_number)
-MPLLIBS_ADD_TEST(suite, test_with_empty_string)
 
 

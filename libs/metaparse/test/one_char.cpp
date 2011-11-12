@@ -19,39 +19,45 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
-
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::one_char;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::get_remaining;
-using mpllibs::metaparse::get_position;
-using mpllibs::metaparse::is_error;
-using mpllibs::metaparse::iterate_c;
-using mpllibs::metaparse::get_line;
-
-using boost::mpl::list_c;
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 namespace
 {
-  const suite_path suite("one_char");
+  using mpllibs::metaparse::one_char;
+  using mpllibs::metaparse::start;
+  
+  using boost::mpl::list_c;
+  using boost::mpl::apply_wrap2;
 
   typedef list_c<char, 'a','\n','b'> unix_multi_line_text;
   typedef list_c<char, 'a','\r','\n','b'> dos_multi_line_text;
   typedef list_c<char, 'a','\r','b'> mac_multi_line_text;
 
   typedef apply_wrap2<one_char, str_hello, start> parse_first_char;
+}
 
-  typedef has_type<one_char> test_has_type;
+BOOST_AUTO_TEST_CASE(test_one_char)
+{
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
+  
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::get_remaining;
+  using mpllibs::metaparse::get_position;
+  using mpllibs::metaparse::is_error;
+  using mpllibs::metaparse::iterate_c;
+  using mpllibs::metaparse::get_line;
+  
+  using boost::mpl::equal_to;
 
-  typedef
+  meta_require<has_type<one_char> >(MPLLIBS_HERE, "test_has_type");
+
+  meta_require<
     equal_to<get_result<parse_first_char>::type, char_h>
-    test_one_char_for_non_empty_string;
+  >(MPLLIBS_HERE, "test_one_char_for_non_empty_string");
 
-  typedef
+  meta_require<
     equal_to<
       get_result<
         apply_wrap2<
@@ -62,13 +68,13 @@ namespace
       >::type,
       char_e
     >
-    test_one_char_for_non_empty_string_second;
+  >(MPLLIBS_HERE, "test_one_char_for_non_empty_string_second");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<one_char, str_, start> >
-    test_one_char_for_empty_string;
+  >(MPLLIBS_HERE, "test_one_char_for_empty_string");
   
-  typedef
+  meta_require<
     equal_to<
       int2,
       get_line<
@@ -77,9 +83,9 @@ namespace
         >
       >
     >
-    test_unix_multi_line_text;
+  >(MPLLIBS_HERE, "test_unix_multi_line_text");
 
-  typedef
+  meta_require<
     equal_to<
       int2,
       get_line<
@@ -88,9 +94,9 @@ namespace
         >
       >
     >
-    test_dos_multi_line_text;
+  >(MPLLIBS_HERE, "test_dos_multi_line_text");
 
-  typedef
+  meta_require<
     equal_to<
       int2,
       get_line<
@@ -99,16 +105,7 @@ namespace
         >
       >
     >
-    test_mac_multi_line_text;
+  >(MPLLIBS_HERE, "test_mac_multi_line_text");
 }
 
-MPLLIBS_ADD_TEST(suite, test_has_type)
-
-MPLLIBS_ADD_TEST(suite, test_one_char_for_non_empty_string)
-MPLLIBS_ADD_TEST(suite, test_one_char_for_non_empty_string_second)
-MPLLIBS_ADD_TEST(suite, test_one_char_for_empty_string)
-
-MPLLIBS_ADD_TEST(suite, test_unix_multi_line_text)
-MPLLIBS_ADD_TEST(suite, test_dos_multi_line_text)
-MPLLIBS_ADD_TEST(suite, test_mac_multi_line_text)
 

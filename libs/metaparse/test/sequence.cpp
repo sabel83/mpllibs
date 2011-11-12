@@ -20,71 +20,72 @@
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/vector_c.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::sequence;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::is_error;
-
-using boost::mpl::equal;
-using boost::mpl::apply_wrap2;
-using boost::mpl::list;
-using boost::mpl::equal_to;
-using boost::mpl::at_c;
-using boost::mpl::vector_c;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_sequence)
 {
-  const suite_path suite("sequence");
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
+  
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::sequence;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::is_error;
+  
+  using boost::mpl::equal;
+  using boost::mpl::apply_wrap2;
+  using boost::mpl::list;
+  using boost::mpl::equal_to;
+  using boost::mpl::at_c;
+  using boost::mpl::vector_c;
 
-  typedef has_type<sequence<lit_h> > test_has_type;
+  meta_require<has_type<sequence<lit_h> > >(MPLLIBS_HERE, "test_has_type");
 
-  typedef
+  meta_require<
     equal<get_result<apply_wrap2<sequence<>, str_hello, start> >::type, list<> >
-    test_no_parser;
+  >(MPLLIBS_HERE, "test_no_parser");
 
-  typedef
+  meta_require<
     equal<
       get_result<apply_wrap2<sequence<lit_h>, str_hello, start> >::type,
       vector_c<char, 'h'>
     >
-    test_one_parser;
+  >(MPLLIBS_HERE, "test_one_parser");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<sequence<lit_e>, str_hello, start> >
-    test_one_failing_parser;
+  >(MPLLIBS_HERE, "test_one_failing_parser");
   
-  typedef
+  meta_require<
     equal<
       get_result<apply_wrap2<sequence<lit_h, lit_e>, str_hello, start> >::type,
       vector_c<char, 'h', 'e'>
     >
-    test_two_chars;
+  >(MPLLIBS_HERE, "test_two_chars");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<sequence<lit_x, lit_e>, str_hello, start> >
-    test_first_fails;
+  >(MPLLIBS_HERE, "test_first_fails");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<sequence<lit_h, lit_x>, str_hello, start> >
-    test_second_fails;
+  >(MPLLIBS_HERE, "test_second_fails");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<sequence<lit_h, lit_e>, str_, start> >
-    test_empty_input;
+  >(MPLLIBS_HERE, "test_empty_input");
 
-  typedef
+  meta_require<
     equal<
       get_result<
         apply_wrap2<sequence<lit_h, lit_e, lit_l>, str_hello, start>
       >::type,
       vector_c<char, 'h', 'e', 'l'>
     >
-    test_three_chars;
+  >(MPLLIBS_HERE, "test_three_chars");
 
-  typedef
+  meta_require<
     equal_to<
       at_c<
         get_result<
@@ -94,18 +95,7 @@ namespace
       >::type,
       char_e
     >
-    test_indexing_in_result;
+  >(MPLLIBS_HERE, "test_indexing_in_result");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_no_parser)
-MPLLIBS_ADD_TEST(suite, test_one_parser)
-MPLLIBS_ADD_TEST(suite, test_one_failing_parser)
-MPLLIBS_ADD_TEST(suite, test_two_chars)
-MPLLIBS_ADD_TEST(suite, test_first_fails)
-MPLLIBS_ADD_TEST(suite, test_second_fails)
-MPLLIBS_ADD_TEST(suite, test_empty_input)
-MPLLIBS_ADD_TEST(suite, test_three_chars)
-MPLLIBS_ADD_TEST(suite, test_indexing_in_result)
 
 

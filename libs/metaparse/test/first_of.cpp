@@ -10,70 +10,62 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::first_of;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::is_error;
-
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_first_of)
 {
-  const suite_path suite("first_of");
+  using mpllibs::metatest::has_type;
+  using mpllibs::metatest::meta_require;
+  
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::first_of;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::is_error;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap2;
 
-  typedef has_type<first_of<lit_h> > test_has_type;
+  meta_require<has_type<first_of<lit_h> > >(MPLLIBS_HERE, "test_has_type");
 
-  typedef
+  meta_require<
     equal_to<
       get_result<apply_wrap2<first_of<lit_h>, str_hello, start> >::type,
       char_h
     >
-    test_one_char;
+  >(MPLLIBS_HERE, "test_one_char");
 
-  typedef
+  meta_require<
     equal_to<
       get_result<apply_wrap2<first_of<lit_h, lit_e>, str_hello, start> >::type,
       char_h
     >
-    test_two_chars;
+  >(MPLLIBS_HERE, "test_two_chars");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<first_of<lit_x, lit_e>, str_hello, start> >
-    test_first_fails;
+  >(MPLLIBS_HERE, "test_first_fails");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<first_of<lit_h, lit_x>, str_hello, start> >
-    test_second_fails;
+  >(MPLLIBS_HERE, "test_second_fails");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<first_of<lit_h, lit_e>, str_, start> >
-    test_empty_input;
+  >(MPLLIBS_HERE, "test_empty_input");
 
-  typedef
+  meta_require<
     equal_to<
       get_result<
         apply_wrap2<first_of<lit_h, lit_e, lit_l>, str_hello, start>
       >::type,
       char_h
     >
-    test_three_chars;
+  >(MPLLIBS_HERE, "test_three_chars");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_one_char)
-MPLLIBS_ADD_TEST(suite, test_two_chars)
-MPLLIBS_ADD_TEST(suite, test_first_fails)
-MPLLIBS_ADD_TEST(suite, test_second_fails)
-MPLLIBS_ADD_TEST(suite, test_empty_input)
-MPLLIBS_ADD_TEST(suite, test_three_chars)
 

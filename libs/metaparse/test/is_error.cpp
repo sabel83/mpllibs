@@ -14,25 +14,25 @@
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::is_error;
-using mpllibs::metaparse::fail;
-
-using boost::mpl::not_;
-using boost::mpl::apply_wrap2;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_is_error)
 {
-  const suite_path suite("is_error");
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
   
-  typedef not_<is_error<int13> > test_not_error;
+  using mpllibs::metaparse::is_error;
+  using mpllibs::metaparse::fail;
+  
+  using boost::mpl::not_;
+  using boost::mpl::apply_wrap2;
 
-  typedef is_error<apply_wrap2<fail<int11>, int1, int13> > test_error;
+  meta_require<not_<is_error<int13> > >(MPLLIBS_HERE, "test_not_error");
+
+  meta_require<is_error<apply_wrap2<fail<int11>, int1, int13> > >(
+    MPLLIBS_HERE,
+    "test_error"
+  );
 }
-
-MPLLIBS_ADD_TEST(suite, test_not_error)
-MPLLIBS_ADD_TEST(suite, test_error)
-
 

@@ -16,95 +16,80 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::nth_of_c;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::nth_of;
-using mpllibs::metaparse::is_error;
-
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
-
-namespace mpl = boost::mpl;
-namespace mp = mpllibs::metaparse;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_nth_of)
 {
-  const suite_path suite("nth_of");
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
   
-  typedef has_type<nth_of_c<0, lit_h> > test_has_type_c;
-  typedef has_type<nth_of<int0, lit_h> > test_has_type;
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::nth_of_c;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::nth_of;
+  using mpllibs::metaparse::is_error;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap2;
 
-  typedef
+  namespace mpl = boost::mpl;
+  namespace mp = mpllibs::metaparse;
+
+  meta_require<has_type<nth_of_c<0, lit_h> > >(MPLLIBS_HERE, "test_has_type_c");
+  meta_require<has_type<nth_of<int0, lit_h> > >(MPLLIBS_HERE, "test_has_type");
+
+  meta_require<
     equal_to<
       get_result<apply_wrap2<nth_of_c<0, lit_h>, str_hello, start> >::type,
       char_h
     >
-    test_first_of_one;
+  >(MPLLIBS_HERE, "test_first_of_one");
 
-  typedef
+  meta_require<
     equal_to<
       get_result<
         apply_wrap2<nth_of_c<0, lit_h, lit_e>, str_hello, start>
       >::type,
       char_h
     >
-    test_first_of_two;
+  >(MPLLIBS_HERE, "test_first_of_two");
 
-  typedef
+  meta_require<
     equal_to<
       get_result<
         apply_wrap2<nth_of<int1, lit_h, lit_e>, str_hello, start>
       >::type,
       char_e
     >
-    test_second_of_two;
+  >(MPLLIBS_HERE, "test_second_of_two");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<nth_of_c<1, lit_x, lit_e>, str_hello, start> >
-    test_nothing;
+  >(MPLLIBS_HERE, "test_nothing");
   
-  typedef
+  meta_require<
     is_error<apply_wrap2<nth_of_c<0>, str_hello, start> >
-    test_first_of_none;
+  >(MPLLIBS_HERE, "test_first_of_none");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<nth_of_c<-1, lit_h, lit_e>, str_hello, start> >
-    test_n_is_less_than_zero;
+  >(MPLLIBS_HERE, "test_n_is_less_than_zero");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<nth_of_c<2, lit_h, lit_e>, str_hello, start> >
-    test_n_is_greater_than_the_number_of_parsers;
+  >(MPLLIBS_HERE, "test_n_is_greater_than_the_number_of_parsers");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<nth_of_c<1, lit_x, lit_e, lit_l>, str_hello, start> >
-    test_error_before_the_nth;
+  >(MPLLIBS_HERE, "test_error_before_the_nth");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<nth_of_c<1, lit_h, lit_x, lit_l>, str_hello, start> >
-    test_error_at_the_nth;
+  >(MPLLIBS_HERE, "test_error_at_the_nth");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<nth_of_c<1, lit_h, lit_e, lit_x>, str_hello, start> >
-    test_error_after_the_nth;
+  >(MPLLIBS_HERE, "test_error_after_the_nth");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type_c)
-MPLLIBS_ADD_TEST(suite, test_has_type)
-
-MPLLIBS_ADD_TEST(suite, test_first_of_one)
-MPLLIBS_ADD_TEST(suite, test_first_of_two)
-MPLLIBS_ADD_TEST(suite, test_second_of_two)
-MPLLIBS_ADD_TEST(suite, test_nothing)
-
-MPLLIBS_ADD_TEST(suite, test_first_of_none)
-MPLLIBS_ADD_TEST(suite, test_n_is_less_than_zero)
-MPLLIBS_ADD_TEST(suite, test_n_is_greater_than_the_number_of_parsers)
-MPLLIBS_ADD_TEST(suite, test_error_before_the_nth)
-MPLLIBS_ADD_TEST(suite, test_error_at_the_nth)
-MPLLIBS_ADD_TEST(suite, test_error_after_the_nth)
-
 

@@ -14,31 +14,39 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
-
-using mpllibs::metaparse::fail;
-using mpllibs::metaparse::is_error;
-
-using mpllibs::metaparse::util::unless_error;
-
-using boost::mpl::apply_wrap2;
-using boost::mpl::equal_to;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 namespace
 {
-  const suite_path suite = suite_path("util")("unless_error");
-  
+  using boost::mpl::apply_wrap2;
+  using mpllibs::metaparse::fail;
+
   typedef apply_wrap2<fail<int1>, int11, int2> err;
-  
-  typedef has_type<unless_error<err, int13> > test_has_type;
-
-  typedef is_error<unless_error<err, int13> > test_error;
-
-  typedef equal_to<int13, unless_error<int11, int13>::type> test_not_error;
 }
 
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_error)
-MPLLIBS_ADD_TEST(suite, test_not_error)
+BOOST_AUTO_TEST_CASE(test_util_unless_error)
+{
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
+  
+  using mpllibs::metaparse::is_error;
+  
+  using mpllibs::metaparse::util::unless_error;
+  
+  using boost::mpl::equal_to;
+
+  meta_require<
+    has_type<unless_error<err, int13> >
+  >(MPLLIBS_HERE, "test_has_type");
+
+  meta_require<
+    is_error<unless_error<err, int13> >
+  >(MPLLIBS_HERE, "test_error");
+
+  meta_require<
+    equal_to<int13, unless_error<int11, int13>::type>
+  >(MPLLIBS_HERE, "test_not_error");
+}
+
 

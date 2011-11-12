@@ -15,27 +15,24 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/at.hpp>
 
-using mpllibs::metatest::suite_path;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::util::lazy_equal_to;
-
-using boost::mpl::eval_if;
-using boost::mpl::false_;
-using boost::mpl::true_;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_lazy_equal_to)
 {
-  const suite_path suite = suite_path("util")("lazy_equal_to");
+  using mpllibs::metatest::meta_require;
   
-  typedef lazy_equal_to<int13, int13> test_evaluated;
+  using mpllibs::metaparse::util::lazy_equal_to;
   
-  typedef
+  using boost::mpl::eval_if;
+  using boost::mpl::false_;
+  using boost::mpl::true_;
+
+  meta_require<lazy_equal_to<int13, int13> >(MPLLIBS_HERE, "test_evaluated");
+  
+  meta_require<
     eval_if<false_, lazy_equal_to<can_not_be_instantiated, int13>, true_>
-    test_not_evaluated;
+  >(MPLLIBS_HERE, "test_not_evaluated");
 }
-
-MPLLIBS_ADD_TEST(suite, test_evaluated)
-MPLLIBS_ADD_TEST(suite, test_not_evaluated)
-
 
 

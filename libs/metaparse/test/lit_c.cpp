@@ -17,33 +17,38 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::is_error;
-using mpllibs::metaparse::get_remaining;
-using mpllibs::metaparse::get_position;
-
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_lit_c)
 {
-  const suite_path suite("lit_c");
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
+  
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::is_error;
+  using mpllibs::metaparse::get_remaining;
+  using mpllibs::metaparse::get_position;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap2;
 
-  typedef has_type<lit_c_h> test_has_type;
+  meta_require<has_type<lit_c_h> >(MPLLIBS_HERE, "test_has_type");
 
-  typedef
+  meta_require<
     equal_to<get_result<apply_wrap2<lit_c_h, str_hello, start> >::type, char_h>
-    test_accept;
+  >(MPLLIBS_HERE, "test_accept");
 
-  typedef is_error<apply_wrap2<lit_c_h, str_bello, start> > test_reject;
+  meta_require<
+    is_error<apply_wrap2<lit_c_h, str_bello, start> >
+  >(MPLLIBS_HERE, "test_reject");
 
-  typedef is_error< apply_wrap2<lit_c_h, str_, start> > test_with_empty_string;
+  meta_require<
+    is_error< apply_wrap2<lit_c_h, str_, start> >
+  >(MPLLIBS_HERE, "test_with_empty_string");
 
-  typedef
+  meta_require<
     equal_to<
       get_result<
         apply_wrap2<
@@ -54,12 +59,7 @@ namespace
       >::type,
       char_e
     >
-    test_remaining_string;
+  >(MPLLIBS_HERE, "test_remaining_string");
 }
 
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_accept)
-MPLLIBS_ADD_TEST(suite, test_reject)
-MPLLIBS_ADD_TEST(suite, test_with_empty_string)
-MPLLIBS_ADD_TEST(suite, test_remaining_string)
 

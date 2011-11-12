@@ -17,29 +17,26 @@
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/identity.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
-
-using mpllibs::metaparse::util::curry0;
-using mpllibs::metaparse::util::curry2;
-
-using boost::mpl::identity;
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap1;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 namespace
 {
-  const suite_path suite = suite_path("util")("curry");
-  
+  using std::ostream;
+
+  using boost::mpl::identity;
+
+  using mpllibs::metatest::to_stream_argument_list;
+
   template <class A, class B>
   struct get_first : identity<A>
   {
     struct to_stream
     {
-      static std::ostream& run(std::ostream& o)
+      static ostream& run(ostream& o)
       {
         o << "get_first<";
-        mpllibs::metatest::to_stream_argument_list<A, B>::run(o);
+        to_stream_argument_list<A, B>::run(o);
         return o << ">";
       }
     };
@@ -50,38 +47,48 @@ namespace
   {
     struct to_stream
     {
-      static std::ostream& run(std::ostream& o)
+      static ostream& run(ostream& o)
       {
         o << "get_second<";
-        mpllibs::metatest::to_stream_argument_list<A, B>::run(o);
+        to_stream_argument_list<A, B>::run(o);
         return o << ">";
       }
     };
   };
   
   typedef identity<int13> nullary_metafunction;
-  
-  typedef has_type<curry2<get_second> > test_has_type;
+}
 
-  typedef
+BOOST_AUTO_TEST_CASE(test_curry)
+{
+  using mpllibs::metatest::has_type;
+  using mpllibs::metatest::meta_require;
+  
+  using mpllibs::metaparse::util::curry0;
+  using mpllibs::metaparse::util::curry2;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap1;
+
+  meta_require<has_type<curry2<get_second> > >(MPLLIBS_HERE, "test_has_type");
+
+  meta_require<
     equal_to<
       apply_wrap1<apply_wrap1<curry2<get_first>, int11>::type, int13>::type,
       int11
     >
-    test_currying_first_argument;
+  >(MPLLIBS_HERE, "test_currying_first_argument");
 
-  typedef
+  meta_require<
     equal_to<
       apply_wrap1<apply_wrap1<curry2<get_second>, int11>::type, int13>::type,
       int13
     >
-    test_currying_second_argument;
+  >(MPLLIBS_HERE, "test_currying_second_argument");
 
-  typedef equal_to<curry0<nullary_metafunction>::type, int13> test_nullary;
+  meta_require<
+    equal_to<curry0<nullary_metafunction>::type, int13>
+  >(MPLLIBS_HERE, "test_nullary");
 }
 
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_currying_first_argument)
-MPLLIBS_ADD_TEST(suite, test_currying_second_argument)
-MPLLIBS_ADD_TEST(suite, test_nullary)
 

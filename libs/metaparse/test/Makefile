@@ -10,8 +10,7 @@ BIN_DIR = $(SOURCE_ROOT)/bin/tests/metaparse
 
 BIN = $(BIN_DIR)/test
 
-LIBS += metatest
-LIB_DIRS += $(SOURCE_ROOT)/bin/libs/metatest
+LIBS += boost_unit_test_framework
 
 check : $(BIN)
 	$(BIN)

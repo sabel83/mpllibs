@@ -18,49 +18,47 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::look_ahead;
-using mpllibs::metaparse::digit_val;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::is_error;
-using mpllibs::metaparse::fail;
-using mpllibs::metaparse::get_remaining;
-
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
-using boost::mpl::equal;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_look_ahead)
 {
-  const suite_path suite("look_ahead");
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
   
-  typedef has_type<look_ahead<digit_val> > test_has_type;
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::look_ahead;
+  using mpllibs::metaparse::digit_val;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::is_error;
+  using mpllibs::metaparse::fail;
+  using mpllibs::metaparse::get_remaining;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap2;
+  using boost::mpl::equal;
+ 
+  meta_require<
+    has_type<look_ahead<digit_val> >
+  >(MPLLIBS_HERE, "test_has_type");
 
-  typedef
+  meta_require<
     equal_to<
       int1,
       get_result<apply_wrap2<look_ahead<digit_val>, str_1983, start> >::type
     >
-    test_returns_result;
+  >(MPLLIBS_HERE, "test_returns_result");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<look_ahead<fail<int13> >, str_1983, start> >
-    test_returns_error;
+  >(MPLLIBS_HERE, "test_returns_error");
 
-  typedef
+  meta_require<
     equal<
       str_1983,
       get_remaining<apply_wrap2<look_ahead<digit_val>, str_1983, start> >::type
     >
-    test_doesnt_process_input;
+  >(MPLLIBS_HERE, "test_doesnt_process_input");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_returns_result)
-MPLLIBS_ADD_TEST(suite, test_returns_error)
-MPLLIBS_ADD_TEST(suite, test_doesnt_process_input)
 
 

@@ -25,70 +25,79 @@
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
-
-using mpllibs::metaparse::fail;
-using mpllibs::metaparse::is_error;
-using mpllibs::metaparse::any_one_of1;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::one_char;
-using mpllibs::metaparse::keyword;
-using mpllibs::metaparse::error_tag;
-
-using boost::mpl::apply_wrap2;
-using boost::mpl::equal;
-using boost::mpl::list;
-using boost::mpl::string;
-using boost::mpl::vector_c;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 namespace
 {
-  const suite_path suite("any_one_of1");
-  
+  using mpllibs::metaparse::error_tag;
+
   MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
+}
+
+BOOST_AUTO_TEST_CASE(test_any_one_of1)
+{
+  using mpllibs::metatest::has_type;
+  using mpllibs::metatest::meta_require;
   
-  typedef has_type<any_one_of1<one_char> > test_has_type;
+  using mpllibs::metaparse::fail;
+  using mpllibs::metaparse::is_error;
+  using mpllibs::metaparse::any_one_of1;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::one_char;
+  using mpllibs::metaparse::keyword;
+  
+  using boost::mpl::apply_wrap2;
+  using boost::mpl::equal;
+  using boost::mpl::list;
+  using boost::mpl::string;
+  using boost::mpl::vector_c;
+  
+  meta_require<
+    has_type<any_one_of1<one_char> >
+  >(MPLLIBS_HERE, "test_has_type");
 
   typedef fail<test_error> test_fail;
 
-  typedef is_error<apply_wrap2<any_one_of1< >, str_hello, start> > test0;
+  meta_require<
+    is_error<apply_wrap2<any_one_of1< >, str_hello, start> >
+  >(MPLLIBS_HERE, "test0");
   
-  typedef
+  meta_require<
     equal<
       get_result<apply_wrap2<any_one_of1<one_char>, str_hello, start> >::type,
       vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
-    test_good_sequence;
+  >(MPLLIBS_HERE, "test_good_sequence");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<any_one_of1<test_fail>, str_hello, start> >
-    test_1_with_bad;
+  >(MPLLIBS_HERE, "test_1_with_bad");
 
-  typedef
+  meta_require<
     equal<
       get_result<
         apply_wrap2<any_one_of1<one_char, test_fail>, str_hello, start>
       >::type,
       vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
-    test_2_with_first_good;
+  >(MPLLIBS_HERE, "test_2_with_first_good");
 
-  typedef
+  meta_require<
     equal<
       get_result<
         apply_wrap2<any_one_of1<test_fail, one_char>, str_hello, start>
       >::type,
       vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
-    test_2_with_second_good;
+  >(MPLLIBS_HERE, "test_2_with_second_good");
 
   typedef keyword<str_h, char_h> keyword_h;
   typedef keyword<str_e, char_e> keyword_e;
   typedef keyword<str_l, char_l> keyword_l;
 
-  typedef
+  meta_require<
     equal<
       get_result<
         apply_wrap2<
@@ -99,14 +108,6 @@ namespace
       >::type,
       list<char_h, char_e, char_l, char_l>
     >
-    test_accept_any_argument;
+  >(MPLLIBS_HERE, "test_accept_any_argument");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test0)
-MPLLIBS_ADD_TEST(suite, test_good_sequence)
-MPLLIBS_ADD_TEST(suite, test_1_with_bad)
-MPLLIBS_ADD_TEST(suite, test_2_with_first_good)
-MPLLIBS_ADD_TEST(suite, test_2_with_second_good)
-MPLLIBS_ADD_TEST(suite, test_accept_any_argument)
 

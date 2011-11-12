@@ -7,7 +7,6 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <mpllibs/metamonad/do_try.hpp>
@@ -15,30 +14,38 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
-
-using mpllibs::metaparse::util::digit_to_int;
-using mpllibs::metaparse::error_tag;
-
-using mpllibs::metamonad::do_try;
-
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap1;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 namespace
 {
-  const suite_path suite = suite_path("util")("digit_to_int");
-
-  typedef has_type<digit_to_int> test_has_type;
-
-  typedef equal_to<apply_wrap1<digit_to_int, char_0>::type, int0> test0;
-
-  typedef equal_to<apply_wrap1<digit_to_int, char_9>::type, int9> test9;
-  
   struct x;
+}
+
+BOOST_AUTO_TEST_CASE(test_digit_to_int)
+{
+  using mpllibs::metatest::has_type;
+  using mpllibs::metatest::meta_require;
   
-  typedef
+  using mpllibs::metaparse::util::digit_to_int;
+  using mpllibs::metaparse::error_tag;
+  
+  using mpllibs::metamonad::do_try;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap1;
+
+  meta_require<has_type<digit_to_int> >(MPLLIBS_HERE, "test_has_type");
+
+  meta_require<
+    equal_to<apply_wrap1<digit_to_int, char_0>::type, int0>
+  >(MPLLIBS_HERE, "test0");
+
+  meta_require<
+    equal_to<apply_wrap1<digit_to_int, char_9>::type, int9>
+  >(MPLLIBS_HERE, "test9");
+  
+  meta_require<
     equal_to<
       do_try<
         apply_wrap1<digit_to_int, char_x>
@@ -47,12 +54,6 @@ namespace
       ::type,
       int13
     >
-    test_error;
+  >(MPLLIBS_HERE, "test_error");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test0)
-MPLLIBS_ADD_TEST(suite, test9)
-MPLLIBS_ADD_TEST(suite, test_error)
-
 

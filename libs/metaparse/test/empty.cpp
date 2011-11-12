@@ -10,40 +10,37 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::empty;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::is_error;
-
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_empty)
 {
-  const suite_path suite("empty");
+  using mpllibs::metatest::has_type;
+  using mpllibs::metatest::meta_require;
   
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::empty;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::is_error;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap2;
+ 
   typedef empty<int13> empty13;
 
-  typedef has_type<empty13> test_has_type;
+  meta_require<has_type<empty13> >(MPLLIBS_HERE, "test_has_type");
 
-  typedef
+  meta_require<
     equal_to<get_result<apply_wrap2<empty13, str_, start> >::type, int13>
-    test_accept_empty;
+  >(MPLLIBS_HERE, "test_accept_empty");
 
-  typedef is_error<apply_wrap2<empty13, str_a, start> > test_reject_non_empty;
+  meta_require<
+    is_error<apply_wrap2<empty13, str_a, start> >
+  >(MPLLIBS_HERE, "test_reject_non_empty");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_accept_empty)
-MPLLIBS_ADD_TEST(suite, test_reject_non_empty)
-
 

@@ -16,37 +16,36 @@
 
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::always;
-using mpllibs::metaparse::digit;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::is_error;
-
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_always)
 {
-  const suite_path suite("always");
+  using mpllibs::metatest::has_type;
+  using mpllibs::metatest::meta_require;
   
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::always;
+  using mpllibs::metaparse::digit;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::is_error;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap2;
+
   typedef always<digit, int13> always_digit_13;
 
   typedef has_type<always_digit_13> test_has_type;
 
-  typedef
+  meta_require<
     equal_to<
       get_result<apply_wrap2<always_digit_13, str_1, start> >::type,
       int13
     >
-    test_result;
+  >(MPLLIBS_HERE, "test_result");
   
-  typedef is_error<apply_wrap2<always_digit_13, str_a, start> > test_fail;
+  meta_require<
+    is_error<apply_wrap2<always_digit_13, str_a, start> >
+  >(MPLLIBS_HERE, "test_fail");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_result)
-MPLLIBS_ADD_TEST(suite, test_fail)
 

@@ -4,17 +4,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/any1.hpp>
- 
-#include <mpllibs/metatest/test.hpp>
-
-using mpllibs::metatest::suite_path;
 
 using mpllibs::metaparse::any1;
-
-namespace
-{ 
-  const suite_path suite("any1");
-}
+ 
+#define DEFINE_TEST_CASE BOOST_AUTO_TEST_CASE(test_any1)
 
 #include "any1_test.hpp"
 

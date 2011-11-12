@@ -13,31 +13,34 @@
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/not.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::util::is_letter;
-
-using boost::mpl::apply_wrap1;
-using boost::mpl::not_;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_util_is_letter)
 {
-  const suite_path suite = suite_path("util")("is_letter");
-
-  typedef has_type<is_letter> test_has_type;
-
-  typedef apply_wrap1<is_letter, char_k> test_lcase_letter;
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
   
-  typedef apply_wrap1<is_letter, char_K> test_ucase_letter;
+  using mpllibs::metaparse::util::is_letter;
+  
+  using boost::mpl::apply_wrap1;
+  using boost::mpl::not_;
+
+  meta_require<has_type<is_letter> >(MPLLIBS_HERE, "test_has_type");
+
+  meta_require<apply_wrap1<is_letter, char_k> >(
+    MPLLIBS_HERE,
+    "test_lcase_letter"
+  );
+  
+  meta_require<apply_wrap1<is_letter, char_K> >(
+    MPLLIBS_HERE,
+    "test_ucase_letter"
+  );
     
-  typedef not_<apply_wrap1<is_letter, char_7> > test_not_letter;
+  meta_require<not_<apply_wrap1<is_letter, char_7> > >(
+    MPLLIBS_HERE,
+    "test_not_letter"
+  );
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_lcase_letter)
-MPLLIBS_ADD_TEST(suite, test_ucase_letter)
-MPLLIBS_ADD_TEST(suite, test_not_letter)
-
-
 

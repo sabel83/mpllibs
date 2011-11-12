@@ -14,41 +14,47 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
-
-using mpllibs::metaparse::is_error;
-using mpllibs::metaparse::except;
-using mpllibs::metaparse::one_char;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::fail;
-using mpllibs::metaparse::error_tag;
-
-using boost::mpl::apply_wrap2;
-using boost::mpl::equal_to;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 namespace
 {
-  const suite_path suite("except");
+  using mpllibs::metaparse::error_tag;
 
   MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
+}
 
-  typedef has_type<except<one_char, int13, test_error> > test_has_type;
+BOOST_AUTO_TEST_CASE(test_except)
+{
+  using mpllibs::metatest::has_type;
+  using mpllibs::metatest::meta_require;
+  
+  using mpllibs::metaparse::is_error;
+  using mpllibs::metaparse::except;
+  using mpllibs::metaparse::one_char;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::fail;
+  
+  using boost::mpl::apply_wrap2;
+  using boost::mpl::equal_to;
 
-  typedef
+  meta_require<
+    has_type<except<one_char, int13, test_error> >
+  >(MPLLIBS_HERE, "test_has_type");
+
+  meta_require<
     is_error<
       apply_wrap2<except<one_char, int13, test_error>, str_hello, start>
     >
-    test_with_good;
+  >(MPLLIBS_HERE, "test_with_good");
   
-  typedef
+  meta_require<
     equal_to<
       get_result<
         apply_wrap2<
@@ -59,12 +65,8 @@ namespace
       >::type,
       int13
     >
-    test_with_bad;
+  >(MPLLIBS_HERE, "test_with_bad");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_with_good)
-MPLLIBS_ADD_TEST(suite, test_with_bad)
 
 
 

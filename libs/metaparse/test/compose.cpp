@@ -7,7 +7,6 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <boost/mpl/identity.hpp>
@@ -18,23 +17,16 @@
 
 #include <boost/type_traits/is_same.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
-
-using mpllibs::metaparse::util::compose;
-
-using boost::mpl::identity;
-using boost::mpl::plus;
-using boost::mpl::times;
-using boost::mpl::apply_wrap1;
-using boost::mpl::apply_wrap2;
-using boost::mpl::equal_to;
-
-using boost::is_same;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 namespace
 {
-  const suite_path suite = suite_path("util")("compose");
+  using std::ostream;
+
+  using boost::mpl::identity;
+  using boost::mpl::plus;
+  using boost::mpl::times;
 
   struct make_pointer
   {
@@ -43,7 +35,7 @@ namespace
     
     struct to_stream
     {
-      static std::ostream& run(std::ostream& o)
+      static ostream& run(ostream& o)
       {
         return o << "make_pointer";
       }
@@ -57,7 +49,7 @@ namespace
     
     struct to_stream
     {
-      static std::ostream& run(std::ostream& o)
+      static ostream& run(ostream& o)
       {
         return o << "incr";
       }
@@ -71,7 +63,7 @@ namespace
     
     struct to_stream
     {
-      static std::ostream& run(std::ostream& o)
+      static ostream& run(ostream& o)
       {
         return o << "double_value";
       }
@@ -85,20 +77,36 @@ namespace
     
     struct to_stream
     {
-      static std::ostream& run(std::ostream& o)
+      static ostream& run(ostream& o)
       {
         return o << "take_first";
       }
     };
   };
+}
 
-  typedef has_type<compose<make_pointer, make_pointer> > test_has_type;
+BOOST_AUTO_TEST_CASE(test_compose)
+{
+  using mpllibs::metatest::has_type;
+  using mpllibs::metatest::meta_require;
+  
+  using mpllibs::metaparse::util::compose;
+  
+  using boost::mpl::apply_wrap1;
+  using boost::mpl::apply_wrap2;
+  using boost::mpl::equal_to;
+  
+  using boost::is_same;
 
-  typedef
+  meta_require<
+    has_type<compose<make_pointer, make_pointer> >
+  >(MPLLIBS_HERE, "test_has_type");
+
+  meta_require<
     is_same<apply_wrap1<compose<make_pointer, make_pointer>, int>::type, int**>
-    test_same_function_twice;
+  >(MPLLIBS_HERE, "test_same_function_twice");
 
-  typedef
+  meta_require<
     is_same<
       apply_wrap1<
         compose<
@@ -112,24 +120,18 @@ namespace
       >::type,
       int*****
     >
-    test_same_function_five_times;
+  >(MPLLIBS_HERE, "test_same_function_five_times");
 
-  typedef
+  meta_require<
     equal_to<apply_wrap1<compose<double_value, incr>, int1>::type, int28>
-    test_order;
+  >(MPLLIBS_HERE, "test_order");
 
-  typedef
+  meta_require<
     equal_to<
       apply_wrap2<compose<double_value, take_first>, int1, int3>::type,
       int2
     >
-    test_two_arguments_for_the_first_function;
+  >(MPLLIBS_HERE, "test_two_arguments_for_the_first_function");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_same_function_twice)
-MPLLIBS_ADD_TEST(suite, test_same_function_five_times)
-MPLLIBS_ADD_TEST(suite, test_order)
-MPLLIBS_ADD_TEST(suite, test_two_arguments_for_the_first_function)
 
 

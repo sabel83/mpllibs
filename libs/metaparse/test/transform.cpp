@@ -21,60 +21,60 @@
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/lambda.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
-
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::transform;
-using mpllibs::metaparse::start;
-using mpllibs::metaparse::is_error;
-using mpllibs::metaparse::any;
-using mpllibs::metaparse::one_char;
-
-using boost::mpl::always;
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
-using boost::mpl::front;
-using boost::mpl::_1;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 namespace
 {
-  const suite_path suite("transform");
+  using mpllibs::metaparse::any;
+  using mpllibs::metaparse::one_char;
+
+  using boost::mpl::always;
 
   typedef always<char_x> f;
   typedef any<one_char> any_one_char;
-    
-  typedef has_type<transform<lit_h, f> > test_has_type;
+}
 
-  typedef
+BOOST_AUTO_TEST_CASE(test_transform)
+{
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
+  
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::transform;
+  using mpllibs::metaparse::start;
+  using mpllibs::metaparse::is_error;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap2;
+  using boost::mpl::front;
+  using boost::mpl::_1;
+
+  meta_require<has_type<transform<lit_h, f> > >(MPLLIBS_HERE, "test_has_type");
+
+  meta_require<
     equal_to<
       get_result<apply_wrap2<transform<lit_h, f>, str_hello, start> >::type,
       char_x
     >
-    test_normal_case;
+  >(MPLLIBS_HERE, "test_normal_case");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<transform<lit_x, f>, str_hello, start> >
-    test_parser_fails;
+  >(MPLLIBS_HERE, "test_parser_fails");
 
-  typedef
+  meta_require<
     is_error<apply_wrap2<transform<lit_h, f>, str_, start> >
-    test_empty_input;
+  >(MPLLIBS_HERE, "test_empty_input");
   
-  typedef
+  meta_require<
     equal_to<
       get_result<
         apply_wrap2<transform<any_one_char, front<_1> >, str_hello, start>
       >::type,
       char_h
     >
-    test_tranformation_functions_arg;
+  >(MPLLIBS_HERE, "test_tranformation_functions_arg");
 }
-
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_normal_case)
-MPLLIBS_ADD_TEST(suite, test_parser_fails)
-MPLLIBS_ADD_TEST(suite, test_empty_input)
-MPLLIBS_ADD_TEST(suite, test_tranformation_functions_arg)
 
 

@@ -5,16 +5,9 @@
 
 #include <mpllibs/metaparse/any.hpp>
 
-#include <mpllibs/metatest/test.hpp>
-
-using mpllibs::metatest::suite_path;
-
 using mpllibs::metaparse::any;
 
-namespace
-{ 
-  const suite_path suite("any");
-}
+#define DEFINE_TEST_CASE BOOST_AUTO_TEST_CASE(test_any)
 
 #include "any_test.hpp"  
 

@@ -16,39 +16,39 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-using mpllibs::metatest::suite_path;
-using mpllibs::metatest::has_type;
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metaparse::get_result;
-using mpllibs::metaparse::if_;
-using mpllibs::metaparse::digit;
-using mpllibs::metaparse::start;
-
-using boost::mpl::equal_to;
-using boost::mpl::apply_wrap2;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_if)
 {
-  const suite_path suite("if");
+  using mpllibs::metatest::meta_require;
+  using mpllibs::metatest::has_type;
+  
+  using mpllibs::metaparse::get_result;
+  using mpllibs::metaparse::if_;
+  using mpllibs::metaparse::digit;
+  using mpllibs::metaparse::start;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::apply_wrap2;
 
-  typedef has_type<if_<digit, int11, int13> > test_has_type;
+  meta_require<
+    has_type<if_<digit, int11, int13> >
+  >(MPLLIBS_HERE, "test_has_type");
 
-  typedef
+  meta_require<
     equal_to<
       get_result<apply_wrap2<if_<digit, int11, int13>, str_1, start> >::type,
       int11
     >
-    test_true;
+  >(MPLLIBS_HERE, "test_true");
     
-  typedef
+  meta_require<
     equal_to<
       get_result<apply_wrap2<if_<digit, int11, int13>, str_a, start> >::type,
       int13
     >
-    test_false;
+  >(MPLLIBS_HERE, "test_false");
 }
 
-MPLLIBS_ADD_TEST(suite, test_has_type)
-MPLLIBS_ADD_TEST(suite, test_true)
-MPLLIBS_ADD_TEST(suite, test_false)
 
