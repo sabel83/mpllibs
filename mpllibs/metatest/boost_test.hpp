@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metatest/test_result.hpp>
+#include <boost/test/unit_test.hpp>
 
 namespace mpllibs
 {
