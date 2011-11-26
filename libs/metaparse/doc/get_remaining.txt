@@ -5,7 +5,7 @@
 
 get_remaining
 =============
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

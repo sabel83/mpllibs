@@ -5,7 +5,7 @@
 
 get_line
 ========
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

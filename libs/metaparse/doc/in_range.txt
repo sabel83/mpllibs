@@ -5,7 +5,7 @@
 
 in_range
 ========
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

@@ -5,7 +5,7 @@
 
 keyword
 =======
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

@@ -5,7 +5,7 @@
 
 build_parser
 ============
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

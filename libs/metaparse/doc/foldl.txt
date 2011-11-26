@@ -5,7 +5,7 @@
 
 foldl
 =====
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

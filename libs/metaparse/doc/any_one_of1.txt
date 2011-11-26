@@ -5,7 +5,7 @@
 
 any_one_of1
 ===========
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

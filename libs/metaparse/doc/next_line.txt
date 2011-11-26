@@ -5,7 +5,7 @@
 
 next_line
 =========
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

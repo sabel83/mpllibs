@@ -5,7 +5,7 @@
 
 iterate
 =======
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

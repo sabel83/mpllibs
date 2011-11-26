@@ -5,7 +5,7 @@
 
 mpllibs::metaparse
 ==================
-Abel Sinkovics
+Ábel Sinkovics
 
 Metaparse is parser generator library for template metaprograms. The purpose of this
 library is to support the creation of parsers that parse at compile time. This
@@ -17,7 +17,21 @@ The library is based on the paper of
 http://www.cs.lth.se/eda120/assignment4/parser.pdf[L. Andersson].
 
 link:manual.html[User manual] +
-link:reference.html[Library reference]
+link:reference.html[Library reference] +
+
+Related publications
+--------------------
+
+Ábel Sinkovics: +
+*Functional Extensions to the Boost Metaprogram Library* +
+In Electr. Notes Theor. Comput. Sci., 264(5):85-101, 2010 +
+
+Zoltán Porkoláb, Ábel Sinkovics: +
+*Domain-specific Language Integration with Compile-time Parser Generator
+Library* +
+In Eelco Visser, Jaakko Järvi, editors, Proceedings of the ninth
+international conference on Generative programming and component
+engineering (GPCE 2010). ACM, October 2010, pp. 137-146. +
 
 include::copyright[]
 

@@ -5,7 +5,7 @@
 
 any
 ===
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

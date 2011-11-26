@@ -5,7 +5,7 @@
 
 mpllibs::metaparse user manual
 ==============================
-Abel Sinkovics
+Ábel Sinkovics
 
 What is a parser
 ----------------

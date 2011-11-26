@@ -5,7 +5,7 @@
 
 get_col
 =======
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

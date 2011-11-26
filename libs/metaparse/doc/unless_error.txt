@@ -5,7 +5,7 @@
 
 unless_error
 ============
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

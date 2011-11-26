@@ -5,7 +5,7 @@
 
 cons_seq
 ========
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

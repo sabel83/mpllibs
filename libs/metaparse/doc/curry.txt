@@ -5,7 +5,7 @@
 
 curry
 =====
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

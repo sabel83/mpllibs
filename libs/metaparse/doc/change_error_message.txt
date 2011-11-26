@@ -5,7 +5,7 @@
 
 change_error_message
 ====================
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

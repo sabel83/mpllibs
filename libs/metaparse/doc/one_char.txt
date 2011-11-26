@@ -5,7 +5,7 @@
 
 one_char
 ========
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

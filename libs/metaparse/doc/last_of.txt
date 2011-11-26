@@ -5,7 +5,7 @@
 
 last_of
 =======
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

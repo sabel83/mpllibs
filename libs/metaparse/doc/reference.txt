@@ -5,7 +5,7 @@
 
 mpllibs::metaparse reference
 ============================
-Abel Sinkovics
+Ábel Sinkovics
 
 Parsers and combinators provided by the library
 -----------------------------------------------

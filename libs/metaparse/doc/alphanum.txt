@@ -5,7 +5,7 @@
 
 alphanum
 ========
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

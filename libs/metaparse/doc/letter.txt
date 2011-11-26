@@ -5,7 +5,7 @@
 
 letter
 ======
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

@@ -5,7 +5,7 @@
 
 look_ahead
 ==========
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

@@ -5,7 +5,7 @@
 
 digit
 =====
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

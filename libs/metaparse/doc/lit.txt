@@ -5,7 +5,7 @@
 
 lit
 ===
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

@@ -5,7 +5,7 @@
 
 get_result
 ==========
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

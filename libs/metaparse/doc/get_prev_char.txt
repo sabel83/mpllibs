@@ -5,7 +5,7 @@
 
 get_prev_char
 =============
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

@@ -5,7 +5,7 @@
 
 foldr1
 ======
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------

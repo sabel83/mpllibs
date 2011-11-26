@@ -5,7 +5,7 @@
 
 is_whitespace
 =============
-Abel Sinkovics
+Ábel Sinkovics
 
 Synopsis
 --------
