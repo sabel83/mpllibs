@@ -63,6 +63,6 @@ typedef lit_c<'a'> accept_a;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

@@ -60,7 +60,7 @@ boost::mpl::apply<digit_to_int, boost::mpl::char_<'7'> >
 
 include::copyright[]
 
-link:util_index.html[[up]]
+link:reference.html[[up]]
 
 
 

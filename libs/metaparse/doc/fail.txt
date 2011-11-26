@@ -48,6 +48,6 @@ returns an error with +msg+ as the error message.
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

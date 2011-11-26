@@ -66,6 +66,6 @@ typedef build_parser<main_of_dsl_parser> dsl_parser;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

@@ -74,6 +74,6 @@ typedef any<mpllibs::metaparse::alphanum> parse_word;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

@@ -71,7 +71,7 @@ typedef
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

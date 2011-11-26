@@ -74,6 +74,6 @@ typedef iterate<mpllibs::metaparse::one_char, boost::mpl::int_<3> > three_chars;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

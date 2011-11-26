@@ -63,6 +63,6 @@ boost::mpl::apply<mpllibs::metaparse::alphanum, boost::mpl::string<'abcd'>, mpll
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

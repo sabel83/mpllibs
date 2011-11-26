@@ -1,0 +1,132 @@
+// Copyright Abel Sinkovics (abel@sinkovics.hu) 2010 - 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+mpllibs::metaparse user manual
+==============================
+Abel Sinkovics
+
+What is a parser
+----------------
+
+A parser is a template metafunction that takes the following arguments:
+
+* a postfix of the input text, a compile time string
+* a structure describing at which position of the entire input text the postfix begins at
+
+The function parses a prefix of the input string.
+When the parsing is successful, it returns a structure with the tag
++mpllibs::metaparse::accept_tag+. The following functions can be used to query
+this result:
+
+* link:get_result.html[get_result]
+* link:get_remaining.html[get_remaining]
+* link:get_position.html[get_position]
+
+When there is a parsing error, the parser returns a structure with the tag
++mpllibs::metaparse::error_tag+.
+
+Source positions
+~~~~~~~~~~~~~~~~
+
+A source position is described using a compile-time data structure. The
+following functions can be used to query it:
+
+* link:get_col.html[get_col]
+* link:get_line.html[get_line]
+
+The beginning of the input is link:start.html[+start+] which requires
++<mpllibs/metaparse/source_position.hpp>+ to be included.
+
+Error handling
+~~~~~~~~~~~~~~
+
+An error is described using a compile-time data structure. It contains
+information about the source position where the error was detected and some
+description about the error. The description is a compile-time data structure
+without any restriction. link:debug_parsing_error.html[debug_parsing_error] can
+be used to display the error message.
+
+Some examples of simple parsers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* A parser that parses nothing and always succeeds is +mpllibs::metaparse::return+.
+* A parser that always fails is +mpllibs::metaparse::fail+.
+* A parser that parses one character and returns the parsed character as the result is +mpllibs::metaparse::one_char+.
+
+Combining parsers
+-----------------
+
+Complex parsers can be built by combining simple parsers. The parser library
+contains a number of parser combinators that build new parsers from already
+existing ones.
+
+For example +mpllibs::metaparse::accept_when<Parser, Predicate, RejectErrorMsg>+
+is a parser. It uses +Parser+ to parse the input. When +Parser+ rejects the
+input, the combinator forwards the error +Parser+ emitted. When +Parser+
+is successful, the combinator validates the result using +Predicate+. If the
+predicate returns true, the combinator accepts the input, otherwise it generates
+an error with the message +RejectErrorMsg+.
+
+Having +accept_when+, +one_char+ can be used to build parsers that accept
+only digit characters, only whitespaces, etc. For example +digit+ accepts only
+digit characters:
+
+--------------------------------------
+typedef
+  mpllibs::metaparse::accept_when<
+    mpllibs::metaparse::one_char,
+    mpllibs::metaparse::util::is_digit,
+    mpllibs::metaparse::errors::digit_expected
+  >
+  digit;
+--------------------------------------
+
+Sequence
+~~~~~~~~
+
+The result of a successful parsing is some value and the remaining string that
+was not parsed. The remaining string can be processed by another parser. The
+parser library provides a parser combinator, +mpllibs::metaparse::sequence+,
+that takes a number of parsers as arguments and builds a new parser from them
+that:
+
+* Parses the input using the first parser
+* If parsing succeeds, it parses the remaining string with the second parser
+* It continues applying the parsers in order as long as all of them succeed
+* If all of them succeded, it returns the list of results
+* If any of the parsers fail, the combinator fails as well and returns the error
+
+Repetition
+~~~~~~~~~~
+
+We have parsers for letters, we should be able to build parsers for words that
+are sequences of letters. Words have no fixed length, the end of the word is the
+first character that is not a letter, thus the first character where the letter
+parser fails. Since this is a common pattern, the parser library contains a
+parser combinator for this, +mpllibs::metaparse::any<Parser>+. It uses +Parser+
+repeatedly as long as +Parser+ succeeds. The result of parsing is a sequence,
+the results we got by repeatedly applying +Parser+.
+
+Monadic parsing
+---------------
+
++metaparse+ provides a parsing monad implementation based on +metamonad+'s
+monadic framework. The overloads of +bind+ and +return_+ can be loaded by
+including +mpllibs/metaparse/parser_monad.hpp+.
+
+Monadic values are parsers. The monadic +return_+ operation constructs a 
++link:return.html[return_]+ parser. The arguments of the monadic +bind+ are a
+parser +P+ and a function +F+, taking a value and buliding a parser. +bind+
+constructs the following parser:
+
+* It parses the input using +P+.
+* When +P+ fails, the error is propagated.
+* When +P+ succeeds, the result is passed to +F+ and the remaining input is parsed using the parser returned by +F+.
+
+include::copyright[]
+
+link:index.html[[up]]
+
+

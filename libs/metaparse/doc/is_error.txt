@@ -40,7 +40,7 @@ value, for any other +c+ class +is_error<c>::type+ is a wrapped compile-time
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

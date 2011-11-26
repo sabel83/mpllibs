@@ -69,6 +69,6 @@ boost::mpl::apply<int_, boost::mpl::string<'13'>, mpllibs::metaparse::start>
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

@@ -84,6 +84,6 @@ struct any1 : foldr1<P, empty_list, push_front> {};
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

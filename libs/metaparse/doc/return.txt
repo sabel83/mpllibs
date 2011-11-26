@@ -63,6 +63,6 @@ typedef return_<int> always_int;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

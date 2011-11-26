@@ -63,6 +63,6 @@ boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'x'> >
 
 include::copyright[]
 
-link:util_index.html[[up]]
+link:reference.html[[up]]
 
 

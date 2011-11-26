@@ -68,6 +68,6 @@ typedef empty<int> end_of_input;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

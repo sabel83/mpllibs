@@ -87,6 +87,6 @@ struct any : foldl<P, empty_list, push_back> {};
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

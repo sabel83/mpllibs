@@ -63,6 +63,6 @@ typedef lit<boost::mpl::char_<'a'> > accept_a;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

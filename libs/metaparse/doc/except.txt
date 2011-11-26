@@ -74,6 +74,6 @@ typedef except<mpllibs::metaparse::digit, int, no_digit_expected> not_digit;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

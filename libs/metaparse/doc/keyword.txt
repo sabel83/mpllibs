@@ -64,6 +64,6 @@ typedef keyword<boost::mpl::string<'if'> > accept_if;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 

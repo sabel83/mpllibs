@@ -62,7 +62,7 @@ debug_parsing_error<some_parser, boost::string<'abcd'> > do_debugging;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 
