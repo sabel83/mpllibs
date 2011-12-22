@@ -4,27 +4,36 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/foldl.hpp>
+#include <mpllibs/metaparse/foldl1.hpp>
 #include <mpllibs/metaparse/lit_c.hpp>
 #include <mpllibs/metaparse/transform.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/always.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
+#include <mpllibs/metaparse/middle_of.hpp>
+#include <mpllibs/metaparse/accept_when.hpp>
 
 #include <boost/xpressive/xpressive.hpp>
 
 #include <boost/mpl/string.hpp>
+#include <boost/mpl/bool.hpp>
 
 using mpllibs::metaparse::foldl;
+using mpllibs::metaparse::foldl1;
 using mpllibs::metaparse::lit_c;
 using mpllibs::metaparse::transform;
 using mpllibs::metaparse::one_char;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::one_of;
 using mpllibs::metaparse::always;
+using mpllibs::metaparse::middle_of;
+using mpllibs::metaparse::accept_when;
 
 using boost::mpl::string;
 using boost::mpl::c_str;
+using boost::mpl::true_;
+using boost::mpl::false_;
 
 using boost::xpressive::sregex;
 using boost::xpressive::as_xpr;
@@ -75,19 +84,46 @@ struct r_append
 template <class A, class B>
 const sregex r_append::apply<A, B>::value = B::type::value >> A::type::value;
 
+template <char C> struct char_lit_cond_impl : true_ {};
+template <> struct char_lit_cond_impl<'.'> : false_ {};
+template <> struct char_lit_cond_impl<'('> : false_ {};
+template <> struct char_lit_cond_impl<')'> : false_ {};
+
+struct char_lit_cond
+{
+  template <class C>
+  struct apply : char_lit_cond_impl<C::type::value> {};
+};
+
+struct regular_character_expected {};
+
 /*
  * The grammar
  *
- * regexp ::= ('.' | char_lit)*
- * char_lit ::= any character except: .
+ * regexp ::= (bracket_expr | non_bracket_expr)*
+ * non_bracket_expr ::= '.' | char_lit
+ * bracket_expr ::= '(' regexp ')'
+ * char_lit ::= any character except: . ( )
  */
 
 typedef
-  foldl<
-    one_of<always<lit_c<'.'>, r_any_char>, transform<one_char, r_char_lit> >,
+  foldl1<
+    one_of<
+      always<lit_c<'.'>, r_any_char>,
+      transform<
+        accept_when<one_char, char_lit_cond, regular_character_expected>,
+        r_char_lit
+      >
+    >,
     r_epsilon,
     r_append
   >
+  non_bracket_expr;
+
+typedef middle_of<lit_c<'('>, non_bracket_expr, lit_c<')'> > bracket_expr;
+
+typedef
+  foldl<one_of<bracket_expr, non_bracket_expr>, r_epsilon, r_append>
   regexp;
 
 typedef build_parser<regexp> regexp_parser;
@@ -101,7 +137,7 @@ void test_string(const std::string& s)
   using std::cout;
   using std::endl;
 
-  typedef string<'.','b','c'> regexp;
+  typedef string<'.(bc',')'> regexp;
 
   const sregex re = apply_wrap1<regexp_parser, regexp>::type::value;
   smatch w;
