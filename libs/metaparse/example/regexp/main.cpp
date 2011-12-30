@@ -12,6 +12,7 @@
 #include <mpllibs/metaparse/always.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
 #include <mpllibs/metaparse/middle_of.hpp>
+#include <mpllibs/metaparse/entire_input.hpp>
 
 #include <boost/xpressive/xpressive.hpp>
 
@@ -27,6 +28,7 @@ using mpllibs::metaparse::one_of;
 using mpllibs::metaparse::always;
 using mpllibs::metaparse::middle_of;
 using mpllibs::metaparse::one_char_except_c;
+using mpllibs::metaparse::entire_input;
 
 using boost::mpl::string;
 using boost::mpl::c_str;
@@ -108,7 +110,7 @@ typedef
   foldl<one_of<bracket_expr, non_bracket_expr>, r_epsilon, r_append>
   regexp;
 
-typedef build_parser<regexp> regexp_parser;
+typedef build_parser<entire_input<regexp> > regexp_parser;
 
 void test_string(const std::string& s)
 {

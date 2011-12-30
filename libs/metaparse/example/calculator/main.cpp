@@ -15,6 +15,7 @@
 #include <mpllibs/metaparse/parser_monad.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/token.hpp>
+#include <mpllibs/metaparse/entire_input.hpp>
 
 #include <mpllibs/metaparse/build_parser.hpp>
 
@@ -54,6 +55,7 @@ using mpllibs::metaparse::parser_tag;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
 using mpllibs::metaparse::token;
+using mpllibs::metaparse::entire_input;
 
 using mpllibs::metatest::to_stream;
 
@@ -190,7 +192,7 @@ typedef
 
 typedef last_of<any<space>, plus_exp> expression;
 
-typedef build_parser<expression> calculator_parser;
+typedef build_parser<entire_input<expression> > calculator_parser;
 
 int main()
 {

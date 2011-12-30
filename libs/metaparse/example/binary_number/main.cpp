@@ -8,6 +8,7 @@
 #include <mpllibs/metaparse/build_parser.hpp>
 #include <mpllibs/metaparse/transform.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
+#include <mpllibs/metaparse/entire_input.hpp>
 
 #include <mpllibs/metaparse/util/digit_to_int.hpp>
 
@@ -23,6 +24,7 @@ using mpllibs::metaparse::foldl1;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::transform;
 using mpllibs::metaparse::one_of;
+using mpllibs::metaparse::entire_input;
 
 using mpllibs::metaparse::util::digit_to_int;
 
@@ -50,7 +52,7 @@ typedef
   >
   S;
 
-typedef build_parser<S> binary_parser;
+typedef build_parser<entire_input<S> > binary_parser;
 
 template <class S>
 struct binary : binary_parser::apply<S>::type {};
