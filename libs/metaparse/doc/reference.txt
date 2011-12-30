@@ -21,6 +21,7 @@ link:change_error_message.html[change_error_message] +
 link:digit.html[digit] +
 link:digit_val.html[digit_val] +
 link:empty.html[empty] +
+link:entire_input.html[entire_input] +
 link:except.html[except] +
 link:fail.html[fail] +
 link:first_of.html[first_of] +
