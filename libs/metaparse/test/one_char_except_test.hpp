@@ -24,6 +24,10 @@ BOOST_AUTO_TEST_CASE(BOOST_PP_CAT(TEST_NAME, _except))
   meta_require<
     is_error<apply_wrap2<oc, str_0, start> >
   >(MPLLIBS_HERE, "rejects_except_char");
+
+  meta_require<
+    is_error<apply_wrap2<oc, str_1, start> >
+  >(MPLLIBS_HERE, "rejects_other_except_char");
 }
 
 #include "one_char_test.hpp"

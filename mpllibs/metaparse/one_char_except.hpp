@@ -56,7 +56,7 @@ namespace mpllibs
             boost::mpl::eval_if< \
               typename boost::mpl::equal_to< \
                 typename C::type, \
-                typename T0::type \
+                typename BOOST_PP_CAT(T, BOOST_PP_DEC(n))::type \
               >::type, \
               boost::mpl::false_, \
               boost::mpl::apply_wrap1< \
