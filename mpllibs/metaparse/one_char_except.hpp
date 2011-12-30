@@ -91,7 +91,7 @@ namespace mpllibs
     struct one_char_except;
 
     #ifdef MPLLIBS_METAPARSE_UNUSED
-      #error MPLLIBS_METAPARSE_UNUSED
+      #error MPLLIBS_METAPARSE_UNUSED already defined
     #endif
     #define MPLLIBS_METAPARSE_UNUSED(z, n, unused) \
       BOOST_PP_COMMA_IF(n) impl::one_char_except_not_used

@@ -43,6 +43,7 @@ link:nth_of_c.html[nth_of_c] +
 link:nth_of.html[nth_of] +
 link:one_char.html[one_char] +
 link:one_char_except.html[one_char_except] +
+link:one_char_except_c.html[one_char_except_c] +
 link:one_of.html[one_of] +
 link:return.html[return] +
 link:sequence.html[sequence] +
