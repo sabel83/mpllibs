@@ -9,10 +9,10 @@
 #include <mpllibs/metaparse/transform.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
+#include <mpllibs/metaparse/string.hpp>
 
 #include <mpllibs/metaparse/util/digit_to_int.hpp>
 
-#include <boost/mpl/string.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/times.hpp>
@@ -61,12 +61,11 @@ int main()
 {
   using std::cout;
   using std::endl;
-  using boost::mpl::string;
   
   cout
-    << binary<string<'100'> >::value << endl
-    << binary<string<'1011'> >::value << endl
-    << binary<string<'1'> >::value << endl;
+    << binary<_S("100")>::value << endl
+    << binary<_S("1011")>::value << endl
+    << binary<_S("1")>::value << endl;
 }
 
 

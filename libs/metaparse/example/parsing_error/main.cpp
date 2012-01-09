@@ -9,8 +9,8 @@
 #include <mpllibs/metaparse/debug_parsing_error.hpp>
 
 #include <mpllibs/metaparse/build_parser.hpp>
+#include <mpllibs/metaparse/string.hpp>
 
-#include <boost/mpl/list_c.hpp>
 #include <boost/mpl/apply.hpp>
 
 using mpllibs::metaparse::sequence;
@@ -19,7 +19,6 @@ using mpllibs::metaparse::any;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::debug_parsing_error;
 
-using boost::mpl::list_c;
 using boost::mpl::apply;
 
 /*
@@ -31,7 +30,7 @@ typedef sequence<any<lit_c<'a'> >, lit_c<'b'> > s;
 
 typedef build_parser<s> test_parser;
 
-typedef list_c<char, 'a','a','a','c'> invalid_input;
+typedef _S("aaac") invalid_input;
 
 debug_parsing_error<test_parser, invalid_input> debug;
 

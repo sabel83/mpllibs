@@ -32,6 +32,8 @@ CXXFLAGS += -Wall
 CXXFLAGS += -ansi
 CXXFLAGS += -pedantic
 
+CXXFLAGS += --std=c++0x
+
 $(OBJECTS) : $(BIN_DIR)/%.o : %.cpp
 	mkdir -p $(BIN_DIR)
 	$(CXX) -c $(CFLAGS) $(CXXFLAGS) $(foreach i,$(INCLUDES), -I$(i) ) -o $@ $<

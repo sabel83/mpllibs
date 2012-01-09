@@ -16,6 +16,7 @@
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/token.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
+#include <mpllibs/metaparse/string.hpp>
 
 #include <mpllibs/metaparse/build_parser.hpp>
 
@@ -36,7 +37,6 @@
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/divides.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/mpl/string.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/char.hpp>
@@ -74,7 +74,6 @@ using boost::mpl::times;
 using boost::mpl::divides;
 using boost::mpl::eval_if;
 using boost::mpl::bool_;
-using boost::mpl::string;
 using boost::mpl::equal_to;
 using boost::mpl::char_;
 using boost::mpl::bool_;
@@ -200,19 +199,19 @@ int main()
   using std::endl;
   
   to_stream<
-    apply_wrap1<calculator_parser, string<'13'> >::type
+    apply_wrap1<calculator_parser, _S("13")>::type
   >::run(cout) << endl;
 
   to_stream<
-    apply_wrap1<calculator_parser, string<' 1+ ','2*4-','6/2'> >::type
+    apply_wrap1<calculator_parser, _S(" 1+ 2*4-6/2")>::type
   >::run(cout) << endl;
 
   to_stream<
-    apply_wrap1<calculator_parser, string<'11/0'> >::type
+    apply_wrap1<calculator_parser, _S("11/0")>::type
   >::run(cout) << endl;
 
   to_stream<
-    apply_wrap1<calculator_parser, string<'19 +',' 83/','0 + ','11'> >::type
+    apply_wrap1<calculator_parser, _S("19 + 83/0 + 11")>::type
   >::run(cout) << endl;
 }
 

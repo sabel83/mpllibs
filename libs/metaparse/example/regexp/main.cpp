@@ -13,10 +13,10 @@
 #include <mpllibs/metaparse/build_parser.hpp>
 #include <mpllibs/metaparse/middle_of.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
+#include <mpllibs/metaparse/string.hpp>
 
 #include <boost/xpressive/xpressive.hpp>
 
-#include <boost/mpl/string.hpp>
 #include <boost/mpl/bool.hpp>
 
 using mpllibs::metaparse::foldl;
@@ -30,7 +30,6 @@ using mpllibs::metaparse::middle_of;
 using mpllibs::metaparse::one_char_except_c;
 using mpllibs::metaparse::entire_input;
 
-using boost::mpl::string;
 using boost::mpl::c_str;
 using boost::mpl::true_;
 using boost::mpl::false_;
@@ -121,7 +120,7 @@ void test_string(const std::string& s)
   using std::cout;
   using std::endl;
 
-  typedef string<'.(bc',')'> regexp;
+  typedef _S(".(bc)") regexp;
 
   const sregex re = apply_wrap1<regexp_parser, regexp>::type::value;
   smatch w;
