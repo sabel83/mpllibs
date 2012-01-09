@@ -26,9 +26,10 @@ namespace mpllibs
       template <class S, char C>
       struct append_string<S, C, true> : S {};
 
-      constexpr char string_at(const char s[], int len, int n)
+      template <int Len, class T>
+      constexpr T array_at(const T (&s)[Len], int n)
       {
-        return n >= len ? 0 : s[n];
+        return n >= Len ? 0 : s[n];
       }
     }
   }
@@ -45,7 +46,7 @@ namespace mpllibs
 #endif
 #define MPLLIBS_METAPARSE_STRING_POST(z, n, str) \
     , \
-    mpllibs::metaparse::impl::string_at(str, sizeof(str), n), \
+    mpllibs::metaparse::impl::array_at<sizeof(str)>(str, n), \
     (n >= sizeof(str) - 1) \
   >::type
 
