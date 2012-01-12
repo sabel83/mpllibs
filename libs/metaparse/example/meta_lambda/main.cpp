@@ -7,7 +7,6 @@
 #include <mpllibs/metaparse/sequence.hpp>
 #include <mpllibs/metaparse/lit_c.hpp>
 #include <mpllibs/metaparse/last_of.hpp>
-#include <mpllibs/metaparse/first_of.hpp>
 #include <mpllibs/metaparse/space.hpp>
 #include <mpllibs/metaparse/int.hpp>
 #include <mpllibs/metaparse/foldr.hpp>
@@ -27,11 +26,9 @@
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/meta_atom.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/fold.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/back.hpp>
 #include <boost/mpl/plus.hpp>
@@ -40,16 +37,12 @@
 #include <boost/mpl/divides.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/char.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/mpl/quote.hpp>
 
 using mpllibs::metaparse::sequence;
 using mpllibs::metaparse::lit_c;
 using mpllibs::metaparse::last_of;
-using mpllibs::metaparse::first_of;
 using mpllibs::metaparse::space;
 using mpllibs::metaparse::any;
 using mpllibs::metaparse::build_parser;
@@ -63,28 +56,21 @@ using mpllibs::metaparse::entire_input;
 using mpllibs::metaparse::transform;
 using mpllibs::metaparse::always;
 
-using mpllibs::metatest::to_stream;
-
 using mpllibs::metamonad::do_try;
 using mpllibs::metamonad::throw_;
 using mpllibs::metamonad::do_;
 using mpllibs::metamonad::set;
 
 using boost::mpl::apply_wrap1;
-using boost::mpl::fold;
 using boost::mpl::front;
 using boost::mpl::back;
 using boost::mpl::plus;
 using boost::mpl::minus;
 using boost::mpl::times;
 using boost::mpl::divides;
-using boost::mpl::eval_if;
 using boost::mpl::if_;
 using boost::mpl::bool_;
 using boost::mpl::equal_to;
-using boost::mpl::char_;
-using boost::mpl::bool_;
-using boost::mpl::quote1;
 
 /*
  * The grammar
@@ -107,9 +93,6 @@ struct x;
 
 MPLLIBS_DEFINE_TAG(division_by_zero_tag)
 MPLLIBS_DEFINE_META_ATOM(division_by_zero_tag, division_by_zero)
-
-struct new_value;
-struct state;
 
 template <class T, char C>
 struct is_c : bool_<T::type::value == C>
