@@ -38,7 +38,6 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/bool.hpp>
 
 using mpllibs::metaparse::sequence;
 using mpllibs::metaparse::lit_c;
