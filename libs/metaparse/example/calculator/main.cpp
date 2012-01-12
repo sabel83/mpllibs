@@ -39,7 +39,6 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/char.hpp>
 #include <boost/mpl/bool.hpp>
 
 using mpllibs::metaparse::sequence;
@@ -75,7 +74,6 @@ using boost::mpl::divides;
 using boost::mpl::eval_if;
 using boost::mpl::bool_;
 using boost::mpl::equal_to;
-using boost::mpl::char_;
 using boost::mpl::bool_;
 
 /*
