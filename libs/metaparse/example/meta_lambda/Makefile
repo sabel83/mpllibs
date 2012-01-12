@@ -5,7 +5,7 @@
 
 SOURCE_ROOT = ../../../..
 
-NAME = calculator
+NAME = meta_lambda
 
 INCLUDES += $(SOURCE_ROOT)
 BIN_DIR = $(SOURCE_ROOT)/bin/example/metaparse/$(NAME)
