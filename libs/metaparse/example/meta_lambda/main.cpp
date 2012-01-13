@@ -273,7 +273,8 @@ typedef build_parser<entire_input<expression> > metafunction_parser;
 #ifdef META_LAMBDA
   #error META_LAMBDA already defined
 #endif
-#define META_LAMBDA(exp) apply_wrap1<metafunction_parser, _S(#exp)>::type
+#define META_LAMBDA(exp) \
+  apply_wrap1<metafunction_parser, MPLLIBS_STRING(#exp)>::type
 
 int main()
 {

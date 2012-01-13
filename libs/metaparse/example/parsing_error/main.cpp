@@ -30,7 +30,7 @@ typedef sequence<any<lit_c<'a'> >, lit_c<'b'> > s;
 
 typedef build_parser<s> test_parser;
 
-typedef _S("aaac") invalid_input;
+typedef MPLLIBS_STRING("aaac") invalid_input;
 
 debug_parsing_error<test_parser, invalid_input> debug;
 

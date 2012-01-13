@@ -278,7 +278,7 @@ typedef build_parser<entire_input<expression> > function_parser;
 #ifdef LAMBDA
   #error LAMBDA already defined
 #endif
-#define LAMBDA(exp) apply_wrap1<function_parser, _S(#exp)>::type
+#define LAMBDA(exp) apply_wrap1<function_parser, MPLLIBS_STRING(#exp)>::type
 
 LAMBDA(13) f1;
 LAMBDA(2 + 3) f2;

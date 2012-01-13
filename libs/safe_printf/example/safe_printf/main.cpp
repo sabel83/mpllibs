@@ -14,11 +14,11 @@ int main()
   using safe::sprintf;
   using safe::fprintf;
   
-  printf<_S("John %d, %s %d\n")>(11, "Joe", 13);
+  printf<MPLLIBS_STRING("John %d, %s %d\n")>(11, "Joe", 13);
 
   char s[128];
-  sprintf<_S("%d / %d = %.2f")>(s, 13, 2, 6.5);
+  sprintf<MPLLIBS_STRING("%d / %d = %.2f")>(s, 13, 2, 6.5);
   
-  fprintf<_S("Using sprintf: %s\n")>(stderr, s);
+  fprintf<MPLLIBS_STRING("Using sprintf: %s\n")>(stderr, s);
 }
 

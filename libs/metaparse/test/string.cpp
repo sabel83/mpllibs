@@ -19,11 +19,11 @@ BOOST_AUTO_TEST_CASE(test_string)
   using boost::mpl::equal;
 
   meta_require<
-    equal<_S(""), boost::mpl::string<> >
+    equal<MPLLIBS_STRING(""), boost::mpl::string<> >
   >(MPLLIBS_HERE, "test_empty_string");
 
   meta_require<
-    equal<_S("hello"), boost::mpl::string<'h','e','l','l','o'> >
+    equal<MPLLIBS_STRING("hello"), boost::mpl::string<'h','e','l','l','o'> >
   >(MPLLIBS_HERE, "test_string_creation");
 }
 

@@ -191,6 +191,11 @@ typedef last_of<any<space>, plus_exp> expression;
 
 typedef build_parser<entire_input<expression> > calculator_parser;
 
+#ifdef _S
+  #error _S already defined
+#endif
+#define _S MPLLIBS_STRING
+
 int main()
 {
   using std::cout;

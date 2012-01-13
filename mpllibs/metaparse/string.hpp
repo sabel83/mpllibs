@@ -66,10 +66,5 @@ namespace mpllibs
     s \
   )
 
-#ifdef _S
-  #error _S already defined
-#endif
-#define _S MPLLIBS_STRING
-
 #endif
 

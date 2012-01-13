@@ -120,7 +120,7 @@ void test_string(const std::string& s)
   using std::cout;
   using std::endl;
 
-  typedef _S(".(bc)") regexp;
+  typedef MPLLIBS_STRING(".(bc)") regexp;
 
   const sregex re = apply_wrap1<regexp_parser, regexp>::type::value;
   smatch w;

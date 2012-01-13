@@ -57,6 +57,11 @@ typedef build_parser<entire_input<S> > binary_parser;
 template <class S>
 struct binary : binary_parser::apply<S>::type {};
 
+#ifdef _S
+  #error _S already defined
+#endif
+#define _S MPLLIBS_STRING
+
 int main()
 {
   using std::cout;
