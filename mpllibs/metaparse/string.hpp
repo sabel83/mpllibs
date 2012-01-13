@@ -10,8 +10,8 @@
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/char.hpp>
 
-#ifndef MPLLIBS_METAPARSE_STRING_MAX_LENGTH
-  #define MPLLIBS_METAPARSE_STRING_MAX_LENGTH 32
+#ifndef MPLLIBS_STRING_MAX_LENGTH
+  #define MPLLIBS_STRING_MAX_LENGTH 32
 #endif
 
 namespace mpllibs
@@ -35,41 +35,41 @@ namespace mpllibs
   }
 }
 
-#ifdef MPLLIBS_METAPARSE_STRING_PRE
-  #error MPLLIBS_METAPARSE_STRING_PRE already defined
+#ifdef MPLLIBS_STRING_PRE
+  #error MPLLIBS_STRING_PRE already defined
 #endif
-#define MPLLIBS_METAPARSE_STRING_PRE(z, n, unused) \
+#define MPLLIBS_STRING_PRE(z, n, unused) \
   mpllibs::metaparse::impl::append_string< \
 
-#ifdef MPLLIBS_METAPARSE_STRING_POST
-  #error MPLLIBS_METAPARSE_STRING_POST already defined
+#ifdef MPLLIBS_STRING_POST
+  #error MPLLIBS_STRING_POST already defined
 #endif
-#define MPLLIBS_METAPARSE_STRING_POST(z, n, str) \
+#define MPLLIBS_STRING_POST(z, n, str) \
     , \
     mpllibs::metaparse::impl::array_at<sizeof(str)>(str, n), \
     (n >= sizeof(str) - 1) \
   >::type
 
-#ifdef MPLLIBS_METAPARSE_STRING
-  #error MPLLIBS_METAPARSE_STRING already defined
+#ifdef MPLLIBS_STRING
+  #error MPLLIBS_STRING already defined
 #endif
-#define MPLLIBS_METAPARSE_STRING(s) \
+#define MPLLIBS_STRING(s) \
   BOOST_PP_REPEAT( \
-    MPLLIBS_METAPARSE_STRING_MAX_LENGTH, \
-    MPLLIBS_METAPARSE_STRING_PRE, \
+    MPLLIBS_STRING_MAX_LENGTH, \
+    MPLLIBS_STRING_PRE, \
     ~\
   ) \
     boost::mpl::string<> \
   BOOST_PP_REPEAT( \
-    MPLLIBS_METAPARSE_STRING_MAX_LENGTH, \
-    MPLLIBS_METAPARSE_STRING_POST, \
+    MPLLIBS_STRING_MAX_LENGTH, \
+    MPLLIBS_STRING_POST, \
     s \
   )
 
 #ifdef _S
   #error _S already defined
 #endif
-#define _S MPLLIBS_METAPARSE_STRING
+#define _S MPLLIBS_STRING
 
 #endif
 
