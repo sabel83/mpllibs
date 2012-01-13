@@ -58,7 +58,7 @@ typedef fail<maybe_tag, one_error>::type this_is_nothing;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

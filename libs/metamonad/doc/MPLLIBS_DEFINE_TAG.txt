@@ -65,7 +65,7 @@ MPLLIBS_DEFINE_META_ATOM(example_tag, example_atom)
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

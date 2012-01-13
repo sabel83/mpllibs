@@ -51,7 +51,7 @@ typedef is_right<mpllibs::metaparse::right<boost::mpl::int_<13> > > always_true;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

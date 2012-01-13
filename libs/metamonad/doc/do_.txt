@@ -56,7 +56,7 @@ do_<exception_tag>::apply<
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

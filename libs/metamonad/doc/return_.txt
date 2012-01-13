@@ -56,7 +56,7 @@ typedef return_<exception_tag, int> lifted_int;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

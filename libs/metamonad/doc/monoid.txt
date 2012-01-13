@@ -80,7 +80,7 @@ struct monoid<plus_tag> : monoid_defaults<plus_tag>
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

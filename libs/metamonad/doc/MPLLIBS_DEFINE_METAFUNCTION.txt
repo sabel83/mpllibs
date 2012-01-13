@@ -77,7 +77,7 @@ MPLLIBS_DEFINE_METAFUNCTION(f, 3)
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

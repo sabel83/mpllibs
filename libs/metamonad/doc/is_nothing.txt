@@ -51,7 +51,7 @@ typedef is_nothing<mpllibs::metaparse::nothing> always_true;
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

@@ -86,7 +86,7 @@ struct my_metafunction :
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 

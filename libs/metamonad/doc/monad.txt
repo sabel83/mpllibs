@@ -108,7 +108,7 @@ struct monad<list_tag> : monad_defaults<list_tag>
 
 include::copyright[]
 
-link:index.html[[up]]
+link:reference.html[[up]]
 
 
 
