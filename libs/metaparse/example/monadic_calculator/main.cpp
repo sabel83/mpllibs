@@ -16,7 +16,12 @@
 #include <mpllibs/metaparse/token.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
 #include <mpllibs/metaparse/string.hpp>
+
 #include <mpllibs/metaparse/build_parser.hpp>
+
+#include <mpllibs/metamonad/do_try.hpp>
+#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <mpllibs/metatest/to_stream.hpp>
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
@@ -49,6 +54,10 @@ using mpllibs::metaparse::token;
 using mpllibs::metaparse::entire_input;
 
 using mpllibs::metatest::to_stream;
+
+using mpllibs::metamonad::do_try;
+using mpllibs::metamonad::throw_;
+using mpllibs::metamonad::set;
 
 using boost::mpl::apply_wrap1;
 using boost::mpl::fold;
@@ -104,10 +113,14 @@ struct eval_plus
 {
   template <class C, class State>
   struct apply :
-    eval_if<
-      is_c<front<C>, '+'>,
-      plus<typename State::type, typename back<C>::type>,
-      minus<typename State::type, typename back<C>::type>
+    do_try<
+      set<state, State>,
+      set<new_value, back<C> >,
+      eval_if<
+        is_c<front<C>, '+'>,
+        plus<state, new_value>,
+        minus<state, new_value>
+      >
     >
   {};
 
@@ -124,10 +137,18 @@ struct eval_mult
 {
   template <class C, class State>
   struct apply :
-    eval_if<
-      is_c<front<C>, '*'>,
-      times<typename State::type, typename back<C>::type>,
-      divides<typename State::type, typename back<C>::type>
+    do_try<
+      set<state, State>,
+      set<new_value, back<C> >,
+      eval_if<
+        is_c<front<C>, '*'>,
+        times<state, new_value>,
+        eval_if<
+          equal_to<new_value, boost::mpl::int_<0> >,
+          throw_<division_by_zero>,
+          divides<state, new_value>
+        >
+      >
     >
   {};
 
@@ -176,6 +197,14 @@ int main()
 
   to_stream<
     apply_wrap1<calculator_parser, _S(" 1+ 2*4-6/2")>::type
+  >::run(cout) << endl;
+
+  to_stream<
+    apply_wrap1<calculator_parser, _S("11/0")>::type
+  >::run(cout) << endl;
+
+  to_stream<
+    apply_wrap1<calculator_parser, _S("19 + 83/0 + 11")>::type
   >::run(cout) << endl;
 }
 
