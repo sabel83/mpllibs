@@ -32,10 +32,9 @@ BOOST_AUTO_TEST_CASE(test_last_of)
   using boost::mpl::equal_to;
   using boost::mpl::apply_wrap2;
 
-  meta_require<has_type<last_of<lit_h, lit_e> > >(
-    MPLLIBS_HERE,
-    "test_has_type"
-  );
+  meta_require<
+    has_type<last_of<lit_h, lit_e> >
+  >(MPLLIBS_HERE, "test_has_type");
 
   meta_require<
     equal_to<

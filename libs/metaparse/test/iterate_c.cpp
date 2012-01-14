@@ -37,10 +37,9 @@ BOOST_AUTO_TEST_CASE(test_iterate_c)
   using boost::mpl::list;
   using boost::mpl::vector_c;
 
-  meta_require<has_type<iterate_c<one_char, 0> > >(
-    MPLLIBS_HERE,
-    "test_has_type"
-  );
+  meta_require<
+    has_type<iterate_c<one_char, 0> >
+  >(MPLLIBS_HERE, "test_has_type");
 
   meta_require<
     is_error<apply_wrap2<iterate_c<one_char, 13>, str_, start> >

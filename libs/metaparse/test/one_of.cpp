@@ -52,10 +52,9 @@ BOOST_AUTO_TEST_CASE(test_one_of)
   
   meta_require<has_type<one_of<one_char> > >(MPLLIBS_HERE, "test_has_type");
 
-  meta_require<is_error<apply_wrap2<one_of_0< >, str_hello, start> > >(
-    MPLLIBS_HERE,
-    "test0"
-  );
+  meta_require<
+    is_error<apply_wrap2<one_of_0< >, str_hello, start> >
+  >(MPLLIBS_HERE, "test0");
   
   meta_require<
     equal_to<

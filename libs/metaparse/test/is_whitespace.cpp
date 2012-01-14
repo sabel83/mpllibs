@@ -28,16 +28,14 @@ BOOST_AUTO_TEST_CASE(test_util_is_whitespace)
 
   meta_require<has_type<is_whitespace> >(MPLLIBS_HERE, "test_has_type");
 
-  meta_require<apply_wrap1<is_whitespace, char_space> >(
-    MPLLIBS_HERE,
-    "test_space"
-  );
+  meta_require<
+    apply_wrap1<is_whitespace, char_space>
+  >(MPLLIBS_HERE, "test_space");
   
   meta_require<apply_wrap1<is_whitespace, char_tab> >(MPLLIBS_HERE, "test_tab");
   
-  meta_require<not_<apply_wrap1<is_whitespace, char_a> > >(
-    MPLLIBS_HERE,
-    "test_non_whitespace"
-  );
+  meta_require<
+    not_<apply_wrap1<is_whitespace, char_a> >
+  >(MPLLIBS_HERE, "test_non_whitespace");
 }
 

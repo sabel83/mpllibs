@@ -28,19 +28,16 @@ BOOST_AUTO_TEST_CASE(test_util_is_letter)
 
   meta_require<has_type<is_letter> >(MPLLIBS_HERE, "test_has_type");
 
-  meta_require<apply_wrap1<is_letter, char_k> >(
-    MPLLIBS_HERE,
-    "test_lcase_letter"
-  );
+  meta_require<
+    apply_wrap1<is_letter, char_k>
+  >(MPLLIBS_HERE, "test_lcase_letter");
   
-  meta_require<apply_wrap1<is_letter, char_K> >(
-    MPLLIBS_HERE,
-    "test_ucase_letter"
-  );
+  meta_require<
+    apply_wrap1<is_letter, char_K>
+  >(MPLLIBS_HERE, "test_ucase_letter");
     
-  meta_require<not_<apply_wrap1<is_letter, char_7> > >(
-    MPLLIBS_HERE,
-    "test_not_letter"
-  );
+  meta_require<
+    not_<apply_wrap1<is_letter, char_7> >
+  >(MPLLIBS_HERE, "test_not_letter");
 }
 

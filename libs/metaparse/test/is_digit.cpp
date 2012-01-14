@@ -30,10 +30,9 @@ BOOST_AUTO_TEST_CASE(test_util_is_digit)
 
   meta_require<apply_wrap1<is_digit, char_7> >(MPLLIBS_HERE, "test_digit");
   
-  meta_require<not_<apply_wrap1<is_digit, char_a> > >(
-    MPLLIBS_HERE,
-    "test_non_digit"
-  );
+  meta_require<
+    not_<apply_wrap1<is_digit, char_a> >
+  >(MPLLIBS_HERE, "test_non_digit");
 }
 
 

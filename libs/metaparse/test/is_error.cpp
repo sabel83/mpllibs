@@ -30,9 +30,8 @@ BOOST_AUTO_TEST_CASE(test_is_error)
 
   meta_require<not_<is_error<int13> > >(MPLLIBS_HERE, "test_not_error");
 
-  meta_require<is_error<apply_wrap2<fail<int11>, int1, int13> > >(
-    MPLLIBS_HERE,
-    "test_error"
-  );
+  meta_require<
+    is_error<apply_wrap2<fail<int11>, int1, int13> >
+  >(MPLLIBS_HERE, "test_error");
 }
 
