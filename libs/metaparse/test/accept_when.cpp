@@ -25,9 +25,8 @@
 
 namespace
 {
-  using mpllibs::metaparse::error_tag;
-
-  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
+  MPLLIBS_DEFINE_TAG(test_error_tag)
+  MPLLIBS_DEFINE_META_ATOM(test_error_tag, test_error)
 }
 
 BOOST_AUTO_TEST_CASE(test_accept_when)

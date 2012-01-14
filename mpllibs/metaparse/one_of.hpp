@@ -8,6 +8,7 @@
 
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/fail.hpp>
+#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metamonad/meta_atom.hpp>
 

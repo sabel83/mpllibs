@@ -10,6 +10,7 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/fail.hpp>
+#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 

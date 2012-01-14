@@ -25,7 +25,7 @@ this result:
 * link:get_position.html[get_position]
 
 When there is a parsing error, the parser returns a structure with the tag
-+mpllibs::metaparse::error_tag+.
++mpllibs::metaparse::fail_tag+.
 
 Source positions
 ~~~~~~~~~~~~~~~~

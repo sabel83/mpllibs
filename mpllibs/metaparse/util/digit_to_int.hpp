@@ -13,6 +13,8 @@
 
 #include <boost/mpl/int.hpp>
 
+#include <iostream>
+
 namespace mpllibs
 {
   namespace metaparse

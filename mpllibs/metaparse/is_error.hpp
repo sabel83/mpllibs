@@ -16,12 +16,12 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    struct error_tag;
+    struct fail_tag;
   
     template <class T>
     struct is_error :
       boost::is_same<
-        error_tag,
+        fail_tag,
         typename boost::mpl::tag<typename T::type>::type
       >
     {
