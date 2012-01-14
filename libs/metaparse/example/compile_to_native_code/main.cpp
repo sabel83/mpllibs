@@ -17,13 +17,7 @@
 #include <mpllibs/metaparse/string.hpp>
 #include <mpllibs/metaparse/transform.hpp>
 #include <mpllibs/metaparse/always.hpp>
-
 #include <mpllibs/metaparse/build_parser.hpp>
-
-#include <mpllibs/metamonad/do.hpp>
-#include <mpllibs/metamonad/do_try.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
-#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 
@@ -48,11 +42,6 @@ using mpllibs::metaparse::entire_input;
 using mpllibs::metaparse::transform;
 using mpllibs::metaparse::always;
 
-using mpllibs::metamonad::do_try;
-using mpllibs::metamonad::throw_;
-using mpllibs::metamonad::do_;
-using mpllibs::metamonad::set;
-
 using boost::mpl::apply_wrap1;
 using boost::mpl::front;
 using boost::mpl::back;
@@ -75,11 +64,6 @@ typedef token<lit_c<'/'> > div_token;
  
 typedef token<int_> int_token;
 typedef token<lit_c<'_'> > arg_token;
-
-struct x;
-
-MPLLIBS_DEFINE_TAG(division_by_zero_tag)
-MPLLIBS_DEFINE_META_ATOM(division_by_zero_tag, division_by_zero)
 
 template <class T, char C>
 struct is_c : bool_<T::type::value == C>
