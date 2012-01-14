@@ -1,0 +1,695 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+mpllibs::metamonad user manual
+==============================
+Abel Sinkovics
+
+Introduction
+------------
+
+This library is built on top of boost::mpl, thus the reader is expected to be
+familiar with that library and its concepts.
+This tutorial introduces the different components of metamonad using examples.
+Since the tools of the library extend each other, it is recommended to read this
+tutorial in order.
+
+Tags
+----
+
+The concept of +tags+ needs to be introduced first. This comes from boost::mpl,
+metamonad is heavily dependent on it.
+
+In boost::mpl every compile-time value has a member type called +tag+ that
+is used to determine whether that value is a wrapped integral, a list, a vector,
+etc. There may be more than one implementations of a compile-time data-type,
+such as wrapped integrals. As long as they provide the same interface and have
+the same +tag+, all metafunctions operating on the wrapped integrals can
+deal with them. The +tag+ is used to identify that they are wrapped
+integrals.
+
+This +tag+ works like the type information of compile-time data-structures. 
+Polymorphic metafunctions in boost::mpl get the +tag+ information of the
+arguments, instantiate a helper metafunction class with the tags as template
+parameters and pass the original arguments to that metafunction class. Different
+specializations of the metafunction class can be created for different tags and
+tag combinations. Each specialization implements one overload of the
+metafunction. Since a new specialization can be implemented without changing
+existing code, new overloads for newly created classes can be implemented later.
+
+Let expressions
+---------------
+
+metamonad implements let expressions in C++ template metaprogramming. A let
+expression binds an expression to a name in the scope of another expression.
+An expression is represented by a nullary metafunction, a name is represented
+by a class. metamonad provides a metafunction, +let+, that takes the three
+arguments mentioned above:
+
+--------------------------------------
+template <
+  class Name,
+  class ExpressionToBind,
+  class ExpressionToBindInTheScopeOf
+>
+struct let;
+--------------------------------------
+
+It returns a nullary metafunction, which is an updated version of
++ExpressionToBindInTheScopeOf+: every occurrence of +Name+ is replaced with
++ExpressionToBind+ in the body of +ExpressionToBindInTheScopeOf+. An example:
+
+--------------------------------------
+struct x;
+
+template <class N>
+struct my_metafunction :
+  let<
+    x, boost::mpl::plus<N, boost::mpl::int_<13> >,
+    boost::mpl::times<N, N>
+  >::type
+{};
+--------------------------------------
+
+Using +let+, many empty placeholder classes need to be created. Note that any
+class can (+int+, template instances, etc.) be used as placeholder.
+
+Lambda expressions
+------------------
+
+metamonad provides a lambda expression implementation for template metaprograms.
+A lambda expression is a metafunction class taking (in the current
+implementation exactly) one argument. Lambda expressions can be defined inside
+the body of expressions. metamonad provides the +lambda+ metafunction class for
+defining lambda expressions:
+
+--------------------------------------
+template <class Name, class Body>
+struct lambda;
+--------------------------------------
+
++Name+ is a placeholder for the argument that is passed to the lambda expression
+when it is used as a metafunction class. +Body+ is a nullary metafunction,
+which is the body of the lambda expression. When the lambda expression is called
+with an argument, every occurrence of +Name+ is replaced with the value of the
+argument in the body of +Body+, and the resulting nullary metafunction gets
+evaluated.
+
+Recursive let bindings
+----------------------
+
+The binding using +let+ happens non-recursively, thus it can not be used to
+bind a recursive function (calling itself) to a name. For example, it can not be
+used to implement a recursive factorial:
+
+--------------------------------------
+let<
+  fact,
+  lambda<
+    n,
+    boost::mpl::eval_if<
+      boost::mpl::equal_to<n, boost::mpl::int_<0> >,
+      boost::mpl::int_<1>,
+      boost::mpl::times<
+        boost::mpl::apply<
+          fact,
+          boost::mpl::minus<n, boost::mpl::int_<1> >
+        >,
+        n
+      >
+    >
+  >,
+  boost::mpl::apply<fact, boost::mpl::int_<3> >
+>
+--------------------------------------
+
+In the above example the placeholder +fact+ in the body of the lambda expression
+is not bound to itself, thus recursive calls don't work as expected. metamonad
+provides a recursive version of +let+, +letrec+, which works the same way as
++let+, except that it does the binding recursively. The above example can be
+implemented correctly using +letrec+:
+
+--------------------------------------
+letrec<
+  fact,
+  lambda<
+    n,
+    boost::mpl::eval_if<
+      boost::mpl::equal_to<n, boost::mpl::int_<0> >,
+      boost::mpl::int_<1>,
+      boost::mpl::times<
+        boost::mpl::apply<
+          fact,
+          boost::mpl::minus<n, boost::mpl::int_<1> >
+        >,
+        n
+      >
+    >
+  >,
+  boost::mpl::apply<fact, boost::mpl::int_<3> >
+>
+--------------------------------------
+
+Haskell typeclasses in template metaprograms
+--------------------------------------------
+
+We need to introduce an equivalent of the Haskell typeclass in template
+metaprogramming. It can be implemented using traits:
+
+* The typeclass is a trait, the template argument is a +tag+
+* Instances of the typeclass are specialisations of the trait
+* Functions required by the typeclass are implemented as template metafunction
+  classes in the specialisations
+* For a typeclass X, a template class called X_defaults implements the functions
+  with default implementations. Every instance of the typeclass is expected to
+  publicly inherit from this template class with the same template argument.
+* The specialisation of the trait inheriting from the +_defaults+ class can
+  override any of the default implementations.
+
+There is no way of expressing which functions instances of the typeclass have
+to implement. This solution makes the usage of typeclasses explicit in the code.
+
+Example:
+~~~~~~~~
+
+Typeclass in Haskell:
+
+--------------------------------------
+class Monad m where
+  bind :: m a -> (a -> m b) -> m b
+  bind_ :: m a -> m b -> m b
+  return :: a -> m a
+
+  bind m k = bind m (\_ -> k)
+--------------------------------------
+
+Its template metaprogramming equivalent:
+
+--------------------------------------
+using boost::mpl;
+
+template <class Tag>
+struct monad;
+// Requires:
+//   struct return_ { template <class> struct apply; };
+//   struct bind { template <class> struct apply; };
+
+template <class Tag>
+struct monad_defaults
+{
+  template <class A, class B>
+  struct apply : apply_wrap2<typename monad<Tag>::bind, A, always<B> > {};
+};
+--------------------------------------
+
+An instance of this class in Haskell:
+
+--------------------------------------
+instance Monad M where
+  return a = ...
+  bind (M a) f = ...
+--------------------------------------
+
+An instance of this class in template metaprogramming:
+
+--------------------------------------
+struct m_tag;
+
+template <>
+struct monad<m_tag> : monad_defaults<m_tag>
+{
+  struct return
+  {
+    template <class T>
+    struct apply { ... };
+  };
+
+  struct bind
+  {
+    template <class T, class F>
+    struct apply { ... };
+  };
+};
+--------------------------------------
+
+Reporting errors
+----------------
+
+Error reporting is presented using a simple template metafunction as an example.
+This metafunction takes two arguments and returns the smaller one. It will be
+called +min+, and will be implemented by another metafunction, +less+, that
+takes two arguments and returns +true+ or +false+ depending on whether the first
+argument is smaller than the second one. +min+ will use +less+ to decide which
+one of its arguments is smaller. The metafunctions +min+ and +less+ will be
+polymorphic: they will work with any compile-time data that can be compared.
+When someone develops a new compile-time data type in the future, he should be
+able to extend these metafunctions to work with his type, as well, without
+changing existing code.
+
+First +less+ needs to be implemented, which is a metafunction taking 2
+arguments: the values to compare. Following boost::mpl's approach to make it
+polymorphic, it can be defined the following way:
+
+--------------------------------------
+template <class Tag1, class Tag2>
+struct less_impl;
+
+template <class A, class B>
+struct less :
+  boost::mpl::apply<
+    less_impl<
+      typename boost::mpl::tag<A>::type,
+      typename boost::mpl::tag<B>::type
+    >,
+    A,
+    B
+  >
+{};
+--------------------------------------
+
+For +less+ to support the different compile-time data structures, a
+specialization of +less_impl+ needs to be implemented per data type.
+
+When a developer uses +less+ with a data type it doesn't support (for example
+because those types of values can not be compared) this implementation breaks
+the compilation process. Using metamonad, +less+ can be implemented in a way,
+that it returns a special value representing error in these cases. metamonad
+provides the +exception+ compile-time data structure. The +exception+ template
+takes one argument, an arbitrary compile-time data value that is meant to
+describe the error. The general case of +less+ can be implemented the following
+way:
+
+--------------------------------------
+struct not_comparable;
+
+template <class T1, class T2>
+struct less_impl
+{
+  template <class A, class B>
+  struct apply
+  {
+    typedef exception<not_comparable> type;
+  };
+};
+--------------------------------------
+
+The helper class, +not_comparable+, represents the error message.
+
++min+ can be implemented in terms of +less+.
++min+ takes two arguments, compares them using +less+ and returns the
+smaller one. It can be implemented the following way:
+
+--------------------------------------
+template <class A, class B>
+struct min : boost::mpl::if_<less<A, B>, A, B> {};
+--------------------------------------
+
+When the arguments are comparable, it works fine. However, when the two
+arguments can not be compared, +less+ returns an +exception+, not a wrapped
+boolean value, which breaks +if_+. Thus, the result of +less+ has to be checked.
+When this is an error, it has to be returned as it is, otherwise it can be used
+to calculate the result of +min+.
+
+Using monads
+------------
+
+The previous section shows how to return error values from template
+metafunctions and that they needs to be propagated up to a point, when they can
+be handled. Implementing this error propagation manually is a tedious and
+error-prone process, not to mention how less readable the code becomes.
+For imperative languages exceptions were invented to work around this. C\++
+template metaprogramming is a pure functional language, metafunctions can not
+have side-effects. Throwing an exception would be a side-effect, thus it is not 
+possible. Haskell uses monads to handle side-effects in pure functions. Monads,
+among many other things, can be used for error handling and propagation in pure
+code. metamonad follows Haskell's approach to implement monads in C++ template
+metaprogramming.
+
+metamonad provides a monad for error propagation. It is similar to Haskell's
++Either+. Every value in template metaprogramming belongs to this monad, thus
+values don't need wrapping and functions don't need lifting to work in this
+monad. The values with +exception_tag+ are treated as special values -- they
+represent errors and are propagated. The error propagation monad is identified
+by +exception_tag+. Note that values representing errors and the monad itself
+are both identified by the same +tag+. Given that they are used in different
+contexts, it doesn't cause confusion.
+
+The following two metafunction classes will be used as examples to show how
+monads work:
+
+--------------------------------------
+struct may_fail1
+{
+  template <class T>
+  struct apply
+     // ...
+  {};
+};
+
+struct may_fail2
+{
+  template <class T>
+  struct apply
+    // ...
+  {};
+};
+--------------------------------------
+
+They do some calculation that either succeeds or fails and they expect that no
+errors (+exception+ values) will be passed to them as arguments.
+Assume that +may_fail1+ needs to be called and its result needs to be passed to
++may_fail2+:
+
+--------------------------------------
+boost::mpl::apply<
+  may_fail2,
+  boost::mpl::apply<may_fail1, boost::mpl::int_<13> >::type
+>
+--------------------------------------
+
+In this case, when +may_fail1+ returns an error, this error gets passed to
++may_fail2+, which should not happen. To avoid it, the return value of
++may_fail1+ needs to be verified first and +may_fail2+ has to be or must not be
+called based on it. The error monad implements this logic, thus the above
+example can be implemented safely the following way:
+
+--------------------------------------
+bind<exception_tag,
+  bind<exception_tag, retrun_<boost::mpl::int_<13> >, may_fail1>,
+  may_fail2
+>
+--------------------------------------
+
++bind+ checks the result of the previous step, which is the second argument of
+the +bind+ metafunction. When it is an error, +bind+ returns this error.
+Otherwise +bind+ passes this value to the continuation, which the third argument
+of +bind+, a metafunction class taking one argument. Using the error monad
+guarantees, that +may_fail2+ is never called with an error value. Using this
+monad, the functions that are chained don't have to deal with error propagation.
+
+When more than two functions need to be chained together, or the flow of data
+is not as simple as passing the result of one step to the next one, expressions
+using +bind+ directly become extremely complicated. Haskell provides a syntactic
+sugar for these situations, which is called the __do notation__. metamonad
+provides a template metaprogramming tool, similar to Haskell's do notation.
+Using it, the above example can be written the following way:
+
+--------------------------------------
+struct r;
+
+do_<exception_tag>::apply<
+  set<r, may_fail1<do_return<boost::mpl::int_<13> > >,
+  may_fail2<r>
+>
+--------------------------------------
+
+This implementation uses +set+ to bind the result of calling the +may_fail1+
+metafunction to a name, +r+. Instead of using +return_+ directly, it uses
++do_return+, which evaluates +return_+ with the monad +tag+ used by the do
+block, in this case +exception_tag+. The result of +may_fail1+ can be passed to
++may_fail2+ using the name +r+.
+
+The next two sections present monads and the do notation in detail.
+
+Monads
+------
+
+A monad consists of the following:
+
+* A +tag+, identifying the monad itself
+* A set of metaprogramming values (which are types)
+* Two basic operations:
+** +return_<class>+ taking some value and returning an element of the set
+** +bind<class, class>+ taking an element of the set and a function, taking
+   some value and returning an element of the set. +bind+ returns an element of
+   the set.
+* Two further operations:
+** +bind_+ taking two monadic values and returning a new monadic value. It has a
+   default implementation that calls +bind+ with the first value and a
+   metafunction class that always returns the second argument of +bind_+.
+** +fail+ taking a value and returning a monadic value that breaks the
+   execution of the monad. It has a default implementation that throws a
+   compile-time exception.
+
+In Haskell the set of values is identified by the type system, in template
+metaprogramming it is identified by an informal description in the
+documentation.
+
+Similarly to Haskell, metamonad provides the link:monad.html[monad] typeclass
+for implementing monads. It requires +return_+ and +bind+ to be implemented as
+metafunction classes.
+
+metamonad uses +tags+ to identify monads themselves, but not to identify the set
+of values. +tags+ are used as a replacement of Haskell's value constructors and
+pattern matching. For example Haskell's +Maybe+ is implemented the following
+way to support metafunction overloading:
+
+--------------------------------------
+struct nothing_tag;
+struct just_tag;
+
+struct nothing { typedef nothing_tag tag; };
+
+template <class T>
+struct just { typedef just_tag tag; };
+--------------------------------------
+
+The +Maybe+ monad consists of the +nothing+ and +just+ values, which have
+different +tags+. Because of this, +tags+ cannot be used to identify the set of
+values belonging to a monad.
+
+metamonad provides metafunctions for the operations implemented by the
+typeclass to hide the typeclass itself behind monads. These functions take the
++tag+ of the monad as their first argument and call the same operation of the
+typeclass:
+
+--------------------------------------
+template <class MonadTag, class SomeValue>
+struct return_;
+
+template <
+  class MonadTag,
+  class SomeValue,
+  class FunctionReturningElementOfSet
+>
+struct bind;
+--------------------------------------
+
+Haskell has semantic expectations for monads that are
+documented but can not be verified by the compiler. The C++ template
+metaprogramming equivalent of these expectations are the following.
+
+* left identity:
+    +monad<Tag>::bind<monad<Tag>::return_<X>, F>+ is equivalent to
+    +boost::mpl::apply<F, X>+.
+* right identity:
+    +monad<Tag>::bind<M, monad<Tag>::return_>+ is equivalent to +M+.
+* associativity:
+    +monad<Tag>::bind<M, lambda<x, monad<Tag>::bind<boost::mpl::apply<F, x>, G> > >+
+    is equivalent to +monad<Tag>::bind<monad<Tag>::bind<M, F>, G>+. +lambda+ is
+    metamonad's lambda expression implementation.
+
+Similarly to Haskell, metamonad cannot verify these expectations. It is the
+responsibility of the monad's author to satisfy these expectations.
+
+do notation
+-----------
+
+Haskell provides syntactic sugar for monads, called __do notation__. In Haskell,
+a __do block__ is associated with a monad and contains a number of monadic
+function calls and value bindings. Here is an example do block:
+
+--------------------------------------
+do
+  r <- may_fail1 13
+  may_fail2 r
+--------------------------------------
+
+This evaluates +may_fail1 13+, binds +r+ to its result and evaluates
++may_fail2 r+. metamonad implements a similar notation for writing monadic
+template metaprograms. A do block using metamonad looks like the following:
+
+--------------------------------------
+do_<monad_tag>::apply<
+  step1,
+  step2,
+
+  // ...
+
+  stepn
+>
+--------------------------------------
+
++monad_tag+ is the +tag+ identifying the monad. This has to be passed to the
++return_+ and +bind+ functions. +do_<monad_tag>+ is a metafunction class, taking
+the steps of the do block as arguments. A step is either a nullary metafunction
+returning a monadic value, or a binding of an expression to a name. A binding is
+expressed by the following structure:
+
+--------------------------------------
+set<name, step>
+--------------------------------------
+
+where +set+ is a template class. +step+ is a nullary metafunction returning a
+monadic value. +name+ is the name of a class, the binding binds the result of
++step+ to this name. The bound name can be used in the steps of the do block
+following the binding.
+
+Using +return_+ in do blocks directly is not convenient, since the +tag+ of the
+monad has to be passed to the +return_+ metafunction explicitly, thus every time
++return_+ is used, the +tag+ of the monad needs to be repeated. For example:
+
+--------------------------------------
+do_<monad_tag>::apply<
+  step1,
+  step2,
+  set<some_name, return_<monad_tag, some_value> >,
+
+  // ...
+
+  stepn
+>
+--------------------------------------
+
+To make using +return_+ in do blocks simpler, metamonad provides a template
+class, +do_return+, that can be used in do blocks:
+
+--------------------------------------
+do_<monad_tag>::apply<
+  step1,
+  step2,
+  set<some_name, do_return<some_value> >,
+
+  // ...
+
+  stepn
+>
+--------------------------------------
+
+A +do_return<X>+ instance of this template class gets automatically translated
+to +return_<Tag, X>+ inside a do block with +Tag+ as tag;
+
+Compile-time exceptions
+-----------------------
+
+The way the +exception+ monad propagates errors is similar to how exceptions are
+propagated in runtime C++ code. Based on this similarity, metamonad provides
+tools for handling exceptions in template metaprograms. These tools are based on
+monads and the do notation.
+
+Exceptions handling happens by using a __try block__, which looks like the
+following:
+
+--------------------------------------
+do_try<
+  step1,
+  step2,
+  
+  // ...
+  
+  stepn
+>
+--------------------------------------
+
+A try block is a special +do_<exception_tag>+ block, thus the body of it
+can be constructed the same way as the body of a do block. The main difference
+between a regular do block and a try block is how the result of it can be
+handled. Try blocks can be followed by exception handling blocks, dealing with
+error values returned by the body of the try block. These exception handling
+blocks are called __catch blocks__, since they are similar to the catch blocks
+of runtime C++ code. Here is an example try block with two catch blocks:
+
+--------------------------------------
+struct e;
+
+struct non_comparable_tag;
+
+template <class WrappedException>
+struct arguments_can_not_be_compared;
+
+struct unknown_error;
+
+template <class A, class B>
+struct min :
+  do_try<
+    set<c, less<A, B> >,
+    boost::mpl::if_<c, A, B>
+  >
+  ::template catch_<non_comparable_tag, e>
+    ::template apply<
+      THROW<arguments_can_not_be_compared<e> >
+    >
+  ::template catch_<catch_any, e>
+    ::template apply<throw_<unknown_error> >
+{};
+--------------------------------------
+
+Error values returned by the try block are differentiated by the +tag+ of the
+error message (which is, for example the template argument of the +exception+
+template). A catch block is an application of the template metafunction class
++catch_<class Tag, class Name>+. +Tag+ specifies, which +tags+ this catch block
+handles, +Name+ is a class that is used as a placeholder for the actual error
+value in the body of the catch block. The metafunction class takes a
+nullary metafunction as argument, which is the body of the catch block. When
+the catch block is evaluated, this body gets evaluated.
+
+When the body of a try block returns an error, at most one of the
+catch blocks is evaluated. The blocks are checked in order, each one specifies
+the +tag+ it handles. The first one specifying the +tag+ of the error message
+or specifying +catch_any+ as +tag+ is selected. +catch_any+ catches all
+exceptions, it is similar to +...+ in C++ exceptions.
+
+When a catch block was chosen, the result of the catch block is the result of
+the whole try-catch structure. When no catch block was chosen or the try block
+returned no error, the result of the try block is the result of the whole
+structure.
+
+To narrow the gap between the syntax of C++ and compile-time exceptions, a
+metafunction +throw_+ is provided for constructing error values. It takes one
+argument, which is the error message.
+
+Advanced compile-time exceptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We have seen so far how to handle exceptions using do-blocks, but we can handle
+exceptions in regular template metaprogramming code as well -- we don't need to
+know about monads and do-blocks. metamonad provides
+link:try_.html[try_] blocks, which work the same way as
+link:do_try.html[do_try] blocks except that the body of the
++try_+ block is a nullary metafunction instead of a do-block. When a
+sub-expression of the +try_+ block evaluates to an exception the evaluation of
+the entire nullary metafunction stops and the result of the +try_+ block is the
+exception. It may be handled by the +catch_+ blocks or it is the result of the
+try-catch block.
+
+Here is an example of this:
+--------------------------------------
+using boost::mpl;
+
+struct e;
+
+template <class T>
+struct always_throw : throw_<int_<13> > {};
+
+typedef
+  try_<
+    plus<int_<1>, always_throw<int_<2> > >
+  >
+  ::catch_<catch_any, e>
+    ::apply<e>
+  ::type
+  this_is_13;
+--------------------------------------
+
+In this example one of the arguments of +plus+ throws a compile-time exception.
+Since +plus+ is used in an +try_+ block, +plus+ itself is never called
+with an exception as its argument. +try_+ delegates the exception to the
++catch_+ block which handels it.
+
+include::copyright[]
+
+link:index.html[[up]]
+
+
