@@ -170,13 +170,10 @@ int main()
   using std::cout;
   using std::endl;
   
-  to_stream<
-    apply_wrap1<calculator_parser, _S("13")>::type
-  >::run(cout) << endl;
-
-  to_stream<
-    apply_wrap1<calculator_parser, _S(" 1+ 2*4-6/2")>::type
-  >::run(cout) << endl;
+  cout
+    << apply_wrap1<calculator_parser, _S("13")>::type::value << endl
+    << apply_wrap1<calculator_parser, _S(" 1+ 2*4-6/2")>::type::value << endl
+    ;
 }
 
 
