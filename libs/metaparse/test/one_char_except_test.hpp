@@ -12,6 +12,8 @@
 
 #include <boost/preprocessor/cat.hpp>
 
+#include <boost/test/unit_test.hpp>
+
 BOOST_AUTO_TEST_CASE(BOOST_PP_CAT(TEST_NAME, _except))
 {
   using mpllibs::metatest::meta_require;

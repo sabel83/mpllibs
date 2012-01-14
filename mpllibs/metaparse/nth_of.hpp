@@ -230,7 +230,8 @@ namespace mpllibs
           static std::ostream& run(std::ostream& o) \
           { \
             o << "nth_of_c<" << K; \
-            if (n > 0) { \
+            if (n > 0) \
+            { \
               o << ", "; \
             } \
             mpllibs::metatest::to_stream_argument_list< \

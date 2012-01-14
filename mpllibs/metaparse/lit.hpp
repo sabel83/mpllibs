@@ -44,7 +44,7 @@ namespace mpllibs
         mpllibs::metaparse::errors::literal_expected<C>
       >
     {
-      struct to_stream_impl
+      struct to_stream
       {
         static std::ostream& run(std::ostream& o)
         {
