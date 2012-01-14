@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(test_alphanum)
 
   typedef list_c<char, '.', '.', ','> other_string;
   
-  typedef has_type<alphanum> test_has_type;
+  meta_require<has_type<alphanum> >(MPLLIBS_HERE, "test_has_type");
 
   meta_require<
     equal_to<get_result<apply_wrap2<alphanum, str_hello, start> >::type, char_h>

@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(test_always)
 
   typedef always<digit, int13> always_digit_13;
 
-  typedef has_type<always_digit_13> test_has_type;
+  meta_require<has_type<always_digit_13> >(MPLLIBS_HERE, "test_has_type");
 
   meta_require<
     equal_to<

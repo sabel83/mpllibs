@@ -10,9 +10,8 @@
 #include <mpllibs/metaparse/first_of.hpp>
 #include <mpllibs/metaparse/space.hpp>
 #include <mpllibs/metaparse/int.hpp>
-#include <mpllibs/metaparse/foldr.hpp>
+#include <mpllibs/metaparse/foldlp.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
-#include <mpllibs/metaparse/parser_monad.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/token.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
@@ -49,8 +48,7 @@ using mpllibs::metaparse::space;
 using mpllibs::metaparse::any;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::int_;
-using mpllibs::metaparse::foldr;
-using mpllibs::metaparse::parser_tag;
+using mpllibs::metaparse::foldlp;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
 using mpllibs::metaparse::token;
@@ -166,25 +164,19 @@ struct eval_mult
 };
 
 typedef
-  do_<parser_tag>::apply<
-    set<x, int_token>,
-    foldr<
-      sequence<one_of<mult_token, div_token>, int_token>,
-      get_result<x>,
-      eval_mult
-    >
-  >::type
+  foldlp<
+    sequence<one_of<mult_token, div_token>, int_token>,
+    int_token,
+    eval_mult
+  >
   prod_exp;
   
 typedef
-  do_<parser_tag>::apply<
-    set<x, prod_exp>,
-    foldr<
-      sequence<one_of<plus_token, minus_token>, prod_exp>,
-      get_result<x>,
-      eval_plus
-    >
-  >::type
+  foldlp<
+    sequence<one_of<plus_token, minus_token>, prod_exp>,
+    prod_exp,
+    eval_plus
+  >
   plus_exp;
 
 typedef last_of<any<space>, plus_exp> expression;

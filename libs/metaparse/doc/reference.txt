@@ -27,8 +27,10 @@ link:fail.html[fail] +
 link:first_of.html[first_of] +
 link:foldl.html[foldl] +
 link:foldl1.html[foldl1] +
+link:foldlp.html[foldlp] +
 link:foldr.html[foldr] +
 link:foldr1.html[foldr1] +
+link:foldrp.html[foldrp] +
 link:if.html[if] +
 link:int.html[int_] +
 link:iterate.html[iterate] +
