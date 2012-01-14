@@ -12,9 +12,6 @@ BIN_DIR = $(SOURCE_ROOT)/bin/example/metaparse/$(NAME)
 
 BIN = $(BIN_DIR)/$(NAME)
 
-LIBS += metatest
-LIB_DIRS += $(SOURCE_ROOT)/bin/libs/metatest
-
 run : $(BIN)
 	-$(BIN)
 
