@@ -78,14 +78,6 @@ typedef token<lit_c<'/'> > div_token;
  
 typedef token<int_> int_token;
 
-struct x;
-
-MPLLIBS_DEFINE_TAG(division_by_zero_tag)
-MPLLIBS_DEFINE_META_ATOM(division_by_zero_tag, division_by_zero)
-
-struct new_value;
-struct state;
-
 template <class T, char C>
 struct is_c : bool_<T::type::value == C>
 {
