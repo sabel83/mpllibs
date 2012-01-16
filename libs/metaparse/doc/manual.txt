@@ -12,20 +12,47 @@ What is a parser
 
 A parser is a template metafunction that takes the following arguments:
 
-* a postfix of the input text, a compile time string
+* a postfix of the input text, a +boost::mpl::string+
 * a structure describing at which position of the entire input text the postfix begins at
 
 The function parses a prefix of the input string.
 When the parsing is successful, it returns a structure with the tag
-+mpllibs::metaparse::accept_tag+. The following functions can be used to query
-this result:
++mpllibs::metaparse::accept_tag+. The following metafunctions can be used to
+query this result:
 
-* link:get_result.html[get_result]
-* link:get_remaining.html[get_remaining]
-* link:get_position.html[get_position]
+* link:get_result.html[+get_result+]
+* link:get_remaining.html[+get_remaining+]
+* link:get_position.html[+get_position+]
 
 When there is a parsing error, the parser returns a structure with the tag
 +mpllibs::metaparse::fail_tag+.
+
+The input of the parsers
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parsers take a +boost::mpl::string+ as input, which represents a string for
+template metaprograms. For example the string +"Hello World!"+ can be defined
+the following way:
+
+--------------------------------------
+boost::mpl::string<'Hell','o Wo','rld!'>
+--------------------------------------
+
+This syntax makes the input of the parsers difficult to read. Metaparse works
+with compilers using C++98, but the input of the parsers has to be defined the
+way it is described above.
+
+Based on +constexpr+, a feature provided by C\+\+11, Metaparse provides a macro,
+link:MPLLIBS_STRING.html[+MPLLIBS_STRING+] for defining strings:
+
+--------------------------------------
+MPLLIBS_STRING("Hello World!")
+--------------------------------------
+
+This defines a +boost::mpl::string+ as well, however, it is easier to read.
+The maximum length of the string that can be defined this way is limited,
+however, this limit is configurable. It is specified by the 
++MPLLIBS_STRING_MAX_LENGTH+ macro.
 
 Source positions
 ~~~~~~~~~~~~~~~~
@@ -33,8 +60,8 @@ Source positions
 A source position is described using a compile-time data structure. The
 following functions can be used to query it:
 
-* link:get_col.html[get_col]
-* link:get_line.html[get_line]
+* link:get_col.html[+get_col+]
+* link:get_line.html[+get_line+]
 
 The beginning of the input is link:start.html[+start+] which requires
 +<mpllibs/metaparse/source_position.hpp>+ to be included.
@@ -45,8 +72,8 @@ Error handling
 An error is described using a compile-time data structure. It contains
 information about the source position where the error was detected and some
 description about the error. The description is a compile-time data structure
-without any restriction. link:debug_parsing_error.html[debug_parsing_error] can
-be used to display the error message.
+without any restriction. link:debug_parsing_error.html[+debug_parsing_error+]
+can be used to display the error message.
 
 Some examples of simple parsers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,6 +135,26 @@ parser fails. Since this is a common pattern, the parser library contains a
 parser combinator for this, +mpllibs::metaparse::any<Parser>+. It uses +Parser+
 repeatedly as long as +Parser+ succeeds. The result of parsing is a sequence,
 the results we got by repeatedly applying +Parser+.
+
+Parsing based on +constexpr+
+----------------------------
+
+Metaparse is based on template metaprogramming, however, C\+\+11 provides
++constexpr+, which can be used for parsing at compile-time as well. While
+implementing parsers based on +constexpr+ is easier for a C++ developer, since
+they follow the regular syntax of the language, the result of parsing has to be
+a +constexpr+ value. Parsers based on template metaprogramming can build types
+as the result of parsing. These types may be boxed +constexpr+ values but can be
+metafunction classes, classes with static functions which can be called at
+runtime, etc.
+
+When a parser built with Metaparse needs a sub-parser for processing a part of
+the input text and generating a +constexpr+ value as the result of such parsing,
+one can implement the sub-parser based on +constexpr+ functions. Metaparse
+can be integrated with them and lift their results into C++ template
+metaprogramming. An example demonstrating this feature can be found among the
+examples (+constexpr_parser+). This capability makes it possible to integrate
+Metaparse with parsing libraries based on +constexpr+.
 
 Monadic parsing
 ---------------
