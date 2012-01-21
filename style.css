@@ -9,6 +9,8 @@ body
 {
   font-family: Helvetica, Tahoma, Arial;
   font-size: 18px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 a:link, a:visited, a:active

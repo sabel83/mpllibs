@@ -13,7 +13,8 @@ What is a parser
 A parser is a template metafunction that takes the following arguments:
 
 * a postfix of the input text, a +boost::mpl::string+
-* a structure describing at which position of the entire input text the postfix begins at
+* a structure describing at which position of the entire input text the postfix
+  begins at
 
 The function parses a prefix of the input string.
 When the parsing is successful, it returns a structure with the tag
@@ -78,9 +79,11 @@ can be used to display the error message.
 Some examples of simple parsers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* A parser that parses nothing and always succeeds is +mpllibs::metaparse::return+.
-* A parser that always fails is +mpllibs::metaparse::fail+.
-* A parser that parses one character and returns the parsed character as the result is +mpllibs::metaparse::one_char+.
+* A parser that parses nothing and always succeeds is
+  link:return.html[+return_+].
+* A parser that always fails is link:fail.html[+fail+].
+* A parser that parses one character and returns the parsed character as the
+  result is link:one_char.html[+one_char+].
 
 Combining parsers
 -----------------
@@ -89,10 +92,11 @@ Complex parsers can be built by combining simple parsers. The parser library
 contains a number of parser combinators that build new parsers from already
 existing ones.
 
-For example +mpllibs::metaparse::accept_when<Parser, Predicate, RejectErrorMsg>+
-is a parser. It uses +Parser+ to parse the input. When +Parser+ rejects the
-input, the combinator forwards the error +Parser+ emitted. When +Parser+
-is successful, the combinator validates the result using +Predicate+. If the
+For example
+link:accept_when.html[+accept_when+]+<Parser, Predicate, RejectErrorMsg>+ is a
+parser. It uses +Parser+ to parse the input. When +Parser+ rejects the input,
+the combinator returns the error +Parser+ failed with. When +Parser+ is
+successful, the combinator validates the result using +Predicate+. If the
 predicate returns true, the combinator accepts the input, otherwise it generates
 an error with the message +RejectErrorMsg+.
 
@@ -115,15 +119,16 @@ Sequence
 
 The result of a successful parsing is some value and the remaining string that
 was not parsed. The remaining string can be processed by another parser. The
-parser library provides a parser combinator, +mpllibs::metaparse::sequence+,
+parser library provides a parser combinator, link:sequence.html[+sequence+],
 that takes a number of parsers as arguments and builds a new parser from them
 that:
 
 * Parses the input using the first parser
 * If parsing succeeds, it parses the remaining string with the second parser
-* It continues applying the parsers in order as long as all of them succeed
-* If all of them succeded, it returns the list of results
-* If any of the parsers fail, the combinator fails as well and returns the error
+* It continues applying the parsers in order as long as they succeed
+* If all of them succeed, it returns the list of results
+* If any of the parsers fails, the combinator fails as well and returns the
+  error the first failing parser returned with
 
 Repetition
 ~~~~~~~~~~
@@ -132,7 +137,7 @@ We have parsers for letters, we should be able to build parsers for words that
 are sequences of letters. Words have no fixed length, the end of the word is the
 first character that is not a letter, thus the first character where the letter
 parser fails. Since this is a common pattern, the parser library contains a
-parser combinator for this, +mpllibs::metaparse::any<Parser>+. It uses +Parser+
+parser combinator for this, link:any.html[+any+]+<Parser>+. It uses +Parser+
 repeatedly as long as +Parser+ succeeds. The result of parsing is a sequence,
 the results we got by repeatedly applying +Parser+.
 
@@ -142,15 +147,15 @@ Parsing based on +constexpr+
 Metaparse is based on template metaprogramming, however, C\+\+11 provides
 +constexpr+, which can be used for parsing at compile-time as well. While
 implementing parsers based on +constexpr+ is easier for a C++ developer, since
-they follow the regular syntax of the language, the result of parsing has to be
-a +constexpr+ value. Parsers based on template metaprogramming can build types
-as the result of parsing. These types may be boxed +constexpr+ values but can be
-metafunction classes, classes with static functions which can be called at
-runtime, etc.
+its syntax resembles the regular syntax of the language, the result of parsing
+has to be a +constexpr+ value. Parsers based on template metaprogramming can
+build types as the result of parsing. These types may be boxed +constexpr+
+values but can be metafunction classes, classes with static functions which can
+be called at runtime, etc.
 
 When a parser built with Metaparse needs a sub-parser for processing a part of
-the input text and generating a +constexpr+ value as the result of such parsing,
-one can implement the sub-parser based on +constexpr+ functions. Metaparse
+the input text and generating a +constexpr+ value as the result of parsing, one
+can implement the sub-parser based on +constexpr+ functions. Metaparse
 can be integrated with them and lift their results into C++ template
 metaprogramming. An example demonstrating this feature can be found among the
 examples (+constexpr_parser+). This capability makes it possible to integrate
@@ -159,18 +164,19 @@ Metaparse with parsing libraries based on +constexpr+.
 Monadic parsing
 ---------------
 
-+metaparse+ provides a parsing monad implementation based on +metamonad+'s
-monadic framework. The overloads of +bind+ and +return_+ can be loaded by
-including +mpllibs/metaparse/parser_monad.hpp+.
++metaparse+ provides a parsing monad implementation based on Metamonad's monadic
+framework. The overloads of +bind+ and +return_+ can be loaded by including
++mpllibs/metaparse/parser_monad.hpp+.
 
-Monadic values are parsers. The monadic +return_+ operation constructs a 
-+link:return.html[return_]+ parser. The arguments of the monadic +bind+ are a
-parser +P+ and a function +F+, taking a value and buliding a parser. +bind+
-constructs the following parser:
+Monadic values are parsers. The monadic +return_+ operation constructs a
++return_+ parser. The arguments of the monadic +bind+ are a parser +P+ and a
+function +F+, taking a value and buliding a parser. +bind+ constructs the
+following parser:
 
 * It parses the input using +P+.
 * When +P+ fails, the error is propagated.
-* When +P+ succeeds, the result is passed to +F+ and the remaining input is parsed using the parser returned by +F+.
+* When +P+ succeeds, the result is passed to +F+ and the remaining input is
+  parsed using the parser returned by +F+.
 
 include::copyright[]
 
