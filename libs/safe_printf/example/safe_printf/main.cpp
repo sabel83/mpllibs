@@ -8,6 +8,25 @@
 
 namespace safe = mpllibs::safe_printf;
 
+#ifdef BOOST_NO_CONSTEXPR
+
+int main()
+{
+  using safe::printf;
+  using safe::sprintf;
+  using safe::fprintf;
+  using boost::mpl::string;
+  
+  printf<string<'John',' %d,',' %s ','%d\n'> >(11, "Joe", 13);
+
+  char s[128];
+  sprintf<string<'%d /',' %d ','= %.','2f'> >(s, 13, 2, 6.5);
+  
+  fprintf<string<'Usin','g sp','rint','f: %','s\n'> >(stderr, s);
+}
+
+#else
+
 int main()
 {
   using safe::printf;
@@ -21,4 +40,6 @@ int main()
   
   fprintf<MPLLIBS_STRING("Using sprintf: %s\n")>(stderr, s);
 }
+
+#endif
 

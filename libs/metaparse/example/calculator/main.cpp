@@ -157,6 +157,20 @@ typedef build_parser<entire_input<expression> > calculator_parser;
 #endif
 #define _S MPLLIBS_STRING
 
+#ifdef BOOST_NO_CONSTEXPR
+int main()
+{
+  using std::cout;
+  using std::endl;
+  using boost::mpl::string;
+  
+  cout
+    << apply_wrap1<calculator_parser, string<'13'> >::type::value << endl
+    << apply_wrap1<calculator_parser, string<' 1+ ','2*4-','6/2'> >::type::value
+    << endl
+    ;
+}
+#else
 int main()
 {
   using std::cout;
@@ -167,5 +181,6 @@ int main()
     << apply_wrap1<calculator_parser, _S(" 1+ 2*4-6/2")>::type::value << endl
     ;
 }
+#endif
 
 

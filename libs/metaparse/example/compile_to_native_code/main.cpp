@@ -228,7 +228,7 @@ struct arg
 };
 
 typedef
-  one_of<transform<int_token, build_value>, always<arg_token, arg>>
+  one_of<transform<int_token, build_value>, always<arg_token, arg> >
   value_exp;
 
 typedef
@@ -251,6 +251,21 @@ typedef last_of<any<space>, plus_exp> expression;
 
 typedef build_parser<entire_input<expression> > function_parser;
 
+#ifdef BOOST_NO_CONSTEXPR
+
+template <class Exp>
+struct lambda : apply_wrap1<function_parser, Exp> {};
+
+using boost::mpl::string;
+
+lambda<string<'13'> >::type f1;
+lambda<string<'2 + ','3'> >::type f2;
+lambda<string<'2 * ','2'> >::type f3;
+lambda<string<' 1+ ','2*4-','6/2'> >::type f4;
+lambda<string<'2 * ','_'> >::type f5;
+
+#else
+
 #ifdef LAMBDA
   #error LAMBDA already defined
 #endif
@@ -261,6 +276,8 @@ LAMBDA(2 + 3) f2;
 LAMBDA(2 * 2) f3;
 LAMBDA( 1+ 2*4-6/2) f4;
 LAMBDA(2 * _) f5;
+
+#endif
 
 int main()
 {

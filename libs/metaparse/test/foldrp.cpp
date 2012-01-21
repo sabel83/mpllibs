@@ -49,32 +49,23 @@ BOOST_AUTO_TEST_CASE(test_foldrp)
   meta_require<has_type<p> >(MPLLIBS_HERE, "test_has_type");
 
   meta_require<
-    equal_to<
-      get_result<apply_wrap2<p, MPLLIBS_STRING("b"), start> >::type,
-      char_<'b'>
-    >
+    equal_to<get_result<apply_wrap2<p, str_b, start> >::type, char_<'b'> >
   >(MPLLIBS_HERE, "test_b");
   
   meta_require<
-    equal_to<
-      get_result<apply_wrap2<p, MPLLIBS_STRING("ab"), start> >::type,
-      char_<'b'>
-    >
+    equal_to<get_result<apply_wrap2<p, str_ab, start> >::type, char_<'b'> >
   >(MPLLIBS_HERE, "test_ab");
 
   meta_require<
-    equal_to<
-      get_result<apply_wrap2<p, MPLLIBS_STRING("aaaab"), start> >::type,
-      char_<'b'>
-    >
+    equal_to<get_result<apply_wrap2<p, str_aaaab, start> >::type, char_<'b'> >
   >(MPLLIBS_HERE, "test_aaaab");
 
   meta_require<
-    is_error<apply_wrap2<p, MPLLIBS_STRING("c"), start> >
+    is_error<apply_wrap2<p, str_c, start> >
   >(MPLLIBS_HERE, "test_c");
 
   meta_require<
-    is_error<apply_wrap2<p, MPLLIBS_STRING("ac"), start> >
+    is_error<apply_wrap2<p, str_ac, start> >
   >(MPLLIBS_HERE, "test_ac");
 }
 

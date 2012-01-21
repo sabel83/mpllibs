@@ -223,7 +223,7 @@ struct arg
 };
 
 typedef
-  one_of<transform<int_token, build_value>, always<arg_token, arg>>
+  one_of<transform<int_token, build_value>, always<arg_token, arg> >
   value_exp;
 
 typedef
@@ -245,6 +245,36 @@ typedef
 typedef last_of<any<space>, plus_exp> expression;
 
 typedef build_parser<entire_input<expression> > metafunction_parser;
+
+#ifdef BOOST_NO_CONSTEXPR
+
+template <class Exp>
+struct meta_lambda : apply_wrap1<metafunction_parser, Exp> {};
+
+int main()
+{
+  using std::cout;
+  using std::endl;
+  using boost::mpl::string;
+
+  typedef meta_lambda<string<'13'> >::type metafunction_class_1;
+  typedef meta_lambda<string<'2 + ','3'> >::type metafunction_class_2;
+  typedef meta_lambda<string<'2 * ','2'> >::type metafunction_class_3;
+  typedef meta_lambda<string<' 1+ ','2*4-','6/2'> >::type metafunction_class_4;
+  typedef meta_lambda<string<'2 * ','_'> >::type metafunction_class_5;
+
+  typedef boost::mpl::int_<11> int11;
+
+  cout
+    << apply_wrap1<metafunction_class_1, int11>::type::value << endl
+    << apply_wrap1<metafunction_class_2, int11>::type::value << endl
+    << apply_wrap1<metafunction_class_3, int11>::type::value << endl
+    << apply_wrap1<metafunction_class_4, int11>::type::value << endl
+    << apply_wrap1<metafunction_class_5, int11>::type::value << endl
+    ;
+}
+
+#else
 
 #ifdef META_LAMBDA
   #error META_LAMBDA already defined
@@ -274,4 +304,5 @@ int main()
     ;
 }
 
+#endif
 

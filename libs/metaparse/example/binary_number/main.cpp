@@ -62,6 +62,20 @@ struct binary : binary_parser::apply<S>::type {};
 #endif
 #define _S MPLLIBS_STRING
 
+#ifdef BOOST_NO_CONSTEXPR
+
+int main()
+{
+  using std::cout;
+  using std::endl;
+  using boost::mpl::string;
+  
+  cout
+    << binary<string<'100'> >::value << endl
+    << binary<string<'1011'> >::value << endl
+    << binary<string<'1'> >::value << endl;
+}
+#else
 int main()
 {
   using std::cout;
@@ -72,5 +86,6 @@ int main()
     << binary<_S("1011")>::value << endl
     << binary<_S("1")>::value << endl;
 }
+#endif
 
 

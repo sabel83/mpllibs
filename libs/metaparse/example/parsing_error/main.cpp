@@ -30,7 +30,15 @@ typedef sequence<any<lit_c<'a'> >, lit_c<'b'> > s;
 
 typedef build_parser<s> test_parser;
 
+#ifdef BOOST_NO_CONSTEXPR
+
+typedef boost::mpl::string<'aaac'> invalid_input;
+
+#else
+
 typedef MPLLIBS_STRING("aaac") invalid_input;
+
+#endif
 
 debug_parsing_error<test_parser, invalid_input> debug;
 

@@ -12,6 +12,8 @@
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
+#ifndef BOOST_NO_CONSTEXPR
+
 BOOST_AUTO_TEST_CASE(test_string)
 {
   using mpllibs::metatest::meta_require;
@@ -26,4 +28,6 @@ BOOST_AUTO_TEST_CASE(test_string)
     equal<MPLLIBS_STRING("hello"), boost::mpl::string<'h','e','l','l','o'> >
   >(MPLLIBS_HERE, "test_string_creation");
 }
+
+#endif
 

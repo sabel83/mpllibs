@@ -186,6 +186,33 @@ typedef build_parser<entire_input<expression> > calculator_parser;
 #endif
 #define _S MPLLIBS_STRING
 
+#ifdef BOOST_NO_CONSTEXPR
+
+int main()
+{
+  using std::cout;
+  using std::endl;
+  using boost::mpl::string;
+  
+  to_stream<
+    apply_wrap1<calculator_parser, string<'13'> >::type
+  >::run(cout) << endl;
+
+  to_stream<
+    apply_wrap1<calculator_parser, string<' 1+ ','2*4-','6/2'> >::type
+  >::run(cout) << endl;
+
+  to_stream<
+    apply_wrap1<calculator_parser, string<'11/0'> >::type
+  >::run(cout) << endl;
+
+  to_stream<
+    apply_wrap1<calculator_parser, string<'19 +',' 83/','0 + ','11'> >::type
+  >::run(cout) << endl;
+}
+
+#else
+
 int main()
 {
   using std::cout;
@@ -208,4 +235,5 @@ int main()
   >::run(cout) << endl;
 }
 
+#endif
 

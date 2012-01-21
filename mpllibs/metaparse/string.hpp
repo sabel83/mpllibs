@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/config.hpp>
+
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/char.hpp>
@@ -18,6 +20,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
+#ifndef BOOST_NO_CONSTEXPR
     namespace impl
     {
       template <class S, char C, bool EndOfString>
@@ -32,39 +35,55 @@ namespace mpllibs
         return n >= Len ? 0 : s[n];
       }
     }
+#endif
   }
 }
 
-#ifdef MPLLIBS_STRING_PRE
-  #error MPLLIBS_STRING_PRE already defined
-#endif
-#define MPLLIBS_STRING_PRE(z, n, unused) \
-  mpllibs::metaparse::impl::append_string< \
+#ifdef BOOST_NO_CONSTEXPR
 
-#ifdef MPLLIBS_STRING_POST
-  #error MPLLIBS_STRING_POST already defined
-#endif
-#define MPLLIBS_STRING_POST(z, n, str) \
-    , \
-    mpllibs::metaparse::impl::array_at<sizeof(str)>(str, n), \
-    (n >= sizeof(str) - 1) \
-  >::type
+  // Include it only when it is needed
+  #include <boost/static_assert.hpp>
 
-#ifdef MPLLIBS_STRING
-  #error MPLLIBS_STRING already defined
+  #ifdef MPLLIBS_STRING
+    #error MPLLIBS_STRING already defined
+  #endif
+  #define MPLLIBS_STRING(s) \
+    BOOST_STATIC_ASSERT_MSG(false, "MPLLIBS_STRING is not supported")
+
+#else
+
+  #ifdef MPLLIBS_STRING_PRE
+    #error MPLLIBS_STRING_PRE already defined
+  #endif
+  #define MPLLIBS_STRING_PRE(z, n, unused) \
+    mpllibs::metaparse::impl::append_string< \
+  
+  #ifdef MPLLIBS_STRING_POST
+    #error MPLLIBS_STRING_POST already defined
+  #endif
+  #define MPLLIBS_STRING_POST(z, n, str) \
+      , \
+      mpllibs::metaparse::impl::array_at<sizeof(str)>(str, n), \
+      (n >= sizeof(str) - 1) \
+    >::type
+  
+  #ifdef MPLLIBS_STRING
+    #error MPLLIBS_STRING already defined
+  #endif
+  #define MPLLIBS_STRING(s) \
+    BOOST_PP_REPEAT( \
+      MPLLIBS_STRING_MAX_LENGTH, \
+      MPLLIBS_STRING_PRE, \
+      ~\
+    ) \
+      boost::mpl::string<> \
+    BOOST_PP_REPEAT( \
+      MPLLIBS_STRING_MAX_LENGTH, \
+      MPLLIBS_STRING_POST, \
+      s \
+    )
+
 #endif
-#define MPLLIBS_STRING(s) \
-  BOOST_PP_REPEAT( \
-    MPLLIBS_STRING_MAX_LENGTH, \
-    MPLLIBS_STRING_PRE, \
-    ~\
-  ) \
-    boost::mpl::string<> \
-  BOOST_PP_REPEAT( \
-    MPLLIBS_STRING_MAX_LENGTH, \
-    MPLLIBS_STRING_POST, \
-    s \
-  )
 
 #endif
 

@@ -27,6 +27,17 @@
 #include <iostream>
 #include <string>
 
+#ifdef BOOST_NO_CONSTEXPR
+
+int main()
+{
+  std::cout
+    << "This example focuses on constexpr, which is not supported"
+    << std::endl;
+}
+
+#else
+
 using mpllibs::metaparse::sequence;
 using mpllibs::metaparse::lit_c;
 using mpllibs::metaparse::build_parser;
@@ -303,4 +314,5 @@ int main()
     ;
 }
 
+#endif
 
