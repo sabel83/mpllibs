@@ -41,47 +41,55 @@ using boost::xpressive::as_xpr;
  * Results of parsing
  */
 
-struct r_epsilon
+template <class T>
+struct has_value
 {
-  typedef r_epsilon type;
+  typedef T type;
   static const sregex value;
 };
 
-const sregex r_epsilon::value = as_xpr("");
+template <class T>
+const sregex has_value<T>::value = T::run();
 
-struct r_any_char
+struct r_epsilon : has_value<r_epsilon>
 {
-  typedef r_any_char type;
-  static const sregex value;
+  static sregex run()
+  {
+    return as_xpr("");
+  }
 };
 
-const sregex r_any_char::value = boost::xpressive::_;
+struct r_any_char : has_value<r_any_char>
+{
+  static sregex run()
+  {
+    return boost::xpressive::_;
+  }
+};
 
 struct r_char_lit
 {
   template <class C>
-  struct apply
+  struct apply : has_value<apply<C> >
   {
-    typedef apply type;
-    static const sregex value;
+    static sregex run()
+    {
+      return as_xpr(C::type::value);
+    }
   };
 };
-
-template <class C>
-const sregex r_char_lit::apply<C>::value = as_xpr(C::type::value);
 
 struct r_append
 {
   template <class A, class B>
-  struct apply
+  struct apply : has_value<apply<A, B> >
   {
-    typedef apply type;
-    static const sregex value;
+    static sregex run()
+    {
+      return B::type::run() >> A::type::run();
+    }
   };
 };
-
-template <class A, class B>
-const sregex r_append::apply<A, B>::value = B::type::value >> A::type::value;
 
 /*
  * The grammar
