@@ -19,7 +19,7 @@ Description
 -----------
 
 Macro for defining +boost::mpl::string+ values. +s+ is expected to be a string
-literal. The macro requires C\+\+11.
+literal. The macro requires C++11.
 
 The maximal length of the string is limited. This limit is defined by the
 +MPLLIBS_STRING_MAX_LENGTH+ macro.
