@@ -5,7 +5,7 @@
 
 #define BOOST_TEST_DYN_LINK
 
-#include <mpllibs/metaparse/util/unless_error.hpp>
+#include <mpllibs/metaparse/unless_error.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
 
 #include "common.hpp"
@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(test_util_unless_error)
   
   using mpllibs::metaparse::is_error;
   
-  using mpllibs::metaparse::util::unless_error;
+  using mpllibs::metaparse::unless_error;
   
   using boost::mpl::equal_to;
 

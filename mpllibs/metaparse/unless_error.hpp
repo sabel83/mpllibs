@@ -17,27 +17,24 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    namespace util
+    template <class T, class NotErrorCase>
+    struct unless_error :
+      boost::mpl::eval_if<
+        typename mpllibs::metaparse::is_error<T>::type,
+        T,
+        NotErrorCase
+      >
     {
-      template <class T, class NotErrorCase>
-      struct unless_error :
-        boost::mpl::eval_if<
-          typename mpllibs::metaparse::is_error<T>::type,
-          T,
-          NotErrorCase
-        >
+      struct to_stream
       {
-        struct to_stream
+        static std::ostream& run(std::ostream& o)
         {
-          static std::ostream& run(std::ostream& o)
-          {
-            o << "unless_error<";
-            mpllibs::metatest::to_stream_argument_list<T, NotErrorCase>::run(o);
-            return o << ">";
-          }
-        };
+          o << "unless_error<";
+          mpllibs::metatest::to_stream_argument_list<T, NotErrorCase>::run(o);
+          return o << ">";
+        }
       };
-    }
+    };
   }
 }
 

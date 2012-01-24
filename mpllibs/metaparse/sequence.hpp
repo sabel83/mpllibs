@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/unless_error.hpp>
+#include <mpllibs/metaparse/unless_error.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/get_remaining.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
@@ -59,7 +59,7 @@ namespace mpllibs
       public:
         template <class State, class Parser>
         struct apply :
-          mpllibs::metaparse::util::unless_error<
+          mpllibs::metaparse::unless_error<
             State,
             apply_unchecked<
               mpllibs::metaparse::get_result<State>,

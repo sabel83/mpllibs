@@ -10,8 +10,7 @@
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/get_remaining.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
-
-#include <mpllibs/metaparse/util/unless_error.hpp>
+#include <mpllibs/metaparse/unless_error.hpp>
 
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 
@@ -37,7 +36,7 @@ namespace mpllibs
       
       template <class S, class Pos>
       struct apply :
-        mpllibs::metaparse::util::unless_error<
+        mpllibs::metaparse::unless_error<
           boost::mpl::apply<P, S, Pos>,
           boost::mpl::apply_wrap2<
             return_<

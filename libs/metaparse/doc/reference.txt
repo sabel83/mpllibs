@@ -77,6 +77,7 @@ Metafunctions and metafunction classes
 --------------------------------------
 
 link:build_parser.html[build_parser] +
+link:unless_error.html[unless_error] +
 
 Macros
 ------
@@ -88,8 +89,8 @@ Utilities
 
 link:debug_parsing_error.html[debug_parsing_error] +
 
-+metaparse+ uses a number of small extensions to
-http://www.boost.org/doc/libs/1_43_0/libs/mpl/doc/index.html[boost::mpl].
+Metaparse uses a number of general purpose metafunctions and metafunction
+classes.
 
 link:compose.html[compose] + 
 link:cons.html[cons] + 
@@ -103,7 +104,6 @@ link:is_lcase_letter.html[is_lcase_letter] +
 link:is_letter.html[is_letter] + 
 link:is_ucase_letter.html[is_ucase_letter] + 
 link:is_whitespace.html[is_whitespace] + 
-link:unless_error.html[unless_error] + 
 
 include::copyright[]
 
