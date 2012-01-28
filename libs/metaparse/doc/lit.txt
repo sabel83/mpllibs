@@ -46,7 +46,7 @@ lit<c>
 
 mpllibs::metaparse::accept_when<
   mpllibs::metaparse::one_char,
-  boost::mpl::equal_to<boost::mpl::_1, c>,
+  boost::mpl::lambda<boost::mpl::equal_to<boost::mpl::_1, c> >::type,
   // unspecified
 >
 --------------------------------------

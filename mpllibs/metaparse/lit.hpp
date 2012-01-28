@@ -41,7 +41,9 @@ namespace mpllibs
     struct lit :
       accept_when<
         one_char,
-        boost::mpl::equal_to<boost::mpl::_1, C>,
+        typename boost::mpl::lambda<
+          boost::mpl::equal_to<boost::mpl::_1, C>
+        >::type,
         mpllibs::metaparse::errors::literal_expected<C>
       >
     {
