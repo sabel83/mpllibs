@@ -10,9 +10,10 @@
 #include <mpllibs/metaparse/one_char.hpp>
 #include <mpllibs/metaparse/error.hpp>
 
-#include <mpllibs/metaparse/util/is_char.hpp>
-
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
+
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/lambda.hpp>
 
 namespace mpllibs
 {
@@ -40,7 +41,7 @@ namespace mpllibs
     struct lit :
       accept_when<
         one_char,
-        mpllibs::metaparse::util::is_char<C>,
+        boost::mpl::equal_to<boost::mpl::_1, C>,
         mpllibs::metaparse::errors::literal_expected<C>
       >
     {
