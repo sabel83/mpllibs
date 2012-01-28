@@ -96,7 +96,6 @@ link:compose.html[compose] +
 link:curry.html[curry] + 
 link:digit_to_int.html[digit_to_int] + 
 link:in_range.html[in_range] + 
-link:is_char.html[is_char] + 
 link:is_digit.html[is_digit] + 
 link:is_lcase_letter.html[is_lcase_letter] + 
 link:is_letter.html[is_letter] + 
