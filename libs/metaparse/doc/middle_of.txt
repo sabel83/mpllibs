@@ -26,9 +26,8 @@ struct middle_of
 Description
 -----------
 
-Parser combinator applying three parsers after each other. It accepts an input
-when all parsers accept it. The result of parsing is the result of the second
-parser.
+Parser combinator applying three parsers in sequence. It accepts an input when
+all parsers accept it. The result of parsing is the result of the second parser.
 
 Header
 ------

@@ -26,7 +26,7 @@ Description
 -----------
 
 Parser accepting any number of whitespace characters. It requires at least one
-to be present. The result of parsing is undefined.
+to be present.
 
 Header
 ------

@@ -26,10 +26,10 @@ struct foldr
 Description
 -----------
 
-Parser combinator taking a parser argument. It applies the parser on the input
-string repeatedly as long as the parser accepts the input. The result of parsing
-is equivalent to +boost::reverse_fold<Sequence, State, BackwardOp>+, where
-+Sequence+ is the sequence of the results of the applications of +P+.
+Parser combinator taking a parser as argument. It applies the parser on the
+input string repeatedly as long as the parser accepts the input. The result of
+parsing is equivalent to +boost::reverse_fold<Sequence, State, BackwardOp>+,
+where +Sequence+ is the sequence of the results of the applications of +P+.
 
 When the parser rejects the input for the first time, +foldr+ still accepts
 the input and the result of parsing is +State+.
@@ -48,13 +48,16 @@ For any +p+ parser, +t+ class, +f+ metafunction class taking two arguments,
 +s+ compile-time string and +pos+ source position
 
 --------------------------------------
-mpllibs::metaparse::get_result<
-  boost::mpl::apply<foldr<p, t, f>, s, pos>
->::type
+boost::mpl::apply<foldr<p, t, f>, s, pos>
 --------------------------------------
 
-is equivalent to +t+ when +boost::mpl::apply<p, s, pos>+
-returns an error. It is
+is equivalent to
+
+--------------------------------------
+boost::mpl::apply<mpllibs::metaparse::return_<t>, s, pos>
+--------------------------------------
+
+when +boost::mpl::apply<p, s, pos>+ returns an error. It is
 
 --------------------------------------
 boost::mpl::apply<

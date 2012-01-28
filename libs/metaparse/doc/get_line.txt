@@ -39,6 +39,7 @@ wrapped character the following are equivalent
 
 --------------------------------------
 get_line<mpllibs::metaparse::source_position<l, c, ch> >::type
+
 l::type
 --------------------------------------
 

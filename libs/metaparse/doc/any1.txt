@@ -26,9 +26,10 @@ struct any1
 Description
 -----------
 
-Parser combinator taking a parser argument. It applies the parser on the input
-string repeatedly as long as the parser accepts the input. The result of parsing
-is a sequence of the results of the individual applications of the parser.
+Parser combinator taking a parser as argument. It applies the parser on the
+input string repeatedly as long as the parser accepts the input. The result of
+parsing is a sequence of the results of the individual applications of the
+parser.
 
 When the parser rejects the input for the first time, +any1+ rejects it as well.
 At least one successful application of +P+ is required for +any1+ to accept the
@@ -44,27 +45,16 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +s+ compile-time string and +pos+ source position
+For any +p+ parser the following are equivalent:
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<any1<p>, s, pos> >::type
---------------------------------------
+any1<p>
 
-is equivalent to the following, when +boost::mpl::apply<p, s, pos>+ doesn't
-return an error:
-
---------------------------------------
-boost::mpl::push_front<
-  boost::mpl::apply<
-    any<p>,
-    mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
-    mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
-  >::type,
-  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
+mpllibs::metaparse::last_of<
+  mpllibs::metaparse::look_ahead<p>,
+  mpllibs::metaparse::any<p>
 >
 --------------------------------------
-
-It forwards the error +boost::mpl::apply<p, s, pos>+ returned otherwise.
 
 Example
 -------

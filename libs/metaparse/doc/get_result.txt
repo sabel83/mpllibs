@@ -31,16 +31,6 @@ Header
 #include <mpllibs/metaparse/get_result.hpp>
 --------------------------------------
 
-Expression semantics
---------------------
-
-For any +a+, +b+ and +c+ classes, the following are equivalent
-
---------------------------------------
-get_position<mpllibs::metaparse::accept<a, b, c> >::type
-a::type
---------------------------------------
-
 include::copyright[]
 
 link:reference.html[[up]]

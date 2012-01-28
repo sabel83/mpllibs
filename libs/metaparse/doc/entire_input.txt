@@ -27,9 +27,8 @@ Description
 -----------
 
 Parser taking a parser, +P+ as argument, parsing the input using it and checking
-if +P+ consumes the entire input. If either +P+ rejects the input or doesn't
-consume the entire input, +entire_input+ fails. Otherwise it returns the result
-of +P+.
+if +P+ consumes the entire input. If +P+ fails or doesn't consume the entire
+input, +entire_input+ fails. Otherwise it returns the result of +P+.
 
 Header
 ------
@@ -41,15 +40,18 @@ Header
 Expression semantics
 --------------------
 
-For any +P+ parser the following are equivalent
+For any +p+ parser the following are equivalent
 
 --------------------------------------
-entire_input<P>
+entire_input<p>
 
-mpllibs::metaparser::first_of<P, mpllibs::metaparser::empty<T> >
+mpllibs::metaparser::first_of<
+  p,
+  mpllibs::metaparser::empty<
+    // unspecified
+  >
+>
 --------------------------------------
-
-for some (unspecified) +T+ type.
 
 Example
 -------

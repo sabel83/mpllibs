@@ -26,11 +26,9 @@ struct foldrp
 Description
 -----------
 
-The same as link:foldr.html[foldr], but instead of the initial state it uses a
-parser, +StateP+. After applying +P+ repeatedly, it applies +StateP+ as well.
-If it fails, +foldrp+ fails. If it succeeds, +foldrp+ works as +foldr+ taking
-the result of this last parser as the initial state for calculating the folded
-value.
+The same as +link:foldr.html[foldr]+, but before folding it applies a parser,
++StateP+ on the input. If it fails, +foldrp+ fails. If it succeeds, +foldrp+
+works as +foldr+ taking the result of +StateP+ as the initial state.
 
 Header
 ------

@@ -39,20 +39,13 @@ Header
 Expression semantics
 --------------------
 
-For any +c+ character, +s+ compile-time string and +pos+ source position
+For any +c+ character the following are equivalent:
 
 --------------------------------------
-boost::mpl::apply<lit<c>, s, pos>
---------------------------------------
+lit_c<c>
 
-is equivalent to
-
+lit<boost::mpl::char_<c> >
 --------------------------------------
-mpllibs::metaparse::one_char<s, pos>
---------------------------------------
-
-when +s+ is not empty and the first character of +s+ is +c+.
-It is an error otherwise.
 
 Example
 -------

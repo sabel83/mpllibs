@@ -25,7 +25,8 @@ struct digit_to_int
 Description
 -----------
 
-Converts a character containing a value in the range +'0'..'9'+ to an integer.
+Converts a boxed character containing a value in the range +[\'0\'..\'9']+ to an
+integer.
 
 It evaluates its argument lazily.
 

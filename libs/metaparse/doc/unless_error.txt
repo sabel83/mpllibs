@@ -35,28 +35,12 @@ Header
 Expression semantics
 --------------------
 
-For any +e+ parsing error and +c+ nullary metafunction
+For any +t+ and +c+ classes the following are equivalent:
 
 --------------------------------------
-unless_error<e, c>::type
---------------------------------------
+unless_error<t, c>
 
-is equivalent to
-
---------------------------------------
-e::type
---------------------------------------
-
-For any +t+ type, that is not a parsing error and +c+ nullary metafunction
-
---------------------------------------
-unless_error<t, c>::type
---------------------------------------
-
-is equivalent to
-
---------------------------------------
-c::type
+boost::mpl::if_<mpllibs::metaparse::is_error<t::type>::type, t, c>
 --------------------------------------
 
 Example
@@ -68,7 +52,10 @@ struct digit_char
   typedef digit_char type;
 };
 
-unless_error<boost::mpl::apply<is_digit, boost::mpl::char_<'7'> >, digit_char>::type;
+unless_error<
+  boost::mpl::apply<is_digit, boost::mpl::char_<'7'> >,
+  digit_char
+>::type;
 --------------------------------------
 
 include::copyright[]

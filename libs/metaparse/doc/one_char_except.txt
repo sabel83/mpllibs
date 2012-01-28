@@ -45,28 +45,13 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string and +C1+, ..., +Cn+ boxed characters the
-following are equivalent
+For any +c1+, ..., +cn+ boxed characters the following are equivalent
 
 --------------------------------------
-mpllibs::metaparse::get_result<
-  boost::mpl::apply<one_char_except<C1, ..., Cn>, s, pos>
->
+one_char_except<c1, ..., cn>
 
-boost::mpl::front<s>
+mpllibs::metaparse::one_char_except_c<c1::type::value, ..., cn::type::value>
 --------------------------------------
-
---------------------------------------
-mpllibs::metaparse::get_remaining<
-  boost::mpl::apply<one_char_except<C1, ..., Cn>, s, pos>
->
-
-boost::mpl::pop_front<s>
---------------------------------------
-
-when +s+ is not empty and the first character of +s+ is not one of
-+C1::type::value+, ..., +Cn::type::value+. The parser returns an error
-otherwise.
 
 Example
 -------

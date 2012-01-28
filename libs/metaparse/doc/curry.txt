@@ -41,7 +41,8 @@ Header
 Expression semantics
 --------------------
 
-For any +T+ metafunction c taking n arguments and +C1+ ... +Cn+ classes
+For any +T+ metafunction class taking n arguments and +C1+ ... +Cn+ classes the
+following are equivalent:
 
 --------------------------------------
 boost::mpl::apply<
@@ -56,11 +57,7 @@ boost::mpl::apply<
   ...
   Cn
 >
---------------------------------------
 
-is equivalent to
-
---------------------------------------
 boost::mpl::apply<T, C1, ..., Cn>
 --------------------------------------
 

@@ -31,11 +31,11 @@ struct nth_of
 Description
 -----------
 
-Parser combinator applying a number of parsers after each other. It accepts an
-input when all parsers accept it. The result of parsing is the result of the
-+N+th parser. +N+ is a nullary metafunction.
+Parser combinator applying a number of parsers in sequence. It accepts an input
+when all parsers accept it. The result of parsing is the result of the +N+.
+parser. +N+ is a nullary metafunction.
 
-The maximum number of parsers +sequence+ accepts can be specified with the
+The maximum number of parsers +nth_of+ accepts can be specified with the
 +MPLLIBS_SEQUENCE_MAX_ARGUMENT+ macro. Its default value is 5.
 
 Header
@@ -48,38 +48,25 @@ Header
 Expression semantics
 --------------------
 
-For any +p0+, ..., +pn+ parsers, +s+ compile-time string, +pos+ source position
-and +k+ nullary metafunction evaluating to an integer value, where this value is
-in the range +[0..n)+ the following are equivalent
+For any +p0+, ..., +pn+ parsers and +k+ boxed integer value the following are
+equivalent
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<nth_of<k, p0, ..., pn>, s, pos> >
+nth_of<k, p0, ..., pn>
 
-boost::mpl::at_c<
-  mpllibs::metaparse::get_result<
-    boost::mpl::apply<mpllibs::metaparse::sequence<p0, ..., pn>, s, pos>
-  >,
-  n
->
+mpllibs::metaparse::nth_of_c<k::type::value, p0, ..., pn>
 --------------------------------------
-
---------------------------------------
-mpllibs::metaparse::get_remaining<boost::mpl::apply<nth_of<k, p0, ..., pn>, s, pos> >
-
-mpllibs::metaparse::get_remaning<
-  boost::mpl::apply<mpllibs::metaparse::sequence<p0, ..., pn>, s, pos>
->
---------------------------------------
-
-when +p0+ ... +pn+ all accept the input. The parser combinator returns an
-error otherwise.
 
 Example
 -------
 
 --------------------------------------
 typedef
-  nth_of<boost::mpl::int_<1>, mpllibs::metaparse::digit, mpllibs::metaparse::digit>
+  nth_of<
+    boost::mpl::int_<1>,
+    mpllibs::metaparse::digit,
+    mpllibs::metaparse::digit
+  >
   second_digit;
 --------------------------------------
 

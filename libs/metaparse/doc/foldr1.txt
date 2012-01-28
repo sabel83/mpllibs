@@ -26,10 +26,10 @@ struct foldr1
 Description
 -----------
 
-Parser combinator taking a parser argument. It applies the parser on the input
-string repeatedly as long as the parser accepts the input. The result of parsing
-is equivalent to +boost::reverse_fold<Sequence, State, BackwardOp>+, where
-+Sequence+ is the sequence of the results of the applications of +P+.
+Parser combinator taking a parser as argument. It applies the parser on the
+input string repeatedly as long as the parser accepts the input. The result of
+parsing is equivalent to +boost::reverse_fold<Sequence, State, BackwardOp>+,
+where +Sequence+ is the sequence of the results of the applications of +P+.
 
 When the parser rejects the input for the first time, +foldr1+ rejects it as
 well. At least one successful application of +P+ is required for +foldr1+ to
@@ -45,31 +45,17 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +t+ class, +f+ metafunction class taking two arguments,
-+s+ compile-time string and +pos+ source position
+For any +p+ parser, +t+ class, +f+ metafunction class taking two arguments the
+following are equivalent:
 
 --------------------------------------
-mpllibs::metaparse::get_result<
-  boost::mpl::apply<foldr1<p, t, f>, s, pos>
->::type
---------------------------------------
+foldr1<p, t, f>
 
-is equivalent to the following, when +boost::mpl::apply<p, s, pos>+ doesn't
-return an error:
-
---------------------------------------
-boost::mpl::apply<
-  f,
-  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type,
-  boost::mpl::apply_wrap2<
-    foldr<p, t, f>,
-    mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
-    mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
-  >::type
+mpllibs::metaparse::last_of<
+  mpllibs::metaparse::look_ahead<p>,
+  mpllibs::metaparse::foldr<p, t, f>
 >
 --------------------------------------
-
-It forwards the error +boost::mpl::apply<p, s, pos>+ returned otherwise.
 
 Example
 -------

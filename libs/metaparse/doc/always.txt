@@ -40,14 +40,13 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +t+ class, +s+ compile-time string and +pos+ source position
+For any +p+ parser, +t+ class the following are equivalent:
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<always<p, t>, s, pos> >::type
---------------------------------------
+always<p, t>
 
-is equivalent to +t+ when +boost::mpl::apply<p, s, pos>+ does not return an
-error.
+mpllibs::metaparse::last_of<p, mpllibs::metaparse::return_<t> >
+--------------------------------------
 
 Example
 -------

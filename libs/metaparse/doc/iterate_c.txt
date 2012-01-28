@@ -41,29 +41,18 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +n+ integer value, +s+ compile-time string and +pos+
-source position
+For any +p+ parser, +n+ integer value the following are equivalent:
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<iterate_c<p, n>, s, pos> >::type
---------------------------------------
+iterate_c<p, n>
 
-is equivalent to +boost::mpl::list<>+ when +n+ is +0+. The combinator returns an
-error when +n+ is not +0+ and +boost::mpl::apply<p, s>+ returns an error.
-+get_result+ returns
-
---------------------------------------
-boost::mpl::push_front<
-  boost::mpl::apply<
-    iterate_c<p, n - 1>,
-    mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
-    mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
-  >::type,
-  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type
+mpllibs::metaparse::sequence<
+  p, // 1.
+  p, // 2.
+  // ...
+  p  // n.
 >
 --------------------------------------
-
-otherwise.
 
 Example
 -------

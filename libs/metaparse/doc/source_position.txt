@@ -22,17 +22,21 @@ struct source_position
 Description
 -----------
 
-Compile-time data-structure describing a position in the input text. It
-can be queried using link:get_col.html[get_col] and
-link:get_line.html[get_line].
+Compile-time data-structure describing a position of the input text. It
+can be queried using +link:get_col.html[get_col]+ and
++link:get_line.html[get_line]+.
 
-The following operations are also supported: link:next_char.html[next_char] and
-link:next_line.html[next_line].
+The values of this data-structure store the last character that was parsed
+before reaching that position of the input text. This can be queried using
++link:get_prev_char[get_prev_char]+.
+
+The following operations are also supported: +link:next_char.html[next_char]+
+and +link:next_line.html[next_line]+.
 
 Its tag is +mpllibs::metaparse::source_position_tag+.
 
-These values should not be directly constructed, the beginning of the input
-text is represented by link:start.html[mpllibs::metaparse::start].
+The beginning of the input text is represented by
++link:start.html[mpllibs::metaparse::start]+.
 
 Header
 ------

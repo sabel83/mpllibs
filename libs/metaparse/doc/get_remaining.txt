@@ -31,16 +31,6 @@ Header
 #include <mpllibs/metaparse/get_remaining.hpp>
 --------------------------------------
 
-Expression semantics
---------------------
-
-For any +a+, +b+ and +c+ classes, the following are equivalent
-
---------------------------------------
-get_remaining<mpllibs::metaparse::accept<a, b, c> >::type
-b::type
---------------------------------------
-
 include::copyright[]
 
 link:reference.html[[up]]

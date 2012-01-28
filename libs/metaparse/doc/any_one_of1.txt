@@ -31,13 +31,9 @@ struct any_one_of1
 Description
 -----------
 
-Parser combinator taking a number of parsers as arguments. It tries to use the
-parsers. When any of them accepts the input, it tries all parsers with the
-remaining input again. +any_one_of+ stops when no parser accepts the input.
-The result of parsing is a sequence of the results of the individual parsings.
-+any_one_of1+ expects at least one successful application of a parser. When it
-is not possible, it rejects the input and returns
-+mpllibs::metaparse::undefined+.
+Parser combinator taking a number of parsers as arguments. It applies the
+parsers repeatedly as long as any of them accepts the input. The result is a
+sequence of the individual parsing results.
 
 The maximum number of accepted parsers is defined by the
 +MPLLIBS_ONE_OF_MAX_ARGUMENT+ macro. Its default value is 20.

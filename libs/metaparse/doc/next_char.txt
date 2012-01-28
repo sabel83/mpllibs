@@ -37,25 +37,28 @@ Expression semantics
 For any +s+ source position and +c+ wrapped character the following are
 equivalent
 
---------------------------------------
-mpllibs::metaparse::get_col<next_char<s, c> >::type
-
-boost::mpl::plus<
-  mpllibs::metaparse::get_col<s>::type,
-  boost::mpl::int_<1>
->::type
---------------------------------------
+1)
 
 --------------------------------------
-mpllibs::metaparse::get_line<next_char<s, c> >::type
+mpllibs::metaparse::get_col<next_char<s, c> >
 
-mpllibs::metaparse::get_line<s>::type,
+boost::mpl::plus<mpllibs::metaparse::get_col<s>::type, boost::mpl::int_<1> >
 --------------------------------------
+
+2)
+
+--------------------------------------
+mpllibs::metaparse::get_line<next_char<s, c> >
+
+mpllibs::metaparse::get_line<s>
+--------------------------------------
+
+3)
 
 --------------------------------------
 mpllibs::metaparse::get_prev_char<next_char<s, c> >::type
 
-c,
+c
 --------------------------------------
 
 Example

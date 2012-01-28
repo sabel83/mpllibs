@@ -38,26 +38,27 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string and +pos+ source position
+The following are equivalent:
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<digit, s, pos> >
---------------------------------------
+digit
 
-is equivalent to
-
+mpllibs::metaparse::accept_when<
+  mpllibs::metaparse::one_char,
+  mpllibs::metaparse::util::is_digit,
+  // unspecified
+>
 --------------------------------------
-boost::mpl::front<s>
---------------------------------------
-
-when +boost::mpl::empty<s>::type+ is +false+ and +boost::mpl::front<s>::type+
-is in the range +0-9+. The parser combinator returns an error otherwise.
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<mpllibs::metaparse::digit, boost::mpl::string<'13'>, mpllibs::metaparse::start>
+boost::mpl::apply<
+  mpllibs::metaparse::digit,
+  boost::mpl::string<'13'>,
+  mpllibs::metaparse::start
+>
 --------------------------------------
 
 include::copyright[]

@@ -39,15 +39,11 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string and +pos+ source position
+The following are equivalent:
 
 --------------------------------------
-boost::mpl::apply<int_, s, pos>
---------------------------------------
+int_
 
-is equivalent to
-
---------------------------------------
 mpllibs::metaparse::foldl1<
   mpllibs::metaparse::digit_val,
   boost::mpl::int_<0>,

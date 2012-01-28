@@ -26,9 +26,9 @@ struct token
 Description
 -----------
 
-Parser combinator taking a parser as argument. It applies its argument and when
-it accepts the input, +token+ parsers white spaces that follow the accepted
-input. The result of parsing is the result of applying +P+.
+Parser combinator parsing taking a parser, +P+ as argument. It uses +P+ to parse
+the input and consumes all whitespaces afterwards. The result of parsing is the
+result of +P+.
 
 Header
 ------
@@ -40,19 +40,13 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser
+For any +p+ parser the following are equivalent:
 
 --------------------------------------
 token<p>
---------------------------------------
 
-is equivalent to
-
---------------------------------------
 mpllibs::metaparse::first_of<p, mpllibs::metaparse::spaces>
 --------------------------------------
-
-when +p+ doesn't return an error. The combinator returns the error otherwise.
 
 Example
 -------

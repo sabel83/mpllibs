@@ -38,27 +38,26 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string and +pos+ source position the following are
-equivalent:
+The following are equivalent:
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<alphanum, s, pos> >
-boost::mpl::front<s>
---------------------------------------
+alphanum
 
+mpllibs::metaparse::one_of<
+  mpllibs::metaparse::digit,
+  mpllibs::metaparse::letter
+>
 --------------------------------------
-mpllibs::metaparse::get_remaining<boost::mpl::apply<alphanum, s, pos> >
-boost::mpl::pop_front<s>
---------------------------------------
-
-when +boost::mpl::empty<s>::type+ is +false+ and +boost::mpl::front<s>::type+
-is in the range +a-z+, +A-Z+ or +0-9+. The parser returns an error otherwise.
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<mpllibs::metaparse::alphanum, boost::mpl::string<'abcd'>, mpllibs::metaparse::start>
+boost::mpl::apply<
+  mpllibs::metaparse::alphanum,
+  boost::mpl::string<'abcd'>,
+  mpllibs::metaparse::start
+>
 --------------------------------------
 
 include::copyright[]

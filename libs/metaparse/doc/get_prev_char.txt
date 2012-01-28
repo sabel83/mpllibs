@@ -40,6 +40,7 @@ wrapped character the following are equivalent
 
 --------------------------------------
 get_prev_char<mpllibs::metaparse::source_position<l, c, ch> >::type
+
 ch::type
 --------------------------------------
 

@@ -27,7 +27,7 @@ Description
 -----------
 
 Parser accepting empty input only. The result of parsing is the +Result+
-argument. This parser can detect the end of an input.
+argument.
 
 Header
 ------
@@ -39,25 +39,17 @@ Header
 Expression semantics
 --------------------
 
-For any +t+ type, +s+ empty compile-time string and +pos+ source position
+For any +c+ class the following are equivalent:
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<empty<t>, s, pos> >::type
---------------------------------------
+empty<c>
 
-is equivalent to
-
+mpllibs::metaparse::except<
+  mpllibs::metaparse::one_char,
+  c,
+  // unspecified
+>
 --------------------------------------
-t
---------------------------------------
-
-For any +t+ type, +s+ empty compile-time string and +pos+ source position
-
---------------------------------------
-boost::mpl::apply<empty<t>, s>::type
---------------------------------------
-
-returns an error.
 
 Example
 -------

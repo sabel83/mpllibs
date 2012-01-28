@@ -26,9 +26,9 @@ struct transform
 Description
 -----------
 
-Parser combinator taking a parser and a transformation function as argument.
-It accepts the same inputs +P+ accepts, but transforms the result of +P+ using
-+T+.
+Parser combinator taking a parser, +P+ and a transformation function +T+ as
+arguments. It accepts the same inputs +P+ accepts, but transforms the result of
++P+ using +T+.
 
 Header
 ------
@@ -40,11 +40,13 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +t+ metafunction class, +s+ compile-time string and +pos+
-source position
+For any +p+ parser, +t+ metafunction class accepting one argument, +s+
+compile-time string and +pos+ source position
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<transform<p, t>, s, pos> >::type
+mpllibs::metaparse::get_result<
+  boost::mpl::apply<transform<p, t>, s, pos>
+>::type
 --------------------------------------
 
 is equivalent to
@@ -52,7 +54,7 @@ is equivalent to
 --------------------------------------
 boost::mpl::apply<
   t,
-  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >
+  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type
 >::type
 --------------------------------------
 

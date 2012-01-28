@@ -25,7 +25,8 @@ struct is_digit
 Description
 -----------
 
-Checks if a character a digit value or not. Returns a wrapped boolean value.
+Checks if a boxed character is a digit value or not. Returns a wrapped boolean
+value.
 
 Header
 ------

@@ -39,20 +39,17 @@ Header
 Expression semantics
 --------------------
 
-For any +c+ wrapped character, +s+ compile-time string and +pos+ source position
+For any +c+ wrapped character the following are equivalent:
 
 --------------------------------------
-boost::mpl::apply<lit<c>, s, pos>
---------------------------------------
+lit<c>
 
-is equivalent to
-
+mpllibs::metaparse::accept_when<
+  mpllibs::metaparse::one_char,
+  boost::mpl::equal_to<boost::mpl::_1, c>,
+  // unspecified
+>
 --------------------------------------
-mpllibs::metaparse::one_char<s, pos>
---------------------------------------
-
-when +s+ is not empty and the first character of +s+ is +c+.
-It is an error otherwise.
 
 Example
 -------

@@ -38,15 +38,11 @@ Header
 Expression semantics
 --------------------
 
-For any _less or equal_ comparable +L+, +U+ and +T+
+For any +L+, +U+ and +T+ classes the following are equivalent:
 
 --------------------------------------
 boost::mpl::apply<in_range<L, U>, T>
---------------------------------------
 
-is equivalent to
-
---------------------------------------
 boost::mpl::and_<
   boost::mpl::less_equal<L, T>,
   boost::mpl::less_equal<T, U>

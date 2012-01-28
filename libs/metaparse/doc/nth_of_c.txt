@@ -31,11 +31,11 @@ struct nth_of_c
 Description
 -----------
 
-Parser combinator applying a number of parsers after each other. It accepts an
-input when all parsers accept it. The result of parsing is the result of the
-+N+th parser.
+Parser combinator applying a number of parsers in sequence. It accepts an input
+when all parsers accept it. The result of parsing is the result of the +N+.
+parser.
 
-The maximum number of parsers +sequence+ accepts can be specified with the
+The maximum number of parsers +nth_of_c+ accepts can be specified with the
 +MPLLIBS_SEQUENCE_MAX_ARGUMENT+ macro. Its default value is 5.
 
 Header
@@ -47,17 +47,16 @@ Header
 
 Expression semantics
 --------------------
-
-For any +p0+, ..., +pn+ parsers and +k+ integer, where +0 <= k < n+
+For any +p0+, ..., +pn+ parsers and +k+ integer value, where +0 \<= k < n+ the
+following are equivalent
 
 --------------------------------------
 nth_of_c<k, p0, ..., pn>
---------------------------------------
 
-is equivalent to
-
---------------------------------------
-mpllibs::metaparse::nth_of_c<boost::mpl::int_<k>, p0, ..., pn>
+mpllibs::metaparse::transform<
+  mpllibs::metaparse::sequence<p0, ..., pn>,
+  boost::mpl::at_c<boost::mpl::_1, k>
+>
 --------------------------------------
 
 Example

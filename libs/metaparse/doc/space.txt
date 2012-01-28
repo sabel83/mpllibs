@@ -37,20 +37,17 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string and +pos+ source position
+The followin are equivalent:
 
 --------------------------------------
-mpllibs::metaparse::get_remaining<boost::mpl::apply<spaces, s, pos> >::type
---------------------------------------
+space
 
-is equivalent to
-
+mpllibs::metaparse::accept_when<
+  mpllibs::metaparse::one_char,
+  mpllibs::metaparse::util::is_whitespace,
+  // unspecified
+>
 --------------------------------------
-boost::mpl::pop_front<s>::type
---------------------------------------
-
-when +s+ is not empty and its first character is a white space. The combinator
-returns an error otherwise.
 
 Example
 -------
@@ -58,7 +55,11 @@ Example
 --------------------------------------
 typedef
   mpllibs::metaparse::get_remaining<
-    boost::mpl::apply<space, boost::mpl::string<' abc'>, mpllibs::metaparse::start>
+    boost::mpl::apply<
+      space,
+      boost::mpl::string<' abc'>,
+      mpllibs::metaparse::start
+    >
   >::type
   abc;
 --------------------------------------

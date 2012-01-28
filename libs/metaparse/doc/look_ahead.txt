@@ -22,8 +22,8 @@ struct look_ahead
 Description
 -----------
 
-Parses the input using parser +P+. When the parser returns an error, the
-combinator forwards the error. When the parser returns a result, the combinator
+Parses the input using parser +P+. When the parser returns an error,
++look_ahead+ returns the error. When the parser returns a result, +look_ahead+
 returns the result without consuming anything from the input string.
 
 Header
@@ -36,26 +36,31 @@ Header
 Expression semantics
 --------------------
 
-For any +p+ parser, +s+ compile-time string and +pos+ source position the
-following are equivalent
+For any +p+ parser, +s+ compile-time string and +pos+ source position
 
 --------------------------------------
-mpllibs::metaparse::get_result<boost::mpl::apply<look_ahead<p>, s, pos> >::type
-mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type
+boost::mpl::apply<look_ahead<p>, s, pos>
 --------------------------------------
 
---------------------------------------
-mpllibs::metaparse::get_position<boost::mpl::apply<look_ahead<p>, s, pos> >::type
-pos
---------------------------------------
+is equivalent to
 
 --------------------------------------
-mpllibs::metaparse::get_remaining<boost::mpl::apply<look_ahead<p>, s, pos> >::type
-s
+boost::mpl::apply<
+  mpllibs::metaparse::return_<
+    mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type
+  >,
+  s,
+  pos
+>
 --------------------------------------
 
-when +boost::mpl::apply<p, s, pos>+ doesn't return an error. +p+ and
-+look_ahead<p>+ are equivavlent otherwise.
+when +boost::mpl::apply<p, s, pos>+ succeeds. It is
+
+--------------------------------------
+boost::mpl::apply<p, s, pos>
+--------------------------------------
+
+otherwise.
 
 Example
 -------

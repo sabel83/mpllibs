@@ -27,10 +27,11 @@ Description
 -----------
 
 Parser combinator taking a parser, a predicate and an error message as
-arguments. It builds a parser that acccepts the input if and only if the
-original parsers accepts the input and the predicate is +true+ for the result of
-the original parser, otherwise it returns an error with +Msg+ as the error
-message.
+arguments. It builds a parser that accepts the input if and only if the original
+parsers accepts it and the predicate is +true+ for the result of the
+original parser. When the original parser, +P+ fails, the error returned by +P+
+is forwarded. When the predicate returns +false+ on the result of the original
+parser, an error with +Msg+ as the error message is returned.
 
 Header
 ------

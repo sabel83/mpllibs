@@ -31,10 +31,9 @@ struct any_one_of
 Description
 -----------
 
-Parser combinator taking a number of parsers as arguments. It tries to use the
-parsers. When any of them accepts the input, it tries all parsers with the
-remaining input again. +any_one_of+ stops when no parser accepts the input.
-The result of parsing is a sequence of the results of the individual parsings.
+Parser combinator taking a number of parsers as arguments. It applies the
+parsers repeatedly as long as any of them accepts the input. The result is a
+sequence of the individual parsing results.
 
 The maximum number of accepted parsers is defined by the
 +MPLLIBS_ONE_OF_MAX_ARGUMENT+ macro. Its default value is 20.

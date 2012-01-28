@@ -38,20 +38,17 @@ Header
 Expression semantics
 --------------------
 
-For any +s+ compile-time string and +pos+ source position
+The following are equivalent:
 
 --------------------------------------
-boost::mpl::apply<letter, s, pos>
---------------------------------------
+letter
 
-is equivalent to
-
+mpllibs::metaparse::accept_when<
+  mpllibs::metaparse::one_char,
+  mpllibs::metaparse::util::is_letter,
+  // unspecified
+>
 --------------------------------------
-mpllibs::metaparse::one_char<s, pos>
---------------------------------------
-
-when +boost::mpl::empty<s>::type+ is +false+ and +boost::mpl::front<s>::type+
-is in the range +a-z+ or +A-Z+. It is an error otherwise.
 
 Example
 -------

@@ -30,9 +30,9 @@ struct last_of
 Description
 -----------
 
-Parser combinator applying a number parsers after each other. It accepts an
-input when all parsers accept it. The result of parsing is the result of the
-last parser.
+Parser combinator applying a number parsers in sequence. It accepts an input
+when all parsers accept it. The result of parsing is the result of the last
+parser.
 
 Header
 ------
