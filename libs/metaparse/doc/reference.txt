@@ -38,12 +38,12 @@ link:iterate_c.html[iterate_c] +
 link:keyword.html[keyword] +
 link:last_of.html[last_of] +
 link:letter.html[letter] +
-link:lit_c.html[lit_c] +
 link:lit.html[lit] +
+link:lit_c.html[lit_c] +
 link:look_ahead.html[look_ahead] +
 link:middle_of.html[middle_of] +
-link:nth_of_c.html[nth_of_c] +
 link:nth_of.html[nth_of] +
+link:nth_of_c.html[nth_of_c] +
 link:one_char.html[one_char] +
 link:one_char_except.html[one_char_except] +
 link:one_char_except_c.html[one_char_except_c] +
@@ -93,8 +93,6 @@ Metaparse uses a number of general purpose metafunctions and metafunction
 classes.
 
 link:compose.html[compose] + 
-link:cons.html[cons] + 
-link:cons_seq.html[cons_seq] + 
 link:curry.html[curry] + 
 link:digit_to_int.html[digit_to_int] + 
 link:in_range.html[in_range] + 
