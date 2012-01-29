@@ -33,7 +33,6 @@ CXXFLAGS += -MP
 
 CXXFLAGS += -Wall
 CXXFLAGS += -Werror
-CXXFLAGS += -ansi
 CXXFLAGS += -pedantic
 
 $(OBJECTS) : $(BIN_DIR)/%.o : %.cpp
