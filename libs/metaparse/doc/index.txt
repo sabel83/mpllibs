@@ -20,6 +20,7 @@ well.
 
 link:manual.html[User manual] +
 link:reference.html[Library reference] +
+link:performance.html[Performance] +
 
 Related publications
 --------------------
