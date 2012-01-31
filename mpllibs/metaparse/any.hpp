@@ -23,7 +23,9 @@ namespace mpllibs
       foldr<
         P,
         boost::mpl::vector<>,
-        boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1>
+        typename boost::mpl::lambda<
+          boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1>
+        >::type
       >
     {
       struct to_stream
