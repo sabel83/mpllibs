@@ -39,6 +39,7 @@ using boost::mpl::eval_if;
 using boost::mpl::insert;
 using boost::mpl::pair;
 using boost::mpl::apply_wrap1;
+using boost::mpl::apply_wrap2;
 using boost::mpl::size;
 using boost::mpl::at;
 using boost::mpl::push_front;
@@ -241,6 +242,15 @@ struct grammar
   typedef Rules rules;
   typedef Actions actions;
 
+  // Make it a parser
+  template <class S, class Pos>
+  struct apply :
+    apply_wrap2<
+      typename get_parser<grammar, rebuild<_S("S")>::type>::type, S,
+      Pos
+    >
+  {};
+
   template <class Name, class P>
   struct rule_ :
     grammar<
@@ -430,12 +440,12 @@ struct build_arg
 
 typedef
   grammar<>
-    ::rule_<_S("plus_token"),  token<lit_c<'+'> > >::type
-    ::rule_<_S("minus_token"), token<lit_c<'-'> > >::type
-    ::rule_<_S("mult_token"),  token<lit_c<'*'> > >::type
-    ::rule_<_S("div_token"),   token<lit_c<'/'> > >::type
-    ::rule_<_S("arg_token"),   token<lit_c<'_'> > >::type
-    ::rule_<_S("int_token"),   token<int_> >::type
+    ::rule_<_S("plus_token"),  token<lit_c<'+'>>>::type
+    ::rule_<_S("minus_token"), token<lit_c<'-'>>>::type
+    ::rule_<_S("mult_token"),  token<lit_c<'*'>>>::type
+    ::rule_<_S("div_token"),   token<lit_c<'/'>>>::type
+    ::rule_<_S("arg_token"),   token<lit_c<'_'>>>::type
+    ::rule_<_S("int_token"),   token<int_>>::type
 
     ::rule<_S("S"),         _S("plus_exp")>::type
     ::rule<_S("plus_exp"),  _S("prod_exp plus_exp_*")>::type
@@ -452,9 +462,7 @@ typedef
     ::semantic_action<_S("plus_exp"),  build_plus>::type
   g;
 
-typedef
-  build_parser<entire_input<get_parser<g, rebuild<_S("S")>::type>::type> >
-  function_parser;
+typedef build_parser<entire_input<g>> function_parser;
 
 #ifdef LAMBDA
   #error LAMBDA already defined
