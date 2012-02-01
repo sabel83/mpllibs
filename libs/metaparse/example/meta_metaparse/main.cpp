@@ -251,10 +251,10 @@ typedef build_parser<name_token> name_parser;
 template <class S>
 struct rebuild : apply_wrap1<name_parser, S> {};
 
-template <class Rules = map<>, class Actions = map<>>
-struct grammar
+template <class Start, class Rules, class Actions>
+struct grammar_builder
 {
-  typedef grammar type;
+  typedef grammar_builder type;
   typedef Rules rules;
   typedef Actions actions;
 
@@ -262,14 +262,16 @@ struct grammar
   template <class S, class Pos>
   struct apply :
     apply_wrap2<
-      typename get_parser<grammar, rebuild<_S("S")>::type>::type, S,
+      typename get_parser<grammar_builder, typename rebuild<Start>::type>::type,
+      S,
       Pos
     >
   {};
 
   template <class Name, class P>
   struct rule_ :
-    grammar<
+    grammar_builder<
+      Start,
       typename insert<
         Rules,
         pair<typename rebuild<Name>::type, build_native_parser<P>>
@@ -280,7 +282,8 @@ struct grammar
 
   template <class Name, class Expr>
   struct rule :
-    grammar<
+    grammar_builder<
+      Start,
       typename insert<
         Rules,
         pair<typename rebuild<Name>::type, build_parsed_parser<Expr>>
@@ -291,12 +294,16 @@ struct grammar
 
   template <class Name, class F>
   struct semantic_action :
-    grammar<
+    grammar_builder<
+      Start,
       Rules,
       typename insert<Actions, pair<typename rebuild<Name>::type, F>>::type
     >
   {};
 };
+
+template <class Start = boost::mpl::string<'S'> >
+struct grammar : grammar_builder<Start, map<>, map<> > {};
 
 ///////////////////////
 // Real parser
@@ -455,7 +462,7 @@ struct build_arg
 };
 
 typedef
-  grammar<>
+  grammar<_S("plus_exp")>
     ::rule_<_S("plus_token"),  token<lit_c<'+'>>>::type
     ::rule_<_S("minus_token"), token<lit_c<'-'>>>::type
     ::rule_<_S("mult_token"),  token<lit_c<'*'>>>::type
@@ -463,7 +470,6 @@ typedef
     ::rule_<_S("arg_token"),   token<lit_c<'_'>>>::type
     ::rule_<_S("int_token"),   token<int_>>::type
 
-    ::rule<_S("S"),         _S("plus_exp")>::type
     ::rule<_S("plus_exp"),  _S("prod_exp ((plus_token | minus_token) prod_exp)*")>::type
     ::rule<_S("prod_exp"),  _S("value_exp ((mult_token | div_token) value_exp)*")>::type
     ::rule<_S("value_exp"), _S("int_token | arg_token")>::type
