@@ -80,11 +80,12 @@ using boost::mpl::vector;
 using boost::mpl::push_back;
 using boost::mpl::_1;
 using boost::mpl::_2;
+using boost::mpl::lambda;
 
 namespace
 { 
   template <class P>
-  struct any : foldlp<P, return_<vector<> >, push_back<_2, _1> >
+  struct any : foldlp<P, return_<vector<> >, lambda<push_back<_2, _1> >::type>
   {
     struct to_stream
     {

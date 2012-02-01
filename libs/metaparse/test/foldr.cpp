@@ -19,11 +19,12 @@ using boost::mpl::list;
 using boost::mpl::push_front;
 using boost::mpl::_1;
 using boost::mpl::_2;
+using boost::mpl::lambda;
 
 namespace
 { 
   template <class P>
-  struct any : foldr<P, list<>, push_front<_2, _1> >
+  struct any : foldr<P, list<>, lambda<push_front<_2, _1> >::type>
   {
     struct to_stream
     {

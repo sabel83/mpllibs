@@ -19,11 +19,12 @@ using boost::mpl::vector;
 using boost::mpl::push_back;
 using boost::mpl::_1;
 using boost::mpl::_2;
+using boost::mpl::lambda;
 
 namespace
 { 
   template <class P>
-  struct any : foldl<P, vector<>, push_back<_2, _1> >
+  struct any : foldl<P, vector<>, lambda<push_back<_2, _1> >::type>
   {
     struct to_stream
     {
