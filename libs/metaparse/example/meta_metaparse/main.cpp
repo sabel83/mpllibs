@@ -3,6 +3,9 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#define BOOST_MPL_LIMIT_STRING_SIZE 64
+#define MPLLIBS_STRING_MAX_LENGTH BOOST_MPL_LIMIT_STRING_SIZE
+
 #include <mpllibs/metaparse/string.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
 #include <mpllibs/metaparse/digit.hpp>
@@ -18,6 +21,7 @@
 #include <mpllibs/metaparse/sequence.hpp>
 #include <mpllibs/metaparse/last_of.hpp>
 #include <mpllibs/metaparse/int.hpp>
+#include <mpllibs/metaparse/middle_of.hpp>
 
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/insert.hpp>
@@ -64,6 +68,7 @@ using mpllibs::metaparse::transform;
 using mpllibs::metaparse::sequence;
 using mpllibs::metaparse::last_of;
 using mpllibs::metaparse::int_;
+using mpllibs::metaparse::middle_of;
 
 #ifdef BOOST_NO_CONSTEXPR
 int main()
@@ -85,7 +90,7 @@ int main()
  *
  * expression ::= seq_expression (or_token seq_expression)*
  * seq_expression ::= name_expression+
- * name_expression ::= name_token '*'*
+ * name_expression ::= (name_token | open_bracket_token expression close_bracket_token) repeat_token*
  */
 
 struct build_repeat
@@ -185,6 +190,10 @@ struct build_name
 
 typedef token<lit_c<'*'>> repeat_token;
 typedef token<lit_c<'|'>> or_token;
+typedef token<lit_c<'('>> open_bracket_token;
+typedef token<lit_c<')'>> close_bracket_token;
+
+struct expression;
 
 typedef
   token<
@@ -197,14 +206,21 @@ typedef
   name_token;
 
 typedef
-  foldlp<repeat_token, transform<name_token, build_name>, build_repeat>
+  foldlp<
+    repeat_token,
+    one_of<
+      transform<name_token, build_name>,
+      middle_of<open_bracket_token, expression, close_bracket_token>
+    >,
+    build_repeat
+  >
   name_expression;
 
 typedef foldlp<name_expression, name_expression, build_sequence> seq_expression;
 
-typedef
+struct expression :
   foldlp<last_of<or_token, seq_expression>, seq_expression, build_selection>
-  expression;
+{};
 
 typedef build_parser<entire_input<expression>> parser_parser;
 
@@ -448,12 +464,8 @@ typedef
     ::rule_<_S("int_token"),   token<int_>>::type
 
     ::rule<_S("S"),         _S("plus_exp")>::type
-    ::rule<_S("plus_exp"),  _S("prod_exp plus_exp_*")>::type
-    ::rule<_S("plus_exp_"), _S("plus_op prod_exp")>::type
-    ::rule<_S("plus_op"),   _S("plus_token | minus_token")>::type
-    ::rule<_S("prod_exp"),  _S("value_exp prod_exp_*")>::type
-    ::rule<_S("prod_exp_"), _S("prod_op value_exp")>::type
-    ::rule<_S("prod_op"),   _S("mult_token | div_token")>::type
+    ::rule<_S("plus_exp"),  _S("prod_exp ((plus_token | minus_token) prod_exp)*")>::type
+    ::rule<_S("prod_exp"),  _S("value_exp ((mult_token | div_token) value_exp)*")>::type
     ::rule<_S("value_exp"), _S("int_token | arg_token")>::type
 
     ::semantic_action<_S("int_token"), build_value>::type
