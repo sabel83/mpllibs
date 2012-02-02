@@ -283,7 +283,7 @@ struct grammar_builder
   {};
 
   template <class Name, class P>
-  struct rule_ :
+  struct import :
     grammar_builder<
       Start,
       typename insert<
@@ -474,12 +474,12 @@ struct build_arg
 
 typedef
   grammar<_S("plus_exp")>
-    ::rule_<_S("plus_token"),  token<lit_c<'+'>>>::type
-    ::rule_<_S("minus_token"), token<lit_c<'-'>>>::type
-    ::rule_<_S("mult_token"),  token<lit_c<'*'>>>::type
-    ::rule_<_S("div_token"),   token<lit_c<'/'>>>::type
-    ::rule_<_S("arg_token"),   token<lit_c<'_'>>>::type
-    ::rule_<_S("int_token"),   token<int_>>::type
+    ::import<_S("plus_token"),  token<lit_c<'+'>>>::type
+    ::import<_S("minus_token"), token<lit_c<'-'>>>::type
+    ::import<_S("mult_token"),  token<lit_c<'*'>>>::type
+    ::import<_S("div_token"),   token<lit_c<'/'>>>::type
+    ::import<_S("arg_token"),   token<lit_c<'_'>>>::type
+    ::import<_S("int_token"),   token<int_>>::type
 
     ::rule<_S("plus_exp ::= prod_exp ((plus_token | minus_token) prod_exp)*")>::type
     ::rule<_S("prod_exp ::= value_exp ((mult_token | div_token) value_exp)*")>::type
