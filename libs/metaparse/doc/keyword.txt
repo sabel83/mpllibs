@@ -39,11 +39,11 @@ Header
 Expression semantics
 --------------------
 
-For any +r+ class and +k+ compile-time string that is built from the characters
-+k1+ ... +kn+ the following are equivalent:
+For any +r+ class and +s+ compile-time string that is built from the characters
++c1+ ... +cn+ the following are equivalent:
 
 --------------------------------------
-keyword<s, c>
+keyword<s, r>
 
 mpllibs::metaparse::last_of<
   mpllibs::metaparse::lit<c1>,
