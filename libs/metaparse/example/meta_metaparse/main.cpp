@@ -22,6 +22,7 @@
 #include <mpllibs/metaparse/last_of.hpp>
 #include <mpllibs/metaparse/int.hpp>
 #include <mpllibs/metaparse/middle_of.hpp>
+#include <mpllibs/metaparse/keyword.hpp>
 
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/insert.hpp>
@@ -69,6 +70,7 @@ using mpllibs::metaparse::sequence;
 using mpllibs::metaparse::last_of;
 using mpllibs::metaparse::int_;
 using mpllibs::metaparse::middle_of;
+using mpllibs::metaparse::keyword;
 
 #ifdef BOOST_NO_CONSTEXPR
 int main()
@@ -88,6 +90,7 @@ int main()
 /*
  * The grammar
  *
+ * rule_definition ::= name_token define_token expression
  * expression ::= seq_expression (or_token seq_expression)*
  * seq_expression ::= name_expression+
  * name_expression ::= (name_token | open_bracket_token expression close_bracket_token) repeat_token*
@@ -192,6 +195,7 @@ typedef token<lit_c<'*'>> repeat_token;
 typedef token<lit_c<'|'>> or_token;
 typedef token<lit_c<'('>> open_bracket_token;
 typedef token<lit_c<')'>> close_bracket_token;
+typedef token<keyword<boost::mpl::string<':',':','='>>> define_token;
 
 struct expression;
 
@@ -222,7 +226,9 @@ struct expression :
   foldlp<last_of<or_token, seq_expression>, seq_expression, build_selection>
 {};
 
-typedef build_parser<entire_input<expression>> parser_parser;
+typedef sequence<name_token, define_token, expression> rule_definition;
+
+typedef build_parser<entire_input<rule_definition>> parser_parser;
 
 template <class P>
 struct build_native_parser
@@ -239,11 +245,19 @@ struct build_native_parser
 template <class S>
 struct build_parsed_parser
 {
-  typedef build_parsed_parser type;
   typedef typename apply_wrap1<parser_parser, S>::type p;
+  typedef typename front<p>::type name;
+  typedef typename back<p>::type exp;
 
-  template <class G>
-  struct apply : apply_wrap1<p, G> {};
+  struct the_parser
+  {
+    typedef the_parser type;
+
+    template <class G>
+    struct apply : apply_wrap1<exp, G> {};
+  };
+
+  typedef pair<name, the_parser> type;
 };
 
 typedef build_parser<name_token> name_parser;
@@ -280,14 +294,11 @@ struct grammar_builder
     >
   {};
 
-  template <class Name, class Expr>
+  template <class Def>
   struct rule :
     grammar_builder<
       Start,
-      typename insert<
-        Rules,
-        pair<typename rebuild<Name>::type, build_parsed_parser<Expr>>
-      >::type,
+      typename insert<Rules, typename build_parsed_parser<Def>::type>::type,
       Actions
     >
   {};
@@ -470,9 +481,9 @@ typedef
     ::rule_<_S("arg_token"),   token<lit_c<'_'>>>::type
     ::rule_<_S("int_token"),   token<int_>>::type
 
-    ::rule<_S("plus_exp"),  _S("prod_exp ((plus_token | minus_token) prod_exp)*")>::type
-    ::rule<_S("prod_exp"),  _S("value_exp ((mult_token | div_token) value_exp)*")>::type
-    ::rule<_S("value_exp"), _S("int_token | arg_token")>::type
+    ::rule<_S("plus_exp ::= prod_exp ((plus_token | minus_token) prod_exp)*")>::type
+    ::rule<_S("prod_exp ::= value_exp ((mult_token | div_token) value_exp)*")>::type
+    ::rule<_S("value_exp ::= int_token | arg_token")>::type
 
     ::semantic_action<_S("int_token"), build_value>::type
     ::semantic_action<_S("arg_token"), build_arg>::type
