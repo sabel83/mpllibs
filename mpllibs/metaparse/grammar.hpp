@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/any.hpp>
+#include <mpllibs/metaparse/any1.hpp>
 #include <mpllibs/metaparse/sequence.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/transform.hpp>
@@ -43,7 +44,7 @@
  * rule_definition ::= name_token define_token expression
  * expression ::= seq_expression (or_token seq_expression)*
  * seq_expression ::= repeat_expression+
- * repeat_expression ::= name_expression repeat_token*
+ * repeat_expression ::= name_expression (repeat_token | repeat1_token)*
  * name_expression ::= char_token | name_token | bracket_expression
  * bracket_expression ::= open_bracket_token expression close_bracket_token
  */
@@ -54,25 +55,38 @@ namespace mpllibs
   {
     namespace grammar_util
     {
+      template <char Op, class FState>
+      struct repeat_apply_impl
+      {
+        typedef repeat_apply_impl type;
+      
+        template <class G>
+        struct apply :
+          mpllibs::metaparse::any<
+            typename boost::mpl::apply_wrap1<FState, G>::type
+          >
+        {};
+      };
+
+      template <class FState>
+      struct repeat_apply_impl<'+', FState>
+      {
+        typedef repeat_apply_impl type;
+      
+        template <class G>
+        struct apply :
+          mpllibs::metaparse::any1<
+            typename boost::mpl::apply_wrap1<FState, G>::type
+          >
+        {};
+      };
+
       struct build_repeat
       {
         typedef build_repeat type;
       
-        template <class FState>
-        struct apply_impl
-        {
-          typedef apply_impl type;
-      
-          template <class G>
-          struct apply :
-            mpllibs::metaparse::any<
-              typename boost::mpl::apply_wrap1<FState, G>::type
-            >
-          {};
-        };
-      
         template <class T, class FState>
-        struct apply : apply_impl<FState> {};
+        struct apply : repeat_apply_impl<T::type::value, FState> {};
       };
       
       struct build_sequence
@@ -185,6 +199,10 @@ namespace mpllibs
         repeat_token;
 
       typedef
+        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'+'>>
+        repeat1_token;
+
+      typedef
         mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'|'>>
         or_token;
 
@@ -265,7 +283,11 @@ namespace mpllibs
         name_expression;
 
       typedef
-        mpllibs::metaparse::foldlp<repeat_token, name_expression, build_repeat>
+        mpllibs::metaparse::foldlp<
+          mpllibs::metaparse::one_of<repeat_token, repeat1_token>,
+          name_expression,
+          build_repeat
+        >
         repeat_expression;
       
       typedef

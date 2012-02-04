@@ -356,6 +356,48 @@ BOOST_AUTO_TEST_CASE(test_grammar)
       >::type
     >
   >(MPLLIBS_HERE, "semantic_action");
+
+  meta_require<
+    is_error<
+      apply_wrap2<
+        grammar<>
+          ::rule<string<'X',' ',':',':','=',' ','\'','x','\''> >::type
+          ::rule<string<'S',' ',':',':','=',' ','X','+'> >::type,
+        string<'y'>,
+        start
+      >
+    >
+  >(MPLLIBS_HERE, "repeat+_0");
+
+  meta_require<
+    equal<
+      vector<char_<'x'> >,
+      get_result<
+        apply_wrap2<
+          grammar<>
+            ::rule<string<'X',' ',':',':','=',' ','\'','x','\''> >::type
+            ::rule<string<'S',' ',':',':','=',' ','X','+'> >::type,
+          string<'x','y'>,
+          start
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "repeat+_1");
+
+  meta_require<
+    equal<
+      vector<char_<'x'>, char_<'x'> >,
+      get_result<
+        apply_wrap2<
+          grammar<>
+            ::rule<string<'X',' ',':',':','=',' ','\'','x','\''> >::type
+            ::rule<string<'S',' ',':',':','=',' ','X','+'> >::type,
+          string<'x','x','y'>,
+          start
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "repeat+_2");
 }
 
 
