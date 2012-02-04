@@ -13,6 +13,7 @@
 #include <mpllibs/metaparse/token.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
 #include <mpllibs/metaparse/int.hpp>
+#include <mpllibs/metaparse/transform.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/front.hpp>
@@ -31,6 +32,7 @@ using mpllibs::metaparse::token;
 using mpllibs::metaparse::entire_input;
 using mpllibs::metaparse::int_;
 using mpllibs::metaparse::grammar;
+using mpllibs::metaparse::transform;
 
 #ifdef BOOST_NO_CONSTEXPR
 int main()
@@ -207,7 +209,7 @@ struct keep_front
 
 typedef
   grammar<_S("plus_exp")>
-    ::import<_S("int_token"), token<int_>, build_value>::type
+    ::import<_S("int_token"), token<transform<int_, build_value>>>::type
 
     ::rule<_S("ws ::= (' ' | '\n' | '\r' | '\t')*")>::type
     ::rule<_S("plus_token ::= '+' ws"), keep_front>::type

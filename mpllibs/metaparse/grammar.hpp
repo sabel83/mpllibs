@@ -334,7 +334,7 @@ namespace mpllibs
       template <class G, class P, class F>
       struct add_rule;
       
-      template <class G, class Name, class P, class F>
+      template <class G, class Name, class P>
       struct add_import;
       
       template <class Start, class Rules, class Actions>
@@ -357,9 +357,9 @@ namespace mpllibs
           >
         {};
       
-        template <class Name, class P, class Action = no_action>
+        template <class Name, class P>
         struct import :
-          add_import<grammar_builder, typename rebuild<Name>::type, P, Action>
+          add_import<grammar_builder, typename rebuild<Name>::type, P>
         {};
       
         template <class Def, class Action = no_action>
@@ -390,8 +390,7 @@ namespace mpllibs
       {};
       
       template <class Start, class Rules, class Actions, class Name, class P>
-      struct
-        add_import<grammar_builder<Start, Rules, Actions>, Name, P, no_action> :
+      struct add_import<grammar_builder<Start, Rules, Actions>, Name, P> :
         grammar_builder<
           Start,
           typename boost::mpl::insert<
@@ -399,25 +398,6 @@ namespace mpllibs
             boost::mpl::pair<Name, build_native_parser<P> >
           >::type,
           Actions
-        >
-      {};
-      
-      template <
-        class Start,
-        class Rules,
-        class Actions,
-        class Name,
-        class P,
-        class F
-      >
-      struct add_import<grammar_builder<Start, Rules, Actions>, Name, P, F> :
-        grammar_builder<
-          Start,
-          typename boost::mpl::insert<
-            Rules,
-            boost::mpl::pair<Name, build_native_parser<P> >
-          >::type,
-          typename boost::mpl::insert<Actions, boost::mpl::pair<Name, F>>::type
         >
       {};
     }
