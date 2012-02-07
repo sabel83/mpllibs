@@ -1,0 +1,139 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2012.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+grammar
+=======
+Ábel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class StartSymbol = boost::mpl::string<'S'> >
+struct grammar
+{
+  template <class S, class Pos>
+  struct apply
+  {
+    // unspecified
+  };
+
+  template <class Name, class P>
+  struct import
+  {
+    // unspecified
+  };
+
+  template <class S, class Action = /* unspecified */>
+  struct rule
+  {
+    // unspecified
+  };
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Parser combinator for constructing parsers based on an embedded DSL similar to
+EBNF. It can be used the following way:
+
+--------------------------------------
+grammar<>
+  // definitions
+--------------------------------------
+
+where a definition can be a rule or an import command.
+
+Rules look like on of the following:
+
+--------------------------------------
+  ::rule<MPLLIBS_STRING("name ::= def")>
+  ::rule<MPLLIBS_STRING("name ::= def"), semantic_action>
+--------------------------------------
+
++name+ consists of letters, digits and the +_+ character. It is the name of
+the symbol being defined. +def+ describes the rule. It can be
+
+ * the name of a symbol
+ * a terminal, which is a character between single quotes. +\+ can be used for
+   escaping. The following are accepted: +\n+, +\r+, +\t+, +\\+, +\'+
+ * a sequence of definitions
+ * a definition followed by the +*+ character, which means repetition accepting
+   0 match
+ * a definition followed by the +++ character, which means repetition expecting
+   at least one match
+ * a definition in brackets
+
+Rules take an optional +semantic_action+ argument. It is a placeholder
+expression taking one argument. When this is given, this is used to transform
+the result of the rule.
+
+Imports can be used to turn an arbitrary parser into a symbol available for the
+rules. Import definitions look like the following:
+
+--------------------------------------
+  ::import<MPLLIBS_STRING("name"), parser>
+--------------------------------------
+
++name+ is the name of the symbol, +parser+ is the parser to bind the name to.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metaparse/grammar.hpp>
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+using mpllibs::metaparse::token;
+using mpllibs::metaparse::int_;
+using mpllibs::metaparse::build_grammar;
+using mpllibs::metaparse::entire_input;
+
+using boost::mpl::front;
+using boost::mpl::back;
+using boost::mpl::plus;
+using boost::mpl::fold;
+using boost::mpl::_1;
+using boost::mpl::_2;
+
+// We need a lazy version of the Boost.MPL functions
+template <class A, class B>
+struct lazy_plus : boost::mpl::plus<typename A::type, typename B::type> {};
+
+template <class Sequence, class State, class ForwardOp>
+struct lazy_fold :
+  fold<typename Sequence::type, typename State::type, typename ForwardOp::type>
+{};
+
+typedef
+  lazy_fold<back<_1>, front<_1>, lambda<lazy_plus<_1, back<_2>>>::type>
+  plus_action;
+
+typedef
+  grammar<MPLLIBS_STRING("plus_exp")>
+    ::import<MPLLIBS_STRING("int_token"), token<int_>>::type
+
+    ::rule<MPLLIBS_STRING("ws ::= (' ' | '\n' | '\r' | '\t')*")>::type
+    ::rule<MPLLIBS_STRING("plus_token ::= '+' ws"), front<_1>>::type
+    ::rule<MPLLIBS_STRING("plus_exp ::= int_token (plus_token int_token)*"), plus_action>::type
+  plus_grammar;
+
+typedef build_parser<entire_input<plus_grammar>> plus_parser;
+
+const int ten =
+  apply_wrap1<plus_parser, MPLLIBS_STRING("1 + 2 + 3 + 4")>::type::value;
+--------------------------------------
+
+include::copyright[]
+
+link:reference.html[[up]]
+
+
