@@ -406,7 +406,11 @@ namespace mpllibs
           typename boost::mpl::insert<Rules, typename P::type>::type,
           typename boost::mpl::insert<
             Actions,
-            boost::mpl::pair<typename P::name, F>>
+            boost::mpl::pair<
+              typename P::name,
+              typename boost::mpl::lambda<F>::type
+            >
+          >
           ::type
         >
       {};
