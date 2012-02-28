@@ -81,6 +81,9 @@ rules. Import definitions look like the following:
 
 +name+ is the name of the symbol, +parser+ is the parser to bind the name to.
 
+The start symbol of the grammar is specified by the template argument of the
++grammar+ template. This is optional, the default value is +S+.
+
 Header
 ------
 

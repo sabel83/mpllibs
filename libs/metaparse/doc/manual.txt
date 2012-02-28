@@ -141,6 +141,33 @@ parser combinator for this, link:any.html[+any+]+<Parser>+. It uses +Parser+
 repeatedly as long as +Parser+ succeeds. The result of parsing is a sequence,
 the results we got by repeatedly applying +Parser+.
 
+Grammars
+~~~~~~~~
+
+Metaparse provides a way to define grammars in a syntax that resembles EBNF. The
+link:grammar.html[+grammar+] template can be used to define a grammar. It can be
+used the following way:
+
+--------------------------------------
+grammar<MPLLIBS_STRING("plus_exp")>
+  ::import<MPLLIBS_STRING("int_token"), token<int_>>::type
+
+  ::rule<MPLLIBS_STRING("ws ::= (' ' | '\n' | '\r' | '\t')*")>::type
+  ::rule<MPLLIBS_STRING("plus_token ::= '+' ws"), front<_1>>::type
+  ::rule<MPLLIBS_STRING("plus_exp ::= int_token (plus_token int_token)*"), plus_action>::type
+--------------------------------------
+
+The code above defines a parser from a grammar definition. The start symbol of
+the grammar is +plus_exp+. The lines beginning with +::rule+ define rules.
+Rules optionally have a semantic action, which is a metafunction class that
+transforms the result of parsing after the rule has been applied.
+Existing parsers can be bound to names and be used in the rules by importing
+them. Lines beginning with +::import+ bind existing parsers to names.
+
+The result of a grammar definition is a parser which can be given to other
+parser combinators or be used directly. Given that grammars can import existing
+parsers and build new ones, they are parser combinators as well.
+
 Parsing based on +constexpr+
 ----------------------------
 
