@@ -154,7 +154,7 @@ namespace mpllibs
         typedef
           typename boost::mpl::eval_if<
             typename boost::mpl::has_key<typename G::actions, Name>::type,
-            impl<boost::mpl::at<typename G::actions, Name>>,
+            impl<boost::mpl::at<typename G::actions, Name> >,
             p
           >::type
           type;
@@ -195,28 +195,28 @@ namespace mpllibs
       };
       
       typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'*'>>
+        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'*'> >
         repeat_token;
 
       typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'+'>>
+        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'+'> >
         repeat1_token;
 
       typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'|'>>
+        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'|'> >
         or_token;
 
       typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'('>>
+        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'('> >
         open_bracket_token;
 
       typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<')'>>
+        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<')'> >
         close_bracket_token;
 
       typedef
         mpllibs::metaparse::token<
-          mpllibs::metaparse::keyword<boost::mpl::string<':',':','='>>
+          mpllibs::metaparse::keyword<boost::mpl::string<':',':','='> >
         >
         define_token;
 
