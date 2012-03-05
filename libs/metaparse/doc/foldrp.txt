@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class P, class StateP, class ForwardOp>
+template <class P, class StateP, class BackwardOp>
 struct foldrp
 {
   template <class S, class Pos>
