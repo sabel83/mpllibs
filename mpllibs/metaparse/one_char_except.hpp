@@ -29,10 +29,9 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(
-        mpllibs::metaparse::error_tag,
-        unexpected_character
-      )
+      typedef
+        boost::mpl::string<'unex','pect','ed c','hara','cter'>
+        unexpected_character;
     }
     
     namespace impl

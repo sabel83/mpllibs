@@ -14,8 +14,6 @@
 
 #include <mpllibs/metaparse/util/is_digit.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-
 #include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
 
@@ -24,12 +22,6 @@
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
-
-namespace
-{
-  MPLLIBS_DEFINE_TAG(test_error_tag)
-  MPLLIBS_DEFINE_META_ATOM(test_error_tag, test_error)
-}
 
 BOOST_AUTO_TEST_CASE(test_accept_when)
 {
@@ -47,14 +39,21 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
   using boost::mpl::apply;
   using boost::mpl::equal_to;
   using boost::mpl::apply_wrap2;
+  using boost::mpl::string;
+
+  typedef string<'fail'> test_error_msg;
 
   meta_require<
-    has_type<accept_when<one_char, is_digit, test_error> >
+    has_type<accept_when<one_char, is_digit, test_error_msg> >
   >(MPLLIBS_HERE, "test_has_type");
 
   meta_require<
     is_error<
-      apply_wrap2<accept_when<one_char, is_digit, test_error>, str_hello, start>
+      apply_wrap2<
+        accept_when<one_char, is_digit, test_error_msg>,
+        str_hello,
+        start
+      >
     >
   >(MPLLIBS_HERE, "test_with_text");
   
@@ -62,7 +61,7 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
     equal_to<
       get_result<
         apply_wrap2<
-          accept_when<one_char, is_digit, test_error>,
+          accept_when<one_char, is_digit, test_error_msg>,
           str_1983,
           start
         >
@@ -73,7 +72,7 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
 
   meta_require<
     is_error<
-      apply_wrap2<accept_when<one_char, is_digit, test_error>, str_, start>
+      apply_wrap2<accept_when<one_char, is_digit, test_error_msg>, str_, start>
     >
   >(MPLLIBS_HERE, "test_with_empty_string");
 }

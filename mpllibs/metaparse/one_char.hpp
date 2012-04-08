@@ -11,7 +11,6 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/get_prev_char.hpp>
-#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metamonad/meta_atom.hpp>
 
@@ -25,6 +24,7 @@
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/char.hpp>
+#include <boost/mpl/string.hpp>
 
 namespace mpllibs
 {
@@ -32,10 +32,9 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(
-        mpllibs::metaparse::error_tag,
-        unexpected_end_of_input
-      )
+      typedef
+        boost::mpl::string<'unex','pect','ed e','nd o','f in','put'>
+        unexpected_end_of_input;
     }
     
     struct one_char

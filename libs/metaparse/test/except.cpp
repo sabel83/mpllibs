@@ -12,8 +12,6 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-
 #include "common.hpp"
 
 #include <mpllibs/metatest/has_type.hpp>
@@ -23,13 +21,6 @@
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
-
-namespace
-{
-  using mpllibs::metaparse::error_tag;
-
-  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
-}
 
 BOOST_AUTO_TEST_CASE(test_except)
 {
@@ -45,14 +36,17 @@ BOOST_AUTO_TEST_CASE(test_except)
   
   using boost::mpl::apply_wrap2;
   using boost::mpl::equal_to;
+  using boost::mpl::string;
+
+  typedef string<'fail'> test_error_msg;
 
   meta_require<
-    has_type<except<one_char, int13, test_error> >
+    has_type<except<one_char, int13, test_error_msg> >
   >(MPLLIBS_HERE, "test_has_type");
 
   meta_require<
     is_error<
-      apply_wrap2<except<one_char, int13, test_error>, str_hello, start>
+      apply_wrap2<except<one_char, int13, test_error_msg>, str_hello, start>
     >
   >(MPLLIBS_HERE, "test_with_good");
   
@@ -60,7 +54,7 @@ BOOST_AUTO_TEST_CASE(test_except)
     equal_to<
       get_result<
         apply_wrap2<
-          except<fail<test_error>, int13, test_error>,
+          except<fail<test_error_msg>, int13, test_error_msg>,
           str_hello,
           start
         >

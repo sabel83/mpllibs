@@ -86,7 +86,7 @@ namespace mpllibs
     };
   }
 
-  namespace error
+  namespace metatest
   {
     template <class T>
     struct to_stream_impl;
@@ -106,11 +106,11 @@ namespace mpllibs
           typedef typename mpllibs::metaparse::get_position<E>::type position;
         
           o_ << "accept<";
-          mpllibs::error::to_stream_impl<result>::run(o_);
+          to_stream<result>::run(o_);
           o_ << ", ";
-          mpllibs::error::to_stream_impl<remaining>::run(o_);
+          to_stream<remaining>::run(o_);
           o_ << ", ";
-          mpllibs::error::to_stream_impl<position>::run(o_);
+          to_stream<position>::run(o_);
           return o_ << ">";
         }
       };

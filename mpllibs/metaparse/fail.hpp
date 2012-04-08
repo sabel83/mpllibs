@@ -6,18 +6,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
-
-#include <mpllibs/metamonad/tag_tag.hpp>
-
-#include <iostream>
+#include <mpllibs/metaparse/fail_tag.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(fail_tag)
-
     template <class Msg>
     struct fail
     {
@@ -40,28 +34,6 @@ namespace mpllibs
           o << "fail<";
           mpllibs::metatest::to_stream_argument_list<Msg>::run(o);
           return o << ">";
-        }
-      };
-    };
-  }
-
-  namespace metatest
-  {
-    template <>
-    struct to_stream_impl<mpllibs::metaparse::fail_tag>
-    {
-      template <class E>
-      struct apply
-      {
-        typedef apply type;
-      
-        static std::ostream& run(std::ostream& o_)
-        {
-          o_ << "Error at ";
-          to_stream<typename E::source_position::type>::run(o_);
-          o_ << ": ";
-          to_stream<typename E::message::type>::run(o_);
-          return o_;
         }
       };
     };

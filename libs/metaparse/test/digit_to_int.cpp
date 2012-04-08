@@ -30,9 +30,9 @@ BOOST_AUTO_TEST_CASE(test_digit_to_int)
   using mpllibs::metatest::meta_require;
   
   using mpllibs::metaparse::util::digit_to_int;
-  using mpllibs::metaparse::error_tag;
   
   using mpllibs::metamonad::do_try;
+  using mpllibs::metamonad::catch_any;
   
   using boost::mpl::equal_to;
   using boost::mpl::apply_wrap1;
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(test_digit_to_int)
       do_try<
         apply_wrap1<digit_to_int, char_x>
       >
-      ::catch_<error_tag, x>::apply<int13>
+      ::catch_<catch_any, x>::apply<int13>
       ::type,
       int13
     >

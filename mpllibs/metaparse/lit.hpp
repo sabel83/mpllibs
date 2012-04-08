@@ -8,12 +8,13 @@
 
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
-#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/lambda.hpp>
+#include <boost/mpl/string.hpp>
+#include <boost/mpl/push_back.hpp>
 
 namespace mpllibs
 {
@@ -22,19 +23,9 @@ namespace mpllibs
     namespace errors
     {
       template <class C>
-      struct literal_expected
-      {
-        typedef literal_expected type;
-        typedef mpllibs::metaparse::error_tag tag;
-
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o)
-          {
-            return o << "'" << C::type::value << "' literal expected.";
-          }
-        };
-      };
+      struct literal_expected :
+        boost::mpl::push_back<boost::mpl::string<'expe','cted',': '>, C>::type
+      {};
     }
   
     template <class C>

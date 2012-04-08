@@ -8,7 +8,6 @@
 
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
-#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metaparse/util/is_digit.hpp>
 
@@ -22,7 +21,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, digit_expected)
+      typedef boost::mpl::string<'digi','t ex','pect','ed'> digit_expected;
     }
   
     typedef

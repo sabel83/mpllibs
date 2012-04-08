@@ -9,9 +9,6 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
-
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/string.hpp>
@@ -62,13 +59,19 @@ namespace mpllibs
       {
         static void run()
         {
-          using std::cout;
           using std::endl;
-          using mpllibs::metatest::to_stream;
+          using boost::mpl::c_str;
+          using mpllibs::metaparse::get_line;
+          using mpllibs::metaparse::get_col;
           
-          cout << "Parsing failed:" << endl;
-          to_stream<Result>::run(cout);
-          cout << endl;
+          typedef typename Result::type R;
+
+          std::cout
+            << "Parsing failed:" << endl
+            << "line " << get_line<typename R::source_position>::type::value
+            << ", col " << get_col<typename R::source_position>::type::value
+            << ": "
+            << c_str<typename R::message::type>::type::value << endl;
         }
       };
       

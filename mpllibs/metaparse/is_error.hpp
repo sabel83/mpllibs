@@ -8,6 +8,8 @@
 
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 
+#include <mpllibs/metaparse/fail_tag.hpp>
+
 #include <boost/mpl/tag.hpp>
 
 #include <boost/type_traits/is_same.hpp>
@@ -16,8 +18,6 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    struct fail_tag;
-  
     template <class T>
     struct is_error :
       boost::is_same<

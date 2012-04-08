@@ -12,8 +12,6 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-
 #include "common.hpp"
 
 #include <mpllibs/metatest/test.hpp>
@@ -27,12 +25,10 @@
 
 namespace
 {
-  using mpllibs::metaparse::error_tag;
   using mpllibs::metaparse::fail;
+  using boost::mpl::string;
 
-  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
-
-  typedef fail<test_error> test_fail;
+  typedef fail<string<'fail'> > test_fail;
 }
 
 BOOST_AUTO_TEST_CASE(test_one_of)

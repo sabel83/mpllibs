@@ -9,8 +9,6 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/source_position.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-
 #include "common.hpp"
 
 #include <mpllibs/metatest/has_type.hpp>
@@ -20,13 +18,6 @@
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
-
-namespace
-{
-  using mpllibs::metaparse::error_tag;
-
-  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
-}
 
 BOOST_AUTO_TEST_CASE(test_fail)
 {
@@ -38,11 +29,14 @@ BOOST_AUTO_TEST_CASE(test_fail)
   using mpllibs::metaparse::start;
   
   using boost::mpl::apply_wrap2;
+  using boost::mpl::string;
 
-  meta_require<has_type<fail<test_error> > >(MPLLIBS_HERE, "test_has_type");
+  typedef string<'fail'> test_error_msg;
+
+  meta_require<has_type<fail<test_error_msg> > >(MPLLIBS_HERE, "test_has_type");
 
   meta_require<
-    is_error<apply_wrap2<fail<test_error>, str_hello, start> >
+    is_error<apply_wrap2<fail<test_error_msg>, str_hello, start> >
   >(MPLLIBS_HERE, "test_fail_for_non_empty_string");
 }
 

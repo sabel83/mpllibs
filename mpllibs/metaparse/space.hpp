@@ -8,13 +8,12 @@
 
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
-#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metaparse/util/is_whitespace.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
+#include <boost/mpl/string.hpp>
 
 namespace mpllibs
 {
@@ -22,10 +21,9 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(
-        mpllibs::metaparse::error_tag,
-        whitespace_expected
-      )
+      typedef
+        boost::mpl::string<'whit','espa','ce e','xpec','ted'>
+        whitespace_expected;
     }
   
     typedef

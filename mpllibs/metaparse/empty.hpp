@@ -8,7 +8,6 @@
 
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/return.hpp>
-#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metamonad/meta_atom.hpp>
 
@@ -17,6 +16,7 @@
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/string.hpp>
 
 namespace mpllibs
 {
@@ -24,10 +24,9 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(
-        mpllibs::metaparse::error_tag,
-        end_of_input_expected
-      )
+      typedef
+        boost::mpl::string<'end ','of i','nput','expe','cted'>
+        end_of_input_expected;
     }
     
     template <class Result>

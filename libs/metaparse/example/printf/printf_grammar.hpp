@@ -19,15 +19,15 @@
 #include <mpllibs/metaparse/one_char.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <boost/mpl/string.hpp>
 
 namespace safe
 {
   namespace errors
   {
-    MPLLIBS_DEFINE_TAG(printf_error_tag)
-    MPLLIBS_DEFINE_META_ATOM(printf_error_tag, no_percentage_char_expected)
+    typedef
+      boost::mpl::string<'no %', ' exp','ecte','d'>
+      no_percentage_char_expected;
   }
 
   namespace grammar

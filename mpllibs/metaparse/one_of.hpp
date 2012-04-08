@@ -8,7 +8,6 @@
 
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/fail.hpp>
-#include <mpllibs/metaparse/error.hpp>
 
 #include <mpllibs/metamonad/meta_atom.hpp>
 
@@ -18,6 +17,7 @@
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/string.hpp>
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
@@ -33,10 +33,11 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(
-        mpllibs::metaparse::error_tag,
-        none_of_the_expected_cases_found
-      )
+      typedef
+        boost::mpl::string<
+          'none',' of ','the ','expe','cted',' cas','es f','ound'
+        >
+        none_of_the_expected_cases_found;
     }
   
     #ifdef MPLLIBS_ONE_OF_BODY_PREFIX

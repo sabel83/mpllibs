@@ -12,8 +12,6 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-
 #include "common.hpp"
 
 #include <mpllibs/metatest/has_type.hpp>
@@ -27,13 +25,6 @@
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
-
-namespace
-{
-  using mpllibs::metaparse::error_tag;
-
-  MPLLIBS_DEFINE_META_ATOM(error_tag, test_error)
-}
 
 BOOST_AUTO_TEST_CASE(test_any_one_of)
 {
@@ -55,7 +46,7 @@ BOOST_AUTO_TEST_CASE(test_any_one_of)
   
   meta_require<has_type<any_one_of<one_char> > >(MPLLIBS_HERE, "test_has_type");
 
-  typedef fail<test_error> test_fail;
+  typedef fail<string<'fail'> > test_fail;
 
   meta_require<
     equal<

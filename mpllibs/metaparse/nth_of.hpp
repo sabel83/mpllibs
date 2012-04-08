@@ -10,7 +10,9 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/fail.hpp>
-#include <mpllibs/metaparse/error.hpp>
+
+#include <mpllibs/metaparse/util/int_to_string.hpp>
+#include <mpllibs/metaparse/util/join_string.hpp>
 
 #include <mpllibs/metatest/to_stream_argument_list.hpp>
 
@@ -20,6 +22,7 @@
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/fold.hpp>
+#include <boost/mpl/string.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
@@ -37,22 +40,25 @@ namespace mpllibs
     namespace errors
     {
       template <int From, int To, int N>
-      struct index_out_of_range
-      {
-        typedef mpllibs::metaparse::error_tag tag;
-        typedef index_out_of_range type;
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o)
-          {
-            return
-              o
-                << "Index (" << N << ") out of range ["
-                << From << ", "<< To << "]";
-          }
-        };
-      };
+      struct index_out_of_range :
+        mpllibs::metaparse::util::join_string<
+          boost::mpl::vector<
+            boost::mpl::string<'inde','x ('>,
+            mpllibs::metaparse::util::int_to_string::apply<
+              boost::mpl::int_<N>
+            >,
+            boost::mpl::string<') ou','t of',' ran','ge ','['>,
+            mpllibs::metaparse::util::int_to_string::apply<
+              boost::mpl::int_<From>
+            >,
+            boost::mpl::string<'-'>,
+            mpllibs::metaparse::util::int_to_string::apply<
+              boost::mpl::int_<To>
+            >,
+            boost::mpl::string<']'>
+          >
+        >
+      {};
     }
   
     namespace impl

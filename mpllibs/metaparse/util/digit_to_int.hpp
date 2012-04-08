@@ -6,12 +6,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/error.hpp>
-
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <boost/mpl/int.hpp>
+#include <boost/mpl/string.hpp>
 
 #include <iostream>
 
@@ -21,7 +20,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      MPLLIBS_DEFINE_META_ATOM(mpllibs::metaparse::error_tag, invalid_digit)
+      typedef boost::mpl::string<'inva','lid ','digi','t'> invalid_digit;
     }
     
     namespace util

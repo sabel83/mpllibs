@@ -16,6 +16,7 @@
 
 #include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
+#include <mpllibs/metatest/to_stream.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/always.hpp>
