@@ -9,6 +9,8 @@
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/meta_atom.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/string.hpp>
 
@@ -41,14 +43,6 @@ namespace mpllibs
         struct apply :
           mpllibs::metaparse::util::impl::digit_to_int<D::type::value>
         {};
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o)
-          {
-            return o << "digit_to_int";
-          }
-        };
       };
     
       namespace impl
@@ -76,6 +70,11 @@ namespace mpllibs
     }
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::util::digit_to_int,
+  "digit_to_int"
+)
 
 #endif
 

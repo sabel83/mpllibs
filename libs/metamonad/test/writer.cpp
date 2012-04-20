@@ -41,16 +41,6 @@ namespace
   {
     typedef log_plus type;
     
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o_)
-      {
-        o_ << "log_plus<";
-        mpllibs::metatest::to_stream<A>::run(o_);
-        return o_ << ">";
-      }
-    };
-    
     template <class R>
     struct apply : pair<plus<A, R>, list<A> > {};
   };
@@ -81,6 +71,8 @@ namespace
     >
     test_bind_log;
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, log_plus, "log_plus")
 
 MPLLIBS_ADD_TEST(suite, test_return_value)
 MPLLIBS_ADD_TEST(suite, test_return_log)

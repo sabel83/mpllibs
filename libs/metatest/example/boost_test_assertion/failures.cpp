@@ -32,35 +32,18 @@ using boost::is_same;
 
 // Bad metafunction: no "type"
 template <class T>
-struct bad
-{
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      o << "bad";
-      mpllibs::metatest::to_stream_argument_list<T>::run(o);
-      return o << ">";
-    }
-  };
-};
+struct bad {};
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, bad, "bad")
 
 // Bad metafunction for a test case: no "type::value"
 template <class T>
 struct bad2
 {
   struct type {};
-
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      o << "bad2";
-      mpllibs::metatest::to_stream_argument_list<T>::run(o);
-      return o << ">";
-    }
-  };
 };
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, bad2, "bad2")
 
 BOOST_AUTO_TEST_CASE(example_failure)
 {

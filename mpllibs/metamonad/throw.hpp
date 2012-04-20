@@ -8,6 +8,8 @@
 
 #include <mpllibs/metamonad/exception_core.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 namespace mpllibs
 {
   namespace metamonad
@@ -16,6 +18,12 @@ namespace mpllibs
     struct throw_ : exception<Msg> {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  1,
+  mpllibs::metamonad::throw_,
+  "exception"
+)
 
 #endif
 

@@ -47,17 +47,6 @@ namespace
       {
         typedef impl type;
   
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            mpllibs::metatest::to_stream<plusn<N> >::run(o_);
-            o_ << "::apply<";
-            mpllibs::metatest::to_stream<A>::run(o_);
-            return o_ << ">";
-          }
-        };
-  
         template <class S>
         struct apply :
           boost::mpl::pair<typename plus<A, N>::type, typename plus<S, N>::type>
@@ -65,16 +54,6 @@ namespace
       };
     public:
       typedef impl type;
-    };
-
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o_)
-      {
-        o_ << "plusn<";
-        mpllibs::metatest::to_stream<N>::run(o_);
-        return o_ << ">";
-      }
     };
   };
 
@@ -106,6 +85,8 @@ namespace
     >
     test_bind_state;
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, plusn, "plusn")
 
 MPLLIBS_ADD_TEST(suite, test_return_value)
 MPLLIBS_ADD_TEST(suite, test_return_state)

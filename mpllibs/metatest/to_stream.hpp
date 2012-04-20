@@ -8,8 +8,6 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <mpllibs/metatest/has_to_stream.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -19,51 +17,16 @@ namespace mpllibs
   namespace metatest
   {
     template <class T>
-    struct to_stream_impl
+    struct to_stream
     {
-      template <class V>
-      struct apply
-      {
-        typedef apply type;
-      
-        static std::ostream& run(std::ostream& o_)
-        {
-          // I can't use typeid, because it breaks for non-defined types
-          return o_ << "???";
-        }
-      };
-    };
-    
-    namespace impl
-    {
-      template <class T>
-      struct to_stream_using_to_stream
-      {
-        typedef to_stream_using_to_stream type;
-        
-        static std::ostream& run(std::ostream& o)
-        {
-          return T::to_stream::run(o);
-        }
-      };
+      typedef to_stream type;
 
-      template <class T>
-      struct to_stream_using_tag :
-        boost::mpl::apply_wrap1<
-          mpllibs::metatest::to_stream_impl<typename boost::mpl::tag<T>::type>,
-          T
-        >
-      {};
-    }
-    
-    template <class T>
-    struct to_stream :
-      boost::mpl::if_<
-        typename has_to_stream<T>::type,
-        mpllibs::metatest::impl::to_stream_using_to_stream<T>,
-        mpllibs::metatest::impl::to_stream_using_tag<T>
-      >::type
-    {};
+      static std::ostream& run(std::ostream& o_)
+      {
+        // I can't use typeid, because it breaks for non-defined types
+        return o_ << "???";
+      }
+    };
     
     template <class T>
     struct to_stream<T*>
@@ -121,6 +84,26 @@ namespace mpllibs
     };
   }
 }    
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(char)
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(signed char)
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(unsigned char)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(short)
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(unsigned short)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(int)
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(unsigned int)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(long)
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(unsigned long)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(float)
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(double)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(bool)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(void)
 
 #ifndef MPLLIBS_NO_TO_STREAM_MPL
 #include <mpllibs/metatest/to_stream_mpl.hpp>

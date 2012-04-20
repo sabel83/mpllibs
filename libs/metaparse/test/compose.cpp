@@ -34,58 +34,31 @@ namespace
   {
     template <class T>
     struct apply : identity<T*> {};
-    
-    struct to_stream
-    {
-      static ostream& run(ostream& o)
-      {
-        return o << "make_pointer";
-      }
-    };
   };
   
   struct incr
   {
     template <class T>
     struct apply : plus<int13, T> {};
-    
-    struct to_stream
-    {
-      static ostream& run(ostream& o)
-      {
-        return o << "incr";
-      }
-    };
   };
 
   struct double_value
   {
     template <class T>
     struct apply : times<int2, T> {};
-    
-    struct to_stream
-    {
-      static ostream& run(ostream& o)
-      {
-        return o << "double_value";
-      }
-    };
   };
 
   struct take_first
   {
     template <class A, class B>
     struct apply : identity<A> {};
-    
-    struct to_stream
-    {
-      static ostream& run(ostream& o)
-      {
-        return o << "take_first";
-      }
-    };
   };
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(make_pointer)
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(incr)
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(double_value)
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(take_first)
 
 BOOST_AUTO_TEST_CASE(test_compose)
 {

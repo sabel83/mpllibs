@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <mpllibs/metamonad/monad.hpp>
 
@@ -23,19 +23,15 @@ namespace mpllibs
         A,
         F
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "bind<";
-          mpllibs::metatest::to_stream_argument_list<MonadTag, A, F>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  3,
+  mpllibs::metamonad::bind,
+  "bind"
+)
 
 #endif
 

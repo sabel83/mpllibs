@@ -16,6 +16,8 @@
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/monad.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/apply.hpp>
@@ -37,14 +39,6 @@ namespace mpllibs
       struct return_
       {
         typedef return_ type;
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<parser_tag>::return_";
-          }
-        };
         
         template <class T>
         struct apply : mpllibs::metaparse::return_<T> {};
@@ -89,18 +83,20 @@ namespace mpllibs
         };
         
         typedef bind type;
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<parser_tag>::bind";
-          }
-        };
       };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metaparse::parser_tag>::bind,
+  "monad<parser_tag>::bind"
+)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metaparse::parser_tag>::return_,
+  "monad<parser_tag>::return_"
+)
 
 #endif
 

@@ -11,7 +11,7 @@
 
 #include <mpllibs/metamonad/meta_atom.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/not.hpp>
@@ -120,19 +120,7 @@ namespace mpllibs
           ~ \
         ) \
       > : one_of_##n<BOOST_PP_ENUM_PARAMS(n, P)> \
-      { \
-        struct to_stream \
-        { \
-          static std::ostream& run(std::ostream& o) \
-          { \
-            o << "one_of<"; \
-            mpllibs::metatest::to_stream_argument_list< \
-              BOOST_PP_ENUM_PARAMS(n, P) \
-            >::run(o); \
-            return o << ">"; \
-          } \
-        }; \
-      };
+      {};
     
     BOOST_PP_REPEAT(MPLLIBS_ONE_OF_MAX_ARGUMENT, MPLLIBS_ONE_OF_CASE, ~)
     
@@ -140,6 +128,13 @@ namespace mpllibs
     #undef MPLLIBS_ONE_OF_UNUSED_PARAM
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
+  0,
+  MPLLIBS_ONE_OF_MAX_ARGUMENT,
+  mpllibs::metaparse::one_of,
+  "one_of"
+)
 
 #endif
 

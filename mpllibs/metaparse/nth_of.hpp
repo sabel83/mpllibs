@@ -14,7 +14,7 @@
 #include <mpllibs/metaparse/util/int_to_string.hpp>
 #include <mpllibs/metaparse/util/join_string.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -230,23 +230,7 @@ namespace mpllibs
           K BOOST_PP_COMMA_IF(n) \
           BOOST_PP_ENUM_PARAMS(n, P) \
         > \
-      { \
-        struct to_stream \
-        { \
-          static std::ostream& run(std::ostream& o) \
-          { \
-            o << "nth_of_c<" << K; \
-            if (n > 0) \
-            { \
-              o << ", "; \
-            } \
-            mpllibs::metatest::to_stream_argument_list< \
-              BOOST_PP_ENUM_PARAMS(n, P) \
-            >::run(o); \
-            return o << ">"; \
-          } \
-        }; \
-      };
+      {};
     
     BOOST_PP_REPEAT(MPLLIBS_SEQUENCE_MAX_ARGUMENT, MPLLIBS_NTH_OF_N, ~)
     
@@ -270,23 +254,16 @@ namespace mpllibs
         K::type::value,
         BOOST_PP_ENUM_PARAMS(MPLLIBS_SEQUENCE_MAX_ARGUMENT, P)
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "nth_of<";
-          mpllibs::metatest::to_stream_argument_list<
-            K,
-            BOOST_PP_ENUM_PARAMS(MPLLIBS_SEQUENCE_MAX_ARGUMENT, P)
-          >::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
 
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
+  1,
+  BOOST_PP_ADD(MPLLIBS_SEQUENCE_MAX_ARGUMENT, 1),
+  mpllibs::metaparse::nth_of,
+  "nth_of"
+)
 
 #endif
 

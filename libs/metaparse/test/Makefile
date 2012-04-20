@@ -29,6 +29,7 @@ CXXFLAGS += -Wall
 CXXFLAGS += -Werror
 CXXFLAGS += -pedantic
 CXXFLAGS += -Wno-multichar # boost::string uses it
+CXXFLAGS += -Wno-four-char-constants
 
 $(OBJECTS) : $(BIN_DIR)/%.o : %.cpp
 	mkdir -p $(BIN_DIR)

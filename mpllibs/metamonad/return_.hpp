@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <mpllibs/metamonad/monad.hpp>
 
@@ -22,19 +22,11 @@ namespace mpllibs
         typename mpllibs::metamonad::monad<MonadTag>::return_,
         T
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "return_<";
-          mpllibs::metatest::to_stream_argument_list<MonadTag, T>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, mpllibs::metamonad::return_, "return_")
 
 #endif
 

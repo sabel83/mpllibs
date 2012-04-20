@@ -1,7 +1,7 @@
 #ifndef MPLLIBS_METATEST_TO_STREAM_SEQUENCE_HPP
 #define MPLLIBS_METATEST_TO_STREAM_SEQUENCE_HPP
 
-// Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+// Copyright Abel Sinkovics (abel@sinkovics.hu) 2011-2012.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -9,7 +9,6 @@
 #include <mpllibs/metatest/character_printer.hpp>
 #include <mpllibs/metatest/to_stream.hpp>
 
-#include <boost/mpl/aux_/range_c/tag.hpp>
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/deref.hpp>
 #include <boost/mpl/empty.hpp>
@@ -20,8 +19,14 @@
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/list.hpp>
+#include <boost/mpl/list_c.hpp>
 #include <boost/mpl/next.hpp>
 #include <boost/mpl/vector.hpp>
+#include <boost/mpl/vector_c.hpp>
+#include <boost/mpl/deque.hpp>
+#include <boost/mpl/set.hpp>
+#include <boost/mpl/set_c.hpp>
+#include <boost/mpl/map.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
@@ -191,75 +196,166 @@ namespace mpllibs
       }
     };
 
-    #ifdef MPLLIBS_TO_STREAM_SEQUENCE
-      #error MPLLIBS_TO_STREAM_SEQUENCE already defined
-    #endif
-    #define MPLLIBS_TO_STREAM_SEQUENCE(tag, name) \
-      template <> \
-      struct to_stream_impl<tag> \
-      { \
-        typedef to_stream_impl type; \
-        \
-        template <class Seq> \
-        struct apply \
-        { \
-          typedef apply type; \
-          \
-          static std::ostream& run(std::ostream& o_) \
-          { \
-            return \
-              mpllibs::metatest::to_stream_sequence_begin< \
-                Seq, \
-                typename boost::mpl::eval_if< \
-                  typename boost::mpl::empty<Seq>::type, \
-                  mpllibs::metatest::no_common_tag, \
-                  mpllibs::metatest::common_tag<Seq> \
-                >::type \
-              >::run(o_ << "mpl::" #name); \
-          } \
-        }; \
-      };
-    
-    #ifdef MPLLIBS_TO_STREAM_SEQUENCE_
-      #error MPLLIBS_TO_STREAM_SEQUENCE_ already defined
-    #endif
-    #define MPLLIBS_TO_STREAM_SEQUENCE_(tag, name) \
-      template <long N> \
-      struct to_stream_impl<tag<N> > \
-      { \
-        typedef to_stream_impl type; \
-        \
-        template <class Seq> \
-        struct apply \
-        { \
-          typedef apply type; \
-          \
-          static std::ostream& run(std::ostream& o_) \
-          { \
-            return \
-              mpllibs::metatest::to_stream_sequence_begin< \
-                Seq, \
-                typename boost::mpl::eval_if< \
-                  typename boost::mpl::empty<Seq>::type, \
-                  mpllibs::metatest::no_common_tag, \
-                  mpllibs::metatest::common_tag<Seq> \
-                >::type \
-              >::run(o_ << "mpl::" #name); \
-          } \
-        }; \
-      };
-    
-    #if defined(BOOST_MPL_CFG_TYPEOF_BASED_SEQUENCES)
-      MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::vector_tag, vector)
-    #else
-      MPLLIBS_TO_STREAM_SEQUENCE_(boost::mpl::aux::vector_tag, vector)
-    #endif
-    MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::list_tag, list)
-    MPLLIBS_TO_STREAM_SEQUENCE(boost::mpl::aux::half_open_range_tag, range)
-    
-    #undef MPLLIBS_TO_STREAM_SEQUENCE_
-    #undef MPLLIBS_TO_STREAM_SEQUENCE
+    template <class S, class Name>
+    struct to_stream_seq
+    {
+      typedef to_stream_seq type;
+      
+      static std::ostream& run(std::ostream& o_)
+      {
+        return
+          to_stream_sequence_begin<
+            S,
+            typename boost::mpl::eval_if<
+              typename boost::mpl::empty<S>::type,
+              no_common_tag,
+              common_tag<S>
+            >::type
+          >::run(o_ << "mpl::" << Name::run());
+      }
+    };
 
+    namespace util
+    {
+      // Use these classes instead of TMP strings for simplicity
+      #ifdef MPLLIBS_DEF_NAME
+        #error MPLLIBS_DEF_NAME already defined
+      #endif
+      #define MPLLIBS_DEF_NAME(s) \
+        struct name_##s \
+        { \
+          typedef name_##s type; \
+          static const char* run() \
+          { \
+            return #s; \
+          } \
+        };
+
+      MPLLIBS_DEF_NAME(list)
+      MPLLIBS_DEF_NAME(vector)
+      MPLLIBS_DEF_NAME(set)
+      MPLLIBS_DEF_NAME(map)
+      MPLLIBS_DEF_NAME(deque)
+
+      #undef MPLLIBS_DEF_NAME
+    }
+
+    #ifdef MPLLIBS_DEF_SEQ_C
+      #error MPLLIBS_DEF_SEQ_C already defined
+    #endif
+    #define MPLLIBS_DEF_SEQ_C(seq, limit) \
+      template <class T, BOOST_PP_ENUM_PARAMS(limit, long N)> \
+      struct to_stream< \
+        BOOST_PP_CAT(boost::mpl::seq, _c)<T, BOOST_PP_ENUM_PARAMS(limit, N)> \
+      > : \
+        to_stream_seq< \
+          BOOST_PP_CAT(boost::mpl::seq, _c)< \
+            T, \
+            BOOST_PP_ENUM_PARAMS(limit, N) \
+          >, \
+          BOOST_PP_CAT(mpllibs::metatest::util::name_, seq) \
+        > \
+      {};
+
+    #ifdef MPLLIBS_DEF_SEQ
+      #error MPLLIBS_DEF_SEQ already defined
+    #endif
+    #define MPLLIBS_DEF_SEQ(seq, limit) \
+      template <BOOST_PP_ENUM_PARAMS(limit, class T)> \
+      struct to_stream<boost::mpl::seq<BOOST_PP_ENUM_PARAMS(limit, T)> > : \
+        to_stream_seq< \
+          boost::mpl::seq<BOOST_PP_ENUM_PARAMS(limit, T)>, \
+          BOOST_PP_CAT(mpllibs::metatest::util::name_, seq) \
+        > \
+      {};
+
+    #ifdef MPLLIBS_DEF_SEQ_N_ITER
+      #error MPLLIBS_DEF_SEQ_N_ITER already defined
+    #endif
+    #define MPLLIBS_DEF_SEQ_N_ITER(z, n, seq) \
+      template <BOOST_PP_ENUM_PARAMS(n, class T)> \
+      struct to_stream< \
+        BOOST_PP_CAT(boost::mpl::seq, n)<BOOST_PP_ENUM_PARAMS(n, T)> \
+      > : \
+        to_stream_seq< \
+          BOOST_PP_CAT(boost::mpl::seq, n)<BOOST_PP_ENUM_PARAMS(n, T)>, \
+          BOOST_PP_CAT(mpllibs::metatest::util::name_, seq) \
+        > \
+      {};
+
+    #ifdef MPLLIBS_DEF_SEQ_N
+      #error MPLLIBS_DEF_SEQ_N already defined
+    #endif
+    #define MPLLIBS_DEF_SEQ_N(seq, limit) \
+      template <class Dummy> \
+      struct to_stream<BOOST_PP_CAT(boost::mpl::seq, 0)<Dummy> > : \
+        to_stream_seq< \
+          BOOST_PP_CAT(boost::mpl::seq, 0)<Dummy>, \
+          BOOST_PP_CAT(mpllibs::metatest::util::name_, seq) \
+        > \
+      {};\
+      \
+      BOOST_PP_REPEAT_FROM_TO( \
+        1, \
+        limit, \
+        MPLLIBS_DEF_SEQ_N_ITER, \
+        seq \
+      )
+
+    MPLLIBS_DEF_SEQ(list, BOOST_MPL_LIMIT_LIST_SIZE)
+    MPLLIBS_DEF_SEQ_C(list, BOOST_MPL_LIMIT_LIST_SIZE)
+    MPLLIBS_DEF_SEQ_N(list, BOOST_MPL_LIMIT_VECTOR_SIZE)
+    MPLLIBS_DEF_SEQ(vector, BOOST_MPL_LIMIT_VECTOR_SIZE)
+    MPLLIBS_DEF_SEQ_C(vector, BOOST_MPL_LIMIT_VECTOR_SIZE)
+    MPLLIBS_DEF_SEQ_N(vector, BOOST_MPL_LIMIT_VECTOR_SIZE)
+    MPLLIBS_DEF_SEQ(deque, BOOST_MPL_LIMIT_VECTOR_SIZE)
+    MPLLIBS_DEF_SEQ(set, BOOST_MPL_LIMIT_SET_SIZE)
+    MPLLIBS_DEF_SEQ_C(set, BOOST_MPL_LIMIT_SET_SIZE)
+    MPLLIBS_DEF_SEQ_N(set, BOOST_MPL_LIMIT_SET_SIZE)
+    MPLLIBS_DEF_SEQ(map, BOOST_MPL_LIMIT_MAP_SIZE)
+    MPLLIBS_DEF_SEQ_N(map, BOOST_MPL_LIMIT_MAP_SIZE)
+
+    #undef MPLLIBS_DEF_SEQ_N_ITER
+    #undef MPLLIBS_DEF_SEQ_N
+    #undef MPLLIBS_DEF_SEQ
+    #undef MPLLIBS_DEF_SEQ_C
+
+    template <class Size, class T, class Next>
+    struct to_stream<boost::mpl::l_item<Size, T, Next> > :
+      to_stream_seq<
+        boost::mpl::l_item<Size, T, Next>,
+        mpllibs::metatest::util::name_list
+      >
+    {};
+
+    template <class T, class Base, int AtFront>
+    struct to_stream<boost::mpl::v_item<T, Base, AtFront> > :
+      to_stream_seq<
+        boost::mpl::v_item<T, Base, AtFront>,
+        mpllibs::metatest::util::name_vector
+      >
+    {};
+
+    template <class Key, class T, class Base>
+    struct to_stream<boost::mpl::m_item<Key, T, Base> > :
+      to_stream_seq<
+        boost::mpl::m_item<Key, T, Base>,
+        mpllibs::metatest::util::name_map
+      >
+    {};
+
+    template <class T, class Base>
+    struct to_stream<boost::mpl::s_item<T, Base> > :
+      to_stream_seq<
+        boost::mpl::s_item<T, Base>,
+        mpllibs::metatest::util::name_set
+      >
+    {};
+
+    template <>
+    struct to_stream<boost::mpl::l_end> :
+      to_stream_seq<boost::mpl::l_end, mpllibs::metatest::util::name_vector>
+    {};
   }
 }    
 

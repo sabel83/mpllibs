@@ -12,7 +12,7 @@
 #include <mpllibs/metaparse/get_position.hpp>
 #include <mpllibs/metaparse/unless_error.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
@@ -49,19 +49,15 @@ namespace mpllibs
           >
         >
       {};
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "transform<";
-          mpllibs::metatest::to_stream_argument_list<P, T>::run(o);
-          return o << ">";
-        }
-      };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metaparse::transform,
+  "transform"
+)
 
 #endif
 

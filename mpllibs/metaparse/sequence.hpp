@@ -13,7 +13,7 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/transform.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/vector.hpp>
@@ -153,19 +153,7 @@ namespace mpllibs
           ~ \
         ) \
       > : sequence##n<BOOST_PP_ENUM_PARAMS(n, P)> \
-      { \
-        struct to_stream \
-        { \
-          static std::ostream& run(std::ostream& o) \
-          { \
-            o << "<"; \
-            mpllibs::metatest::to_stream_argument_list< \
-              BOOST_PP_ENUM_PARAMS(n, P) \
-            >::run(o); \
-            return o << ">"; \
-          } \
-        }; \
-      };
+      {};
     
     BOOST_PP_REPEAT(MPLLIBS_SEQUENCE_MAX_ARGUMENT, MPLLIBS_SEQUENCE_N, ~)
     
@@ -173,6 +161,13 @@ namespace mpllibs
     #undef MPLLIBS_SEQUENCE_UNUSED_PARAM
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
+  0,
+  MPLLIBS_SEQUENCE_MAX_ARGUMENT,
+  mpllibs::metaparse::sequence,
+  "sequence"
+)
 
 #endif
 

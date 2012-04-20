@@ -49,19 +49,7 @@ namespace mpllibs
           ~ \
         ) \
       > : any1<one_of_##n<BOOST_PP_ENUM_PARAMS(n, P)> > \
-      { \
-        struct to_stream \
-        { \
-          static std::ostream& run(std::ostream& o) \
-          { \
-            o << "any_one_of1<"; \
-            mpllibs::metatest::to_stream_argument_list< \
-              BOOST_PP_ENUM_PARAMS(n, P) \
-            >::run(o); \
-            return o << ">"; \
-          } \
-        }; \
-      };
+      {};
     
     BOOST_PP_REPEAT(MPLLIBS_ONE_OF_MAX_ARGUMENT, MPLLIBS_ANY_ONE_OF1_CASE, ~)
     

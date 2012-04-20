@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/nth_of.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 namespace mpllibs
 {
@@ -23,21 +23,16 @@ namespace mpllibs
     >
     struct first_of :
       nth_of_c<0, BOOST_PP_ENUM_PARAMS(MPLLIBS_SEQUENCE_MAX_ARGUMENT, P)>
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "first_of<";
-          mpllibs::metatest::to_stream_argument_list<
-            BOOST_PP_ENUM_PARAMS(MPLLIBS_SEQUENCE_MAX_ARGUMENT, P)
-          >::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
+  0,
+  MPLLIBS_SEQUENCE_MAX_ARGUMENT,
+  mpllibs::metaparse::first_of,
+  "first_of"
+)
 
 #endif
 

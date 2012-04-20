@@ -10,7 +10,7 @@
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/monad.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/tag.hpp>
@@ -25,28 +25,6 @@
 
 namespace mpllibs
 {
-  namespace metatest
-  {
-    template <>
-    struct to_stream_impl<mpllibs::metamonad::exception_tag>
-    {
-      template <class E>
-      struct apply
-      {
-        typedef apply type;
-      
-        static std::ostream& run(std::ostream& o)
-        {
-          using mpllibs::metamonad::get_data;
-          
-          o << "exception<";
-          to_stream_argument_list<typename get_data<E>::type>::run(o);
-          return o << ">";
-        }
-      };
-    };
-  }
-
   namespace metamonad
   {
     template <>
@@ -80,14 +58,6 @@ namespace mpllibs
       {
         typedef return_ type;
         
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<exception_tag>::return_";
-          }
-        };
-
         template <class T>
         struct apply
         {
@@ -98,14 +68,6 @@ namespace mpllibs
       struct bind
       {
         typedef bind type;
-
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<exception_tag>::bind";
-          }
-        };
 
         template <class A, class F>
         struct apply :
@@ -156,6 +118,21 @@ namespace boost
     {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::exception_tag>::bind,
+  "monad<exception_tag>::bind"
+)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::exception_tag>::fail,
+  "monad<exception_tag>::fail"
+)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::exception_tag>::return_,
+  "monad<exception_tag>::return_"
+)
 
 #endif
 

@@ -17,9 +17,6 @@ namespace mpllibs
   namespace metatest
   {
     template <class T>
-    struct to_stream_impl;
-    
-    template <class T>
     struct to_stream;
   }
 }    

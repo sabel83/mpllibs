@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/foldl.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/if.hpp>
 
@@ -29,23 +29,11 @@ namespace mpllibs
           foldl<P, State, ForwardOp>
         >::type::template apply<S, Pos>
       {};
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "foldl1<";
-          mpllibs::metatest::to_stream_argument_list<
-            P,
-            State,
-            ForwardOp
-          >::run(o);
-          return o << ">";
-        }
-      };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metaparse::foldl1, "foldl1")
 
 #endif
 

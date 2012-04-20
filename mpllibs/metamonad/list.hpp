@@ -11,6 +11,8 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/end.hpp>
@@ -46,14 +48,6 @@ namespace mpllibs
       {
         typedef return_ type;
         
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<list_tag>::return_";
-          }
-        };
-
         template <class T>
         struct apply : boost::mpl::list<T> {};
       };
@@ -62,14 +56,6 @@ namespace mpllibs
       {
         typedef bind type;
         
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<list_tag>::bind";
-          }
-        };
-
         template <class A, class F>
         struct apply :
           boost::mpl::fold<
@@ -97,6 +83,16 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::list_tag>::bind,
+  "monad<list_tag>::bind"
+)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::list_tag>::return_,
+  "monad<list_tag>::return_"
+)
 
 #endif
 

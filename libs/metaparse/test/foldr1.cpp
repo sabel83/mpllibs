@@ -7,7 +7,7 @@
 
 #include <mpllibs/metaparse/foldr1.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/push_front.hpp>
@@ -23,19 +23,10 @@ using boost::mpl::_2;
 namespace
 { 
   template <class P>
-  struct any1 : foldr1<P, list<>, push_front<_2, _1> >
-  {
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        o << "foldr1__any1<";
-        mpllibs::metatest::to_stream_argument_list<P>::run(o);
-        return o << ">";
-      }
-    };
-  };
+  struct any1 : foldr1<P, list<>, push_front<_2, _1> > {};
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, any1, "foldr1__any1")
 
 #define DEFINE_TEST_CASE BOOST_AUTO_TEST_CASE(test_foldr1)
 

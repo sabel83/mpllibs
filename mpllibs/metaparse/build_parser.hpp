@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/apply.hpp>
 
@@ -24,19 +24,15 @@ namespace mpllibs
       
       template <class S>
       struct apply : get_result<boost::mpl::apply<P, S, start> > {};
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "build_parser<";
-          mpllibs::metatest::to_stream_argument_list<P>::run(o);
-          return o << ">";
-        }
-      };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  1,
+  mpllibs::metaparse::build_parser,
+  "build_parser"
+)
 
 #endif
 

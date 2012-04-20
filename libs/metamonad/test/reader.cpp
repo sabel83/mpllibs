@@ -38,16 +38,6 @@ namespace
   {
     typedef fplus type;
     
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o_)
-      {
-        o_ << "fplus<";
-        mpllibs::metatest::to_stream<A>::run(o_);
-        return o_ << ">";
-      }
-    };
-    
     template <class R>
     struct apply : plus<A, R> {};
   };
@@ -65,6 +55,8 @@ namespace
     >
     test_bind;
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, fplus, "fplus")
 
 MPLLIBS_ADD_TEST(suite, test_return)
 MPLLIBS_ADD_TEST(suite, test_bind)

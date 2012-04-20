@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -28,19 +28,15 @@ namespace mpllibs
         typename P::type,
         typename Ch::type
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "next_line<";
-          mpllibs::metatest::to_stream_argument_list<P, Ch>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metaparse::next_line,
+  "next_line"
+)
 
 #endif
 

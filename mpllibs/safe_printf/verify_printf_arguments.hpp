@@ -9,7 +9,7 @@
 #include <mpllibs/safe_printf/printf_parser.hpp>
 #include <mpllibs/safe_printf/verify_printf_arguments_impl.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 
@@ -23,19 +23,15 @@ namespace mpllibs
         boost::mpl::apply_wrap1<printf_parser, F>,
         ArgTypes
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "verify_printf_arguments<";
-          mpllibs::metatest::to_stream_argument_list<F, ArgTypes>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::safe_printf::verify_printf_arguments,
+  "verify_printf_arguments"
+)
 
 #endif
 

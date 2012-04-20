@@ -39,7 +39,7 @@ struct bind<ast::application<F, Arg>, TopEnv, Env>
 };
 
 template <class F, class ArgName, class TopEnv, class Env>
-class bind<ast::lambda<F, ArgName>, TopEnv, Env>
+struct bind<ast::lambda<F, ArgName>, TopEnv, Env>
 {
 private:
   struct lambda

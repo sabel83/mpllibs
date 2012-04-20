@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 #include <mpllibs/metatest/yes.hpp>
 #include <mpllibs/metatest/no.hpp>
 
@@ -23,16 +23,6 @@ namespace mpllibs
     template <class F, class ValueType>
     struct has_value
     {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "has_value<";
-          to_stream_argument_list<F, ValueType>::run(o);
-          return o << ">";
-        }
-      };
-
       struct type
       {
         template <ValueType Value_>
@@ -59,12 +49,16 @@ namespace mpllibs
               has_value<F, ValueType>::type::tester(static_cast<F*>(0), 13)
             )
             == sizeof(yes);
-
-        typedef typename has_value<F, ValueType>::to_stream to_stream;
       };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metatest::has_value,
+  "has_value"
+)
 
 #endif
 

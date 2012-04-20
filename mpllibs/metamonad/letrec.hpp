@@ -8,7 +8,7 @@
 
 #include <mpllibs/metamonad/let.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 namespace mpllibs
 {
@@ -16,19 +16,11 @@ namespace mpllibs
   {
     template <class A, class E1, class E2>
     struct letrec : let<A, letrec<A, E1, E1>, E2>
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "letrec<";
-          mpllibs::metatest::to_stream_argument_list<A, E1, E2>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metamonad::letrec, "letrec")
 
 #endif
 

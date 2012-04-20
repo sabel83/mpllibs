@@ -3,6 +3,17 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/config.hpp>
+
+#ifdef BOOST_NO_CONSTEXPR
+#include <iostream>
+
+int main()
+{
+  std::cout << "Please use a compiler that supports constexpr" << std::endl;
+}
+#else
+
 #define BOOST_MPL_LIMIT_STRING_SIZE 64 
 #define MPLLIBS_STRING_MAX_LENGTH BOOST_MPL_LIMIT_STRING_SIZE
 
@@ -54,13 +65,6 @@ using boost::mpl::_2;
 using boost::mpl::char_;
 using boost::mpl::lambda;
 using boost::mpl::int_;
-
-#ifdef BOOST_NO_CONSTEXPR
-int main()
-{
-  std::cout << "Please use a compiler that supports constexpr" << std::endl;
-}
-#else
 
 #ifdef _S
   #error _S already defined

@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/char.hpp>
@@ -31,18 +33,15 @@ namespace mpllibs
             boost::mpl::equal_to<C, boost::mpl::char_<'\t'> >
           >
         {};
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o)
-          {
-            return o << "is_whitespace";
-          }
-        };
       };
     }
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metaparse::util::is_whitespace,
+  "is_whitespace"
+)
 
 #endif
 

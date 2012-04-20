@@ -19,7 +19,6 @@
 #include <mpllibs/metaparse/build_parser.hpp>
 
 #include <mpllibs/metatest/to_stream.hpp>
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/fold.hpp>
@@ -79,18 +78,7 @@ typedef token<lit_c<'/'> > div_token;
 typedef token<int_> int_token;
 
 template <class T, char C>
-struct is_c : bool_<T::type::value == C>
-{
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      o << "is_c";
-      mpllibs::metatest::to_stream_argument_list<T>::run(o);
-      return o << ", " << C << ">";
-    }
-  };
-};
+struct is_c : bool_<T::type::value == C> {};
 
 struct eval_plus
 {
@@ -102,15 +90,9 @@ struct eval_plus
       minus<typename State::type, typename back<C>::type>
     >
   {};
-
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      return o << "eval_plus";
-    }
-  };
 };
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(eval_plus)
   
 struct eval_mult
 {
@@ -122,15 +104,9 @@ struct eval_mult
       divides<typename State::type, typename back<C>::type>
     >
   {};
-
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      return o << "eval_mult";
-    }
-  };
 };
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(eval_mult)
 
 typedef
   foldlp<

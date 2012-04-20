@@ -11,7 +11,7 @@
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
@@ -257,16 +257,6 @@ namespace mpllibs
           Monad BOOST_PP_REPEAT(MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_ARG, ~)
         >
       {};
-      
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "do_<";
-          mpllibs::metatest::to_stream_argument_list<Monad>::run(o);
-          return o << ">";
-        }
-      };
     };
     
     #undef MPLLIBS_DO_ARG

@@ -26,19 +26,11 @@ namespace mpllibs
         typename boost::mpl::tag<typename T::type>::type,
         left_tag
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o_)
-        {
-          o_ << "is_left<";
-          mpllibs::metatest::to_stream<T>::run(o_);
-          return o_ << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metamonad::is_left, "is_left")
 
 #endif
 

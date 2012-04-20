@@ -9,8 +9,6 @@
 #include <mpllibs/metamonad/typeclass.hpp>
 #include <mpllibs/metamonad/throw.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/always.hpp>
 
@@ -43,16 +41,6 @@ namespace mpllibs
             boost::mpl::always<B>
           >
         {};
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            o_ << "monad<";
-            mpllibs::metatest::to_stream<Tag>::run(o_);
-            return o_ << ">::bind_";
-          }
-        };
       };
 
       struct fail
@@ -61,31 +49,7 @@ namespace mpllibs
       
         template <class S>
         struct apply : throw_<S> {};
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            o_ << "monad<";
-            mpllibs::metatest::to_stream<Tag>::run(o_);
-            return o_ << ">::fail";
-          }
-        };
       };
-    };
-  }
-  
-  namespace metatest
-  {
-    template <class Tag>
-    struct to_stream<mpllibs::metamonad::monad<Tag> >
-    {
-      static std::ostream& run(std::ostream& o_)
-      {
-        o_ << "monad<";
-        mpllibs::metatest::to_stream<Tag>::run(o_);
-        return o_ << ">";
-      }
     };
   }
 }

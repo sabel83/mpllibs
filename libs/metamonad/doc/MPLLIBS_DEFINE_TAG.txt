@@ -45,13 +45,6 @@ struct example_tag
 {
   typedef example_tag type;
   typedef tag_tag tag;
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      return o << "examlpe_tag";
-    }
-  };
 };
 --------------------------------------
 

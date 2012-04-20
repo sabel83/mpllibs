@@ -16,14 +16,6 @@
   { \
     typedef name type; \
     typedef tag_type tag; \
-    \
-    struct to_stream \
-    { \
-      static std::ostream& run(std::ostream& o) \
-      { \
-        return o << #name; \
-      } \
-    }; \
   };
 
 #endif

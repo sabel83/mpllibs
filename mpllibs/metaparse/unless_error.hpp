@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/is_error.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -24,19 +24,15 @@ namespace mpllibs
         T,
         NotErrorCase
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "unless_error<";
-          mpllibs::metatest::to_stream_argument_list<T, NotErrorCase>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metaparse::unless_error,
+  "unless_error"
+)
 
 #endif
 

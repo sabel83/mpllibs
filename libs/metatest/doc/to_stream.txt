@@ -1,4 +1,4 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2010 - 2012.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
@@ -23,17 +23,9 @@ Description
 -----------
 
 Tool for pretty-printing types at runtime. It takes the type as a compile-time
-and the stream to print it to as a runtime argument.
-This template has been designed to be customizable in several ways:
-
-* The template can be specialised for any type.
-* When +T+ has a nested type +to_stream+, its
-  +static std::ostream& run(std::ostream&)+ method is used.
-* When none of the above applies, +to_stream+ instantiates +to_stream_impl+
-  with the +tag+ of +T+ as argument. The +run+ method of that class is used.
-
-These things are checked in the above order - the first one that applies is
-used.
+and the stream to print it to as a runtime argument. Pretty-printing support for
+new types can be added by specialising this template and providing the +run+
+method in the specialisation.
 
 Header
 ------

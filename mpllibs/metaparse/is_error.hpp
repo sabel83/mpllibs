@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <mpllibs/metaparse/fail_tag.hpp>
 
@@ -24,19 +24,15 @@ namespace mpllibs
         fail_tag,
         typename boost::mpl::tag<typename T::type>::type
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "is_error<";
-          mpllibs::metatest::to_stream_argument_list<T>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  1,
+  mpllibs::metaparse::is_error,
+  "is_error"
+)
 
 #endif
 

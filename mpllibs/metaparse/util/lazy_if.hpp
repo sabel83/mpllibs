@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/if.hpp>
 
 #include <iostream>
@@ -24,9 +26,6 @@ namespace mpllibs
 
   namespace metatest
   {
-    template <class T>
-    struct to_stream;
-
     template <class C, class T, class F>
     struct to_stream<mpllibs::metaparse::util::lazy_if<C, T, F> >
     {

@@ -8,8 +8,6 @@
 
 #include <mpllibs/metamonad/typeclass.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/reverse_fold.hpp>
 
@@ -42,31 +40,7 @@ namespace mpllibs
             typename monoid<Tag>::append
           >
         {};
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            o_ << "monoid<";
-            mpllibs::metatest::to_stream<Tag>::run(o_);
-            return o_ << ">::concat";
-          }
-        };
       };
-    };
-  }
-  
-  namespace metatest
-  {
-    template <class Tag>
-    struct to_stream<mpllibs::metamonad::monoid<Tag> >
-    {
-      static std::ostream& run(std::ostream& o_)
-      {
-        o_ << "monoid<";
-        mpllibs::metatest::to_stream<Tag>::run(o_);
-        return o_ << ">";
-      }
     };
   }
 }

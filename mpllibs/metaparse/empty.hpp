@@ -11,7 +11,7 @@
 
 #include <mpllibs/metamonad/meta_atom.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -46,19 +46,11 @@ namespace mpllibs
           Pos
         >
       {};
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "empty<";
-          mpllibs::metatest::to_stream_argument_list<Result>::run(o);
-          return o << ">";
-        }
-      };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::empty, "empty")
 
 #endif
 

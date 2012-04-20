@@ -12,7 +12,7 @@
 
 #include <mpllibs/metamonad/tag_tag.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <iostream>
 
@@ -36,16 +36,6 @@ namespace mpllibs
         typedef C result;
         typedef S remaining;
         typedef Pos source_position;
-      };
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "return_<";
-          mpllibs::metatest::to_stream_argument_list<C>::run(o);
-          return o << ">";
-        }
       };
     };
     
@@ -85,38 +75,13 @@ namespace mpllibs
       struct apply : A::source_position {};
     };
   }
-
-  namespace metatest
-  {
-    template <class T>
-    struct to_stream_impl;
-    
-    template <>
-    struct to_stream_impl<mpllibs::metaparse::accept_tag>
-    {
-      template <class E>
-      struct apply
-      {
-        typedef apply type;
-      
-        static std::ostream& run(std::ostream& o_)
-        {
-          typedef typename mpllibs::metaparse::get_result<E>::type result;
-          typedef typename mpllibs::metaparse::get_remaining<E>::type remaining;
-          typedef typename mpllibs::metaparse::get_position<E>::type position;
-        
-          o_ << "accept<";
-          to_stream<result>::run(o_);
-          o_ << ", ";
-          to_stream<remaining>::run(o_);
-          o_ << ", ";
-          to_stream<position>::run(o_);
-          return o_ << ">";
-        }
-      };
-    };
-  }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  1,
+  mpllibs::metaparse::return_,
+  "metaparse::return_"
+)
 
 #endif
 

@@ -6,7 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_integral_constant.hpp>
 #include <mpllibs/metatest/to_stream_sequence.hpp>
 
 #include <boost/mpl/string.hpp>
@@ -66,47 +65,87 @@
 #include <boost/mpl/value_type.hpp>
 #include <boost/mpl/void.hpp>
 #include <boost/mpl/zip_view.hpp>
+#include <boost/mpl/range_c.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
 #include <boost/preprocessor/arithmetic/inc.hpp>
+#include <boost/preprocessor/arithmetic/div.hpp>
+#include <boost/preprocessor/repetition/enum_params.hpp>
 
 namespace mpllibs
 {
   namespace metatest
   {
-    template <>
-    struct to_stream_impl<boost::mpl::integral_c_tag>
+    template <class T, T Start, T Finish>
+    struct to_stream<boost::mpl::range_c<T, Start, Finish> >
     {
-      template <class T>
-      struct apply :
-        to_stream_integral_constant<typename T::value_type, T::value>
-      {};
+      static std::ostream& run(std::ostream& o)
+      {
+        o << "range_c<";
+        to_stream<T>::run(o);
+        return o << ", " << Start << ", " << Finish << ">";
+      }
     };
 
-    template <>
-    struct to_stream_impl<boost::mpl::string_tag>
+    template <class T, T N>
+    struct to_stream<boost::mpl::integral_c<T, N> >
     {
-      template <class S>
-      struct apply
+      static std::ostream& run(std::ostream& o)
       {
-        static std::ostream& run(std::ostream& o_)
-        {
-          o_ << "string<\"";
-          boost::mpl::for_each<S>(character_printer(o_));
-          return o_ << "\">";
-        }
-      };
+        o << "integral_c<";
+        to_stream<T>::run(o);
+        return o << ", " << N << ">";
+      }
     };
 
-    template <>
-    struct to_stream<boost::mpl::void_>
+    template <size_t N>
+    struct to_stream<boost::mpl::size_t<N> >
     {
-      typedef to_stream type;
-      
-      static std::ostream& run(std::ostream& o_)
+      static std::ostream& run(std::ostream& o)
       {
-        return o_ << "void_";
+        return o << "size_t<" << N << ">";
+      }
+    };
+
+    template <long N>
+    struct to_stream<boost::mpl::long_<N> >
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        return o << "long<" << N << ">";
+      }
+    };
+
+    template <int N>
+    struct to_stream<boost::mpl::int_<N> >
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        return o << "int<" << N << ">";
+      }
+    };
+
+    template <BOOST_PP_ENUM_PARAMS(BOOST_MPL_STRING_MAX_PARAMS, int C)>
+    struct to_stream<
+      boost::mpl::string<BOOST_PP_ENUM_PARAMS(BOOST_MPL_STRING_MAX_PARAMS, C)>
+    >
+    {
+      static std::ostream& run(std::ostream& o)
+      {
+        return
+          o
+            << "string<\""
+            <<
+              boost::mpl::c_str<
+                boost::mpl::string<
+                  BOOST_PP_ENUM_PARAMS(
+                    BOOST_PP_DIV(BOOST_MPL_LIMIT_STRING_SIZE, 4),
+                    C
+                  )
+                >
+              >::type::value
+            << "\">";
       }
     };
 
@@ -120,28 +159,23 @@ namespace mpllibs
         return o_ << "_" << N;
       }
     };
+
+    template <char C>
+    struct to_stream<boost::mpl::char_<C> >
+    {
+      typedef to_stream type;
+
+      static std::ostream& run(std::ostream& o_)
+      {
+        return o_ << "char_<" << C << ">";
+      }
+    };
   }
-}    
+}
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(char)
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(signed char)
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(unsigned char)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(short)
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(unsigned short)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(int)
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(unsigned int)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(long)
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(unsigned long)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(float)
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(double)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(bool)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(void)
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(boost::mpl::bool_<true>, "true")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(boost::mpl::bool_<false>, "false")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(boost::mpl::void_, "void_")
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(boost::mpl::empty_sequence, "empty_sequence")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, boost::mpl::filter_view, "filter_view")

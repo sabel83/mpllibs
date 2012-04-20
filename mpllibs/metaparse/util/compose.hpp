@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
@@ -124,19 +124,7 @@ namespace mpllibs
             ~ \
           ) \
         > : compose##n<BOOST_PP_ENUM_PARAMS(n, F)> \
-        { \
-          struct to_stream \
-          { \
-            static std::ostream& run(std::ostream& o) \
-            { \
-              o << "compose<"; \
-              mpllibs::metatest::to_stream_argument_list< \
-                BOOST_PP_ENUM_PARAMS(n, F) \
-              >::run(o); \
-              return o << ">"; \
-            } \
-          }; \
-        };
+        {};
     
       BOOST_PP_REPEAT_FROM_TO(
         1,
@@ -152,6 +140,12 @@ namespace mpllibs
     }
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  MPLLIBS_COMPOSE_MAX_ARGUMENT,
+  mpllibs::metaparse::util::compose,
+  "compose"
+)
 
 #endif
 

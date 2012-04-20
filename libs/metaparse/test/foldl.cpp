@@ -7,7 +7,7 @@
 
 #include <mpllibs/metaparse/foldl.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/push_back.hpp>
@@ -24,19 +24,10 @@ using boost::mpl::lambda;
 namespace
 { 
   template <class P>
-  struct any : foldl<P, vector<>, lambda<push_back<_2, _1> >::type>
-  {
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        o << "foldl__any<";
-        mpllibs::metatest::to_stream_argument_list<P>::run(o);
-        return o << ">";
-      }
-    };
-  };
+  struct any : foldl<P, vector<>, lambda<push_back<_2, _1> >::type> {};
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, any, "foldl__any")
 
 #define DEFINE_TEST_CASE BOOST_AUTO_TEST_CASE(test_foldl)
 

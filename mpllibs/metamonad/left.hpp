@@ -27,15 +27,6 @@ namespace mpllibs
       typedef left type;
       typedef left_tag tag;
       typedef typename T::type data;
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o_)
-        {
-          o_ << "left<";
-          mpllibs::metatest::to_stream<T>::run(o_);
-          return o_ << ">";
-        }
-      };
     };
     
     template <>
@@ -74,6 +65,8 @@ namespace boost
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metamonad::left, "left")
 
 #endif
 

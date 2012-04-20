@@ -8,6 +8,8 @@
 
 #include <mpllibs/metaparse/foldl.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -35,23 +37,11 @@ namespace mpllibs
           apply_unchecked<boost::mpl::apply<StateP, S, Pos> >
         >
       {};
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "foldlp<";
-          mpllibs::metatest::to_stream_argument_list<
-            P,
-            StateP,
-            ForwardOp
-          >::run(o);
-          return o << ">";
-        }
-      };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metaparse::foldlp, "foldlp")
 
 #endif
 

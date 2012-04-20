@@ -8,7 +8,7 @@
 
 #include <mpllibs/metatest/has_value.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/eval_if.hpp>
 
@@ -19,19 +19,15 @@ namespace mpllibs
     template <class T, class Default>
     struct get_value :
       boost::mpl::eval_if<typename has_value<T, bool>::type, T, Default>
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "get_value<";
-          to_stream_argument_list<T, Default>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metatest::get_value,
+  "get_value"
+)
 
 #endif
 

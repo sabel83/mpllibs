@@ -13,6 +13,8 @@
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/apply.hpp>
@@ -29,14 +31,6 @@ namespace mpllibs
       struct return_
       {
         typedef return_ type;
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<either_tag>::return_";
-          }
-        };
         
         template <class T>
         struct apply : right<T> {};
@@ -58,27 +52,11 @@ namespace mpllibs
         {};
         
         typedef bind type;
-
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<either_tag>::bind";
-          }
-        };
       };
 
       struct fail
       {
         typedef fail type;
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<either_tag>::fail";
-          }
-        };
         
         template <class S>
         struct apply : left<S> {};
@@ -86,6 +64,21 @@ namespace mpllibs
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::either_tag>::bind,
+  "monad<either_tag>::bind"
+)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::either_tag>::fail,
+  "monad<either_tag>::fail"
+)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::either_tag>::return_,
+  "monad<either_tag>::return_"
+)
 
 #endif
 

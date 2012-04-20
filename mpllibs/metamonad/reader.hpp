@@ -27,14 +27,6 @@ namespace mpllibs
       {
         typedef return_ type;
         
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<reader_tag>::return_";
-          }
-        };
-        
         template <class T>
         struct apply
         {
@@ -66,18 +58,20 @@ namespace mpllibs
         struct apply : impl<A, F> {};
         
         typedef bind type;
-
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<reader_tag>::bind";
-          }
-        };
       };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::reader_tag>::bind,
+  "monad<reader_tag>::bind"
+)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::reader_tag>::return_,
+  "monad<reader_tag>::return_"
+)
 
 #endif
 

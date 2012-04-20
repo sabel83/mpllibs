@@ -21,19 +21,7 @@ namespace mpllibs
   namespace metamonad
   {
     template <class M>
-    struct writer_tag
-    {
-      typedef writer_tag type;
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o_)
-        {
-          o_ << "writer_tag<";
-          mpllibs::metatest::to_stream<M>::run(o_);
-          return o_ << ">";
-        }
-      };
-    };
+    struct writer_tag {};
     
     template <class M>
     struct monad<writer_tag<M> > : monad_defaults<writer_tag<M> >
@@ -41,16 +29,6 @@ namespace mpllibs
       struct return_
       {
         typedef return_ type;
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            o_ << "monad<";
-            mpllibs::metatest::to_stream<writer_tag<M> >::run(o_);
-            return o_ << ">::return_";
-          }
-        };
         
         template <class T>
         struct apply
@@ -82,20 +60,16 @@ namespace mpllibs
         };
         
         typedef bind type;
-
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            o_ << "monad<";
-            mpllibs::metatest::to_stream<writer_tag<M> >::run(o_);
-            return o_ << ">::bind";
-          }
-        };
       };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  1,
+  mpllibs::metamonad::writer_tag,
+  "writer_tag"
+)
 
 #endif
 

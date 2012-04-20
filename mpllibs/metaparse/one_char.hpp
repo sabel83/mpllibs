@@ -14,6 +14,8 @@
 
 #include <mpllibs/metamonad/meta_atom.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
@@ -73,9 +75,7 @@ namespace mpllibs
         boost::mpl::eval_if<
           typename boost::mpl::empty<S>::type,
           boost::mpl::apply_wrap2<
-            fail<
-              mpllibs::metaparse::errors::unexpected_end_of_input
-            >,
+            fail<mpllibs::metaparse::errors::unexpected_end_of_input>,
             S,
             Pos
           >,
@@ -86,17 +86,11 @@ namespace mpllibs
           >
         >
       {};
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          return o << "one_char";
-        }
-      };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::one_char, "one_char")
 
 #endif
 

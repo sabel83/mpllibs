@@ -8,7 +8,7 @@
 
 #include "verify_argument_impl.hpp"
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/or.hpp>
@@ -33,18 +33,14 @@ namespace safe
         typename Actual::type
       >
     >
-  {
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        o << "verify_argument<";
-        mpllibs::metatest::to_stream_argument_list<Expected, Actual>::run(o);
-        return o << ">";
-      }
-    };
-  };
+  {};
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  safe::verify_argument,
+  "verify_argument"
+)
 
 #endif
 

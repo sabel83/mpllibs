@@ -36,14 +36,6 @@ namespace
   
     template <class A>
     struct apply : right<typename minus<typename A::value, int2>::type> {};
-    
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        return o << "minus_2";
-      }
-    };
   };
 
   typedef equal_to<right<int13>, return_<either, int13>::type> test_return;
@@ -63,6 +55,8 @@ namespace
     >
     test_multi_step_chain;
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(minus_2)
 
 MPLLIBS_ADD_TEST(suite, test_return)
 MPLLIBS_ADD_TEST(suite, test_bind_left)

@@ -9,6 +9,8 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/string.hpp>
@@ -42,16 +44,6 @@ namespace mpllibs
         exit(0);
       }
     
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "debug_parsing_error<";
-          mpllibs::metatest::to_stream_argument_list<P, S>::run(o);
-          return o << ">";
-        }
-      };
-      
       typedef debug_parsing_error type;
     private:
       template <class Result>
@@ -113,6 +105,12 @@ namespace mpllibs
     {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  2,
+  mpllibs::metaparse::debug_parsing_error,
+  "debug_parsing_error"
+)
 
 #endif
 

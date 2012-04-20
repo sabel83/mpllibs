@@ -17,15 +17,18 @@ namespace mpllibs
   namespace metaparse
   {
     template <char C>
-    struct lit_c : lit<boost::mpl::char_<C> >
+    struct lit_c : lit<boost::mpl::char_<C> > {};
+  }
+
+  namespace metatest
+  {
+    template <char C>
+    struct to_stream<mpllibs::metaparse::lit_c<C> >
     {
-      struct to_stream
+      static std::ostream& run(std::ostream& o)
       {
-        static std::ostream& run(std::ostream& o)
-        {
-          return o << "lit_c<" << C << ">";
-        }
-      };
+        return o << "lit_c<" << C << ">";
+      }
     };
   }
 }

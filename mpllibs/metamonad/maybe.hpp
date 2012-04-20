@@ -13,6 +13,8 @@
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/monad.hpp>
 
+#include <mpllibs/metatest/to_stream_fwd.hpp>
+
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/apply.hpp>
@@ -30,14 +32,6 @@ namespace mpllibs
       {
         typedef return_ type;
         
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<maybe_tag>::return_";
-          }
-        };
-
         template <class T>
         struct apply : just<T> {};
       };
@@ -57,34 +51,33 @@ namespace mpllibs
           >::type
         {};
         typedef bind type;
-        
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<maybe_tag>::bind";
-          }
-        };
       };
 
       struct fail
       {
         typedef return_ type;
         
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o_)
-          {
-            return o_ << "monad<maybe_tag>::fail";
-          }
-        };
-
         template <class S>
         struct apply : nothing {};
       };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::maybe_tag>::bind,
+  "monad<maybe_tag>::bind"
+)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::maybe_tag>::fail,
+  "monad<maybe_tag>::fail"
+)
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
+  mpllibs::metamonad::monad<mpllibs::metamonad::maybe_tag>::return_,
+  "monad<maybe_tag>::return_"
+)
 
 #endif
 

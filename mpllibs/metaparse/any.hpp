@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/foldr.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/push_front.hpp>
@@ -27,19 +27,11 @@ namespace mpllibs
           boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1>
         >::type
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "any<";
-          mpllibs::metatest::to_stream_argument_list<P>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::any, "any")
 
 #endif
 

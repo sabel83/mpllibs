@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/lambda.hpp>
@@ -24,7 +24,7 @@ namespace mpllibs
     {
       template <class C>
       struct literal_expected :
-        boost::mpl::push_back<boost::mpl::string<'expe','cted',': '>, C>::type
+        boost::mpl::push_back<boost::mpl::string<'expe','cted',': '>, C>
       {};
     }
   
@@ -37,19 +37,11 @@ namespace mpllibs
         >::type,
         mpllibs::metaparse::errors::literal_expected<C>
       >
-    {
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "lit<";
-          mpllibs::metatest::to_stream_argument_list<C>::run(o);
-          return o << ">";
-        }
-      };
-    };
+    {};
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::lit, "lit")
 
 #endif
 

@@ -11,7 +11,7 @@
 
 #include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metatest/has_type.hpp>
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -25,41 +25,19 @@
 namespace
 {
   using std::ostream;
-
   using boost::mpl::identity;
 
-  using mpllibs::metatest::to_stream_argument_list;
-
   template <class A, class B>
-  struct get_first : identity<A>
-  {
-    struct to_stream
-    {
-      static ostream& run(ostream& o)
-      {
-        o << "get_first<";
-        to_stream_argument_list<A, B>::run(o);
-        return o << ">";
-      }
-    };
-  };
+  struct get_first : identity<A> {};
   
   template <class A, class B>
-  struct get_second : identity<B>
-  {
-    struct to_stream
-    {
-      static ostream& run(ostream& o)
-      {
-        o << "get_second<";
-        to_stream_argument_list<A, B>::run(o);
-        return o << ">";
-      }
-    };
-  };
+  struct get_second : identity<B> {};
   
   typedef identity<int13> nullary_metafunction;
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, get_first, "get_first")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, get_second, "get_second")
 
 BOOST_AUTO_TEST_CASE(test_curry)
 {

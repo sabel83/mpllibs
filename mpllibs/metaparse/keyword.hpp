@@ -15,7 +15,7 @@
 #include <mpllibs/metamonad/meta_atom.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -85,19 +85,11 @@ namespace mpllibs
           Pos
         >
       {};
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "keyword<";
-          mpllibs::metatest::to_stream_argument_list<Kw, ResultType>::run(o);
-          return o << ">";
-        }
-      };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, mpllibs::metaparse::keyword, "keyword")
 
 #endif
 

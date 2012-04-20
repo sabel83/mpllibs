@@ -19,7 +19,7 @@
 #include <mpllibs/metaparse/always.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/front.hpp>
@@ -66,18 +66,7 @@ typedef token<int_> int_token;
 typedef token<lit_c<'_'> > arg_token;
 
 template <class T, char C>
-struct is_c : bool_<T::type::value == C>
-{
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      o << "is_c";
-      mpllibs::metatest::to_stream_argument_list<T>::run(o);
-      return o << ", " << C << ">";
-    }
-  };
-};
+struct is_c : bool_<T::type::value == C> {};
 
 struct build_plus
 {
@@ -121,15 +110,9 @@ struct build_plus
       _minus<State, typename back<C>::type>
     >
   {};
-
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      return o << "build_plus";
-    }
-  };
 };
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(build_plus)
 
 struct build_mult
 {
@@ -173,15 +156,9 @@ struct build_mult
       _div<State, typename back<C>::type>
     >
   {};
-
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      return o << "build_mult";
-    }
-  };
 };
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(build_mult)
 
 struct build_value
 {
@@ -198,15 +175,9 @@ struct build_value
       return V::type::value;
     }
   };
-
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      return o << "build_value";
-    }
-  };
 };
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(build_value)
 
 struct arg
 {
@@ -217,15 +188,9 @@ struct arg
   {
     return t;
   }
-
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      return o << "arg";
-    }
-  };
 };
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(arg)
 
 typedef
   one_of<transform<int_token, build_value>, always<arg_token, arg> >

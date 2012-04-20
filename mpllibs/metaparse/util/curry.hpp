@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -25,6 +25,11 @@
 
 namespace mpllibs
 {
+  #ifdef MPLLIBS_CLASS_REPEAT
+    #error MPLLIBS_CLASS_REPEAT already defined
+  #endif
+  #define MPLLIBS_CLASS_REPEAT(z, n, unused) BOOST_PP_COMMA_IF(n) class
+
   namespace metaparse
   {
     namespace util
@@ -90,23 +95,7 @@ namespace mpllibs
 
     
       template <class T>
-      struct curry0 : T
-      {
-        struct to_stream
-        {
-          static std::ostream& run(std::ostream& o)
-          {
-            o << "curry0<";
-            mpllibs::metatest::to_stream<T>::run(o);
-            return o << ">";
-          }
-        };
-      };
-
-      #ifdef MPLLIBS_CLASS_REPEAT
-        #error MPLLIBS_CLASS_REPEAT already defined
-      #endif
-      #define MPLLIBS_CLASS_REPEAT(z, n, unused) BOOST_PP_COMMA_IF(n) class
+      struct curry0 : T {};
 
       #ifdef MPLLIBS_CURRY
         #error MPLLIBS_CURRY already defined
@@ -121,23 +110,48 @@ namespace mpllibs
             boost::mpl::int_<n>, \
             boost::mpl::deque<> \
           >::type \
-        { \
-          struct to_stream \
-          { \
-            static std::ostream& run(std::ostream& o) \
-            { \
-              return o << "curry" << n << "<?" "??" ">"; \
-            } \
-          }; \
-        };
+        {};
     
       BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_CURRY_MAX_ARGUMENT, MPLLIBS_CURRY, ~)
     
       #undef MPLLIBS_CURRY
-      #undef MPLLIBS_CLASS_REPEAT
     }
   }
+  
+  namespace metatest
+  {
+    #ifdef MPLLIBS_DEFINE_TO_STREAM_FOR_CURRY
+      #error MPLLIBS_DEFINE_TO_STREAM_FOR_CURRY already defined
+    #endif
+    #define MPLLIBS_DEFINE_TO_STREAM_FOR_CURRY(z, n, unused) \
+      template < \
+        template <BOOST_PP_REPEAT(n, MPLLIBS_CLASS_REPEAT, ~)> class T \
+      > \
+      struct to_stream<mpllibs::metaparse::util::curry##n<T> > \
+      { \
+        static std::ostream& run(std::ostream& o) \
+        { \
+          return o << "curry" << n << "<?" "??" ">"; \
+        } \
+      };
+
+    BOOST_PP_REPEAT_FROM_TO(
+      1,
+      MPLLIBS_CURRY_MAX_ARGUMENT,
+      MPLLIBS_DEFINE_TO_STREAM_FOR_CURRY,
+      ~
+    )
+    
+    #undef MPLLIBS_DEFINE_TO_STREAM_FOR_CURRY
+  }
+  #undef MPLLIBS_CLASS_REPEAT
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
+  1,
+  mpllibs::metaparse::util::curry0,
+  "curry0"
+)
 
 #endif
 

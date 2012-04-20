@@ -23,7 +23,6 @@ Macro for defining a class called +name+
 
 * which has tag +tag+
 * which can be used as a nullary metafunction evaluating to itself
-* which has +to_stream+ nested type for displaying +name+
 
 It works like atoms in other functional and logical languages in template
 metaprogramming.
@@ -51,13 +50,6 @@ struct example_atom
 {
   typedef example_atom type;
   typedef example_tag tag;
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      return o << "examlpe_atom";
-    }
-  };
 };
 --------------------------------------
 

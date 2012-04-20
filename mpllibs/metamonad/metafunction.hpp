@@ -19,12 +19,6 @@
 
 #include <iostream>
 
-#ifdef MPLLIBS_DEFINE_METAFUNCTION_FORMAT_ARG
-  #error MPLLIBS_DEFINE_METAFUNCTION_FORMAT_ARG already defined
-#endif
-#define MPLLIBS_DEFINE_METAFUNCTION_FORMAT_ARG(z, n, unused) \
-  mpllibs::metatest::to_stream<T##n>::run(o);
-
 #ifdef MPLLIBS_DEFINE_METAFUNCTION_GET_TAG
   #error MPLLIBS_DEFINE_METAFUNCTION_GET_TAG already defined
 #endif
@@ -63,17 +57,7 @@
       template apply< \
         BOOST_PP_REPEAT(arg_num, MPLLIBS_DEFINE_METAFUNCTION_EVAL_ARG, ~) \
       > \
-  { \
-    struct to_stream \
-    { \
-      static std::ostream& run(std::ostream& o) \
-      { \
-        o << #name "<"; \
-        BOOST_PP_REPEAT(arg_num, MPLLIBS_DEFINE_METAFUNCTION_FORMAT_ARG, ~) \
-        return o << ">"; \
-      } \
-    }; \
-  };
+  {};
 
 #endif
 

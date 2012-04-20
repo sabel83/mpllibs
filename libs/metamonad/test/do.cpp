@@ -7,7 +7,7 @@
 #include <mpllibs/metamonad/tag_tag.hpp>
 
 #include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -39,18 +39,10 @@ namespace
     typedef wrapper_tag tag;
     typedef T value;
     typedef wrapped type;
-    
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        o << "wrapped<";
-        mpllibs::metatest::to_stream_argument_list<T>::run(o);
-        return o << ">";
-      }
-    };    
   };
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, wrapped, "wrapped")
 
 namespace mpllibs
 {
@@ -97,32 +89,10 @@ namespace
   const suite_path suite("do_");
   
   template <class A>
-  struct minus_2 : right<typename minus<typename A::value, int2>::type>
-  {
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        o << "minus_2<";
-        mpllibs::metatest::to_stream_argument_list<A>::run(o);
-        return o << ">";
-      }
-    };    
-  };
+  struct minus_2 : right<typename minus<typename A::value, int2>::type> {};
   
   template <class T>
-  struct eval_to_right : right<typename T::type>
-  {
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        o << "eval_to_right<";
-        mpllibs::metatest::to_stream_argument_list<T>::run(o);
-        return o << ">";
-      }
-    };    
-  };
+  struct eval_to_right : right<typename T::type> {};
 
   typedef
     equal_to<
@@ -202,6 +172,9 @@ namespace
     >
     test_nested_do_with_different_monads;
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, minus_2, "minus_2")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, eval_to_right, "eval_to_right")
 
 MPLLIBS_ADD_TEST(suite, test_do)
 MPLLIBS_ADD_TEST(suite, test_do_three_steps)

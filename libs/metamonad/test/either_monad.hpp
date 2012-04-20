@@ -9,7 +9,7 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/tag.hpp>
@@ -33,16 +33,6 @@ namespace
     typedef left_tag tag;
     typedef T value;
     typedef left type;
-    
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        o << "left<";
-        mpllibs::metatest::to_stream_argument_list<T>::run(o);
-        return o << ">";
-      }
-    };
   };
   
   template <class T>
@@ -51,18 +41,11 @@ namespace
     typedef right_tag tag;
     typedef T value;
     typedef right type;
-    
-    struct to_stream
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        o << "right<";
-        mpllibs::metatest::to_stream_argument_list<T>::run(o);
-        return o << ">";
-      }
-    };
   };
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, left, "left")
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, right, "right")
 
 namespace boost
 {

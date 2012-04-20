@@ -120,30 +120,6 @@ namespace mpllibs
       {};
     };
   }
-  
-  namespace metatest
-  {
-    template <class T>
-    struct to_stream_impl;
-    
-    template <>
-    struct to_stream_impl<mpllibs::metaparse::source_position_tag>
-    {
-      template <class Sp>
-      struct apply
-      {
-        typedef apply type;
-      
-        static std::ostream& run(std::ostream& o_)
-        {
-          typedef typename mpllibs::metaparse::get_line<Sp>::type line;
-          typedef typename mpllibs::metaparse::get_col<Sp>::type col;
-          
-          return o_ << "line " << line::value << ", col " << col::value;
-        }
-      };
-    };
-  }
 }
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(

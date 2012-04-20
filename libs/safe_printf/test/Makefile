@@ -28,6 +28,9 @@ CXXFLAGS += -MP
 
 CXXFLAGS += -Wall
 CXXFLAGS += -pedantic
+CXXFLAGS += -Wno-multichar
+CXXFLAGS += -Werror
+CXXFLAGS += -Wno-four-char-constants
 
 $(OBJECTS) : $(BIN_DIR)/%.o : %.cpp
 	mkdir -p $(BIN_DIR)

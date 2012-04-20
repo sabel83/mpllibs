@@ -246,43 +246,14 @@ struct to_stream
 };
 --------------------------------------
 
-To use link:to_stream.html[+to_stream+] with a custom type, one has the
-following options:
-
-* link:to_stream.html[+to_stream+] can be specialized directly and can make use
-  of pattern matching through template specialization.
-* when +T+ has a nested type called +to_stream+, the
-  link:to_stream.html[+to_stream+] metafunction
-  calls the +run+ method of the nested class. This +run+ method is expected to
-  have the same signature as the +run+ method of +to_stream+ above. This
-  solution can be used to add pretty-printing support to a compile-time value
-  without explicitly changing (or even including) the
-  link:to_stream.html[+to_stream+] metafunction.
-* when link:to_stream.html[+to_stream+] is not specialized and +T+ has no nested
-  +to_stream+ class, +to_stream+ works as overloaded metafunctions of the Boost
-  metaprogramming
-  library: it applies +T+ on the +to_stream_impl<tag of T>+ metafunction class,
-  which can be specialized. This method can be used to define pretty printing
-  for types based on their +tag+.
-
-We demonstrate the above options for specialization for user-defined types in
-the following example.
+To use link:to_stream.html[+to_stream+] with a custom type, one has to
+specialise this template directly and make use of pattern matching through
+template specialisation.
+We demonstrate the specialisation for for user-defined types in the following
+example.
 
 --------------------------------------
 struct UDT {};
-struct UDT_tag;
-struct tagged_UDT { typedef UDT_tag tag; };
-
-struct UDT_with_nested_to_stream
-{
-  struct to_stream
-  {
-    static std::ostream& run(std::ostream& o)
-    {
-      return o << "UDT_with_nested_to_stream";
-    }
-  };
-};
 
 template<>
 struct to_stream<UDT>
@@ -292,18 +263,6 @@ struct to_stream<UDT>
   static std::ostream& run(std::ostream& os)
   { os << "UDT"; }
 }
-
-template<>
-struct to_stream_impl<UDT_tag>
-{
-  template <typename Type>
-  struct apply
-  {
-    typedef apply type;
-  
-    static std::ostream& run(std::ostream& os)
-    { os << "tagged_UDT"; }
-};
 --------------------------------------
 
 The +to_stream+ metafunction is defined in the following header:

@@ -10,7 +10,7 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/apply.hpp>
@@ -37,23 +37,11 @@ namespace mpllibs
           Pos
         >
       {};
-
-      struct to_stream
-      {
-        static std::ostream& run(std::ostream& o)
-        {
-          o << "except<";
-          mpllibs::metatest::to_stream_argument_list<
-            P,
-            Result,
-            ErrorMsg
-          >::run(o);
-          return o << ">";
-        }
-      };
     };
   }
 }
+
+MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metaparse::except, "except")
 
 #endif
 
