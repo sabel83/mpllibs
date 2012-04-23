@@ -5,21 +5,30 @@
 
 SOURCE_ROOT = ../../../..
 
-NAME = meta_hs
+NAME1 = meta_hs_in_haskell
+NAME2 = meta_hs_handcrafted
 
 INCLUDES += .
 INCLUDES += $(SOURCE_ROOT)
-BIN_DIR = $(SOURCE_ROOT)/bin/example/metaparse/$(NAME)
+BIN_DIR = $(SOURCE_ROOT)/bin/example/metaparse/meta_hs
 
-BIN = $(BIN_DIR)/$(NAME)
+BIN1 = $(BIN_DIR)/$(NAME1)
+BIN2 = $(BIN_DIR)/$(NAME2)
 
-run : $(BIN)
-	-$(BIN)
+run : $(BIN1) $(BIN2)
+	-$(BIN1)
+	-$(BIN2)
 
-build : $(BIN)
+build : $(BIN1) $(BIN2)
 
-SOURCES += $(wildcard *.cpp)
-OBJECTS += $(addprefix $(BIN_DIR)/, $(SOURCES:.cpp=.o))
+SOURCES1 += main_in_haskell.cpp
+OBJECTS1 += $(addprefix $(BIN_DIR)/, $(SOURCES1:.cpp=.o))
+OBJECTS += $(OBJECTS1)
+
+SOURCES2 += main_handcrafted.cpp
+OBJECTS2 += $(addprefix $(BIN_DIR)/, $(SOURCES2:.cpp=.o))
+OBJECTS += $(OBJECTS2)
+
 DEPS += $(OBJECTS:.o=.d)
 
 # We need it for dependency file generation
@@ -50,9 +59,12 @@ all : clean
 
 -include $(DEPS)
 
-$(BIN) : $(OBJECTS)
-	$(CXX) -o $(BIN) $(OBJECTS) $(foreach l,$(LIBS), -l$(l) ) $(foreach l,$(LIB_DIRS), -L$(l) )
+$(BIN1) : $(OBJECTS1)
+	$(CXX) -o $(BIN1) $(OBJECTS1) $(foreach l,$(LIBS), -l$(l) ) $(foreach l,$(LIB_DIRS), -L$(l) )
+
+$(BIN2) : $(OBJECTS2)
+	$(CXX) -o $(BIN2) $(OBJECTS2) $(foreach l,$(LIBS), -l$(l) ) $(foreach l,$(LIB_DIRS), -L$(l) )
 
 clean :
-	-rm $(BIN)
+	-rm $(BIN1) $(BIN2) $(OBJECTS) $(DEPS)
 
