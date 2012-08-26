@@ -7,7 +7,7 @@
 
 LIBS = $(wildcard libs/*)
 
-recurse = $(foreach d, $(1), $(MAKE) -C $(d) $(2) && ) true
+recurse = +$(foreach d, $(1), $(MAKE) -C $(d) $(2) && ) true
 
 build :
 	$(call recurse, libs/metatest, build)

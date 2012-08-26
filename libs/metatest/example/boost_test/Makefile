@@ -53,7 +53,7 @@ clean_deps:
 	-rm $(DEPS)
 
 all : clean
-	$(MAKE) build
+	+$(MAKE) build
 
 -include $(DEPS)
 

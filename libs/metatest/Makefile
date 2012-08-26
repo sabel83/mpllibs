@@ -6,7 +6,7 @@
 EXAMPLE_DIRS = $(wildcard example/*)
 CODE_DIRS = $(foreach d, src test, $(wildcard $(d)) ) $(EXAMPLE_DIRS)
 
-recurse = $(foreach d, $(1), $(MAKE) -C $(d) $(2) && ) true
+recurse = +$(foreach d, $(1), $(MAKE) -C $(d) $(2) && ) true
 
 build : ; $(call recurse, $(CODE_DIRS), build)
 .PHONY : build
