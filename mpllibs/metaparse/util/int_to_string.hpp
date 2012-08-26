@@ -40,7 +40,7 @@ namespace mpllibs
       struct int_to_string
       {
         typedef int_to_string type;
-        
+
         // I wrap comparison expressions with bool_<> to make it work for
         // any value that behaves like an int
         template <class N>
@@ -49,11 +49,11 @@ namespace mpllibs
             boost::mpl::bool_<N::type::value == 0>,
             boost::mpl::string<'0'>,
             boost::mpl::eval_if<
-              boost::mpl::bool_<(N::type::value < 0)>,
+              boost::mpl::bool_<(0 > N::type::value)>,
               boost::mpl::push_front<
                 typename mpllibs::metaparse::util::impl::unsigned_int_to_string<
                   // I need it because push_front is not lazy
-                  (N::type::value < 0 ? -N::type::value : N::type::value)
+                  (0 > N::type::value ? -N::type::value : N::type::value)
                 >::type,
                 boost::mpl::char_<'-'>
               >,
