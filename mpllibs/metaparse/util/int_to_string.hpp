@@ -22,7 +22,11 @@ namespace mpllibs
     {
       namespace impl
       {
-        template <unsigned int N>
+        // Taking N as int, because it is a helper function of int_to_string
+        // which expects an int.
+        // A version of this function taking an unsigned int instead of an int
+        // may be implemented outside of the impl namespace.
+        template <int N>
         struct unsigned_int_to_string :
           boost::mpl::push_back<
             typename unsigned_int_to_string<N / 10>::type,
