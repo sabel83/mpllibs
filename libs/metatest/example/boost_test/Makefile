@@ -35,7 +35,6 @@ CXXFLAGS += -MMD
 CXXFLAGS += -MP
 
 CXXFLAGS += -Wall
-CXXFLAGS += -Werror
 CXXFLAGS += -pedantic
 CXXFLAGS += -Wno-multichar
 CXXFLAGS += -Wno-four-char-constants
