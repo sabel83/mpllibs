@@ -319,43 +319,6 @@ namespace mpllibs
     #undef MPLLIBS_DEF_SEQ_N
     #undef MPLLIBS_DEF_SEQ
     #undef MPLLIBS_DEF_SEQ_C
-
-    template <class Size, class T, class Next>
-    struct to_stream<boost::mpl::l_item<Size, T, Next> > :
-      to_stream_seq<
-        boost::mpl::l_item<Size, T, Next>,
-        mpllibs::metatest::util::name_list
-      >
-    {};
-
-    template <class T, class Base, int AtFront>
-    struct to_stream<boost::mpl::v_item<T, Base, AtFront> > :
-      to_stream_seq<
-        boost::mpl::v_item<T, Base, AtFront>,
-        mpllibs::metatest::util::name_vector
-      >
-    {};
-
-    template <class Key, class T, class Base>
-    struct to_stream<boost::mpl::m_item<Key, T, Base> > :
-      to_stream_seq<
-        boost::mpl::m_item<Key, T, Base>,
-        mpllibs::metatest::util::name_map
-      >
-    {};
-
-    template <class T, class Base>
-    struct to_stream<boost::mpl::s_item<T, Base> > :
-      to_stream_seq<
-        boost::mpl::s_item<T, Base>,
-        mpllibs::metatest::util::name_set
-      >
-    {};
-
-    template <>
-    struct to_stream<boost::mpl::l_end> :
-      to_stream_seq<boost::mpl::l_end, mpllibs::metatest::util::name_vector>
-    {};
   }
 }    
 
