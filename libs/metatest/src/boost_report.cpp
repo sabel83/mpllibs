@@ -10,12 +10,16 @@
 
 #include <boost/test/parameterized_test.hpp>
 
+#include <boost/shared_ptr.hpp>
+
 using boost::unit_test::framework::master_test_suite;
 
 using mpllibs::metatest::test_driver;
 using mpllibs::metatest::test_result;
 
 using boost::test_tools::predicate_result;
+
+using boost::shared_ptr;
 
 using std::string;
 
@@ -24,16 +28,19 @@ namespace
   class report_metatest
   {
   public:
-    report_metatest(test_result result) : _result(metatest_predicate(result)) {}
+    report_metatest(const report_metatest& r) : _result(r._result) {}
+    report_metatest(test_result result) :
+      _result(new predicate_result(metatest_predicate(result)))
+    {}
   
     void operator()() const
     {
       // I use a reference to "format" the error report
-      const predicate_result& compile_time_test = _result;
+      const predicate_result& compile_time_test = *_result;
       BOOST_CHECK(compile_time_test);
     }
   private:
-    predicate_result _result;
+    shared_ptr<predicate_result> _result;
   
     static predicate_result metatest_predicate(test_result r_)
     {
