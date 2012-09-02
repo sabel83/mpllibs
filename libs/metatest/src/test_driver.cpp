@@ -6,7 +6,7 @@
 #include <mpllibs/metatest/test_driver.hpp>
 #include <mpllibs/metatest/test_suite.hpp>
 
-#include <boost/pool/detail/singleton.hpp>
+#include <boost/test/utils/trivial_singleton.hpp>
 
 using mpllibs::metatest::test_driver;
 using mpllibs::metatest::test_suite;
@@ -15,7 +15,7 @@ using mpllibs::metatest::suite_path;
 
 test_driver& test_driver::instance()
 {
-  return boost::details::pool::singleton_default<test_driver>::instance();
+  return boost::unit_test::singleton<test_driver>::instance();
 }
 
 void test_driver::add(const suite_path& suite_, const test_result& result_)
