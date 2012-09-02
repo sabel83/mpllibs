@@ -7,47 +7,46 @@
 #include <mpllibs/metamonad/is_left.hpp>
 #include <mpllibs/metamonad/is_right.hpp>
 
-#include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/int.hpp>
 
-using mpllibs::metatest::suite_path;
-
-using mpllibs::metamonad::right;
-using mpllibs::metamonad::get_data;
-using mpllibs::metamonad::is_left;
-using mpllibs::metamonad::is_right;
-
-using boost::mpl::equal_to;
-using boost::mpl::not_;
-using boost::mpl::int_;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_right)
 {
-  const suite_path suite("right");
+  using mpllibs::metatest::meta_require;
+
+  using mpllibs::metamonad::right;
+  using mpllibs::metamonad::get_data;
+  using mpllibs::metamonad::is_left;
+  using mpllibs::metamonad::is_right;
   
+  using boost::mpl::equal_to;
+  using boost::mpl::not_;
+  using boost::mpl::int_;
+
   typedef int_<13> int13;
   typedef int_<11> int11;
 
   typedef right<int13> right13;
   typedef right<int11> right11;
   
-  typedef equal_to<get_data<right13>::type, int13> test_get_data;
+  meta_require<
+    equal_to<get_data<right13>::type, int13>
+  >(MPLLIBS_HERE, "test_get_data");
 
-  typedef equal_to<right13, right13> test_compare_with_same_data;
+  meta_require<
+    equal_to<right13, right13>
+  >(MPLLIBS_HERE, "test_compare_with_same_data");
 
-  typedef not_<equal_to<right13, right11> > test_compare_with_different_data;
+  meta_require<
+    not_<equal_to<right13, right11> >
+  >(MPLLIBS_HERE, "test_compare_with_different_data");
 
-  typedef not_<is_left<right13> > test_is_left;
+  meta_require<not_<is_left<right13> > >(MPLLIBS_HERE, "test_is_left");
 
-  typedef is_right<right13> test_is_right;
+  meta_require<is_right<right13> >(MPLLIBS_HERE, "test_is_right");
 }
-
-MPLLIBS_ADD_TEST(suite, test_get_data)
-MPLLIBS_ADD_TEST(suite, test_compare_with_same_data)
-MPLLIBS_ADD_TEST(suite, test_compare_with_different_data)
-MPLLIBS_ADD_TEST(suite, test_is_left)
-MPLLIBS_ADD_TEST(suite, test_is_right)
 
 

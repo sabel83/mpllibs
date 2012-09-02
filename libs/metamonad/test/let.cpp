@@ -5,22 +5,21 @@
 
 #include <mpllibs/metamonad/let.hpp>
 
-#include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
 
-using boost::mpl::equal_to;
-using boost::mpl::plus;
-
-using mpllibs::metatest::suite_path;
-
-using mpllibs::metamonad::let;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_let)
 {
-  const suite_path suite("let");
+  using mpllibs::metatest::meta_require;
 
-  typedef
+  using boost::mpl::equal_to;
+  using boost::mpl::plus;
+  
+  using mpllibs::metamonad::let;
+
+  meta_require<
     equal_to<
       int13,
       let<
@@ -28,9 +27,9 @@ namespace
         x
       >::type
     >
-    test_let_name;
+  >(MPLLIBS_HERE, "test_let_name");
 
-  typedef
+  meta_require<
     equal_to<
       int11,
       let<
@@ -38,9 +37,9 @@ namespace
         int11
       >::type
     >
-    test_let_not_name;
+  >(MPLLIBS_HERE, "test_let_not_name");
   
-  typedef
+  meta_require<
     equal_to<
       int26,
       let<
@@ -48,9 +47,9 @@ namespace
         double_value<x>
       >::type
     >
-    test_template;
+  >(MPLLIBS_HERE, "test_template");
 
-  typedef
+  meta_require<
     equal_to<
       int24,
       let<
@@ -61,9 +60,9 @@ namespace
         >::type
       >::type::type
     >
-    test_nested_let;
+  >(MPLLIBS_HERE, "test_nested_let");
   
-  typedef
+  meta_require<
     equal_to<
       int37,
       let<
@@ -77,15 +76,8 @@ namespace
         >
       >::type::type
     >
-    test_shadowing;
+  >(MPLLIBS_HERE, "test_shadowing");
 }
-
-MPLLIBS_ADD_TEST(suite, test_let_name)
-MPLLIBS_ADD_TEST(suite, test_let_not_name)
-MPLLIBS_ADD_TEST(suite, test_template)
-MPLLIBS_ADD_TEST(suite, test_nested_let)
-MPLLIBS_ADD_TEST(suite, test_shadowing)
-
 
 
 

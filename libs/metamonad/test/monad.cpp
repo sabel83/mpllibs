@@ -3,7 +3,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/test.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
 
@@ -14,22 +13,16 @@
 
 #include <boost/static_assert.hpp>
 
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
+
 #include "common.hpp"
 
 #include <iostream>
 
 using boost::mpl::minus;
-using boost::mpl::equal_to;
-
-using mpllibs::metatest::suite_path;
-
-using mpllibs::metamonad::return_;
-using mpllibs::metamonad::bind;
-
 namespace
 {
-  const suite_path suite("monad");
-  
   struct minus_2
   {
     typedef minus_2 type;
@@ -37,31 +30,36 @@ namespace
     template <class A>
     struct apply : right<typename minus<typename A::value, int2>::type> {};
   };
+}
 
-  typedef equal_to<right<int13>, return_<either, int13>::type> test_return;
+BOOST_AUTO_TEST_CASE(test_monad)
+{
+  using mpllibs::metatest::meta_require;
 
-  typedef
+  using boost::mpl::equal_to;
+  
+  using mpllibs::metamonad::return_;
+  using mpllibs::metamonad::bind;
+
+  meta_require<
+    equal_to<right<int13>, return_<either, int13>::type>
+  >(MPLLIBS_HERE, "test_return");
+
+  meta_require<
     equal_to<right<int11>, bind<either, right<int13>, minus_2>::type>
-    test_bind_right;
+  >(MPLLIBS_HERE, "test_bind_right");
 
-  typedef
+  meta_require<
     equal_to<left<int13>, bind<either, left<int13>, minus_2>::type>
-    test_bind_left;
+  >(MPLLIBS_HERE, "test_bind_left");
 
-  typedef
+  meta_require<
     equal_to<
       right<int9>,
       bind<either, bind<either, return_<either, int13>, minus_2>, minus_2>
     >
-    test_multi_step_chain;
+  >(MPLLIBS_HERE, "test_multi_step_chain");
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(minus_2)
-
-MPLLIBS_ADD_TEST(suite, test_return)
-MPLLIBS_ADD_TEST(suite, test_bind_left)
-MPLLIBS_ADD_TEST(suite, test_bind_right)
-MPLLIBS_ADD_TEST(suite, test_multi_step_chain)
 
 
 

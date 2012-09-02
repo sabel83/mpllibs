@@ -5,8 +5,8 @@
 
 #include <mpllibs/metamonad/monoid.hpp>
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
 
@@ -17,25 +17,15 @@
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/apply.hpp>
 
-using mpllibs::metatest::suite_path;
 
-using mpllibs::metamonad::monoid;
-using mpllibs::metamonad::monoid_defaults;
-
-using boost::mpl::equal_to;
 using boost::mpl::lambda;
 using boost::mpl::_1;
 using boost::mpl::_2;
-using boost::mpl::list_c;
 using boost::mpl::plus;
 using boost::mpl::times;
-using boost::mpl::apply;
-using boost::mpl::int_;
 
 namespace
 {
-  const suite_path suite("monoid");
-  
   MPLLIBS_DEFINE_TAG(plus_tag)
   MPLLIBS_DEFINE_TAG(mult_tag)
 }
@@ -60,26 +50,31 @@ namespace mpllibs
   }
 }
 
-namespace
+BOOST_AUTO_TEST_CASE(test_monoid)
 {  
-  typedef
+  using mpllibs::metatest::meta_require;
+
+  using mpllibs::metamonad::monoid;
+
+  using boost::mpl::equal_to;
+  using boost::mpl::list_c;
+  using boost::mpl::apply;
+  using boost::mpl::int_;
+
+  meta_require<
     equal_to<
       int13,
       apply<monoid<plus_tag>::concat, list_c<int, 1, 2, 3, 4, 3> >::type
     >
-    test_concat_plus;
+  >(MPLLIBS_HERE, "test_concat_plus");
 
-  typedef
+  meta_require<
     equal_to<
       int_<72>,
       apply<monoid<mult_tag>::concat, list_c<int, 1, 2, 3, 4, 3> >::type
     >
-    test_concat_mult;
+  >(MPLLIBS_HERE, "test_concat_mult");
 }
-
-MPLLIBS_ADD_TEST(suite, test_concat_plus)
-MPLLIBS_ADD_TEST(suite, test_concat_mult)
-
 
 
 

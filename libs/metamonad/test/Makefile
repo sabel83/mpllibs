@@ -1,4 +1,4 @@
-# Copyright Abel Sinkovics (abel@sinkovics.hu)  2010-2011.
+# Copyright Abel Sinkovics (abel@sinkovics.hu)  2010-2012.
 # Distributed under the Boost Software License, Version 1.0.
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
@@ -10,8 +10,7 @@ BIN_DIR = $(SOURCE_ROOT)/bin/tests/metamonad
 
 BIN = $(BIN_DIR)/test
 
-LIBS += metatest
-LIB_DIRS += $(SOURCE_ROOT)/bin/libs/metatest
+LIBS += boost_unit_test_framework
 
 check : $(BIN)
 	$(BIN)
@@ -27,7 +26,6 @@ CXXFLAGS += -MMD
 CXXFLAGS += -MP
 
 CXXFLAGS += -Wall
-CXXFLAGS += -Werror
 CXXFLAGS += -pedantic
 CXXFLAGS += -Wno-multichar
 CXXFLAGS += -Wno-four-char-constants

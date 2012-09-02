@@ -6,25 +6,23 @@
 #include <mpllibs/metamonad/nothing.hpp>
 #include <mpllibs/metamonad/is_nothing.hpp>
 
-#include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
-using mpllibs::metatest::suite_path;
-
-using mpllibs::metamonad::nothing;
-using mpllibs::metamonad::is_nothing;
-
-using boost::mpl::equal_to;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_nothing)
 {
-  const suite_path suite("nothing");
+  using mpllibs::metatest::meta_require;
+
+  using mpllibs::metamonad::nothing;
+  using mpllibs::metamonad::is_nothing;
   
-  typedef equal_to<nothing, nothing> test_compare_nothing_to_nothing;
+  using boost::mpl::equal_to;
 
-  typedef is_nothing<nothing> test_is_nothing;
+  meta_require<
+    equal_to<nothing, nothing>
+  >(MPLLIBS_HERE, "test_compare_nothing_to_nothing");
+
+  meta_require<is_nothing<nothing> >(MPLLIBS_HERE, "test_is_nothing");
 }
-
-MPLLIBS_ADD_TEST(suite, test_compare_nothing_to_nothing)
-MPLLIBS_ADD_TEST(suite, test_is_nothing)
 
 

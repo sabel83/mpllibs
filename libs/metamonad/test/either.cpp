@@ -8,14 +8,13 @@
 #include <mpllibs/metamonad/bind.hpp>
 #include <mpllibs/metamonad/fail.hpp>
 
-#include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/lambda.hpp>
-
-using mpllibs::metatest::suite_path;
 
 using mpllibs::metamonad::left;
 using mpllibs::metamonad::right;
@@ -33,8 +32,6 @@ using boost::mpl::int_;
 
 namespace
 {
-  const suite_path suite("either");
-  
   typedef int_<2> int2;
   typedef int_<11> int11;
   typedef int_<13> int13;
@@ -46,26 +43,26 @@ namespace
   typedef right<plus<_1, int2> > either_add_2;
   
   typedef equal_to<return_<either_tag, int13>, right13> test_return;
+}
 
-  typedef
+BOOST_AUTO_TEST_CASE(test_either)
+{
+  using mpllibs::metatest::meta_require;
+
+  meta_require<
     equal_to<bind<either_tag, right11, either_add_2>::type, right13>
-    test_bind_with_right;
+  >(MPLLIBS_HERE, "test_bind_with_right");
 
-  typedef
+  meta_require<
     equal_to<bind<either_tag, left11, either_add_2>::type, left11>
-    test_bind_with_left;
+  >(MPLLIBS_HERE, "test_bind_with_left");
 
-  typedef
+  meta_require<
     equal_to<
       bind<either_tag, fail<either_tag, int13>, either_add_2>::type,
       left<int13>
     >
-    test_fail;
+  >(MPLLIBS_HERE, "test_fail");
 }
-
-MPLLIBS_ADD_TEST(suite, test_return)
-MPLLIBS_ADD_TEST(suite, test_bind_with_right)
-MPLLIBS_ADD_TEST(suite, test_bind_with_left)
-MPLLIBS_ADD_TEST(suite, test_fail)
 
 

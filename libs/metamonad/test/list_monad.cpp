@@ -7,42 +7,43 @@
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
 
-#include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
 
 #include <boost/mpl/equal.hpp>
 
-using mpllibs::metatest::suite_path;
-
-using mpllibs::metamonad::return_;
-using mpllibs::metamonad::bind;
-using mpllibs::metamonad::list_tag;
-
-using boost::mpl::equal;
 using boost::mpl::list;
 
 namespace
 {
-  const suite_path suite = suite_path("list")("monad");
-  
   struct twice
   {
     template <class T>
     struct apply : list<T, T> {};
   };
-  
-  typedef equal<return_<list_tag, int13>, list<int13> > test_return;
+}
 
-  typedef
+BOOST_AUTO_TEST_CASE(test_list_monad)
+{
+  using mpllibs::metatest::meta_require;
+
+  using mpllibs::metamonad::return_;
+  using mpllibs::metamonad::bind;
+  using mpllibs::metamonad::list_tag;
+  
+  using boost::mpl::equal;
+  
+  meta_require<
+    equal<return_<list_tag, int13>, list<int13> >
+  >(MPLLIBS_HERE, "test_return");
+
+  meta_require<
     equal<
       bind<list_tag, list<int13, int11>, twice>::type,
       list<int13, int13, int11, int11>
     >
-    test_bind;
+  >(MPLLIBS_HERE, "test_bind");
 }
-
-MPLLIBS_ADD_TEST(suite, test_return)
-MPLLIBS_ADD_TEST(suite, test_bind)
-
 

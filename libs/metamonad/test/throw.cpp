@@ -8,7 +8,8 @@
 #include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 
-#include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -17,24 +18,24 @@
 
 #include "common.hpp"
 
-using boost::mpl::equal_to;
-
-using mpllibs::metatest::suite_path;
-
-using mpllibs::metamonad::get_data;
-using mpllibs::metamonad::exception_monad;
-using mpllibs::metamonad::throw_;
-using mpllibs::metamonad::do_;
-using mpllibs::metamonad::do_return;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_throw_)
 {
-  const suite_path suite("throw_");
+  using mpllibs::metatest::meta_require;
+
+  using boost::mpl::equal_to;
   
-  typedef equal_to<int13, get_data<throw_<int13> >::type> test_get_data;
+  using mpllibs::metamonad::get_data;
+  using mpllibs::metamonad::exception_monad;
+  using mpllibs::metamonad::throw_;
+  using mpllibs::metamonad::do_;
+  using mpllibs::metamonad::do_return;
+
+  meta_require<
+    equal_to<int13, get_data<throw_<int13> >::type>
+  >(MPLLIBS_HERE, "test_get_data");
 
   
-  typedef
+  meta_require<
     equal_to<
       int13,
       get_data<
@@ -43,10 +44,9 @@ namespace
         >::type
       >::type
     >
-    test_monadic_exception;
+  >(MPLLIBS_HERE, "test_monadic_exception");
 
-
-  typedef
+  meta_require<
     equal_to<
       int11,
       get_data<
@@ -56,12 +56,7 @@ namespace
         >::type
       >::type
     >
-    test_exception_propagation;
+  >(MPLLIBS_HERE, "test_exception_propagation");
 }
-
-MPLLIBS_ADD_TEST(suite, test_get_data)
-
-MPLLIBS_ADD_TEST(suite, test_monadic_exception)
-MPLLIBS_ADD_TEST(suite, test_exception_propagation)
 
 

@@ -6,8 +6,8 @@
 #include <mpllibs/metamonad/writer.hpp>
 #include <mpllibs/metamonad/list.hpp>
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -15,27 +15,12 @@
 
 #include "common.hpp"
 
-using mpllibs::metatest::suite_path;
-
-using mpllibs::metamonad::writer_tag;
-using mpllibs::metamonad::list_tag;
-using mpllibs::metamonad::monad;
-
-using boost::mpl::equal_to;
-using boost::mpl::equal;
-using boost::mpl::apply;
+using boost::mpl::list;
 using boost::mpl::pair;
 using boost::mpl::plus;
-using boost::mpl::list;
-
+  
 namespace
 {
-  const suite_path suite("writer");
-  
-  typedef writer_tag<list_tag> list_writer_tag;
-  
-  typedef apply<monad<list_writer_tag>::return_, int11>::type return11;
-  
   template <class A>
   struct log_plus
   {
@@ -45,11 +30,33 @@ namespace
     struct apply : pair<plus<A, R>, list<A> > {};
   };
 
-  typedef equal_to<int11, return11::first> test_return_value;
-  
-  typedef equal<list<>, return11::second> test_return_log;
+}
 
-  typedef
+BOOST_AUTO_TEST_CASE(test_writer)
+{
+  using mpllibs::metatest::meta_require;
+
+  using mpllibs::metamonad::writer_tag;
+  using mpllibs::metamonad::list_tag;
+  using mpllibs::metamonad::monad;
+  
+  using boost::mpl::equal_to;
+  using boost::mpl::equal;
+  using boost::mpl::apply;
+
+  typedef writer_tag<list_tag> list_writer_tag;
+  
+  typedef apply<monad<list_writer_tag>::return_, int11>::type return11;
+  
+  meta_require<
+    equal_to<int11, return11::first>
+  >(MPLLIBS_HERE, "test_return_value");
+  
+  meta_require<
+    equal<list<>, return11::second>
+  >(MPLLIBS_HERE, "test_return_log");
+
+  meta_require<
     equal_to<
       int13,
       apply<
@@ -58,9 +65,9 @@ namespace
         log_plus<int2>
       >::type::first
     >
-    test_bind_value;
+  >(MPLLIBS_HERE, "test_bind_value");
 
-  typedef
+  meta_require<
     equal<
       list<int2>,
       apply<
@@ -69,16 +76,7 @@ namespace
         log_plus<int2>
       >::type::second
     >
-    test_bind_log;
+  >(MPLLIBS_HERE, "test_bind_log");
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, log_plus, "log_plus")
-
-MPLLIBS_ADD_TEST(suite, test_return_value)
-MPLLIBS_ADD_TEST(suite, test_return_log)
-MPLLIBS_ADD_TEST(suite, test_bind_value)
-MPLLIBS_ADD_TEST(suite, test_bind_log)
-
-
 
 

@@ -6,26 +6,25 @@
 #include <mpllibs/metamonad/letrec.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 
-#include <mpllibs/metatest/test.hpp>
+#include <mpllibs/metatest/boost_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
 
 #include <boost/mpl/minus.hpp>
 
-using boost::mpl::equal_to;
-using boost::mpl::minus;
-using boost::mpl::eval_if;
-
-using mpllibs::metatest::suite_path;
-
-using mpllibs::metamonad::letrec;
-using mpllibs::metamonad::lambda;
-
-namespace
+BOOST_AUTO_TEST_CASE(test_letrec)
 {
-  const suite_path suite("letrec");
+  using mpllibs::metatest::meta_require;
 
-  typedef
+  using boost::mpl::equal_to;
+  using boost::mpl::minus;
+  using boost::mpl::eval_if;
+  
+  using mpllibs::metamonad::letrec;
+  using mpllibs::metamonad::lambda;
+
+  meta_require<
     equal_to<
       int13,
       // name is replaced with a nullary metafunction evaluating to the
@@ -35,11 +34,13 @@ namespace
         x
       >::type::type
     >
-    test_letrec_name;
+  >(MPLLIBS_HERE, "test_letrec_name");
 
-  typedef equal_to<int11, letrec<x, int13, int11>::type> test_letrec_not_name;
+  meta_require<
+    equal_to<int11, letrec<x, int13, int11>::type>
+  >(MPLLIBS_HERE, "test_letrec_not_name");
   
-  typedef
+  meta_require<
     equal_to<
       int26,
       letrec<
@@ -47,9 +48,9 @@ namespace
         lazy_double_value<x>
       >::type
     >
-    test_template;
+  >(MPLLIBS_HERE, "test_template");
 
-  typedef
+  meta_require<
     equal_to<
       int24,
       letrec<
@@ -60,9 +61,9 @@ namespace
         >::type
       >::type::type
     >
-    test_nested_letrec;
+  >(MPLLIBS_HERE, "test_nested_letrec");
   
-  typedef
+  meta_require<
     equal_to<
       int37,
       letrec<
@@ -76,9 +77,9 @@ namespace
         >
       >::type::type
     >
-    test_shadowing;
+  >(MPLLIBS_HERE, "test_shadowing");
   
-  typedef
+  meta_require<
     equal_to<
       int24,
       letrec<
@@ -94,16 +95,8 @@ namespace
         lazy_apply<x, int4>
       >::type::type
     >
-    test_recursion;
+  >(MPLLIBS_HERE, "test_recursion");
 }
-
-MPLLIBS_ADD_TEST(suite, test_letrec_name)
-MPLLIBS_ADD_TEST(suite, test_letrec_not_name)
-MPLLIBS_ADD_TEST(suite, test_template)
-MPLLIBS_ADD_TEST(suite, test_nested_letrec)
-MPLLIBS_ADD_TEST(suite, test_shadowing)
-MPLLIBS_ADD_TEST(suite, test_recursion)
-
 
 
 
