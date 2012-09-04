@@ -21,6 +21,11 @@
 
 #include "common.hpp"
 
+namespace
+{
+  struct x;
+}
+
 BOOST_AUTO_TEST_CASE(test_exception)
 {
   using mpllibs::metatest::meta_require;
@@ -102,8 +107,6 @@ BOOST_AUTO_TEST_CASE(test_exception)
         >::type
     >
   >(MPLLIBS_HERE, "test_execution_sequence");
-  
-  struct x;
   
   meta_require<
     equal_to<
