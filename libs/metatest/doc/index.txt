@@ -468,8 +468,7 @@ different testing tools. The same tests (containing failures) can be run using
 metatest and another solution based on static assertions.
 
 link:https://github.com/sabel83/mpllibs/tree/master/libs/metatest/example/reverse[source code] +
-link:example_reverse_metatest.html[output using metatest] +
-link:example_reverse_static_assert.html[output using static assertions] (GNU compiler) +
+link:example_reverse.html[output] +
 
 stream_type
 ~~~~~~~~~~~

@@ -1,7 +1,0 @@
-Running 7 test cases...
-boost_report.cpp(33): error in "test_no_type": check compile_time_test failed. failures.cpp:64: Test case has no nested type
-boost_report.cpp(33): error in "test_no_type_value": check compile_time_test failed. failures.cpp:65: Result of test case has no nested boolean value
-boost_report.cpp(33): error in "test_fail": check compile_time_test failed. failures.cpp:66: false
-boost_report.cpp(33): error in "test_fail_with_to_equal": check compile_time_test failed. failures.cpp:67: equal_to<int<11>, integral_c<int, 40>>
-boost_report.cpp(33): error in "test_fail_with_is_same": check compile_time_test failed. failures.cpp:68: is_same<int, double>
-boost_report.cpp(33): error in "test_fail_complex_expression": check compile_time_test failed. failures.cpp:69: not_<and_<or_<true, false>, true>>

@@ -31,14 +31,10 @@ _mpllibs_ contains the following libraries:
 Usage
 -----
 
-The root of the source tree contains a +Makefile+. The following
-targets are supported:
-
-* +make check+ builds and runs all unit tests of the project.
-* +make html+ generates all HTML documentation to the +doc+ directory of the
-  source tree.
-* +make clean+ deletes all generated files.
-* +make all+ rebuilds everything.
+* +mkdir bin && cd bin && cmake ..+ sets the build directory up
+* +make+ builds the code
+* +make test+ runs the unit tests
+* +make website+ generates the documentation
 
 License
 -------
