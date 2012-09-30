@@ -1,6 +1,0 @@
-The following tests have been executed:
-  inline_test::test1: OK
-  inline_test::test2: OK
-========================
-Number of tests: 2
-Number of failures: 0
