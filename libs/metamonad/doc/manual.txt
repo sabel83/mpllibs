@@ -68,7 +68,7 @@ template <class N>
 struct my_metafunction :
   let<
     x, boost::mpl::plus<N, boost::mpl::int_<13> >,
-    boost::mpl::times<N, N>
+    boost::mpl::times<x, x>
   >::type
 {};
 --------------------------------------
