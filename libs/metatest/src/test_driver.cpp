@@ -3,6 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#define MPLLIBS_METATEST_SOURCE
+
 #include <mpllibs/metatest/test_driver.hpp>
 #include <mpllibs/metatest/test_suite.hpp>
 

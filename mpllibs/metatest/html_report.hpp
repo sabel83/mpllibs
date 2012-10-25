@@ -6,12 +6,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/config.hpp>
+
 #include <iosfwd>
 
 namespace mpllibs {
 namespace metatest {
 
-bool html_report(std::ostream &os_);
+MPLLIBS_METATEST_DECL bool html_report(std::ostream &os_);
 
 } // namespace metatest
 } // namespace mpllibs

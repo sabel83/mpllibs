@@ -6,6 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/config.hpp>
 #include <mpllibs/metatest/suite_path.hpp>
 #include <mpllibs/metatest/test_result.hpp>
 
@@ -28,11 +29,11 @@ namespace mpllibs
       typedef std::map<std::string, test_suite> suite_map;
       typedef std::list<test_result> result_list;
       
-      size_t failure_count() const;
-      size_t count() const;
+      MPLLIBS_METATEST_DECL size_t failure_count() const;
+      MPLLIBS_METATEST_DECL size_t count() const;
       
-      const suite_map& suites() const;
-      const result_list& results() const;
+      MPLLIBS_METATEST_DECL const suite_map& suites() const;
+      MPLLIBS_METATEST_DECL const result_list& results() const;
     private:
       suite_map _suites;
       result_list _results;

@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/config.hpp>
+
 #include <string>
 #include <list>
 
@@ -20,14 +22,14 @@ namespace mpllibs
     public:
       typedef elements::const_iterator iterator;
       
-      suite_path();
-      suite_path(const std::string& p_);
-      suite_path(const std::list<std::string>& p_);
+      MPLLIBS_METATEST_DECL suite_path();
+      MPLLIBS_METATEST_DECL suite_path(const std::string& p_);
+      MPLLIBS_METATEST_DECL suite_path(const std::list<std::string>& p_);
       
-      iterator begin() const;
-      iterator end() const;
+      MPLLIBS_METATEST_DECL iterator begin() const;
+      MPLLIBS_METATEST_DECL iterator end() const;
       
-      suite_path operator()(const std::string& e_) const;
+      MPLLIBS_METATEST_DECL suite_path operator()(const std::string& e_) const;
     private:
       elements _elements;
     };

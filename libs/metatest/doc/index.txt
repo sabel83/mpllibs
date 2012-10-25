@@ -329,8 +329,6 @@ uses +to_stream_argument_list+ to display the arguments.
 Pre-defined reporting tools
 ---------------------------
 
-// TODO: innet folytatni
-
 The library provides the following report generating functions:
 
 |=================
@@ -353,28 +351,13 @@ available:
 Integration with other unit testing libraries
 ---------------------------------------------
 
-Test hiearchy can be traversed at runtime and the results can be integrated into
-other unit testing tools by asserting the success of the compile-time test at
-runtime. The following header
-
---------------------------------------
-#include <mpllibs/metatest/boost_report.hpp>
---------------------------------------
-
-provides the following function:
-
---------------------------------------
-boost::unit_test::test_suite* build_metatest_test_suite(
-  const std::string& name = "metatest"
-);
---------------------------------------
-
-This function builds a Boost test +test_suite+, the root of which is called
-+name+. It reconstructs the hierarchy of compile-time test cases as a Boost test
-test suite hierarchy.
-
-Integration with other unit testing frameworks has to be implemented by the
-user.
+Compile-time assertions can be turned into runtime ones by passing the result of
+the compile-time assertion to a runtime testing framework as a constant value.
+Metatest provides the link:meta_warn.html[+meta_warn+],
+link:meta_check.html[+meta_check+] and link:meta_require.html[+meta_require+]
+utilities for passing the result of compile-time assertions to the Boost.Test
+framework. In case of failures, the error report provided by Boost.Test
+contains the pretty-printed expression as well.
 
 Best practices
 --------------
@@ -410,19 +393,6 @@ the code.
 
 link:https://github.com/sabel83/mpllibs/tree/master/libs/metatest/example/boost_test_assertion[source code] +
 link:example_boost_test_assertion.html[output] +
-
-boost_test
-~~~~~~~~~~
-
-A tree of compile-time test results constructed using metatest. The entire tree
-is added to Boost.Test later. This shows how compile-time tests can be
-implemented independently of the unit testing framework for the runtime parts of
-the program. To use some of the reporting capabilities of metatest (such as HTML
-reporting) or a different unit testing framework (such as CppUnit), only the
-+main.cpp+ file needs to be changed.
-
-link:https://github.com/sabel83/mpllibs/tree/master/libs/metatest/example/boost_test[source code] +
-link:example_boost_test.html[output] +
 
 exception_debug
 ~~~~~~~~~~~~~~~

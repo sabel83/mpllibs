@@ -6,6 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metatest/config.hpp>
 #include <mpllibs/metatest/test_result.hpp>
 #include <mpllibs/metatest/test_suite.hpp>
 
@@ -22,11 +23,14 @@ namespace mpllibs
     class test_driver
     {
     public:
-      static test_driver& instance();
+      MPLLIBS_METATEST_DECL static test_driver& instance();
       
-      const test_suite& suite() const;
+      MPLLIBS_METATEST_DECL const test_suite& suite() const;
 
-      void add(const suite_path& suite_, const test_result& result_);
+      MPLLIBS_METATEST_DECL void add(
+        const suite_path& suite_,
+        const test_result& result_
+      );
     private:
       test_suite _suite;
     };

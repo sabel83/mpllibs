@@ -5,7 +5,6 @@
 
 subdirs(
   boost_mpl_unit_test
-  boost_test
   boost_test_assertion
   exception_debug
   metatest_example

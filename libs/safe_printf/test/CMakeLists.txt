@@ -6,7 +6,11 @@
 aux_source_directory(. SOURCES)
 add_executable(safe_printf_test ${SOURCES})
 
-target_link_libraries(safe_printf_test boost_unit_test_framework)
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  target_link_libraries(safe_printf_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+else()
+  target_link_libraries(safe_printf_test boost_unit_test_framework)
+endif()
 
 add_test(safe_printf_unit_tests safe_printf_test)
 

@@ -3,6 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#define BOOST_TEST_DYN_LINK
+
 #include <mpllibs/metamonad/left.hpp>
 #include <mpllibs/metamonad/is_right.hpp>
 #include <mpllibs/metamonad/is_left.hpp>

@@ -1,3 +1,5 @@
+#define MPLLIBS_METATEST_SOURCE
+
 #include <mpllibs/metatest/plaintext_report.hpp>
 #include <mpllibs/metatest/test_driver.hpp>
 

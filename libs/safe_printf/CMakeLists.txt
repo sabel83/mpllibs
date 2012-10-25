@@ -3,5 +3,10 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-subdirs(test example doc)
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  subdirs(test example)
+else()
+  subdirs(test example doc)
+endif()
+
 

@@ -6,7 +6,11 @@
 aux_source_directory(. SOURCES)
 add_executable(metamonad_test ${SOURCES})
 
-target_link_libraries(metamonad_test boost_unit_test_framework)
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  target_link_libraries(metamonad_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+else()
+  target_link_libraries(metamonad_test boost_unit_test_framework)
+endif()
 
 add_test(metamonad_unit_tests metamonad_test)
 

@@ -7,7 +7,11 @@ aux_source_directory(. SOURCES)
 add_executable(stream_type ${SOURCES})
 
 target_link_libraries(stream_type metatest)
-target_link_libraries(stream_type boost_unit_test_framework)
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  target_link_libraries(stream_type ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+else()
+  target_link_libraries(stream_type boost_unit_test_framework)
+endif()
 
 include(ExampleOutput)
 example_text_output(stream_type stream_type)

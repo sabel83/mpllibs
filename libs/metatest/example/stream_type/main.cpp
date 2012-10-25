@@ -117,24 +117,13 @@ int main()
     map<pair<int_<1>, int_<2> >, pair<int_<3>, int_<4> > >::type
   >::run(cout) << endl;
   to_stream<map<>::type>::run(cout) << endl;
-  to_stream<insert<map<>, pair<int_<1>, int_<2> > >::type>::run(cout) << endl;
   to_stream<set<int_<1>, int_<2>, int_<3> >::type>::run(cout) << endl;
   to_stream<set<>::type>::run(cout) << endl;
-  to_stream<insert<set<>, int_<13> >::type>::run(cout) << endl;
   to_stream<deque<int_<1>, int_<2>, int_<3> >::type>::run(cout) << endl;
   to_stream<deque<>::type>::run(cout) << endl;
   to_stream<list<int_<1>, int_<2>, int_<3> >::type>::run(cout) << endl;
-  to_stream<
-    push_front<list<int_<1>, int_<2>, int_<3> >, int>::type
-  >::run(cout) << endl;
-  to_stream<list<>::type>::run(cout) << endl;
-  to_stream<push_front<list<>, int>::type>::run(cout) << endl;
   to_stream<vector<int_<1>, int_<2>, int_<3> >::type>::run(cout) << endl;
-  to_stream<
-    push_front<vector<int_<1>, int_<2>, int_<3> >, int>::type
-  >::run(cout) << endl;
   to_stream<vector<>::type>::run(cout) << endl;
-  to_stream<push_front<vector<>, int>::type>::run(cout) << endl;
   to_stream<vector_c<int, 1, 2, 3> >::run(cout) << endl;
   to_stream<vector<int_<1>, int_<2>, int_<3> > >::run(cout) << endl;
   to_stream<list_c<int, 1, 2, 3> >::run(cout) << endl;
