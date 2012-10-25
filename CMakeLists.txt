@@ -39,13 +39,18 @@ else()
   
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/style.css ${WEBSITE_ROOT}/style.css)
   
-  add_custom_command(
-    OUTPUT ${WEBSITE_ROOT}/index.html
-    COMMAND cat ${CMAKE_SOURCE_DIR}/index.html | sed 's/\\"libs\\//"/g' | sed 's/\\/html\\//\\//g' > ${WEBSITE_ROOT}/index.html
-    DEPENDS ${CMAKE_SOURCE_DIR}/index.html ${WEBSITE_ROOT}
-  )
+  set(WEBSITE_FILES ${WEBSITE_ROOT}/style.css)
+
+  foreach(F index build)
+    add_custom_command(
+      OUTPUT ${WEBSITE_ROOT}/${F}.html
+      COMMAND cat ${CMAKE_SOURCE_DIR}/${F}.html | sed 's/\\"libs\\//"/g' | sed 's/\\/html\\//\\//g' > ${WEBSITE_ROOT}/${F}.html
+      DEPENDS ${CMAKE_SOURCE_DIR}/${F}.html ${WEBSITE_ROOT}
+    )
+
+    set(WEBSITE_FILES ${WEBSITE_FILES} ${WEBSITE_ROOT}/${F}.html)
+  endforeach(F)
   
-  set(WEBSITE_FILES ${WEBSITE_ROOT}/index.html ${WEBSITE_ROOT}/style.css)
   
   # metatest code samples
   foreach(E
@@ -96,8 +101,31 @@ else()
   
     configure_file(${DIR}/html/style.css ${WEBSITE_ROOT}/${L}/style.css)
     set(WEBSITE_FILES ${WEBSITE_FILES} ${WEBSITE_ROOT}/${L}/style.css)
+
   endforeach(L)
   
   add_custom_target(website DEPENDS base_documentation ${WEBSITE_FILES})
 endif()
+
+
+# Installation
+macro(install_with_dir PREFIX_TO_CUT)
+ 
+ string(LENGTH ${PREFIX_TO_CUT} PREFIX_LEN)
+
+ foreach(F ${ARGN})
+   string(REGEX MATCH "(.*)[/\\]" DIR ${F})
+   string(LENGTH ${DIR} DIR_LEN)
+   math(EXPR DIR_KEEP "${DIR_LEN} - ${PREFIX_LEN}")
+   string(SUBSTRING ${DIR} ${PREFIX_LEN} ${DIR_KEEP} DIR2)
+   install(FILES ${F} DESTINATION include/${DIR2})
+ endforeach(F)
+          
+endmacro(install_with_dir)
+           
+
+file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/mpllibs/*.hpp)
+install_with_dir(${CMAKE_CURRENT_SOURCE_DIR} ${HEADER_FILES})
+
+
 

@@ -6,4 +6,5 @@
 aux_source_directory(. SOURCES)
 add_library(metatest ${SOURCES})
 
+install(TARGETS metatest DESTINATION lib)
 
