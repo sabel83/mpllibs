@@ -9,8 +9,6 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/if.hpp>

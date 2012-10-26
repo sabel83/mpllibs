@@ -12,8 +12,6 @@
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/get_prev_char.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/empty.hpp>

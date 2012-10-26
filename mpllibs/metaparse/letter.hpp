@@ -11,8 +11,6 @@
 
 #include <mpllibs/metaparse/util/is_letter.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 namespace mpllibs
