@@ -1,0 +1,2 @@
+Metafunction calculating the Fibonaccy numbers. It demonstrates how to implement
+recursive metafunctions with the help of metamonad::lazy.

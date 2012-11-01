@@ -13,6 +13,11 @@ Let expressions
 link:let.html[let] +
 link:letrec.html[letrec] +
 
+Lazy evaluation
+---------------
+
+link:lazy.html[lazy] +
+
 Lambda expressions
 ------------------
 
