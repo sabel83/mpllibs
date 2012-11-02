@@ -53,6 +53,7 @@ namespace mpllibs
       ~
     )
 
+    #undef MPLLIBS_METAMONAD_LAZY_REC
     #undef MPLLIBS_METAMONAD_LAZY_TEMPLATE
 
     template <class C, class T, class F>
