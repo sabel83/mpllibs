@@ -105,7 +105,7 @@ else()
 
     add_custom_command(
       OUTPUT ${P}/index.html
-      COMMAND cat ${DIR}/html/index.html | sed 's/\\.\\.\\/\\.\\.\\/\\.\\.\\/index\\.html/..\\/..\\/index.html/' > ${P}/index.html
+      COMMAND cat ${DIR}/html/index.html | sed 's/\\.\\.\\/\\.\\.\\/\\.\\.\\/index\\.html/..\\/index.html/' > ${P}/index.html
       DEPENDS ${L}_documentation ${DIR}/html/index.html ${P}
     )
     set(WEBSITE_FILES ${WEBSITE_FILES} ${P}/index.html)
