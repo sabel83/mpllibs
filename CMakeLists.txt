@@ -16,6 +16,7 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}")
 include(Asciidoc)
+include(Files)
 
 enable_testing()
 
@@ -32,12 +33,9 @@ else()
   # build the documentation website
   set(WEBSITE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/website)
   
-  add_custom_command(
-    OUTPUT ${WEBSITE_ROOT}
-    COMMAND mkdir -p ${WEBSITE_ROOT}
-  )
+  dir(${WEBSITE_ROOT})
   
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/style.css ${WEBSITE_ROOT}/style.css)
+  copy_file(${CMAKE_SOURCE_DIR} style.css ${WEBSITE_ROOT})
   
   set(WEBSITE_FILES ${WEBSITE_ROOT}/style.css)
 
@@ -64,20 +62,21 @@ else()
     exception_debug
   )
     set(FILENAME example_${E}.html)
-    set(SRC_FILE ${CMAKE_SOURCE_DIR}/libs/metatest/html/${FILENAME})
     set(DST_FILE ${WEBSITE_ROOT}/metatest/${FILENAME})
   
     set(WEBSITE_FILES ${WEBSITE_FILES} ${DST_FILE})
-    add_custom_command(
-      OUTPUT ${DST_FILE}
-      COMMAND cp ${SRC_FILE} ${DST_FILE}
-      DEPENDS example_${E}_output ${SRC_FILE}
+    copy_file(
+      ${CMAKE_SOURCE_DIR}/libs/metatest/html
+      ${FILENAME}
+      ${WEBSITE_ROOT}/metatest
+      example_${E}_output
     )
   endforeach(E)
   
-  configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/libs/metatest/html/jquery.js
-    ${WEBSITE_ROOT}/metatest/jquery.js
+  copy_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/metatest/html
+    jquery.js
+    ${WEBSITE_ROOT}/metatest
   )
   set(WEBSITE_FILES ${WEBSITE_FILES} ${WEBSITE_ROOT}/metatest/jquery.js)
   
@@ -85,22 +84,34 @@ else()
   foreach(L metatest metamonad metaparse safe_printf)
     set(DIR ${CMAKE_SOURCE_DIR}/libs/${L})
     file(GLOB FILES ${DIR}/doc/*.txt)
-    list(REMOVE_ITEM FILES ${DIR}/doc/CMakeLists.txt)
+    list(REMOVE_ITEM FILES ${DIR}/doc/CMakeLists.txt ${DIR}/doc/index.txt)
+
+    dir(${WEBSITE_ROOT}/${L})
     
     foreach(F ${FILES})
       get_filename_component(FN_BASE ${F} NAME_WE)
+      get_filename_component(P ${WEBSITE_ROOT}/${L} ABSOLUTE)
+
       set(FILENAME ${FN_BASE}.html)
-      set(DST ${WEBSITE_ROOT}/${L}/${FILENAME})
-      add_custom_command(
-        OUTPUT ${DST}
-        COMMAND cp ${DIR}/html/${FILENAME} ${DST}
-        DEPENDS ${L}_documentation ${DIR}/html/${FILENAME}
+      set(DST ${P}/${FILENAME})
+      copy_file(
+        ${DIR}/html
+        ${FILENAME}
+        ${P}
+        ${L}_documentation
       )
       set(WEBSITE_FILES ${WEBSITE_FILES} ${DST})
     endforeach(F)
+
+    add_custom_command(
+      OUTPUT ${P}/index.html
+      COMMAND cat ${DIR}/html/index.html | sed 's/\\.\\.\\/\\.\\.\\/\\.\\.\\/index\\.html/..\\/..\\/index.html/' > ${P}/index.html
+      DEPENDS ${L}_documentation ${DIR}/html/index.html ${P}
+    )
+    set(WEBSITE_FILES ${WEBSITE_FILES} ${P}/index.html)
   
-    configure_file(${DIR}/html/style.css ${WEBSITE_ROOT}/${L}/style.css)
-    set(WEBSITE_FILES ${WEBSITE_FILES} ${WEBSITE_ROOT}/${L}/style.css)
+    copy_file(${DIR}/html style.css ${P})
+    set(WEBSITE_FILES ${WEBSITE_FILES} ${P}/style.css)
 
   endforeach(L)
   
