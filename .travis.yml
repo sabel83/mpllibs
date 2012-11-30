@@ -1,0 +1,5 @@
+language: cpp
+compiler:
+  - gcc
+  - clang
+script: mkdir bin && cd bin && cmake .. -DCMAKE_CXX_FLAGS:STRING="-std=c++0x" && make && make test
