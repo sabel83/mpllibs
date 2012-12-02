@@ -83,12 +83,17 @@ classes the following are equivalent:
 
 --------------------------------------
 lazy<boost::mpl::eval_if<p, t, f> >::type
-boost::mpl::eval_if<lazy<p>::type, t, f>::type
+boost::mpl::eval_if<lazy<p>::type, lazy<t>, lazy<f> >::type
 --------------------------------------
 
 --------------------------------------
 lazy<boost::mpl::if_<p, t, f> >::type
-boost::mpl::if_<lazy<p>::type, t, f>::type
+boost::mpl::if_<lazy<p>::type, lazy<t>, lazy<f> >::type
+--------------------------------------
+
+--------------------------------------
+lazy<lazy<t> >::type
+lazy<t>::type
 --------------------------------------
 
 Example
