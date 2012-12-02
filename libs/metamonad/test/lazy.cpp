@@ -5,6 +5,7 @@
 
 #define BOOST_TEST_DYN_LINK
 
+#include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
@@ -21,6 +22,8 @@
 
 namespace
 {
+  using boost::mpl::eval_if;
+
   struct returns13
   {
     typedef int13 type;
@@ -31,6 +34,9 @@ namespace
 
   template <class T>
   struct always13 : returns13 {};
+
+  template <class C, class T, class F>
+  struct custom_eval_if : eval_if<C, T, F> {};
 }
 
 BOOST_AUTO_TEST_CASE(test_lazy)
@@ -38,10 +44,10 @@ BOOST_AUTO_TEST_CASE(test_lazy)
   using mpllibs::metatest::meta_require;
 
   using mpllibs::metamonad::lazy;
+  using mpllibs::metamonad::already_lazy;
   
   using boost::mpl::equal_to;
   using boost::mpl::divides;
-  using boost::mpl::eval_if;
   using boost::mpl::if_;
   using boost::mpl::false_;
 
@@ -68,6 +74,20 @@ BOOST_AUTO_TEST_CASE(test_lazy)
       lazy<if_<false_, breaking_expr, divides<int26, int2> > >::type::type
     >
   >(MPLLIBS_HERE, "test_if");
+
+  meta_require<
+    equal_to<
+      int13,
+      lazy<
+        custom_eval_if<
+          false_,
+          already_lazy<breaking_expr>,
+          already_lazy<divides<int26, int2> >
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_custom_eval_if");
+
 }
 
 

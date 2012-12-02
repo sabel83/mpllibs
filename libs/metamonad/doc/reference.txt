@@ -16,6 +16,7 @@ link:letrec.html[letrec] +
 Lazy evaluation
 ---------------
 
+link:already_lazy.html[already_lazy] +
 link:lazy.html[lazy] +
 
 Lambda expressions
