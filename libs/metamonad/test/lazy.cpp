@@ -37,6 +37,17 @@ namespace
 
   template <class C, class T, class F>
   struct custom_eval_if : eval_if<C, T, F> {};
+
+  struct hidden_result
+  {
+    typedef int13 the_result;
+    // no ::type
+  };
+
+  struct can_be_evaluated_only_once
+  {
+    typedef hidden_result type;
+  };
 }
 
 BOOST_AUTO_TEST_CASE(test_lazy)
@@ -88,6 +99,31 @@ BOOST_AUTO_TEST_CASE(test_lazy)
     >
   >(MPLLIBS_HERE, "test_custom_eval_if");
 
+  meta_require<
+    equal_to<
+      int26,
+      lazy<
+        eval_if<false_, breaking_expr, non_lazy_plus<returns13, returns13> >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_eval_if_with_lazy_expression_as_selected_case");
+
+  meta_require<
+    equal_to<
+      int26,
+      lazy<
+        if_<false_, breaking_expr, non_lazy_plus<returns13, returns13> >
+      >::type::type
+    >
+  >(MPLLIBS_HERE, "test_if_with_lazy_expression_as_selected_case");
+
+  meta_require<
+    equal_to<int13, lazy<can_be_evaluated_only_once>::type::the_result>
+  >(MPLLIBS_HERE, "test_evaluation_limit");
+
+  meta_require<
+    equal_to<int13, lazy<lazy<can_be_evaluated_only_once> >::type::the_result>
+  >(MPLLIBS_HERE, "test_evaluation_limit_of_double_lazy");
 }
 
 
