@@ -1,6 +1,8 @@
 mpllibs
 =======
 
+[![Build Status](https://secure.travis-ci.org/sabel83/mpllibs.png?branch=master "Build Status")](http://travis-ci.org/sabel83/mpllibs)
+
 Introduction
 ------------
 
