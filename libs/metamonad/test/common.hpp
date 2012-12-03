@@ -11,6 +11,7 @@
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/times.hpp>
+#include <boost/mpl/divides.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/minus.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -60,6 +61,21 @@ namespace
 
   template <class F, class A1>
   struct lazy_apply : boost::mpl::apply<typename F::type, A1> {};
+
+  // Needed by laziness tests
+
+  struct returns13
+  {
+    typedef int13 type;
+  };
+
+  template <class A, class B>
+  struct non_lazy_plus : boost::mpl::int_<A::value + B::value> {};
+
+  template <class C, class T, class F>
+  struct custom_eval_if : boost::mpl::eval_if<C, T, F> {};
+
+  typedef boost::mpl::divides<int1, int0> breaking_expr;
 }
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, double_value, "double_value")
