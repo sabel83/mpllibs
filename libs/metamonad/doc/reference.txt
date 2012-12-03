@@ -18,6 +18,7 @@ Lazy evaluation
 
 link:already_lazy.html[already_lazy] +
 link:lazy.html[lazy] +
+link:lazy_argument.html[lazy_argument] +
 
 Lambda expressions
 ------------------

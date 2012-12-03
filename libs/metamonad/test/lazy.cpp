@@ -5,6 +5,7 @@
 
 #define BOOST_TEST_DYN_LINK
 
+#include <mpllibs/metamonad/lazy_argument.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 
@@ -56,6 +57,7 @@ BOOST_AUTO_TEST_CASE(test_lazy)
 
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::already_lazy;
+  using mpllibs::metamonad::lazy_argument;
   
   using boost::mpl::equal_to;
   using boost::mpl::divides;
@@ -124,6 +126,36 @@ BOOST_AUTO_TEST_CASE(test_lazy)
   meta_require<
     equal_to<int13, lazy<lazy<can_be_evaluated_only_once> >::type::the_result>
   >(MPLLIBS_HERE, "test_evaluation_limit_of_double_lazy");
+
+  meta_require<
+    equal_to<
+      int26,
+      lazy<
+        custom_eval_if<
+          false_,
+          already_lazy<breaking_expr>,
+          already_lazy<lazy<non_lazy_plus<returns13, returns13> > >
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_custom_eval_if_with_lazy_expression_as_selected_case");
+
+  meta_require<
+    equal_to<
+      int26,
+      lazy<
+        custom_eval_if<
+          false_,
+          lazy_argument<breaking_expr>,
+          lazy_argument<non_lazy_plus<returns13, returns13> >
+        >
+      >::type
+    >
+  >(
+    MPLLIBS_HERE,
+    "test_custom_eval_if_with_lazy_expression_as_selected_case"
+    "_with_lazy_argument"
+  );
 }
 
 
