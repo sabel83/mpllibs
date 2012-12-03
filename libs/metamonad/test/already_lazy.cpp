@@ -14,10 +14,11 @@
 #include "common.hpp"
 
 #include <boost/mpl/int.hpp>
+#include <boost/mpl/divides.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/bool.hpp>
 
-BOOST_AUTO_TEST_CASE(test_lazy)
+BOOST_AUTO_TEST_CASE(test_already_lazy)
 {
   using mpllibs::metatest::meta_require;
 
@@ -26,6 +27,7 @@ BOOST_AUTO_TEST_CASE(test_lazy)
   
   using boost::mpl::equal_to;
   using boost::mpl::false_;
+  using boost::mpl::divides;
 
   meta_require<
     equal_to<
