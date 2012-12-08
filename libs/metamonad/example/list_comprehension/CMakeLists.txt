@@ -3,9 +3,9 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-subdirs(
-  fib
-  min
-  min_with_do
-  list_comprehension
-)
+aux_source_directory(. SOURCES)
+add_executable(list_comprehension  ${SOURCES})
+
+target_link_libraries(list_comprehension)
+
+
