@@ -6,15 +6,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/tmp_value.hpp>
+
 #include <iostream>
 
 #ifdef MPLLIBS_DEFINE_META_ATOM
   #error MPLLIBS_DEFINE_META_ATOM already defined
 #endif
 #define MPLLIBS_DEFINE_META_ATOM(tag_type, name) \
-  struct name \
+  struct name : mpllibs::metamonad::tmp_value<name> \
   { \
-    typedef name type; \
     typedef tag_type tag; \
   };
 

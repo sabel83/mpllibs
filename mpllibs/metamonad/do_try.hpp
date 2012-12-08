@@ -10,6 +10,7 @@
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -39,10 +40,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    struct catch_any
-    {
-      typedef catch_any type;
-    };
+    struct catch_any : tmp_value<catch_any> {};
 
     namespace impl
     {

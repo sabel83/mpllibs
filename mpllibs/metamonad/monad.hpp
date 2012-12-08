@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/typeclass.hpp>
 #include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/always.hpp>
@@ -29,10 +30,8 @@ namespace mpllibs
     template <class Tag>
     struct monad_defaults : monad<typeclass_expectations>
     {
-      struct bind_
+      struct bind_ : tmp_value<bind_>
       {
-        typedef bind_ type;
-      
         template <class A, class B>
         struct apply :
           boost::mpl::apply_wrap2<
@@ -43,10 +42,8 @@ namespace mpllibs
         {};
       };
 
-      struct fail
+      struct fail : tmp_value<fail>
       {
-        typedef fail type;
-      
         template <class S>
         struct apply : throw_<S> {};
       };

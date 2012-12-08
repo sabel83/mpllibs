@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/overloading_error.hpp>
 #include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -41,10 +42,11 @@
   ) \
   \
   template <BOOST_PP_ENUM_PARAMS(arg_num, class Tag)> \
-  struct name##_impl \
+  struct name##_impl : \
+    mpllibs::metamonad::tmp_value< \
+      name##_impl<BOOST_PP_ENUM_PARAMS(arg_num, Tag)> \
+    > \
   { \
-    typedef name##_impl type; \
-    \
     template <BOOST_PP_ENUM_PARAMS(arg_num, class T)> \
     struct apply : mpllibs::metamonad::throw_<invalid_args_for_##name> {}; \
   }; \

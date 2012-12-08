@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/typeclass.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/reverse_fold.hpp>
@@ -28,10 +29,8 @@ namespace mpllibs
     template <class Tag>
     struct monoid_defaults : monoid<typeclass_expectations>
     {
-      struct concat
+      struct concat : tmp_value<concat>
       {
-        typedef concat type;
-      
         template <class L>
         struct apply :
           boost::mpl::reverse_fold<

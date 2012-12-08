@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -22,9 +23,8 @@ namespace mpllibs
     MPLLIBS_DEFINE_TAG(just_tag)
     
     template <class T>
-    struct just
+    struct just : tmp_value<just<T> >
     {
-      typedef just type;
       typedef just_tag tag;
       typedef typename T::type data;
     };

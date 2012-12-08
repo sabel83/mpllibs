@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/monad.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -54,10 +55,8 @@ namespace mpllibs
     template <>
     struct monad<exception_tag> : monad_defaults<exception_tag>
     {
-      struct return_
+      struct return_ : tmp_value<return_>
       {
-        typedef return_ type;
-        
         template <class T>
         struct apply
         {
@@ -65,10 +64,8 @@ namespace mpllibs
         };
       };
       
-      struct bind
+      struct bind : tmp_value<bind>
       {
-        typedef bind type;
-
         template <class A, class F>
         struct apply :
           boost::mpl::if_<

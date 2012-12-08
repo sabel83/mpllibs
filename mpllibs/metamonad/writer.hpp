@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -26,10 +27,8 @@ namespace mpllibs
     template <class M>
     struct monad<writer_tag<M> > : monad_defaults<writer_tag<M> >
     {
-      struct return_
+      struct return_ : tmp_value<return_>
       {
-        typedef return_ type;
-        
         template <class T>
         struct apply
         {
@@ -37,7 +36,7 @@ namespace mpllibs
         };
       };
       
-      struct bind
+      struct bind : tmp_value<bind>
       {
         template <class A, class F>
         struct apply
@@ -58,8 +57,6 @@ namespace mpllibs
             >
             type;
         };
-        
-        typedef bind type;
       };
     };
   }

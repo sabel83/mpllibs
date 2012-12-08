@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -23,10 +24,8 @@ namespace mpllibs
     template <>
     struct monad<reader_tag> : monad_defaults<reader_tag>
     {
-      struct return_
+      struct return_ : tmp_value<return_>
       {
-        typedef return_ type;
-        
         template <class T>
         struct apply
         {
@@ -34,14 +33,12 @@ namespace mpllibs
         };
       };
       
-      struct bind
+      struct bind : tmp_value<bind>
       {
       private:
         template <class A, class F>
-        struct impl
+        struct impl : tmp_value<impl<A, F> >
         {
-          typedef impl type;
-          
           template <class R>
           struct apply :
             boost::mpl::apply<
@@ -56,8 +53,6 @@ namespace mpllibs
       public:
         template <class A, class F>
         struct apply : impl<A, F> {};
-        
-        typedef bind type;
       };
     };
   }

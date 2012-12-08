@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -22,9 +23,8 @@ namespace mpllibs
     MPLLIBS_DEFINE_TAG(left_tag)
     
     template <class T>
-    struct left
+    struct left : tmp_value<left<T> >
     {
-      typedef left type;
       typedef left_tag tag;
       typedef typename T::type data;
     };

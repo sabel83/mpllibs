@@ -12,6 +12,7 @@
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/monad.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -28,15 +29,13 @@ namespace mpllibs
     template <>
     struct monad<maybe_tag> : monad_defaults<maybe_tag>
     {
-      struct return_
+      struct return_ : tmp_value<return_>
       {
-        typedef return_ type;
-        
         template <class T>
         struct apply : just<T> {};
       };
       
-      struct bind
+      struct bind : tmp_value<bind>
       {
       private:
         template <class A, class F>
@@ -50,13 +49,10 @@ namespace mpllibs
             call_F<A, F>
           >::type
         {};
-        typedef bind type;
       };
 
-      struct fail
+      struct fail : tmp_value<fail>
       {
-        typedef return_ type;
-        
         template <class S>
         struct apply : nothing {};
       };

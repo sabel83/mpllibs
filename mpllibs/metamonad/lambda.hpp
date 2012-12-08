@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -15,10 +16,8 @@ namespace mpllibs
   namespace metamonad
   {
     template <class ArgName, class F>
-    struct lambda
+    struct lambda : tmp_value<lambda<ArgName, F> >
     {
-      typedef lambda type;
-
       template <class T>
       struct apply : let<ArgName, T, F>::type {};
     };
