@@ -16,9 +16,9 @@
 #include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/end.hpp>
-#include <boost/mpl/transform.hpp>
 #include <boost/mpl/lambda.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/transform_view.hpp>
 
 namespace mpllibs
 {
@@ -59,7 +59,7 @@ namespace mpllibs
         template <class A, class F>
         struct apply :
           boost::mpl::fold<
-            typename boost::mpl::transform<A, F>::type,
+            boost::mpl::transform_view<A, F>,
             boost::mpl::list<>,
             mpllibs::metamonad::impl::join_lists
           >
