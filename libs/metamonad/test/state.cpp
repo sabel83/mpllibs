@@ -6,6 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/state.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -19,28 +20,23 @@
 
 using boost::mpl::plus;
 
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
   template <class N>
-  struct plusn
+  struct plusn : tmp_value<plusn<N> >
   {
-    typedef plusn type;
-
     template <class A>
     struct apply
     {
-    private:
-      struct impl
+      struct type : tmp_value<type>
       {
-        typedef impl type;
-  
         template <class S>
         struct apply :
           boost::mpl::pair<typename plus<A, N>::type, typename plus<S, N>::type>
         {};
       };
-    public:
-      typedef impl type;
     };
   };
 }

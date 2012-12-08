@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -31,10 +32,8 @@ namespace mpllibs
     template <>
     struct monad<test_tag> : monad_defaults<test_tag>
     {
-      struct return_
+      struct return_ : tmp_value<return_>
       {
-        typedef return_ type;
-        
         template <class T>
         struct apply : identity<int13> {};
       };

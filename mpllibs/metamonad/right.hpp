@@ -23,9 +23,8 @@ namespace mpllibs
     MPLLIBS_DEFINE_TAG(right_tag)
     
     template <class T>
-    struct right : tmp_value<right<T> >
+    struct right : tmp_value<right<T>, right_tag>
     {
-      typedef right_tag tag;
       typedef typename T::type data;
     };
     

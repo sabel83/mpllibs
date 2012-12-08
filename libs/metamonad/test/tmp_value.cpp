@@ -16,7 +16,11 @@ namespace
 {
   using mpllibs::metamonad::tmp_value;
 
+  struct test_tag : tmp_value<test_tag> {};
+
   struct test_value : tmp_value<test_value> {};
+
+  struct test_value_with_tag : tmp_value<test_value_with_tag, test_tag> {};
 }
 
 BOOST_AUTO_TEST_CASE(test_tmp_value)
@@ -28,6 +32,14 @@ BOOST_AUTO_TEST_CASE(test_tmp_value)
   meta_require<
     is_same<test_value, test_value::type>
   >(MPLLIBS_HERE, "test_value_becomes_nullary_metafunction");
+
+  meta_require<
+    is_same<test_value_with_tag, test_value_with_tag::type>
+  >(MPLLIBS_HERE, "test_value_with_tag_becomes_nullary_metafunction");
+
+  meta_require<
+    is_same<test_tag, test_value_with_tag::tag>
+  >(MPLLIBS_HERE, "test_value_with_tag_has_tag");
 }
 
 

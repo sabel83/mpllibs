@@ -6,6 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/reader.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -18,13 +19,14 @@
 #include "common.hpp"
 
 using boost::mpl::plus;
+
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
   template <class A>
-  struct fplus
+  struct fplus : tmp_value<fplus<A> >
   {
-    typedef fplus type;
-    
     template <class R>
     struct apply : plus<A, R> {};
   };

@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -23,6 +24,7 @@ using boost::mpl::minus;
 using mpllibs::metamonad::do_;
 using mpllibs::metamonad::set;
 using mpllibs::metamonad::do_return;
+using mpllibs::metamonad::tmp_value;
 
 /*
  * WrapperMonad
@@ -34,11 +36,9 @@ namespace
   typedef wrapper_tag wrapper_monad;
 
   template <class T>
-  struct wrapped
+  struct wrapped : tmp_value<wrapped<T>, wrapper_tag>
   {
-    typedef wrapper_tag tag;
     typedef T value;
-    typedef wrapped type;
   };
 }
 
@@ -51,18 +51,14 @@ namespace mpllibs
     template <>
     struct monad<wrapper_tag>
     {
-      struct return_
+      struct return_ : tmp_value<return_>
       {
-        typedef return_ type;
-
         template <class T>
         struct apply : wrapped<T> {};
       };
       
-      struct bind
+      struct bind : tmp_value<bind>
       {
-        typedef bind type;
-
         template <class A, class F>
         struct apply : apply<F, A> {};
       };

@@ -12,8 +12,16 @@ namespace mpllibs
 {
   namespace metamonad
   {
+    struct no_tag_for_tmp_value;
+
+    template <class T, class Tag = no_tag_for_tmp_value>
+    struct tmp_value : tmp_value<T, no_tag_for_tmp_value>
+    {
+      typedef Tag tag;
+    };
+
     template <class T>
-    struct tmp_value
+    struct tmp_value<T, no_tag_for_tmp_value>
     {
       typedef T type;
     };

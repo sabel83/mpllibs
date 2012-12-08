@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
@@ -23,12 +24,13 @@
 #include <iostream>
 
 using boost::mpl::minus;
+
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
-  struct minus_2
+  struct minus_2 : tmp_value<minus_2>
   {
-    typedef minus_2 type;
-  
     template <class A>
     struct apply : right<typename minus<typename A::value, int2>::type> {};
   };

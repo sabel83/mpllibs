@@ -23,9 +23,8 @@ namespace mpllibs
     MPLLIBS_DEFINE_TAG(just_tag)
     
     template <class T>
-    struct just : tmp_value<just<T> >
+    struct just : tmp_value<just<T>, just_tag>
     {
-      typedef just_tag tag;
       typedef typename T::type data;
     };
     

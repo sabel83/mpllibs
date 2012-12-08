@@ -14,10 +14,7 @@
   #error MPLLIBS_DEFINE_META_ATOM already defined
 #endif
 #define MPLLIBS_DEFINE_META_ATOM(tag_type, name) \
-  struct name : mpllibs::metamonad::tmp_value<name> \
-  { \
-    typedef tag_type tag; \
-  };
+  struct name : mpllibs::metamonad::tmp_value<name, tag_type> {};
 
 #endif
 

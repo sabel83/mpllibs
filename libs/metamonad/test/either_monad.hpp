@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -28,19 +29,15 @@ namespace
   typedef either_tag either;
   
   template <class T>
-  struct left
+  struct left : mpllibs::metamonad::tmp_value<left<T>, left_tag>
   {
-    typedef left_tag tag;
     typedef T value;
-    typedef left type;
   };
   
   template <class T>
-  struct right
+  struct right : mpllibs::metamonad::tmp_value<right<T>, right_tag>
   {
-    typedef right_tag tag;
     typedef T value;
-    typedef right type;
   };
 }
 
@@ -87,18 +84,14 @@ namespace mpllibs
     template <>
     struct monad<either_tag> : monad_defaults<either_tag>
     {
-      struct return_
+      struct return_ : tmp_value<return_>
       {
-        typedef return_ type;
-        
         template <class T>
         struct apply : right<T> {};
       };
       
-      struct bind
+      struct bind : tmp_value<bind>
       {
-        typedef bind type;
-        
         template <class A, class F>
         struct apply :
           boost::mpl::if_<

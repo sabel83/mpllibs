@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/writer.hpp>
 #include <mpllibs/metamonad/list.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -20,14 +21,14 @@
 using boost::mpl::list;
 using boost::mpl::pair;
 using boost::mpl::plus;
+
+using mpllibs::metamonad::tmp_value;
   
 namespace
 {
   template <class A>
-  struct log_plus
+  struct log_plus : tmp_value<log_plus<A> >
   {
-    typedef log_plus type;
-    
     template <class R>
     struct apply : pair<plus<A, R>, list<A> > {};
   };

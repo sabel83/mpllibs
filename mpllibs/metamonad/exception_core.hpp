@@ -17,10 +17,8 @@ namespace mpllibs
     MPLLIBS_DEFINE_TAG(exception_tag)
   
     template <class Data>
-    struct exception : tmp_value<exception<Data> >
+    struct exception : tmp_value<exception<Data>, exception_tag>
     {
-      typedef exception_tag tag;
-
       typedef Data data;
     };
   }
