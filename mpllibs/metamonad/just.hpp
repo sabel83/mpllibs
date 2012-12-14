@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
@@ -20,7 +20,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_TAG(just_tag)
+    struct just_tag : tmp_tag<just_tag> {};
     
     template <class T>
     struct just : tmp_value<just<T>, just_tag>

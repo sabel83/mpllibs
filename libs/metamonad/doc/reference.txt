@@ -83,10 +83,9 @@ link:overloading_error_tag.html[overloading_error_tag] +
 Convenience functions and macros
 --------------------------------
 
-link:MPLLIBS_DEFINE_TAG.html[MPLLIBS_DEFINE_TAG] +
-link:MPLLIBS_DEFINE_META_ATOM.html[MPLLIBS_DEFINE_META_ATOM] +
 link:MPLLIBS_DEFINE_METAFUNCTION.html[MPLLIBS_DEFINE_METAFUNCTION] +
 
+link:tmp_tag.html[tmp_tag] +
 link:tmp_value.html[tmp_value] +
 
 Maybe

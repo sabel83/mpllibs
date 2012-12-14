@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/monad.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
@@ -22,9 +22,9 @@ namespace
   /*
    * Either monad for testing
    */
-  MPLLIBS_DEFINE_TAG(either_tag)
-  MPLLIBS_DEFINE_TAG(left_tag)
-  MPLLIBS_DEFINE_TAG(right_tag)
+  struct either_tag : mpllibs::metamonad::tmp_tag<either_tag> {};
+  struct left_tag : mpllibs::metamonad::tmp_tag<left_tag> {};
+  struct right_tag : mpllibs::metamonad::tmp_tag<right_tag> {};
 
   typedef either_tag either;
   

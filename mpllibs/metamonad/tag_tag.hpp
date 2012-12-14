@@ -8,19 +8,13 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_META_ATOM(tag_tag, tag_tag)
-    
-    #ifdef MPLLIBS_DEFINE_TAG
-      #error MPLLIBS_DEFINE_TAG already defined
-    #endif
-    #define MPLLIBS_DEFINE_TAG(name) \
-      MPLLIBS_DEFINE_META_ATOM(mpllibs::metamonad::tag_tag, name)
+    struct tag_tag : tmp_tag<tag_tag> {};
   }
 }
 

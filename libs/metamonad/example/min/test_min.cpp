@@ -5,8 +5,8 @@
 
 #include "min.hpp"
 
-#include <mpllibs/metamonad/tag_tag.hpp>
-#include <mpllibs/metamonad/meta_atom.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/test.hpp>
 
@@ -16,6 +16,8 @@
 using mpllibs::metatest::suite_path;
 
 using mpllibs::metamonad::exception;
+using mpllibs::metamonad::tmp_tag;
+using mpllibs::metamonad::tmp_value;
 
 using boost::mpl::int_;
 using boost::mpl::equal_to;
@@ -24,8 +26,8 @@ namespace
 {
   const suite_path suite("min");
   
-  MPLLIBS_DEFINE_TAG(test_class_tag)
-  MPLLIBS_DEFINE_META_ATOM(test_class_tag, test_class)
+  struct test_class_tag : tmp_tag<test_class_tag> {};
+  struct test_class : tmp_value<test_class, test_class_tag> {};
   
   typedef equal_to<int_<11>, min<int_<11>, int_<13> >::type> test_integers;
 

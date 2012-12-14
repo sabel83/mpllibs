@@ -1,59 +1,55 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2012.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-MPLLIBS_DEFINE_TAG
-==================
+tmp_tag
+=======
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_DEFINE_TAG(name) \
-  // unspecified
+template <class T>
+struct tmp_tag : tmp_value<T, tag_tag> {};
 --------------------------------------
 
 
 Description
 -----------
 
-Macro for defining a class that can be used as +tag+. +tag+ of +tags+ is
-+link:tag_tag.html[tag_tag]+.
+Convenience function for defining classes that are intended to be used as tags.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-The following
+For any +t+ types the following are equivalent:
 
 --------------------------------------
-MPLLIBS_DEFINE_TAG(example_tag)
+t
+tmp_tag<t>::type
 --------------------------------------
 
-is equivalent to
-
 --------------------------------------
-struct example_tag
-{
-  typedef example_tag type;
-  typedef tag_tag tag;
-};
+tag_tag
+tmp_tag<t>::tag
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-MPLLIBS_DEFINE_TAG(example_tag)
-MPLLIBS_DEFINE_META_ATOM(example_tag, example_atom)
+struct some_tag : tmp_tag<some_tag> {};
+
+struct void_ : tmp_value<void_, some_tag> {};
 --------------------------------------
 
 include::copyright[]

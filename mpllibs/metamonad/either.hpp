@@ -10,7 +10,7 @@
 #include <mpllibs/metamonad/left.hpp>
 #include <mpllibs/metamonad/right.hpp>
 #include <mpllibs/metamonad/is_left.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
@@ -24,7 +24,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_TAG(either_tag)
+    struct either_tag : tmp_tag<either_tag> {};
     
     template <>
     struct monad<either_tag> : monad_defaults<either_tag>

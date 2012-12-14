@@ -8,8 +8,8 @@
 #include <mpllibs/metamonad/try.hpp>
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
-#include <mpllibs/metamonad/meta_atom.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -24,13 +24,16 @@
 
 #include "common.hpp"
 
+using mpllibs::metamonad::tmp_tag;
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
-  MPLLIBS_DEFINE_TAG(tag1)
-  MPLLIBS_DEFINE_META_ATOM(tag1, e1)
+  struct tag1 : tmp_tag<tag1> {};
+  struct e1 : tmp_value<e1, tag1> {};
   
-  MPLLIBS_DEFINE_TAG(tag2)
-  MPLLIBS_DEFINE_META_ATOM(tag2, e2)
+  struct tag2 : tmp_tag<tag2> {};
+  struct e2 : tmp_value<e2, tag2> {};
 }
 
 BOOST_AUTO_TEST_CASE(test_try_)

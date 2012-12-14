@@ -7,14 +7,16 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/throw.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
-#include <mpllibs/metamonad/meta_atom.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal_to.hpp>
 
-MPLLIBS_DEFINE_TAG(non_comparable_tag)
-MPLLIBS_DEFINE_META_ATOM(non_comparable_tag, non_comparable)
+struct non_comparable_tag : mpllibs::metamonad::tmp_tag<non_comparable_tag> {};
+struct non_comparable :
+  mpllibs::metamonad::tmp_value<non_comparable, non_comparable_tag>
+{};
 
 namespace boost
 {

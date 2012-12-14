@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -14,7 +14,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_TAG(exception_tag)
+    struct exception_tag : tmp_tag<exception_tag> {};
   
     template <class Data>
     struct exception : tmp_value<exception<Data>, exception_tag>

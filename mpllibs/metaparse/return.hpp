@@ -10,7 +10,7 @@
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
 
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -20,7 +20,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(accept_tag)
+    struct accept_tag : mpllibs::metamonad::tmp_tag<accept_tag> {};
     
     template <class C>
     struct return_

@@ -7,7 +7,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/throw.hpp>
-#include <mpllibs/metamonad/meta_atom.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 

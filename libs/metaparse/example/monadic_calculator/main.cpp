@@ -20,8 +20,8 @@
 #include <mpllibs/metaparse/build_parser.hpp>
 
 #include <mpllibs/metamonad/do_try.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
-#include <mpllibs/metamonad/meta_atom.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream.hpp>
 
@@ -57,6 +57,8 @@ using mpllibs::metatest::to_stream;
 using mpllibs::metamonad::do_try;
 using mpllibs::metamonad::throw_;
 using mpllibs::metamonad::set;
+using mpllibs::metamonad::tmp_tag;
+using mpllibs::metamonad::tmp_value;
 
 using boost::mpl::apply_wrap1;
 using boost::mpl::fold;
@@ -88,8 +90,8 @@ typedef token<int_> int_token;
 
 struct x;
 
-MPLLIBS_DEFINE_TAG(division_by_zero_tag)
-MPLLIBS_DEFINE_META_ATOM(division_by_zero_tag, division_by_zero)
+struct division_by_zero_tag : tmp_tag<division_by_zero_tag> {};
+struct division_by_zero : tmp_value<division_by_zero, division_by_zero_tag> {};
 
 struct new_value;
 struct state;

@@ -6,7 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/return_.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
@@ -20,9 +20,11 @@
 
 using boost::mpl::identity;
 
+using mpllibs::metamonad::tmp_tag;
+
 namespace
 {
-  MPLLIBS_DEFINE_TAG(test_tag)
+  struct test_tag : tmp_tag<test_tag> {};
 }
 
 namespace mpllibs

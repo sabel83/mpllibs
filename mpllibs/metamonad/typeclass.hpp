@@ -6,16 +6,19 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/tag_tag.hpp>
-#include <mpllibs/metamonad/meta_atom.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/throw.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_TAG(invalid_typeclass_tag)
-    MPLLIBS_DEFINE_META_ATOM(invalid_typeclass_tag, invalid_typeclass)
+    struct invalid_typeclass_tag : tmp_tag<invalid_typeclass_tag> {};
+
+    struct invalid_typeclass :
+      tmp_value<invalid_typeclass, invalid_typeclass_tag>
+    {};
     
     #ifdef MPLLIBS_TYPECLASS_EXPECT
       #error MPLLIBS_TYPECLASS_EXPECT already defined
@@ -24,7 +27,7 @@ namespace mpllibs
       typedef \
         mpllibs::metamonad::throw_<mpllibs::metamonad::invalid_typeclass> name;
   
-    MPLLIBS_DEFINE_TAG(typeclass_expectations)
+    struct typeclass_expectations : tmp_tag<typeclass_expectations> {};
   }
 }
 

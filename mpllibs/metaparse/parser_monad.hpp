@@ -13,7 +13,7 @@
 #include <mpllibs/metaparse/get_position.hpp>
 
 #include <mpllibs/metamonad/do_try.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/monad.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
@@ -27,7 +27,7 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(parser_tag)
+    struct parser_tag : mpllibs::metamonad::tmp_tag<parser_tag> {};
   }
   
   namespace metamonad

@@ -6,7 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/do.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
@@ -24,6 +24,7 @@ using boost::mpl::minus;
 using mpllibs::metamonad::do_;
 using mpllibs::metamonad::set;
 using mpllibs::metamonad::do_return;
+using mpllibs::metamonad::tmp_tag;
 using mpllibs::metamonad::tmp_value;
 
 /*
@@ -31,7 +32,7 @@ using mpllibs::metamonad::tmp_value;
  */
 namespace
 {
-  MPLLIBS_DEFINE_TAG(wrapper_tag)
+  struct wrapper_tag : tmp_tag<wrapper_tag> {};
 
   typedef wrapper_tag wrapper_monad;
 

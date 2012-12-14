@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/get_col.hpp>
 #include <mpllibs/metaparse/get_line.hpp>
 
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -23,7 +23,9 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(source_position_tag)
+    struct source_position_tag :
+      mpllibs::metamonad::tmp_tag<source_position_tag>
+    {};
     
     template <class Line, class Col, class PrevChar>
     struct source_position

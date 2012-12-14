@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/monad.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
@@ -20,7 +20,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_TAG(state_tag)
+    struct state_tag : tmp_tag<state_tag> {};
     
     template <>
     struct monad<state_tag> : monad_defaults<state_tag>

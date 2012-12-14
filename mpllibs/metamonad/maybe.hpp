@@ -9,7 +9,7 @@
 #include <mpllibs/metamonad/just.hpp>
 #include <mpllibs/metamonad/is_nothing.hpp>
 #include <mpllibs/metamonad/nothing.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
@@ -24,7 +24,7 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_TAG(maybe_tag)
+    struct maybe_tag : tmp_tag<maybe_tag> {};
     
     template <>
     struct monad<maybe_tag> : monad_defaults<maybe_tag>

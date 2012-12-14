@@ -6,31 +6,82 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 namespace safe
 {
-  MPLLIBS_DEFINE_TAG(expectation_tag)
+  struct expectation_tag : mpllibs::metamonad::tmp_tag<expectation_tag> {};
 
   // Expected argument types
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_character)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_unsigned_character)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_string)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_wide_character)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_wide_character_string)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_signed_integer)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_unsigned_integer)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_short_signed_integer)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_short_unsigned_integer)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_long_signed_integer)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_long_unsigned_integer)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_float)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_double)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_long_double)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_pointer)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_signed_int_pointer)
-  MPLLIBS_DEFINE_META_ATOM(expectation_tag, expect_nothing) // To handle %%
+  struct expect_character :
+    mpllibs::metamonad::tmp_value<expect_character, expectation_tag>
+  {};
+
+  struct expect_unsigned_character :
+    mpllibs::metamonad::tmp_value<expect_unsigned_character, expectation_tag>
+  {};
+
+  struct expect_string :
+    mpllibs::metamonad::tmp_value<expect_string, expectation_tag>
+  {};
+
+  struct expect_wide_character :
+    mpllibs::metamonad::tmp_value<expect_wide_character, expectation_tag>
+  {};
+
+  struct expect_wide_character_string :
+    mpllibs::metamonad::tmp_value<expect_wide_character_string, expectation_tag>
+  {};
+
+  struct expect_signed_integer :
+    mpllibs::metamonad::tmp_value<expect_signed_integer, expectation_tag>
+  {};
+
+  struct expect_unsigned_integer :
+    mpllibs::metamonad::tmp_value<expect_unsigned_integer, expectation_tag>
+  {};
+
+  struct expect_short_signed_integer :
+    mpllibs::metamonad::tmp_value<expect_short_signed_integer, expectation_tag>
+  {};
+
+  struct expect_short_unsigned_integer :
+    mpllibs::metamonad::tmp_value<expect_short_unsigned_integer,expectation_tag>
+  {};
+
+  struct expect_long_signed_integer :
+    mpllibs::metamonad::tmp_value<expect_long_signed_integer, expectation_tag>
+  {};
+
+  struct expect_long_unsigned_integer :
+    mpllibs::metamonad::tmp_value<expect_long_unsigned_integer, expectation_tag>
+  {};
+
+  struct expect_float :
+    mpllibs::metamonad::tmp_value<expect_float, expectation_tag>
+  {};
+
+  struct expect_double :
+    mpllibs::metamonad::tmp_value<expect_double, expectation_tag>
+  {};
+
+  struct expect_long_double :
+    mpllibs::metamonad::tmp_value<expect_long_double, expectation_tag>
+  {};
+
+  struct expect_pointer :
+    mpllibs::metamonad::tmp_value<expect_pointer, expectation_tag>
+  {};
+
+  struct expect_signed_int_pointer :
+    mpllibs::metamonad::tmp_value<expect_signed_int_pointer, expectation_tag>
+  {};
+
+  // To handle %%
+  struct expect_nothing :
+    mpllibs::metamonad::tmp_value<expect_nothing, expectation_tag>
+  {};
 }
 
 #endif

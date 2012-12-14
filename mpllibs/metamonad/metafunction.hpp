@@ -36,10 +36,12 @@
   #error MPLLIBS_DEFINE_METAFUNCTION already defined
 #endif
 #define MPLLIBS_DEFINE_METAFUNCTION(name, arg_num) \
-  MPLLIBS_DEFINE_META_ATOM( \
-    mpllibs::metamonad::overloading_error_tag, \
-    invalid_args_for_##name \
-  ) \
+  struct invalid_args_for_##name : \
+    mpllibs::metamonad::tmp_value< \
+      invalid_args_for_##name, \
+      mpllibs::metamonad::overloading_error_tag \
+    > \
+  {}; \
   \
   template <BOOST_PP_ENUM_PARAMS(arg_num, class Tag)> \
   struct name##_impl : \

@@ -6,8 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/tag_tag.hpp>
-#include <mpllibs/metamonad/meta_atom.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <boost/mpl/bool.hpp>
 
@@ -15,9 +15,8 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_TAG(nothing_tag)
-    
-    MPLLIBS_DEFINE_META_ATOM(nothing_tag, nothing)
+    struct nothing_tag : tmp_tag<nothing_tag> {};
+    struct nothing : tmp_value<nothing, nothing_tag> {};
   }
 }
 

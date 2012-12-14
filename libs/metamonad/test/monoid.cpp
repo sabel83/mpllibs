@@ -6,6 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/monoid.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -26,10 +27,12 @@ using boost::mpl::_2;
 using boost::mpl::plus;
 using boost::mpl::times;
 
+using mpllibs::metamonad::tmp_tag;
+
 namespace
 {
-  MPLLIBS_DEFINE_TAG(plus_tag)
-  MPLLIBS_DEFINE_TAG(mult_tag)
+  struct plus_tag : tmp_tag<plus_tag> {};
+  struct mult_tag : tmp_tag<mult_tag> {};
 }
 
 namespace mpllibs

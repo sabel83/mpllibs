@@ -12,8 +12,8 @@
 #include <mpllibs/metaparse/get_remaining.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
 
-#include <mpllibs/metamonad/meta_atom.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -28,9 +28,13 @@ namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_TAG(accepted_keyword_tag)
+    struct accepted_keyword_tag :
+      mpllibs::metamonad::tmp_tag<accepted_keyword_tag>
+    {};
     
-    MPLLIBS_DEFINE_META_ATOM(accepted_keyword_tag, accepted_keyword)
+    struct accepted_keyword :
+      mpllibs::metamonad::tmp_value<accepted_keyword, accepted_keyword_tag>
+    {};
 
     // Does not consume/check anything after the keyword
     template <class Kw, class ResultType = accepted_keyword>

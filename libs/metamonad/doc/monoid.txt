@@ -68,7 +68,7 @@ Example
 --------------------------------------
 using boost::mpl;
 
-MPLLIBS_DEFINE_TAG(plus_tag)
+struct plus_tag : mpllibs::metamonad::tmp_tag<plus_tag> {};
 
 template <>
 struct monoid<plus_tag> : monoid_defaults<plus_tag>
