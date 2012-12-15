@@ -87,6 +87,15 @@ namespace mpllibs
     #undef MPLLIBS_LET_TEMPLATE_CASE
     #undef MPLLIBS_LET_CLASS
     #undef MPLLIBS_LET_REC_CASE
+
+    /*
+      lazy compatibility
+    */
+    template <class T>
+    struct lazy;
+
+    template <class A, class E1, class E2>
+    struct lazy<let<A, E1, E2> > : let<A, lazy<E1>, lazy<E2>> {};
   }
 }
 

@@ -21,6 +21,12 @@ namespace mpllibs
       template <class T>
       struct apply : let<ArgName, T, F>::type {};
     };
+
+    template <class T>
+    struct lazy;
+
+    template <class ArgName, class F>
+    struct lazy<lambda<ArgName, F> > : lambda<ArgName, lazy<F> > {};
   }
 }
 

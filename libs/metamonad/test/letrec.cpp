@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/letrec.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -25,6 +26,7 @@ BOOST_AUTO_TEST_CASE(test_letrec)
   
   using mpllibs::metamonad::letrec;
   using mpllibs::metamonad::lambda;
+  using mpllibs::metamonad::lazy;
 
   meta_require<
     equal_to<
@@ -98,6 +100,18 @@ BOOST_AUTO_TEST_CASE(test_letrec)
       >::type::type
     >
   >(MPLLIBS_HERE, "test_recursion");
+
+  meta_require<
+    equal_to<
+      int13,
+      lazy<
+        letrec<
+          x, int13,
+          x
+        >
+      >::type::type
+    >
+  >(MPLLIBS_HERE, "test_lazy");
 }
 
 

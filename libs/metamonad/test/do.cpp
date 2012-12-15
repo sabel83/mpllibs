@@ -8,6 +8,7 @@
 #include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 
@@ -28,6 +29,7 @@ using mpllibs::metamonad::set;
 using mpllibs::metamonad::do_return;
 using mpllibs::metamonad::tmp_tag;
 using mpllibs::metamonad::tmp_value;
+using mpllibs::metamonad::returns;
 
 /*
  * WrapperMonad
@@ -45,10 +47,7 @@ namespace
   struct unwrap;
 
   template <class T>
-  struct unwrap<wrapped<T> >
-  {
-    typedef T type;
-  };
+  struct unwrap<wrapped<T> > : returns<T> {};
 }
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, wrapped, "wrapped")
