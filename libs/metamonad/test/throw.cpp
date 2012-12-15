@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(test_throw_)
     equal_to<
       int13,
       get_data<
-        do_<exception_monad>::apply<
+        do_<exception_monad,
           throw_<int13>
         >::type
       >::type
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(test_throw_)
     equal_to<
       int11,
       get_data<
-        do_<exception_monad>::apply<
+        do_<exception_monad,
           throw_<int11>,
           do_return<int13>
         >::type

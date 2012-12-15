@@ -29,6 +29,9 @@ namespace mpllibs
       #error MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT not big enough
     #endif
     
+    template <class T>
+    struct lazy;
+
     /*
      * Syntactic sugar
      */
@@ -129,6 +132,9 @@ namespace mpllibs
     struct do1 : E {};
 
     template <class Monad, class Name, class F>
+    struct do1<Monad, lazy<set<Name, F> > >;
+
+    template <class Monad, class Name, class F>
     struct do1<Monad, set<Name, F> >;
       // Error: last statement in a 'do' construct must be an expression.
       // Current way of error handling is not having an implementation.
@@ -179,8 +185,25 @@ namespace mpllibs
       > \
       struct do##n< \
         Monad, \
-        set<Name, Ex> \
-        BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
+        lazy<set<Name, Ex> > BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
+        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
+      > : \
+        do##n< \
+          Monad, \
+          set<Name, Ex> BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
+          BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
+        > \
+      {}; \
+      \
+      template < \
+        class Monad, \
+        class Name, \
+        class Ex \
+        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_CASE, ~) \
+      > \
+      struct do##n< \
+        Monad, \
+        set<Name, Ex> BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
         BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
       > : \
         boost::mpl::apply_wrap2< \
@@ -242,24 +265,52 @@ namespace mpllibs
     #define MPLLIBS_DO_ARG(z, n, unused) \
       , typename do_substitute<Monad, E##n>::type
     
-    template <class Monad>
-    struct do_
-    {
-      template <
-        BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-          MPLLIBS_DO_MAX_ARGUMENT,
-          class E,
-          boost::mpl::na
-        )
+    template <
+      class Monad,
+      BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
+        MPLLIBS_DO_MAX_ARGUMENT,
+        class E,
+        boost::mpl::na
+      )
+    >
+    struct do_:
+      do_impl<
+        Monad BOOST_PP_REPEAT(MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_ARG, ~)
       >
-      struct apply :
-        do_impl<
-          Monad BOOST_PP_REPEAT(MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_ARG, ~)
-        >
-      {};
-    };
-    
+    {};
+
     #undef MPLLIBS_DO_ARG
+
+    /*
+      Protection against lazy
+    */
+    template <class T>
+    struct make_lazy
+    {
+      typedef lazy<T> type;
+    };
+
+    template <>
+    struct make_lazy<boost::mpl::na>
+    {
+      typedef boost::mpl::na type;
+    };
+
+    #ifdef MPLLIBS_DO_LAZY
+      #error MPLLIBS_DO_LAZY already defined
+    #endif
+    #define MPLLIBS_DO_LAZY(z, n, unused) \
+      , typename make_lazy<BOOST_PP_CAT(T, n)>::type
+
+    template <
+      class Monad,
+      BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, class T)
+    >
+    struct lazy<do_<Monad, BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)> > :
+      do_<Monad BOOST_PP_REPEAT(MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_LAZY, ~)>
+    {};
+
+    #undef MPLLIBS_DO_LAZY
   }
 }
 

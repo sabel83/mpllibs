@@ -32,7 +32,7 @@ namespace
   struct minus_2 : tmp_value<minus_2>
   {
     template <class A>
-    struct apply : right<typename minus<typename A::value, int2>::type> {};
+    struct apply : right<typename minus<A, int2>::type> {};
   };
 }
 

@@ -78,7 +78,7 @@ int main()
   typedef list_c<int, 1, 2, 3, 4> j;
 
   typedef
-    do_<list_tag>::apply<
+    do_<list_tag,
       set<i, list_c<int, 1, 2> >,
       set<j, range_c<int, 1, 5> >,
       do_return<pair<i, j> >

@@ -399,7 +399,7 @@ Using it, the above example can be written the following way:
 --------------------------------------
 struct r;
 
-do_<exception_tag>::apply<
+do_<exception_tag,
   set<r, may_fail1<do_return<boost::mpl::int_<13> > >,
   may_fail2<r>
 >
@@ -512,7 +512,7 @@ This evaluates +may_fail1 13+, binds +r+ to its result and evaluates
 template metaprograms. A do block using metamonad looks like the following:
 
 --------------------------------------
-do_<monad_tag>::apply<
+do_<monad_tag,
   step1,
   step2,
 
@@ -542,7 +542,7 @@ monad has to be passed to the +return_+ metafunction explicitly, thus every time
 +return_+ is used, the +tag+ of the monad needs to be repeated. For example:
 
 --------------------------------------
-do_<monad_tag>::apply<
+do_<monad_tag,
   step1,
   step2,
   set<some_name, return_<monad_tag, some_value> >,
@@ -557,7 +557,7 @@ To make using +return_+ in do blocks simpler, metamonad provides a template
 class, +do_return+, that can be used in do blocks:
 
 --------------------------------------
-do_<monad_tag>::apply<
+do_<monad_tag,
   step1,
   step2,
   set<some_name, do_return<some_value> >,

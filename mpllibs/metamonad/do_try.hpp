@@ -106,18 +106,18 @@ namespace mpllibs
         typename boost::is_same<
           exception_tag,
           typename boost::mpl::tag<
-            typename do_<exception_monad>::template apply<
+            typename do_<exception_monad,
               BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
             >::type
           >::type
         >::type,
         mpllibs::metamonad::impl::was_exception<
-          typename do_<exception_monad>::template apply<
+          typename do_<exception_monad,
             BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
           >::type
         >,
         mpllibs::metamonad::impl::skip_further_catches<
-          typename do_<exception_monad>::template apply<
+          typename do_<exception_monad,
             BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, E)
           >::type
         >

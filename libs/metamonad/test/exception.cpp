@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   meta_require<
     equal_to<
       int13,
-      do_<exception_monad>::apply<
+      do_<exception_monad,
         do_return<int13>
       >::type
     >
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
     equal_to<
       int13,
       get_data<
-        do_<exception_monad>::apply<
+        do_<exception_monad,
           apply_wrap1<always<e>, int>
         >::type
       >::type
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
     equal_to<
       int13,
       get_data<
-        do_<exception_monad>::apply<
+        do_<exception_monad,
           apply_wrap1<always<e>, int>,
           do_return<int13>
         >::type
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   meta_require<
     is_same<
       int11,
-      do_<exception_monad>::apply<
+      do_<exception_monad,
         do_return<int11>
       >::type
     >
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   meta_require<
     equal_to<
       int11,
-        do_<exception_monad>::apply<
+        do_<exception_monad,
           do_return<int13>,
           do_return<int11>
         >::type
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
     equal_to<
       int13,
       get_data<
-        do_<exception_monad>::apply<
+        do_<exception_monad,
           set<x, apply_wrap1<always<e>, int> >,
           do_return<int13>
         >::type

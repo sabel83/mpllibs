@@ -11,13 +11,10 @@ Synopsis
 --------
 
 --------------------------------------
-template <class MonadTag>
+template <class MonadTag, class Step1, ..., class Stepn>
 struct do_
 {
-  template <class Step1, ..., class Stepn>
-  struct apply
-    // unspecified...
-  ;
+  // unspecified...
 };
 --------------------------------------
 
@@ -48,7 +45,7 @@ using boost::mpl::int_;
 
 struct r;
 
-do_<exception_tag>::apply<
+do_<exception_tag,
   set<r, may_fail1<int_<13> >,
   may_fail2<r>
 >

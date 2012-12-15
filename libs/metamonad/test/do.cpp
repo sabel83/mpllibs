@@ -8,6 +8,8 @@
 #include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/lazy_metafunction.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -36,10 +38,16 @@ namespace
 
   typedef wrapper_tag wrapper_monad;
 
+  MPLLIBS_REC_METAFUNCTION(wrapped, (class T))
+  ((tmp_value<wrapped<T>, wrapper_tag>));
+
   template <class T>
-  struct wrapped : tmp_value<wrapped<T>, wrapper_tag>
+  struct unwrap;
+
+  template <class T>
+  struct unwrap<wrapped<T> >
   {
-    typedef T value;
+    typedef T type;
   };
 }
 
@@ -52,17 +60,10 @@ namespace mpllibs
     template <>
     struct monad<wrapper_tag>
     {
-      struct return_ : tmp_value<return_>
-      {
-        template <class T>
-        struct apply : wrapped<T> {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(return_, (class T)) ((wrapped<T>));
       
-      struct bind : tmp_value<bind>
-      {
-        template <class A, class F>
-        struct apply : apply<F, A> {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(bind, (class A)(class F))
+      ((boost::mpl::apply<F, A>));
     };
   }
 }
@@ -74,30 +75,29 @@ namespace boost
     template <>
     struct equal_to_impl<wrapper_tag, wrapper_tag>
     {
-      template <class A, class B>
-      struct apply : equal_to<typename A::value, typename B::value>
-      {};
+      MPLLIBS_LAZY_METAFUNCTION(apply, (class A)(class B))
+      ((equal_to<unwrap<A>, unwrap<B>>));
     };
   }
 }
 
 namespace
 {
-  template <class A>
-  struct minus_2 : right<typename minus<typename A::value, int2>::type> {};
+  MPLLIBS_LAZY_METAFUNCTION(minus_2, (class A)) ((right<minus<A, int2>>));
   
-  template <class T>
-  struct eval_to_right : right<typename T::type> {};
+  MPLLIBS_LAZY_METAFUNCTION(eval_to_right, (class T)) ((right<T>));
 }
 
 BOOST_AUTO_TEST_CASE(test_do)
 {
   using mpllibs::metatest::meta_require;
 
+  using mpllibs::metamonad::lazy;
+
   meta_require<
     equal_to<
       right<int11>,
-      do_<either>::apply<
+      do_<either,
         set<x, do_return<int13> >,
         minus_2<x>
       >::type
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE(test_do)
   meta_require<
     equal_to<
       right<int9>,
-      do_<either>::apply<
+      do_<either,
         set<x, do_return<int13> >,
         set<y, minus_2<x> >,
         minus_2<y>
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(test_do)
   meta_require<
     equal_to<
       right<int9>,
-      do_<either>::apply<
+      do_<either,
         set<x, do_return<int13> >,
         set<y, minus_2<x> >,
         minus_2<x>,
@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE(test_do)
   meta_require<
     equal_to<
       right<int13>,
-      do_<either>::apply<
+      do_<either,
         do_return<int11>,
         do_return<int13>
       >::type
@@ -140,9 +140,9 @@ BOOST_AUTO_TEST_CASE(test_do)
   meta_require<
     equal_to<
       right<right<int13> >,
-      do_<either>::apply<
+      do_<either,
         do_return<
-          do_<either>::apply<
+          do_<either,
             do_return<int13>
           >
         >
@@ -153,7 +153,7 @@ BOOST_AUTO_TEST_CASE(test_do)
   meta_require<
     equal_to<
       right<right<int13> >,
-      do_<either>::apply<
+      do_<either,
         do_return<do_return<int13> >
       >::type
     >
@@ -161,10 +161,22 @@ BOOST_AUTO_TEST_CASE(test_do)
 
   meta_require<
     equal_to<
+      right<int13>,
+      lazy<
+        do_<either,
+          set<x, do_return<int13> >,
+          do_return<x>
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_do_in_lazy");
+
+  meta_require<
+    equal_to<
       right<wrapped<int13> >,
-      do_<either>::apply<
+      do_<either,
         eval_to_right<
-          do_<wrapper_monad>::apply<
+          do_<wrapper_monad,
             do_return<int13>
           >
         >

@@ -39,6 +39,21 @@ namespace
   {
     typedef T value;
   };
+
+  template <class T>
+  struct get_value;
+
+  template <class T>
+  struct get_value<left<T> >
+  {
+    typedef T type;
+  };
+
+  template <class T>
+  struct get_value<right<T> >
+  {
+    typedef T type;
+  };
 }
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, left, "left")
@@ -97,9 +112,9 @@ namespace mpllibs
           boost::mpl::if_<
             typename boost::is_same<
               right_tag,
-              typename boost::mpl::tag<A>::type
+              typename boost::mpl::tag<typename A::type>::type
             >::type,
-            boost::mpl::apply<F, A>,
+            boost::mpl::apply<F, typename get_value<typename A::type>::type>,
             A
           >::type
         {};
