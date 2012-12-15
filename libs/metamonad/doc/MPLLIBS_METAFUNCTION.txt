@@ -1,0 +1,76 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2012.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+MPLLIBS_METAFUNCTION
+====================
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+#define MPLLIBS_METAFUNCTION(name, body) \
+  // unspecified
+--------------------------------------
+
+
+Description
+-----------
+
+This macro is intended to be used for defining forwarding metafunctions in a C++
+standard neutral way. When template aliases are available, it expands to an
+alias template, when they are not available, it expands to metafunction
+forwarding using inheritance. The +body+ is expected to be in parentheses.
+
+This is not intended to be used for defining self-recursive metafunctions. A
+different macro, link:MPLLIBS_REC_METAFUNCTION.html[+MPLLIBS_REC_METAFUNCTION+]
+is intended to be used for that.
+
+Boost.Config is used to determine the availability of alias templates.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metamonad/metafunction.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +body+ angly-bracket expression the following
+
+--------------------------------------
+MPLLIBS_METAFUNCTION(name, (body));
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+struct name : body {};
+--------------------------------------
+
+when no alias templates are available and it is equivalent to
+
+--------------------------------------
+using name = body;
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+using namespace boost::mpl;
+
+template <class N>
+MPLLIBS_METAFUNCTION(double_value, (times<int_<2>, N>));
+--------------------------------------
+
+include::copyright[]
+
+link:reference.html[[up]]
+
+
+
