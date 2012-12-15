@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/util/id.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -25,16 +25,16 @@ namespace mpllibs
     struct let : let_impl<A, E1, E2> {};
 
     template <class A, class E1>
-    struct let<A, E1, A> : mpllibs::metamonad::util::id<E1> {};
+    struct let<A, E1, A> : returns<E1> {};
 
     
     // let_impl assumes, that let_impl<A, E1, A> is never instantiated
     template <class A, class E1, class E2>
-    struct let_impl : mpllibs::metamonad::util::id<E2> {};
+    struct let_impl : returns<E2> {};
 
     template <class A, class E1a, class E1b, class E2>
     struct let_impl<A, E1a, let<A, E1b, E2> > :
-      mpllibs::metamonad::util::id<let<A, E1b, E2> >
+      returns<let<A, E1b, E2> >
     {};
 
     template <class A, class E1, class E2>
@@ -42,7 +42,7 @@ namespace mpllibs
 
     template <class A, class E1a, class E1b, class E2>
     struct let_impl<A, E1a, letrec<A, E1b, E2> > :
-      mpllibs::metamonad::util::id<letrec<A, E1b, E2> >
+      returns<letrec<A, E1b, E2> >
     {};
 
     #ifndef MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT
@@ -72,7 +72,7 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS(n, class X) \
       > \
       struct let_impl<A, E1, T<BOOST_PP_ENUM_PARAMS(n, X)> > : \
-        mpllibs::metamonad::util::id< \
+        mpllibs::metamonad::returns< \
           T<BOOST_PP_REPEAT(n, MPLLIBS_LET_REC_CASE, ~) > \
         > \
       {};

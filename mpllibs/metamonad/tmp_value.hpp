@@ -8,6 +8,8 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
+#include <mpllibs/metamonad/returns.hpp>
+
 namespace mpllibs
 {
   namespace metamonad
@@ -21,10 +23,7 @@ namespace mpllibs
     };
 
     template <class T>
-    struct tmp_value<T, no_tag_for_tmp_value>
-    {
-      typedef T type;
-    };
+    struct tmp_value<T, no_tag_for_tmp_value> : returns<T> {};
   }
 }
 

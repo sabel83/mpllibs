@@ -60,13 +60,11 @@ namespace mpllibs
     // recurse into that.
     // Using boost::mpl::apply and do_ together is not supported
     template <class Monad, class T>
-    struct do_substitute : mpllibs::metamonad::util::id<T> {};
+    struct do_substitute : returns<T> {};
 
     template <class Monad, class T>
     struct do_substitute<Monad, do_return<T> > :
-      mpllibs::metamonad::util::id<
-        return_<Monad, typename do_substitute<Monad, T>::type>
-      >
+      returns<return_<Monad, typename do_substitute<Monad, T>::type> >
     {};
     
     // When an outer do_ has already substituted this do_return,
@@ -74,9 +72,7 @@ namespace mpllibs
     // substitution of inner do_'s do_returns.
     template <class Monad1, class Monad2, class T>
     struct do_substitute<Monad1, return_<Monad2, T> > :
-      mpllibs::metamonad::util::id<
-        return_<Monad1, typename do_substitute<Monad1, T>::type>
-      >
+      returns<return_<Monad1, typename do_substitute<Monad1, T>::type> >
     {};
 
     #ifdef MPLLIBS_DO_CLASS
@@ -102,7 +98,7 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS(n, class X) \
       > \
       struct do_substitute<Monad, T<BOOST_PP_ENUM_PARAMS(n, X)> > : \
-        mpllibs::metamonad::util::id< \
+        mpllibs::metamonad::returns< \
           T< BOOST_PP_REPEAT(n, MPLLIBS_DO_REC_CASE, ~) > \
         > \
       {};

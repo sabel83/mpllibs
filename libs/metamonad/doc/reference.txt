@@ -92,6 +92,7 @@ link:MPLLIBS_METAFUNCTION.html[MPLLIBS_METAFUNCTION] +
 link:MPLLIBS_METAFUNCTION_CLASS.html[MPLLIBS_METAFUNCTION_CLASS] +
 link:MPLLIBS_REC_METAFUNCTION.html[MPLLIBS_REC_METAFUNCTION] +
 
+link:returns.html[returns] +
 link:tmp_tag.html[tmp_tag] +
 link:tmp_value.html[tmp_value] +
 
