@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_METAMONAD_METAFUNCTION_HPP
-#define MPLLIBS_METAMONAD_METAFUNCTION_HPP
+#ifndef MPLLIBS_METAMONAD_TD_METAFUNCTION_HPP
+#define MPLLIBS_METAMONAD_TD_METAFUNCTION_HPP
 
 //    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
 // Distributed under the Boost Software License, Version 1.0.
@@ -20,22 +20,22 @@
 
 #include <iostream>
 
-#ifdef MPLLIBS_DEFINE_METAFUNCTION_GET_TAG
-  #error MPLLIBS_DEFINE_METAFUNCTION_GET_TAG already defined
+#ifdef MPLLIBS_DEFINE_TD_METAFUNCTION_GET_TAG
+  #error MPLLIBS_DEFINE_TD_METAFUNCTION_GET_TAG already defined
 #endif
-#define MPLLIBS_DEFINE_METAFUNCTION_GET_TAG(z, n, unused) \
+#define MPLLIBS_DEFINE_TD_METAFUNCTION_GET_TAG(z, n, unused) \
   BOOST_PP_COMMA_IF(n) typename boost::mpl::tag<typename T##n::type>::type
 
-#ifdef MPLLIBS_DEFINE_METAFUNCTION_EVAL_ARG
-  #error MPLLIBS_DEFINE_METAFUNCTION_EVAL_ARG already defined
+#ifdef MPLLIBS_DEFINE_TD_METAFUNCTION_EVAL_ARG
+  #error MPLLIBS_DEFINE_TD_METAFUNCTION_EVAL_ARG already defined
 #endif
-#define MPLLIBS_DEFINE_METAFUNCTION_EVAL_ARG(z, n, unused) \
+#define MPLLIBS_DEFINE_TD_METAFUNCTION_EVAL_ARG(z, n, unused) \
   BOOST_PP_COMMA_IF(n) typename T##n::type
 
-#ifdef MPLLIBS_DEFINE_METAFUNCTION
-  #error MPLLIBS_DEFINE_METAFUNCTION already defined
+#ifdef MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION
+  #error MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION already defined
 #endif
-#define MPLLIBS_DEFINE_METAFUNCTION(name, arg_num) \
+#define MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION(name, arg_num) \
   struct invalid_args_for_##name : \
     mpllibs::metamonad::tmp_value< \
       invalid_args_for_##name, \
@@ -56,10 +56,10 @@
   template <BOOST_PP_ENUM_PARAMS(arg_num, class T)> \
   struct name : \
     name##_impl< \
-      BOOST_PP_REPEAT(arg_num, MPLLIBS_DEFINE_METAFUNCTION_GET_TAG, ~) \
+      BOOST_PP_REPEAT(arg_num, MPLLIBS_DEFINE_TD_METAFUNCTION_GET_TAG, ~) \
     >:: \
       template apply< \
-        BOOST_PP_REPEAT(arg_num, MPLLIBS_DEFINE_METAFUNCTION_EVAL_ARG, ~) \
+        BOOST_PP_REPEAT(arg_num, MPLLIBS_DEFINE_TD_METAFUNCTION_EVAL_ARG, ~) \
       > \
   {};
 

@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/td_metafunction.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    MPLLIBS_DEFINE_METAFUNCTION(get_prev_char, 1)
+    MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION(get_prev_char, 1)
   }
 }
 

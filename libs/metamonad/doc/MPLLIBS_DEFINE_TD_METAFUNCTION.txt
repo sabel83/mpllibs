@@ -3,15 +3,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-MPLLIBS_DEFINE_METAFUNCTION
-===========================
+MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION
+===========================================
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_DEFINE_METAFUNCTION(name, arg_num) \
+#define MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION(name, arg_num) \
   // unspecified
 --------------------------------------
 
@@ -37,7 +37,7 @@ Expression semantics
 The following
 
 --------------------------------------
-MPLLIBS_DEFINE_METAFUNCTION(name, 3)
+MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION(name, 3)
 --------------------------------------
 
 is equivalent to
@@ -72,7 +72,7 @@ Example
 -------
 
 --------------------------------------
-MPLLIBS_DEFINE_METAFUNCTION(f, 3)
+MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION(f, 3)
 --------------------------------------
 
 include::copyright[]

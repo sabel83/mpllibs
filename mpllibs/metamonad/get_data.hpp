@@ -7,13 +7,13 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/exception_core.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/td_metafunction.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DEFINE_METAFUNCTION(get_data, 1)
+    MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION(get_data, 1)
   }
 }
 
