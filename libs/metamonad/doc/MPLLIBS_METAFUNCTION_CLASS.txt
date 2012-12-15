@@ -3,15 +3,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-MPLLIBS_REC_METAFUNCTION
-========================
+MPLLIBS_METAFUNCTION_CLASS
+==========================
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_REC_METAFUNCTION(name, args) \
+#define MPLLIBS_METAFUNCTION_CLASS(name, args) \
   // unspecified
 --------------------------------------
 
@@ -19,16 +19,12 @@ Synopsis
 Description
 -----------
 
-This macro is intended to be used for defining recursive forwarding
-metafunctions in a C++ standard neutral way. The +body+ is expected to be in
-parentheses.
-+args+ is the list of template arguments, each of
-them in parentheses. The +body+ is expected to follow the macro call in
-double parentheses.
-
-This is intended to be used for defining self-recursive metafunctions. For
-efficiency reasons, for not self-recursive metafunctions a different macro,
-link:MPLLIBS_METAFUNCTION.html[+MPLLIBS_METAFUNCTION+] should be used.
+This macro is intended to be used for defining forwarding metafunction classes
+in a C++ standard neutral way. When template aliases are available, it expands
+to an alias template definition, when they are not available, it expands to
+metafunction forwarding using inheritance. +args+ is the list of template
+arguments, each of them in parentheses. The +body+ is expected to follow the
+macro call in double parentheses. +args+ can not be empty.
 
 Boost.Config is used to determine the availability of alias templates.
 
@@ -46,14 +42,16 @@ For any +body+ angly-bracket expression, +n > 0+ and +arg1+ ... +argn+ template
 arguments the following
 
 --------------------------------------
-MPLLIBS_REC_METAFUNCTION(name, (arg1)(arg2)...(argn)) ((body));
+MPLLIBS_METAFUNCTION_CLASS(name, (arg1)(arg2)...(argn)) ((body));
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-template <arg1, arg2, ..., argn>
-struct name : body {};
+struct name : mpllibs::metamonad::tmp_value<name>
+{
+  MPLLIBS_METAFUNCTION(apply, (arg1)(arg2)...(argn) ((body));
+};
 --------------------------------------
 
 Example
@@ -62,16 +60,7 @@ Example
 --------------------------------------
 using namespace boost::mpl;
 
-MPLLIBS_REC_METAFUNCTION(fact, (class N))
-((
-  metmonad::lazy<
-    eval_if<
-      less<N, int_<1> >,
-      int_<1>,
-      times<fact<minus<N, int_<1> > >, N>
-    >
-  >
-));
+MPLLIBS_METAFUNCTION_CLASS(double_value, (class N)) ((times<int_<2>, N>));
 --------------------------------------
 
 include::copyright[]

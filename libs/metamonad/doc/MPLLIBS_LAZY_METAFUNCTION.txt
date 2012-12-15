@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_LAZY_METAFUNCTION(name, body) \
+#define MPLLIBS_LAZY_METAFUNCTION(name, args) \
   // unspecified
 --------------------------------------
 
@@ -32,16 +32,18 @@ Header
 Expression semantics
 --------------------
 
-For any +body+ angly-bracket expression the following
+For any +body+ angly-bracket expression, +n > 0+ and +arg1+ ... +argn+ template
+arguments the following
 
 --------------------------------------
-MPLLIBS_LAZY_METAFUNCTION(name, (body));
+MPLLIBS_LAZY_METAFUNCTION(name, (arg1)(arg2)...(argn)) ((body));
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-MPLLIBS_METAFUNCTION(name, (mpllibs::metamonad::lazy< body >));
+MPLLIBS_METAFUNCTION(name, (arg1)(arg2)...(argn))
+((mpllibs::metamonad::lazy< body >));
 --------------------------------------
 
 Example
@@ -50,8 +52,7 @@ Example
 --------------------------------------
 using namespace boost::mpl;
 
-template <class N>
-MPLLIBS_LAZY_METAFUNCTION(double_value, (times<int_<2>, N>));
+MPLLIBS_LAZY_METAFUNCTION(double_value, (class N)) (times<int_<2>, N>));
 --------------------------------------
 
 include::copyright[]
