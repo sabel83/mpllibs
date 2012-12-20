@@ -68,6 +68,10 @@ struct last<T> : metamonad::returns<T> {};
 
 MPLLIBS_VARIADIC_METAFUNCTION_CLASS(mult_first_and_last, (A), B)
 ((times<A, typename last<B...>::type>));
+
+template <class A>
+MPLLIBS_VARIADIC_METAFUNCTION_CLASS(mult_with_last, (X), B)
+((times<A, typename last<B...>::type>));
 --------------------------------------
 
 include::copyright[]

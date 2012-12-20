@@ -64,6 +64,9 @@ Example
 using namespace boost::mpl;
 
 MPLLIBS_LAZY_METAFUNCTION_CLASS(double_value, (N)) (times<int_<2>, N>));
+
+template <class N>
+MPLLIBS_LAZY_METAFUNCTION_CLASS(plusn, (M)) ((plus<N, M>));
 --------------------------------------
 
 include::copyright[]

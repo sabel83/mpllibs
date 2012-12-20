@@ -6,10 +6,17 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/returns.hpp>
+
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 #include <boost/preprocessor/seq/for_each_i.hpp>
+#include <boost/preprocessor/cat.hpp>
 
 #include <boost/config.hpp>
+
+#ifndef MPLLIBS_HELPER_METAFUNCTION
+  #define MPLLIBS_HELPER_METAFUNCTION(name) BOOST_PP_CAT(name, __impl)
+#endif
 
 #ifdef MPLLIBS_EXPAND_ARG_USAGE
   #error MPLLIBS_EXPAND_ARG_USAGE already defined
@@ -22,6 +29,20 @@
 #endif
 #define MPLLIBS_EXPAND_ARGS_USAGE(args) \
   BOOST_PP_SEQ_FOR_EACH_I(MPLLIBS_EXPAND_ARG_USAGE, ~, args)
+
+#ifdef MPLLIBS_DECLARE_HELPER
+  #error MPLLIBS_DECLARE_HELPER already defined
+#endif
+#define MPLLIBS_DECLARE_HELPER(name, args) \
+  template <MPLLIBS_EXPAND_ARGS_USAGE(args)> \
+  struct MPLLIBS_HELPER_METAFUNCTION(name);
+
+#ifdef MPLLIBS_DEFINE_HELPER
+  #error MPLLIBS_DEFINE_HELPER already defined
+#endif
+#define MPLLIBS_DEFINE_HELPER(name, args) \
+  template <MPLLIBS_EXPAND_ARGS_USAGE(args)> \
+  struct MPLLIBS_HELPER_METAFUNCTION(name) : MPLLIBS_METAFUNCTION_BODY
 
 #ifdef MPLLIBS_METAFUNCTION_BODY
   #error MPLLIBS_METAFUNCTION_BODY already defined
