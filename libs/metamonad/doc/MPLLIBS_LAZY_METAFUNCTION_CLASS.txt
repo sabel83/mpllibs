@@ -23,6 +23,14 @@ This macro is similar to
 link:MPLLIBS_METAFUNCTION_CLASS.html[+MPLLIBS_METAFUNCTION_CLASS+] but it uses
 the evaluated arguments in its +body+.
 
+The macro defines a helper metafunction as well. The name of it is generated
+using the +MPLLIBS_HELPER_METAFUNCION+ macro. When it is not defined, the
+following default is used:
+
+--------------------------------------
+#define MPLLIBS_HELPER_METAFUNCTION(name) BOOST_PP_CAT(name, __impl)
+--------------------------------------
+
 Header
 ------
 
@@ -55,7 +63,7 @@ Example
 --------------------------------------
 using namespace boost::mpl;
 
-MPLLIBS_LAZY_METAFUNCTION_CLASS(double_value, (class N)) (times<int_<2>, N>));
+MPLLIBS_LAZY_METAFUNCTION_CLASS(double_value, (N)) (times<int_<2>, N>));
 --------------------------------------
 
 include::copyright[]

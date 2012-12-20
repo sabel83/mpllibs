@@ -24,6 +24,9 @@ macro call expands to metafunction forwarding using inheritance. +args+ is the
 list of template arguments, each of them in parentheses. The +body+ is expected
 to follow the macro call in double parentheses. +args+ can not be empty.
 
+The macro supports variadic metafunctions. The argument representing the
+parameter pack has to be prefixed with +...+ in +args+.
+
 Header
 ------
 
@@ -44,7 +47,7 @@ MPLLIBS_METAFUNCTION(name, (arg1)(arg2)...(argn)) ((body));
 is equivalent to
 
 --------------------------------------
-template <arg1, arg2, ..., argn>
+template <class arg1, class arg2, ..., class argn>
 struct name : body {};
 --------------------------------------
 
@@ -54,7 +57,8 @@ Example
 --------------------------------------
 using namespace boost::mpl;
 
-MPLLIBS_METAFUNCTION(double_value, (class N)) ((times<int_<2>, N>));
+MPLLIBS_METAFUNCTION(double_value, (N)) ((times<int_<2>, N>));
+MPLLIBS_METAFUNCTION(double_value, (N)) ((times<int_<2>, N>));
 --------------------------------------
 
 include::copyright[]
