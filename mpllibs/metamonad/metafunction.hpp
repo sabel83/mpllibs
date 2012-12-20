@@ -16,6 +16,12 @@
   template <MPLLIBS_EXPAND_ARGS_USAGE(args)> \
   struct name : MPLLIBS_METAFUNCTION_BODY
 
+#ifdef MPLLIBS_VARIADIC_METAFUNCTION
+  #error MPLLIBS_VARIADIC_METAFUNCTION already defined
+#endif
+#define MPLLIBS_VARIADIC_METAFUNCTION(name, args, pack_name) \
+  MPLLIBS_METAFUNCTION(name, args(...pack_name))
+
 #ifdef MPLLIBS_METAFUNCTION_CLASS
   #error MPLLIBS_METAFUNCTION_CLASS
 #endif
@@ -34,24 +40,11 @@
     struct apply : MPLLIBS_METAFUNCTION_BODY(body); \
   }
 
-#ifdef MPLLIBS_METAFUNCTION_BODY
-  #error MPLLIBS_METAFUNCTION_BODY already defined
+#ifdef MPLLIBS_VARIADIC_METAFUNCTION_CLASS
+  #error MPLLIBS_VARIADIC_METAFUNCTION_CLASS already defined
 #endif
-
-#if defined(BOOST_NO_CXX11_VARIADIC_MACROS) || defined(BOOST_NO_VARIADIC_MACROS)
-
-#define MPLLIBS_METAFUNCTION_BODY(body) \
-  mpllibs::metamonad::impl::argument_type<void (*)body>::type {}
-
-#else
-
-// returns is used to make
-//    MPLLIBS_METAFUNCTION(x, (class T)) ((typename f<T>::type))
-// work the same way as it does without variadic macros
-#define MPLLIBS_METAFUNCTION_BODY(body) \
-  mpllibs::metamonad::returns< MPLLIBS_UNPACK body >::type {}
-
-#endif
+#define MPLLIBS_VARIADIC_METAFUNCTION_CLASS(name, args, pack_name) \
+  MPLLIBS_METAFUNCTION_CLASS(name, args(...pack_name))
 
 #endif
 

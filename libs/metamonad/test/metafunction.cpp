@@ -64,7 +64,10 @@ namespace
   template <class T, class... Ts>
   struct var_first<T, Ts...> : returns<T> {};
 
-  MPLLIBS_METAFUNCTION(variadic_mf, (A)(...B))
+  MPLLIBS_VARIADIC_METAFUNCTION(variadic_mf, (A), B)
+  ((times<A, typename var_first<B...>::type>));
+
+  MPLLIBS_VARIADIC_METAFUNCTION_CLASS(variadic_mfc, (A), B)
   ((times<A, typename var_first<B...>::type>));
 #endif
 }
@@ -104,6 +107,13 @@ BOOST_AUTO_TEST_CASE(test_metafunction)
   meta_require<
     equal_to<int_<6>, variadic_mf<int_<2>, int_<3>, int_<4>, int_<5> >::type>
   >(MPLLIBS_HERE, "test_variadic_metafunction");
+
+  meta_require<
+    equal_to<
+      int_<6>,
+      variadic_mfc::apply<int_<2>, int_<3>, int_<4>, int_<5> >::type
+    >
+  >(MPLLIBS_HERE, "test_variadic_metafunction_class");
 
 #endif
 }

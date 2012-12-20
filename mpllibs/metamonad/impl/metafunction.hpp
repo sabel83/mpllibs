@@ -23,6 +23,10 @@
 #define MPLLIBS_EXPAND_ARGS_USAGE(args) \
   BOOST_PP_SEQ_FOR_EACH_I(MPLLIBS_EXPAND_ARG_USAGE, ~, args)
 
+#ifdef MPLLIBS_METAFUNCTION_BODY
+  #error MPLLIBS_METAFUNCTION_BODY already defined
+#endif
+
 #if defined(BOOST_NO_CXX11_VARIADIC_MACROS) || defined(BOOST_NO_VARIADIC_MACROS)
 
 namespace mpllibs
@@ -43,12 +47,21 @@ namespace mpllibs
   }
 }
 
+#define MPLLIBS_METAFUNCTION_BODY(body) \
+  mpllibs::metamonad::impl::argument_type<void (*)body>::type {}
+
 #else
 
 #ifdef MPLLIBS_UNPACK
   #error MPLLIBS_UNPACK already defined
 #endif
 #define MPLLIBS_UNPACK(...) __VA_ARGS__
+
+// returns is used to make
+//    MPLLIBS_METAFUNCTION(x, (class T)) ((typename f<T>::type))
+// work the same way as it does without variadic macros
+#define MPLLIBS_METAFUNCTION_BODY(body) \
+  mpllibs::metamonad::returns< MPLLIBS_UNPACK body >::type {}
 
 #endif
 

@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -19,6 +20,8 @@
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
+#include <boost/config.hpp>
+
 using boost::mpl::int_;
 using boost::mpl::minus;
 using boost::mpl::times;
@@ -27,6 +30,11 @@ using boost::mpl::less;
 using boost::mpl::eval_if;
 
 using mpllibs::metamonad::lazy;
+using mpllibs::metamonad::returns;
+
+#if defined(BOOST_NO_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+  #define BOOST_NO_CXX11_VARIADIC_TEMPLATES
+#endif
 
 namespace
 {
@@ -48,6 +56,20 @@ namespace
   MPLLIBS_LAZY_METAFUNCTION(mult, (A)(B)) ((times<A, B>));
 
   MPLLIBS_LAZY_METAFUNCTION_CLASS(sub, (A)(B)) ((minus<A, B>));
+
+#ifndef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+  template <class... Ts>
+  struct var_first;
+
+  template <class T, class... Ts>
+  struct var_first<T, Ts...> : returns<T> {};
+
+  MPLLIBS_LAZY_VARIADIC_METAFUNCTION(variadic_mf, (A), B)
+  ((times<A, typename var_first<B...>::type>));
+
+  MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS(variadic_mfc, (A), B)
+  ((times<A, typename var_first<B...>::type>));
+#endif
 }
 
 BOOST_AUTO_TEST_CASE(test_lazy_metafunction)
@@ -88,6 +110,20 @@ BOOST_AUTO_TEST_CASE(test_lazy_metafunction)
   meta_require<
     equal_to<int_<13>, not_using_arg<int_<8> >::type>
   >(MPLLIBS_HERE, "test_lazy_mf_not_using_arg");
+
+#ifndef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+  meta_require<
+    equal_to<int_<6>, variadic_mf<int_<2>, int_<3>, int_<4>, int_<5> >::type>
+  >(MPLLIBS_HERE, "test_variadic_metafunction");
+
+  meta_require<
+    equal_to<
+      int_<6>,
+      variadic_mfc::apply<int_<2>, int_<3>, int_<4>, int_<5> >::type
+    >
+  >(MPLLIBS_HERE, "test_variadic_metafunction_class");
+
+#endif
 }
 
 
