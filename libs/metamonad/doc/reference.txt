@@ -20,6 +20,8 @@ link:already_lazy.html[already_lazy] +
 link:lazy.html[lazy] +
 link:lazy_argument.html[lazy_argument] +
 
+link:make_mpl_lambda.html[make_mpl_lambda] +
+
 Lambda expressions
 ------------------
 
@@ -87,10 +89,8 @@ link:MPLLIBS_DEFINE_TD_METAFUNCTION.html[MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNC
 
 link:MPLLIBS_LAZY_METAFUNCTION.html[MPLLIBS_LAZY_METAFUNCTION] +
 link:MPLLIBS_LAZY_METAFUNCTION_CLASS.html[MPLLIBS_LAZY_METAFUNCTION_CLASS] +
-link:MPLLIBS_LAZY_REC_METAFUNCTION.html[MPLLIBS_LAZY_REC_METAFUNCTION] +
 link:MPLLIBS_METAFUNCTION.html[MPLLIBS_METAFUNCTION] +
 link:MPLLIBS_METAFUNCTION_CLASS.html[MPLLIBS_METAFUNCTION_CLASS] +
-link:MPLLIBS_REC_METAFUNCTION.html[MPLLIBS_REC_METAFUNCTION] +
 
 link:returns.html[returns] +
 link:tmp_tag.html[tmp_tag] +

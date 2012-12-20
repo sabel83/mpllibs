@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -16,11 +17,8 @@ namespace mpllibs
   namespace metamonad
   {
     template <class ArgName, class F>
-    struct lambda : tmp_value<lambda<ArgName, F> >
-    {
-      template <class T>
-      struct apply : let<ArgName, T, F>::type {};
-    };
+    MPLLIBS_METAFUNCTION_CLASS(lambda, (T))
+    ((typename let<ArgName, T, F>::type));
 
     template <class T>
     struct lazy;

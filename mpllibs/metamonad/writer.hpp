@@ -10,6 +10,9 @@
 #include <mpllibs/metamonad/monoid.hpp>
 #include <mpllibs/metamonad/tag_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -27,37 +30,32 @@ namespace mpllibs
     template <class M>
     struct monad<writer_tag<M> > : monad_defaults<writer_tag<M> >
     {
-      struct return_ : tmp_value<return_>
-      {
-        template <class T>
-        struct apply
-        {
-          typedef boost::mpl::pair<T, typename monoid<M>::empty> type;
-        };
-      };
+      MPLLIBS_METAFUNCTION_CLASS(return_, (T))
+      ((returns<boost::mpl::pair<T, typename monoid<M>::empty> >));
       
-      struct bind : tmp_value<bind>
-      {
-        template <class A, class F>
-        struct apply
-        {
-        private:
-          typedef
-            typename boost::mpl::apply<F, typename A::first>::type
-            FA_first;
-        public:
-          typedef
-            boost::mpl::pair<
-              typename FA_first::first,
-              typename boost::mpl::apply<
-                typename monoid<M>::append,
-                typename A::second,
-                typename FA_first::second
-              >::type
+      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
+      ((
+        lazy<
+          boost::mpl::pair<
+            boost::mpl::first<
+              boost::mpl::apply_wrap1<
+                boost::mpl::lambda<F>,
+                boost::mpl::first<A>
+              >
+            >,
+            boost::mpl::apply<
+              typename monoid<M>::append,
+              boost::mpl::second<A>,
+              boost::mpl::second<
+                boost::mpl::apply_wrap1<
+                  boost::mpl::lambda<F>,
+                  boost::mpl::first<A>
+                >
+              >
             >
-            type;
-        };
-      };
+          >
+        >
+      ));
     };
   }
 }

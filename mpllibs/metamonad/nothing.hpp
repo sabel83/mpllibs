@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <boost/mpl/bool.hpp>
 
@@ -34,8 +35,7 @@ namespace boost
         mpllibs::metamonad::nothing_tag
       >
     {
-      template <class A, class B>
-      struct apply : boost::mpl::true_ {};
+      MPLLIBS_METAFUNCTION(apply, (A)(B)) ((boost::mpl::true_));
     };
   }
 }

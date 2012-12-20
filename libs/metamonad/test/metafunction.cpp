@@ -30,11 +30,11 @@ using mpllibs::metamonad::lazy;
 
 namespace
 {
-  MPLLIBS_METAFUNCTION(double_value, (class N)) ((times<N, int_<2> >));
+  MPLLIBS_METAFUNCTION(double_value, (N)) ((times<N, int_<2> >));
 
-  MPLLIBS_METAFUNCTION_CLASS(triple_value, (class N)) ((times<N, int_<3> >));
+  MPLLIBS_METAFUNCTION_CLASS(triple_value, (N)) ((times<N, int_<3> >));
 
-  MPLLIBS_REC_METAFUNCTION(fact, (class N))
+  MPLLIBS_METAFUNCTION(fact, (N))
   ((
     lazy<
       eval_if<
@@ -45,9 +45,9 @@ namespace
     >
   ));
 
-  MPLLIBS_METAFUNCTION(mult, (class A)(class B)) ((times<A, B>));
+  MPLLIBS_METAFUNCTION(mult, (A)(B)) ((times<A, B>));
 
-  MPLLIBS_METAFUNCTION_CLASS(sub, (class A)(class B)) ((minus<A, B>));
+  MPLLIBS_METAFUNCTION_CLASS(sub, (A)(B)) ((minus<A, B>));
 }
 
 BOOST_AUTO_TEST_CASE(test_metafunction)

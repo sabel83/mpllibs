@@ -9,6 +9,8 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -31,11 +33,7 @@ namespace mpllibs
     template <>
     struct get_data_impl<just_tag>
     {
-      template <class T>
-      struct apply
-      {
-        typedef typename T::data type;
-      };
+      MPLLIBS_METAFUNCTION(apply, (T)) ((returns<typename T::data>));
     };
   }
 }
@@ -54,13 +52,13 @@ namespace boost
         mpllibs::metamonad::just_tag
       >
     {
-      template <class A, class B>
-      struct apply :
+      MPLLIBS_METAFUNCTION(apply, (A)(B))
+      ((
         equal_to<
           typename mpllibs::metamonad::get_data<A>::type,
           typename mpllibs::metamonad::get_data<B>::type
         >
-      {};
+      ));
     };
   }
 }

@@ -11,6 +11,7 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -29,39 +30,29 @@ namespace mpllibs
     
     namespace impl
     {
-      struct join_lists
-      {
-        template <class State, class NewList>
-        struct apply :
-          boost::mpl::insert_range<
-            State,
-            typename boost::mpl::end<State>::type,
-            NewList
-          >
-        {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(join_lists, (State)(NewList))
+      ((
+        boost::mpl::insert_range<
+          State,
+          typename boost::mpl::end<State>::type,
+          NewList
+        >
+      ));
     }
 
     template <>
     struct monad<list_tag> : monad_defaults<list_tag>
     {
-      struct return_ : tmp_value<return_>
-      {
-        template <class T>
-        struct apply : boost::mpl::list<T> {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((boost::mpl::list<T>));
       
-      struct bind : tmp_value<bind>
-      {
-        template <class A, class F>
-        struct apply :
-          boost::mpl::fold<
-            boost::mpl::transform_view<A, F>,
-            boost::mpl::list<>,
-            mpllibs::metamonad::impl::join_lists
-          >
-        {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
+      ((
+        boost::mpl::fold<
+          boost::mpl::transform_view<A, F>,
+          boost::mpl::list<>,
+          mpllibs::metamonad::impl::join_lists
+        >
+      ));
     };
     
     template <>

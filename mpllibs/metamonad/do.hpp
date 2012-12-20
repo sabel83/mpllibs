@@ -260,7 +260,7 @@ namespace mpllibs
     #endif
     #define MPLLIBS_DO_ARG(z, n, unused) \
       , typename do_substitute<Monad, E##n>::type
-    
+     
     template <
       class Monad,
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
@@ -281,16 +281,10 @@ namespace mpllibs
       Protection against lazy
     */
     template <class T>
-    struct make_lazy
-    {
-      typedef lazy<T> type;
-    };
+    struct make_lazy : returns<lazy<T> > {};
 
     template <>
-    struct make_lazy<boost::mpl::na>
-    {
-      typedef boost::mpl::na type;
-    };
+    struct make_lazy<boost::mpl::na> : returns<boost::mpl::na> {};
 
     #ifdef MPLLIBS_DO_LAZY
       #error MPLLIBS_DO_LAZY already defined

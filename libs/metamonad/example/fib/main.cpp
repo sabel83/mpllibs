@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/plus.hpp>
@@ -25,34 +26,35 @@ using mpllibs::metamonad::lazy;
 template <class N>
 struct fib_without_lazy;
 
-template <class N>
-struct fib_without_lazy_helper :
+MPLLIBS_METAFUNCTION(fib_without_lazy_helper, (N))
+((
   plus<
     typename fib_without_lazy<typename minus<N, int_<1> >::type>::type,
     typename fib_without_lazy<typename minus<N, int_<2> >::type>::type
   >
-{};
+));
 
-template <class N>
-struct fib_without_lazy :
+
+MPLLIBS_METAFUNCTION(fib_without_lazy, (N))
+((
   eval_if<
     typename less<N, int_<2> >::type,
     int_<1>,
     fib_without_lazy_helper<N>
   >
-{};
+));
 
 // With lazy
 ////////////
 
-template <class N>
-struct fib :
+MPLLIBS_METAFUNCTION(fib, (N))
+((
   eval_if<
     typename less<N, int_<2> >::type,
     int_<1>,
     lazy<plus<fib<minus<N, int_<1> > >, fib<minus<N, int_<2> > > > >
   >
-{};
+));
 
 ///////////
 

@@ -12,6 +12,7 @@
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/always.hpp>
 
 struct non_comparable_tag : mpllibs::metamonad::tmp_tag<non_comparable_tag> {};
 
@@ -24,18 +25,12 @@ namespace boost
   namespace mpl
   {
     template <>
-    struct equal_to_impl<non_comparable_tag, non_comparable_tag>
-    {
-      template <class A, class B>
-      struct apply : boost::mpl::true_ {};
-    };
+    struct equal_to_impl<non_comparable_tag, non_comparable_tag> :
+      always<true_>
+    {};
     
     template <class T>
-    struct equal_to_impl<non_comparable_tag, T>
-    {
-      template <class A, class B>
-      struct apply : boost::mpl::false_ {};
-    };
+    struct equal_to_impl<non_comparable_tag, T> : always<false_> {};
 
     template <class T>
     struct equal_to_impl<T, non_comparable_tag> :
@@ -45,11 +40,9 @@ namespace boost
 }
 
 template <class TagA, class TagB>
-struct less_impl
-{
-  template <class A, class B>
-  struct apply : mpllibs::metamonad::throw_<non_comparable> {};
-};
+struct less_impl :
+  boost::mpl::always<mpllibs::metamonad::throw_<non_comparable> >
+{};
 
 template <class A, class B>
 struct less :
@@ -69,12 +62,7 @@ template <>
 struct less_impl<int_tag, int_tag>
 {
   template <class A, class B>
-  struct apply
-  {
-    static const int value = A::value < B::value;
-
-    typedef boost::mpl::bool_<value> type;
-  };
+  struct apply : boost::mpl::bool_<(A::value < B::value)> {};
 };
 
 #endif

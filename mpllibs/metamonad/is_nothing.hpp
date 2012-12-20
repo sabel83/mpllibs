@@ -7,8 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/nothing.hpp>
-
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <mpllibs/metamonad/lazy_metafunction.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
@@ -20,21 +19,10 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    template <class T>
-    struct is_nothing :
-      boost::is_same<
-        typename boost::mpl::tag<typename T::type>::type,
-        nothing_tag
-      >
-    {};
+    MPLLIBS_LAZY_METAFUNCTION(is_nothing, (T))
+    ((boost::is_same<typename boost::mpl::tag<T>::type, nothing_tag>));
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metamonad::is_nothing,
-  "is_nothing"
-)
 
 #endif
 

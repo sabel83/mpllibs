@@ -6,9 +6,24 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/preprocessor/punctuation/comma_if.hpp>
+#include <boost/preprocessor/seq/for_each_i.hpp>
+
 #include <boost/config.hpp>
 
-#ifdef BOOST_NO_CXX11_TEMPLATE_ALIASES
+#ifdef MPLLIBS_EXPAND_ARG_USAGE
+  #error MPLLIBS_EXPAND_ARG_USAGE already defined
+#endif
+#define MPLLIBS_EXPAND_ARG_USAGE(r, unused, n, arg) \
+  BOOST_PP_COMMA_IF(n) class arg
+
+#ifdef MPLLIBS_EXPAND_ARGS_USAGE
+  #error MPLLIBS_EXPAND_ARGS_USAGE already defined
+#endif
+#define MPLLIBS_EXPAND_ARGS_USAGE(args) \
+  BOOST_PP_SEQ_FOR_EACH_I(MPLLIBS_EXPAND_ARG_USAGE, ~, args)
+
+#if defined(BOOST_NO_CXX11_VARIADIC_MACROS) || defined(BOOST_NO_VARIADIC_MACROS)
 
 namespace mpllibs
 {

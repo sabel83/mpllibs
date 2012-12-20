@@ -6,6 +6,8 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -18,10 +20,11 @@
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/bool.hpp>
 
+using mpllibs::metamonad::returns;
+
 namespace
 {
-  template <class T>
-  struct always13 : returns13 {};
+  MPLLIBS_METAFUNCTION(always13, (T)) ((returns13));
 
   struct hidden_result
   {
@@ -29,10 +32,7 @@ namespace
     // no ::type
   };
 
-  struct can_be_evaluated_only_once
-  {
-    typedef hidden_result type;
-  };
+  struct can_be_evaluated_only_once : returns<hidden_result> {};
 }
 
 BOOST_AUTO_TEST_CASE(test_lazy)

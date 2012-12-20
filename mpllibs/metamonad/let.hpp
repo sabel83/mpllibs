@@ -95,7 +95,7 @@ namespace mpllibs
     struct lazy;
 
     template <class A, class E1, class E2>
-    struct lazy<let<A, E1, E2> > : let<A, lazy<E1>, lazy<E2>> {};
+    struct lazy<let<A, E1, E2> > : let<A, lazy<E1>, lazy<E2> > {};
   }
 }
 

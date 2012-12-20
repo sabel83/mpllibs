@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/typeclass.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/reverse_fold.hpp>
@@ -29,17 +30,14 @@ namespace mpllibs
     template <class Tag>
     struct monoid_defaults : monoid<typeclass_expectations>
     {
-      struct concat : tmp_value<concat>
-      {
-        template <class L>
-        struct apply :
-          boost::mpl::reverse_fold<
-            L,
-            typename monoid<Tag>::empty,
-            typename monoid<Tag>::append
-          >
-        {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(concat, (L))
+      ((
+        boost::mpl::reverse_fold<
+          L,
+          typename monoid<Tag>::empty,
+          typename monoid<Tag>::append
+        >
+      ));
     };
   }
 }

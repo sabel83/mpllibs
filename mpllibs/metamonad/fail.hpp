@@ -9,6 +9,7 @@
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <mpllibs/metamonad/monad.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 
@@ -16,21 +17,15 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    template <class MonadTag, class S>
-    struct fail :
+    MPLLIBS_METAFUNCTION(fail, (MonadTag)(S))
+    ((
       boost::mpl::apply_wrap1<
         typename mpllibs::metamonad::monad<MonadTag>::fail,
         S
       >
-    {};
+    ));
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  2,
-  mpllibs::metamonad::fail,
-  "fail"
-)
 
 #endif
 

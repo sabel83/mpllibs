@@ -6,6 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -25,25 +26,28 @@ using boost::mpl::equal_to;
 using boost::mpl::less;
 using boost::mpl::eval_if;
 
+using mpllibs::metamonad::lazy;
+
 namespace
 {
-  MPLLIBS_LAZY_METAFUNCTION(double_value, (class N)) ((times<N, int_<2> >));
+  MPLLIBS_LAZY_METAFUNCTION(not_using_arg, (T)) ((int_<13>));
 
-  MPLLIBS_LAZY_METAFUNCTION_CLASS(triple_value, (class N))
-  ((times<N, int_<3> >));
+  MPLLIBS_LAZY_METAFUNCTION(double_value, (N)) ((times<N, int_<2> >));
 
-  MPLLIBS_LAZY_REC_METAFUNCTION(fact, (class N))
+  MPLLIBS_LAZY_METAFUNCTION_CLASS(triple_value, (N)) ((times<N, int_<3> >));
+
+  MPLLIBS_LAZY_METAFUNCTION(fact, (N))
   ((
     eval_if<
       less<N, int_<1> >,
       int_<1>,
-      times<fact<minus<N, int_<1> > >, N>
+      lazy<times<fact<minus<N, int_<1> > >, N> >
     >
   ));
 
-  MPLLIBS_LAZY_METAFUNCTION(mult, (class A)(class B)) ((times<A, B>));
+  MPLLIBS_LAZY_METAFUNCTION(mult, (A)(B)) ((times<A, B>));
 
-  MPLLIBS_LAZY_METAFUNCTION_CLASS(sub, (class A)(class B)) ((minus<A, B>));
+  MPLLIBS_LAZY_METAFUNCTION_CLASS(sub, (A)(B)) ((minus<A, B>));
 }
 
 BOOST_AUTO_TEST_CASE(test_lazy_metafunction)
@@ -62,6 +66,10 @@ BOOST_AUTO_TEST_CASE(test_lazy_metafunction)
   >(MPLLIBS_HERE, "test_lazy_metafunction_with_two_arguments");
 
   meta_require<
+    equal_to<int_<24>, mult<mult<int_<2>, int_<3> >, int_<4> >::type>
+  >(MPLLIBS_HERE, "test_nested_lazy_metafunction_call");
+
+  meta_require<
     equal_to<int_<9>, apply_wrap1<triple_value, int_<3> >::type>
   >(MPLLIBS_HERE, "test_metafunction_class");
 
@@ -76,6 +84,10 @@ BOOST_AUTO_TEST_CASE(test_lazy_metafunction)
   meta_require<
     equal_to<int_<6>, fact<int_<3> >::type>
   >(MPLLIBS_HERE, "test_lazy_rec_metafunction");
+
+  meta_require<
+    equal_to<int_<13>, not_using_arg<int_<8> >::type>
+  >(MPLLIBS_HERE, "test_lazy_mf_not_using_arg");
 }
 
 

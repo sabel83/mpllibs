@@ -13,11 +13,13 @@
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/identity.hpp>
-#include <boost/mpl/if.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
 
 namespace mpllibs
@@ -29,33 +31,18 @@ namespace mpllibs
     template <>
     struct monad<maybe_tag> : monad_defaults<maybe_tag>
     {
-      struct return_ : tmp_value<return_>
-      {
-        template <class T>
-        struct apply : just<T> {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((just<T>));
       
-      struct bind : tmp_value<bind>
-      {
-      private:
-        template <class A, class F>
-        struct call_F : boost::mpl::apply<F, typename get_data<A>::type> {};
-      public:
-        template <class A, class F>
-        struct apply :
-          boost::mpl::if_<
-            is_nothing<A>,
-            boost::mpl::identity<A>,
-            call_F<A, F>
-          >::type
-        {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
+      ((
+        boost::mpl::eval_if<
+          is_nothing<A>,
+          boost::mpl::identity<A>,
+          lazy<boost::mpl::apply<F, get_data<A> > >
+        >
+      ));
 
-      struct fail : tmp_value<fail>
-      {
-        template <class S>
-        struct apply : nothing {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(fail, (S)) ((nothing));
     };
   }
 }

@@ -8,6 +8,7 @@
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -34,11 +35,7 @@ namespace mpllibs
     template <>
     struct monad<test_tag> : monad_defaults<test_tag>
     {
-      struct return_ : tmp_value<return_>
-      {
-        template <class T>
-        struct apply : identity<int13> {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((identity<int13>));
       
       // no bind is needed for this test
     };

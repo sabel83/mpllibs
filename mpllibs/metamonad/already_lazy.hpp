@@ -8,6 +8,8 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
+#include <mpllibs/metamonad/returns.hpp>
+
 namespace mpllibs
 {
   namespace metamonad
@@ -20,11 +22,7 @@ namespace mpllibs
     struct lazy;
 
     template <class AnglyExpr>
-    struct lazy<already_lazy<AnglyExpr> >
-    {
-      typedef AnglyExpr type;
-    };
-
+    struct lazy<already_lazy<AnglyExpr> > : returns<AnglyExpr> {};
   }
 }
 

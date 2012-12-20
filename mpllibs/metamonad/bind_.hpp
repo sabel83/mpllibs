@@ -9,6 +9,7 @@
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <mpllibs/metamonad/monad.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 
@@ -16,22 +17,16 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    template <class MonadTag, class A, class B>
-    struct bind_ :
+    MPLLIBS_METAFUNCTION(bind_, (MonadTag)(A)(B))
+    ((
       boost::mpl::apply_wrap2<
         typename mpllibs::metamonad::monad<MonadTag>::bind_,
         A,
         B
       >
-    {};
+    ));
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  3,
-  mpllibs::metamonad::bind_,
-  "bind_"
-)
 
 #endif
 

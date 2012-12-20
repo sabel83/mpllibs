@@ -38,13 +38,14 @@ BOOST_AUTO_TEST_CASE(test_maybe)
   using boost::mpl::plus;
   using boost::mpl::_1;
   using boost::mpl::list_c;
+  using boost::mpl::lambda;
 
   typedef just<int13> just13;
   typedef just<int11> just11;
   
   typedef list_c<char, 'h', 'e', 'l', 'l', 'o'> s_hello;
   
-  typedef just<plus<_1, int2> > maybe_add_2;
+  typedef lambda<just<plus<_1, int2> > > maybe_add_2;
   
   meta_require<
     equal_to<return_<maybe_tag, int13>, just13>

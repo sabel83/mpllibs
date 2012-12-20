@@ -10,6 +10,9 @@
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lazy_metafunction.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -17,7 +20,7 @@
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/if.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 
 #include <boost/type_traits/is_same.hpp>
@@ -31,11 +34,7 @@ namespace mpllibs
     template <>
     struct get_data_impl<exception_tag>
     {
-      template <class E>
-      struct apply
-      {
-        typedef typename E::data type;
-      };
+      MPLLIBS_METAFUNCTION(apply, (E)) ((typename E::data));
     };
 
     /*
@@ -55,26 +54,16 @@ namespace mpllibs
     template <>
     struct monad<exception_tag> : monad_defaults<exception_tag>
     {
-      struct return_ : tmp_value<return_>
-      {
-        template <class T>
-        struct apply
-        {
-          typedef T type;
-        };
-      };
+      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((returns<T>));
       
-      struct bind : tmp_value<bind>
-      {
-        template <class A, class F>
-        struct apply :
-          boost::mpl::if_<
-            boost::is_same<exception_tag, typename boost::mpl::tag<A>::type>,
-            boost::mpl::identity<A>,
-            boost::mpl::apply1<F, A>
-          >::type
-        {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
+      ((
+        boost::mpl::eval_if<
+          boost::is_same<exception_tag, typename boost::mpl::tag<A>::type>,
+          boost::mpl::identity<A>,
+          boost::mpl::apply1<F, A>
+        >
+      ));
     };
   }
 }
@@ -93,20 +82,19 @@ namespace boost
         mpllibs::metamonad::exception_tag
       >
     {
-      template <class A, class B>
-      struct apply :
+      MPLLIBS_LAZY_METAFUNCTION(apply, (A)(B))
+      ((
         equal_to<
-          typename mpllibs::metamonad::get_data<A>::type,
-          typename mpllibs::metamonad::get_data<B>::type
+          mpllibs::metamonad::get_data<A>,
+          mpllibs::metamonad::get_data<B>
         >
-      {};
+      ));
     };
 
     template <class T>
     struct equal_to_impl<mpllibs::metamonad::exception_tag, T>
     {
-      template <class A, class B>
-      struct apply : boost::mpl::false_ {};
+      MPLLIBS_METAFUNCTION(apply, (A)(B)) ((boost::mpl::false_));
     };
 
     template <class T>

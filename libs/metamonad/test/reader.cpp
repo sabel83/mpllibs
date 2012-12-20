@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/reader.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -25,11 +26,7 @@ using mpllibs::metamonad::tmp_value;
 namespace
 {
   template <class A>
-  struct fplus : tmp_value<fplus<A> >
-  {
-    template <class R>
-    struct apply : plus<A, R> {};
-  };
+  MPLLIBS_METAFUNCTION_CLASS(fplus, (R)) ((plus<A, R>));
 }
 
 BOOST_AUTO_TEST_CASE(test_reader)

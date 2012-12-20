@@ -9,6 +9,7 @@
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <mpllibs/metamonad/monad.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 
@@ -16,13 +17,9 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    template <class MonadTag, class T>
-    struct return_ :
-      boost::mpl::apply_wrap1<
-        typename mpllibs::metamonad::monad<MonadTag>::return_,
-        T
-      >
-    {};
+    // It must not be an alias to be able to do pattern matching on it
+    MPLLIBS_METAFUNCTION(return_, (MonadTag)(T))
+    ((boost::mpl::apply_wrap1<typename monad<MonadTag>::return_, T>));
   }
 }
 

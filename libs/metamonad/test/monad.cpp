@@ -29,11 +29,8 @@ using mpllibs::metamonad::tmp_value;
 
 namespace
 {
-  struct minus_2 : tmp_value<minus_2>
-  {
-    template <class A>
-    struct apply : right<typename minus<A, int2>::type> {};
-  };
+  MPLLIBS_METAFUNCTION_CLASS(minus_2, (A))
+  ((right<typename minus<A, int2>::type>));
 }
 
 BOOST_AUTO_TEST_CASE(test_monad)

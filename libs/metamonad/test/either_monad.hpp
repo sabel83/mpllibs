@@ -9,6 +9,9 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/lazy_metafunction.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -29,16 +32,10 @@ namespace
   typedef either_tag either;
   
   template <class T>
-  struct left : mpllibs::metamonad::tmp_value<left<T>, left_tag>
-  {
-    typedef T value;
-  };
+  struct left : mpllibs::metamonad::tmp_value<left<T>, left_tag> {};
   
   template <class T>
-  struct right : mpllibs::metamonad::tmp_value<right<T>, right_tag>
-  {
-    typedef T value;
-  };
+  struct right : mpllibs::metamonad::tmp_value<right<T>, right_tag> {};
 
   template <class T>
   struct get_value;
@@ -66,10 +63,12 @@ namespace boost
     template <>
     struct equal_to_impl<left_tag, left_tag>
     {
-      template <class A, class B>
-      struct apply :
-        boost::mpl::equal_to<typename A::value, typename B::value>
-      {};
+      MPLLIBS_LAZY_METAFUNCTION(apply, (A)(B))
+      ((
+        mpllibs::metamonad::lazy<
+          boost::mpl::equal_to<get_value<A>, get_value<B> >
+        >
+      ));
     };
 
     template <>
@@ -80,9 +79,8 @@ namespace boost
     template <>
     struct equal_to_impl<right_tag, left_tag>
     {
-      template <class A, class B>
-      struct apply : boost::mpl::identity<boost::mpl::false_>
-      {};
+      MPLLIBS_METAFUNCTION(apply, (A)(B))
+      ((boost::mpl::identity<boost::mpl::false_>));
     };
     
     template <>
@@ -99,17 +97,11 @@ namespace mpllibs
     template <>
     struct monad<either_tag> : monad_defaults<either_tag>
     {
-      struct return_ : tmp_value<return_>
-      {
-        template <class T>
-        struct apply : right<T> {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((right<T>));
       
-      struct bind : tmp_value<bind>
-      {
-        template <class A, class F>
-        struct apply :
-          boost::mpl::if_<
+      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
+      ((
+          typename boost::mpl::if_<
             typename boost::is_same<
               right_tag,
               typename boost::mpl::tag<typename A::type>::type
@@ -117,8 +109,7 @@ namespace mpllibs
             boost::mpl::apply<F, typename get_value<typename A::type>::type>,
             A
           >::type
-        {};
-      };
+      ));
     };
   }
 }

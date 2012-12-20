@@ -19,14 +19,10 @@ Synopsis
 Description
 -----------
 
-This macro is intended to be used for defining forwarding metafunction classes
-in a C++ standard neutral way. When template aliases are available, it expands
-to an alias template definition, when they are not available, it expands to
-metafunction forwarding using inheritance. +args+ is the list of template
-arguments, each of them in parentheses. The +body+ is expected to follow the
-macro call in double parentheses. +args+ can not be empty.
-
-Boost.Config is used to determine the availability of alias templates.
+This macro is intended to be used for defining forwarding metafunction classes.
+A macro call expands to metafunction forwarding using inheritance. +args+ is the
+list of template arguments, each of them in parentheses. The +body+ is expected
+to follow the macro call in double parentheses. +args+ can not be empty.
 
 Header
 ------

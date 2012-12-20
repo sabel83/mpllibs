@@ -9,11 +9,17 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/make_mpl_lambda.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/always.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -24,36 +30,30 @@ namespace mpllibs
     template <>
     struct monad<reader_tag> : monad_defaults<reader_tag>
     {
-      struct return_ : tmp_value<return_>
-      {
-        template <class T>
-        struct apply
-        {
-          typedef boost::mpl::always<T> type;
-        };
-      };
+      struct r;
+
+      MPLLIBS_METAFUNCTION_CLASS(return_, (T))
+      ((returns<boost::mpl::always<T> >));
       
-      struct bind : tmp_value<bind>
-      {
-      private:
-        template <class A, class F>
-        struct impl : tmp_value<impl<A, F> >
-        {
-          template <class R>
-          struct apply :
-            boost::mpl::apply<
-              typename boost::mpl::apply<
-                F,
-                typename boost::mpl::apply<A, R>::type
-              >::type,
-              R
+      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
+      ((
+        lambda<r,
+          lazy<
+            boost::mpl::apply_wrap1<
+              make_mpl_lambda<
+                boost::mpl::apply_wrap1<
+                  boost::mpl::lambda<F>,
+                  boost::mpl::apply_wrap1<
+                    boost::mpl::lambda<A>,
+                    already_lazy<r>
+                  >
+                >
+              >,
+              already_lazy<r>
             >
-          {};
-        };
-      public:
-        template <class A, class F>
-        struct apply : impl<A, F> {};
-      };
+          >
+        >
+      ));
     };
   }
 }

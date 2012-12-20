@@ -20,11 +20,7 @@ using boost::mpl::list;
 
 namespace
 {
-  struct twice
-  {
-    template <class T>
-    struct apply : list<T, T> {};
-  };
+  MPLLIBS_METAFUNCTION_CLASS(twice, (T)) ((list<T, T>));
 }
 
 BOOST_AUTO_TEST_CASE(test_list_monad)

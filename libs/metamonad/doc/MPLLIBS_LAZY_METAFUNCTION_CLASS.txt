@@ -20,8 +20,8 @@ Description
 -----------
 
 This macro is similar to
-link:MPLLIBS_METAFUNCTION_CLASS.html[+MPLLIBS_METAFUNCTION_CLASS+] but it wraps
-its +body+ with link:lazy.html[+lazy+].
+link:MPLLIBS_METAFUNCTION_CLASS.html[+MPLLIBS_METAFUNCTION_CLASS+] but it uses
+the evaluated arguments in its +body+.
 
 Header
 ------
@@ -43,9 +43,11 @@ MPLLIBS_LAZY_METAFUNCTION_CLASS(name, (arg1)(arg2)...(argn)) ((body));
 is equivalent to
 
 --------------------------------------
-MPLLIBS_METAFUNCTION_CLASS(name, (arg1)(arg2)...(argn))
-((mpllibs::metamonad::lazy< body >));
+MPLLIBS_METAFUNCTION_CLASS(name, (arg1)(arg2)...(argn)) ((body));
 --------------------------------------
+
+but when +arg1+, +arg2+, ..., +argn+ is referred to in +body+, it refers to
++arg1::type+, +arg2::type+, ..., +argn::type+.
 
 Example
 -------

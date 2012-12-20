@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -15,14 +16,13 @@ namespace mpllibs
   namespace metamonad
   {
     template <class A, class E1, class E2>
-    struct letrec : let<A, letrec<A, E1, E1>, E2>
-    {};
+    struct letrec : let<A, letrec<A, E1, E1>, E2> {};
 
     template <class T>
     struct lazy;
 
     template <class A, class E1, class E2>
-    struct lazy<letrec<A, E1, E2> > : letrec<A, lazy<E1>, lazy<E2>> {};
+    struct lazy<letrec<A, E1, E2> > : letrec<A, lazy<E1>, lazy<E2> > {};
   }
 }
 

@@ -19,18 +19,10 @@ Synopsis
 Description
 -----------
 
-This macro is intended to be used for defining forwarding metafunctions in a C++
-standard neutral way. When template aliases are available, it expands to an
-alias template definition, when they are not available, it expands to
-metafunction forwarding using inheritance. +args+ is the list of template
-arguments, each of them in parentheses. The +body+ is expected to follow the
-macro call in double parentheses. +args+ can not be empty.
-
-This is not intended to be used for defining self-recursive metafunctions. A
-different macro, link:MPLLIBS_REC_METAFUNCTION.html[+MPLLIBS_REC_METAFUNCTION+]
-is intended to be used for that.
-
-Boost.Config is used to determine the availability of alias templates.
+This macro is intended to be used for defining forwarding metafunctions. The
+macro call expands to metafunction forwarding using inheritance. +args+ is the
+list of template arguments, each of them in parentheses. The +body+ is expected
+to follow the macro call in double parentheses. +args+ can not be empty.
 
 Header
 ------
@@ -54,13 +46,6 @@ is equivalent to
 --------------------------------------
 template <arg1, arg2, ..., argn>
 struct name : body {};
---------------------------------------
-
-when no alias templates are available and it is equivalent to
-
---------------------------------------
-template <arg1, arg2, ..., argn>
-using name = body;
 --------------------------------------
 
 Example

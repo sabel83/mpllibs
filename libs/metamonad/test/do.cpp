@@ -30,6 +30,7 @@ using mpllibs::metamonad::do_return;
 using mpllibs::metamonad::tmp_tag;
 using mpllibs::metamonad::tmp_value;
 using mpllibs::metamonad::returns;
+using mpllibs::metamonad::lazy;
 
 /*
  * WrapperMonad
@@ -40,8 +41,7 @@ namespace
 
   typedef wrapper_tag wrapper_monad;
 
-  MPLLIBS_REC_METAFUNCTION(wrapped, (class T))
-  ((tmp_value<wrapped<T>, wrapper_tag>));
+  MPLLIBS_METAFUNCTION(wrapped, (T)) ((tmp_value<wrapped<T>, wrapper_tag>));
 
   template <class T>
   struct unwrap;
@@ -59,10 +59,8 @@ namespace mpllibs
     template <>
     struct monad<wrapper_tag>
     {
-      MPLLIBS_METAFUNCTION_CLASS(return_, (class T)) ((wrapped<T>));
-      
-      MPLLIBS_METAFUNCTION_CLASS(bind, (class A)(class F))
-      ((boost::mpl::apply<F, A>));
+      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((wrapped<T>));
+      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F)) ((boost::mpl::apply<F, A>));
     };
   }
 }
@@ -74,17 +72,17 @@ namespace boost
     template <>
     struct equal_to_impl<wrapper_tag, wrapper_tag>
     {
-      MPLLIBS_LAZY_METAFUNCTION(apply, (class A)(class B))
-      ((equal_to<unwrap<A>, unwrap<B>>));
+      MPLLIBS_LAZY_METAFUNCTION(apply, (A)(B))
+      ((lazy<equal_to<unwrap<A>, unwrap<B> > >));
     };
   }
 }
 
 namespace
 {
-  MPLLIBS_LAZY_METAFUNCTION(minus_2, (class A)) ((right<minus<A, int2>>));
+  MPLLIBS_LAZY_METAFUNCTION(minus_2, (A)) ((lazy<right<minus<A, int2> > >));
   
-  MPLLIBS_LAZY_METAFUNCTION(eval_to_right, (class T)) ((right<T>));
+  MPLLIBS_LAZY_METAFUNCTION(eval_to_right, (T)) ((right<T>));
 }
 
 BOOST_AUTO_TEST_CASE(test_do)

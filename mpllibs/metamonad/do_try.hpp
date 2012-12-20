@@ -11,6 +11,9 @@
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lazy_metafunction.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -46,51 +49,40 @@ namespace mpllibs
     {
       // evaluates result lazily
       template <class Result>
-      struct skip_further_catches
+      struct skip_further_catches : returns<Result>
       {
-        typedef Result type;
-        
         template <class ExceptionTag, class Name>
-        struct catch_
-        {
-          template <class Body>
-          struct apply : skip_further_catches {};
-        };
+        MPLLIBS_METAFUNCTION_CLASS(catch_, (Body)) ((skip_further_catches));
       };
       
-      template <class Result>
-      struct lazy_skip_further_catches :
-        skip_further_catches<typename Result::type>
-      {};
+      MPLLIBS_METAFUNCTION(lazy_skip_further_catches, (Result))
+      ((skip_further_catches<typename Result::type>));
       
       template <class Exception>
-      struct was_exception
+      struct was_exception : returns<Exception>
       {
-        typedef Exception type;
-        
         template <class ExceptionTag, class Name>
-        struct catch_
-        {
-        private:
-          typedef typename get_data<Exception>::type _exception_data;
-
-          typedef
-            typename boost::mpl::tag<_exception_data>::type _exception_data_tag;
-        public:
-          template <class Body>
-          struct apply :
-            boost::mpl::if_<
-              boost::mpl::or_<
-                boost::is_same<ExceptionTag, _exception_data_tag>,
-                boost::is_same<ExceptionTag, catch_any>
+        MPLLIBS_METAFUNCTION_CLASS(catch_, (Body))
+        ((
+          typename boost::mpl::if_<
+            boost::mpl::or_<
+              boost::is_same<
+                ExceptionTag,
+                typename boost::mpl::tag<
+                  typename get_data<Exception>::type
+                >::type
               >,
-              lazy_skip_further_catches<
-                typename let<Name, _exception_data, Body>::type
-              >,
-              was_exception
-            >::type
-          {};
-        };
+              boost::is_same<ExceptionTag, catch_any>
+            >,
+            lazy_skip_further_catches<
+              typename let<
+                Name, typename get_data<Exception>::type,
+                Body
+              >::type
+            >,
+            was_exception
+          >::type
+        ));
       };
     }
 

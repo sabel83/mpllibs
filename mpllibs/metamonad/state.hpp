@@ -9,11 +9,17 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/make_mpl_lambda.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/pair.hpp>
 
 namespace mpllibs
@@ -25,45 +31,31 @@ namespace mpllibs
     template <>
     struct monad<state_tag> : monad_defaults<state_tag>
     {
-      struct return_ : tmp_value<return_>
-      {
-        template <class T>
-        struct apply
-        {
-          struct type : tmp_value<type>
-          {
-            template <class S>
-            struct apply : boost::mpl::pair<T, S> {};
-          };
-        };
-      };
+      struct s;
+
+      MPLLIBS_METAFUNCTION_CLASS(return_, (T))
+      ((returns<lambda<s, boost::mpl::pair<T, s> > >));
       
-      struct bind : tmp_value<bind>
-      {
-      private:
-        template <class A, class F>
-        struct impl : tmp_value<impl<A, F> >
-        {
-          template <class S>
-          struct apply
-          {
-          private:
-            typedef typename boost::mpl::apply<A, S>::type apply_first;
-            typedef typename apply_first::first new_value;
-            typedef typename apply_first::second new_state;
-          public:
-            typedef
-              typename boost::mpl::apply<
-                typename boost::mpl::apply<F, new_value>::type,
-                new_state
-              >::type
-              type;
-          };
-        };
-      public:
-        template <class A, class F>
-        struct apply : impl<A, F> {};
-      };
+      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
+      ((
+        lambda<s,
+          lazy<
+            boost::mpl::apply_wrap1<
+              make_mpl_lambda<
+                boost::mpl::apply_wrap1<
+                  make_mpl_lambda<F>,
+                  boost::mpl::first<
+                    boost::mpl::apply_wrap1<make_mpl_lambda<A>, s>
+                  >
+                >
+              >,
+              boost::mpl::second<
+                boost::mpl::apply_wrap1<make_mpl_lambda<A>, s>
+              >
+            >
+          >
+        >
+      ));
     };
   }
 }
