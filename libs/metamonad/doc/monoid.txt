@@ -15,13 +15,13 @@ template <class MonoidTag>
 struct monoid;
   // Requires:
   //   publicly inherit from monoid_defaults<MonoidTag>
-  //   struct empty;
-  //   struct append { template <class, class> struct apply; };
+  //   struct mempty;
+  //   struct mappend { template <class, class> struct apply; };
 
 template <class MonadTag>
 struct monoid_defaults
 {
-  struct concat
+  struct mconcat
   {
     template <class L>
     struct apply
@@ -37,23 +37,23 @@ Description
 -----------
 
 This is a typeclass for monoids. A monoid is an abstraction of a type and an
-associative operation (+append+) on it. The operation is required to have an
-identity element (+empty+). Examples:
+associative operation (+mappend+) on it. The operation is required to have an
+identity element (+mempty+). Examples:
 
 * integers with 0 as identity and addition as operation
 * integers with 1 as identity and multiplication as operation
 * lists with empty list as identity and concatenation as operation
 
-Monoids have a +concat+ operation that takes a sequence of values and produces
-as sum value from it by repeatedly calling +append+.
+Monoids have a +mconcat+ operation that takes a sequence of values and produces
+as sum value from it by repeatedly calling +mappend+.
 
 For any +MonoidTag+, the operations are expected to meet the following
 requirements:
 
-* +append<empty, X>+ is equivalent to +X+
-* +append<X, empty>+ is equivalent to +X+
-* +append<X, append<Y, Z> >+ is equivalent to +append<append<X, Y>, Z>+
-* +concat<L>+ is equivalent to +boost::mpl::reverse_fold<L, empty, append>+
+* +mappend<mempty, X>+ is equivalent to +X+
+* +mappend<X, mempty>+ is equivalent to +X+
+* +mappend<X, mappend<Y, Z> >+ is equivalent to +mappend<mappend<X, Y>, Z>+
+* +mconcat<L>+ is equivalent to +boost::mpl::reverse_fold<L, mempty, mappend>+
 
 Header
 ------
@@ -73,8 +73,8 @@ struct plus_tag : mpllibs::metamonad::tmp_tag<plus_tag> {};
 template <>
 struct monoid<plus_tag> : monoid_defaults<plus_tag>
 {
-  typedef int0 empty;
-  typedef lambda<plus<_1, _2> > append;
+  typedef int0 mempty;
+  typedef lambda<plus<_1, _2> > mappend;
 };
 --------------------------------------
 

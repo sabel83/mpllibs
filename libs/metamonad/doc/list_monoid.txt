@@ -14,8 +14,8 @@ general information
 
 * header: +<mpllibs/metamonad/list.hpp>+
 * tag of monoid: +list_tag+
-* empty: empty list
-* append: list concatenation
+* mempty: empty list
+* mappend: list concatenation
 
 include::copyright[]
 

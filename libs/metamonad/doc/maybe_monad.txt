@@ -20,7 +20,8 @@ general information
 -------------------
 
 * header: +<mpllibs/metamonad/maybe.hpp>+
-* tag of monad: +maybe_tag+
+* tag of monad: +maybe_tag<T>+ where +T+ is the tag of the value wrapped by
+  +just+.
 * return's logic: pass the argument to +just+
 * bind's logic: when the first argument is +nothing+, +bind+ returns it as it
   is. When it is +just+, +bind+ passes the wrapped value to the continuation,

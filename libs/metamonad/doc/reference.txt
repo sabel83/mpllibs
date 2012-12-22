@@ -107,6 +107,7 @@ link:monoid.html[monoid] +
 Instances of Monoid +
 
 link:list_monoid.html[list monoid] +
+link:maybe_monoid.html[maybe monoid] +
 
 Monad
 ~~~~~
