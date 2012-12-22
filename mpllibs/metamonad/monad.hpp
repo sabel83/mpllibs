@@ -8,13 +8,10 @@
 
 #include <mpllibs/metamonad/typeclass.hpp>
 #include <mpllibs/metamonad/throw.hpp>
-#include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/always.hpp>
-
-#include <iostream>
 
 namespace mpllibs
 {
