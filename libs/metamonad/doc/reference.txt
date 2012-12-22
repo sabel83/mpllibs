@@ -7,14 +7,17 @@ mpllibs::metamonad refrence
 ===========================
 Abel Sinkovics
 
+Language elements
+-----------------
+
 Let expressions
----------------
+~~~~~~~~~~~~~~~
 
 link:let.html[let] +
 link:letrec.html[letrec] +
 
 Lazy evaluation
----------------
+~~~~~~~~~~~~~~~
 
 link:already_lazy.html[already_lazy] +
 link:lazy.html[lazy] +
@@ -23,17 +26,78 @@ link:lazy_argument.html[lazy_argument] +
 link:make_mpl_lambda.html[make_mpl_lambda] +
 
 Lambda expression
------------------
+~~~~~~~~~~~~~~~~~
 
 link:lambda.html[lambda] +
 
 Typeclass
----------
+~~~~~~~~~
 
 link:MPLLIBS_TYPECLASS_EXPECT.html[MPLLIBS_TYPECLASS_EXPECT] +
 
+Do notation
+~~~~~~~~~~~
+
+link:do_.html[do_] +
+link:set.html[set] +
+link:do_return.html[do_return] +
+
+Compile-time exception
+~~~~~~~~~~~~~~~~~~~~~~
+
+link:exception.html[exception] +
+link:get_data.html[get_data] +
+link:throw_.html[throw_] +
+link:do_try.html[do_try] +
+link:try_.html[try_] +
+
+Metafunction definition
+~~~~~~~~~~~~~~~~~~~~~~~
+
+link:MPLLIBS_DEFINE_TD_METAFUNCTION.html[MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION] +
+
+link:MPLLIBS_LAZY_METAFUNCTION.html[MPLLIBS_LAZY_METAFUNCTION] +
+link:MPLLIBS_LAZY_METAFUNCTION_CLASS.html[MPLLIBS_LAZY_METAFUNCTION_CLASS] +
+link:MPLLIBS_LAZY_VARIADIC_METAFUNCTION.html[MPLLIBS_LAZY_VARIADIC_METAFUNCTION] +
+link:MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS.html[MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS] +
+link:MPLLIBS_METAFUNCTION.html[MPLLIBS_METAFUNCTION] +
+link:MPLLIBS_METAFUNCTION_CLASS.html[MPLLIBS_METAFUNCTION_CLASS] +
+link:MPLLIBS_VARIADIC_METAFUNCTION.html[MPLLIBS_VARIADIC_METAFUNCTION] +
+link:MPLLIBS_VARIADIC_METAFUNCTION_CLASS.html[MPLLIBS_VARIADIC_METAFUNCTION_CLASS] +
+
+link:returns.html[returns] +
+link:tmp_tag.html[tmp_tag] +
+link:tmp_value.html[tmp_value] +
+
+Data types
+----------
+
+Tags
+~~~~
+
+link:tag_tag.html[tag_tag] +
+link:overloading_error_tag.html[overloading_error_tag] +
+
+Maybe
+~~~~~
+
+link:nothing.html[nothing] +
+link:just.html[just] +
+link:is_nothing.html[is_nothing] +
+
+Either
+~~~~~~
+
+link:left.html[left] +
+link:right.html[right] +
+link:is_left.html[is_left] +
+link:is_right.html[is_right] +
+
+Typeclasses
+-----------
+
 Monoid
-------
+~~~~~~
 
 link:mappend.html[mappend] +
 link:mconcat.html[mconcat] +
@@ -45,7 +109,7 @@ Instances of Monoid +
 link:list_monoid.html[list monoid] +
 
 Monad
------
+~~~~~
 
 link:bind_.html[bind_] +
 link:bind.html[bind] +
@@ -64,7 +128,7 @@ link:state_monad.html[state monad] +
 link:writer_monad.html[writer monad] +
 
 MonadPlus
----------
+~~~~~~~~~
 
 link:monad_plus.html[monad_plus] +
 link:mplus.html[mplus] +
@@ -74,61 +138,6 @@ Instances of MonadPlus +
 
 link:maybe_monad_plus.html[maybe monad plus] +
 link:list_monad_plus.html[list monad plus] +
-
-Do notation
------------
-
-link:do_.html[do_] +
-link:set.html[set] +
-link:do_return.html[do_return] +
-
-Compile-time exception
-----------------------
-
-link:exception.html[exception] +
-link:get_data.html[get_data] +
-link:throw_.html[throw_] +
-link:do_try.html[do_try] +
-link:try_.html[try_] +
-
-Tags
-----
-
-link:tag_tag.html[tag_tag] +
-link:overloading_error_tag.html[overloading_error_tag] +
-
-Convenience functions and macros
---------------------------------
-
-link:MPLLIBS_DEFINE_TD_METAFUNCTION.html[MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION] +
-
-link:MPLLIBS_LAZY_METAFUNCTION.html[MPLLIBS_LAZY_METAFUNCTION] +
-link:MPLLIBS_LAZY_METAFUNCTION_CLASS.html[MPLLIBS_LAZY_METAFUNCTION_CLASS] +
-link:MPLLIBS_LAZY_VARIADIC_METAFUNCTION.html[MPLLIBS_LAZY_VARIADIC_METAFUNCTION] +
-link:MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS.html[MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS] +
-link:MPLLIBS_METAFUNCTION.html[MPLLIBS_METAFUNCTION] +
-link:MPLLIBS_METAFUNCTION_CLASS.html[MPLLIBS_METAFUNCTION_CLASS] +
-link:MPLLIBS_VARIADIC_METAFUNCTION.html[MPLLIBS_VARIADIC_METAFUNCTION] +
-link:MPLLIBS_VARIADIC_METAFUNCTION_CLASS.html[MPLLIBS_VARIADIC_METAFUNCTION_CLASS] +
-
-link:returns.html[returns] +
-link:tmp_tag.html[tmp_tag] +
-link:tmp_value.html[tmp_value] +
-
-Maybe
------
-
-link:nothing.html[nothing] +
-link:just.html[just] +
-link:is_nothing.html[is_nothing] +
-
-Either
-------
-
-link:left.html[left] +
-link:right.html[right] +
-link:is_left.html[is_left] +
-link:is_right.html[is_right] +
 
 include::copyright[]
 
