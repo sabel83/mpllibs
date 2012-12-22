@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/list.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/monad.hpp>
+#include <mpllibs/metamonad/monad_plus.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
@@ -60,14 +61,21 @@ namespace mpllibs
     {
       typedef boost::mpl::list<> empty;
       typedef
-        boost::mpl::lambda<
+        typename boost::mpl::lambda<
           boost::mpl::apply_wrap2<
             mpllibs::metamonad::impl::join_lists,
             boost::mpl::_1,
             boost::mpl::_2
           >
-        >
+        >::type
         append;
+    };
+
+    template <>
+    struct monad_plus<list_tag>
+    {
+      typedef monoid<list_tag>::empty mzero;
+      typedef monoid<list_tag>::append mplus;
     };
   }
 }

@@ -11,6 +11,9 @@
 #include <mpllibs/metamonad/bind.hpp>
 #include <mpllibs/metamonad/fail.hpp>
 
+#include <mpllibs/metamonad/mzero.hpp>
+#include <mpllibs/metamonad/mplus.hpp>
+
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
@@ -32,6 +35,8 @@ BOOST_AUTO_TEST_CASE(test_maybe)
   using mpllibs::metamonad::bind;
   using mpllibs::metamonad::maybe_tag;
   using mpllibs::metamonad::fail;
+  using mpllibs::metamonad::mplus;
+  using mpllibs::metamonad::mzero;
   
   using boost::mpl::equal_to;
   using boost::mpl::not_;
@@ -65,6 +70,27 @@ BOOST_AUTO_TEST_CASE(test_maybe)
       nothing
     >
   >(MPLLIBS_HERE, "test_fail");
+
+
+  typedef mzero<maybe_tag>::type zero;
+
+  meta_require<equal_to<zero, nothing> >(MPLLIBS_HERE, "test mzero");
+
+  meta_require<
+    equal_to<zero, mplus<maybe_tag, zero, zero>::type>
+  >(MPLLIBS_HERE, "test mzero + mzero");
+
+  meta_require<
+    equal_to<just13, mplus<maybe_tag, zero, just13>::type>
+  >(MPLLIBS_HERE, "test mzero + x");
+
+  meta_require<
+    equal_to<just13, mplus<maybe_tag, just13, zero>::type>
+  >(MPLLIBS_HERE, "test x + mzero");
+
+  meta_require<
+    equal_to<just13, mplus<maybe_tag, just13, just11>::type>
+  >(MPLLIBS_HERE, "test x + y");
 }
 
 

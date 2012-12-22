@@ -18,13 +18,7 @@ namespace mpllibs
   namespace metamonad
   {
     MPLLIBS_METAFUNCTION(bind_, (MonadTag)(A)(B))
-    ((
-      boost::mpl::apply_wrap2<
-        typename mpllibs::metamonad::monad<MonadTag>::bind_,
-        A,
-        B
-      >
-    ));
+    ((boost::mpl::apply_wrap2<typename monad<MonadTag>::bind_, A, B>));
   }
 }
 

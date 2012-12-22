@@ -22,27 +22,27 @@ link:lazy_argument.html[lazy_argument] +
 
 link:make_mpl_lambda.html[make_mpl_lambda] +
 
-Lambda expressions
-------------------
+Lambda expression
+-----------------
 
 link:lambda.html[lambda] +
 
-Typeclasses
------------
+Typeclass
+---------
 
 link:MPLLIBS_TYPECLASS_EXPECT.html[MPLLIBS_TYPECLASS_EXPECT] +
 
-Monoids
--------
+Monoid
+------
 
 link:monoid.html[monoid] +
 
-Monoids implemented by the library +
+Instances of Monoid +
 
 link:list_monoid.html[list monoid] +
 
-Monads
-------
+Monad
+-----
 
 link:bind_.html[bind_] +
 link:bind.html[bind] +
@@ -50,7 +50,7 @@ link:fail.html[fail] +
 link:monad.html[monad] +
 link:return_.html[return_] +
 
-Monads implemented by the library +
+Instances of Monad +
 
 link:either_monad.html[either monad] +
 link:exception_monad.html[exception monad] +
@@ -60,6 +60,18 @@ link:reader_monad.html[reader monad] +
 link:state_monad.html[state monad] +
 link:writer_monad.html[writer monad] +
 
+MonadPlus
+---------
+
+link:monad_plus.html[monad_plus] +
+link:mplus.html[mplus] +
+link:mzero.html[mzero] +
+
+Instances of MonadPlus +
+
+link:maybe_monad_plus.html[maybe monad plus] +
+link:list_monad_plus.html[list monad plus] +
+
 Do notation
 -----------
 
@@ -67,8 +79,8 @@ link:do_.html[do_] +
 link:set.html[set] +
 link:do_return.html[do_return] +
 
-Compile-time exceptions
------------------------
+Compile-time exception
+----------------------
 
 link:exception.html[exception] +
 link:get_data.html[get_data] +

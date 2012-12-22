@@ -12,6 +12,7 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/monad.hpp>
+#include <mpllibs/metamonad/monad_plus.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
@@ -20,6 +21,7 @@
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/if.hpp>
 #include <boost/mpl/apply.hpp>
 
 namespace mpllibs
@@ -43,6 +45,15 @@ namespace mpllibs
       ));
 
       MPLLIBS_METAFUNCTION_CLASS(fail, (S)) ((nothing));
+    };
+
+    template <>
+    struct monad_plus<maybe_tag>
+    {
+      typedef nothing mzero;
+
+      MPLLIBS_METAFUNCTION_CLASS(mplus, (A)(B))
+      ((boost::mpl::if_<is_nothing<A>, B, A>));
     };
   }
 }

@@ -1,0 +1,70 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2012.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+mplus
+=====
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class MonadTag, class A, class B>
+struct mplus
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
++mplus+ is a metafunction for the +mplus+ operation of the
+link:monad_plus.html[monad_plus] typeclass.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metamonad/mplus.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +MonadTag+ tag and +A+ and +B+ classes:
+
+--------------------------------------
+mplus<MonadTag, A, B>
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+boost::mpl::apply_wrap2<monad_plus<MonadTag>::mplus, A, B>
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+using boost::mpl::list_c;
+
+typedef
+  mplus<
+    list_tag,
+    list_c<int, 0, 1, 2, 3, 4>,
+    list_c<int, 5, 6, 7, 8, 9>
+  >::type
+  list_0_to_10;
+--------------------------------------
+
+include::copyright[]
+
+link:reference.html[[up]]
+
+
+
