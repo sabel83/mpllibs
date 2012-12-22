@@ -1,0 +1,74 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2012.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+mconcat
+=======
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class MonadTag, class L>
+struct mconcat
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
++mconcat+ is a metafunction for the +mconcat+ operation of the
+link:monoid.html[monoid] typeclass.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metamonad/mconcat.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +MonadTag+ tag and +L+ list:
+
+--------------------------------------
+mconcat<MonadTag, L>
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+boost::mpl::apply_wrap2<monoid<MonadTag>::mconcat, L>
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+using boost::mpl::list_c;
+using boost::mpl::list;
+
+typedef
+  mconcat<
+    list_tag,
+    list<
+      list_c<int, 0, 1, 2, 3, 4>,
+      list_c<int, 5, 6>,
+      list_c<int, 7, 8, 9>
+    >
+  >::type
+  list_0_to_10;
+--------------------------------------
+
+include::copyright[]
+
+link:reference.html[[up]]
+
+
+

@@ -22,20 +22,20 @@ namespace mpllibs
     template <class Tag>
     struct monoid
     {
-      MPLLIBS_TYPECLASS_EXPECT(empty);
-      MPLLIBS_TYPECLASS_EXPECT(append);
-      MPLLIBS_TYPECLASS_EXPECT(concat);
+      MPLLIBS_TYPECLASS_EXPECT(mempty);
+      MPLLIBS_TYPECLASS_EXPECT(mappend);
+      MPLLIBS_TYPECLASS_EXPECT(mconcat);
     };
     
     template <class Tag>
     struct monoid_defaults : monoid<typeclass_expectations>
     {
-      MPLLIBS_METAFUNCTION_CLASS(concat, (L))
+      MPLLIBS_METAFUNCTION_CLASS(mconcat, (L))
       ((
         boost::mpl::reverse_fold<
           L,
-          typename monoid<Tag>::empty,
-          typename monoid<Tag>::append
+          typename monoid<Tag>::mempty,
+          typename monoid<Tag>::mappend
         >
       ));
     };

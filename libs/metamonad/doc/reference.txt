@@ -35,6 +35,9 @@ link:MPLLIBS_TYPECLASS_EXPECT.html[MPLLIBS_TYPECLASS_EXPECT] +
 Monoid
 ------
 
+link:mappend.html[mappend] +
+link:mconcat.html[mconcat] +
+link:mempty.html[mempty] +
 link:monoid.html[monoid] +
 
 Instances of Monoid +

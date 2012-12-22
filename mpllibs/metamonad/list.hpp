@@ -59,7 +59,7 @@ namespace mpllibs
     template <>
     struct monoid<list_tag> : monoid_defaults<list_tag>
     {
-      typedef boost::mpl::list<> empty;
+      typedef boost::mpl::list<> mempty;
       typedef
         typename boost::mpl::lambda<
           boost::mpl::apply_wrap2<
@@ -68,14 +68,14 @@ namespace mpllibs
             boost::mpl::_2
           >
         >::type
-        append;
+        mappend;
     };
 
     template <>
     struct monad_plus<list_tag>
     {
-      typedef monoid<list_tag>::empty mzero;
-      typedef monoid<list_tag>::append mplus;
+      typedef monoid<list_tag>::mempty mzero;
+      typedef monoid<list_tag>::mappend mplus;
     };
   }
 }

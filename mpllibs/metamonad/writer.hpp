@@ -31,7 +31,7 @@ namespace mpllibs
     struct monad<writer_tag<M> > : monad_defaults<writer_tag<M> >
     {
       MPLLIBS_METAFUNCTION_CLASS(return_, (T))
-      ((returns<boost::mpl::pair<T, typename monoid<M>::empty> >));
+      ((returns<boost::mpl::pair<T, typename monoid<M>::mempty> >));
       
       MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
       ((
@@ -44,7 +44,7 @@ namespace mpllibs
               >
             >,
             boost::mpl::apply<
-              typename monoid<M>::append,
+              typename monoid<M>::mappend,
               boost::mpl::second<A>,
               boost::mpl::second<
                 boost::mpl::apply_wrap1<
