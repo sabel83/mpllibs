@@ -35,7 +35,7 @@ Header
 Expression semantics
 --------------------
 
-For any +Tag+ tag and +S+ value:
+For any +MonadTag+ tag and +S+ class:
 
 --------------------------------------
 fail<MonadTag, S>
@@ -44,7 +44,7 @@ fail<MonadTag, S>
 is equivalent to
 
 --------------------------------------
-monad<MonadTag>::fail<S>
+boost::mpl::apply_wrap1<monad<MonadTag>::fail, S>
 --------------------------------------
 
 Example

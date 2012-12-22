@@ -35,7 +35,7 @@ Header
 Expression semantics
 --------------------
 
-For any +Tag+ tag and +A+, +B+ values:
+For any +MonadTag+ tag and +A+, +B+ classes:
 
 --------------------------------------
 bind_<MonadTag, A, B>
@@ -44,7 +44,7 @@ bind_<MonadTag, A, B>
 is equivalent to
 
 --------------------------------------
-monad<MonadTag>::bind_<A, B>
+boost::mpl::apply_wrap2<monad<MonadTag>::bind_, A, B>
 --------------------------------------
 
 Example

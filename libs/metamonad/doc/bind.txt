@@ -35,7 +35,8 @@ Header
 Expression semantics
 --------------------
 
-For any +Tag+ tag, +A+ value and +F+ nullary metafunction taking one argument:
+For any +MonadTag+ tag, +A+ class and +F+ nullary metafunction taking one
+argument:
 
 --------------------------------------
 bind<MonadTag, A, F>
@@ -44,7 +45,7 @@ bind<MonadTag, A, F>
 is equivalent to
 
 --------------------------------------
-monad<MonadTag>::bind<A, F>
+boost::mpl::apply_wrap2<monad<MonadTag>::bind, A, F>
 --------------------------------------
 
 Example

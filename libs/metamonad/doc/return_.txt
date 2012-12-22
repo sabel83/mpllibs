@@ -35,7 +35,7 @@ Header
 Expression semantics
 --------------------
 
-For any +Tag+ tag and +T+ value
+For any +MonadTag+ tag and +T+ class
 
 --------------------------------------
 return_<MonadTag, T>
@@ -44,7 +44,7 @@ return_<MonadTag, T>
 is equivalent to
 
 --------------------------------------
-monad<MonadTag>::return_<T>
+boost::mpl::apply_wrap1<monad<MonadTag>::return_, T>
 --------------------------------------
 
 Example
