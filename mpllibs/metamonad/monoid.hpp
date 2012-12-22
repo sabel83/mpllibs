@@ -22,9 +22,9 @@ namespace mpllibs
     template <class Tag>
     struct monoid
     {
-      MPLLIBS_TYPECLASS_EXPECT(empty)
-      MPLLIBS_TYPECLASS_EXPECT(append)
-      MPLLIBS_TYPECLASS_EXPECT(concat)
+      MPLLIBS_TYPECLASS_EXPECT(empty);
+      MPLLIBS_TYPECLASS_EXPECT(append);
+      MPLLIBS_TYPECLASS_EXPECT(concat);
     };
     
     template <class Tag>

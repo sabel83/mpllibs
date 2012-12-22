@@ -20,9 +20,9 @@ namespace mpllibs
     template <class Tag>
     struct monad
     {
-      MPLLIBS_TYPECLASS_EXPECT(return_)
-      MPLLIBS_TYPECLASS_EXPECT(bind)
-      MPLLIBS_TYPECLASS_EXPECT(bind_)
+      MPLLIBS_TYPECLASS_EXPECT(return_);
+      MPLLIBS_TYPECLASS_EXPECT(bind);
+      MPLLIBS_TYPECLASS_EXPECT(bind_);
     };
     
     template <class Tag>

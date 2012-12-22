@@ -25,7 +25,7 @@ namespace mpllibs
     #endif
     #define MPLLIBS_TYPECLASS_EXPECT(name) \
       typedef \
-        mpllibs::metamonad::throw_<mpllibs::metamonad::invalid_typeclass> name;
+        mpllibs::metamonad::throw_<mpllibs::metamonad::invalid_typeclass> name
   
     struct typeclass_expectations : tmp_tag<typeclass_expectations> {};
   }

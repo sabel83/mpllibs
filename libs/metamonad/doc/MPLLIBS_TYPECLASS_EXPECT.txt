@@ -36,7 +36,7 @@ Expression semantics
 The following
 
 --------------------------------------
-MPLLIBS_TYPECLASS_EXPECT(some_fun)
+MPLLIBS_TYPECLASS_EXPECT(some_fun);
 --------------------------------------
 
 is equivalent to
@@ -54,8 +54,8 @@ Example
 template <class Tag>
 struct example_typeclass
 {
-  MPLLIBS_TYPECLASS_EXPECT(some_fun)
-  MPLLIBS_TYPECLASS_EXPECT(some_other_fun)
+  MPLLIBS_TYPECLASS_EXPECT(some_fun);
+  MPLLIBS_TYPECLASS_EXPECT(some_other_fun);
 };
 --------------------------------------
 
