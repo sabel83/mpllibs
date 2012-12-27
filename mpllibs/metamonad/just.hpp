@@ -27,7 +27,7 @@ namespace mpllibs
     template <class T>
     struct just : tmp_value<just<T>, just_tag>
     {
-      typedef typename T::type data;
+      typedef T data;
     };
     
     template <>

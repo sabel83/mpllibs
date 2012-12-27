@@ -10,11 +10,19 @@ Abel Sinkovics
 Language elements
 -----------------
 
+Pattern matching
+~~~~~~~~~~~~~~~~
+
+link:case_.html[case_] +
+link:match.html[match] +
+
 Let expressions
 ~~~~~~~~~~~~~~~
 
 link:let.html[let] +
 link:letrec.html[letrec] +
+link:match_let.html[match_let] +
+link:multi_let.html[multi_let] +
 
 Lazy evaluation
 ~~~~~~~~~~~~~~~
@@ -45,10 +53,11 @@ link:do_return.html[do_return] +
 Compile-time exception
 ~~~~~~~~~~~~~~~~~~~~~~
 
+link:do_try.html[do_try] +
 link:exception.html[exception] +
 link:get_data.html[get_data] +
+link:is_exception.html[is_exception] +
 link:throw_.html[throw_] +
-link:do_try.html[do_try] +
 link:try_.html[try_] +
 
 Algebraic data-types

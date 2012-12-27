@@ -8,7 +8,6 @@
 
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/monad.hpp>
-#include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>

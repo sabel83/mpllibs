@@ -1,0 +1,79 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2012.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+match_let
+=========
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class Pattern, class Exp, class Body>
+struct match_let
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Pattern matching version of link:let.html[let]. The angly-bracket expression
++Exp+ is matched against the pattern +Pattern+. The open variables of the
+match can be used in +Body+.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metamonad/match_let.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +p+, +e+ and +b+ angly-bracket expressions
+
+--------------------------------------
+match_let<p, e, b>::type
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+multi_let<match<p, e>::type, b>::type
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+template <class A>
+struct maybe_something :
+  boost::mpl::if_<
+    typename boost::is_same<A, int>::type,
+    just<double>,
+    nothing
+  >
+{};
+
+struct x;
+
+typedef
+  match_let<
+    just<var<x>>, maybe_something<int>::type,
+    x
+  >::type
+  this_is_double;
+--------------------------------------
+
+include::copyright[]
+
+link:reference.html[[up]]
+
+
+

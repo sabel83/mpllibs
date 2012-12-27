@@ -1,0 +1,93 @@
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2012.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+multi_let
+=========
+Abel Sinkovics
+
+Synopsis
+--------
+
+--------------------------------------
+template <class ValueMap, class Body>
+struct multi_let
+{
+  // unspecified
+};
+--------------------------------------
+
+
+Description
+-----------
+
+Variable substitution in an angly-bracket expression. The list of variables are
+defined by the +boost::mpl::map+ value +ValueMap+. The keys are the classes
+representing the variable names, the values are the classes they should be
+substituted with.
+The result of +multi_let+ is +Body+ with all occurrences of the variable names
+replaced by the corresponding value.
+
+Header
+------
+
+--------------------------------------
+#include <mpllibs/metamonad/multi_let.hpp>
+--------------------------------------
+
+Expression semantics
+--------------------
+
+For any +k >= 0+, +n1+, ..., +nk+ and +v1+, ..., +vk+ classes and +b+
+angly-bracket expressions
+
+--------------------------------------
+multi_let<
+  boost::mpl::map<
+    boost::mpl::pair<n1, v1>,
+    // ...
+    boost::mpl::pair<nk, vk>
+  >,
+  b
+>::type
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+let<
+  n1, v1,
+  let<
+    n2, v2,
+
+    // ...
+
+    let<
+      nk, vk,
+      b
+    >::type
+
+    // ...
+
+  >::type
+>::type
+--------------------------------------
+
+Example
+-------
+
+--------------------------------------
+using namespace boost::mpl;
+
+struct x;
+
+typedef multi_let<map<pair<x, double>>, x>::type this_is_double;
+--------------------------------------
+
+include::copyright[]
+
+link:reference.html[[up]]
+
+
+

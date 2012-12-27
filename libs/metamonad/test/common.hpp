@@ -48,13 +48,13 @@ namespace
   
   MPLLIBS_LAZY_METAFUNCTION(lazy_plus, (A)(B)) ((boost::mpl::plus<A, B>));
 
-  MPLLIBS_METAFUNCTION(double_lazy_plus, (A)(B))
-  ((mpllibs::metamonad::lazy<boost::mpl::plus<eval<A>, eval<B> > >));
+  MPLLIBS_LAZY_METAFUNCTION(double_lazy_plus, (A)(B))
+  ((boost::mpl::plus<typename A::type, typename B::type>));
 
   MPLLIBS_LAZY_METAFUNCTION(lazy_times, (A)(B)) ((boost::mpl::times<A, B>));
 
   MPLLIBS_METAFUNCTION(lazy_eval_if, (C)(T)(F))
-  ((mpllibs::metamonad::lazy<boost::mpl::eval_if<C, T, F> >));
+  ((boost::mpl::eval_if<typename C::type, T, F>));
 
   MPLLIBS_LAZY_METAFUNCTION(lazy_equal_to, (A)(B))
   ((boost::mpl::equal_to<A, B>));

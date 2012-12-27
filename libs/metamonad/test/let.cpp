@@ -6,7 +6,6 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/let.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -81,18 +80,6 @@ BOOST_AUTO_TEST_CASE(test_let)
       >::type::type
     >
   >(MPLLIBS_HERE, "test_shadowing");
-
-  meta_require<
-    equal_to<
-      int13,
-      lazy<
-        let<
-          x, int13,
-          x
-        >
-      >::type
-    >
-  >(MPLLIBS_HERE, "test_lazy");
 }
 
 

@@ -1,10 +1,10 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2011.
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2012.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-is_nothing
-==========
+is_exception
+============
 Abel Sinkovics
 
 Synopsis
@@ -12,7 +12,7 @@ Synopsis
 
 --------------------------------------
 template <class Data>
-struct is_nothing
+struct is_exception
 {
   // unspecified
 };
@@ -22,31 +22,37 @@ struct is_nothing
 Description
 -----------
 
-Metafunction checking if its argument is a link:nothing.html[nothing] value. It
-expects a nullary metafunction as argument.
+Metafunction checking if its argument is an link:exception.html[exception]
+value. It expects a nullary metafunction as argument.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/is_nothing.hpp>
+#include <mpllibs/metamonad/is_exception.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +d+ class the following evaluate to +true+
+For any +d+ class the following evaluates to +true+
 
 --------------------------------------
-is_nothing<nothing>
-boost::mpl::not_<is_nothing<just<d> > >
+is_exception<exception<d> >
+--------------------------------------
+
+For any +c+ class, that is not an instance of the +exception+ template, the
+following evaluates to +true+
+
+--------------------------------------
+boost::mpl::not_<is_exception<c>::type>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-typedef is_nothing<mpllibs::metaparse::nothing> always_true;
+typedef is_exception<mpllibs::metaparse::throw_<int>::type> always_true;
 --------------------------------------
 
 include::copyright[]
