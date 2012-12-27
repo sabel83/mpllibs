@@ -29,20 +29,33 @@ BOOST_AUTO_TEST_CASE(test_lambda)
   using mpllibs::metamonad::lazy;
 
   meta_require<
+    equal_to<int13, lambda<plus<int2, int11> >::type>
+  >(MPLLIBS_HERE, "test_no_argument");
+
+  meta_require<
     equal_to<int13, apply<lambda<x, plus<x, int11> >, int2>::type>
   >(MPLLIBS_HERE, "test_simple_lambda");
 
   meta_require<
     equal_to<
       int13,
-      lazy_apply<apply<lambda<x, lambda<y, plus<x, y> > >, int2>, int11>::type
+      apply<lambda<x, y, plus<x, y> >, int2, int11>::type
     >
   >(MPLLIBS_HERE, "test_nested_lambda");
 
   meta_require<
-    equal_to<int13, lazy<apply<lambda<x, plus<x, int11> >, int2> >::type>
-  >(MPLLIBS_HERE, "test_lazy");
+    equal_to<
+      int13,
+      lazy_apply<apply<lambda<x, lambda<y, plus<x, y> > >, int2>, int11>::type
+    >
+  >(MPLLIBS_HERE, "test_multiple_arguments");
 
+  meta_require<
+    equal_to<
+      int13,
+      lazy_apply<apply<lambda<x, y, plus<x, y> >, int2>, int11>::type
+    >
+  >(MPLLIBS_HERE, "test_currying");
 }
 
 
