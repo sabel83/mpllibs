@@ -39,7 +39,8 @@ namespace mpllibs
   {
     struct no_case;
 
-    struct no_case_matched : tmp_value<no_case_matched> {};
+    MPLLIBS_METAFUNCTION(no_case_matched, (Exp))
+    ((tmp_value<no_case_matched<Exp> >));
 
     template <class P, class E>
     struct matches;
@@ -76,12 +77,12 @@ namespace mpllibs
         >
       ));
 
-      MPLLIBS_LAZY_METAFUNCTION(case_impl, (R))
+      MPLLIBS_METAFUNCTION(case_impl, (Exp)(R))
       ((
         typename boost::mpl::eval_if<
-          typename is_nothing<R>::type,
-          throw_<no_case_matched>,
-          get_data<R>
+          typename is_nothing<typename R::type>::type,
+          throw_<no_case_matched<Exp> >,
+          get_data<typename R::type>
         >::type
       ));
     }
@@ -96,6 +97,7 @@ namespace mpllibs
     >
     struct case_ :
       impl::case_impl<
+        E,
         boost::mpl::fold<
           boost::mpl::vector<BOOST_PP_ENUM_PARAMS(MPLLIBS_LIMIT_CASE_SIZE, C)>,
           nothing,

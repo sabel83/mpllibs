@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(test_case)
 
   meta_require<
     is_same<
-      exception<no_case_matched>,
+      exception<no_case_matched<int> >,
       case_<
         int,
         matches<double, float>
