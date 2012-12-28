@@ -63,8 +63,8 @@ link:try_.html[try_] +
 Algebraic data-types
 ~~~~~~~~~~~~~~~~~~~~
 
+link:algebraic_tag.html[algebraic_tag] +
 link:MPLLIBS_DATA.html[MPLLIBS_DATA] +
-link:MPLLIBS_DEFINE_EQUAL_TO.html[MPLLIBS_DEFINE_EQUAL_TO] +
 
 Metafunction definition
 ~~~~~~~~~~~~~~~~~~~~~~~

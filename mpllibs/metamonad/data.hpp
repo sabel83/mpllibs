@@ -22,6 +22,8 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/lambda.hpp>
 
 #include <boost/type_traits.hpp>
 
@@ -43,7 +45,8 @@
   struct name \
   { \
     typedef name type; \
-    typedef tag_name tag; \
+    typedef mpllibs::metamonad::algebraic_data_type_tag tag; \
+    typedef tag_name algebraic_tag; \
   };
 
 #ifdef MPLLIBS_DATA_CONSTR_CB
@@ -76,6 +79,8 @@ namespace mpllibs
 {
   namespace metamonad
   {
+    struct algebraic_data_type_tag : tmp_value<algebraic_data_type_tag> {};
+
     namespace impl
     {
       template <class A, class B>
@@ -97,7 +102,8 @@ namespace mpllibs
           > : \
           boost::mpl::equal< \
             boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, A)>, \
-            boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, B)> \
+            boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, B)>, \
+            boost::mpl::equal_to<boost::mpl::_1, boost::mpl::_2> \
           > \
         {};
       
@@ -121,33 +127,37 @@ namespace mpllibs
   }
 }
 
-#ifdef MPLLIBS_DEFINE_EQUAL_TO
-  #error MPLLIBS_DEFINE_EQUAL_TO already defined
-#endif
-#define MPLLIBS_DEFINE_EQUAL_TO(name) \
-  namespace boost \
-  { \
-    namespace mpl \
-    { \
-      template <class, class> \
-      struct equal_to_impl; \
-      \
-      template <class T> \
-      struct equal_to_impl<T, BOOST_PP_CAT(name, _tag)> : always<false_> {}; \
-      \
-      template <class T> \
-      struct equal_to_impl<BOOST_PP_CAT(name, _tag), T> : always<false_> {}; \
-      \
-      template <> \
-      struct equal_to_impl<BOOST_PP_CAT(name, _tag), BOOST_PP_CAT(name, _tag)> \
-      { \
-        typedef equal_to_impl type; \
-        \
-        MPLLIBS_LAZY_METAFUNCTION(apply, (A)(B)) \
-        ((mpllibs::metamonad::impl::rec_equal_to<A, B>)); \
-      }; \
-    } \
+namespace boost
+{
+  namespace mpl
+  {
+    template <class, class>
+    struct equal_to_impl;
+    
+    template <class T>
+    struct equal_to_impl<T, mpllibs::metamonad::algebraic_data_type_tag> :
+      always<false_>
+    {};
+    
+    template <class T>
+    struct equal_to_impl<mpllibs::metamonad::algebraic_data_type_tag, T> :
+      always<false_>
+    {};
+    
+    template <>
+    struct
+      equal_to_impl<
+        mpllibs::metamonad::algebraic_data_type_tag,
+        mpllibs::metamonad::algebraic_data_type_tag
+      >
+    {
+      typedef equal_to_impl type;
+      
+      MPLLIBS_LAZY_METAFUNCTION(apply, (A)(B))
+      ((mpllibs::metamonad::impl::rec_equal_to<A, B>));
+    };
   }
+}
 
 #endif
 

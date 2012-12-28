@@ -5,6 +5,7 @@
 
 #define BOOST_TEST_DYN_LINK
 
+#include <mpllibs/metamonad/algebraic_tag.hpp>
 #include <mpllibs/metamonad/data.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 
@@ -27,11 +28,11 @@ namespace
   MPLLIBS_LAZY_METAFUNCTION(lazy_not, (E)) ((boost::mpl::not_<E>));
 }
 
-MPLLIBS_DEFINE_EQUAL_TO(bar::foo)
-
 BOOST_AUTO_TEST_CASE(test_data)
 {
   using mpllibs::metatest::meta_require;
+
+  using mpllibs::metamonad::algebraic_tag;
 
   using boost::is_same;
 
@@ -41,11 +42,11 @@ BOOST_AUTO_TEST_CASE(test_data)
   using namespace bar;
   
   meta_require<
-    is_same<foo_tag, con0::tag>
+    is_same<foo_tag, algebraic_tag<con0>::type>
   >(MPLLIBS_HERE, "test_tag_of_nullary_constructor");
 
   meta_require<
-    is_same<foo_tag, con1<int>::tag>
+    is_same<foo_tag, algebraic_tag<con1<int> >::type>
   >(MPLLIBS_HERE, "test_tag_of_unary_constructor");
 
   meta_require<

@@ -22,11 +22,13 @@ Description
 Macro for defining a Haskell-like algebraic data type for template metaprograms.
 +constructors+ is the list of constructors, represented as a sequence of two
 element tuples. Each tuple describes one constructor. The first element of the
-tuple is the name, the second element is the arity of the constructor.
-The macro defines a tag for the data type. The values can not be compared using
-+boost::mpl::equal_to+, but there is another macro,
-link:MPLLIBS_DEFINE_EQUAL_TO.html[+MPLLIBS_DEFINE_EQUAL_TO+] that overloads this
-metafunction to handle the new data type.
+tuple is the name, the second element is the arity of the constructor. The
+values can be compared using +boost::mpl::equal_to+.
+
+The +::tag+ of the values is +mpllibs::metamonad::algebraic_data_type_tag+
+indicating that the values belong to an algebraic data-type. A custom tag
+(+name_tag+) is defined for each algebraic data-type. This tag can be accessed
+by using link:algebraic_tag.html[+algebraic_tag+].
 
 Header
 ------
