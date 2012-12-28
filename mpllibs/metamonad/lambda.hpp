@@ -6,6 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/impl/lambda.hpp>
+
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
@@ -38,8 +40,6 @@ namespace mpllibs
   {
     namespace impl
     {
-      struct lambda_no_arg;
-
       MPLLIBS_METAFUNCTION_CLASS(lambda_impl_step, (State)(T))
       ((
         boost::mpl::eval_if<
@@ -88,16 +88,6 @@ namespace mpllibs
         {};
       };
     }
-
-    template <
-      BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-        BOOST_MPL_LIMIT_METAFUNCTION_ARITY,
-        class T,
-        impl::lambda_no_arg
-      ),
-      class T = impl::lambda_no_arg // for the body
-    >
-    struct lambda;
 
     #ifdef MPLLIBS_LAMBDA_CASE
       #error MPLLIBS_LAMBDA_CASE already defined
