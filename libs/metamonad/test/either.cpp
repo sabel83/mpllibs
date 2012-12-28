@@ -20,14 +20,7 @@
 
 using mpllibs::metamonad::left;
 using mpllibs::metamonad::right;
-using mpllibs::metamonad::get_data;
-using mpllibs::metamonad::return_;
-using mpllibs::metamonad::bind;
-using mpllibs::metamonad::either_tag;
-using mpllibs::metamonad::fail;
 
-using boost::mpl::equal_to;
-using boost::mpl::not_;
 using boost::mpl::plus;
 using boost::mpl::_1;
 using boost::mpl::int_;
@@ -44,12 +37,24 @@ namespace
   
   typedef right<plus<_1, int2> > either_add_2;
   
-  typedef equal_to<return_<either_tag, int13>, right13> test_return;
 }
 
 BOOST_AUTO_TEST_CASE(test_either)
 {
   using mpllibs::metatest::meta_require;
+
+  using mpllibs::metamonad::either_tag;
+  using mpllibs::metamonad::return_;
+  using mpllibs::metamonad::bind;
+  using mpllibs::metamonad::fail;
+
+  using boost::mpl::equal_to;
+
+  typedef int_<13>::tag int_tag;
+
+  meta_require<
+    equal_to<return_<either_tag, int13>, right13>
+  >(MPLLIBS_HERE, "test_return");
 
   meta_require<
     equal_to<bind<either_tag, right11, either_add_2>::type, right13>

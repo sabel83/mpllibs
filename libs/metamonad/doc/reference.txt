@@ -10,6 +10,8 @@ Abel Sinkovics
 Language elements
 -----------------
 
+link:name.html[name] +
+
 Pattern matching
 ~~~~~~~~~~~~~~~~
 
@@ -103,10 +105,7 @@ link:is_nothing.html[is_nothing] +
 Either
 ~~~~~~
 
-link:left.html[left] +
-link:right.html[right] +
-link:is_left.html[is_left] +
-link:is_right.html[is_right] +
+link:either.html[either] +
 
 Typeclasses
 -----------

@@ -7,60 +7,37 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/monad.hpp>
-#include <mpllibs/metamonad/left.hpp>
-#include <mpllibs/metamonad/right.hpp>
-#include <mpllibs/metamonad/is_left.hpp>
-#include <mpllibs/metamonad/tmp_tag.hpp>
-#include <mpllibs/metamonad/get_data.hpp>
-#include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
+#include <mpllibs/metamonad/data.hpp>
+#include <mpllibs/metamonad/case.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
-#include <boost/mpl/identity.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    struct either_tag : tmp_tag<either_tag> {};
+    MPLLIBS_DATA(either, ((left, 1))((right, 1)));
     
     template <>
     struct monad<either_tag> : monad_defaults<either_tag>
     {
-      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((right<T>));
+      MPLLIBS_LAZY_METAFUNCTION_CLASS(return_, (T)) ((right<T>));
       
-      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
+      MPLLIBS_LAZY_METAFUNCTION_CLASS(bind, (A)(F))
       ((
-        boost::mpl::eval_if<
-          is_left<A>,
-          boost::mpl::identity<A>,
-          boost::mpl::apply<F, typename get_data<A>::type>
+        case_< A,
+          matches<left<_>,              returns<A> >,
+          matches<right<var<name::x> >, boost::mpl::apply<F, name::x> >
         >
       ));
 
-      MPLLIBS_METAFUNCTION_CLASS(fail, (S)) ((left<S>));
+      MPLLIBS_LAZY_METAFUNCTION_CLASS(fail, (S)) ((left<S>));
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::either_tag>::bind,
-  "monad<either_tag>::bind"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::either_tag>::fail,
-  "monad<either_tag>::fail"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::either_tag>::return_,
-  "monad<either_tag>::return_"
-)
 
 #endif
 
