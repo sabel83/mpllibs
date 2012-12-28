@@ -19,10 +19,10 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DATA(either, ((left, 1))((right, 1)));
+    MPLLIBS_DATA(either, 2, ((left, 1))((right, 1)));
     
-    template <>
-    struct monad<either_tag> : monad_defaults<either_tag>
+    template <class L, class R>
+    struct monad<either_tag<L, R> > : monad_defaults<either_tag<L, R> >
     {
       MPLLIBS_LAZY_METAFUNCTION_CLASS(return_, (T)) ((right<T>));
       

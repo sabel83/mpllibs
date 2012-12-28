@@ -50,25 +50,24 @@ BOOST_AUTO_TEST_CASE(test_either)
 
   using boost::mpl::equal_to;
 
+  typedef either_tag<> et;
+
   typedef int_<13>::tag int_tag;
 
   meta_require<
-    equal_to<return_<either_tag, int13>, right13>
+    equal_to<return_<et, int13>, right13>
   >(MPLLIBS_HERE, "test_return");
 
   meta_require<
-    equal_to<bind<either_tag, right11, either_add_2>::type, right13>
+    equal_to<bind<et, right11, either_add_2>::type, right13>
   >(MPLLIBS_HERE, "test_bind_with_right");
 
   meta_require<
-    equal_to<bind<either_tag, left11, either_add_2>::type, left11>
+    equal_to<bind<et, left11, either_add_2>::type, left11>
   >(MPLLIBS_HERE, "test_bind_with_left");
 
   meta_require<
-    equal_to<
-      bind<either_tag, fail<either_tag, int13>, either_add_2>::type,
-      left<int13>
-    >
+    equal_to<bind<et, fail<et, int13>, either_add_2>::type, left<int13> >
   >(MPLLIBS_HERE, "test_fail");
 }
 

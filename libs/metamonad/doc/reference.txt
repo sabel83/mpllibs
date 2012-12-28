@@ -65,7 +65,6 @@ link:try_.html[try_] +
 Algebraic data-types
 ~~~~~~~~~~~~~~~~~~~~
 
-link:algebraic_tag.html[algebraic_tag] +
 link:MPLLIBS_DATA.html[MPLLIBS_DATA] +
 
 Metafunction definition

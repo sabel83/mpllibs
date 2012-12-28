@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_DATA(name, constructors) \
+#define MPLLIBS_DATA(name, type_arity, constructors) \
   // unspecified
 --------------------------------------
 
@@ -27,8 +27,13 @@ values can be compared using +boost::mpl::equal_to+.
 
 The +::tag+ of the values is +mpllibs::metamonad::algebraic_data_type_tag+
 indicating that the values belong to an algebraic data-type. A custom tag
-(+name_tag+) is defined for each algebraic data-type. This tag can be accessed
-by using link:algebraic_tag.html[+algebraic_tag+].
+(+name_tag+) is defined for each algebraic data-type.
+
++type_arity+ is the number of type arguments. When there are one or more type
+arguments, the tag of the data type becomes a template class with +type_arity+
+arguments. The arguments are also algebraic data type tags. When a tag is not
+specified, it is +boost::mpl::void_+. The tag of the data type has this as
+default values for all template arguments.
 
 Header
 ------
@@ -43,7 +48,7 @@ Expression semantics
 The following
 
 --------------------------------------
-MPLLIBS_DATA(name, ((c1, 2))((c2, 0)));
+MPLLIBS_DATA(name, 0, ((c1, 2))((c2, 0)));
 --------------------------------------
 
 is equivalent to
@@ -55,13 +60,39 @@ template <class, class>
 struct c1
 {
   typedef c1 type;
-  typedef name_tag tag;
+  typedef mpllibs::metamonad::algebraic_data_type_tag tag;
 };
 
 struct c2
 {
   typedef c2 type;
-  typedef name_tag tag;
+  typedef mpllibs::metamonad::algebraic_data_type_tag tag;
+};
+--------------------------------------
+
+For any +n > 0+ the following
+
+--------------------------------------
+MPLLIBS_DATA(name, n, ((c1, 2))((c2, 0)));
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+template <class T1 = boost::mpl::void_, ..., class Tn = boost::mpl::void_>
+struct name_tag : metamonad::mpl_tag<name_tag<T0, ..., Tn>> {};
+
+template <class, class>
+struct c1
+{
+  typedef c1 type;
+  typedef mpllibs::metamonad::algebraic_data_type_tag tag;
+};
+
+struct c2
+{
+  typedef c2 type;
+  typedef mpllibs::metamonad::algebraic_data_type_tag tag;
 };
 --------------------------------------
 
@@ -69,7 +100,7 @@ Example
 -------
 
 --------------------------------------
-MPLLIBS_DATA(maybe, ((nothing, 0))((just, 1)));
+MPLLIBS_DATA(maybe, 1, ((nothing, 0))((just, 1)));
 --------------------------------------
 
 include::copyright[]

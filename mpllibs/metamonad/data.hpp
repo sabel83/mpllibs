@@ -17,6 +17,7 @@
 #include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
+#include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/bool.hpp>
@@ -24,6 +25,7 @@
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/lambda.hpp>
+#include <boost/mpl/void.hpp>
 
 #include <boost/type_traits.hpp>
 
@@ -31,30 +33,36 @@
   #define MPLLIBS_DATA_MAX_TEMPLATE_ARGUMENT 10
 #endif
 
-#ifdef MPLLIBS_DATA_CONSTR_ARGS
-  #error MPLLIBS_DATA_CONSTR_ARGS already defined
+#ifdef MPLLIBS_DATA_ARGS
+  #error MPLLIBS_DATA_ARGS already defined
 #endif
-#define MPLLIBS_DATA_CONSTR_ARGS(arity) \
+#define MPLLIBS_DATA_ARGS(arity) \
   template <BOOST_PP_ENUM(arity, class BOOST_PP_TUPLE_EAT(3), ~)>
+
+#ifdef MPLLIBS_DATA_ARGS_WITH_DEFAULT_VOID
+  #error MPLLIBS_DATA_ARGS_WITH_DEFAULT_VOID already defined
+#endif
+#define MPLLIBS_DATA_ARGS_WITH_DEFAULT_VOID(arity) \
+  template < \
+    BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(arity, class T, boost::mpl::void_) \
+  >
 
 #ifdef MPLLIBS_DATA_CONSTR
   #error MPLLIBS_DATA_CONSTR already defined
 #endif
-#define MPLLIBS_DATA_CONSTR(tag_name, name, arity) \
-  BOOST_PP_IF(arity, MPLLIBS_DATA_CONSTR_ARGS, BOOST_PP_TUPLE_EAT(1))(arity) \
+#define MPLLIBS_DATA_CONSTR(name, arity) \
+  BOOST_PP_IF(arity, MPLLIBS_DATA_ARGS, BOOST_PP_TUPLE_EAT(1))(arity) \
   struct name \
   { \
     typedef name type; \
     typedef mpllibs::metamonad::algebraic_data_type_tag tag; \
-    typedef tag_name algebraic_tag; \
   };
 
 #ifdef MPLLIBS_DATA_CONSTR_CB
   #error MPLLIBS_DATA_CONSTR_CB already defined
 #endif
-#define MPLLIBS_DATA_CONSTR_CB(r, tag_name, constr) \
+#define MPLLIBS_DATA_CONSTR_CB(r, unused, constr) \
   MPLLIBS_DATA_CONSTR( \
-    tag_name, \
     BOOST_PP_TUPLE_ELEM(2, 0, constr), \
     BOOST_PP_TUPLE_ELEM(2, 1, constr) \
   )
@@ -62,18 +70,22 @@
 #ifdef MPLLIBS_DATA
   #error MPLLIBS_DATA already defined
 #endif
-#define MPLLIBS_DATA(name, constrs) \
+#define MPLLIBS_DATA(name, type_arity, constrs) \
+  BOOST_PP_IF( \
+    type_arity, \
+    MPLLIBS_DATA_ARGS_WITH_DEFAULT_VOID, \
+    BOOST_PP_TUPLE_EAT(1) \
+  )(type_arity) \
   struct BOOST_PP_CAT(name, _tag); \
   \
-  BOOST_PP_SEQ_FOR_EACH( \
-    MPLLIBS_DATA_CONSTR_CB, \
-    BOOST_PP_CAT(name, _tag), \
-    constrs \
-  ) \
+  BOOST_PP_SEQ_FOR_EACH(MPLLIBS_DATA_CONSTR_CB, ~, constrs) \
   \
-  struct BOOST_PP_CAT(name, _tag) : \
-    mpllibs::metamonad::tmp_tag<BOOST_PP_CAT(name, _tag)> \
-  {}
+  BOOST_PP_IF(type_arity, MPLLIBS_DATA_ARGS, BOOST_PP_TUPLE_EAT(1))(type_arity) \
+  struct BOOST_PP_CAT(name, _tag) \
+  { \
+    typedef BOOST_PP_CAT(name, _tag) type; \
+    typedef mpllibs::metamonad::tag_tag tag; \
+  }
 
 namespace mpllibs
 {
@@ -91,7 +103,7 @@ namespace mpllibs
       #endif
       #define REC_EQUAL_TO_CASE(z, n, unused) \
         template < \
-          MPLLIBS_DATA_CONSTR_ARGS(n) class T, \
+          MPLLIBS_DATA_ARGS(n) class T, \
           BOOST_PP_ENUM_PARAMS(n, class A), \
           BOOST_PP_ENUM_PARAMS(n, class B) \
         > \
