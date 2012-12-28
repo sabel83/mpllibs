@@ -121,10 +121,10 @@ namespace mpllibs
   }
 }
 
-#ifdef MPLLIBS_DEFINE_EQUALITY
-  #error MPLLIBS_DEFINE_EQUALITY already defined
+#ifdef MPLLIBS_DEFINE_EQUAL_TO
+  #error MPLLIBS_DEFINE_EQUAL_TO already defined
 #endif
-#define MPLLIBS_DEFINE_EQUALITY(name) \
+#define MPLLIBS_DEFINE_EQUAL_TO(name) \
   namespace boost \
   { \
     namespace mpl \

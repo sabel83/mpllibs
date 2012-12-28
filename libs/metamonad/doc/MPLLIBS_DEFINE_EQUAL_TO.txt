@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-MPLLIBS_DEFINE_EQUALITY
+MPLLIBS_DEFINE_EQUAL_TO
 =======================
 Abel Sinkovics
 
@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-#define MPLLIBS_DEFINE_EQUALITY(name) \
+#define MPLLIBS_DEFINE_EQUAL_TO(name) \
   // unspecified
 --------------------------------------
 
@@ -39,7 +39,7 @@ namespace foo
   MPLLIBS_DATA(maybe, ((nothing, 0))((just, 1)));
 }
 
-MPLLIBS_DEFINE_EQUALITY(foo::maybe);
+MPLLIBS_DEFINE_EQUAL_TO(foo::maybe);
 --------------------------------------
 
 include::copyright[]

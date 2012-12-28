@@ -25,7 +25,7 @@ element tuples. Each tuple describes one constructor. The first element of the
 tuple is the name, the second element is the arity of the constructor.
 The macro defines a tag for the data type. The values can not be compared using
 +boost::mpl::equal_to+, but there is another macro,
-link:MPLLIBS_DEFINE_EQUALITY.html[+MPLLIBS_DEFINE_EQUALITY+] that overloads this
+link:MPLLIBS_DEFINE_EQUAL_TO.html[+MPLLIBS_DEFINE_EQUAL_TO+] that overloads this
 metafunction to handle the new data type.
 
 Header

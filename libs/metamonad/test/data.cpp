@@ -27,7 +27,7 @@ namespace
   MPLLIBS_LAZY_METAFUNCTION(lazy_not, (E)) ((boost::mpl::not_<E>));
 }
 
-MPLLIBS_DEFINE_EQUALITY(bar::foo)
+MPLLIBS_DEFINE_EQUAL_TO(bar::foo)
 
 BOOST_AUTO_TEST_CASE(test_data)
 {

@@ -64,7 +64,7 @@ Algebraic data-types
 ~~~~~~~~~~~~~~~~~~~~
 
 link:MPLLIBS_DATA.html[MPLLIBS_DATA] +
-link:MPLLIBS_DEFINE_EQUALITY.html[MPLLIBS_DEFINE_EQUALITY] +
+link:MPLLIBS_DEFINE_EQUAL_TO.html[MPLLIBS_DEFINE_EQUAL_TO] +
 
 Metafunction definition
 ~~~~~~~~~~~~~~~~~~~~~~~
