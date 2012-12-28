@@ -97,9 +97,7 @@ link:overloading_error_tag.html[overloading_error_tag] +
 Maybe
 ~~~~~
 
-link:nothing.html[nothing] +
-link:just.html[just] +
-link:is_nothing.html[is_nothing] +
+link:maybe.html[maybe] +
 
 Either
 ~~~~~~

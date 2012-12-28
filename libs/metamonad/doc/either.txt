@@ -11,6 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
+template <class L, class R>
 struct either_tag;
 
 template <class T> struct left;

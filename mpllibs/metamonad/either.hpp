@@ -29,8 +29,8 @@ namespace mpllibs
       MPLLIBS_LAZY_METAFUNCTION_CLASS(bind, (A)(F))
       ((
         case_< A,
-          matches<left<_>,              returns<A> >,
-          matches<right<var<name::x> >, boost::mpl::apply<F, name::x> >
+          matches<left<_>,        returns<A> >,
+          matches<right<var<x> >, boost::mpl::apply<F, x> >
         >
       ));
 

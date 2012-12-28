@@ -7,7 +7,6 @@
 
 #include <mpllibs/metamonad/maybe.hpp>
 #include <mpllibs/metamonad/list.hpp>
-#include <mpllibs/metamonad/is_nothing.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
 #include <mpllibs/metamonad/fail.hpp>
@@ -30,13 +29,21 @@
 #include <boost/mpl/lambda.hpp>
 #include <boost/mpl/list_c.hpp>
 
+namespace
+{
+  template <class T>
+  struct get_maybe_data;
+
+  template <class T>
+  struct get_maybe_data<mpllibs::metamonad::just<T> > : mpllibs::metamonad::returns<T> {};
+}
+
 BOOST_AUTO_TEST_CASE(test_maybe)
 {
   using mpllibs::metatest::meta_require;
 
   using mpllibs::metamonad::just;
   using mpllibs::metamonad::nothing;
-  using mpllibs::metamonad::get_data;
   using mpllibs::metamonad::return_;
   using mpllibs::metamonad::bind;
   using mpllibs::metamonad::maybe_tag;
@@ -124,22 +131,22 @@ BOOST_AUTO_TEST_CASE(test_maybe)
   meta_require<
     equal<
       list_c<int, 13>,
-      get_data<mappend<mlt, just<list_c<int, 13> >, empty_val> >::type
+      get_maybe_data<mappend<mlt, just<list_c<int, 13> >, empty_val>::type>::type
     >
   >(MPLLIBS_HERE, "test x + mempty");
 
   meta_require<
     equal<
       list_c<int, 13>,
-      get_data<mappend<mlt, empty_val, just<list_c<int, 13> > > >::type
+      get_maybe_data<mappend<mlt, empty_val, just<list_c<int, 13> > >::type>::type
     >
   >(MPLLIBS_HERE, "test mempty + x");
 
   meta_require<
     equal<
       list_c<int, 11, 13>,
-      get_data<
-        mappend<mlt, just<list_c<int, 11> >, just<list_c<int, 13> > >
+      get_maybe_data<
+        mappend<mlt, just<list_c<int, 11> >, just<list_c<int, 13> > >::type
       >::type
     >
   >(MPLLIBS_HERE, "test x + y");

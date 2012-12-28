@@ -6,14 +6,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/impl/maybe.hpp>
+
 #include <mpllibs/metamonad/match.hpp>
 #include <mpllibs/metamonad/match_let.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
-#include <mpllibs/metamonad/maybe.hpp>
-#include <mpllibs/metamonad/is_nothing.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
@@ -30,7 +30,7 @@
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 
 #ifndef MPLLIBS_LIMIT_CASE_SIZE
-  #define MPLLIBS_LIMIT_CASE_SIZE 16
+  #define MPLLIBS_LIMIT_CASE_SIZE 8 
 #endif
 
 namespace mpllibs
@@ -47,6 +47,14 @@ namespace mpllibs
 
     namespace impl
     {
+      template <class T>
+      struct get_just_data_impl;
+
+      template <class T>
+      struct get_just_data_impl<just<T> > : returns<T> {};
+
+      MPLLIBS_LAZY_METAFUNCTION(get_just_data, (T)) ((get_just_data_impl<T>));
+
       template <class E, class C>
       struct case_check_match;
 
@@ -67,7 +75,7 @@ namespace mpllibs
       ((
         boost::mpl::eval_if<
           typename boost::mpl::and_<
-            typename is_nothing<S>::type,
+            typename boost::is_same<nothing, S>::type,
             typename boost::mpl::not_<
               typename boost::is_same<no_case, C>::type
             >::type
@@ -77,12 +85,13 @@ namespace mpllibs
         >
       ));
 
+      // eval_if is evaluated because case evaluates the selected branch
       MPLLIBS_METAFUNCTION(case_impl, (Exp)(R))
       ((
         typename boost::mpl::eval_if<
-          typename is_nothing<typename R::type>::type,
+          typename boost::is_same<nothing, typename R::type>::type,
           throw_<no_case_matched<Exp> >,
-          get_data<typename R::type>
+          impl::get_just_data<typename R::type>
         >::type
       ));
     }

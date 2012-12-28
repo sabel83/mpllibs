@@ -6,6 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/match_let.hpp>
+#include <mpllibs/metamonad/case.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -30,6 +31,8 @@ BOOST_AUTO_TEST_CASE(test_match_let)
 
   using mpllibs::metamonad::match_let;
   using mpllibs::metamonad::var;
+  using mpllibs::metamonad::case_;
+  using mpllibs::metamonad::matches;
 
   using boost::is_same;
 
@@ -50,6 +53,20 @@ BOOST_AUTO_TEST_CASE(test_match_let)
       >::type
     >
   >(MPLLIBS_HERE, "test_multiple_variables");
+
+  meta_require<
+    is_same<
+      case_< int,
+        matches<int, some_template<double, int> >
+      >,
+      match_let<
+        var<x>, double,
+        case_< int,
+          matches<int, some_template<x, int> >
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_case_in_match_let");
 }
 
 

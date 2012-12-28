@@ -6,6 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/multi_let.hpp>
+#include <mpllibs/metamonad/case.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -29,6 +30,8 @@ BOOST_AUTO_TEST_CASE(test_multi_let)
   using mpllibs::metatest::meta_require;
 
   using mpllibs::metamonad::multi_let;
+  using mpllibs::metamonad::case_;
+  using mpllibs::metamonad::matches;
 
   using boost::mpl::pair;
   using boost::mpl::map;
@@ -49,6 +52,20 @@ BOOST_AUTO_TEST_CASE(test_multi_let)
       multi_let<map<pair<x, int>, pair<y, double> >, some_template<x,y> >::type
     >
   >(MPLLIBS_HERE, "test_multiple_variables");
+
+  meta_require<
+    is_same<
+      case_< int,
+        matches<int, some_template<double, int> >
+      >,
+      multi_let<
+        map<pair<x, double> >,
+        case_< int,
+          matches<int, some_template<x, int> >
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_case_in_multi_let");
 }
 
 

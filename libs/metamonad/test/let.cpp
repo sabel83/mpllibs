@@ -6,11 +6,20 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/case.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
+#include <boost/type_traits.hpp>
+
 #include "common.hpp"
+
+namespace
+{
+  template <class A, class B>
+  struct some_template;
+}
 
 BOOST_AUTO_TEST_CASE(test_let)
 {
@@ -21,6 +30,10 @@ BOOST_AUTO_TEST_CASE(test_let)
   
   using mpllibs::metamonad::let;
   using mpllibs::metamonad::lazy;
+  using mpllibs::metamonad::case_;
+  using mpllibs::metamonad::matches;
+
+  using boost::is_same;
 
   meta_require<
     equal_to<
@@ -80,6 +93,24 @@ BOOST_AUTO_TEST_CASE(test_let)
       >::type::type
     >
   >(MPLLIBS_HERE, "test_shadowing");
+
+  meta_require<
+    is_same<int, let<x, double, int>::type>
+  >(MPLLIBS_HERE, "test_let_not_evaluating_its_body");
+
+  meta_require<
+    is_same<
+      case_< int,
+        matches<int, some_template<int, double> >
+      >,
+      let<
+        x, double,
+        case_< int,
+          matches<int, some_template<int, x> >
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_case_in_multi_let");
 }
 
 

@@ -13,11 +13,12 @@
 
 #include <boost/type_traits.hpp>
 
+#include <boost/mpl/equal_to.hpp>
+
+#include "common.hpp"
+
 namespace
 {
-  struct x;
-  struct y;
-
   template <class A, class B>
   struct some_template;
 
@@ -38,11 +39,12 @@ BOOST_AUTO_TEST_CASE(test_case)
 
   using boost::is_same;
 
+  using boost::mpl::equal_to;
+
   meta_require<
     is_same<
       exception<no_case_matched<int> >,
-      case_<
-        int,
+      case_< int,
         matches<double, float>
       >::type
     >
@@ -51,8 +53,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       float,
-      case_<
-        int,
+      case_< int,
         matches<int, returns<float> >
       >::type
     >
@@ -61,8 +62,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       float,
-      case_<
-        int,
+      case_< int,
         matches<int, returns<float> >,
         matches<double, char>
       >::type
@@ -72,8 +72,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       float,
-      case_<
-        int,
+      case_< int,
         matches<double, char>,
         matches<int, returns<float> >
       >::type
@@ -83,15 +82,26 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       some_other_template<int, double>,
-      case_<
-        some_template<int, double>,
-        matches<
-          some_template<var<x>, var<y> >,
+      case_< some_template<int, double>,
+        matches< some_template<var<x>, var<y> >,
           returns<some_other_template<x, y> >
         >
       >::type
     >
   >(MPLLIBS_HERE, "test_vars_in_pattern");
+
+  meta_require<
+    equal_to<
+      int13,
+      case_< int11,
+        matches< var<x>,
+          case_< int2,
+            matches<var<y>, boost::mpl::plus<x, y> >
+          >
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_nested_case");
 }
 
 
