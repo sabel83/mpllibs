@@ -6,6 +6,7 @@
 #include <mpllibs/metamonad/list.hpp>
 #include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/list_c.hpp>
@@ -15,6 +16,7 @@
 #include <iostream>
 
 using mpllibs::metamonad::tmp_value;
+using namespace mpllibs::metamonad::name;
 
 struct print_after : tmp_value<print_after>
 {
@@ -48,9 +50,6 @@ void print_values()
 {
   boost::mpl::fold<typename L::type, print_empty, print_after>::type::run();
 }
-
-struct i;
-struct j;
 
 int main()
 {

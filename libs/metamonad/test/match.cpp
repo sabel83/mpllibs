@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -51,6 +52,8 @@ using boost::is_same;
 
 using mpllibs::metamonad::is_exception;
 
+using namespace mpllibs::metamonad::name;
+
 namespace
 {
   MPLLIBS_METAFUNCTION(is_empty, (S))
@@ -87,9 +90,6 @@ namespace
 
   MPLLIBS_METAFUNCTION(not_same_map, (A)(B))
   ((not_<typename same_map<A, B>::type>));
-
-  struct x;
-  struct y;
 
   template <class A, class B, class C>
   struct some_template;

@@ -52,14 +52,12 @@ Example
 
 --------------------------------------
 using boost::mpl::int_;
+using namespace mpllibs::metamonad::name;
 
 struct error_tag_1;
 struct error_tag_2;
 
 struct unknown_error_detected;
-
-struct r;
-struct e;
 
 try_<
   may_fail2<may_fail1<int_<13> > >

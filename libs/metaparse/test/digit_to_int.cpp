@@ -12,17 +12,13 @@
 #include <mpllibs/metatest/has_type.hpp>
 
 #include <mpllibs/metamonad/do_try.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
-
-namespace
-{
-  struct x;
-}
 
 BOOST_AUTO_TEST_CASE(test_digit_to_int)
 {
@@ -36,6 +32,8 @@ BOOST_AUTO_TEST_CASE(test_digit_to_int)
   
   using boost::mpl::equal_to;
   using boost::mpl::apply_wrap1;
+
+  using namespace mpllibs::metamonad::name;
 
   meta_require<has_type<digit_to_int> >(MPLLIBS_HERE, "test_has_type");
 

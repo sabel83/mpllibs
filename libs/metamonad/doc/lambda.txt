@@ -83,7 +83,7 @@ Example
 using boost::mpl::plus;
 using boost::mpl::int_;
 
-struct n;
+using namespace mpllibs::metamonad::name;
 
 typedef lambda<n, plus<int_<1>, n> > plus_1;
 --------------------------------------

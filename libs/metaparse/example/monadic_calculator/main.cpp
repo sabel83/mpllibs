@@ -22,6 +22,7 @@
 #include <mpllibs/metamonad/do_try.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/to_stream.hpp>
 
@@ -73,6 +74,8 @@ using boost::mpl::bool_;
 using boost::mpl::equal_to;
 using boost::mpl::bool_;
 
+using namespace mpllibs::metamonad::name;
+
 /*
  * The grammar
  *
@@ -87,8 +90,6 @@ typedef token<lit_c<'*'> > mult_token;
 typedef token<lit_c<'/'> > div_token;
  
 typedef token<int_> int_token;
-
-struct x;
 
 struct division_by_zero_tag : tmp_tag<division_by_zero_tag> {};
 struct division_by_zero : tmp_value<division_by_zero, division_by_zero_tag> {};

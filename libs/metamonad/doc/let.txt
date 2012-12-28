@@ -73,7 +73,7 @@ using boost::mpl::times;
 using boost::mpl::plus;
 using boost::mpl::int_;
 
-struct x;
+using namespace mpllibs::metamonad::name;
 
 template <class N>
 struct my_metafunction :

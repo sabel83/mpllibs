@@ -14,6 +14,7 @@
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/make_mpl_lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -31,8 +32,6 @@ namespace mpllibs
     template <>
     struct monad<state_tag> : monad_defaults<state_tag>
     {
-      struct s;
-
       MPLLIBS_METAFUNCTION_CLASS(return_, (T))
       ((returns<lambda<s, boost::mpl::pair<T, s> > >));
       

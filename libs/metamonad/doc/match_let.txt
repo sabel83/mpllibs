@@ -52,6 +52,8 @@ Example
 -------
 
 --------------------------------------
+using namespace mpllibs::metamonad::name;
+
 template <class A>
 struct maybe_something :
   boost::mpl::if_<
@@ -60,8 +62,6 @@ struct maybe_something :
     nothing
   >
 {};
-
-struct x;
 
 typedef
   match_let<

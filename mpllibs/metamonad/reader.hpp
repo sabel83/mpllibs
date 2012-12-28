@@ -15,6 +15,7 @@
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/make_mpl_lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -30,8 +31,6 @@ namespace mpllibs
     template <>
     struct monad<reader_tag> : monad_defaults<reader_tag>
     {
-      struct r;
-
       MPLLIBS_METAFUNCTION_CLASS(return_, (T))
       ((returns<boost::mpl::always<T> >));
       

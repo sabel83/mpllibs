@@ -79,8 +79,7 @@ Example
 
 --------------------------------------
 using namespace boost::mpl;
-
-struct x;
+using namespace mpllibs::metamonad::name;
 
 typedef multi_let<map<pair<x, double>>, x>::type this_is_double;
 --------------------------------------

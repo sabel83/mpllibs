@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/multi_let.hpp>
 #include <mpllibs/metamonad/case.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -18,9 +19,6 @@
 
 namespace
 {
-  struct x;
-  struct y;
-
   template <class A, class B>
   struct some_template;
 }
@@ -37,6 +35,8 @@ BOOST_AUTO_TEST_CASE(test_multi_let)
   using boost::mpl::map;
 
   using boost::is_same;
+
+  using namespace mpllibs::metamonad::name;
 
   meta_require<
     is_same<int, multi_let<map<pair<x, int> >, x>::type>

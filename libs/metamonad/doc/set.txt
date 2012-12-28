@@ -38,8 +38,7 @@ Example
 
 --------------------------------------
 using boost::mpl::int_;
-
-struct r;
+using namespace mpllibs::metamonad::name;
 
 do_<exception_tag>::apply<
   set<r, may_fail1<int_<13> >,

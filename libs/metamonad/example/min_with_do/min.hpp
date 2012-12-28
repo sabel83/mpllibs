@@ -10,13 +10,14 @@
 
 #include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/do_try.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
 
-struct c;
+using mpllibs::metamonad::name::c;
 
 template <class TagA, class TagB>
 struct min_impl

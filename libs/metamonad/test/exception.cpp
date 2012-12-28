@@ -8,6 +8,7 @@
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/get_data.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -22,11 +23,6 @@
 #include <boost/type_traits/is_same.hpp>
 
 #include "common.hpp"
-
-namespace
-{
-  struct x;
-}
 
 BOOST_AUTO_TEST_CASE(test_exception)
 {
@@ -48,6 +44,8 @@ BOOST_AUTO_TEST_CASE(test_exception)
   using mpllibs::metamonad::do_;
   using mpllibs::metamonad::set;
   using mpllibs::metamonad::do_return;
+
+  using mpllibs::metamonad::name::x;
 
   typedef exception<int13> e;
 

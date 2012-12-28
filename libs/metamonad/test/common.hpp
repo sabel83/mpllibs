@@ -11,6 +11,7 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/apply.hpp>
@@ -25,8 +26,7 @@
 
 namespace
 {
-  struct x;
-  struct y;
+  using namespace mpllibs::metamonad::name;
   
   typedef boost::mpl::int_<0> int0;
   typedef boost::mpl::int_<1> int1;
