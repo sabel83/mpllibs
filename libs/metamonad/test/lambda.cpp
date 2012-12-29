@@ -24,6 +24,7 @@ BOOST_AUTO_TEST_CASE(test_lambda)
   using mpllibs::metatest::meta_require;
 
   using boost::mpl::apply;
+  using boost::mpl::apply_wrap1;
   using boost::mpl::apply_wrap3;
   using boost::mpl::plus;
   using boost::mpl::equal_to;
@@ -63,13 +64,20 @@ BOOST_AUTO_TEST_CASE(test_lambda)
 
   meta_require<
     equal_to<
+      int11,
+      apply_wrap1<let<a, int11, lambda<b, a> >::type, int13>::type
+    >
+  >(MPLLIBS_HERE, "test_let_and_lambda_body");
+
+  meta_require<
+    equal_to<
       int1,
       let<
         s, int11,
         apply_wrap3<lambda<x, s, z, s>, int0, int1, int2>
       >::type::type
     >
-  >(MPLLIBS_HERE, "test_let_and_lambda_body");
+  >(MPLLIBS_HERE, "test_let_and_lambda3_body");
 
   meta_require<
     equal_to<
@@ -79,7 +87,17 @@ BOOST_AUTO_TEST_CASE(test_lambda)
         apply_wrap3<lambda<x, s, z, int11>, int0, int1, int2>
       >::type::type
     >
-  >(MPLLIBS_HERE, "test_let_and_lambda_arg");
+  >(MPLLIBS_HERE, "test_let_and_lambda3_arg");
+
+  meta_require<
+    equal_to<
+      int13,
+      apply_wrap1<
+        apply_wrap1<lambda<a, lambda<b, a> >, int13>::type,
+        int11
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_nested_lambda");
 }
 
 
