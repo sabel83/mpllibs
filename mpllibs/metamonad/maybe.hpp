@@ -16,7 +16,7 @@
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/name.hpp>
-#include <mpllibs/metamonad/case.hpp>
+#include <mpllibs/metamonad/eval_case.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -33,7 +33,7 @@ namespace mpllibs
       
       MPLLIBS_LAZY_METAFUNCTION_CLASS(bind, (A)(F))
       ((
-        case_< A,
+        eval_case< A,
           matches<nothing,       returns<A> >,
           matches<just<var<x> >, boost::mpl::apply<F, x> >
         >
@@ -49,7 +49,7 @@ namespace mpllibs
 
       MPLLIBS_LAZY_METAFUNCTION_CLASS(mplus, (A)(B))
       ((
-        case_< A,
+        eval_case< A,
           matches<nothing, B>,
           matches<_,       A>
         >
@@ -63,12 +63,12 @@ namespace mpllibs
 
       MPLLIBS_LAZY_METAFUNCTION_CLASS(mappend, (A)(B))
       ((
-        case_< A,
+        eval_case< A,
           matches< nothing,
             returns<B>
           >,
           matches< just<var<a> >,
-            case_< B,
+            eval_case< B,
               matches< nothing,
                 returns<A>
               >,

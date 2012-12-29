@@ -6,7 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/let.hpp>
-#include <mpllibs/metamonad/case.hpp>
+#include <mpllibs/metamonad/eval_case.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE(test_let)
   
   using mpllibs::metamonad::let;
   using mpllibs::metamonad::lazy;
-  using mpllibs::metamonad::case_;
+  using mpllibs::metamonad::eval_case;
   using mpllibs::metamonad::matches;
 
   using boost::is_same;
@@ -100,12 +100,12 @@ BOOST_AUTO_TEST_CASE(test_let)
 
   meta_require<
     is_same<
-      case_< int,
+      eval_case< int,
         matches<int, some_template<int, double> >
       >,
       let<
         x, double,
-        case_< int,
+        eval_case< int,
           matches<int, some_template<int, x> >
         >
       >::type

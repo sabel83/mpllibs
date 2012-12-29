@@ -5,7 +5,7 @@
 
 #define BOOST_TEST_DYN_LINK
 
-#include <mpllibs/metamonad/case.hpp>
+#include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
@@ -26,11 +26,11 @@ namespace
   struct some_other_template;
 }
 
-BOOST_AUTO_TEST_CASE(test_case)
+BOOST_AUTO_TEST_CASE(test_eval_case)
 {
   using mpllibs::metatest::meta_require;
 
-  using mpllibs::metamonad::case_;
+  using mpllibs::metamonad::eval_case;
   using mpllibs::metamonad::matches;
   using mpllibs::metamonad::exception;
   using mpllibs::metamonad::no_case_matched;
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       exception<no_case_matched<int> >,
-      case_< returns<int>,
+      eval_case< returns<int>,
         matches<double, float>
       >::type
     >
@@ -53,8 +53,8 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       float,
-      case_< returns<int>,
-        matches<int, float>
+      eval_case< returns<int>,
+        matches<int, returns<float> >
       >::type
     >
   >(MPLLIBS_HERE, "test_match");
@@ -62,8 +62,8 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       float,
-      case_< returns<int>,
-        matches<int, float>,
+      eval_case< returns<int>,
+        matches<int, returns<float> >,
         matches<double, char>
       >::type
     >
@@ -72,9 +72,9 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       float,
-      case_< returns<int>,
+      eval_case< returns<int>,
         matches<double, char>,
-        matches<int, float>
+        matches<int, returns<float> >
       >::type
     >
   >(MPLLIBS_HERE, "test_second_matches");
@@ -82,20 +82,20 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       some_other_template<int, double>,
-      case_< returns<some_template<int, double> >,
-        matches< some_template<var<x>, var<y> >, some_other_template<x, y> >
+      eval_case< returns<some_template<int, double> >,
+        matches< some_template<var<x>, var<y> >,
+          returns<some_other_template<x, y> >
+        >
       >::type
     >
   >(MPLLIBS_HERE, "test_vars_in_pattern");
 
   meta_require<
-    is_same<
-      case_< int2,
-        matches<var<y>, boost::mpl::plus<int11, y> >
-      >,
-      case_< int11,
+    equal_to<
+      int13,
+      eval_case< int11,
         matches< var<x>,
-          case_< int2,
+          eval_case< int2,
             matches<var<y>, boost::mpl::plus<x, y> >
           >
         >

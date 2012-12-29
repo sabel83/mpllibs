@@ -10,7 +10,7 @@
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/data.hpp>
-#include <mpllibs/metamonad/case.hpp>
+#include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
 #include <boost/mpl/apply.hpp>
@@ -28,7 +28,7 @@ namespace mpllibs
       
       MPLLIBS_LAZY_METAFUNCTION_CLASS(bind, (A)(F))
       ((
-        case_< A,
+        eval_case< A,
           matches<left<_>,        returns<A> >,
           matches<right<var<x> >, boost::mpl::apply<F, x> >
         >

@@ -65,7 +65,7 @@ namespace mpllibs
             typename match<P, typename E1::type>::type
           >::type,
           nothing,
-          match_let<P, E1, just<E2> >
+          returns<just<match_let<P, E1, E2> > >
         >
       {};
 

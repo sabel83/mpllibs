@@ -16,6 +16,7 @@ Pattern matching
 ~~~~~~~~~~~~~~~~
 
 link:case_.html[case_] +
+link:eval_case.html[eval_case] +
 link:match.html[match] +
 
 Let expressions
