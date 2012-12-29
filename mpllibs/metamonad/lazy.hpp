@@ -67,11 +67,6 @@ namespace mpllibs
       boost::mpl::eval_if<typename lazy<C>::type, lazy<T>, lazy<F> >
     {};
 
-    template <class C, class T, class F>
-    struct lazy<boost::mpl::if_<C, T, F> > :
-      boost::mpl::if_<typename lazy<C>::type, lazy<T>, lazy<F> >
-    {};
-
     // This will not call the functions with the placeholders as their arguments
     // since the inner lazy gets evaluated after the substitution
     template <class X, class Tag>

@@ -42,18 +42,13 @@ boost::mpl::plus<
 
 Some metafunctions are handled specially:
 
-   * +boost::mpl::if_+ and +boost::mpl::eval_if+. Their second and third
+   * +boost::mpl::eval_if+. Their second and third
      arguments are not evaluated to avoid accidentally evaluating an expression
      that should never be evaluated.
    * +boost::mpl::lambda+. Its content is assumed to be a placeholder expression
      and is wrapped by +lazy+, but not evaluated. This +lazy+ wrapping the
      content is evaluated when the body of the lambda expression is evaluated,
      thus when the lambda expression gets called.
-   * link:let.html[+let+], link:letrec.html[+letrec+] and
-     link:lambda.html[+lambda+]. Their first argument represents a name which is
-     not handled differently. The rest of the arguments are assumed to be angly
-     bracket expressions and their contents are wrapped by +lazy+ similarly to
-     the body of +boost::mpl::lambda+.
 
 Header
 ------
