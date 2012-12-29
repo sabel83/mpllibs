@@ -8,6 +8,7 @@
 #include <mpllibs/metamonad/match_let.hpp>
 #include <mpllibs/metamonad/case.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -31,24 +32,25 @@ BOOST_AUTO_TEST_CASE(test_match_let)
   using mpllibs::metamonad::var;
   using mpllibs::metamonad::case_;
   using mpllibs::metamonad::matches;
+  using mpllibs::metamonad::returns;
 
   using boost::is_same;
 
   using namespace mpllibs::metamonad::name;
 
   meta_require<
-    is_same<int, match_let<var<x>, int, x>::type>
+    is_same<int, match_let<var<x>, returns<int>, x>::type>
   >(MPLLIBS_HERE, "test_setting_value");
 
   meta_require<
-    is_same<x, match_let<int, int, x>::type>
+    is_same<x, match_let<int, returns<int>, x>::type>
   >(MPLLIBS_HERE, "test_nothing_to_set");
 
   meta_require<
     is_same<
       some_other_template<int, double>,
       match_let<
-        some_template<var<x>, var<y> >, some_template<int, double>,
+        some_template<var<x>, var<y> >, returns<some_template<int, double> >,
         some_other_template<x, y>
       >::type
     >
@@ -56,12 +58,12 @@ BOOST_AUTO_TEST_CASE(test_match_let)
 
   meta_require<
     is_same<
-      case_< int,
+      case_< returns<int>,
         matches<int, some_template<double, int> >
       >,
       match_let<
-        var<x>, double,
-        case_< int,
+        var<x>, returns<double>,
+        case_< returns<int>,
           matches<int, some_template<x, int> >
         >
       >::type

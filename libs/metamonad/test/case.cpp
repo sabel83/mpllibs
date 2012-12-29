@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       exception<no_case_matched<int> >,
-      case_< int,
+      case_< returns<int>,
         matches<double, float>
       >::type
     >
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       float,
-      case_< int,
+      case_< returns<int>,
         matches<int, returns<float> >
       >::type
     >
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       float,
-      case_< int,
+      case_< returns<int>,
         matches<int, returns<float> >,
         matches<double, char>
       >::type
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       float,
-      case_< int,
+      case_< returns<int>,
         matches<double, char>,
         matches<int, returns<float> >
       >::type
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       some_other_template<int, double>,
-      case_< some_template<int, double>,
+      case_< returns<some_template<int, double> >,
         matches< some_template<var<x>, var<y> >,
           returns<some_other_template<x, y> >
         >

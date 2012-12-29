@@ -8,18 +8,14 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
-#include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
-#include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/make_mpl_lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/eval_match_let.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <boost/mpl/always.hpp>
-#include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/pair.hpp>
 
@@ -32,29 +28,22 @@ namespace mpllibs
     template <>
     struct monad<state_tag> : monad_defaults<state_tag>
     {
-      MPLLIBS_METAFUNCTION_CLASS(return_, (T))
-      ((returns<lambda<s, boost::mpl::pair<T, s> > >));
-      
-      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
-      ((
-        lambda<s,
-          lazy<
-            boost::mpl::apply_wrap1<
-              make_mpl_lambda<
-                boost::mpl::apply_wrap1<
-                  make_mpl_lambda<F>,
-                  boost::mpl::first<
-                    boost::mpl::apply_wrap1<make_mpl_lambda<A>, s>
-                  >
-                >
-              >,
-              boost::mpl::second<
-                boost::mpl::apply_wrap1<make_mpl_lambda<A>, s>
+      typedef lambda<t, s, boost::mpl::pair<t, s> > return_;
+
+      typedef
+        lambda<a, f, s,
+          eval_match_let<
+            boost::mpl::pair<var<t>, var<u> >,
+              lazy<boost::mpl::apply_wrap1<make_mpl_lambda<a>, s> >,
+            lazy<
+              boost::mpl::apply_wrap1<
+                make_mpl_lambda<boost::mpl::apply_wrap1<make_mpl_lambda<f>,t> >,
+                u
               >
             >
           >
         >
-      ));
+        bind;
     };
   }
 }

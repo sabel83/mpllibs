@@ -14,9 +14,8 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    // Not defined. Using it outside of lazy is an error.
     template <class AnglyExpr>
-    struct already_lazy;
+    struct already_lazy : AnglyExpr {};
 
     template <class AnglyExpr>
     struct lazy;

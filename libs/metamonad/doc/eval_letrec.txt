@@ -3,16 +3,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-already_lazy
-============
+eval_letrec
+===========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class Exp>
-struct already_lazy
+template <class Name, class Exp, class Body>
+struct eval_letrec
 {
   // unspecified
 };
@@ -22,52 +22,58 @@ struct already_lazy
 Description
 -----------
 
-+Exp+ is an angly bracket expression of metafunctions calling each other with
-other angly bracket expressions as arguments. When +already_lazy+ is used
-inside link:lazy.html[+lazy+], the content of +already_lazy+ is not transformed
-by +lazy+. When it is used outside of +lazy+, it does not change the meaning of
-the wrapped expression.
+This is similar to link:letrec.html[+letrec+], but it evaluates the substituted
+expression.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/eval_letrec.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +c+ class the following are equivalent
+For any +n+, +x+ and +f+ classes
 
 --------------------------------------
-lazy<already_lazy<c> >::type
-c
+eval_letrec<n, x, f>
 --------------------------------------
 
+is equivalent to
+
 --------------------------------------
-already_lazy<c>::type
-c::type
+eval<letrec<n, x, f>>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-using namespace boost::mpl;
+using boost::mpl::times;
+using boost::mpl::plus;
+using boost::mpl::minus;
+using boost::mpl::int_;
+using boost::mpl::eval_if;
+using boost::mpl::equal_to;
+using boost::mpl::apply;
 
-template <class N>
-struct fib :
-  lazy<
-    eval_if<
-      less<N, int_<2> >,
-      already_lazy<int_<1> >,
-      already_lazy<
-        lazy<plus<fib<minus<N, int_<1> > >, fib<minus<N, int_<2> > > >
-      >
-    >
-  >
-{};
+struct fact;
+
+typedef
+  eval_letrec<
+    fact,
+    lambda<
+      n,
+      eval_if<
+        equal_to<n, int_<0> >,
+        int_<1>,
+        lazy<times<apply<fact, minus<n, int_<1> > >, n > > >
+      >,
+    lazy<apply<fact, int_<3> > >
+  >::type
+  fact_3;
 --------------------------------------
 
 include::copyright[]

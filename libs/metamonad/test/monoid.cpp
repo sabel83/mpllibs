@@ -45,14 +45,14 @@ namespace mpllibs
     struct monoid<plus_tag> : monoid_defaults<plus_tag>
     {
       typedef int0 mempty;
-      typedef lambda<plus<_1, _2> > mappend;
+      typedef boost::mpl::lambda<plus<_1, _2> >::type mappend;
     };
 
     template <>
     struct monoid<mult_tag> : monoid_defaults<mult_tag>
     {
       typedef int1 mempty;
-      typedef lambda<times<_1, _2> > mappend;
+      typedef boost::mpl::lambda<times<_1, _2> >::type mappend;
     };
   }
 }

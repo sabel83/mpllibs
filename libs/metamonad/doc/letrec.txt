@@ -22,7 +22,7 @@ struct letrec
 Description
 -----------
 
-Recursive version of link:let.html[let]. It does the binding in +Body+ and in
+Recursive version of link:let.html[+let+]. It does the binding in +Body+ and in
 +Exp+ as well, thus +Exp+ can refer to itself recursively by +Name+.
 
 Header
@@ -70,10 +70,10 @@ typedef
       eval_if<
         equal_to<n, int_<0> >,
         int_<1>,
-        times<apply<fact, minus<n, int_<1> > >, n > >
+        lazy<times<apply<fact, minus<n, int_<1> > >, n > > >
       >,
-    apply<fact, int_<3> >
-  >::type
+    lazy<apply<fact, int_<3> > >
+  >::type::type
   fact_3;
 --------------------------------------
 

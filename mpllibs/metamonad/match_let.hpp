@@ -15,7 +15,7 @@ namespace mpllibs
   namespace metamonad
   {
     MPLLIBS_METAFUNCTION(match_let, (P)(E1)(E2))
-    ((multi_let<typename match<P, E1>::type, E2>));
+    ((multi_let<typename match<P, typename E1::type>::type, E2>));
   }
 }
 

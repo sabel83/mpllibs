@@ -21,6 +21,10 @@ link:match.html[match] +
 Let expressions
 ~~~~~~~~~~~~~~~
 
+link:eval_let.html[eval_let] +
+link:eval_letrec.html[eval_letrec] +
+link:eval_match_let.html[eval_match_let] +
+link:eval_multi_let.html[eval_multi_let] +
 link:let.html[let] +
 link:letrec.html[letrec] +
 link:match_let.html[match_let] +
@@ -30,8 +34,10 @@ Lazy evaluation
 ~~~~~~~~~~~~~~~
 
 link:already_lazy.html[already_lazy] +
+link:eval.html[eval] +
 link:lazy.html[lazy] +
 link:lazy_argument.html[lazy_argument] +
+link:lazy_protect_args.html[lazy_protect_args] +
 
 link:make_mpl_lambda.html[make_mpl_lambda] +
 

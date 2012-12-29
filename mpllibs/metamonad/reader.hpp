@@ -8,9 +8,6 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
-#include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/returns.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
@@ -19,7 +16,6 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <boost/mpl/always.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
@@ -31,19 +27,17 @@ namespace mpllibs
     template <>
     struct monad<reader_tag> : monad_defaults<reader_tag>
     {
-      MPLLIBS_METAFUNCTION_CLASS(return_, (T))
-      ((returns<boost::mpl::always<T> >));
+      typedef lambda<t, x, t> return_;
       
-      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
-      ((
-        lambda<r,
+      typedef
+        lambda<a, f, r,
           lazy<
             boost::mpl::apply_wrap1<
               make_mpl_lambda<
                 boost::mpl::apply_wrap1<
-                  boost::mpl::lambda<F>,
+                  boost::mpl::lambda<f>,
                   boost::mpl::apply_wrap1<
-                    boost::mpl::lambda<A>,
+                    boost::mpl::lambda<a>,
                     already_lazy<r>
                   >
                 >
@@ -52,7 +46,7 @@ namespace mpllibs
             >
           >
         >
-      ));
+        bind;
     };
   }
 }

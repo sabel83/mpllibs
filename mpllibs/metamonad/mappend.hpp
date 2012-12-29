@@ -8,7 +8,6 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <mpllibs/metamonad/monoid.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
@@ -17,6 +16,9 @@ namespace mpllibs
 {
   namespace metamonad
   {
+    template <class Tag>
+    struct monoid;
+
     MPLLIBS_METAFUNCTION(mappend, (MonadTag)(A)(B))
     ((boost::mpl::apply_wrap2<typename monoid<MonadTag>::mappend, A, B>));
   }

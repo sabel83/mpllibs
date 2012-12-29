@@ -3,16 +3,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-already_lazy
-============
+eval_match_let
+==============
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class Exp>
-struct already_lazy
+template <class Pattern, class Exp, class Body>
+struct eval_match_let
 {
   // unspecified
 };
@@ -22,52 +22,52 @@ struct already_lazy
 Description
 -----------
 
-+Exp+ is an angly bracket expression of metafunctions calling each other with
-other angly bracket expressions as arguments. When +already_lazy+ is used
-inside link:lazy.html[+lazy+], the content of +already_lazy+ is not transformed
-by +lazy+. When it is used outside of +lazy+, it does not change the meaning of
-the wrapped expression.
+This is similar to link:match_let.html[+match_let+], but it evaluates the
+substituted expression.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/eval_match_let.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +c+ class the following are equivalent
+For any +p+, +x+ and +f+ classes
 
 --------------------------------------
-lazy<already_lazy<c> >::type
-c
+eval_match_let<p, x, f>
 --------------------------------------
 
+is equivalent to
+
 --------------------------------------
-already_lazy<c>::type
-c::type
+eval<match_let<p, x, f>>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-using namespace boost::mpl;
+using namespace mpllibs::metamonad::name;
 
-template <class N>
-struct fib :
-  lazy<
-    eval_if<
-      less<N, int_<2> >,
-      already_lazy<int_<1> >,
-      already_lazy<
-        lazy<plus<fib<minus<N, int_<1> > >, fib<minus<N, int_<2> > > >
-      >
-    >
+template <class A>
+struct maybe_something :
+  boost::mpl::if_<
+    typename boost::is_same<A, int>::type,
+    just<returns<double>>,
+    nothing
   >
 {};
+
+typedef
+  eval_match_let<
+    just<var<x>>, maybe_something<int>::type,
+    x
+  >::type
+  this_is_double;
 --------------------------------------
 
 include::copyright[]

@@ -7,13 +7,14 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/typeclass.hpp>
-#include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/mempty.hpp>
+#include <mpllibs/metamonad/mappend.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/already_lazy.hpp>
 
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/reverse_fold.hpp>
-
-#include <iostream>
 
 namespace mpllibs
 {
@@ -30,14 +31,20 @@ namespace mpllibs
     template <class Tag>
     struct monoid_defaults : monoid<typeclass_expectations>
     {
-      MPLLIBS_METAFUNCTION_CLASS(mconcat, (L))
-      ((
-        boost::mpl::reverse_fold<
-          L,
-          typename monoid<Tag>::mempty,
-          typename monoid<Tag>::mappend
+      typedef
+        lambda<l,
+          lazy<
+            boost::mpl::reverse_fold<
+              already_lazy<l>,
+              mpllibs::metamonad::mempty<already_lazy<Tag> >,
+              already_lazy<
+                lambda<s, t, mpllibs::metamonad::mappend<Tag, s, t> >
+              >,
+              already_lazy<lambda<x, y, x> >
+            >
+          >
         >
-      ));
+        mconcat;
     };
   }
 }

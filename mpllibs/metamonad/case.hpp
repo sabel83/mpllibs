@@ -61,7 +61,9 @@ namespace mpllibs
       template <class P, class E1, class E2>
       struct case_check_match<E1, matches<P, E2> > :
         boost::mpl::eval_if<
-          typename is_exception<typename match<P, E1>::type>::type,
+          typename is_exception<
+            typename match<P, typename E1::type>::type
+          >::type,
           nothing,
           match_let<P, E1, just<E2> >
         >
@@ -90,7 +92,7 @@ namespace mpllibs
       ((
         typename boost::mpl::eval_if<
           typename boost::is_same<nothing, typename R::type>::type,
-          throw_<no_case_matched<Exp> >,
+          throw_<no_case_matched<typename Exp::type> >,
           impl::get_just_data<typename R::type>
         >::type
       ));

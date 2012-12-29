@@ -8,16 +8,13 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
-#include <mpllibs/metamonad/tag_tag.hpp>
-#include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/mappend.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <boost/mpl/always.hpp>
-#include <boost/mpl/apply.hpp>
 #include <boost/mpl/pair.hpp>
 
 namespace mpllibs
@@ -30,32 +27,38 @@ namespace mpllibs
     template <class M>
     struct monad<writer_tag<M> > : monad_defaults<writer_tag<M> >
     {
-      MPLLIBS_METAFUNCTION_CLASS(return_, (T))
-      ((returns<boost::mpl::pair<T, typename monoid<M>::mempty> >));
-      
-      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
-      ((
-        lazy<
-          boost::mpl::pair<
-            boost::mpl::first<
-              boost::mpl::apply_wrap1<
-                boost::mpl::lambda<F>,
-                boost::mpl::first<A>
-              >
-            >,
-            boost::mpl::apply<
-              typename monoid<M>::mappend,
-              boost::mpl::second<A>,
-              boost::mpl::second<
+      typedef
+        lambda<t,
+          lazy<
+            boost::mpl::pair<already_lazy<t>, mpllibs::metamonad::mempty<M> >
+          >
+        >
+        return_;
+
+      typedef
+        lambda<a, f,
+          lazy<
+            boost::mpl::pair<
+              boost::mpl::first<
                 boost::mpl::apply_wrap1<
-                  boost::mpl::lambda<F>,
-                  boost::mpl::first<A>
+                  boost::mpl::lambda<f>,
+                  boost::mpl::first<a>
+                >
+              >,
+              mpllibs::metamonad::mappend<
+                already_lazy<M>,
+                boost::mpl::second<a>,
+                boost::mpl::second<
+                  boost::mpl::apply_wrap1<
+                    boost::mpl::lambda<f>,
+                    boost::mpl::first<a>
+                  >
                 >
               >
             >
           >
         >
-      ));
+        bind;
     };
   }
 }

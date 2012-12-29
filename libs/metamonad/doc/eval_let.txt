@@ -3,16 +3,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-already_lazy
-============
+eval_let
+========
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class Exp>
-struct already_lazy
+template <class Name, class Exp, class Body>
+struct eval_let
 {
   // unspecified
 };
@@ -22,50 +22,46 @@ struct already_lazy
 Description
 -----------
 
-+Exp+ is an angly bracket expression of metafunctions calling each other with
-other angly bracket expressions as arguments. When +already_lazy+ is used
-inside link:lazy.html[+lazy+], the content of +already_lazy+ is not transformed
-by +lazy+. When it is used outside of +lazy+, it does not change the meaning of
-the wrapped expression.
+This is similar to link:let.html[+let+], but it evaluates the substituted
+expression.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/eval_let.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +c+ class the following are equivalent
+For any +n+, +x+ and +f+ classes
 
 --------------------------------------
-lazy<already_lazy<c> >::type
-c
+eval_let<n, x, f>
 --------------------------------------
 
+is equivalent to
+
 --------------------------------------
-already_lazy<c>::type
-c::type
+eval<let<n, x, f>>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-using namespace boost::mpl;
+using boost::mpl::times;
+using boost::mpl::plus;
+using boost::mpl::int_;
+
+using namespace mpllibs::metamonad::name;
 
 template <class N>
-struct fib :
-  lazy<
-    eval_if<
-      less<N, int_<2> >,
-      already_lazy<int_<1> >,
-      already_lazy<
-        lazy<plus<fib<minus<N, int_<1> > >, fib<minus<N, int_<2> > > >
-      >
-    >
+struct my_metafunction :
+  eval_let<
+    x, plus<n, int_<13> >,
+    times<x, x>
   >
 {};
 --------------------------------------

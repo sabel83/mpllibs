@@ -99,6 +99,10 @@ BOOST_AUTO_TEST_CASE(test_letrec)
       >::type::type
     >
   >(MPLLIBS_HERE, "test_recursion");
+
+  meta_require<
+    equal_to<int11, letrec<x, int2, lazy<minus<int13, x> > >::type>
+  >(MPLLIBS_HERE, "test_letrec_lazy");
 }
 
 

@@ -23,8 +23,8 @@ Description
 -----------
 
 Pattern matching version of link:let.html[let]. The angly-bracket expression
-+Exp+ is matched against the pattern +Pattern+. The open variables of the
-match can be used in +Body+.
++Exp+ is evaluated and matched against the pattern +Pattern+. The open variables
+of the match can be used in +Body+.
 
 Header
 ------

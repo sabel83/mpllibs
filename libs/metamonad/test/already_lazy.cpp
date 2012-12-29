@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -18,16 +19,21 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/bool.hpp>
 
+#include <boost/type_traits.hpp>
+
 BOOST_AUTO_TEST_CASE(test_already_lazy)
 {
   using mpllibs::metatest::meta_require;
 
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::already_lazy;
+  using mpllibs::metamonad::returns;
   
   using boost::mpl::equal_to;
   using boost::mpl::false_;
   using boost::mpl::divides;
+
+  using boost::is_same;
 
   meta_require<
     equal_to<
@@ -54,6 +60,10 @@ BOOST_AUTO_TEST_CASE(test_already_lazy)
       >::type
     >
   >(MPLLIBS_HERE, "test_custom_eval_if_with_lazy_expression_as_selected_case");
+
+  meta_require<
+    is_same<double, already_lazy<returns<double> >::type>
+  >(MPLLIBS_HERE, "test_outside_of_lazy");
 }
 
 
