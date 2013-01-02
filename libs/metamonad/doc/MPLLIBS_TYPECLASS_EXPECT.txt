@@ -42,7 +42,7 @@ MPLLIBS_TYPECLASS_EXPECT(some_fun);
 is equivalent to
 
 --------------------------------------
-typedef mpllibs::metamonad::throw_<
+typedef mpllibs::metamonad::exception<
   // unspecified
 > some_fun;
 --------------------------------------

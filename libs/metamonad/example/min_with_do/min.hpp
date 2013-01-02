@@ -8,7 +8,6 @@
 
 #include "less.hpp"
 
-#include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/do_try.hpp>
 #include <mpllibs/metamonad/name.hpp>
 

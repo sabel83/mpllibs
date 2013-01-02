@@ -56,7 +56,7 @@ using mpllibs::metaparse::entire_input;
 using mpllibs::metatest::to_stream;
 
 using mpllibs::metamonad::do_try;
-using mpllibs::metamonad::throw_;
+using mpllibs::metamonad::exception;
 using mpllibs::metamonad::set;
 using mpllibs::metamonad::tmp_tag;
 using mpllibs::metamonad::tmp_value;
@@ -130,7 +130,7 @@ struct eval_mult
         times<state, new_value>,
         eval_if<
           equal_to<new_value, boost::mpl::int_<0> >,
-          throw_<division_by_zero>,
+          exception<division_by_zero>,
           divides<state, new_value>
         >
       >

@@ -107,6 +107,7 @@ BOOST_AUTO_TEST_CASE(test_match)
 
   using boost::mpl::equal;
   using boost::mpl::insert;
+  using boost::mpl::na;
 
   // same_map
 
@@ -219,6 +220,13 @@ BOOST_AUTO_TEST_CASE(test_match)
       >::type
     >
   >(MPLLIBS_HERE, "test_two_vars");
+
+  meta_require<
+    same_map<
+      map<pair<x, na> >,
+      match<some_template<var<x>, _, _>, some_template<na, na, na> >::type
+    >
+  >(MPLLIBS_HERE, "test_match_with_na_template_argument");
 }
 
 

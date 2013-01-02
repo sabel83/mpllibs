@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
@@ -41,7 +41,7 @@ namespace boost
 
 template <class TagA, class TagB>
 struct less_impl :
-  boost::mpl::always<mpllibs::metamonad::throw_<non_comparable> >
+  boost::mpl::always<mpllibs::metamonad::exception<non_comparable> >
 {};
 
 template <class A, class B>

@@ -11,12 +11,14 @@
 #include <mpllibs/metamonad/match.hpp>
 #include <mpllibs/metamonad/match_let.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
-#include <mpllibs/metamonad/get_data.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/lazy_protect_args.hpp>
+#include <mpllibs/metamonad/eval_let.hpp>
 
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
@@ -48,12 +50,10 @@ namespace mpllibs
     namespace impl
     {
       template <class T>
-      struct get_just_data_impl;
+      struct get_just_data;
 
       template <class T>
-      struct get_just_data_impl<just<T> > : returns<T> {};
-
-      MPLLIBS_LAZY_METAFUNCTION(get_just_data, (T)) ((get_just_data_impl<T>));
+      struct get_just_data<just<T> > : returns<T> {};
 
       template <class E, class C>
       struct case_check_match;
@@ -65,37 +65,9 @@ namespace mpllibs
             typename match<P, typename E1::type>::type
           >::type,
           nothing,
-          returns<just<match_let<P, E1, E2> > >
+          match_let<P, E1, just<E2> >
         >
       {};
-
-      // S:
-      //  nothing -> no case matched so far
-      //  just<X> -> a case matched, the result is X
-      template <class E>
-      MPLLIBS_METAFUNCTION_CLASS(case_cb, (S)(C))
-      ((
-        boost::mpl::eval_if<
-          typename boost::mpl::and_<
-            typename boost::is_same<nothing, S>::type,
-            typename boost::mpl::not_<
-              typename boost::is_same<no_case, C>::type
-            >::type
-          >::type,
-          case_check_match<E, C>,
-          returns<S>
-        >
-      ));
-
-      // eval_if is evaluated because case evaluates the selected branch
-      MPLLIBS_METAFUNCTION(case_impl, (Exp)(R))
-      ((
-        typename boost::mpl::eval_if<
-          typename boost::is_same<nothing, typename R::type>::type,
-          throw_<no_case_matched<typename Exp::type> >,
-          impl::get_just_data<typename R::type>
-        >::type
-      ));
     }
 
     template <
@@ -107,12 +79,35 @@ namespace mpllibs
       )
     >
     struct case_ :
-      impl::case_impl<
-        E,
+      eval_let<
+        r,
         boost::mpl::fold<
           boost::mpl::vector<BOOST_PP_ENUM_PARAMS(MPLLIBS_LIMIT_CASE_SIZE, C)>,
           nothing,
-          impl::case_cb<E>
+          lambda<s, c,
+            // s:
+            //  nothing -> no case matched so far
+            //  just<X> -> a case matched, the result is X
+            lazy<
+              boost::mpl::eval_if<
+                boost::mpl::and_<
+                  lazy_protect_args<boost::is_same<nothing, s> >,
+                  boost::mpl::not_<
+                    lazy_protect_args<boost::is_same<no_case, c> >
+                  >
+                >,
+                lazy_protect_args<impl::case_check_match<E, c> >,
+                lazy_protect_args<returns<s> >
+              >
+            >
+          >
+        >,
+        lazy<
+          boost::mpl::eval_if<
+            boost::is_same<nothing, lazy_protect_args<r> >,
+            exception<no_case_matched<lazy_protect_args<E> > >,
+            impl::get_just_data<lazy_protect_args<r> >
+          >
         >
       >
     {};

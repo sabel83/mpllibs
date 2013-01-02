@@ -8,7 +8,7 @@
 
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/exception_core.hpp>
 
 namespace mpllibs
 {
@@ -25,7 +25,8 @@ namespace mpllibs
     #endif
     #define MPLLIBS_TYPECLASS_EXPECT(name) \
       typedef \
-        mpllibs::metamonad::throw_<mpllibs::metamonad::invalid_typeclass> name
+        mpllibs::metamonad::exception<mpllibs::metamonad::invalid_typeclass> \
+        name
   
     struct typeclass_expectations : tmp_tag<typeclass_expectations> {};
   }

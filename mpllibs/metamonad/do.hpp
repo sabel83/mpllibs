@@ -9,12 +9,26 @@
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/return_.hpp>
+#include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/lazy_protect_args.hpp>
+#include <mpllibs/metamonad/eval_match_let.hpp>
+#include <mpllibs/metamonad/eval_case.hpp>
+#include <mpllibs/metamonad/instantiate.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/arithmetic/dec.hpp>
+
+#include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/pair.hpp>
+#include <boost/mpl/fold.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/push_front.hpp>
+#include <boost/mpl/push_back.hpp>
 
 namespace mpllibs
 {
@@ -300,6 +314,88 @@ namespace mpllibs
     {};
 
     #undef MPLLIBS_DO_LAZY
+
+    /*
+      Protection against let
+    */
+    namespace impl
+    {
+      // Custom names are needed to avoid "let"'s A be the same as one of the
+      // names used
+      struct let_do_c;
+      struct let_do_d;
+      struct let_do_s;
+      struct let_do_v;
+      struct let_do_w;
+    }
+
+    template <
+      class A,
+      class E1,
+      class Monad,
+      BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, class T)
+    >
+    struct
+      let_impl<
+        A,
+        E1,
+        do_<Monad, BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)>
+      > :
+      eval_match_let<
+        boost::mpl::pair<var<impl::let_do_w>, _>,
+        boost::mpl::fold<
+          boost::mpl::vector<BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)>,
+          boost::mpl::pair<boost::mpl::vector<>, boost::mpl::true_>,
+          lambda<impl::let_do_s, impl::let_do_c,
+            eval_match_let<
+              boost::mpl::pair<var<impl::let_do_v>, var<impl::let_do_d> >,
+              impl::let_do_s,
+              boost::mpl::eval_if< impl::let_do_d,
+                eval_case< returns<impl::let_do_c>,
+                  matches<set<A, _>,
+                    lazy<
+                      boost::mpl::pair<
+                        lazy_protect_args<
+                          boost::mpl::push_back<impl::let_do_v, impl::let_do_c>
+                        >,
+                        boost::mpl::false_
+                      >
+                    >
+                  >,
+                  matches<_,
+                    lazy<
+                      boost::mpl::pair<
+                        boost::mpl::push_back<
+                          already_lazy<impl::let_do_v>,
+                          lazy_protect_args<let<A, E1, impl::let_do_c> >
+                        >,
+                        boost::mpl::true_
+                      >
+                    >
+                  >
+                >,
+                lazy<
+                  boost::mpl::pair<
+                    lazy_protect_args<
+                      boost::mpl::push_back<impl::let_do_v, impl::let_do_c>
+                    >,
+                    boost::mpl::false_
+                  >
+                >
+              >
+            >
+          >
+        >,
+        lazy<
+          boost::mpl::apply_wrap1<
+            BOOST_PP_CAT(instantiate, BOOST_PP_INC(MPLLIBS_DO_MAX_ARGUMENT))<
+              do_
+            >,
+            lazy_protect_args<boost::mpl::push_front<impl::let_do_w, Monad> >
+          >
+        >
+      >
+    {};
   }
 }
 

@@ -26,23 +26,13 @@ Description
 
 Compile-time data-structure representing an error that occured during the
 evaluation of template metaprograms. +Data+ is a compile-time data-structure
-describing the error. This data can be queried by link:get_data.html[get_data].
+describing the error.
 
 Header
 ------
 
 --------------------------------------
 #include <mpllibs/metamonad/exception.hpp>
---------------------------------------
-
-Expression semantics
---------------------
-
-For any +d+ compile-time value, the following are equivalent
-
---------------------------------------
-mpllibs::metamonad::get_data<exception<d> >::type
-d::type
 --------------------------------------
 
 Example

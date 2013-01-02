@@ -7,7 +7,6 @@
 
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/do.hpp>
-#include <mpllibs/metamonad/get_data.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
@@ -38,7 +37,6 @@ BOOST_AUTO_TEST_CASE(test_exception)
   using boost::mpl::not_;
   
   using mpllibs::metamonad::exception;
-  using mpllibs::metamonad::get_data;
   using mpllibs::metamonad::exception_monad;
   using mpllibs::metamonad::return_;
   using mpllibs::metamonad::do_;
@@ -48,8 +46,6 @@ BOOST_AUTO_TEST_CASE(test_exception)
   using mpllibs::metamonad::name::x;
 
   typedef exception<int13> e;
-
-  typedef equal_to<int13, get_data<e>::type> test_get_data;
 
   meta_require<
     equal_to<
@@ -62,11 +58,9 @@ BOOST_AUTO_TEST_CASE(test_exception)
 
   meta_require<
     equal_to<
-      int13,
-      get_data<
-        do_<exception_monad,
-          apply_wrap1<always<e>, int>
-        >::type
+      exception<int13>,
+      do_<exception_monad,
+        apply_wrap1<always<e>, int>
       >::type
     >
   >(MPLLIBS_HERE, "test_monadic_exception");
@@ -74,12 +68,10 @@ BOOST_AUTO_TEST_CASE(test_exception)
 
   meta_require<
     equal_to<
-      int13,
-      get_data<
-        do_<exception_monad,
-          apply_wrap1<always<e>, int>,
-          do_return<int13>
-        >::type
+      exception<int13>,
+      do_<exception_monad,
+        apply_wrap1<always<e>, int>,
+        do_return<int13>
       >::type
     >
   >(MPLLIBS_HERE, "test_exception_propagation");
@@ -110,12 +102,10 @@ BOOST_AUTO_TEST_CASE(test_exception)
   
   meta_require<
     equal_to<
-      int13,
-      get_data<
-        do_<exception_monad,
-          set<x, apply_wrap1<always<e>, int> >,
-          do_return<int13>
-        >::type
+      exception<int13>,
+      do_<exception_monad,
+        set<x, apply_wrap1<always<e>, int> >,
+        do_return<int13>
       >::type
     >
   >(MPLLIBS_HERE, "test_exception_in_set");

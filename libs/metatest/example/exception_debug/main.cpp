@@ -4,7 +4,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/do_try.hpp>
-#include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 
 #include <mpllibs/metatest/debug.hpp>
@@ -23,7 +22,7 @@ using boost::mpl::divides;
 using mpllibs::metatest::debug;
 
 using mpllibs::metamonad::do_try;
-using mpllibs::metamonad::throw_;
+using mpllibs::metamonad::exception;
 using mpllibs::metamonad::do_return;
 
 typedef int_<0> int0;
@@ -37,7 +36,7 @@ struct safe_divides :
   do_try<
     eval_if<
       typename equal_to<B, int0>::type,
-      throw_<division_by_zero>,
+      exception<division_by_zero>,
       do_return<divides<A, B> >
     >
   >

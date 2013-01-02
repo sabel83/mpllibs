@@ -11,12 +11,16 @@
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/eval_let.hpp>
+#include <mpllibs/metamonad/let.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
+
+#include <boost/type_traits.hpp>
 
 #include "common.hpp"
 
@@ -90,6 +94,10 @@ BOOST_AUTO_TEST_CASE(test_do)
   using mpllibs::metatest::meta_require;
 
   using mpllibs::metamonad::lazy;
+  using mpllibs::metamonad::let;
+  using mpllibs::metamonad::eval_let;
+
+  using boost::is_same;
 
   meta_require<
     equal_to<
@@ -180,6 +188,53 @@ BOOST_AUTO_TEST_CASE(test_do)
       >::type
     >
   >(MPLLIBS_HERE, "test_nested_do_with_different_monads");
+
+  meta_require<
+    equal_to<
+      right<int13>,
+      eval_let<
+        x, int11,
+        do_<either,
+          set<x, do_return<int13> >,
+          do_return<x>
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_set_in_let");
+
+  meta_require<
+    equal_to<
+      right<int11>,
+      eval_let<
+        x, int11,
+        do_<either,
+          set<x, do_return<int13> >,
+          do_return<int11>
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_argument_of_set_and_do_in_let");
+
+  meta_require<
+    equal_to<
+      right<int11>,
+      eval_let<
+        x, int11,
+        do_<either,
+          set<y, do_return<x> >,
+          set<x, do_return<int13> >,
+          do_return<y>
+        >
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_let_before_override");
+
+  meta_require<
+    is_same<
+      do_<either, do_return<int11> >,
+      let<x, int11, do_<either, do_return<int11> > >::type
+    >
+  >(MPLLIBS_HERE, "test_na_arguments_of_do");
 }
 
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, minus_2, "minus_2")

@@ -7,12 +7,14 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/box.hpp>
+#include <mpllibs/metamonad/unbox.hpp>
 
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/pair.hpp>
@@ -33,6 +35,7 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/tuple/eat.hpp>
+#include <boost/preprocessor/cat.hpp>
 
 namespace mpllibs
 {
@@ -46,7 +49,7 @@ namespace mpllibs
     MPLLIBS_METAFUNCTION(var, (Name)) ((tmp_value<var<Name> >));
 
     template <class Pattern, class Value>
-    struct match : throw_<bad_match<Pattern, Value> > {};
+    struct match : exception<bad_match<Pattern, Value> > {};
 
     template <class Value>
     struct match<_, Value> : boost::mpl::map<> {};
@@ -81,7 +84,7 @@ namespace mpllibs
                   boost::mpl::second<already_lazy<P> >
                 >,
                 already_lazy<S>,
-                throw_<
+                exception<
                   bad_match<
                     boost::mpl::first<already_lazy<P> >,
                     boost::mpl::second<already_lazy<P> >
@@ -116,23 +119,31 @@ namespace mpllibs
             merge_map<
               already_lazy<S>,
               match<
-                boost::mpl::front<already_lazy<P> >,
-                boost::mpl::back<already_lazy<P> >
+                unbox<boost::mpl::front<already_lazy<P> > >,
+                unbox<boost::mpl::back<already_lazy<P> > >
               >
             >
           >
         >
       ));
   
+      // Elements of Ps and Vs are boxed because Ps or Vs may contain mpl::na in
+      // which case Ps and Vs have different sizes and zip_view can not handle
+      // that.
       MPLLIBS_METAFUNCTION(match_impl, (Ps)(Vs))
       ((
         boost::mpl::fold<
-          typename boost::mpl::zip_view<boost::mpl::vector<Ps, Vs> >::type,
+          boost::mpl::zip_view<boost::mpl::vector<Ps, Vs> >,
           boost::mpl::map<>,
           match_impl_op
         >
       ));
     }
+
+    #ifdef MPLLIBS_WRAPPED
+      #error MPLLIBS_WRAPPED already defined
+    #endif
+    #define MPLLIBS_WRAPPED(z, n, name) box<BOOST_PP_CAT(name, n)>
 
     #ifdef MPLLIBS_MATCH_TEMPLATE
       #error MPLLIBS_MATCH_TEMPLATE already defined
@@ -146,8 +157,8 @@ namespace mpllibs
       struct \
         match<T<BOOST_PP_ENUM_PARAMS(n, P)>, T<BOOST_PP_ENUM_PARAMS(n, V)> > : \
         impl::match_impl< \
-          boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, P)>, \
-          boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, V)> \
+          boost::mpl::vector<BOOST_PP_ENUM(n, MPLLIBS_WRAPPED, P)>, \
+          boost::mpl::vector<BOOST_PP_ENUM(n, MPLLIBS_WRAPPED, V)> \
         > \
       {};
 
@@ -159,6 +170,7 @@ namespace mpllibs
     )
 
     #undef MPLLIBS_MATCH_TEMPLATE
+    #undef MPLLIBS_WRAPPED
 
   }
 }

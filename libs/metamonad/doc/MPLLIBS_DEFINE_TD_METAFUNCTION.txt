@@ -21,7 +21,7 @@ Description
 
 Macro for defining an overloadable metafunction evaluating its arguments
 lazily. When there is no overload for the given arguments, it
-+link:throw_.html[throws]+ an exception with
++link:exception.html[throws]+ an exception with
 +link:overloading_error_tag.html[overloading_error_tag]+ +tag+.
 
 Header
@@ -48,7 +48,7 @@ struct name_impl
 {
   template <class, class, class>
   struct apply :
-    mpllibs::metamonad::throw_<
+    mpllibs::metamonad::exception<
       \\ unspecified
     >
   {};

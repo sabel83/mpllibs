@@ -8,7 +8,6 @@
 
 #include "less.hpp"
 
-#include <mpllibs/metamonad/throw.hpp>
 #include <mpllibs/metamonad/try.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>

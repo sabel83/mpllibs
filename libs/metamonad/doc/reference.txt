@@ -64,9 +64,7 @@ Compile-time exception
 
 link:do_try.html[do_try] +
 link:exception.html[exception] +
-link:get_data.html[get_data] +
 link:is_exception.html[is_exception] +
-link:throw_.html[throw_] +
 link:try_.html[try_] +
 
 Algebraic data-types
@@ -100,6 +98,12 @@ Tags
 
 link:tag_tag.html[tag_tag] +
 link:overloading_error_tag.html[overloading_error_tag] +
+
+Box
+~~~
+
+link:box.html[box] +
+link:unbox.html[unbox] +
 
 Maybe
 ~~~~~
@@ -157,6 +161,11 @@ Instances of MonadPlus +
 
 link:maybe_monad_plus.html[maybe monad plus] +
 link:list_monad_plus.html[list monad plus] +
+
+Miscellaneous
+-------------
+
+link:instantiate.html[instantiate] +
 
 include::copyright[]
 

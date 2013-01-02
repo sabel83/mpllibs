@@ -6,12 +6,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/bind.hpp>
 #include <mpllibs/metamonad/typeclass.hpp>
-#include <mpllibs/metamonad/throw.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/always.hpp>
+#include <mpllibs/metamonad/exception_core.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 namespace mpllibs
 {
@@ -28,16 +27,11 @@ namespace mpllibs
     template <class Tag>
     struct monad_defaults : monad<typeclass_expectations>
     {
-      MPLLIBS_METAFUNCTION_CLASS(bind_, (A)(B))
-      ((
-        boost::mpl::apply_wrap2<
-          typename monad<Tag>::bind,
-          A,
-          boost::mpl::always<B>
-        >
-      ));
+      typedef
+        lambda<a, b, mpllibs::metamonad::bind<Tag, a, lambda<s, b> > >
+        bind_;
 
-      MPLLIBS_METAFUNCTION_CLASS(fail, (S)) ((throw_<S>));
+      typedef lambda<s, exception<s> > fail;
     };
   }
 }

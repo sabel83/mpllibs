@@ -6,8 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/do_try.hpp>
-#include <mpllibs/metamonad/throw.hpp>
-#include <mpllibs/metamonad/get_data.hpp>
+#include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
@@ -49,7 +48,6 @@ BOOST_AUTO_TEST_CASE(test_do_try)
   using mpllibs::metamonad::exception;
   using mpllibs::metamonad::catch_any;
   using mpllibs::metamonad::do_try;
-  using mpllibs::metamonad::throw_;
   using mpllibs::metamonad::set;
   using mpllibs::metamonad::do_return;
 
@@ -82,7 +80,7 @@ BOOST_AUTO_TEST_CASE(test_do_try)
     equal_to<
       int11,
       do_try<
-        throw_<e1>
+        exception<e1>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -94,7 +92,7 @@ BOOST_AUTO_TEST_CASE(test_do_try)
     equal_to<
       int13,
       do_try<
-        throw_<int13>
+        exception<int13>
       >
       ::catch_<tag<int13>::type, x>
         ::apply<identity<x> >
@@ -106,7 +104,7 @@ BOOST_AUTO_TEST_CASE(test_do_try)
     equal_to<
       exception<int13>,
       do_try<
-        throw_<int13>
+        exception<int13>
       >
       ::catch_<tag2, x>
         ::apply<identity<int11> >
@@ -118,7 +116,7 @@ BOOST_AUTO_TEST_CASE(test_do_try)
     equal_to<
       int13,
       do_try<
-        throw_<e2>
+        exception<e2>
       >
       ::catch_<tag1, x>
         ::apply<identity<int11> >
@@ -132,7 +130,7 @@ BOOST_AUTO_TEST_CASE(test_do_try)
     equal_to<
       int11,
       do_try<
-        throw_<e1>,
+        exception<e1>,
         do_return<int1>
       >
       ::catch_<tag1, x>
@@ -159,7 +157,7 @@ BOOST_AUTO_TEST_CASE(test_do_try)
     equal_to<
       int11,
       do_try<
-        set<x, throw_<e1> >,
+        set<x, exception<e1> >,
         do_return<int1>
       >
       ::catch_<tag1, x>
@@ -172,7 +170,7 @@ BOOST_AUTO_TEST_CASE(test_do_try)
     equal_to<
       int13,
       do_try<
-        throw_<e1>,
+        exception<e1>,
         do_return<int1>
       >
       ::catch_<catch_any, x>
@@ -185,11 +183,11 @@ BOOST_AUTO_TEST_CASE(test_do_try)
     equal_to<
       exception<int13>,
       do_try<
-        throw_<e1>,
+        exception<e1>,
         do_return<int1>
       >
       ::catch_<catch_any, x>
-        ::apply<throw_<int13> >
+        ::apply<exception<int13> >
       ::type
     >
   >(MPLLIBS_HERE, "test_rethrowing");
@@ -198,13 +196,13 @@ BOOST_AUTO_TEST_CASE(test_do_try)
     equal_to<
       exception<int13>,
       do_try<
-        throw_<e1>,
+        exception<e1>,
         do_return<int1>
       >
       ::catch_<catch_any, x>
-        ::apply<throw_<int13> >
+        ::apply<exception<int13> >
       ::catch_<catch_any, x>
-        ::apply<throw_<int13> >
+        ::apply<exception<int13> >
       ::type
     >
   >(MPLLIBS_HERE, "test_rethrowing_not_caught_by_next_catch");

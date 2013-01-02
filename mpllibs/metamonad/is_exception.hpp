@@ -7,18 +7,19 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/exception_core.hpp>
-#include <mpllibs/metamonad/lazy_metafunction.hpp>
 
-#include <boost/mpl/tag.hpp>
-
-#include <boost/type_traits/is_same.hpp>
+#include <boost/mpl/bool.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_LAZY_METAFUNCTION(is_exception, (T))
-    ((boost::is_same<exception_tag, typename boost::mpl::tag<T>::type>));
+    // Exceptions are used in the implementation of pattern matching
+    template <class T>
+    struct is_exception : boost::mpl::false_ {};
+
+    template <class T>
+    struct is_exception<exception<T> > : boost::mpl::true_ {};
   }
 }
 
