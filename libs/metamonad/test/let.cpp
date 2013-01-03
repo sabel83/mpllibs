@@ -11,6 +11,11 @@
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
+#include <boost/mpl/list.hpp>
+#include <boost/mpl/equal.hpp>
+#include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/plus.hpp>
+
 #include <boost/type_traits.hpp>
 
 #include "common.hpp"
@@ -25,8 +30,10 @@ BOOST_AUTO_TEST_CASE(test_let)
 {
   using mpllibs::metatest::meta_require;
 
+  using boost::mpl::equal;
   using boost::mpl::equal_to;
   using boost::mpl::plus;
+  using boost::mpl::list;
   
   using mpllibs::metamonad::let;
   using mpllibs::metamonad::lazy;
@@ -111,6 +118,10 @@ BOOST_AUTO_TEST_CASE(test_let)
       >::type
     >
   >(MPLLIBS_HERE, "test_case_in_multi_let");
+
+  meta_require<
+    equal<list<int, double>, let<x, int, list<x, double> >::type>
+  >(MPLLIBS_HERE, "test_list_in_let");
 }
 
 

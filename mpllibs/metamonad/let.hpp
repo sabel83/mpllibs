@@ -113,7 +113,7 @@ namespace mpllibs
 
 
     #ifndef MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT
-      #define MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT 10
+      #define MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT 21
     #endif
     
     #ifdef MPLLIBS_LET_CLASS
