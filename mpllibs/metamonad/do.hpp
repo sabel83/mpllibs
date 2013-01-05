@@ -42,9 +42,6 @@ namespace mpllibs
       #error MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT not big enough
     #endif
     
-    template <class T>
-    struct lazy;
-
     /*
      * Syntactic sugar
      */
@@ -141,9 +138,6 @@ namespace mpllibs
     struct do1 : E {};
 
     template <class Monad, class Name, class F>
-    struct do1<Monad, lazy<set<Name, F> > >;
-
-    template <class Monad, class Name, class F>
     struct do1<Monad, set<Name, F> >;
       // Error: last statement in a 'do' construct must be an expression.
       // Current way of error handling is not having an implementation.
@@ -183,24 +177,6 @@ namespace mpllibs
             Monad, \
             BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
           >::type \
-        > \
-      {}; \
-      \
-      template < \
-        class Monad, \
-        class Name, \
-        class Ex \
-        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_CASE, ~) \
-      > \
-      struct do##n< \
-        Monad, \
-        lazy<set<Name, Ex> > BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
-        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
-      > : \
-        do##n< \
-          Monad, \
-          set<Name, Ex> BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
-          BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
         > \
       {}; \
       \
@@ -291,31 +267,6 @@ namespace mpllibs
     #undef MPLLIBS_DO_ARG
 
     /*
-      Protection against lazy
-    */
-    template <class T>
-    struct make_lazy : returns<lazy<T> > {};
-
-    template <>
-    struct make_lazy<boost::mpl::na> : returns<boost::mpl::na> {};
-
-    #ifdef MPLLIBS_DO_LAZY
-      #error MPLLIBS_DO_LAZY already defined
-    #endif
-    #define MPLLIBS_DO_LAZY(z, n, unused) \
-      , typename make_lazy<BOOST_PP_CAT(T, n)>::type
-
-    template <
-      class Monad,
-      BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, class T)
-    >
-    struct lazy<do_<Monad, BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)> > :
-      do_<Monad BOOST_PP_REPEAT(MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_LAZY, ~)>
-    {};
-
-    #undef MPLLIBS_DO_LAZY
-
-    /*
       Protection against let
     */
     namespace impl
@@ -327,36 +278,23 @@ namespace mpllibs
       struct let_do_s;
       struct let_do_v;
       struct let_do_w;
-    }
 
-    template <
-      class A,
-      class E1,
-      class Monad,
-      BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, class T)
-    >
-    struct
-      let_impl<
-        A,
-        E1,
-        do_<Monad, BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)>
-      > :
-      eval_match_let<
-        boost::mpl::pair<var<impl::let_do_w>, _>,
+      MPLLIBS_METAFUNCTION(let_do_args, (A)(E1)(V))
+      ((
         boost::mpl::fold<
-          boost::mpl::vector<BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)>,
+          V,
           boost::mpl::pair<boost::mpl::vector<>, boost::mpl::true_>,
-          lambda<impl::let_do_s, impl::let_do_c,
+          lambda<let_do_s, let_do_c,
             eval_match_let<
-              boost::mpl::pair<var<impl::let_do_v>, var<impl::let_do_d> >,
-              impl::let_do_s,
-              boost::mpl::eval_if< impl::let_do_d,
-                eval_case< returns<impl::let_do_c>,
+              boost::mpl::pair<var<let_do_v>, var<let_do_d> >,
+              let_do_s,
+              boost::mpl::eval_if< let_do_d,
+                eval_case< returns<let_do_c>,
                   matches<set<A, _>,
                     lazy<
                       boost::mpl::pair<
                         lazy_protect_args<
-                          boost::mpl::push_back<impl::let_do_v, impl::let_do_c>
+                          boost::mpl::push_back<let_do_v, let_do_c>
                         >,
                         boost::mpl::false_
                       >
@@ -366,8 +304,8 @@ namespace mpllibs
                     lazy<
                       boost::mpl::pair<
                         boost::mpl::push_back<
-                          already_lazy<impl::let_do_v>,
-                          lazy_protect_args<let<A, E1, impl::let_do_c> >
+                          already_lazy<let_do_v>,
+                          lazy_protect_args<let<A, E1, let_do_c> >
                         >,
                         boost::mpl::true_
                       >
@@ -377,7 +315,7 @@ namespace mpllibs
                 lazy<
                   boost::mpl::pair<
                     lazy_protect_args<
-                      boost::mpl::push_back<impl::let_do_v, impl::let_do_c>
+                      boost::mpl::push_back<let_do_v, let_do_c>
                     >,
                     boost::mpl::false_
                   >
@@ -385,17 +323,48 @@ namespace mpllibs
               >
             >
           >
-        >,
-        lazy<
-          boost::mpl::apply_wrap1<
-            BOOST_PP_CAT(instantiate, BOOST_PP_INC(MPLLIBS_DO_MAX_ARGUMENT))<
-              do_
-            >,
-            lazy_protect_args<boost::mpl::push_front<impl::let_do_w, Monad> >
-          >
         >
-      >
-    {};
+      ));
+    }
+
+    #ifdef MPLLIBS_HANDLE_DO_FUN
+      #error MPLLIBS_HANDLE_DO_FUN
+    #endif
+    #define MPLLIBS_HANDLE_DO_FUN(f) \
+      template < \
+        class A, \
+        class E1, \
+        class Monad, \
+        BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, class T) \
+      > \
+      struct \
+        let_impl< \
+          A, \
+          E1, \
+          f<Monad, BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)> \
+        > : \
+        eval_match_let< \
+          boost::mpl::pair<var<impl::let_do_w>, _>, \
+          impl::let_do_args< \
+            A, \
+            E1, \
+            boost::mpl::vector<BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT,T)>\
+          >, \
+          lazy< \
+            boost::mpl::apply_wrap1< \
+              BOOST_PP_CAT(instantiate, BOOST_PP_INC(MPLLIBS_DO_MAX_ARGUMENT))<\
+                f \
+              >, \
+              lazy_protect_args<boost::mpl::push_front<impl::let_do_w, Monad> >\
+            > \
+          > \
+        > \
+      {}
+
+    MPLLIBS_HANDLE_DO_FUN(do_);
+    MPLLIBS_HANDLE_DO_FUN(do_impl);
+
+    #undef MPLLIBS_HANDLE_DO_FUN
   }
 }
 

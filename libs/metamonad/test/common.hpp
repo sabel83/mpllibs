@@ -22,8 +22,6 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
 
-#include "either_monad.hpp"
-
 namespace
 {
   using namespace mpllibs::metamonad::name;

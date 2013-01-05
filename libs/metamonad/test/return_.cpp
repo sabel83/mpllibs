@@ -7,19 +7,17 @@
 
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
-#include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/identity.hpp>
 
 #include "common.hpp"
-
-using boost::mpl::identity;
 
 using mpllibs::metamonad::tmp_tag;
 
@@ -35,7 +33,7 @@ namespace mpllibs
     template <>
     struct monad<test_tag> : monad_defaults<test_tag>
     {
-      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((identity<int13>));
+      typedef lambda<t, returns<int13> > return_;
       
       // no bind is needed for this test
     };

@@ -40,23 +40,26 @@ namespace mpllibs
   {
     namespace impl
     {
-      MPLLIBS_METAFUNCTION_CLASS(lambda_impl_step, (State)(T))
-      ((
-        boost::mpl::eval_if<
-          typename boost::is_same<lambda_no_arg, T>::type,
-          State,
-          lazy<
-            boost::mpl::pair<
-              boost::mpl::pop_front<boost::mpl::first<already_lazy<State> > >,
-              let<
-                boost::mpl::front<boost::mpl::first<already_lazy<State> > >,
-                already_lazy<T>,
-                boost::mpl::second<already_lazy<State> >
+      struct lambda_impl_step : tmp_value<lambda_impl_step>
+      {
+        template <class State, class T>
+        struct apply :
+          boost::mpl::eval_if<
+            typename boost::is_same<lambda_no_arg, T>::type,
+            State,
+            lazy<
+              boost::mpl::pair<
+                boost::mpl::pop_front<boost::mpl::first<already_lazy<State> > >,
+                let<
+                  boost::mpl::front<boost::mpl::first<already_lazy<State> > >,
+                  already_lazy<T>,
+                  boost::mpl::second<already_lazy<State> >
+                >
               >
             >
           >
-        >
-      ));
+        {};
+      };
 
       template <class State>
       struct lambda_impl :

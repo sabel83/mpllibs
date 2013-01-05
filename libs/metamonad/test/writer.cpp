@@ -9,6 +9,8 @@
 #include <mpllibs/metamonad/list.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -24,11 +26,12 @@ using boost::mpl::pair;
 using boost::mpl::plus;
 
 using mpllibs::metamonad::tmp_value;
+using mpllibs::metamonad::lambda;
+using namespace mpllibs::metamonad::name;
   
 namespace
 {
-  template <class A>
-  MPLLIBS_METAFUNCTION_CLASS(log_plus, (R)) ((pair<plus<A, R>, list<A> >));
+  MPLLIBS_METAFUNCTION(log_plus, (A)) ((lambda<r, pair<plus<A,r>, list<A> > >));
 }
 
 BOOST_AUTO_TEST_CASE(test_writer)

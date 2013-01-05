@@ -8,15 +8,16 @@
 
 #include <mpllibs/metamonad/impl/maybe.hpp>
 
+#include <mpllibs/metamonad/mappend.hpp>
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/monad_plus.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
-#include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/eval_case.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -29,17 +30,18 @@ namespace mpllibs
     template <class T>
     struct monad<maybe_tag<T> > : monad_defaults<maybe_tag<T> >
     {
-      MPLLIBS_LAZY_METAFUNCTION_CLASS(return_, (X)) ((just<X>));
+      typedef lambda<x, just<x> > return_;
       
-      MPLLIBS_LAZY_METAFUNCTION_CLASS(bind, (A)(F))
-      ((
-        eval_case< A,
-          matches<nothing,       returns<A> >,
-          matches<just<var<x> >, boost::mpl::apply<F, x> >
+      typedef
+        lambda<a, f,
+          eval_case< a,
+            matches<nothing,       returns<a> >,
+            matches<just<var<x> >, boost::mpl::apply<f, x> >
+          >
         >
-      ));
+        bind;
 
-      MPLLIBS_LAZY_METAFUNCTION_CLASS(fail, (S)) ((nothing));
+      typedef lambda<s, nothing> fail;
     };
 
     template <class T>
@@ -47,13 +49,14 @@ namespace mpllibs
     {
       typedef nothing mzero;
 
-      MPLLIBS_LAZY_METAFUNCTION_CLASS(mplus, (A)(B))
-      ((
-        eval_case< A,
-          matches<nothing, B>,
-          matches<_,       A>
+      typedef
+        lambda<a, b,
+          eval_case< a,
+            matches<nothing, b>,
+            matches<_,       a>
+          >
         >
-      ));
+        mplus;
     };
 
     template <class T>
@@ -61,24 +64,21 @@ namespace mpllibs
     {
       typedef nothing mempty;
 
-      MPLLIBS_LAZY_METAFUNCTION_CLASS(mappend, (A)(B))
-      ((
-        eval_case< A,
-          matches< nothing,
-            returns<B>
-          >,
-          matches< just<var<a> >,
-            eval_case< B,
-              matches< nothing,
-                returns<A>
-              >,
-              matches< just<var<b> >,
-                lazy<
-                  just<
-                    boost::mpl::apply_wrap2<
-                      typename monoid<T>::mappend,
-                      already_lazy<a>,
-                      already_lazy<b>
+      typedef
+        lambda<a, b,
+          eval_case< a,
+            matches< nothing,
+              returns<b>
+            >,
+            matches< just<var<c> >,
+              eval_case< b,
+                matches< nothing,
+                  returns<a>
+                >,
+                matches< just<var<d> >,
+                  lazy<
+                    just<
+                      lazy_protect_args<mpllibs::metamonad::mappend<T, c, d> >
                     >
                   >
                 >
@@ -86,7 +86,7 @@ namespace mpllibs
             >
           >
         >
-      ));
+        mappend;
     };
   }
 }

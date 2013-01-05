@@ -8,6 +8,8 @@
 #include <mpllibs/metamonad/reader.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -22,11 +24,12 @@
 using boost::mpl::plus;
 
 using mpllibs::metamonad::tmp_value;
+using mpllibs::metamonad::lambda;
+using namespace mpllibs::metamonad::name;
 
 namespace
 {
-  template <class A>
-  MPLLIBS_METAFUNCTION_CLASS(fplus, (R)) ((plus<A, R>));
+  MPLLIBS_METAFUNCTION(fplus, (A)) ((lambda<r, plus<A, r> >));
 }
 
 BOOST_AUTO_TEST_CASE(test_reader)

@@ -9,7 +9,10 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/already_lazy.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -51,6 +54,9 @@ using boost::mpl::size;
 using boost::is_same;
 
 using mpllibs::metamonad::is_exception;
+using mpllibs::metamonad::lambda;
+using mpllibs::metamonad::lazy;
+using mpllibs::metamonad::already_lazy;
 
 using namespace mpllibs::metamonad::name;
 
@@ -67,15 +73,18 @@ namespace
     >
   ));
 
-  template <class B>
-  MPLLIBS_METAFUNCTION_CLASS(same_map_cb, (S)(P))
+  MPLLIBS_METAFUNCTION(same_map_cb, (B))
   ((
-    and_<
-      S,
-      typename is_same<
-        typename at<B, typename first<P>::type>::type,
-        typename second<P>::type
-      >::type
+    lambda<s, p,
+      lazy<
+        and_<
+          already_lazy<s>,
+          is_same<
+            at<already_lazy<B>, first<already_lazy<p> > >,
+            second<already_lazy<p> >
+          >
+        >
+      >
     >
   ));
 

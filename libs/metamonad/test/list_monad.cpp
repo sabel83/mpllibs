@@ -8,6 +8,8 @@
 #include <mpllibs/metamonad/list.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -18,9 +20,12 @@
 
 using boost::mpl::list;
 
+using mpllibs::metamonad::lambda;
+using namespace mpllibs::metamonad::name;
+
 namespace
 {
-  MPLLIBS_METAFUNCTION_CLASS(twice, (T)) ((list<T, T>));
+  typedef lambda<t, list<t, t> > twice;
 }
 
 BOOST_AUTO_TEST_CASE(test_list_monad)

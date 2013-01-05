@@ -22,29 +22,5 @@
 #define MPLLIBS_VARIADIC_METAFUNCTION(name, args, pack_name) \
   MPLLIBS_METAFUNCTION(name, args(...pack_name))
 
-#ifdef MPLLIBS_METAFUNCTION_CLASS
-  #error MPLLIBS_METAFUNCTION_CLASS
-#endif
-#define MPLLIBS_METAFUNCTION_CLASS(name, args) \
-  struct name \
-  { \
-    typedef name type; \
-    \
-    template <MPLLIBS_EXPAND_ARGS_USAGE(args)> \
-    MPLLIBS_METAFUNCTION_CLASS_BODY
-
-#ifdef MPLLIBS_METAFUNCTION_CLASS_BODY
-  #error MPLLIBS_METAFUNCTION_CLASS_BODY already defined
-#endif
-#define MPLLIBS_METAFUNCTION_CLASS_BODY(body) \
-    struct apply : MPLLIBS_METAFUNCTION_BODY(body); \
-  }
-
-#ifdef MPLLIBS_VARIADIC_METAFUNCTION_CLASS
-  #error MPLLIBS_VARIADIC_METAFUNCTION_CLASS already defined
-#endif
-#define MPLLIBS_VARIADIC_METAFUNCTION_CLASS(name, args, pack_name) \
-  MPLLIBS_METAFUNCTION_CLASS(name, args(...pack_name))
-
 #endif
 

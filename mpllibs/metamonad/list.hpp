@@ -11,15 +11,16 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/monad_plus.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
-#include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/already_lazy.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/end.hpp>
-#include <boost/mpl/lambda.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/transform_view.hpp>
 
@@ -31,29 +32,33 @@ namespace mpllibs
     
     namespace impl
     {
-      MPLLIBS_METAFUNCTION_CLASS(join_lists, (State)(NewList))
-      ((
-        boost::mpl::insert_range<
-          State,
-          typename boost::mpl::end<State>::type,
-          NewList
+      typedef
+        lambda<a, b,
+          lazy<
+            boost::mpl::insert_range<
+              already_lazy<a>,
+              boost::mpl::end<already_lazy<a> >,
+              already_lazy<b>
+            >
+          >
         >
-      ));
+        join_lists;
     }
 
     template <>
     struct monad<list_tag> : monad_defaults<list_tag>
     {
-      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((boost::mpl::list<T>));
+      typedef lambda<t, boost::mpl::list<t> > return_;
       
-      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F))
-      ((
-        boost::mpl::fold<
-          boost::mpl::transform_view<A, F>,
-          boost::mpl::list<>,
-          mpllibs::metamonad::impl::join_lists
+      typedef
+        lambda<a, f,
+          boost::mpl::fold<
+            boost::mpl::transform_view<a, f>,
+            boost::mpl::list<>,
+            mpllibs::metamonad::impl::join_lists
+          >
         >
-      ));
+        bind;
     };
     
     template <>
@@ -61,13 +66,13 @@ namespace mpllibs
     {
       typedef boost::mpl::list<> mempty;
       typedef
-        typename boost::mpl::lambda<
+        lambda<a, b,
           boost::mpl::apply_wrap2<
             mpllibs::metamonad::impl::join_lists,
-            boost::mpl::_1,
-            boost::mpl::_2
+            a,
+            b
           >
-        >::type
+        >
         mappend;
     };
 

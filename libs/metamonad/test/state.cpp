@@ -8,6 +8,8 @@
 #include <mpllibs/metamonad/state.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -16,23 +18,22 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/quote.hpp>
-#include <boost/mpl/lambda.hpp>
 
 #include "common.hpp"
 
 using boost::mpl::plus;
 using boost::mpl::pair;
-using boost::mpl::lambda;
-using boost::mpl::_1;
 
 using mpllibs::metamonad::tmp_value;
 using mpllibs::metamonad::lazy;
+using mpllibs::metamonad::lambda;
+
+using namespace mpllibs::metamonad::name;
 
 namespace
 {
-  template <class N>
-  MPLLIBS_METAFUNCTION_CLASS(plusn, (A))
-  ((lambda<lazy<pair<plus<A, N>, plus<_1, N> > > >));
+  MPLLIBS_METAFUNCTION(plusn, (N))
+  ((lambda<a, b, lazy<pair<plus<a, N>, plus<b, N> > > >));
 }
 
 BOOST_AUTO_TEST_CASE(test_state)

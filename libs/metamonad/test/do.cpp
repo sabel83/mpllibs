@@ -13,12 +13,18 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/eval_let.hpp>
 #include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/either.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/already_lazy.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/tag.hpp>
 
 #include <boost/type_traits.hpp>
 
@@ -35,6 +41,7 @@ using mpllibs::metamonad::tmp_tag;
 using mpllibs::metamonad::tmp_value;
 using mpllibs::metamonad::returns;
 using mpllibs::metamonad::lazy;
+using mpllibs::metamonad::right;
 
 /*
  * WrapperMonad
@@ -63,8 +70,8 @@ namespace mpllibs
     template <>
     struct monad<wrapper_tag>
     {
-      MPLLIBS_METAFUNCTION_CLASS(return_, (T)) ((wrapped<T>));
-      MPLLIBS_METAFUNCTION_CLASS(bind, (A)(F)) ((boost::mpl::apply<F, A>));
+      typedef lambda<t, wrapped<t> > return_;
+      typedef lambda<a, f, boost::mpl::apply<f, a> > bind;
     };
   }
 }
@@ -93,11 +100,18 @@ BOOST_AUTO_TEST_CASE(test_do)
 {
   using mpllibs::metatest::meta_require;
 
+  using mpllibs::metamonad::already_lazy;
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::let;
   using mpllibs::metamonad::eval_let;
+  using mpllibs::metamonad::either_tag;
 
   using boost::is_same;
+
+  using boost::mpl::tag;
+
+  typedef tag<int13>::type int_tag;
+  typedef either_tag<int_tag, int_tag> either;
 
   meta_require<
     equal_to<
@@ -163,18 +177,6 @@ BOOST_AUTO_TEST_CASE(test_do)
       >::type
     >
   >(MPLLIBS_HERE, "test_contents_of_return_is_substituted");
-
-  meta_require<
-    equal_to<
-      right<int13>,
-      lazy<
-        do_<either,
-          set<x, do_return<int13> >,
-          do_return<x>
-        >
-      >::type
-    >
-  >(MPLLIBS_HERE, "test_do_in_lazy");
 
   meta_require<
     equal_to<
