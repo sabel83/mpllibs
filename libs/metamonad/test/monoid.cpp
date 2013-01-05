@@ -7,6 +7,8 @@
 
 #include <mpllibs/metamonad/monoid.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metamonad/mconcat.hpp>
 
@@ -15,7 +17,6 @@
 
 #include "common.hpp"
 
-#include <boost/mpl/lambda.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/plus.hpp>
@@ -23,13 +24,15 @@
 #include <boost/mpl/apply.hpp>
 
 
-using boost::mpl::lambda;
 using boost::mpl::_1;
 using boost::mpl::_2;
 using boost::mpl::plus;
 using boost::mpl::times;
 
 using mpllibs::metamonad::tmp_tag;
+using mpllibs::metamonad::lambda;
+
+using namespace mpllibs::metamonad::name;
 
 namespace
 {
@@ -45,14 +48,14 @@ namespace mpllibs
     struct monoid<plus_tag> : monoid_defaults<plus_tag>
     {
       typedef int0 mempty;
-      typedef boost::mpl::lambda<plus<_1, _2> >::type mappend;
+      typedef lambda<a, b, plus<a, b> >::type mappend;
     };
 
     template <>
     struct monoid<mult_tag> : monoid_defaults<mult_tag>
     {
       typedef int1 mempty;
-      typedef boost::mpl::lambda<times<_1, _2> >::type mappend;
+      typedef lambda<a, b, times<a, b> >::type mappend;
     };
   }
 }

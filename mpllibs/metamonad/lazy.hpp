@@ -12,7 +12,6 @@
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/lambda.hpp>
 
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/tuple/eat.hpp>
@@ -65,13 +64,6 @@ namespace mpllibs
     template <class C, class T, class F>
     struct lazy<boost::mpl::eval_if<C, T, F> > :
       boost::mpl::eval_if<typename lazy<C>::type, lazy<T>, lazy<F> >
-    {};
-
-    // This will not call the functions with the placeholders as their arguments
-    // since the inner lazy gets evaluated after the substitution
-    template <class X, class Tag>
-    struct lazy<boost::mpl::lambda<X, Tag> > :
-      boost::mpl::lambda<lazy<X>, Tag>
     {};
   }
 }

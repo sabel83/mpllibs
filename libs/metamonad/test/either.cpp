@@ -16,7 +16,6 @@
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/plus.hpp>
-#include <boost/mpl/lambda.hpp>
 
 using mpllibs::metamonad::left;
 using mpllibs::metamonad::right;

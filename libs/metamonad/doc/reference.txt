@@ -84,6 +84,7 @@ link:MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS.html[MPLLIBS_LAZY_VARIADIC_METAFUN
 link:MPLLIBS_METAFUNCTION.html[MPLLIBS_METAFUNCTION] +
 link:MPLLIBS_VARIADIC_METAFUNCTION.html[MPLLIBS_VARIADIC_METAFUNCTION] +
 
+link:make_tmp_value.html[make_tmp_value] +
 link:returns.html[returns] +
 link:tmp_tag.html[tmp_tag] +
 link:tmp_value.html[tmp_value] +

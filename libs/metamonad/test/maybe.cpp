@@ -10,6 +10,8 @@
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
 #include <mpllibs/metamonad/fail.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metamonad/mzero.hpp>
 #include <mpllibs/metamonad/mplus.hpp>
@@ -26,7 +28,6 @@
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/plus.hpp>
-#include <boost/mpl/lambda.hpp>
 #include <boost/mpl/list_c.hpp>
 
 namespace
@@ -55,6 +56,7 @@ BOOST_AUTO_TEST_CASE(test_maybe)
   using mpllibs::metamonad::mempty;
   using mpllibs::metamonad::mappend;
   using mpllibs::metamonad::list_tag;
+  using mpllibs::metamonad::lambda;
   
   using boost::mpl::equal_to;
   using boost::mpl::equal;
@@ -62,7 +64,8 @@ BOOST_AUTO_TEST_CASE(test_maybe)
   using boost::mpl::plus;
   using boost::mpl::_1;
   using boost::mpl::list_c;
-  using boost::mpl::lambda;
+
+  using namespace mpllibs::metamonad::name;
 
   typedef just<int13> just13;
   typedef just<int11> just11;
@@ -72,7 +75,7 @@ BOOST_AUTO_TEST_CASE(test_maybe)
   
   typedef list_c<char, 'h', 'e', 'l', 'l', 'o'> s_hello;
   
-  typedef lambda<just<plus<_1, int2> > > maybe_add_2;
+  typedef lambda<n, just<plus<n, int2> > > maybe_add_2;
   
   meta_require<
     equal_to<return_<mt, int13>, just13>

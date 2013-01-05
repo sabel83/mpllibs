@@ -24,7 +24,6 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/lambda.hpp>
 #include <boost/mpl/void.hpp>
 
 #include <boost/type_traits.hpp>

@@ -10,6 +10,7 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/make_tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -38,6 +39,7 @@ BOOST_AUTO_TEST_CASE(test_reader)
 
   using mpllibs::metamonad::reader_tag;
   using mpllibs::metamonad::monad;
+  using mpllibs::metamonad::make_tmp_value;
   
   using boost::mpl::equal_to;
   using boost::mpl::apply;
@@ -55,7 +57,11 @@ BOOST_AUTO_TEST_CASE(test_reader)
     equal_to<
       int22,
       apply<
-        apply<monad<reader_tag>::bind, return11, quote1<fplus> >::type,
+        apply<
+          monad<reader_tag>::bind,
+          return11,
+          make_tmp_value<quote1<fplus> >
+        >::type,
         int11
       >::type
     >

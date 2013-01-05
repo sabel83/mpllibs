@@ -10,6 +10,7 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/make_mpl_lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
@@ -35,9 +36,9 @@ namespace mpllibs
             boost::mpl::apply_wrap1<
               make_mpl_lambda<
                 boost::mpl::apply_wrap1<
-                  boost::mpl::lambda<f>,
+                  boost::mpl::lambda<lazy_protect_args<f> >,
                   boost::mpl::apply_wrap1<
-                    boost::mpl::lambda<a>,
+                    boost::mpl::lambda<lazy_protect_args<a> >,
                     already_lazy<r>
                   >
                 >
