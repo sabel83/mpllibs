@@ -42,8 +42,6 @@ namespace
 
   MPLLIBS_LAZY_METAFUNCTION(double_value, (N)) ((times<N, int_<2> >));
 
-  MPLLIBS_LAZY_METAFUNCTION_CLASS(triple_value, (N)) ((times<N, int_<3> >));
-
   MPLLIBS_LAZY_METAFUNCTION(fact, (N))
   ((
     eval_if<
@@ -55,11 +53,6 @@ namespace
 
   MPLLIBS_LAZY_METAFUNCTION(mult, (A)(B)) ((times<A, B>));
 
-  MPLLIBS_LAZY_METAFUNCTION_CLASS(sub, (A)(B)) ((minus<A, B>));
-
-  template <class A>
-  MPLLIBS_LAZY_METAFUNCTION_CLASS(mult_c, (B)) ((times<A, B>));
-
 #ifndef BOOST_NO_CXX11_VARIADIC_TEMPLATES
   template <class... Ts>
   struct var_first;
@@ -68,13 +61,6 @@ namespace
   struct var_first<T, Ts...> : returns<T> {};
 
   MPLLIBS_LAZY_VARIADIC_METAFUNCTION(variadic_mf, (A), B)
-  ((times<A, typename var_first<B...>::type>));
-
-  MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS(variadic_mfc, (A), B)
-  ((times<A, typename var_first<B...>::type>));
-
-  template <class A>
-  MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS(variadic_tmfc, (X), B)
   ((times<A, typename var_first<B...>::type>));
 #endif
 }
@@ -99,18 +85,6 @@ BOOST_AUTO_TEST_CASE(test_lazy_metafunction)
   >(MPLLIBS_HERE, "test_nested_lazy_metafunction_call");
 
   meta_require<
-    equal_to<int_<9>, apply_wrap1<triple_value, int_<3> >::type>
-  >(MPLLIBS_HERE, "test_metafunction_class");
-
-  meta_require<
-    equal_to<int_<11>, apply_wrap2<sub, int_<13>, int_<2> >::type>
-  >(MPLLIBS_HERE, "test_lazy_metafunction_class_with_two_arguments");
-
-  meta_require<
-    equal_to<int_<9>, apply_wrap1<triple_value::type, int_<3> >::type>
-  >(MPLLIBS_HERE, "test_metafunction_class_as_metaprogramming_value");
-
-  meta_require<
     equal_to<int_<6>, fact<int_<3> >::type>
   >(MPLLIBS_HERE, "test_lazy_rec_metafunction");
 
@@ -118,28 +92,10 @@ BOOST_AUTO_TEST_CASE(test_lazy_metafunction)
     equal_to<int_<13>, not_using_arg<int_<8> >::type>
   >(MPLLIBS_HERE, "test_lazy_mf_not_using_arg");
 
-  meta_require<
-    equal_to<int_<6>, apply_wrap1<mult_c<int_<2> >, int_<3> >::type>
-  >(MPLLIBS_HERE, "test_metafunction_class_with_template_argument");
-
 #ifndef BOOST_NO_CXX11_VARIADIC_TEMPLATES
   meta_require<
     equal_to<int_<6>, variadic_mf<int_<2>, int_<3>, int_<4>, int_<5> >::type>
   >(MPLLIBS_HERE, "test_variadic_metafunction");
-
-  meta_require<
-    equal_to<
-      int_<6>,
-      variadic_mfc::apply<int_<2>, int_<3>, int_<4>, int_<5> >::type
-    >
-  >(MPLLIBS_HERE, "test_variadic_metafunction_class");
-
-  meta_require<
-    equal_to<
-      int_<6>,
-      variadic_tmfc<int_<2> >::apply<int_<7>, int_<3>, int_<4>, int_<5> >::type
-    >
-  >(MPLLIBS_HERE, "test_variadic_template_metafunction_class");
 #endif
 }
 

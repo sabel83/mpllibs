@@ -53,57 +53,5 @@
   \
   MPLLIBS_DEFINE_HELPER(name, args(...pack_name))
 
-#ifdef MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS
-  #error MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS
-#endif
-#define MPLLIBS_LAZY_VARIADIC_METAFUNCTION_CLASS(name, args, pack_name) \
-  struct name \
-  { \
-  private: \
-    MPLLIBS_DECLARE_HELPER(apply, args(...pack_name)) \
-  public: \
-    typedef name type; \
-    \
-    template <MPLLIBS_EXPAND_ARGS_USAGE(args(...pack_name))> \
-    struct apply : \
-      MPLLIBS_HELPER_METAFUNCTION(apply)< \
-        MPLLIBS_LAZY_EVAL_ARGS(args) \
-        BOOST_PP_COMMA_IF(BOOST_PP_SEQ_SIZE(args)) typename pack_name::type... \
-      > \
-    {}; \
-    \
-  private: \
-    template <MPLLIBS_EXPAND_ARGS_USAGE(args(...pack_name))> \
-    struct MPLLIBS_HELPER_METAFUNCTION(apply) : \
-      MPLLIBS_LAZY_METAFUNCTION_CLASS_BODY
-
-#ifdef MPLLIBS_LAZY_METAFUNCTION_CLASS
-  #error MPLLIBS_LAZY_METAFUNCTION_CLASS
-#endif
-#define MPLLIBS_LAZY_METAFUNCTION_CLASS(name, args) \
-  struct name \
-  { \
-  private: \
-    MPLLIBS_DECLARE_HELPER(apply, args) \
-  public: \
-    typedef name type; \
-    \
-    template <MPLLIBS_EXPAND_ARGS_USAGE(args)> \
-    struct apply : \
-      MPLLIBS_HELPER_METAFUNCTION(apply)<MPLLIBS_LAZY_EVAL_ARGS(args)> \
-    {}; \
-    \
-  private: \
-    template <MPLLIBS_EXPAND_ARGS_USAGE(args)> \
-    struct MPLLIBS_HELPER_METAFUNCTION(apply) : \
-      MPLLIBS_LAZY_METAFUNCTION_CLASS_BODY
-
-#ifdef MPLLIBS_LAZY_METAFUNCTION_CLASS_BODY
-  #error MPLLIBS_LAZY_METAFUNCTION_CLASS_BODY already defined
-#endif
-#define MPLLIBS_LAZY_METAFUNCTION_CLASS_BODY(body) \
-    MPLLIBS_METAFUNCTION_BODY(body); \
-  }
-
 #endif
 

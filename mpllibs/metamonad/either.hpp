@@ -8,10 +8,12 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/returns.hpp>
-#include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/data.hpp>
 #include <mpllibs/metamonad/eval_case.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/lazy_protect_args.hpp>
 
 #include <boost/mpl/apply.hpp>
 
@@ -24,17 +26,18 @@ namespace mpllibs
     template <class L, class R>
     struct monad<either_tag<L, R> > : monad_defaults<either_tag<L, R> >
     {
-      MPLLIBS_LAZY_METAFUNCTION_CLASS(return_, (T)) ((right<T>));
+      typedef lambda<t, lazy<lazy_protect_args<right<t> > > > return_;
       
-      MPLLIBS_LAZY_METAFUNCTION_CLASS(bind, (A)(F))
-      ((
-        eval_case< A,
-          matches<left<_>,        returns<A> >,
-          matches<right<var<x> >, boost::mpl::apply<F, x> >
+      typedef
+        lambda<a, f,
+          eval_case< a,
+            matches<left<_>,        a>,
+            matches<right<var<x> >, boost::mpl::apply<f, x> >
+          >
         >
-      ));
+        bind;
 
-      MPLLIBS_LAZY_METAFUNCTION_CLASS(fail, (S)) ((left<S>));
+      typedef lambda<t, lazy<lazy_protect_args<left<t> > > > fail;
     };
   }
 }
