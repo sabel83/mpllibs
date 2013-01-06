@@ -19,6 +19,7 @@
 #include <mpllibs/metamonad/unbox.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/unused_arg.hpp>
 
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/pair.hpp>
@@ -45,8 +46,6 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    struct _ : tmp_value<_> {};
-
     MPLLIBS_METAFUNCTION(bad_match, (Pattern)(Value))
     ((tmp_value<bad_match<Pattern, Value> >));
 

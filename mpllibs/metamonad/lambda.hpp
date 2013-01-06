@@ -14,6 +14,7 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/unused_arg.hpp>
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/front.hpp>
@@ -40,6 +41,12 @@ namespace mpllibs
   {
     namespace impl
     {
+      template <class N, class E1, class E2>
+      struct lambda_let : let<N, E1, E2> {};
+
+      template <class E1, class E2>
+      struct lambda_let<_, E1, E2> : returns<E2> {};
+
       struct lambda_impl_step : tmp_value<lambda_impl_step>
       {
         template <class State, class T>
@@ -50,7 +57,7 @@ namespace mpllibs
             lazy<
               boost::mpl::pair<
                 boost::mpl::pop_front<boost::mpl::first<already_lazy<State> > >,
-                let<
+                lambda_let<
                   boost::mpl::front<boost::mpl::first<already_lazy<State> > >,
                   already_lazy<T>,
                   boost::mpl::second<already_lazy<State> >

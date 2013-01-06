@@ -8,6 +8,7 @@
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -19,6 +20,8 @@
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
+#include <boost/type_traits.hpp>
+
 BOOST_AUTO_TEST_CASE(test_lambda)
 {
   using mpllibs::metatest::meta_require;
@@ -28,10 +31,14 @@ BOOST_AUTO_TEST_CASE(test_lambda)
   using boost::mpl::apply_wrap3;
   using boost::mpl::plus;
   using boost::mpl::equal_to;
+
+  using boost::is_same;
   
   using mpllibs::metamonad::lambda;
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::let;
+  using mpllibs::metamonad::_;
+  using mpllibs::metamonad::returns;
 
   meta_require<
     equal_to<int13, lambda<plus<int2, int11> >::type>
@@ -98,6 +105,10 @@ BOOST_AUTO_TEST_CASE(test_lambda)
       >::type
     >
   >(MPLLIBS_HERE, "test_nested_lambda");
+
+  meta_require<
+    is_same<_, apply_wrap1<lambda<_, returns<_> >, int13>::type>
+  >(MPLLIBS_HERE, "test_unused_arg");
 }
 
 
