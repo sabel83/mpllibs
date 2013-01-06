@@ -40,7 +40,7 @@ namespace mpllibs
               already_lazy<
                 lambda<s, t, mpllibs::metamonad::mappend<Tag, s, t> >
               >,
-              already_lazy<lambda<x, y, x> >
+              already_lazy<lambda<x, _, x> >
             >
           >
         >

@@ -51,7 +51,7 @@ namespace boost
     template <class T>
     struct equal_to_impl<mpllibs::metamonad::box_tag, T> :
       mpllibs::metamonad::lambda<
-        mpllibs::metamonad::name::a, mpllibs::metamonad::name::b,
+        mpllibs::metamonad::_, mpllibs::metamonad::_,
         boost::mpl::false_
       >
     {};

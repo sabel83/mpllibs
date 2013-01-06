@@ -57,7 +57,7 @@ namespace mpllibs
       struct skip_further_catches : returns<typename Result::type>
       {
         MPLLIBS_METAFUNCTION(catch_, (ExceptionTag)(Name))
-        ((lambda<b, skip_further_catches>));
+        ((lambda<_, skip_further_catches>));
       };
 
       template <class Exception>

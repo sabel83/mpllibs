@@ -28,7 +28,7 @@ namespace mpllibs
     template <>
     struct monad<reader_tag> : monad_defaults<reader_tag>
     {
-      typedef lambda<t, x, t> return_;
+      typedef lambda<t, _, t> return_;
       
       typedef
         lambda<a, f, r,

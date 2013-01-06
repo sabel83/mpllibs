@@ -41,7 +41,7 @@ namespace mpllibs
         >
         bind;
 
-      typedef lambda<s, nothing> fail;
+      typedef lambda<_, nothing> fail;
     };
 
     template <class T>
