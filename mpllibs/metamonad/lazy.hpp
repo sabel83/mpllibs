@@ -10,7 +10,6 @@
 
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/if.hpp>
 
 #include <boost/preprocessor/cat.hpp>
@@ -60,11 +59,6 @@ namespace mpllibs
 
     template <class Expr>
     struct lazy<lazy<Expr> > : lazy<Expr> {};
-
-    template <class C, class T, class F>
-    struct lazy<boost::mpl::eval_if<C, T, F> > :
-      boost::mpl::eval_if<typename lazy<C>::type, lazy<T>, lazy<F> >
-    {};
   }
 }
 

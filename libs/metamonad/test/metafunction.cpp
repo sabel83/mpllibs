@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/lazy_argument.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
@@ -30,6 +31,7 @@ using boost::mpl::less;
 using boost::mpl::eval_if;
 
 using mpllibs::metamonad::lazy;
+using mpllibs::metamonad::lazy_argument;
 using mpllibs::metamonad::returns;
 
 #if defined(BOOST_NO_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
@@ -45,8 +47,8 @@ namespace
     lazy<
       eval_if<
         less<N, int_<1> >,
-        int_<1>,
-        times<fact<minus<N, int_<1> > >, N>
+        lazy_argument<int_<1> >,
+        lazy_argument<times<fact<minus<N, int_<1> > >, N> >
       >
     >
   ));

@@ -18,6 +18,7 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
+#include <mpllibs/metamonad/lazy_argument.hpp>
 #include <mpllibs/metamonad/eval_let.hpp>
 
 #include <boost/mpl/fold.hpp>
@@ -96,8 +97,8 @@ namespace mpllibs
                     lazy_protect_args<boost::is_same<no_case, c> >
                   >
                 >,
-                lazy_protect_args<impl::case_check_match<E, c> >,
-                lazy_protect_args<returns<s> >
+                already_lazy<impl::case_check_match<E,c> >,
+                already_lazy<returns<s> >
               >
             >
           >
@@ -105,8 +106,8 @@ namespace mpllibs
         lazy<
           boost::mpl::eval_if<
             boost::is_same<nothing, lazy_protect_args<r> >,
-            exception<no_case_matched<lazy_protect_args<E> > >,
-            impl::get_just_data<lazy_protect_args<r> >
+            lazy_argument<exception<no_case_matched<lazy_protect_args<E> > > >,
+            lazy_argument<impl::get_just_data<lazy_protect_args<r> > >
           >
         >
       >

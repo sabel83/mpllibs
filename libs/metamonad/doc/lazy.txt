@@ -40,16 +40,6 @@ boost::mpl::plus<
 >::type
 --------------------------------------
 
-Some metafunctions are handled specially:
-
-   * +boost::mpl::eval_if+. Their second and third
-     arguments are not evaluated to avoid accidentally evaluating an expression
-     that should never be evaluated.
-   * +boost::mpl::lambda+. Its content is assumed to be a placeholder expression
-     and is wrapped by +lazy+, but not evaluated. This +lazy+ wrapping the
-     content is evaluated when the body of the lambda expression is evaluated,
-     thus when the lambda expression gets called.
-
 Header
 ------
 
@@ -84,38 +74,7 @@ is equivalent to
 c::type
 --------------------------------------
 
-For any +p+ nullary template metafunction evaluating to a boolean and +n+, +t+,
-+f+ classes the following are equivalent:
-
---------------------------------------
-lazy<boost::mpl::eval_if<p, t, f> >::type
-boost::mpl::eval_if<lazy<p>::type, lazy<t>, lazy<f> >::type
---------------------------------------
-
---------------------------------------
-lazy<boost::mpl::if_<p, t, f> >::type
-boost::mpl::if_<lazy<p>::type, lazy<t>, lazy<f> >::type
---------------------------------------
-
---------------------------------------
-lazy<boost::mpl::lambda<t> >::type
-boost::mpl::lambda<lazy<t> >::type
---------------------------------------
-
---------------------------------------
-lazy<let<n, t, f> >::type
-let<n, lazy<t>, lazy<f> >::type
---------------------------------------
-
---------------------------------------
-lazy<letrec<n, t, f> >::type
-letrec<n, lazy<t>, lazy<f> >::type
---------------------------------------
-
---------------------------------------
-lazy<lambda<n, t> >::type
-lambda<n, lazy<t> >::type
---------------------------------------
+For any +t+ class the following are equivalent:
 
 --------------------------------------
 lazy<lazy<t> >::type
