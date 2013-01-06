@@ -19,8 +19,12 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
+#include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/arithmetic/dec.hpp>
+#include <boost/preprocessor/repetition/enum.hpp>
+#include <boost/preprocessor/tuple/eat.hpp>
+#include <boost/preprocessor/cat.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/pair.hpp>
@@ -85,18 +89,11 @@ namespace mpllibs
       returns<return_<Monad1, typename do_substitute<Monad1, T>::type> >
     {};
 
-    #ifdef MPLLIBS_DO_CLASS
-      #error MPLLIBS_DO_CLASS alread defined
-    #endif
-    #define MPLLIBS_DO_CLASS(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) class
-    
     #ifdef MPLLIBS_DO_REC_CASE
       #error MPLLIBS_DO_REC_CASE alread defined
     #endif
     #define MPLLIBS_DO_REC_CASE(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) \
-      typename do_substitute<Monad, X##n>::type
+      typename do_substitute<Monad, BOOST_PP_CAT(X, n)>::type
 
     #ifdef MPLLIBS_DO_TEMPLATE_CASE
       #error MPLLIBS_DO_TEMPLATE_CASE already defined
@@ -104,13 +101,11 @@ namespace mpllibs
     #define MPLLIBS_DO_TEMPLATE_CASE(z, n, unused) \
       template < \
         class Monad, \
-        template<BOOST_PP_REPEAT(n, MPLLIBS_DO_CLASS, ~) > class T, \
+        template<BOOST_PP_ENUM(n, class BOOST_PP_TUPLE_EAT(3), ~) > class T, \
         BOOST_PP_ENUM_PARAMS(n, class X) \
       > \
       struct do_substitute<Monad, T<BOOST_PP_ENUM_PARAMS(n, X)> > : \
-        mpllibs::metamonad::returns< \
-          T< BOOST_PP_REPEAT(n, MPLLIBS_DO_REC_CASE, ~) > \
-        > \
+        mpllibs::metamonad::returns<T<BOOST_PP_ENUM(n,MPLLIBS_DO_REC_CASE,~)> >\
       {};
     
     BOOST_PP_REPEAT_FROM_TO(
@@ -121,7 +116,6 @@ namespace mpllibs
     )
 
     #undef MPLLIBS_DO_TEMPLATE_CASE
-    #undef MPLLIBS_DO_CLASS
     #undef MPLLIBS_DO_REC_CASE
 
     /*
@@ -146,19 +140,6 @@ namespace mpllibs
     /*
      * don
      */
-     
-    #ifdef MPLLIBS_DO_CLASS_CASE
-      #error MPLLIBS_DO_CLASS_CASE already defined
-    #endif
-    #define MPLLIBS_DO_CLASS_CASE(z, n, unused) \
-      , class E##n
-    
-    #ifdef MPLLIBS_DO_CLASS_USE_CASE
-      #error MPLLIBS_DO_CLASS_USE_CASE already defined
-    #endif
-    #define MPLLIBS_DO_CLASS_USE_CASE(z, n, unused) \
-      BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) E##n
-
     #ifdef MPLLIBS_DO_CASE
       #error MPLLIBS_DO_CASE already defined
     #endif
@@ -166,16 +147,16 @@ namespace mpllibs
     #define MPLLIBS_DO_CASE(z, n, unused) \
       template < \
         class Monad, \
-        class T \
-        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_CASE, ~) \
+        class T BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
+        BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), class E) \
       > \
-      struct do##n : \
+      struct BOOST_PP_CAT(do, n) : \
         boost::mpl::apply_wrap2< \
           typename monad<Monad>::bind_, \
           typename T::type, \
           typename do_impl< \
             Monad, \
-            BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
+            BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), E) \
           >::type \
         > \
       {}; \
@@ -183,42 +164,31 @@ namespace mpllibs
       template < \
         class Monad, \
         class Name, \
-        class Ex \
-        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_CASE, ~) \
+        class Ex BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
+        BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), class E) \
       > \
-      struct do##n< \
+      struct BOOST_PP_CAT(do, n)< \
         Monad, \
         set<Name, Ex> BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
-        BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
+        BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), E) \
       > : \
         boost::mpl::apply_wrap2< \
           typename monad<Monad>::bind, \
           typename do1<Monad, Ex>::type, \
-          typename lambda< \
+          lambda< \
             Name, \
-            do_impl< \
-              Monad, \
-              BOOST_PP_REPEAT_FROM_TO(1, n, MPLLIBS_DO_CLASS_USE_CASE, ~) \
-            > \
-          >::type \
+            do_impl<Monad, BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), E)> \
+          > \
         > \
       {};
     
     BOOST_PP_REPEAT_FROM_TO(2, MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_CASE, ~)
     
     #undef MPLLIBS_DO_CASE
-    #undef MPLLIBS_DO_CLASS_USE_CASE
-    #undef MPLLIBS_DO_CLASS_CASE
         
     /*
      * do_impl
      */
-    #ifdef MPLLIBS_DO_UNUSED_PARAM
-      #error MPLLIBS_DO_UNUSED_PARAM already defined
-    #endif
-    #define MPLLIBS_DO_UNUSED_PARAM(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) boost::mpl::na
-    
     #ifdef MPLLIBS_DO_CASE
       #error MPLLIBS_DO_CASE already defined
     #endif
@@ -227,19 +197,18 @@ namespace mpllibs
       struct do_impl< \
         Monad, \
         BOOST_PP_ENUM_PARAMS(n, E) BOOST_PP_COMMA_IF(n) \
-        BOOST_PP_REPEAT( \
+        BOOST_PP_ENUM( \
           BOOST_PP_SUB(MPLLIBS_DO_MAX_ARGUMENT, n), \
-          MPLLIBS_DO_UNUSED_PARAM, \
+          boost::mpl::na BOOST_PP_TUPLE_EAT(3), \
           ~ \
         ) \
       > : \
-        do##n<Monad, BOOST_PP_ENUM_PARAMS(n, E)> \
+        BOOST_PP_CAT(do, n)<Monad, BOOST_PP_ENUM_PARAMS(n, E)> \
       {};
   
     BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_CASE, ~)
     
     #undef MPLLIBS_DO_CASE
-    #undef MPLLIBS_DO_UNUSED_PARAM
     
     /*
      * do_
@@ -248,7 +217,7 @@ namespace mpllibs
       #error MPLLIBS_DO_ARG already defined
     #endif
     #define MPLLIBS_DO_ARG(z, n, unused) \
-      , typename do_substitute<Monad, E##n>::type
+      , typename do_substitute<Monad, BOOST_PP_CAT(E, n)>::type
      
     template <
       class Monad,
