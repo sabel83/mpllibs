@@ -69,7 +69,7 @@ namespace mpllibs
           template <class Body>
           struct apply :
             eval_match_let<
-              exception<var<d> >, typename Exception::type,
+              exception<d>, typename Exception::type,
               lazy<
                 boost::mpl::if_<
                   boost::mpl::or_<

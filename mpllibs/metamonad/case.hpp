@@ -50,6 +50,16 @@ namespace mpllibs
 
     namespace impl
     {
+      // Custom names are needed to avoid "let"'s A be the same as one of the
+      // names used
+      struct let_case_c_;
+      struct let_case_r_;
+      struct let_case_s_;
+
+      typedef var<let_case_c_> let_case_c;
+      typedef var<let_case_r_> let_case_r;
+      typedef var<let_case_s_> let_case_s;
+
       template <class T>
       struct get_just_data;
 
@@ -81,33 +91,37 @@ namespace mpllibs
     >
     struct case_ :
       eval_let<
-        r,
+        impl::let_case_r,
         boost::mpl::fold<
           boost::mpl::vector<BOOST_PP_ENUM_PARAMS(MPLLIBS_LIMIT_CASE_SIZE, C)>,
           nothing,
-          lambda<s, c,
+          lambda<impl::let_case_s, impl::let_case_c,
             // s:
             //  nothing -> no case matched so far
             //  just<X> -> a case matched, the result is X
             lazy<
               boost::mpl::eval_if<
                 boost::mpl::and_<
-                  lazy_protect_args<boost::is_same<nothing, s> >,
+                  lazy_protect_args<boost::is_same<nothing, impl::let_case_s> >,
                   boost::mpl::not_<
-                    lazy_protect_args<boost::is_same<no_case, c> >
+                    lazy_protect_args<
+                      boost::is_same<no_case, impl::let_case_c>
+                    >
                   >
                 >,
-                already_lazy<impl::case_check_match<E,c> >,
-                already_lazy<returns<s> >
+                already_lazy<impl::case_check_match<E, impl::let_case_c> >,
+                already_lazy<returns<impl::let_case_s> >
               >
             >
           >
         >,
         lazy<
           boost::mpl::eval_if<
-            boost::is_same<nothing, lazy_protect_args<r> >,
+            boost::is_same<nothing, lazy_protect_args<impl::let_case_r> >,
             lazy_argument<exception<no_case_matched<lazy_protect_args<E> > > >,
-            lazy_argument<impl::get_just_data<lazy_protect_args<r> > >
+            lazy_argument<
+              impl::get_just_data<lazy_protect_args<impl::let_case_r> >
+            >
           >
         >
       >

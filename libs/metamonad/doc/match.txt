@@ -68,22 +68,22 @@ match<int, double>::type
 exception<...>
 
 match<var<x>, int>::type
-map<pair<x, int>>
+map<pair<var<x>, int>>
 
 match<t1<var<x>, var<y>>, t1<int, double>>::type
-map<pair<x, int>, pair<y, double>>
+map<pair<var<x>, int>, pair<var<y>, double>>
 
 match<t1<var<x>, var<y>>, t2<int, double>>::type
 exception<...>
 
 match<t1<var<x>, var<x>>, t1<int, int>>::type
-map<pair<x, int>>
+map<pair<var<x>, int>>
 
 match<t1<var<x>, var<x>>, t1<int, double>>::type
 exception<...>
 
 match<var<x>, t1<int, double>>::type
-map<pair<x, t1<int, double>>>
+map<pair<var<x#, t1<int, double>>>
 --------------------------------------
 
 Example
@@ -104,7 +104,7 @@ struct maybe_something :
 typedef
   boost::mpl::at<
     match<just<var<x>>, maybe_something<int>::type>::type,
-    x
+    var<x>
   >::type
   this_is_double;
 --------------------------------------

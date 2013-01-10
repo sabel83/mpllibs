@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE(test_eval_match_let)
   using mpllibs::metamonad::var;
 
   meta_require<
-    equal_to<int13, eval_match_let<var<x>, int11, plus<int2, x> >::type>
+    equal_to<int13, eval_match_let<x, int11, plus<int2, x> >::type>
   >(MPLLIBS_HERE, "test_evaluation_of_expression");
 
 }

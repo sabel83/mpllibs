@@ -52,7 +52,10 @@ namespace mpllibs
     MPLLIBS_METAFUNCTION(var, (Name)) ((tmp_value<var<Name> >));
 
     template <class Pattern, class Value>
-    struct match : exception<bad_match<Pattern, Value> > {};
+    struct match_impl : exception<bad_match<Pattern, Value> > {};
+
+    template <class Pattern, class Value>
+    struct match : match_impl<Pattern, Value> {};
 
     template <class Value>
     struct match<_, Value> : boost::mpl::map<> {};
@@ -62,7 +65,7 @@ namespace mpllibs
 
     template <class Name, class Value>
     struct match<var<Name>, Value> :
-      boost::mpl::map<boost::mpl::pair<Name, Value> >
+      boost::mpl::map<boost::mpl::pair<var<Name>, Value> >
     {};
 
     namespace impl
@@ -164,7 +167,9 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS(n, class V) \
       > \
       struct \
-        match<T<BOOST_PP_ENUM_PARAMS(n, P)>, T<BOOST_PP_ENUM_PARAMS(n, V)> > : \
+        match_impl< \
+          T<BOOST_PP_ENUM_PARAMS(n, P)>, T<BOOST_PP_ENUM_PARAMS(n, V)> \
+        > : \
         impl::match_impl< \
           boost::mpl::vector<BOOST_PP_ENUM(n, MPLLIBS_WRAPPED, P)>, \
           boost::mpl::vector<BOOST_PP_ENUM(n, MPLLIBS_WRAPPED, V)> \

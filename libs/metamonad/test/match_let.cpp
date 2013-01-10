@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(test_match_let)
   using namespace mpllibs::metamonad::name;
 
   meta_require<
-    is_same<int, match_let<var<x>, returns<int>, x>::type>
+    is_same<int, match_let<x, returns<int>, x>::type>
   >(MPLLIBS_HERE, "test_setting_value");
 
   meta_require<
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(test_match_let)
     is_same<
       some_other_template<int, double>,
       match_let<
-        some_template<var<x>, var<y> >, returns<some_template<int, double> >,
+        some_template<x, y>, returns<some_template<int, double> >,
         some_other_template<x, y>
       >::type
     >
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(test_match_let)
         matches<int, some_template<double, int> >
       >,
       match_let<
-        var<x>, returns<double>,
+        x, returns<double>,
         eval_case< returns<int>,
           matches<int, some_template<x, int> >
         >

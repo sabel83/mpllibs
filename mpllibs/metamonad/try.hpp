@@ -8,10 +8,12 @@
 
 #include <mpllibs/metamonad/do_try.hpp>
 #include <mpllibs/metamonad/do.hpp>
+#include <mpllibs/metamonad/var.hpp>
 
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
+#include <boost/preprocessor/cat.hpp>
 
 namespace mpllibs
 {
@@ -21,7 +23,8 @@ namespace mpllibs
       #error MPLLIBS_DEFINE_NAME already defined
     #endif
     #define MPLLIBS_DEFINE_NAME(z, n, unused) \
-      struct t##n;
+      struct BOOST_PP_CAT(t_, n); \
+      typedef var<BOOST_PP_CAT(t_, n)> BOOST_PP_CAT(t, n);
 
     BOOST_PP_REPEAT(MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DEFINE_NAME, ~)
     
@@ -40,7 +43,8 @@ namespace mpllibs
       #error MPLLIBS_SET_T already defined
     #endif
     #define MPLLIBS_SET_T(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) mpllibs::metamonad::set<t##n, T##n>
+      BOOST_PP_COMMA_IF(n) \
+      mpllibs::metamonad::set<BOOST_PP_CAT(t, n), BOOST_PP_CAT(T, n)>
     
     #ifdef MPLLIBS_TRY_CASE
       #error MPLLIBS_TRY_CASE already defined

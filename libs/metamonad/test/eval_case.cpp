@@ -83,9 +83,7 @@ BOOST_AUTO_TEST_CASE(test_eval_case)
     is_same<
       some_other_template<int, double>,
       eval_case< returns<some_template<int, double> >,
-        matches< some_template<var<x>, var<y> >,
-          returns<some_other_template<x, y> >
-        >
+        matches< some_template<x, y>, returns<some_other_template<x, y> > >
       >::type
     >
   >(MPLLIBS_HERE, "test_vars_in_pattern");
@@ -94,11 +92,7 @@ BOOST_AUTO_TEST_CASE(test_eval_case)
     equal_to<
       int13,
       eval_case< int11,
-        matches< var<x>,
-          eval_case< int2,
-            matches<var<y>, boost::mpl::plus<x, y> >
-          >
-        >
+        matches< x, eval_case< int2, matches<y, boost::mpl::plus<x, y> > > >
       >::type
     >
   >(MPLLIBS_HERE, "test_nested_case");

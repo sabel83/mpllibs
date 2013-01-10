@@ -168,10 +168,7 @@ BOOST_AUTO_TEST_CASE(test_match)
   >(MPLLIBS_HERE, "test_match_same_type");
 
   meta_require<
-    same_map<
-      map<pair<x, int13> >,
-      match<var<x>, int13>::type
-    >
+    same_map<map<pair<x, int13> >, match<x, int13>::type>
   >(MPLLIBS_HERE, "test_match_var");
 
   meta_require<
@@ -194,7 +191,7 @@ BOOST_AUTO_TEST_CASE(test_match)
     same_map<
       map<pair<x, int13> >,
       match<
-        some_template<int, double, var<x> >,
+        some_template<int, double, x>,
         some_template<int, double, int13>
       >::type
     >
@@ -204,7 +201,7 @@ BOOST_AUTO_TEST_CASE(test_match)
     same_map<
       map<pair<x, int13> >,
       match<
-        some_template<var<x>, double, var<x> >,
+        some_template<x, double, x>,
         some_template<int13, double, int13>
       >::type
     >
@@ -214,7 +211,7 @@ BOOST_AUTO_TEST_CASE(test_match)
     is_same<
       exception<bad_match<x, double> >,
       match<
-        some_template<var<x>, int, var<x> >,
+        some_template<x, int, x>,
         some_template<char, int, double>
       >::type
     >
@@ -224,7 +221,7 @@ BOOST_AUTO_TEST_CASE(test_match)
     same_map<
       map<pair<x, int13>, pair<y, int11> >,
       match<
-        some_template<var<y>, double, var<x> >,
+        some_template<y, double, x>,
         some_template<int11, double, int13>
       >::type
     >
@@ -233,7 +230,7 @@ BOOST_AUTO_TEST_CASE(test_match)
   meta_require<
     same_map<
       map<pair<x, na> >,
-      match<some_template<var<x>, _, _>, some_template<na, na, na> >::type
+      match<some_template<x, _, _>, some_template<na, na, na> >::type
     >
   >(MPLLIBS_HERE, "test_match_with_na_template_argument");
 }

@@ -31,8 +31,8 @@ namespace mpllibs
       typedef
         lambda<a, f,
           eval_case< a,
-            matches<left<_>,        a>,
-            matches<right<var<x> >, boost::mpl::apply<f, x> >
+            matches<left<_>,  a>,
+            matches<right<x>, boost::mpl::apply<f, x> >
           >
         >
         bind;

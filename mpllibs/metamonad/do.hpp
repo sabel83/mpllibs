@@ -242,11 +242,19 @@ namespace mpllibs
     {
       // Custom names are needed to avoid "let"'s A be the same as one of the
       // names used
-      struct let_do_c;
-      struct let_do_d;
-      struct let_do_s;
-      struct let_do_v;
-      struct let_do_w;
+      struct let_do_c_;
+      struct let_do_d_;
+      struct let_do_n_;
+      struct let_do_s_;
+      struct let_do_v_;
+      struct let_do_w_;
+
+      typedef var<let_do_c_> let_do_c;
+      typedef var<let_do_d_> let_do_d;
+      typedef var<let_do_n_> let_do_n;
+      typedef var<let_do_s_> let_do_s;
+      typedef var<let_do_v_> let_do_v;
+      typedef var<let_do_w_> let_do_w;
 
       MPLLIBS_METAFUNCTION(let_do_args, (A)(E1)(V))
       ((
@@ -255,17 +263,33 @@ namespace mpllibs
           boost::mpl::pair<boost::mpl::vector<>, boost::mpl::true_>,
           lambda<let_do_s, let_do_c,
             eval_match_let<
-              boost::mpl::pair<var<let_do_v>, var<let_do_d> >,
+              boost::mpl::pair<let_do_v, let_do_d>,
               let_do_s,
               boost::mpl::eval_if< let_do_d,
                 eval_case< returns<let_do_c>,
-                  matches<set<A, _>,
+                  matches<set<let_do_n, let_do_w>,
                     lazy<
-                      boost::mpl::pair<
-                        lazy_protect_args<
-                          boost::mpl::push_back<let_do_v, let_do_c>
+                      boost::mpl::eval_if<
+                        lazy_protect_args<boost::is_same<A, let_do_n> >,
+                        lazy_argument<
+                          boost::mpl::pair<
+                            lazy_protect_args<
+                              boost::mpl::push_back<let_do_v, let_do_c>
+                            >,
+                            boost::mpl::false_
+                          >
                         >,
-                        boost::mpl::false_
+                        lazy_argument<
+                          boost::mpl::pair<
+                            boost::mpl::push_back<
+                              already_lazy<let_do_v>,
+                              lazy_protect_args<
+                                let<A, E1, set<let_do_n, let_do_w> >
+                              >
+                            >,
+                            boost::mpl::true_
+                          >
+                        >
                       >
                     >
                   >,
@@ -313,7 +337,7 @@ namespace mpllibs
           f<Monad, BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)> \
         > : \
         eval_match_let< \
-          boost::mpl::pair<var<impl::let_do_w>, _>, \
+          boost::mpl::pair<impl::let_do_w, _>, \
           impl::let_do_args< \
             A, \
             E1, \

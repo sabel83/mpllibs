@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(test_case)
     is_same<
       some_other_template<int, double>,
       case_< returns<some_template<int, double> >,
-        matches< some_template<var<x>, var<y> >, some_other_template<x, y> >
+        matches< some_template<x, y>, some_other_template<x, y> >
       >::type
     >
   >(MPLLIBS_HERE, "test_vars_in_pattern");
@@ -91,12 +91,12 @@ BOOST_AUTO_TEST_CASE(test_case)
   meta_require<
     is_same<
       case_< int2,
-        matches<var<y>, boost::mpl::plus<int11, y> >
+        matches<y, boost::mpl::plus<int11, y> >
       >,
       case_< int11,
-        matches< var<x>,
+        matches< x,
           case_< int2,
-            matches<var<y>, boost::mpl::plus<x, y> >
+            matches<y, boost::mpl::plus<x, y> >
           >
         >
       >::type

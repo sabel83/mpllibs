@@ -35,8 +35,8 @@ namespace mpllibs
       typedef
         lambda<a, f,
           eval_case< a,
-            matches<nothing,       returns<a> >,
-            matches<just<var<x> >, boost::mpl::apply<f, x> >
+            matches<nothing, returns<a> >,
+            matches<just<x>, boost::mpl::apply<f, x> >
           >
         >
         bind;
@@ -70,12 +70,12 @@ namespace mpllibs
             matches< nothing,
               returns<b>
             >,
-            matches< just<var<c> >,
+            matches< just<c>,
               eval_case< b,
                 matches< nothing,
                   returns<a>
                 >,
-                matches< just<var<d> >,
+                matches< just<d>,
                   lazy<
                     just<
                       lazy_protect_args<mpllibs::metamonad::mappend<T, c, d> >

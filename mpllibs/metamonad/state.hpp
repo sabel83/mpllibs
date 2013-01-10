@@ -33,7 +33,7 @@ namespace mpllibs
       typedef
         lambda<a, f, s,
           eval_match_let<
-            boost::mpl::pair<var<t>, var<u> >,
+            boost::mpl::pair<t, u>,
               lazy<boost::mpl::apply_wrap1<make_mpl_lambda<a>, s> >,
             lazy<
               boost::mpl::apply_wrap1<
