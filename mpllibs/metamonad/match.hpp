@@ -49,8 +49,6 @@ namespace mpllibs
     MPLLIBS_METAFUNCTION(bad_match, (Pattern)(Value))
     ((tmp_value<bad_match<Pattern, Value> >));
 
-    MPLLIBS_METAFUNCTION(var, (Name)) ((tmp_value<var<Name> >));
-
     template <class Pattern, class Value>
     struct match_impl : exception<bad_match<Pattern, Value> > {};
 

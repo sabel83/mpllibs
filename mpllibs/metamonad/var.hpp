@@ -6,12 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/metafunction.hpp>
+
 namespace mpllibs
 {
   namespace metamonad
   {
-    template <class T>
-    struct var;
+    MPLLIBS_METAFUNCTION(var, (Name)) ((tmp_value<var<Name> >));
   }
 }
 
