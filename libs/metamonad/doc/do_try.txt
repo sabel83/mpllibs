@@ -22,7 +22,17 @@ struct do_try
     {
       // unspecified...
     };
-  }
+  };
+
+  template <class Tag, class Name>
+  struct catch_c
+  {
+    template <class Body>
+    struct apply
+    {
+      // unspecified...
+    };
+  };
 };
 --------------------------------------
 
@@ -33,22 +43,27 @@ Description
 +do_try+ implements a compile-time try-catch block. The body of the try
 block is a link:MPLLIBS_DO.html[MPLLIBS_DO]+<exception_tag>+ block, its steps
 are +Step1+, ..., +Stepn+. The +TRY+ block can be followed by any number of
-+catch_+ blocks, where +catch_+ is a nested template metafunction class of
-+do_try+ parametrised by a +tag+ and an arbitrary class, +Name+. The
++catch_+ and +catch_c+ blocks, where +catch_+ is a nested template metafunction
+class of +do_try+ parametrised by a +tag+ and an arbitrary class, +Name+. The
 metafunction class takes a nullary metafunction which is the body of the catch
 block. When the result of the try block is a compile-time exception and the
 +tag+ of the exception's data is the same as +Tag+, the exception is bound to
 the name +Name+ in +Body+ using a link:let.html[let] expression and the result
 of this is evaluated. Otherwise the catch block is skipped.
 
-The body of the +catch_+ metafunction classes contains another +catch_+
-template, thus any number of catch blocks can be chained together. They are
-evaluated in order and the first one that matches is selected.
+The body of the +catch_+ and +catch_c+ metafunction classes contains other
++catch_+ and +catch_c+ template classes, thus any number of catch blocks can be
+chained together. They are evaluated in order and the first one that matches is
+selected.
 
-There is a special +tag+ that can be used as the +Tag+ argument of +catch_+:
+There is a special +tag+ that can be used as the +Tag+ argument of +catch_+ and
++catch_c+:
 +catch_any+. When this is used, the catch block is selected regardless of the
 +tag+ of the exception's data. It should be used as the last element of a chain
 of catch blocks, because the catch blocks following it are never selected.
+
+A +catch_+ block expects a link:syntax.html[+syntax+] as the expression to
+run when that case is selected, +catch_c+ expects an angle-bracket expression.
 
 Header
 ------
@@ -71,14 +86,14 @@ struct error_tag_2;
 struct unknown_error_detected;
 
 do_try<
-  set<r, may_fail1<int_<13> >,
-  may_fail2<r>
+  syntax<set<r, may_fail1<int_<13>>>,
+  syntax<may_fail2<r>>
 >
-  ::catch_<error_tag_1, e>
-    ::apply<int_<11> >
-  ::catch_<error_tag_2, e>
+  ::catch_c<error_tag_1, e>
+    ::apply<int_<11>>
+  ::catch_c<error_tag_2, e>
     ::apply<e>
-  ::catch_<catch_any, e>
+  ::catch_c<catch_any, e>
     ::apply<unknown_error_detected>
 --------------------------------------
 

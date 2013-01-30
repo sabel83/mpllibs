@@ -33,6 +33,9 @@ referencing these names shorter, even in header files.
 The header contains +using namespace mpllibs::metamonad::name+ in
 +mpllibs::metamonad+, thus the names are available in that namespace as well.
 
+The classes can be used at any location where link:var.html[+variables+] are
+expected.
+
 Header
 ------
 

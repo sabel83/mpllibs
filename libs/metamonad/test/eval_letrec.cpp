@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/eval_letrec.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -26,9 +27,13 @@ BOOST_AUTO_TEST_CASE(test_eval_letrec)
   
   using mpllibs::metamonad::eval_letrec;
   using mpllibs::metamonad::lazy;
+  using mpllibs::metamonad::syntax;
 
   meta_require<
-    equal_to<int13, eval_letrec<x, int11, lazy<plus<int2, x> > >::type>
+    equal_to<
+      int13,
+      eval_letrec<x, syntax<int11>, syntax<lazy<plus<int2, x> > > >::type
+    >
   >(MPLLIBS_HERE, "test_evaluation_of_expression");
 }
 

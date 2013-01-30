@@ -32,6 +32,23 @@
   #define MPLLIBS_DATA_MAX_TEMPLATE_ARGUMENT 10
 #endif
 
+#ifdef MPLLIBS_EVAL_DATA_ARG
+  #error MPLLIBS_EVAL_DATA_ARG already defined
+#endif
+#define MPLLIBS_EVAL_DATA_ARG(z, n, unused) typename BOOST_PP_CAT(T, n)::type
+
+#ifdef MPLLIBS_EVAL_DATA_ARGS
+  #error MPLLIBS_EVAL_DATA_ARGS already defined
+#endif
+#define MPLLIBS_EVAL_DATA_ARGS(arity) \
+  <BOOST_PP_ENUM(arity, MPLLIBS_EVAL_DATA_ARG, ~)>
+
+#ifdef MPLLIBS_NAMED_DATA_ARGS
+  #error MPLLIBS_NAMED_DATA_ARGS already defined
+#endif
+#define MPLLIBS_NAMED_DATA_ARGS(arity) \
+  template <BOOST_PP_ENUM_PARAMS(arity, class T)>
+
 #ifdef MPLLIBS_DATA_ARGS
   #error MPLLIBS_DATA_ARGS already defined
 #endif
@@ -50,10 +67,17 @@
   #error MPLLIBS_DATA_CONSTR already defined
 #endif
 #define MPLLIBS_DATA_CONSTR(name, arity) \
-  BOOST_PP_IF(arity, MPLLIBS_DATA_ARGS, BOOST_PP_TUPLE_EAT(1))(arity) \
+  BOOST_PP_IF(arity, MPLLIBS_NAMED_DATA_ARGS, BOOST_PP_TUPLE_EAT(1))(arity) \
   struct name \
   { \
-    typedef name type; \
+    typedef \
+      name \
+        BOOST_PP_IF( \
+          arity, \
+          MPLLIBS_EVAL_DATA_ARGS, \
+          BOOST_PP_TUPLE_EAT(1) \
+        )(arity) \
+      type; \
     typedef mpllibs::metamonad::algebraic_data_type_tag tag; \
   };
 

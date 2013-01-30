@@ -23,14 +23,18 @@ Description
 -----------
 
 It implements the +case+ construct of functional programming languages. The
-classes +C1+ ... +Cn+ have to be instances of the
+classes +C1+ ... +Cn+ have to be instances one of the following templates:
 
 --------------------------------------
 template <class Pattern, class Body>
 struct matches;
+
+template <class Pattern, class Body>
+struct matches_c;
 --------------------------------------
 
-template. When +case_+ is evaluated, the angyl-bracket expression +Exp+ is
+The arguments of both +matches+ have to be link:syntax.html[+syntax+]es.
+When +case_+ is evaluated, the angyl-bracket expression +Exp+ is
 evaluated and matched against the +Pattern+ patterns in order. When it matches
 one of them, the +Body+ belonging to it is returned. When the expression doesn't
 match any of the patterns, an link:exception.html[+exception+] is returned. When
@@ -56,6 +60,9 @@ For any +m, n > 0+, +e+, +p1+, ..., +pn+, +b1+, ..., +bn+, +q1+, ..., +qm+,
 equivalent:
 
 --------------------------------------
+matches_c<p1, b1>
+matches<syntax<p1>, syntax<b1> >
+
 case_<
   e,
   matches<p1, b1>,
@@ -100,11 +107,13 @@ struct maybe_something :
 {};
 
 typedef
-  case_< maybe_something<int>::type,
-    matches<just<var<x>>, returns<x>>,
-    matches<nothing,      nothing>,
-    matches<_,            nothing>
-  >::type::type
+  eval_syntax<
+    case_< maybe_something<int>::type,
+      matches_c<just<var<x>>, returns<x>>,
+      matches_c<nothing,      nothing>,
+      matches_c<_,            nothing>
+    >
+  >::type
   this_is_double;
 --------------------------------------
 

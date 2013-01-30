@@ -44,7 +44,7 @@ eval_case<e, c1, ..., cn>
 is equivalent to
 
 --------------------------------------
-eval<case_<e, c1, ..., cn>>
+eval_syntax<case_<e, c1, ..., cn>>
 --------------------------------------
 
 Example
@@ -64,9 +64,9 @@ struct maybe_something :
 
 typedef
   eval_case< maybe_something<int>::type,
-    matches<just<var<x>>, returns<x>>,
-    matches<nothing,      nothing>,
-    matches<_,            nothing>
+    matches_c<just<var<x>>, returns<x>>,
+    matches_c<nothing,      nothing>,
+    matches_c<_,            nothing>
   >::type
   this_is_double;
 --------------------------------------

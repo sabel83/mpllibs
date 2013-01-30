@@ -19,7 +19,7 @@
 
 #include <mpllibs/metaparse/build_parser.hpp>
 
-#include <mpllibs/metamonad/do_try.hpp>
+#include <mpllibs/metamonad/do_try_c.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/name.hpp>
@@ -55,7 +55,7 @@ using mpllibs::metaparse::entire_input;
 
 using mpllibs::metatest::to_stream;
 
-using mpllibs::metamonad::do_try;
+using mpllibs::metamonad::do_try_c;
 using mpllibs::metamonad::exception;
 using mpllibs::metamonad::set;
 using mpllibs::metamonad::tmp_tag;
@@ -94,9 +94,6 @@ typedef token<int_> int_token;
 struct division_by_zero_tag : tmp_tag<division_by_zero_tag> {};
 struct division_by_zero : tmp_value<division_by_zero, division_by_zero_tag> {};
 
-struct new_value;
-struct state;
-
 template <class T, char C>
 struct is_c : bool_<T::type::value == C> {};
 
@@ -104,14 +101,10 @@ struct eval_plus
 {
   template <class C, class State>
   struct apply :
-    do_try<
-      set<state, State>,
-      set<new_value, back<C> >,
-      eval_if<
-        is_c<front<C>, '+'>,
-        plus<state, new_value>,
-        minus<state, new_value>
-      >
+    do_try_c<
+      set<s, State>,
+      set<v, back<C> >,
+      eval_if<is_c<front<C>, '+'>, plus<s, v>, minus<s, v> >
     >
   {};
 };
@@ -122,16 +115,16 @@ struct eval_mult
 {
   template <class C, class State>
   struct apply :
-    do_try<
-      set<state, State>,
-      set<new_value, back<C> >,
+    do_try_c<
+      set<s, State>,
+      set<v, back<C> >,
       eval_if<
         is_c<front<C>, '*'>,
-        times<state, new_value>,
+        times<s, v>,
         eval_if<
-          equal_to<new_value, boost::mpl::int_<0> >,
+          equal_to<v, boost::mpl::int_<0> >,
           exception<division_by_zero>,
-          divides<state, new_value>
+          divides<s, v>
         >
       >
     >

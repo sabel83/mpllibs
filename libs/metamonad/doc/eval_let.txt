@@ -44,7 +44,7 @@ eval_let<n, x, f>
 is equivalent to
 
 --------------------------------------
-eval<let<n, x, f>>
+eval_syntax<let<n, x, f>>
 --------------------------------------
 
 Example
@@ -60,8 +60,8 @@ using namespace mpllibs::metamonad::name;
 template <class N>
 struct my_metafunction :
   eval_let<
-    x, plus<n, int_<13> >,
-    times<x, x>
+    x, syntax<plus<n, int_<13>>>,
+    syntax<times<x, x>>
   >
 {};
 --------------------------------------

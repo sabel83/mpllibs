@@ -8,14 +8,14 @@
 
 #include <mpllibs/metamonad/match_let.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/eval.hpp>
+#include <mpllibs/metamonad/eval_syntax.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
     MPLLIBS_METAFUNCTION(eval_match_let, (P)(E1)(E2))
-    ((eval<match_let<P, E1, E2> >));
+    ((eval_syntax<match_let<P, E1, E2> >));
   }
 }
 

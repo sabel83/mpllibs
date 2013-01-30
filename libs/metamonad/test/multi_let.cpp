@@ -8,6 +8,9 @@
 #include <mpllibs/metamonad/multi_let.hpp>
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
+#include <mpllibs/metamonad/eval_syntax.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -17,10 +20,14 @@
 
 #include <boost/type_traits.hpp>
 
+#include "common.hpp"
+
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
   template <class A, class B>
-  struct some_template;
+  struct some_template : tmp_value<some_template<A, B> > {};
 }
 
 BOOST_AUTO_TEST_CASE(test_multi_let)
@@ -29,7 +36,8 @@ BOOST_AUTO_TEST_CASE(test_multi_let)
 
   using mpllibs::metamonad::multi_let;
   using mpllibs::metamonad::eval_case;
-  using mpllibs::metamonad::matches;
+  using mpllibs::metamonad::syntax;
+  using mpllibs::metamonad::eval_syntax;
 
   using boost::mpl::pair;
   using boost::mpl::map;
@@ -39,33 +47,27 @@ BOOST_AUTO_TEST_CASE(test_multi_let)
   using namespace mpllibs::metamonad::name;
 
   meta_require<
-    is_same<int, multi_let<map<pair<x, int> >, x>::type>
+    is_same<
+      int13,
+      eval_syntax<multi_let<map<pair<x, syntax<int13> > >, syntax<x> > >::type
+    >
   >(MPLLIBS_HERE, "test_setting_value");
 
   meta_require<
-    is_same<x, multi_let<map<>, x>::type>
+    is_same<x, eval_syntax<multi_let<map<>, syntax<x> > >::type>
   >(MPLLIBS_HERE, "test_nothing_to_set");
 
   meta_require<
     is_same<
-      some_template<int, double>,
-      multi_let<map<pair<x, int>, pair<y, double> >, some_template<x,y> >::type
-    >
-  >(MPLLIBS_HERE, "test_multiple_variables");
-
-  meta_require<
-    is_same<
-      eval_case< int,
-        matches<int, some_template<double, int> >
-      >,
-      multi_let<
-        map<pair<x, double> >,
-        eval_case< int,
-          matches<int, some_template<x, int> >
+      some_template<int11, int13>,
+      eval_syntax<
+        multi_let<
+          map<pair<x, syntax<int11> >, pair<y, syntax<int13> > >,
+          syntax<some_template<x,y> >
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_case_in_multi_let");
+  >(MPLLIBS_HERE, "test_multiple_variables");
 }
 
 

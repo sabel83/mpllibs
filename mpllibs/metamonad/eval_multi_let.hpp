@@ -8,13 +8,14 @@
 
 #include <mpllibs/metamonad/multi_let.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/eval.hpp>
+#include <mpllibs/metamonad/eval_syntax.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(eval_multi_let, (M)(E)) ((eval<multi_let<M, E> >));
+    MPLLIBS_METAFUNCTION(eval_multi_let, (M)(E))
+    ((eval_syntax<multi_let<M, E> >));
   }
 }
 

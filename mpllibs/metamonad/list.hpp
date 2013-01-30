@@ -33,7 +33,7 @@ namespace mpllibs
     namespace impl
     {
       typedef
-        lambda<a, b,
+        lambda_c<a, b,
           lazy<
             boost::mpl::insert_range<
               already_lazy<a>,
@@ -48,10 +48,10 @@ namespace mpllibs
     template <>
     struct monad<list_tag> : monad_defaults<list_tag>
     {
-      typedef lambda<t, boost::mpl::list<t> > return_;
+      typedef lambda_c<t, boost::mpl::list<t> > return_;
       
       typedef
-        lambda<a, f,
+        lambda_c<a, f,
           boost::mpl::fold<
             boost::mpl::transform_view<a, f>,
             boost::mpl::list<>,
@@ -66,7 +66,7 @@ namespace mpllibs
     {
       typedef boost::mpl::list<> mempty;
       typedef
-        lambda<a, b,
+        lambda_c<a, b,
           boost::mpl::apply_wrap2<
             mpllibs::metamonad::impl::join_lists,
             a,

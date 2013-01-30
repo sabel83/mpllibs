@@ -7,6 +7,7 @@
 
 #include <mpllibs/metamonad/data.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -16,6 +17,8 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/not.hpp>
+
+#include "common.hpp"
 
 namespace
 {
@@ -28,6 +31,8 @@ BOOST_AUTO_TEST_CASE(test_data)
 {
   using mpllibs::metatest::meta_require;
 
+  using mpllibs::metamonad::returns;
+
   using boost::is_same;
 
   using boost::mpl::equal_to;
@@ -38,7 +43,7 @@ BOOST_AUTO_TEST_CASE(test_data)
   >(MPLLIBS_HERE, "test_type_of_nullary_constructor");
 
   meta_require<
-    is_same<con1<int>, con1<int>::type>
+    is_same<con1<int>, con1<returns<int> >::type>
   >(MPLLIBS_HERE, "test_type_of_unary_constructor");
 
   meta_require<

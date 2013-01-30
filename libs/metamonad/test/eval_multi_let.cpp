@@ -28,9 +28,15 @@ BOOST_AUTO_TEST_CASE(test_eval_multi_let)
   using boost::mpl::pair;
   
   using mpllibs::metamonad::eval_multi_let;
+  using mpllibs::metamonad::syntax;
 
   meta_require<
-    equal_to<int13, eval_multi_let<map<pair<x, int11> >, plus<int2, x> >::type>
+    equal_to<
+      int13,
+      eval_multi_let<
+        map<pair<x, syntax<int11> > >, syntax<plus<int2, x> >
+      >::type
+    >
   >(MPLLIBS_HERE, "test_evaluation_of_expression");
 
 }

@@ -45,7 +45,7 @@ letrec<n, x, f>
 is equivalent to
 
 --------------------------------------
-let<n, letrec<n, x, f>, f>
+let<n, syntax<eval_letrec<n, x, f>>, f>
 --------------------------------------
 
 Example
@@ -63,17 +63,19 @@ using boost::mpl::apply;
 struct fact;
 
 typedef
-  letrec<
-    fact,
-    lambda<
-      n,
-      eval_if<
-        equal_to<n, int_<0> >,
-        int_<1>,
-        lazy<times<apply<fact, minus<n, int_<1> > >, n > > >
-      >,
-    lazy<apply<fact, int_<3> > >
-  >::type::type
+  eval_syntax<
+    letrec<
+      fact,
+      lambda<
+        n,
+        eval_if<
+          equal_to<n, int_<0> >,
+          int_<1>,
+          lazy<times<apply<fact, minus<n, int_<1> > >, n > > >
+        >,
+      lazy<apply<fact, int_<3> > >
+    >
+  >::type
   fact_3;
 --------------------------------------
 

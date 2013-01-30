@@ -9,19 +9,24 @@
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/box.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits.hpp>
 
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
   template <class A, class B>
-  struct some_template;
+  struct some_template : tmp_value<some_template<A, B> > {};
 
   template <class A, class B>
-  struct some_other_template;
+  struct some_other_template : tmp_value<some_other_template<A, B> > {};
 }
 
 BOOST_AUTO_TEST_CASE(test_match_let)
@@ -32,39 +37,53 @@ BOOST_AUTO_TEST_CASE(test_match_let)
   using mpllibs::metamonad::var;
   using mpllibs::metamonad::eval_case;
   using mpllibs::metamonad::matches;
+  using mpllibs::metamonad::matches_c;
   using mpllibs::metamonad::returns;
+  using mpllibs::metamonad::syntax;
+  using mpllibs::metamonad::box;
 
   using boost::is_same;
 
   using namespace mpllibs::metamonad::name;
 
   meta_require<
-    is_same<int, match_let<x, returns<int>, x>::type>
+    is_same<
+      syntax<box<int> >,
+      match_let<syntax<x>, returns<box<int> >, syntax<x> >::type
+    >
   >(MPLLIBS_HERE, "test_setting_value");
 
   meta_require<
-    is_same<x, match_let<int, returns<int>, x>::type>
+    is_same<
+      syntax<x>,
+      match_let<syntax<box<int> >, returns<box<int> >, syntax<x> >::type
+    >
   >(MPLLIBS_HERE, "test_nothing_to_set");
 
   meta_require<
     is_same<
-      some_other_template<int, double>,
+      syntax<some_other_template<int, double> >,
       match_let<
-        some_template<x, y>, returns<some_template<int, double> >,
-        some_other_template<x, y>
+        syntax<some_template<x, y> >,
+        returns<some_template<int, double> >,
+        syntax<some_other_template<x, y> >
       >::type
     >
   >(MPLLIBS_HERE, "test_multiple_variables");
 
   meta_require<
     is_same<
-      eval_case< returns<int>,
-        matches<int, some_template<double, int> >
+      syntax<
+        eval_case<returns<box<int> >,
+          matches_c<box<int>, some_template<box<double>, int> >
+        >
       >,
       match_let<
-        x, returns<double>,
-        eval_case< returns<int>,
-          matches<int, some_template<x, int> >
+        syntax<x>, returns<box<double> >,
+        syntax<
+          eval_case< returns<box<int> >,
+            matches_c<box<int>, some_template<x, int> >
+          >
         >
       >::type
     >

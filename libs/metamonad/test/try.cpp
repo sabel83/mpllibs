@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -47,27 +48,28 @@ BOOST_AUTO_TEST_CASE(test_try_)
   using mpllibs::metamonad::exception;
   using mpllibs::metamonad::catch_any;
   using mpllibs::metamonad::try_;
+  using mpllibs::metamonad::syntax;
 
   meta_require<
     equal_to<
       int13,
-      try_<int13>
+      try_<syntax<int13> >
       ::catch_<tag1, x>
-        ::apply<int11>
+        ::apply<syntax<int11> >
       ::type
     >
   >(MPLLIBS_HERE, "test_no_exception");
 
   meta_require<
-    equal_to<int2, try_<plus<int1, int1> >::type>
+    equal_to<int2, try_<syntax<plus<int1, int1> > >::type>
   >(MPLLIBS_HERE, "test_no_exception_no_catch");
 
   meta_require<
     equal_to<
       int11,
-      try_<exception<e1> >
+      try_<syntax<exception<e1> > >
       ::catch_<tag1, x>
-        ::apply<identity<int11> >
+        ::apply<syntax<identity<int11> > >
       ::type
     >
   >(MPLLIBS_HERE, "test_catch");
@@ -75,9 +77,9 @@ BOOST_AUTO_TEST_CASE(test_try_)
   meta_require<
     equal_to<
       int13,
-      try_<exception<int13> >
+      try_<syntax<exception<int13> > >
       ::catch_<tag<int13>::type, x>
-        ::apply<identity<x> >
+        ::apply<syntax<identity<x> > >
       ::type
     >
   >(MPLLIBS_HERE, "test_exception_value_in_catch");
@@ -85,9 +87,9 @@ BOOST_AUTO_TEST_CASE(test_try_)
   meta_require<
     equal_to<
       exception<int13>,
-      try_<exception<int13> >
+      try_<syntax<exception<int13> > >
       ::catch_<tag2, x>
-        ::apply<identity<int11> >
+        ::apply<syntax<identity<int11> > >
       ::type
     >
   >(MPLLIBS_HERE, "test_not_catching");
@@ -95,11 +97,11 @@ BOOST_AUTO_TEST_CASE(test_try_)
   meta_require<
     equal_to<
       int13,
-      try_<exception<e2> >
+      try_<syntax<exception<e2> > >
       ::catch_<tag1, x>
-        ::apply<identity<int11> >
+        ::apply<syntax<identity<int11> > >
       ::catch_<tag2, x>
-        ::apply<identity<int13> >
+        ::apply<syntax<identity<int13> > >
       ::type
     >
   >(MPLLIBS_HERE, "test_second_catch");
@@ -107,20 +109,19 @@ BOOST_AUTO_TEST_CASE(test_try_)
   meta_require<
     equal_to<
       exception<int2>,
-      try_<plus<int1, exception<int2> > >
+      try_<syntax<plus<int1, exception<int2> > > >
       ::catch_<tag1, x>
-        ::apply<identity<int11> >
+        ::apply<syntax<identity<int11> > >
       ::type
     >
   >(MPLLIBS_HERE, "test_exception_propagation");
 
-
   meta_require<
     equal_to<
       int13,
-      try_<exception<e1> >
+      try_<syntax<exception<e1> > >
       ::catch_<catch_any, x>
-        ::apply<identity<int13> >
+        ::apply<syntax<identity<int13> > >
       ::type
     >
   >(MPLLIBS_HERE, "test_catch_any");
@@ -128,9 +129,9 @@ BOOST_AUTO_TEST_CASE(test_try_)
   meta_require<
     equal_to<
       exception<int13>,
-      try_<exception<e1> >
+      try_<syntax<exception<e1> > >
       ::catch_<catch_any, x>
-        ::apply<exception<int13> >
+        ::apply<syntax<exception<int13> > >
       ::type
     >
   >(MPLLIBS_HERE, "test_rethrowing");
@@ -138,11 +139,11 @@ BOOST_AUTO_TEST_CASE(test_try_)
   meta_require<
     equal_to<
       exception<int13>,
-      try_<exception<e1> >
+      try_<syntax<exception<e1> > >
       ::catch_<catch_any, x>
-        ::apply<exception<int13> >
+        ::apply<syntax<exception<int13> > >
       ::catch_<catch_any, x>
-        ::apply<exception<int13> >
+        ::apply<syntax<exception<int13> > >
       ::type
     >
   >(MPLLIBS_HERE, "test_rethrowing_not_caught_by_next_catch");

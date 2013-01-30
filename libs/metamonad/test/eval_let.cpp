@@ -24,9 +24,10 @@ BOOST_AUTO_TEST_CASE(test_eval_let)
   using boost::mpl::plus;
   
   using mpllibs::metamonad::eval_let;
+  using mpllibs::metamonad::syntax;
 
   meta_require<
-    equal_to<int13, eval_let<x, int11, plus<int2, x> >::type>
+    equal_to<int13, eval_let<x, syntax<int11>, syntax<plus<int2, x> > >::type>
   >(MPLLIBS_HERE, "test_evaluation_of_expression");
 
 }

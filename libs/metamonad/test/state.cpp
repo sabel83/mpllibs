@@ -8,7 +8,7 @@
 #include <mpllibs/metamonad/state.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
@@ -26,14 +26,14 @@ using boost::mpl::pair;
 
 using mpllibs::metamonad::tmp_value;
 using mpllibs::metamonad::lazy;
-using mpllibs::metamonad::lambda;
+using mpllibs::metamonad::lambda_c;
 
 using namespace mpllibs::metamonad::name;
 
 namespace
 {
   MPLLIBS_METAFUNCTION(plusn, (N))
-  ((lambda<a, b, lazy<pair<plus<a, N>, plus<b, N> > > >));
+  ((lambda_c<a, b, lazy<pair<plus<a, N>, plus<b, N> > > >));
 }
 
 BOOST_AUTO_TEST_CASE(test_state)

@@ -25,12 +25,12 @@
 using boost::mpl::plus;
 
 using mpllibs::metamonad::tmp_value;
-using mpllibs::metamonad::lambda;
+using mpllibs::metamonad::lambda_c;
 using namespace mpllibs::metamonad::name;
 
 namespace
 {
-  MPLLIBS_METAFUNCTION(fplus, (A)) ((lambda<r, plus<A, r> >));
+  MPLLIBS_METAFUNCTION(fplus, (A)) ((lambda_c<r, plus<A, r> >));
 }
 
 BOOST_AUTO_TEST_CASE(test_reader)

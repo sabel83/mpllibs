@@ -26,18 +26,18 @@ namespace mpllibs
     template <class L, class R>
     struct monad<either_tag<L, R> > : monad_defaults<either_tag<L, R> >
     {
-      typedef lambda<t, lazy<lazy_protect_args<right<t> > > > return_;
+      typedef lambda_c<t, right<t> > return_;
       
       typedef
-        lambda<a, f,
+        lambda_c<a, f,
           eval_case< a,
-            matches<left<_>,  a>,
-            matches<right<x>, boost::mpl::apply<f, x> >
+            matches_c<left<_>,  a>,
+            matches_c<right<x>, boost::mpl::apply<f, x> >
           >
         >
         bind;
 
-      typedef lambda<t, lazy<lazy_protect_args<left<t> > > > fail;
+      typedef lambda_c<t, left<t> > fail;
     };
   }
 }

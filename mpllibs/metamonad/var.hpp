@@ -13,6 +13,13 @@ namespace mpllibs
   namespace metamonad
   {
     MPLLIBS_METAFUNCTION(var, (Name)) ((tmp_value<var<Name> >));
+    
+    // Protection against lazy
+    template <class E>
+    struct lazy;
+
+    template <class Name>
+    struct lazy<var<Name> > : var<Name> {};
   }
 }
 

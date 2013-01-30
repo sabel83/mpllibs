@@ -44,7 +44,7 @@ eval_match_let<p, x, f>
 is equivalent to
 
 --------------------------------------
-eval<match_let<p, x, f>>
+eval_syntax<match_let<p, x, f>>
 --------------------------------------
 
 Example
@@ -64,8 +64,8 @@ struct maybe_something :
 
 typedef
   eval_match_let<
-    just<var<x>>, maybe_something<int>::type,
-    x
+    syntax<just<var<x>>>, maybe_something<int>::type,
+    syntax<x>
   >::type
   this_is_double;
 --------------------------------------

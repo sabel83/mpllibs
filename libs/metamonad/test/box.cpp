@@ -7,7 +7,8 @@
 
 #include <mpllibs/metamonad/unbox.hpp>
 #include <mpllibs/metamonad/box.hpp>
-#include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/let_c.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -23,7 +24,9 @@ BOOST_AUTO_TEST_CASE(test_box)
 
   using mpllibs::metamonad::box;
   using mpllibs::metamonad::unbox;
-  using mpllibs::metamonad::let;
+  using mpllibs::metamonad::let_c;
+  using mpllibs::metamonad::syntax;
+  using mpllibs::metamonad::var;
 
   using boost::mpl::equal_to;
   using boost::mpl::not_;
@@ -47,11 +50,14 @@ BOOST_AUTO_TEST_CASE(test_box)
   >(MPLLIBS_HERE, "test_unequality");
 
   meta_require<
-    is_same<box<int>, let<int, double, box<int> >::type>
+    is_same<
+      syntax<box<var<int> > >,
+      let_c<var<int>, double, box<var<int> > >::type
+    >
   >(MPLLIBS_HERE, "test_let");
 
   meta_require<
-    is_same<double, let<box<int>, double, box<int> >::type>
+    is_same<syntax<double>, let_c<box<int>, double, box<int> >::type>
   >(MPLLIBS_HERE, "test_let_with_boxed_value_as_variable");
 }
 

@@ -8,13 +8,14 @@
 
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/eval.hpp>
+#include <mpllibs/metamonad/eval_syntax.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(eval_let, (N)(E1)(E2)) ((eval<let<N, E1, E2> >));
+    MPLLIBS_METAFUNCTION(eval_let, (N)(E1)(E2))
+    ((eval_syntax<let<N, E1, E2> >));
   }
 }
 

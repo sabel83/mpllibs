@@ -30,18 +30,18 @@ namespace mpllibs
     template <class T>
     struct monad<maybe_tag<T> > : monad_defaults<maybe_tag<T> >
     {
-      typedef lambda<x, just<x> > return_;
+      typedef lambda_c<x, just<x> > return_;
       
       typedef
-        lambda<a, f,
+        lambda_c<a, f,
           eval_case< a,
-            matches<nothing, returns<a> >,
-            matches<just<x>, boost::mpl::apply<f, x> >
+            matches_c<nothing, returns<a> >,
+            matches_c<just<x>, boost::mpl::apply<f, x> >
           >
         >
         bind;
 
-      typedef lambda<_, nothing> fail;
+      typedef lambda_c<_, nothing> fail;
     };
 
     template <class T>
@@ -50,10 +50,10 @@ namespace mpllibs
       typedef nothing mzero;
 
       typedef
-        lambda<a, b,
+        lambda_c<a, b,
           eval_case< a,
-            matches<nothing, b>,
-            matches<_,       a>
+            matches_c<nothing, b>,
+            matches_c<_,       a>
           >
         >
         mplus;
@@ -65,17 +65,13 @@ namespace mpllibs
       typedef nothing mempty;
 
       typedef
-        lambda<a, b,
+        lambda_c<a, b,
           eval_case< a,
-            matches< nothing,
-              returns<b>
-            >,
-            matches< just<c>,
+            matches_c<nothing, returns<b> >,
+            matches_c<just<c>,
               eval_case< b,
-                matches< nothing,
-                  returns<a>
-                >,
-                matches< just<d>,
+                matches_c<nothing, returns<a> >,
+                matches_c<just<d>,
                   lazy<
                     just<
                       lazy_protect_args<mpllibs::metamonad::mappend<T, c, d> >

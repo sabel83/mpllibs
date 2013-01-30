@@ -8,13 +8,14 @@
 
 #include <mpllibs/metamonad/letrec.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/eval.hpp>
+#include <mpllibs/metamonad/eval_syntax.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(eval_letrec, (N)(E1)(E2)) ((eval<letrec<N, E1, E2> >));
+    MPLLIBS_METAFUNCTION(eval_letrec, (N)(E1)(E2))
+    ((eval_syntax<letrec<N, E1, E2> >));
   }
 }
 

@@ -10,7 +10,11 @@ Abel Sinkovics
 Language elements
 -----------------
 
+link:eval_syntax.html[eval_syntax] +
+link:make_syntax.html[make_syntax] +
 link:name.html[name] +
+link:syntax.html[syntax] +
+link:var.html[var] +
 
 Pattern matching
 ~~~~~~~~~~~~~~~~
@@ -18,18 +22,27 @@ Pattern matching
 link:case_.html[case_] +
 link:eval_case.html[eval_case] +
 link:match.html[match] +
+link:match_c.html[match_c] +
 
 Let expressions
 ~~~~~~~~~~~~~~~
 
 link:eval_let.html[eval_let] +
+link:eval_let_c.html[eval_let_c] +
 link:eval_letrec.html[eval_letrec] +
+link:eval_letrec_c.html[eval_letrec_c] +
 link:eval_match_let.html[eval_match_let] +
+link:eval_match_let_c.html[eval_match_let_c] +
 link:eval_multi_let.html[eval_multi_let] +
+link:eval_multi_let_c.html[eval_multi_let_c] +
 link:let.html[let] +
+link:let_c.html[let_c] +
 link:letrec.html[letrec] +
+link:letrec_c.html[letrec_c] +
 link:match_let.html[match_let] +
+link:match_let_c.html[match_let_c] +
 link:multi_let.html[multi_let] +
+link:multi_let_c.html[multi_let_c] +
 
 Lazy evaluation
 ~~~~~~~~~~~~~~~
@@ -46,6 +59,7 @@ Lambda expression
 ~~~~~~~~~~~~~~~~~
 
 link:lambda.html[lambda] +
+link:lambda_c.html[lambda_c] +
 
 Typeclass
 ~~~~~~~~~
@@ -56,6 +70,7 @@ Do notation
 ~~~~~~~~~~~
 
 link:do_.html[do_] +
+link:do_c.html[do_c] +
 link:set.html[set] +
 link:do_return.html[do_return] +
 
@@ -63,9 +78,11 @@ Compile-time exception
 ~~~~~~~~~~~~~~~~~~~~~~
 
 link:do_try.html[do_try] +
+link:do_try_c.html[do_try_c] +
 link:exception.html[exception] +
 link:is_exception.html[is_exception] +
 link:try_.html[try_] +
+link:try_c.html[try_c] +
 
 Algebraic data-types
 ~~~~~~~~~~~~~~~~~~~~
@@ -96,10 +113,11 @@ Tags
 link:tag_tag.html[tag_tag] +
 link:overloading_error_tag.html[overloading_error_tag] +
 
-Box
-~~~
+Boxing
+~~~~~~
 
 link:box.html[box] +
+link:eval_guard.html[eval_guard] +
 link:unbox.html[unbox] +
 
 Maybe

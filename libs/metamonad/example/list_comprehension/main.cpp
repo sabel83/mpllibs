@@ -4,7 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/list.hpp>
-#include <mpllibs/metamonad/do.hpp>
+#include <mpllibs/metamonad/do_c.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
@@ -53,7 +53,7 @@ void print_values()
 
 int main()
 {
-  using mpllibs::metamonad::do_;
+  using mpllibs::metamonad::do_c;
   using mpllibs::metamonad::list_tag;
   using mpllibs::metamonad::set;
   using mpllibs::metamonad::do_return;
@@ -73,11 +73,8 @@ int main()
     Result in Haskell: [(1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(2,4)]
    */
 
-  typedef list_c<int, 1, 2> i;
-  typedef list_c<int, 1, 2, 3, 4> j;
-
   typedef
-    do_<list_tag,
+    do_c<list_tag,
       set<i, list_c<int, 1, 2> >,
       set<j, range_c<int, 1, 5> >,
       do_return<pair<i, j> >

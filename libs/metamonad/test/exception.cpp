@@ -40,6 +40,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   using mpllibs::metamonad::exception_monad;
   using mpllibs::metamonad::return_;
   using mpllibs::metamonad::do_;
+  using mpllibs::metamonad::do_c;
   using mpllibs::metamonad::set;
   using mpllibs::metamonad::do_return;
 
@@ -50,7 +51,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   meta_require<
     equal_to<
       int13,
-      do_<exception_monad,
+      do_c<exception_monad,
         do_return<int13>
       >::type
     >
@@ -59,7 +60,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   meta_require<
     equal_to<
       exception<int13>,
-      do_<exception_monad,
+      do_c<exception_monad,
         apply_wrap1<always<e>, int>
       >::type
     >
@@ -69,7 +70,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   meta_require<
     equal_to<
       exception<int13>,
-      do_<exception_monad,
+      do_c<exception_monad,
         apply_wrap1<always<e>, int>,
         do_return<int13>
       >::type
@@ -84,7 +85,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   meta_require<
     is_same<
       int11,
-      do_<exception_monad,
+      do_c<exception_monad,
         do_return<int11>
       >::type
     >
@@ -93,17 +94,17 @@ BOOST_AUTO_TEST_CASE(test_exception)
   meta_require<
     equal_to<
       int11,
-        do_<exception_monad,
-          do_return<int13>,
-          do_return<int11>
-        >::type
+      do_c<exception_monad,
+        do_return<int13>,
+        do_return<int11>
+      >::type
     >
   >(MPLLIBS_HERE, "test_execution_sequence");
   
   meta_require<
     equal_to<
       exception<int13>,
-      do_<exception_monad,
+      do_c<exception_monad,
         set<x, apply_wrap1<always<e>, int> >,
         do_return<int13>
       >::type

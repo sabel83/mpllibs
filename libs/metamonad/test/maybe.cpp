@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(test_maybe)
   using mpllibs::metamonad::mempty;
   using mpllibs::metamonad::mappend;
   using mpllibs::metamonad::list_tag;
-  using mpllibs::metamonad::lambda;
+  using mpllibs::metamonad::lambda_c;
   
   using boost::mpl::equal_to;
   using boost::mpl::equal;
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(test_maybe)
   
   typedef list_c<char, 'h', 'e', 'l', 'l', 'o'> s_hello;
   
-  typedef lambda<n, just<plus<n, int2> > > maybe_add_2;
+  typedef lambda_c<n, just<plus<n, int2> > > maybe_add_2;
   
   meta_require<
     equal_to<return_<mt, int13>, just13>

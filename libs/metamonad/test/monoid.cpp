@@ -48,14 +48,14 @@ namespace mpllibs
     struct monoid<plus_tag> : monoid_defaults<plus_tag>
     {
       typedef int0 mempty;
-      typedef lambda<a, b, plus<a, b> >::type mappend;
+      typedef lambda_c<a, b, plus<a, b> >::type mappend;
     };
 
     template <>
     struct monoid<mult_tag> : monoid_defaults<mult_tag>
     {
       typedef int1 mempty;
-      typedef lambda<a, b, times<a, b> >::type mappend;
+      typedef lambda_c<a, b, times<a, b> >::type mappend;
     };
   }
 }

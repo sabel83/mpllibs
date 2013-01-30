@@ -24,8 +24,8 @@ Description
 
 Variable substitution in an angly-bracket expression. The list of variables are
 defined by the +boost::mpl::map+ value +ValueMap+. The keys are the classes
-representing the variable names, the values are the classes they should be
-substituted with.
+representing the variable names, the values are link:syntax.html[+syntax+]es
+to replace the variables with.
 The result of +multi_let+ is +Body+ with all occurrences of the variable names
 replaced by the corresponding value.
 
@@ -81,7 +81,9 @@ Example
 using namespace boost::mpl;
 using namespace mpllibs::metamonad::name;
 
-typedef multi_let<map<pair<x, double>>, x>::type this_is_double;
+typedef
+  eval_syntax<multi_let<map<pair<x, syntax<double>>>, syntax<x>>>::type
+  this_is_double;
 --------------------------------------
 
 include::copyright[]

@@ -20,12 +20,12 @@
 
 using boost::mpl::list;
 
-using mpllibs::metamonad::lambda;
+using mpllibs::metamonad::lambda_c;
 using namespace mpllibs::metamonad::name;
 
 namespace
 {
-  typedef lambda<t, list<t, t> > twice;
+  typedef lambda_c<t, list<t, t> > twice;
 }
 
 BOOST_AUTO_TEST_CASE(test_list_monad)

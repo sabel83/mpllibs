@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
+#include <mpllibs/metamonad/eval_syntax.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -16,7 +17,9 @@ namespace mpllibs
   namespace metamonad
   {
     template <class A, class E1, class E2>
-    struct letrec : let<A, lazy_protect_args<letrec<A, E1, E1> >, E2> {};
+    struct letrec :
+      let<A, syntax<lazy_protect_args<eval_syntax<letrec<A, E1, E1> > > >, E2>
+    {};
   }
 }
 

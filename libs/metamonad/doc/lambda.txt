@@ -25,10 +25,10 @@ struct lambda
 Description
 -----------
 
-+Name1+, ..., +Namen+ are classes, +F+ is a nullary metafunction. The +lambda+
-metafunction class takes classes, +T1+, ..., +Tn+ as arguments and produces a
-new nullary metafunction. It binds +T1+, ..., +Tn+ to the names +Name1+, ...,
-+Namen+ in the body of +F+ using link:let.html[let].
++Name1+, ..., +Namen+ are classes, +F+ is a link:syntax.html[+syntax+]. The
++lambda+ metafunction class takes classes, +T1+, ..., +Tn+ as arguments and
+produces a new nullary metafunction. It binds +T1+, ..., +Tn+ to the names
++Name1+, ..., +Namen+ in the body of +F+ using link:let.html[let].
 
 The arguments may be +_+, in which case the value of the argument is ignored and
 no substitution happens.
@@ -51,7 +51,7 @@ For any +k > 0+, +n1+ ... +nk+ and +t1+ ... +tk+ classes and +f+ nullary
 metafunction
 
 --------------------------------------
-lambda<n1, ..., nk, f>::apply<t1, ..., tk>::type
+lambda<n1, ..., nk, syntax<f>>::apply<t1, ..., tk>::type
 --------------------------------------
 
 is equivalent to
@@ -63,20 +63,20 @@ multi_let<
     // ...
     mpl::pair<nk, tk>
   >,
-  f
+  syntax<f>
 >::type::type
 --------------------------------------
 
 For any +0 < j < k+
 
 --------------------------------------
-lambda<n1, ..., nk, f>::apply<t1, ..., tj>::type::apply<t(j+1), ..., tk>::type
+lambda<n1, ..., nk, syntax<f>>::apply<t1, ..., tj>::type::apply<t(j+1), ..., tk>::type
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-lambda<n1, ..., nk, f>::apply<t1, ..., tk>::type
+lambda<n1, ..., nk, syntax<f>>::apply<t1, ..., tk>::type
 --------------------------------------
 
 Example
@@ -88,7 +88,7 @@ using boost::mpl::int_;
 
 using namespace mpllibs::metamonad::name;
 
-typedef lambda<n, plus<int_<1>, n> > plus_1;
+typedef lambda<n, syntax<plus<int_<1>, n>>> plus_1;
 --------------------------------------
 
 include::copyright[]

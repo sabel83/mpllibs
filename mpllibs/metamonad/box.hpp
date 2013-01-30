@@ -9,11 +9,12 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/map.hpp>
 
 #include <boost/type_traits.hpp>
 
@@ -50,7 +51,7 @@ namespace boost
 
     template <class T>
     struct equal_to_impl<mpllibs::metamonad::box_tag, T> :
-      mpllibs::metamonad::lambda<
+      mpllibs::metamonad::lambda_c<
         mpllibs::metamonad::_, mpllibs::metamonad::_,
         boost::mpl::false_
       >
@@ -64,7 +65,7 @@ namespace boost
     template <>
     struct
       equal_to_impl<mpllibs::metamonad::box_tag, mpllibs::metamonad::box_tag> :
-      mpllibs::metamonad::lambda<
+      mpllibs::metamonad::lambda_c<
         mpllibs::metamonad::name::a, mpllibs::metamonad::name::b,
         boost::is_same<mpllibs::metamonad::name::a, mpllibs::metamonad::name::b>
       >

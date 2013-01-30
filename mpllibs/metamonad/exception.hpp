@@ -41,13 +41,13 @@ namespace mpllibs
     template <>
     struct monad<exception_tag> : monad_defaults<exception_tag>
     {
-      typedef lambda<t, returns<t> > return_;
+      typedef lambda_c<t, returns<t> > return_;
       
       typedef
-        lambda<a, f,
+        lambda_c<a, f,
           eval_case< returns<a>,
-            matches<exception<_>, returns<a> >,
-            matches<_, boost::mpl::apply1<f, a> >
+            matches_c<exception<_>, returns<a> >,
+            matches_c<_, boost::mpl::apply1<f, a> >
           >
         >
         bind;

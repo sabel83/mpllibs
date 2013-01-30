@@ -13,11 +13,10 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/eval_let.hpp>
 #include <mpllibs/metamonad/let.hpp>
-#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/either.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/already_lazy.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -30,13 +29,8 @@
 
 #include "common.hpp"
 
-using boost::mpl::apply;
-using boost::mpl::equal_to;
 using boost::mpl::minus;
 
-using mpllibs::metamonad::do_;
-using mpllibs::metamonad::set;
-using mpllibs::metamonad::do_return;
 using mpllibs::metamonad::tmp_tag;
 using mpllibs::metamonad::tmp_value;
 using mpllibs::metamonad::returns;
@@ -70,8 +64,8 @@ namespace mpllibs
     template <>
     struct monad<wrapper_tag>
     {
-      typedef lambda<t, wrapped<t> > return_;
-      typedef lambda<a, f, boost::mpl::apply<f, a> > bind;
+      typedef lambda_c<t, wrapped<t> > return_;
+      typedef lambda_c<a, f, boost::mpl::apply<f, a> > bind;
     };
   }
 }
@@ -100,15 +94,18 @@ BOOST_AUTO_TEST_CASE(test_do)
 {
   using mpllibs::metatest::meta_require;
 
-  using mpllibs::metamonad::already_lazy;
-  using mpllibs::metamonad::lazy;
+  using mpllibs::metamonad::do_;
   using mpllibs::metamonad::let;
   using mpllibs::metamonad::eval_let;
   using mpllibs::metamonad::either_tag;
+  using mpllibs::metamonad::syntax;
+  using mpllibs::metamonad::set;
+  using mpllibs::metamonad::do_return;
 
   using boost::is_same;
 
   using boost::mpl::tag;
+  using boost::mpl::equal_to;
 
   typedef tag<int13>::type int_tag;
   typedef either_tag<int_tag, int_tag> either;
@@ -117,8 +114,8 @@ BOOST_AUTO_TEST_CASE(test_do)
     equal_to<
       right<int11>,
       do_<either,
-        set<x, do_return<int13> >,
-        minus_2<x>
+        syntax<set<x, do_return<int13> > >,
+        syntax<minus_2<x> >
       >::type
     >
   >(MPLLIBS_HERE, "test_do");
@@ -127,9 +124,9 @@ BOOST_AUTO_TEST_CASE(test_do)
     equal_to<
       right<int9>,
       do_<either,
-        set<x, do_return<int13> >,
-        set<y, minus_2<x> >,
-        minus_2<y>
+        syntax<set<x, do_return<int13> > >,
+        syntax<set<y, minus_2<x> > >,
+        syntax<minus_2<y> >
       >::type
     >
   >(MPLLIBS_HERE, "test_do_three_steps");
@@ -138,10 +135,10 @@ BOOST_AUTO_TEST_CASE(test_do)
     equal_to<
       right<int9>,
       do_<either,
-        set<x, do_return<int13> >,
-        set<y, minus_2<x> >,
-        minus_2<x>,
-        minus_2<y>
+        syntax<set<x, do_return<int13> > >,
+        syntax<set<y, minus_2<x> > >,
+        syntax<minus_2<x> >,
+        syntax<minus_2<y> >
       >::type
     >
   >(MPLLIBS_HERE, "test_do_two_calls");
@@ -150,8 +147,8 @@ BOOST_AUTO_TEST_CASE(test_do)
     equal_to<
       right<int13>,
       do_<either,
-        do_return<int11>,
-        do_return<int13>
+        syntax<do_return<int11> >,
+        syntax<do_return<int13> >
       >::type
     >
   >(MPLLIBS_HERE, "test_do_two_returns");
@@ -160,9 +157,11 @@ BOOST_AUTO_TEST_CASE(test_do)
     equal_to<
       right<right<int13> >,
       do_<either,
-        do_return<
-          do_<either,
-            do_return<int13>
+        syntax<
+          do_return<
+            do_<either,
+              syntax<do_return<int13> >
+            >
           >
         >
       >::type
@@ -173,7 +172,7 @@ BOOST_AUTO_TEST_CASE(test_do)
     equal_to<
       right<right<int13> >,
       do_<either,
-        do_return<do_return<int13> >
+        syntax<do_return<do_return<int13> > >
       >::type
     >
   >(MPLLIBS_HERE, "test_contents_of_return_is_substituted");
@@ -182,9 +181,11 @@ BOOST_AUTO_TEST_CASE(test_do)
     equal_to<
       right<wrapped<int13> >,
       do_<either,
-        eval_to_right<
-          do_<wrapper_monad,
-            do_return<int13>
+        syntax<
+          eval_to_right<
+            do_<wrapper_monad,
+              syntax<do_return<int13> >
+            >
           >
         >
       >::type
@@ -195,10 +196,12 @@ BOOST_AUTO_TEST_CASE(test_do)
     equal_to<
       right<int13>,
       eval_let<
-        x, int11,
-        do_<either,
-          set<x, do_return<int13> >,
-          do_return<x>
+        x, syntax<int11>,
+        syntax<
+          do_<either,
+            syntax<set<x, do_return<int13> > >,
+            syntax<do_return<x> >
+          >
         >
       >::type
     >
@@ -208,33 +211,24 @@ BOOST_AUTO_TEST_CASE(test_do)
     equal_to<
       right<int11>,
       eval_let<
-        x, int11,
-        do_<either,
-          set<x, do_return<int13> >,
-          do_return<int11>
+        x, syntax<int11>,
+        syntax<
+          do_<either,
+            syntax<set<x, do_return<int13> > >,
+            syntax<do_return<int11> >
+          >
         >
       >::type
     >
   >(MPLLIBS_HERE, "test_argument_of_set_and_do_in_let");
 
   meta_require<
-    equal_to<
-      right<int11>,
-      eval_let<
-        x, int11,
-        do_<either,
-          set<y, do_return<x> >,
-          set<x, do_return<int13> >,
-          do_return<y>
-        >
-      >::type
-    >
-  >(MPLLIBS_HERE, "test_let_before_override");
-
-  meta_require<
     is_same<
-      do_<either, do_return<int11> >,
-      let<x, int11, do_<either, do_return<int11> > >::type
+      syntax<do_<either, syntax<do_return<int11> > > >,
+      let<
+        x, syntax<int11>,
+        syntax<do_<either, syntax<do_return<int11> > > >
+      >::type
     >
   >(MPLLIBS_HERE, "test_na_arguments_of_do");
 }

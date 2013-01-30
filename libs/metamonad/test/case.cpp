@@ -6,7 +6,9 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/case.hpp>
-#include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
+#include <mpllibs/metamonad/box.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -17,13 +19,15 @@
 
 #include "common.hpp"
 
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
   template <class A, class B>
-  struct some_template;
+  struct some_template : tmp_value<some_template<A, B> > {};
 
   template <class A, class B>
-  struct some_other_template;
+  struct some_other_template : tmp_value<some_other_template<A, B> > {};
 }
 
 BOOST_AUTO_TEST_CASE(test_case)
@@ -32,10 +36,12 @@ BOOST_AUTO_TEST_CASE(test_case)
 
   using mpllibs::metamonad::case_;
   using mpllibs::metamonad::matches;
+  using mpllibs::metamonad::matches_c;
   using mpllibs::metamonad::exception;
   using mpllibs::metamonad::no_case_matched;
   using mpllibs::metamonad::var;
-  using mpllibs::metamonad::returns;
+  using mpllibs::metamonad::syntax;
+  using mpllibs::metamonad::box;
 
   using boost::is_same;
 
@@ -43,60 +49,62 @@ BOOST_AUTO_TEST_CASE(test_case)
 
   meta_require<
     is_same<
-      exception<no_case_matched<int> >,
-      case_< returns<int>,
-        matches<double, float>
+      exception<no_case_matched<box<int> > >,
+      case_< box<int>,
+        matches<syntax<box<double> >, syntax<float> >
       >::type
     >
   >(MPLLIBS_HERE, "test_no_matches");
 
   meta_require<
     is_same<
-      float,
-      case_< returns<int>,
-        matches<int, float>
+      syntax<float>,
+      case_< box<int>,
+        matches<syntax<box<int> >, syntax<float> >
       >::type
     >
   >(MPLLIBS_HERE, "test_match");
 
   meta_require<
     is_same<
-      float,
-      case_< returns<int>,
-        matches<int, float>,
-        matches<double, char>
+      syntax<float>,
+      case_< box<int>,
+        matches<syntax<box<int> >, syntax<float> >,
+        matches<syntax<box<double> >, syntax<char> >
       >::type
     >
   >(MPLLIBS_HERE, "test_first_matches");
 
   meta_require<
     is_same<
-      float,
-      case_< returns<int>,
-        matches<double, char>,
-        matches<int, float>
+      syntax<float>,
+      case_< box<int>,
+        matches<syntax<box<double> >, syntax<char> >,
+        matches<syntax<box<int> >, syntax<float> >
       >::type
     >
   >(MPLLIBS_HERE, "test_second_matches");
 
   meta_require<
     is_same<
-      some_other_template<int, double>,
-      case_< returns<some_template<int, double> >,
-        matches< some_template<x, y>, some_other_template<x, y> >
+      syntax<some_other_template<int, double> >,
+      case_< some_template<int, double>,
+        matches<syntax<some_template<x, y> >,
+          syntax<some_other_template<x, y> >
+        >
       >::type
     >
   >(MPLLIBS_HERE, "test_vars_in_pattern");
 
   meta_require<
     is_same<
-      case_< int2,
-        matches<y, boost::mpl::plus<int11, y> >
-      >,
+      syntax<case_< int2, matches_c<y, boost::mpl::plus<int11, y> > > >,
       case_< int11,
-        matches< x,
-          case_< int2,
-            matches<y, boost::mpl::plus<x, y> >
+        matches<syntax<x>,
+          syntax<
+            case_<int2,
+              matches_c<y, boost::mpl::plus<x, y> >
+            >
           >
         >
       >::type

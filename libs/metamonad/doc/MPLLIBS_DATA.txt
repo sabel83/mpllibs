@@ -35,6 +35,11 @@ arguments. The arguments are also algebraic data type tags. When a tag is not
 specified, it is +boost::mpl::void_+. The tag of the data type has this as
 default values for all template arguments.
 
+When a constructor is evaluated, it instantiates itself with the evaluated
+results of the original constructor arguments. When the constructor is
+instantiated with template metaprogramming values, it is a template
+metaprogramming value itself as well.
+
 Header
 ------
 
@@ -56,10 +61,10 @@ is equivalent to
 --------------------------------------
 struct name_tag : metamonad::mpl_tag<name_tag> {};
 
-template <class, class>
+template <class T0, class T1>
 struct c1
 {
-  typedef c1 type;
+  typedef c1<typename T0::type, typename T1::type> type;
   typedef mpllibs::metamonad::algebraic_data_type_tag tag;
 };
 
@@ -82,10 +87,10 @@ is equivalent to
 template <class T1 = boost::mpl::void_, ..., class Tn = boost::mpl::void_>
 struct name_tag : metamonad::mpl_tag<name_tag<T0, ..., Tn>> {};
 
-template <class, class>
+template <class T0, class T1>
 struct c1
 {
-  typedef c1 type;
+  typedef c1<typename T0::type, typename T1::type> type;
   typedef mpllibs::metamonad::algebraic_data_type_tag tag;
 };
 

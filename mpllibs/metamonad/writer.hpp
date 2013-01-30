@@ -28,7 +28,7 @@ namespace mpllibs
     struct monad<writer_tag<M> > : monad_defaults<writer_tag<M> >
     {
       typedef
-        lambda<t,
+        lambda_c<t,
           lazy<
             boost::mpl::pair<already_lazy<t>, mpllibs::metamonad::mempty<M> >
           >
@@ -36,7 +36,7 @@ namespace mpllibs
         return_;
 
       typedef
-        lambda<a, f,
+        lambda_c<a, f,
           lazy<
             boost::mpl::pair<
               boost::mpl::first<

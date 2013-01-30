@@ -12,7 +12,7 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/make_mpl_lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
-#include <mpllibs/metamonad/eval_match_let.hpp>
+#include <mpllibs/metamonad/eval_match_let_c.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -28,19 +28,14 @@ namespace mpllibs
     template <>
     struct monad<state_tag> : monad_defaults<state_tag>
     {
-      typedef lambda<t, s, boost::mpl::pair<t, s> > return_;
+      typedef lambda_c<t, s, boost::mpl::pair<t, s> > return_;
 
       typedef
-        lambda<a, f, s,
-          eval_match_let<
+        lambda_c<a, f, s,
+          eval_match_let_c<
             boost::mpl::pair<t, u>,
-              lazy<boost::mpl::apply_wrap1<make_mpl_lambda<a>, s> >,
-            lazy<
-              boost::mpl::apply_wrap1<
-                make_mpl_lambda<boost::mpl::apply_wrap1<make_mpl_lambda<f>,t> >,
-                u
-              >
-            >
+            lazy<boost::mpl::apply_wrap1<a, s> >,
+            lazy<boost::mpl::apply_wrap1<boost::mpl::apply_wrap1<f, t>, u> >
           >
         >
         bind;

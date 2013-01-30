@@ -24,7 +24,8 @@ Description
 
 Pattern matching version of link:let.html[let]. The angly-bracket expression
 +Exp+ is evaluated and matched against the pattern +Pattern+. The open variables
-of the match can be used in +Body+.
+of the match can be used in +Body+. +Pattern+ and +Body+ are
+link:syntax.html[+syntax+]es.
 
 Header
 ------
@@ -64,9 +65,11 @@ struct maybe_something :
 {};
 
 typedef
-  match_let<
-    just<var<x>>, maybe_something<int>::type,
-    x
+  eval_syntax<
+    match_let<
+      syntax<just<var<x>>>, maybe_something<int>::type,
+      syntax<x>
+    >
   >::type
   this_is_double;
 --------------------------------------

@@ -28,10 +28,10 @@ namespace mpllibs
     template <>
     struct monad<reader_tag> : monad_defaults<reader_tag>
     {
-      typedef lambda<t, _, t> return_;
+      typedef lambda_c<t, _, t> return_;
       
       typedef
-        lambda<a, f, r,
+        lambda_c<a, f, r,
           lazy<
             boost::mpl::apply_wrap1<
               make_mpl_lambda<

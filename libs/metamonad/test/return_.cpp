@@ -7,7 +7,7 @@
 
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
-#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
@@ -32,7 +32,7 @@ namespace mpllibs
     template <>
     struct monad<test_tag> : monad_defaults<test_tag>
     {
-      typedef lambda<_, returns<int13> > return_;
+      typedef lambda_c<_, returns<int13> > return_;
       
       // no bind is needed for this test
     };

@@ -44,7 +44,7 @@ eval_multi_let<m, f>
 is equivalent to
 
 --------------------------------------
-eval<multi_let<m, f>>
+eval_syntax<multi_let<m, f>>
 --------------------------------------
 
 Example
@@ -61,7 +61,7 @@ using namespace mpllibs::metamonad::name;
 
 template <class N>
 struct my_metafunction :
-  eval_multi_let<map<pair<x, plus<n, int_<13>>>>, times<x, x>>
+  eval_multi_let<map<pair<x, plus<n, int_<13>>>>, syntax<times<x, x>>>
 {};
 --------------------------------------
 

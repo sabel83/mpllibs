@@ -9,7 +9,7 @@
 #include <mpllibs/metamonad/bind.hpp>
 #include <mpllibs/metamonad/typeclass.hpp>
 #include <mpllibs/metamonad/exception_core.hpp>
-#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
 namespace mpllibs
@@ -28,10 +28,10 @@ namespace mpllibs
     struct monad_defaults : monad<typeclass_expectations>
     {
       typedef
-        lambda<a, b, mpllibs::metamonad::bind<Tag, a, lambda<s, b> > >
+        lambda_c<a, b, mpllibs::metamonad::bind<Tag, a, lambda_c<s, b> > >
         bind_;
 
-      typedef lambda<s, exception<s> > fail;
+      typedef lambda_c<s, exception<s> > fail;
     };
   }
 }
