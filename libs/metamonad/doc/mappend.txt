@@ -35,16 +35,16 @@ Header
 Expression semantics
 --------------------
 
-For any +MonadTag+ tag and +A+ and +B+ classes:
+For any +monad_tag+ tag and +a+ and +b+ classes:
 
 --------------------------------------
-mappend<MonadTag, A, B>
+mappend<monad_tag, a, b>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply_wrap2<monoid<MonadTag>::mappend, A, B>
+boost::mpl::apply_wrap2<monoid<monad_tag>::mappend, a, b>
 --------------------------------------
 
 Example

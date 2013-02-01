@@ -34,16 +34,16 @@ Header
 Expression semantics
 --------------------
 
-For any +T+ type
+For any +t+ type
 
 --------------------------------------
-make_syntax<T>::type
+make_syntax<t>::type
 --------------------------------------
 
 is equivalent with
 
 --------------------------------------
-syntax<T::type>
+syntax<t::type>
 --------------------------------------
 
 Example

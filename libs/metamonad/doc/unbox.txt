@@ -34,16 +34,16 @@ Header
 Expression semantics
 --------------------
 
-For any +T+ type
+For any +t+ type
 
 --------------------------------------
-unbox<box<T> >::type
+unbox<box<t>>::type
 --------------------------------------
 
 is equivalent with
 
 --------------------------------------
-T
+t
 --------------------------------------
 
 Example

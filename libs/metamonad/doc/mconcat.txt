@@ -35,16 +35,16 @@ Header
 Expression semantics
 --------------------
 
-For any +MonadTag+ tag and +L+ list:
+For any +monad_tag+ tag and +l+ list:
 
 --------------------------------------
-mconcat<MonadTag, L>
+mconcat<monad_tag, l>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply_wrap2<monoid<MonadTag>::mconcat, L>
+boost::mpl::apply_wrap2<monoid<monad_tag>::mconcat, l>
 --------------------------------------
 
 Example

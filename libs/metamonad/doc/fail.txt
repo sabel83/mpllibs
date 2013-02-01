@@ -35,16 +35,16 @@ Header
 Expression semantics
 --------------------
 
-For any +MonadTag+ tag and +S+ class:
+For any +monad_tag+ tag and +s+ class:
 
 --------------------------------------
-fail<MonadTag, S>
+fail<monad_tag, s>
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply_wrap1<monad<MonadTag>::fail, S>
+boost::mpl::apply_wrap1<monad<monad_tag>::fail, s>
 --------------------------------------
 
 Example
