@@ -123,6 +123,16 @@ BOOST_AUTO_TEST_CASE(test_lambda_c)
   meta_require<
     is_same<_, apply_wrap1<lambda_c<_, returns<_> >, int13>::type>
   >(MPLLIBS_HERE, "test_unused_arg");
+
+  meta_require<
+    equal_to<
+      int13,
+      apply_wrap1<
+        lambda_c<e, apply_wrap1<lambda_c<e, e>::type, e> >,
+        int13
+      >::type
+    >
+  >(MPLLIBS_HERE, "test_parameter_hiding");
 }
 
 
