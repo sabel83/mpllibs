@@ -74,6 +74,13 @@ link:do_c.html[do_c] +
 link:set.html[set] +
 link:do_return.html[do_return] +
 
+Monadic conversion
+~~~~~~~~~~~~~~~~~~
+
+link:already_monadic.html[already_monadic] +
+link:make_monadic.html[make_monadic] +
+link:make_monadic_c.html[make_monadic_c] +
+
 Compile-time exception
 ~~~~~~~~~~~~~~~~~~~~~~
 
