@@ -87,8 +87,6 @@ Compile-time exception
 link:catch_all.html[catch_all] +
 link:catch_just.html[catch_just] +
 
-link:do_try.html[do_try] +
-link:do_try_c.html[do_try_c] +
 link:exception.html[exception] +
 link:is_exception.html[is_exception] +
 link:try_.html[try_] +

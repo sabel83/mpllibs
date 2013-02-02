@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/do_try_c.hpp>
+#include <mpllibs/metamonad/try_c.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
@@ -22,9 +22,8 @@ using boost::mpl::divides;
 
 using mpllibs::metatest::debug;
 
-using mpllibs::metamonad::do_try_c;
+using mpllibs::metamonad::try_c;
 using mpllibs::metamonad::exception;
-using mpllibs::metamonad::do_return;
 using mpllibs::metamonad::tmp_value;
 
 typedef int_<0> int0;
@@ -35,11 +34,11 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(division_by_zero, "division by zero")
 
 template <class A, class B>
 struct safe_divides :
-  do_try_c<
+  try_c<
     eval_if<
       typename equal_to<B, int0>::type,
       exception<division_by_zero>,
-      do_return<divides<A, B> >
+      divides<A, B>
     >
   >
 {};

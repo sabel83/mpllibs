@@ -19,7 +19,8 @@
 
 #include <mpllibs/metaparse/build_parser.hpp>
 
-#include <mpllibs/metamonad/do_try_c.hpp>
+#include <mpllibs/metamonad/do_c.hpp>
+#include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/name.hpp>
@@ -55,8 +56,9 @@ using mpllibs::metaparse::entire_input;
 
 using mpllibs::metatest::to_stream;
 
-using mpllibs::metamonad::do_try_c;
+using mpllibs::metamonad::do_c;
 using mpllibs::metamonad::exception;
+using mpllibs::metamonad::exception_tag;
 using mpllibs::metamonad::set;
 using mpllibs::metamonad::tmp_tag;
 using mpllibs::metamonad::tmp_value;
@@ -101,7 +103,8 @@ struct eval_plus
 {
   template <class C, class State>
   struct apply :
-    do_try_c<
+    do_c<
+      exception_tag,
       set<s, State>,
       set<v, back<C> >,
       eval_if<is_c<front<C>, '+'>, plus<s, v>, minus<s, v> >
@@ -115,7 +118,8 @@ struct eval_mult
 {
   template <class C, class State>
   struct apply :
-    do_try_c<
+    do_c<
+      exception_tag,
       set<s, State>,
       set<v, back<C> >,
       eval_if<
