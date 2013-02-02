@@ -24,8 +24,8 @@ namespace mpllibs
       BOOST_MPL_HAS_XXX_TRAIT_DEF(type)
     }
 
-    template <class E, class T = boost::mpl::na>
-    struct is_tag : 
+    template <class T, class E = boost::mpl::na>
+    struct is_tag :
       boost::is_same<
         typename boost::mpl::tag<typename E::type>::type,
         // Tags coming from Boost.Mpl are not metaprogramming values
@@ -37,11 +37,11 @@ namespace mpllibs
       >
     {};
 
-    template <class E>
-    struct is_tag<E, boost::mpl::na> : tmp_value<is_tag<E, boost::mpl::na> >
+    template <class T>
+    struct is_tag<T, boost::mpl::na> : tmp_value<is_tag<T, boost::mpl::na> >
     {
-      template <class T>
-      struct apply : is_tag<E, T> {};
+      template <class E>
+      struct apply : is_tag<T, E> {};
     };
   }
 }

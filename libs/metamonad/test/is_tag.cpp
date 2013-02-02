@@ -25,20 +25,20 @@ BOOST_AUTO_TEST_CASE(test_is_tag)
 
   using boost::mpl::not_;
 
-  meta_require<is_tag<int13, int13::tag> >(MPLLIBS_HERE, "test_with_two_args");
+  meta_require<is_tag<int13::tag, int13> >(MPLLIBS_HERE, "test_with_two_args");
 
-  meta_require<not_<is_tag<int13, double>::type> >(MPLLIBS_HERE, "test_false");
+  meta_require<not_<is_tag<double, int13>::type> >(MPLLIBS_HERE, "test_false");
 
   meta_require<
-    is_tag<int13>::apply<int13::tag>
+    is_tag<int13::tag>::apply<int13>
   >(MPLLIBS_HERE, "test_currying");
 
   meta_require<
-    is_tag<returns<int13>, int13::tag>
+    is_tag<int13::tag, returns<int13> >
   >(MPLLIBS_HERE, "test_laziness_of_value");
 
   meta_require<
-    is_tag<int13, returns<int13::tag> >
+    is_tag<returns<int13::tag>, int13>
   >(MPLLIBS_HERE, "test_laziness_of_tag");
 }
 

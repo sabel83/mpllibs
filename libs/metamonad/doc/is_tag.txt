@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class Value, class Tag>
+template <class Tag, class Value>
 struct is_tag
 {
   // unspecified
@@ -44,10 +44,10 @@ result of +p+ is the result of +v1+ and +v2+ evaluates to something else the
 following evaluate to true:
 
 --------------------------------------
-is_tag<p, v1>::type
-boost::mpl::not_<is_tag<p, v2>::type>::type
-boost::mpl::apply_wrap<is_tag<p>, v1>::type
-boost::mpl::not_<boost::mpl::apply_wrap<is_tag<p>, v2>::type>::type
+is_tag<v1, p>::type
+boost::mpl::not_<is_tag<v2, p>::type>::type
+boost::mpl::apply_wrap<is_tag<v1>, p>::type
+boost::mpl::not_<boost::mpl::apply_wrap<is_tag<v2>, p>::type>::type
 --------------------------------------
 
 Example
