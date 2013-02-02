@@ -53,8 +53,6 @@ link:lazy.html[lazy] +
 link:lazy_argument.html[lazy_argument] +
 link:lazy_protect_args.html[lazy_protect_args] +
 
-link:make_mpl_lambda.html[make_mpl_lambda] +
-
 Lambda expression
 ~~~~~~~~~~~~~~~~~
 

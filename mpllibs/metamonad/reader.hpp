@@ -12,7 +12,6 @@
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
-#include <mpllibs/metamonad/make_mpl_lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
@@ -34,13 +33,11 @@ namespace mpllibs
         lambda_c<a, f, r,
           lazy<
             boost::mpl::apply_wrap1<
-              make_mpl_lambda<
+              boost::mpl::apply_wrap1<
+                boost::mpl::lambda<lazy_protect_args<f> >,
                 boost::mpl::apply_wrap1<
-                  boost::mpl::lambda<lazy_protect_args<f> >,
-                  boost::mpl::apply_wrap1<
-                    boost::mpl::lambda<lazy_protect_args<a> >,
-                    already_lazy<r>
-                  >
+                  boost::mpl::lambda<lazy_protect_args<a> >,
+                  already_lazy<r>
                 >
               >,
               already_lazy<r>

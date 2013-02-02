@@ -10,7 +10,6 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/make_mpl_lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/eval_match_let_c.hpp>
 
