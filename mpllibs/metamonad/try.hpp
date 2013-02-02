@@ -130,12 +130,15 @@ namespace mpllibs
       >
     {};
 
-    // Protection against let
-    template <class A, class E1, class Pred, class Body>
-    struct let_impl<A, E1, catch_<A, Pred, Body> > : catch_<A, Pred, Body> {};
+    namespace impl
+    {
+      // Protection against let
+      template <class A, class E1, class Pred, class Body>
+      struct let_impl<A, E1, catch_<A, Pred, Body> > : catch_<A, Pred, Body> {};
 
-    template <class A, class E1, class Pred, class Body>
-    struct let_impl<A, E1, catch_c<A, Pred, Body> > : catch_c<A, Pred, Body> {};
+      template <class A, class E1, class Pred, class Body>
+      struct let_impl<A, E1, catch_c<A, Pred, Body> >:catch_c<A, Pred, Body> {};
+    }
   }
 }
 

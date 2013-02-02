@@ -108,25 +108,28 @@ namespace mpllibs
     template <>
     struct lazy<impl::lambda_no_arg> : returns<impl::lambda_no_arg> {};
 
-    template <class A, class E1, class State>
-    struct
-      let_impl<A, E1, impl::lambda_impl<State> > :
-        returns<
-          impl::lambda_impl<
-            boost::mpl::pair<
-              typename boost::mpl::first<State>::type,
-              typename boost::mpl::eval_if<
-                typename boost::mpl::contains<
-                  typename boost::mpl::first<State>::type,
-                  A
-                >::type,
-                returns<typename boost::mpl::second<State>::type>,
-                let_in_syntax<A, E1, typename boost::mpl::second<State>::type>
-              >::type
+    namespace impl
+    {
+      template <class A, class E1, class State>
+      struct
+        let_impl<A, E1, impl::lambda_impl<State> > :
+          returns<
+            impl::lambda_impl<
+              boost::mpl::pair<
+                typename boost::mpl::first<State>::type,
+                typename boost::mpl::eval_if<
+                  typename boost::mpl::contains<
+                    typename boost::mpl::first<State>::type,
+                    A
+                  >::type,
+                  returns<typename boost::mpl::second<State>::type>,
+                  let_in_syntax<A, E1, typename boost::mpl::second<State>::type>
+                >::type
+              >
             >
           >
-        >
-    {};
+      {};
+    }
   }
 }
 

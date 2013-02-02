@@ -342,54 +342,52 @@ namespace mpllibs
           >
         >
       ));
-    }
 
-    #ifdef MPLLIBS_HANDLE_DO_FUN
-      #error MPLLIBS_HANDLE_DO_FUN
-    #endif
-    #define MPLLIBS_HANDLE_DO_FUN(f) \
-      template < \
-        class A, \
-        class E1, \
-        class Monad, \
-        BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, class T) \
-      > \
-      struct \
-        let_impl< \
-          A, \
-          E1, \
-          f<Monad, BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)> \
-        > : \
-        eval_match_let< \
-          syntax<boost::mpl::pair<impl::let_do_w, _> >, \
-          impl::let_do_args< \
+      #ifdef MPLLIBS_HANDLE_DO_FUN
+        #error MPLLIBS_HANDLE_DO_FUN
+      #endif
+      #define MPLLIBS_HANDLE_DO_FUN(f) \
+        template < \
+          class A, \
+          class E1, \
+          class Monad, \
+          BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, class T) \
+        > \
+        struct \
+          let_impl< \
             A, \
             E1, \
-            boost::mpl::vector< \
-              BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T) \
-            > \
-          >, \
-          syntax< \
-            lazy< \
-              boost::mpl::apply_wrap1< \
-                BOOST_PP_CAT( \
-                  instantiate, \
-                  BOOST_PP_INC(MPLLIBS_DO_MAX_ARGUMENT) \
-                )<f>, \
-                lazy_protect_args< \
-                  boost::mpl::push_front<impl::let_do_w, Monad> \
+            f<Monad, BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)> \
+          > : \
+          eval_match_let< \
+            syntax<boost::mpl::pair<let_do_w, _> >, \
+            let_do_args< \
+              A, \
+              E1, \
+              boost::mpl::vector< \
+                BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T) \
+              > \
+            >, \
+            syntax< \
+              lazy< \
+                boost::mpl::apply_wrap1< \
+                  BOOST_PP_CAT( \
+                    instantiate, \
+                    BOOST_PP_INC(MPLLIBS_DO_MAX_ARGUMENT) \
+                  )<f>, \
+                  lazy_protect_args<boost::mpl::push_front<let_do_w, Monad> > \
                 > \
               > \
             > \
           > \
-        > \
-      {}
+        {}
 
-    MPLLIBS_HANDLE_DO_FUN(do_);
-    MPLLIBS_HANDLE_DO_FUN(do_c);
-    MPLLIBS_HANDLE_DO_FUN(do_impl);
+      MPLLIBS_HANDLE_DO_FUN(do_);
+      MPLLIBS_HANDLE_DO_FUN(do_c);
+      MPLLIBS_HANDLE_DO_FUN(do_impl);
 
-    #undef MPLLIBS_HANDLE_DO_FUN
+      #undef MPLLIBS_HANDLE_DO_FUN
+    }
   }
 }
 

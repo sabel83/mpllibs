@@ -54,53 +54,55 @@ namespace mpllibs
 
     #undef MPLLIBS_LAMBDA_CASE
 
-    // lambda_c and let
-    #ifdef MPLLIBS_LET_LAMBDA
-      #error MPLLIBS_LET_LAMBDA already defined
-    #endif
-    #define MPLLIBS_LET_LAMBDA(z, n, unused) \
-      template < \
-        class A, \
-        class E1, \
-        BOOST_PP_ENUM_PARAMS(n, class T) \
-        BOOST_PP_COMMA_IF(n) class B \
-      > \
-      struct \
-        let_impl< \
-          A, \
-          E1, \
-          lambda_c< \
-            BOOST_PP_ENUM_PARAMS(n, T) \
-            BOOST_PP_COMMA_IF(n) B \
-            BOOST_PP_COMMA_IF( \
-              BOOST_PP_SUB(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, n) \
-            ) \
-            BOOST_PP_ENUM( \
-              BOOST_PP_SUB(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, n), \
-              impl::lambda_no_arg BOOST_PP_TUPLE_EAT(3), \
-              ~ \
-            ) \
-          > \
-        > : \
-          returns< \
+    namespace impl
+    {
+      // lambda_c and let
+      #ifdef MPLLIBS_LET_LAMBDA
+        #error MPLLIBS_LET_LAMBDA already defined
+      #endif
+      #define MPLLIBS_LET_LAMBDA(z, n, unused) \
+        template < \
+          class A, \
+          class E1, \
+          BOOST_PP_ENUM_PARAMS(n, class T) \
+          BOOST_PP_COMMA_IF(n) class B \
+        > \
+        struct \
+          let_impl< \
+            A, \
+            E1, \
             lambda_c< \
-              BOOST_PP_ENUM_PARAMS(n, T) BOOST_PP_COMMA_IF(n) \
-              typename boost::mpl::eval_if< \
-                typename boost::mpl::contains< \
-                  boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, T)>, \
-                  A \
-                >::type, \
-                returns<B>, \
-                let_in_syntax<A, E1, B> \
-              >::type \
+              BOOST_PP_ENUM_PARAMS(n, T) \
+              BOOST_PP_COMMA_IF(n) B \
+              BOOST_PP_COMMA_IF( \
+                BOOST_PP_SUB(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, n) \
+              ) \
+              BOOST_PP_ENUM( \
+                BOOST_PP_SUB(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, n), \
+                lambda_no_arg BOOST_PP_TUPLE_EAT(3), \
+                ~ \
+              ) \
             > \
-          > \
-      {};
+          > : \
+            returns< \
+              lambda_c< \
+                BOOST_PP_ENUM_PARAMS(n, T) BOOST_PP_COMMA_IF(n) \
+                typename boost::mpl::eval_if< \
+                  typename boost::mpl::contains< \
+                    boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, T)>, \
+                    A \
+                  >::type, \
+                  returns<B>, \
+                  let_in_syntax<A, E1, B> \
+                >::type \
+              > \
+            > \
+        {};
 
-    BOOST_PP_REPEAT(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, MPLLIBS_LET_LAMBDA, ~)
+      BOOST_PP_REPEAT(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, MPLLIBS_LET_LAMBDA, ~)
 
-    #undef MPLLIBS_LET_LAMBDA
-
+      #undef MPLLIBS_LET_LAMBDA
+    }
   }
 }
 

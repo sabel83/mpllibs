@@ -33,12 +33,15 @@ namespace mpllibs
     template <class T>
     struct lazy<box<T> > : box<T> {};
 
-    // the content of a box should not be used as a let variable
-    template <class A, class E1, class E2>
-    struct let_impl;
+    namespace impl
+    {
+      // the content of a box should not be used as a let variable
+      template <class A, class E1, class E2>
+      struct let_impl;
 
-    template <class A, class E1, class T>
-    struct let_impl<A, E1, box<T> > : returns<box<T> > {};
+      template <class A, class E1, class T>
+      struct let_impl<A, E1, box<T> > : returns<box<T> > {};
+    }
   }
 }
 
