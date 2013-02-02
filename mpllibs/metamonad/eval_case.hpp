@@ -27,7 +27,7 @@ namespace mpllibs
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         MPLLIBS_LIMIT_CASE_SIZE,
         class C,
-        no_case
+        boost::mpl::na
       )
     >
     struct eval_case :

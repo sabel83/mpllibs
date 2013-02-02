@@ -41,8 +41,6 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    struct no_case;
-
     MPLLIBS_METAFUNCTION(no_case_matched, (Exp))
     ((tmp_value<no_case_matched<Exp> >));
 
@@ -97,7 +95,7 @@ namespace mpllibs
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         MPLLIBS_LIMIT_CASE_SIZE,
         class C,
-        no_case
+        boost::mpl::na
       )
     >
     struct case_ :
@@ -113,16 +111,7 @@ namespace mpllibs
               //  just<X> -> a case matched, the result is X
               lazy<
                 boost::mpl::eval_if<
-                  boost::mpl::and_<
-                    lazy_protect_args<
-                      boost::is_same<nothing, impl::let_case_s>
-                    >,
-                    boost::mpl::not_<
-                      lazy_protect_args<
-                        boost::is_same<no_case, impl::let_case_c>
-                      >
-                    >
-                  >,
+                  lazy_protect_args<boost::is_same<nothing, impl::let_case_s> >,
                   already_lazy<impl::case_check_match<E, impl::let_case_c> >,
                   already_lazy<returns<impl::let_case_s> >
                 >
