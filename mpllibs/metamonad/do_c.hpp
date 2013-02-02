@@ -10,15 +10,13 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/returns.hpp>
-#include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/eval_let_c.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/eval_match_let.hpp>
 #include <mpllibs/metamonad/eval_match_let_c.hpp>
-#include <mpllibs/metamonad/let_c.hpp>
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/instantiate.hpp>
-#include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/box.hpp>
 #include <mpllibs/metamonad/eval_guard.hpp>
@@ -305,11 +303,9 @@ namespace mpllibs
                             boost::mpl::push_back<
                               already_lazy<let_do_v>,
                               lazy_protect_args<
-                                eval_syntax<
-                                  let_c<
-                                    A, E1,
-                                    returns<set<let_do_n,let_do_w> >
-                                  >
+                                eval_let_c<
+                                  A, E1,
+                                  returns<set<let_do_n,let_do_w> >
                                 >
                               >
                             >,
@@ -325,7 +321,7 @@ namespace mpllibs
                         boost::mpl::push_back<
                           already_lazy<let_do_v>,
                           lazy_protect_args<
-                            eval_syntax<let_c<A, E1, returns<let_do_c> > >
+                            eval_let_c<A, E1, returns<let_do_c> >
                           >
                         >,
                         boost::mpl::true_
