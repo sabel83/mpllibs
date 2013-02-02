@@ -17,7 +17,6 @@
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/identity.hpp>
 #include <boost/mpl/tag.hpp>
 
 #include <boost/static_assert.hpp>
