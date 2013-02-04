@@ -13,7 +13,6 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
@@ -45,10 +44,10 @@ namespace mpllibs
     ((tmp_value<no_case_matched<Exp> >));
 
     template <class P, class E>
-    struct matches;
+    struct matches : tmp_value<matches<P, E> > {};
 
     template <class P, class E>
-    struct matches_c;
+    struct matches_c : tmp_value<matches_c<P, E> > {};
 
     namespace impl
     {
@@ -63,10 +62,13 @@ namespace mpllibs
       typedef var<let_case_s_> let_case_s;
 
       template <class T>
-      struct get_just_data;
+      struct strict_get_just_data;
 
       template <class T>
-      struct get_just_data<just<T> > : returns<T> {};
+      struct strict_get_just_data<just<T> > : T {};
+
+      MPLLIBS_METAFUNCTION(get_just_data, (T))
+      ((strict_get_just_data<typename T::type>));
 
       template <class E, class C>
       struct case_check_match;
@@ -113,7 +115,7 @@ namespace mpllibs
                 boost::mpl::eval_if<
                   lazy_protect_args<boost::is_same<nothing, impl::let_case_s> >,
                   already_lazy<impl::case_check_match<E, impl::let_case_c> >,
-                  already_lazy<returns<impl::let_case_s> >
+                  already_lazy<impl::let_case_s>
                 >
               >
             >

@@ -8,8 +8,6 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <mpllibs/metamonad/returns.hpp>
-
 #include <boost/mpl/if.hpp>
 
 #include <boost/preprocessor/cat.hpp>

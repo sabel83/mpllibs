@@ -24,7 +24,7 @@
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 
 #ifndef MPLLIBS_INSTANTIATE_ARITY_LIMIT
-  #define MPLLIBS_INSTANTIATE_ARITY_LIMIT 16
+  #define MPLLIBS_INSTANTIATE_ARITY_LIMIT 32
 #endif
 
 namespace mpllibs

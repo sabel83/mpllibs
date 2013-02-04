@@ -6,6 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/instantiate.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -15,10 +16,12 @@
 
 #include <boost/type_traits.hpp>
 
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
   template <class A, class B>
-  struct some_template;
+  struct some_template : tmp_value<some_template<A, B> > {};
 }
 
 BOOST_AUTO_TEST_CASE(test_instantiate)

@@ -7,7 +7,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/monad.hpp>
-#include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/data.hpp>
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/lambda.hpp>

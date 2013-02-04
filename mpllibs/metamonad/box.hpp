@@ -11,7 +11,6 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
-#include <mpllibs/metamonad/returns.hpp>
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/map.hpp>
@@ -40,7 +39,7 @@ namespace mpllibs
       struct let_impl;
 
       template <class A, class E1, class T>
-      struct let_impl<A, E1, box<T> > : returns<box<T> > {};
+      struct let_impl<A, E1, box<T> > : box<T> {};
     }
   }
 }

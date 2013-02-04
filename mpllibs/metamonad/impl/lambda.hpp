@@ -6,7 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
@@ -42,13 +41,13 @@ namespace mpllibs
   {
     namespace impl
     {
-      struct lambda_no_arg;
+      struct lambda_no_arg : tmp_value<lambda_no_arg> {};
 
       template <class N, class E1, class E2>
       struct lambda_let : let<N, syntax<E1>, E2> {};
 
       template <class E1, class E2>
-      struct lambda_let<_, E1, E2> : returns<E2> {};
+      struct lambda_let<_, E1, E2> : E2 {};
 
       struct lambda_impl_step : tmp_value<lambda_impl_step>
       {
@@ -106,26 +105,24 @@ namespace mpllibs
     struct lazy;
 
     template <>
-    struct lazy<impl::lambda_no_arg> : returns<impl::lambda_no_arg> {};
+    struct lazy<impl::lambda_no_arg> : impl::lambda_no_arg {};
 
     namespace impl
     {
       template <class A, class E1, class State>
       struct
         let_impl<A, E1, impl::lambda_impl<State> > :
-          returns<
-            impl::lambda_impl<
-              boost::mpl::pair<
-                typename boost::mpl::first<State>::type,
-                typename boost::mpl::eval_if<
-                  typename boost::mpl::contains<
-                    typename boost::mpl::first<State>::type,
-                    A
-                  >::type,
-                  returns<typename boost::mpl::second<State>::type>,
-                  let_in_syntax<A, E1, typename boost::mpl::second<State>::type>
-                >::type
-              >
+          impl::lambda_impl<
+            boost::mpl::pair<
+              typename boost::mpl::first<State>::type,
+              typename boost::mpl::eval_if<
+                typename boost::mpl::contains<
+                  typename boost::mpl::first<State>::type,
+                  A
+                >::type,
+                boost::mpl::second<State>,
+                let_in_syntax<A, E1, typename boost::mpl::second<State>::type>
+              >::type
             >
           >
       {};

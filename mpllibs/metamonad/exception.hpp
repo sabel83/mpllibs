@@ -8,7 +8,6 @@
 
 #include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/monad.hpp>
-#include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/eval_case.hpp>
@@ -41,12 +40,12 @@ namespace mpllibs
     template <>
     struct monad<exception_tag> : monad_defaults<exception_tag>
     {
-      typedef lambda_c<t, returns<t> > return_;
+      typedef lambda_c<t, t> return_;
       
       typedef
         lambda_c<a, f,
-          eval_case< returns<a>,
-            matches_c<exception<_>, returns<a> >,
+          eval_case< a,
+            matches_c<exception<_>, a>,
             matches_c<_, boost::mpl::apply1<f, a> >
           >
         >

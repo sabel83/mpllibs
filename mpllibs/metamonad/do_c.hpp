@@ -303,10 +303,7 @@ namespace mpllibs
                             boost::mpl::push_back<
                               already_lazy<let_do_v>,
                               lazy_protect_args<
-                                eval_let_c<
-                                  A, E1,
-                                  returns<set<let_do_n,let_do_w> >
-                                >
+                                eval_let_c<A, E1, set<let_do_n,let_do_w> >
                               >
                             >,
                             boost::mpl::true_
