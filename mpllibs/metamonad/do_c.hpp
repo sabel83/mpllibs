@@ -53,19 +53,6 @@ namespace mpllibs
     #endif
     
     /*
-     * Syntactic sugar
-     */
-    template <
-      class Monad,
-      BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-        MPLLIBS_DO_MAX_ARGUMENT,
-        class E,
-        boost::mpl::na
-      )
-    >
-    struct do_impl;
-    
-    /*
      * do_return
      */
     template <class V>
@@ -160,7 +147,7 @@ namespace mpllibs
         boost::mpl::apply_wrap2< \
           typename monad<Monad>::bind_, \
           typename T::type, \
-          typename do_impl< \
+          typename BOOST_PP_CAT(do, BOOST_PP_DEC(n))< \
             Monad, \
             BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), E) \
           >::type \
@@ -183,7 +170,10 @@ namespace mpllibs
           typename do1<Monad, Ex>::type, \
           lambda_c< \
             Name, \
-            do_impl<Monad, BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), E)> \
+            BOOST_PP_CAT(do, BOOST_PP_DEC(n))< \
+              Monad, \
+              BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), E) \
+            > \
           > \
         > \
       {};
@@ -192,30 +182,6 @@ namespace mpllibs
     
     #undef MPLLIBS_DO_CASE
         
-    /*
-     * do_impl
-     */
-    #ifdef MPLLIBS_DO_CASE
-      #error MPLLIBS_DO_CASE already defined
-    #endif
-    #define MPLLIBS_DO_CASE(z, n, unused) \
-      template <class Monad, BOOST_PP_ENUM_PARAMS(n, class E)> \
-      struct do_impl< \
-        Monad, \
-        BOOST_PP_ENUM_PARAMS(n, E) BOOST_PP_COMMA_IF(n) \
-        BOOST_PP_ENUM( \
-          BOOST_PP_SUB(MPLLIBS_DO_MAX_ARGUMENT, n), \
-          boost::mpl::na BOOST_PP_TUPLE_EAT(3), \
-          ~ \
-        ) \
-      > : \
-        BOOST_PP_CAT(do, n)<Monad, BOOST_PP_ENUM_PARAMS(n, E)> \
-      {};
-  
-    BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_CASE, ~)
-    
-    #undef MPLLIBS_DO_CASE
-    
     /*
      * do_c
      */
@@ -233,12 +199,28 @@ namespace mpllibs
         boost::mpl::na
       )
     >
-    struct do_c:
-      do_impl<
-        Monad BOOST_PP_REPEAT(MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_ARG, ~)
-      >
-    {};
+    struct do_c;
 
+    #ifdef MPLLIBS_DO_CASE
+      #error MPLLIBS_DO_CASE already defined
+    #endif
+    #define MPLLIBS_DO_CASE(z, n, unused) \
+      template <class Monad, BOOST_PP_ENUM_PARAMS(n, class E)> \
+      struct do_c< \
+        Monad, \
+        BOOST_PP_ENUM_PARAMS(n, E) BOOST_PP_COMMA_IF(n) \
+        BOOST_PP_ENUM( \
+          BOOST_PP_SUB(MPLLIBS_DO_MAX_ARGUMENT, n), \
+          boost::mpl::na BOOST_PP_TUPLE_EAT(3), \
+          ~ \
+        ) \
+      > : \
+        BOOST_PP_CAT(do, n)<Monad BOOST_PP_REPEAT(n, MPLLIBS_DO_ARG, ~)> \
+      {};
+  
+    BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_DO_CASE, ~)
+    
+    #undef MPLLIBS_DO_CASE
     #undef MPLLIBS_DO_ARG
 
     /*
@@ -343,35 +325,26 @@ namespace mpllibs
       #ifdef MPLLIBS_HANDLE_DO_FUN
         #error MPLLIBS_HANDLE_DO_FUN
       #endif
-      #define MPLLIBS_HANDLE_DO_FUN(f) \
+      #define MPLLIBS_HANDLE_DO_FUN(f, arg_num) \
         template < \
           class A, \
           class E1, \
           class Monad, \
-          BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, class T) \
+          BOOST_PP_ENUM_PARAMS(arg_num, class T) \
         > \
         struct \
-          let_impl< \
-            A, \
-            E1, \
-            f<Monad, BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T)> \
-          > : \
+          let_impl<A, E1, f<Monad, BOOST_PP_ENUM_PARAMS(arg_num, T)> > : \
           eval_match_let< \
             syntax<boost::mpl::pair<let_do_w, _> >, \
             let_do_args< \
               A, \
               E1, \
-              boost::mpl::vector< \
-                BOOST_PP_ENUM_PARAMS(MPLLIBS_DO_MAX_ARGUMENT, T) \
-              > \
+              boost::mpl::vector<BOOST_PP_ENUM_PARAMS(arg_num, T)> \
             >, \
             syntax< \
               lazy< \
                 boost::mpl::apply_wrap1< \
-                  BOOST_PP_CAT( \
-                    instantiate, \
-                    BOOST_PP_INC(MPLLIBS_DO_MAX_ARGUMENT) \
-                  )<f>, \
+                  BOOST_PP_CAT(instantiate, BOOST_PP_INC(arg_num))<f>, \
                   lazy_protect_args<boost::mpl::push_front<let_do_w, Monad> > \
                 > \
               > \
@@ -379,10 +352,18 @@ namespace mpllibs
           > \
         {}
 
-      MPLLIBS_HANDLE_DO_FUN(do_);
-      MPLLIBS_HANDLE_DO_FUN(do_c);
-      MPLLIBS_HANDLE_DO_FUN(do_impl);
+      MPLLIBS_HANDLE_DO_FUN(do_, MPLLIBS_DO_MAX_ARGUMENT);
+      MPLLIBS_HANDLE_DO_FUN(do_c, MPLLIBS_DO_MAX_ARGUMENT);
 
+      #ifdef MPLLIBS_HANDE_DO_N
+        #error MPLLIBS_HANDLE_DO_N
+      #endif
+      #define MPLLIBS_HANDLE_DO_N(z, n, unused) \
+        MPLLIBS_HANDLE_DO_FUN(BOOST_PP_CAT(do, n), n);
+
+      BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_DO_MAX_ARGUMENT, MPLLIBS_HANDLE_DO_N,~)
+
+      #undef MPLLIBS_HANDLE_DO_N
       #undef MPLLIBS_HANDLE_DO_FUN
     }
   }
