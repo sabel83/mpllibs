@@ -52,7 +52,9 @@ BOOST_AUTO_TEST_CASE(test_match)
 
   using boost::is_same;
 
-  meta_require<is_empty<match<_, int13> > >(MPLLIBS_HERE, "test_match_any");
+  meta_require<
+    is_empty<match<syntax<_>, int13> >
+  >(MPLLIBS_HERE, "test_match_any");
 
   meta_require<
     is_same<
