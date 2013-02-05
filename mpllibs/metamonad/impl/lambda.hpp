@@ -13,6 +13,7 @@
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/unused_arg.hpp>
+#include <mpllibs/metamonad/metafunction.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -23,6 +24,7 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/contains.hpp>
 
 #include <boost/type_traits.hpp>
@@ -41,33 +43,32 @@ namespace mpllibs
   {
     namespace impl
     {
-      struct lambda_no_arg : tmp_value<lambda_no_arg> {};
-
-      template <class N, class E1, class E2>
-      struct lambda_let : let<N, syntax<E1>, E2> {};
-
-      template <class E1, class E2>
-      struct lambda_let<_, E1, E2> : E2 {};
-
       struct lambda_impl_step : tmp_value<lambda_impl_step>
       {
-        template <class State, class T>
-        struct apply :
-          boost::mpl::eval_if<
-            typename boost::is_same<lambda_no_arg, T>::type,
-            State,
-            lazy<
-              boost::mpl::pair<
-                boost::mpl::pop_front<boost::mpl::first<already_lazy<State> > >,
-                lambda_let<
-                  boost::mpl::front<boost::mpl::first<already_lazy<State> > >,
-                  already_lazy<T>,
-                  boost::mpl::second<already_lazy<State> >
-                >
+        MPLLIBS_METAFUNCTION(apply, (State)(T))
+        ((
+          boost::mpl::pair<
+            typename boost::mpl::pop_front<
+              typename boost::mpl::first<State>::type
+            >::type,
+            typename boost::mpl::eval_if<
+              typename boost::is_same<
+                typename boost::mpl::front<
+                  typename boost::mpl::first<State>::type
+                >::type,
+                _
+              >::type,
+              typename boost::mpl::second<State>::type,
+              let<
+                typename boost::mpl::front<
+                  typename boost::mpl::first<State>::type
+                >::type,
+                syntax<T>,
+                typename boost::mpl::second<State>::type
               >
-            >
+            >::type
           >
-        {};
+        ));
       };
 
       template <class State>
@@ -84,7 +85,7 @@ namespace mpllibs
           BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
             BOOST_MPL_LIMIT_METAFUNCTION_ARITY,
             class T,
-            lambda_no_arg
+            boost::mpl::na
           )
         >
         struct apply :
@@ -99,16 +100,7 @@ namespace mpllibs
           >
         {};
       };
-    }
 
-    template <class T>
-    struct lazy;
-
-    template <>
-    struct lazy<impl::lambda_no_arg> : impl::lambda_no_arg {};
-
-    namespace impl
-    {
       template <class A, class E1, class State>
       struct
         let_impl<A, E1, impl::lambda_impl<State> > :

@@ -20,9 +20,9 @@ namespace mpllibs
       BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
         BOOST_MPL_LIMIT_METAFUNCTION_ARITY,
         class T,
-        impl::lambda_no_arg
+        boost::mpl::na
       ),
-      class T = impl::lambda_no_arg // for the body
+      class T = boost::mpl::na // for the body
     >
     struct lambda;
 
@@ -40,7 +40,7 @@ namespace mpllibs
           BOOST_PP_COMMA_IF(n) F, \
           BOOST_PP_ENUM( \
             BOOST_PP_SUB(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, n), \
-            impl::lambda_no_arg BOOST_PP_TUPLE_EAT(3), \
+            boost::mpl::na BOOST_PP_TUPLE_EAT(3), \
             ~ \
           ) \
         > : \
@@ -77,7 +77,7 @@ namespace mpllibs
               BOOST_PP_COMMA_IF(n) F, \
               BOOST_PP_ENUM( \
                 BOOST_PP_SUB(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, n), \
-                lambda_no_arg BOOST_PP_TUPLE_EAT(3), \
+                boost::mpl::na BOOST_PP_TUPLE_EAT(3), \
                 ~ \
               ) \
             > \
