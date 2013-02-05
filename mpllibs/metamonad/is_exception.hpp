@@ -15,11 +15,17 @@ namespace mpllibs
   namespace metamonad
   {
     // Exceptions are used in the implementation of pattern matching
-    template <class T>
-    struct is_exception : boost::mpl::false_ {};
+    namespace impl
+    {
+      template <class T>
+      struct strict_is_exception : boost::mpl::false_ {};
+
+      template <class T>
+      struct strict_is_exception<exception<T> > : boost::mpl::true_ {};
+    }
 
     template <class T>
-    struct is_exception<exception<T> > : boost::mpl::true_ {};
+    struct is_exception : impl::strict_is_exception<typename T::type> {};
   }
 }
 
