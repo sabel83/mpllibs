@@ -8,14 +8,14 @@
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
+#include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    template <class AnglyExpr>
-    struct already_lazy : AnglyExpr {};
+    MPLLIBS_METAFUNCTION(already_lazy, (AnglyExpr)) ((AnglyExpr));
 
     template <class AnglyExpr>
     struct lazy;

@@ -6,15 +6,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/metafunction.hpp>
+
 namespace mpllibs
 {
   namespace metamonad
   {
-    template <class E>
-    struct lazy;
+    MPLLIBS_METAFUNCTION(lazy_protect_args, (E)) ((E));
 
     template <class E>
-    struct lazy_protect_args : E {};
+    struct lazy;
 
     template <class E>
     struct lazy<lazy_protect_args<E> > : E {};

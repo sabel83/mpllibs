@@ -8,21 +8,35 @@
 
 #include <mpllibs/metamonad/impl/let.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    template <class A, class E1, class E2>
-    struct let_;
+    namespace impl
+    {
+      template <class A, class E1, class E2>
+      struct strict_let;
 
-    template <class A, class E1, class E2>
-    struct let_<A, syntax<E1>, syntax<E2> > :
-      syntax<typename impl::let_in_syntax<A, E1, E2>::type>
-    {};
+      template <class A, class E1, class E2>
+      struct strict_let<A, syntax<E1>, syntax<E2> > :
+        syntax<typename impl::let_in_syntax<A, E1, E2>::type>
+      {};
+    }
 
     MPLLIBS_METAFUNCTION(let, (A)(E1)(E2))
-    ((let_<typename A::type, typename E1::type, typename E2::type>));
+    ((
+      impl::strict_let<typename A::type, typename E1::type, typename E2::type>
+    ));
+
+    namespace impl
+    {
+      template <class A, class E1a, class E1b, class E2>
+      struct let_impl<A, E1a, let<A, E1b, E2> > :
+        returns<let<A, E1b, E2> >
+      {};
+    }
   }
 }
 

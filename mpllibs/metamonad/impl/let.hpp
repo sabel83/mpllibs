@@ -30,16 +30,6 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    template <class A, class E1, class E2>
-    struct let;
-
-    template <class A, class E1, class E2>
-    struct let_c;
-
-    template <class A, class E1, class E2>
-    struct letrec;
-
-
     namespace impl
     {
       template <class A, class E1, class E2>
@@ -54,25 +44,9 @@ namespace mpllibs
       template <class A, class E1>
       struct let_in_syntax<A, E1, A> : returns<E1> {};
 
-      
       // let_impl assumes, that let_impl<A, E1, A> is never instantiated
       template <class A, class E1, class E2>
       struct let_impl : returns<E2> {};
-
-      template <class A, class E1a, class E1b, class E2>
-      struct let_impl<A, E1a, let<A, E1b, E2> > :
-        returns<let<A, E1b, E2> >
-      {};
-
-      template <class A, class E1a, class E1b, class E2>
-      struct let_impl<A, E1a, let_c<A, E1b, E2> > :
-        returns<let_c<A, E1b, E2> >
-      {};
-
-      template <class A, class E1a, class E1b, class E2>
-      struct let_impl<A, E1a, letrec<A, E1b, E2> > :
-        returns<letrec<A, E1b, E2> >
-      {};
 
       #ifndef MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT
         #define MPLLIBS_LET_MAX_TEMPLATE_ARGUMENT 21

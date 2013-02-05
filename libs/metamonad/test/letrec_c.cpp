@@ -6,15 +6,19 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/letrec_c.hpp>
+#include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
-#include "common.hpp"
-
 #include <boost/mpl/minus.hpp>
+
+#include <boost/type_traits.hpp>
+
+#include "common.hpp"
 
 BOOST_AUTO_TEST_CASE(test_letrec_c)
 {
@@ -25,9 +29,13 @@ BOOST_AUTO_TEST_CASE(test_letrec_c)
   using boost::mpl::eval_if;
   
   using mpllibs::metamonad::letrec_c;
+  using mpllibs::metamonad::let;
   using mpllibs::metamonad::lambda_c;
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::eval_syntax;
+  using mpllibs::metamonad::syntax;
+
+  using boost::is_same;
 
   // name is replaced with a nullary metafunction evaluating to the
   // substituted expression
@@ -96,6 +104,13 @@ BOOST_AUTO_TEST_CASE(test_letrec_c)
       eval_syntax<letrec_c<x, int2, lazy<minus<int13, x> > > >::type
     >
   >(MPLLIBS_HERE, "test_letrec_lazy");
+
+  meta_require<
+    is_same<
+      syntax<letrec_c<x, int13, x> >,
+      let<x, syntax<int13>, syntax<letrec_c<x, x, x> > >::type
+    >
+  >(MPLLIBS_HERE, "test_letrec_c_in_let");
 }
 
 
