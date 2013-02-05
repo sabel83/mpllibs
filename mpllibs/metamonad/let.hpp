@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/impl/let.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/var.hpp>
 
 namespace mpllibs
 {
@@ -20,8 +21,8 @@ namespace mpllibs
       struct strict_let;
 
       template <class A, class E1, class E2>
-      struct strict_let<A, syntax<E1>, syntax<E2> > :
-        syntax<typename impl::let_in_syntax<A, E1, E2>::type>
+      struct strict_let<var<A>, syntax<E1>, syntax<E2> > :
+        syntax<typename impl::let_in_syntax<var<A>, E1, E2>::type>
       {};
     }
 
