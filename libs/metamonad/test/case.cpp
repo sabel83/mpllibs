@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/box.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/let_c.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -42,6 +43,7 @@ BOOST_AUTO_TEST_CASE(test_case)
   using mpllibs::metamonad::var;
   using mpllibs::metamonad::syntax;
   using mpllibs::metamonad::box;
+  using mpllibs::metamonad::let_c;
 
   using boost::is_same;
 
@@ -110,6 +112,13 @@ BOOST_AUTO_TEST_CASE(test_case)
       >::type
     >
   >(MPLLIBS_HERE, "test_nested_case");
+
+  meta_require<
+    is_same<
+      syntax<matches_c<some_template<int11, int13>, int11> >,
+      let_c<x, int11, matches_c<some_template<x, int13>, x> >::type
+    >
+  >(MPLLIBS_HERE, "test_matches_in_let");
 }
 
 
