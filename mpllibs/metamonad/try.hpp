@@ -56,7 +56,7 @@ namespace mpllibs
           lazy<
             boost::mpl::pair<
               boost::mpl::false_,
-              lazy_protect_args<eval_let<N, syntax<E>, Body> >
+              already_lazy<eval_let<N, syntax<E>, Body> >
             >
           >,
           boost::mpl::pair<boost::mpl::true_, exception<E> >

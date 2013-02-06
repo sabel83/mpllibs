@@ -9,8 +9,6 @@
 #include <mpllibs/metamonad/let.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/unused_arg.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>

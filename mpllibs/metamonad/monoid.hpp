@@ -10,6 +10,8 @@
 #include <mpllibs/metamonad/mempty.hpp>
 #include <mpllibs/metamonad/mappend.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
+#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
@@ -37,10 +39,8 @@ namespace mpllibs
             boost::mpl::reverse_fold<
               already_lazy<l>,
               mpllibs::metamonad::mempty<already_lazy<Tag> >,
-              already_lazy<
-                lambda_c<s, t, mpllibs::metamonad::mappend<Tag, s, t> >
-              >,
-              already_lazy<lambda_c<x, _, x> >
+              lambda<s, t, syntax<mpllibs::metamonad::mappend<Tag, s, t> > >,
+              lambda_c<x, _, x>
             >
           >
         >

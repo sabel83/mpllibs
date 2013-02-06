@@ -12,8 +12,6 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/monad_plus.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
@@ -70,13 +68,7 @@ namespace mpllibs
             matches_c<just<c>,
               eval_case< b,
                 matches_c<nothing, a>,
-                matches_c<just<d>,
-                  lazy<
-                    just<
-                      lazy_protect_args<mpllibs::metamonad::mappend<T, c, d> >
-                    >
-                  >
-                >
+                matches_c<just<d>, just<mpllibs::metamonad::mappend<T, c, d> > >
               >
             >
           >

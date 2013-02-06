@@ -148,7 +148,7 @@ namespace mpllibs
         lambda_c<s, p,
           lazy<
             boost::mpl::eval_if<
-              is_exception<lazy_protect_args<s> >,
+              is_exception<already_lazy<s> >,
               lazy_protect_args<s>,
               lazy_argument<
                 boost::mpl::eval_if<

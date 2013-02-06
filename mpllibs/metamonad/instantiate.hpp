@@ -38,7 +38,7 @@ namespace mpllibs
       typename boost::mpl::eval_if< \
         typename boost::mpl::less< \
           boost::mpl::int_<n>, \
-          typename boost::mpl::size<V>::type \
+          typename boost::mpl::size<typename V::type>::type \
         >::type, \
         boost::mpl::deref< \
           BOOST_PP_REPEAT( \
@@ -46,7 +46,7 @@ namespace mpllibs
             typename boost::mpl::next< BOOST_PP_TUPLE_EAT(3), \
             ~ \
           ) \
-            typename boost::mpl::begin<V>::type \
+            typename boost::mpl::begin<typename V::type>::type \
           BOOST_PP_REPEAT(n, >::type BOOST_PP_TUPLE_EAT(3), ~) \
         >, \
         returns<boost::mpl::na> \

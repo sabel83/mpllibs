@@ -285,7 +285,7 @@ namespace mpllibs
                             boost::mpl::push_back<
                               already_lazy<let_do_v>,
                               lazy_protect_args<
-                                eval_let_c<A, E1, set<let_do_n,let_do_w> >
+                                eval_let_c<A, E1, set<let_do_n, let_do_w> >
                               >
                             >,
                             boost::mpl::true_
@@ -342,11 +342,9 @@ namespace mpllibs
               boost::mpl::vector<BOOST_PP_ENUM_PARAMS(arg_num, T)> \
             >, \
             syntax< \
-              lazy< \
-                boost::mpl::apply_wrap1< \
-                  BOOST_PP_CAT(instantiate, BOOST_PP_INC(arg_num))<f>, \
-                  lazy_protect_args<boost::mpl::push_front<let_do_w, Monad> > \
-                > \
+              boost::mpl::apply_wrap1< \
+                BOOST_PP_CAT(instantiate, BOOST_PP_INC(arg_num))<f>, \
+                boost::mpl::push_front<let_do_w, Monad> \
               > \
             > \
           > \

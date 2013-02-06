@@ -125,12 +125,8 @@ namespace mpllibs
           lazy<
             boost::mpl::eval_if<
               boost::is_same<nothing, lazy_protect_args<impl::let_case_r> >,
-              lazy_argument<
-                exception<no_case_matched<lazy_protect_args<E> > >
-              >,
-              lazy_argument<
-                impl::get_just_data<lazy_protect_args<impl::let_case_r> >
-              >
+              already_lazy<exception<no_case_matched<E> > >,
+              already_lazy<impl::get_just_data<impl::let_case_r> >
             >
           >
         >

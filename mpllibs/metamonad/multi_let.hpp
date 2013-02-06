@@ -10,8 +10,6 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/already_lazy.hpp>
 
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/fold.hpp>
@@ -25,15 +23,7 @@ namespace mpllibs
       boost::mpl::fold<
         M,
         E,
-        lambda_c<s, p,
-          lazy<
-            let<
-              boost::mpl::first<already_lazy<p> >,
-              boost::mpl::second<already_lazy<p> >,
-              already_lazy<s>
-            >
-          >
-        >
+        lambda_c<s, p, let<boost::mpl::first<p>, boost::mpl::second<p>, s> >
       >
     ));
   }

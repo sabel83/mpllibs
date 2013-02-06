@@ -7,7 +7,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/let.hpp>
-#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
@@ -18,9 +17,7 @@ namespace mpllibs
   namespace metamonad
   {
     template <class A, class E1, class E2>
-    struct letrec :
-      let<A, syntax<lazy_protect_args<eval_syntax<letrec<A, E1, E1> > > >, E2>
-    {};
+    struct letrec : let<A, syntax<eval_syntax<letrec<A, E1, E1> > >, E2> {};
 
     namespace impl
     {

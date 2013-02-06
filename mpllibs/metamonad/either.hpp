@@ -11,8 +11,6 @@
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/lazy_protect_args.hpp>
 
 #include <boost/mpl/apply.hpp>
 
