@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/throw.hpp>
+#include <mpllibs/metamonad/exception.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -30,7 +30,9 @@ namespace mpllibs
       {
         template <char C>
         struct digit_to_int :
-          mpllibs::metamonad::throw_<mpllibs::metaparse::errors::invalid_digit>
+          mpllibs::metamonad::exception<
+            mpllibs::metaparse::errors::invalid_digit
+          >
         {};
       }
 
