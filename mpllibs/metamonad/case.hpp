@@ -13,6 +13,7 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
@@ -65,8 +66,7 @@ namespace mpllibs
       template <class T>
       struct strict_get_just_data<just<T> > : T {};
 
-      MPLLIBS_METAFUNCTION(get_just_data, (T))
-      ((strict_get_just_data<typename T::type>));
+      MPLLIBS_LAZY_METAFUNCTION(get_just_data, (T)) ((strict_get_just_data<T>));
 
       template <class E, class C>
       struct case_check_match;
