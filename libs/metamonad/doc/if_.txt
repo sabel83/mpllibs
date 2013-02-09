@@ -3,16 +3,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-eval_letrec_c
-=============
+if_
+===
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class Name, class Exp, class Body>
-struct eval_letrec_c
+template <class C, class T, class F>
+struct if_
 {
   // unspecified
 };
@@ -22,58 +22,46 @@ struct eval_letrec_c
 Description
 -----------
 
-The same as link:eval_letrec.html[+eval_letrec+], but +Exp+ and +Body+ are
-angle-bracket expressions and not link:syntax.html[+syntax+]es.
+Evaluates the nullary metafunction +C+, and when it returns a true logical
+value, +if_+ returns the result of the nullary metafunction +T+, when +C+
+returns false, +if_+ returns the result of the nullary metafunction +F+.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/eval_letrec_c.hpp>
+#include <mpllibs/metamonad/if.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +n+, +e+ and +b+ classes
+For any +ct+ nullary metafunction evaluating to true, +cf+ nullary metafunction
+evaluating to false and +t+, +f+ nullary metafunctions the following are
+equivalent:
 
 --------------------------------------
-eval_letrec_c<n, e, b>::type
+if_<ct, t, f>::type
+t::type
 --------------------------------------
 
-is equivalent to
-
 --------------------------------------
-eval_letrec<n, syntax<e>, syntax<b>>::type
+if_<cf, t, f>::type
+f::type
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-using boost::mpl::times;
-using boost::mpl::plus;
-using boost::mpl::minus;
-using boost::mpl::int_;
-using boost::mpl::equal_to;
-using boost::mpl::apply;
-
-struct fact;
-
-typedef
-  eval_letrec_c<
-    fact,
-    lambda<
-      n,
-      if_<
-        equal_to<n, int_<0>>,
-        int_<1>,
-        lazy<times<apply<fact, minus<n, int_<1>>>, n>>
-      >
-    >,
-    lazy<apply<fact, int_<3>>>
-  >::type
-  fact_3;
+MPLLIBS_METAFUNCTION(divide_if_not_zero, (A)(B))
+((
+  if_<
+    boost::mpl::equal_to<boost::mpl::int_<0>, B>,
+    A,
+    boost::mpl::divides<A, B>
+  >
+));
 --------------------------------------
 
 include::copyright[]

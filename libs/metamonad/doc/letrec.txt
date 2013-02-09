@@ -56,7 +56,6 @@ using boost::mpl::times;
 using boost::mpl::plus;
 using boost::mpl::minus;
 using boost::mpl::int_;
-using boost::mpl::eval_if;
 using boost::mpl::equal_to;
 using boost::mpl::apply;
 
@@ -68,7 +67,7 @@ typedef
       fact,
       lambda<
         n,
-        eval_if<
+        if_<
           equal_to<n, int_<0> >,
           int_<1>,
           lazy<times<apply<fact, minus<n, int_<1> > >, n > > >

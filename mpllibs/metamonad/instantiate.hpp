@@ -8,11 +8,11 @@
 
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <boost/mpl/begin_end.hpp>
 #include <boost/mpl/deref.hpp>
 #include <boost/mpl/next.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/int.hpp>
@@ -35,11 +35,11 @@ namespace mpllibs
       #error MPLLIBS_CONT_GET_ELEM already defined
     #endif
     #define MPLLIBS_CONT_GET_ELEM(z, n, unused) \
-      typename boost::mpl::eval_if< \
-        typename boost::mpl::less< \
+      typename if_< \
+        boost::mpl::less< \
           boost::mpl::int_<n>, \
           typename boost::mpl::size<typename V::type>::type \
-        >::type, \
+        >, \
         boost::mpl::deref< \
           BOOST_PP_REPEAT( \
             n, \

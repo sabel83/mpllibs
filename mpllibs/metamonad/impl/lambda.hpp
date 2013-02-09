@@ -12,9 +12,9 @@
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/unused_arg.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/front.hpp>
@@ -22,7 +22,6 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/contains.hpp>
 
 #include <boost/type_traits.hpp>
@@ -49,13 +48,13 @@ namespace mpllibs
             typename boost::mpl::pop_front<
               typename boost::mpl::first<State>::type
             >::type,
-            typename boost::mpl::eval_if<
-              typename boost::is_same<
+            typename if_<
+              boost::is_same<
                 typename boost::mpl::front<
                   typename boost::mpl::first<State>::type
                 >::type,
                 _
-              >::type,
+              >,
               typename boost::mpl::second<State>::type,
               let<
                 typename boost::mpl::front<
@@ -105,11 +104,11 @@ namespace mpllibs
           impl::lambda_impl<
             boost::mpl::pair<
               typename boost::mpl::first<State>::type,
-              typename boost::mpl::eval_if<
-                typename boost::mpl::contains<
+              typename if_<
+                boost::mpl::contains<
                   typename boost::mpl::first<State>::type,
                   A
-                >::type,
+                >,
                 boost::mpl::second<State>,
                 let_in_syntax<A, E1, typename boost::mpl::second<State>::type>
               >::type

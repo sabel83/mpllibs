@@ -10,6 +10,7 @@
 #include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
@@ -21,6 +22,7 @@
 #include <mpllibs/metamonad/unused_arg.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/instantiate.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/pair.hpp>
@@ -28,7 +30,6 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/zip_view.hpp>
 #include <boost/mpl/or.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/has_key.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/insert.hpp>
@@ -71,13 +72,16 @@ namespace mpllibs
 
     namespace impl
     {
+      MPLLIBS_LAZY_METAFUNCTION(lazy_match_c_impl, (Pattern)(Value))
+      ((match_c_impl<Pattern, Value>));
+      
       MPLLIBS_METAFUNCTION(map_insert_impl, (P)(Pair))
       ((
         BOOST_PP_CAT(instantiate, BOOST_MPL_LIMIT_MAP_SIZE)<
           boost::mpl::map
         >::apply<
-          typename boost::mpl::eval_if<
-            typename boost::mpl::second<P>::type,
+          typename if_<
+            boost::mpl::second<P>,
             boost::mpl::push_back<typename boost::mpl::first<P>::type, Pair>,
             boost::mpl::first<P>
           >::type
@@ -98,43 +102,41 @@ namespace mpllibs
             typename Map::type,
             boost::mpl::pair<boost::mpl::vector<>, boost::mpl::true_>,
             lambda_c<s, c,
-              lazy<
-                boost::mpl::eval_if<
-                  boost::mpl::second<already_lazy<s> >,
-                  lazy_argument<
-                    boost::mpl::eval_if<
-                      boost::is_same<
-                        boost::mpl::first<already_lazy<c> >,
-                        boost::mpl::first<lazy_protect_args<Pair> >
-                      >,
-                      lazy_argument<
-                        boost::mpl::pair<
-                          boost::mpl::push_back<
-                            boost::mpl::first<already_lazy<s> >,
-                            lazy_protect_args<Pair>
-                          >,
-                          boost::mpl::false_
-                        >
-                      >,
-                      lazy_argument<
-                        boost::mpl::pair<
-                          boost::mpl::push_back<
-                            boost::mpl::first<already_lazy<s> >,
-                            already_lazy<c>
-                          >,
-                          boost::mpl::true_
-                        >
-                      >
+              if_<
+                boost::mpl::second<s>,
+                if_<
+                  lazy<
+                    boost::is_same<
+                      boost::mpl::first<already_lazy<c> >,
+                      boost::mpl::first<lazy_protect_args<Pair> >
                     >
                   >,
-                  lazy_argument<
+                  lazy<
+                    boost::mpl::pair<
+                      boost::mpl::push_back<
+                        boost::mpl::first<already_lazy<s> >,
+                        lazy_protect_args<Pair>
+                      >,
+                      boost::mpl::false_
+                    >
+                  >,
+                  lazy<
                     boost::mpl::pair<
                       boost::mpl::push_back<
                         boost::mpl::first<already_lazy<s> >,
                         already_lazy<c>
                       >,
-                      boost::mpl::false_
+                      boost::mpl::true_
                     >
+                  >
+                >,
+                lazy<
+                  boost::mpl::pair<
+                    boost::mpl::push_back<
+                      boost::mpl::first<already_lazy<s> >,
+                      already_lazy<c>
+                    >,
+                    boost::mpl::false_
                   >
                 >
               >
@@ -146,39 +148,37 @@ namespace mpllibs
 
       typedef
         lambda_c<s, p,
-          lazy<
-            boost::mpl::eval_if<
-              is_exception<already_lazy<s> >,
-              lazy_protect_args<s>,
-              lazy_argument<
-                boost::mpl::eval_if<
-                  boost::mpl::has_key<
-                    already_lazy<s>,
-                    boost::mpl::first<already_lazy<p> >
-                  >,
-                  lazy_argument<
-                    boost::mpl::eval_if<
-                      boost::is_same<
-                        boost::mpl::at<
-                          already_lazy<s>,
-                          boost::mpl::first<already_lazy<p> >
-                        >,
-                        boost::mpl::second<already_lazy<p> >
-                      >,
-                      already_lazy<s>,
-                      lazy_argument<
-                        exception<
-                          bad_match<
-                            boost::mpl::first<already_lazy<p> >,
-                            boost::mpl::second<already_lazy<p> >
-                          >
-                        >
-                      >
-                    >
-                  >,
-                  already_lazy<map_insert<s, p> >
+          if_<
+            is_exception<s>,
+            s,
+            if_<
+              lazy<
+                boost::mpl::has_key<
+                  already_lazy<s>,
+                  boost::mpl::first<already_lazy<p> >
                 >
-              >
+              >,
+              if_<
+                lazy<
+                  boost::is_same<
+                    boost::mpl::at<
+                      already_lazy<s>,
+                      boost::mpl::first<already_lazy<p> >
+                    >,
+                    boost::mpl::second<already_lazy<p> >
+                  >
+                >,
+                s,
+                lazy<
+                  exception<
+                    bad_match<
+                      boost::mpl::first<already_lazy<p> >,
+                      boost::mpl::second<already_lazy<p> >
+                    >
+                  >
+                >
+              >,
+              map_insert<s, p>
             >
           >
         >
@@ -186,12 +186,12 @@ namespace mpllibs
 
       MPLLIBS_METAFUNCTION(merge_map, (A)(B))
       ((
-        boost::mpl::eval_if<
-          typename is_exception<A>::type,
-          typename A::type,
-          boost::mpl::eval_if<
-            typename is_exception<B>::type,
-            typename B::type,
+        if_<
+          is_exception<A>,
+          A,
+          if_<
+            is_exception<B>,
+            B,
             boost::mpl::fold<
               typename B::type,
               typename A::type,
@@ -210,18 +210,14 @@ namespace mpllibs
           boost::mpl::zip_view<boost::mpl::vector<Ps, Vs> >,
           boost::mpl::map<>,
           lambda_c<s, p,
-            lazy<
-              boost::mpl::eval_if<
-                is_exception<already_lazy<s> >,
-                already_lazy<s>,
-                lazy_argument<
-                  merge_map<
-                    already_lazy<s>,
-                    match_c_impl<
-                      unbox<boost::mpl::front<already_lazy<p> > >,
-                      unbox<boost::mpl::back<already_lazy<p> > >
-                    >
-                  >
+            if_<
+              is_exception<s>,
+              s,
+              merge_map<
+                s,
+                impl::lazy_match_c_impl<
+                  unbox<boost::mpl::front<p> >,
+                  unbox<boost::mpl::back<p> >
                 >
               >
             >

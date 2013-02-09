@@ -16,13 +16,13 @@
 #include <mpllibs/metamonad/eval_let.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/var.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
 #include <boost/type_traits.hpp>
@@ -51,8 +51,8 @@ namespace mpllibs
     {
       template <class E, class N, class Pred, class Body>
       struct handle_catch_impl :
-        boost::mpl::eval_if<
-          typename eval_let<N, syntax<E>, Pred>::type,
+        if_<
+          eval_let<N, syntax<E>, Pred>,
           lazy<
             boost::mpl::pair<
               boost::mpl::false_,

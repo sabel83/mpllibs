@@ -20,6 +20,7 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/box.hpp>
 #include <mpllibs/metamonad/eval_guard.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -266,30 +267,28 @@ namespace mpllibs
             eval_match_let_c<
               boost::mpl::pair<let_do_v, let_do_d>,
               let_do_s,
-              boost::mpl::eval_if< let_do_d,
+              if_< let_do_d,
                 eval_case< eval_guard<let_do_c>,
                   matches_c<eval_guard<set<let_do_n, let_do_w> >,
-                    lazy<
-                      boost::mpl::eval_if<
-                        lazy_protect_args<boost::is_same<A, let_do_n> >,
-                        lazy_argument<
-                          boost::mpl::pair<
+                    if_<
+                      boost::is_same<A, let_do_n>,
+                      lazy<
+                        boost::mpl::pair<
+                          lazy_protect_args<
+                            boost::mpl::push_back<let_do_v, let_do_c>
+                          >,
+                          boost::mpl::false_
+                        >
+                      >,
+                      lazy<
+                        boost::mpl::pair<
+                          boost::mpl::push_back<
+                            already_lazy<let_do_v>,
                             lazy_protect_args<
-                              boost::mpl::push_back<let_do_v, let_do_c>
-                            >,
-                            boost::mpl::false_
-                          >
-                        >,
-                        lazy_argument<
-                          boost::mpl::pair<
-                            boost::mpl::push_back<
-                              already_lazy<let_do_v>,
-                              lazy_protect_args<
-                                eval_let_c<A, E1, set<let_do_n, let_do_w> >
-                              >
-                            >,
-                            boost::mpl::true_
-                          >
+                              eval_let_c<A, E1, set<let_do_n, let_do_w> >
+                            >
+                          >,
+                          boost::mpl::true_
                         >
                       >
                     >

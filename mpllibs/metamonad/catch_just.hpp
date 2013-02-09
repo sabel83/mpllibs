@@ -12,9 +12,9 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/eval_if.hpp>
 
 namespace mpllibs
 {
@@ -24,18 +24,17 @@ namespace mpllibs
     struct catch_just :
       eval_case<E,
         matches_c<exception<e>,
-          lazy<
-            boost::mpl::eval_if<
-              boost::mpl::apply_wrap1<
-                lazy_protect_args<Pred>,
-                already_lazy<e>
-              >,
+          if_<
+            lazy<
+              boost::mpl::apply_wrap1<lazy_protect_args<Pred>, already_lazy<e> >
+            >,
+            lazy<
               boost::mpl::apply_wrap1<
                 lazy_protect_args<Handler>,
                 already_lazy<e>
-              >,
-              already_lazy<E>
-            >
+              >
+            >,
+            E
           >
         >,
         matches_c<_, E>

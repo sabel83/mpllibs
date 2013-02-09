@@ -19,7 +19,6 @@
 #include <boost/preprocessor/tuple/eat.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>
 
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/begin_end.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/find_if.hpp>

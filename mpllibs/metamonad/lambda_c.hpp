@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/impl/lambda.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <boost/mpl/contains.hpp>
 
@@ -87,11 +88,11 @@ namespace mpllibs
             returns< \
               lambda_c< \
                 BOOST_PP_ENUM_PARAMS(n, T) BOOST_PP_COMMA_IF(n) \
-                typename boost::mpl::eval_if< \
-                  typename boost::mpl::contains< \
+                typename if_< \
+                  boost::mpl::contains< \
                     boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, T)>, \
                     A \
-                  >::type, \
+                  >, \
                   returns<B>, \
                   let_in_syntax<A, E1, B> \
                 >::type \

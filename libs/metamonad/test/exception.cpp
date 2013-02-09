@@ -8,13 +8,13 @@
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/do.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/always.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -30,7 +30,6 @@ BOOST_AUTO_TEST_CASE(test_exception)
   using boost::is_same;
   
   using boost::mpl::equal_to;
-  using boost::mpl::always;
   using boost::mpl::apply;
   using boost::mpl::apply_wrap1;
   using boost::mpl::tag;
@@ -43,6 +42,8 @@ BOOST_AUTO_TEST_CASE(test_exception)
   using mpllibs::metamonad::do_c;
   using mpllibs::metamonad::set;
   using mpllibs::metamonad::do_return;
+  using mpllibs::metamonad::lambda_c;
+  using mpllibs::metamonad::_;
 
   using mpllibs::metamonad::name::x;
 
@@ -60,9 +61,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   meta_require<
     equal_to<
       exception<int13>,
-      do_c<exception_monad,
-        apply_wrap1<always<e>, int>
-      >::type
+      do_c<exception_monad, apply_wrap1<lambda_c<_, e>, int> >::type
     >
   >(MPLLIBS_HERE, "test_monadic_exception");
 
@@ -71,7 +70,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
     equal_to<
       exception<int13>,
       do_c<exception_monad,
-        apply_wrap1<always<e>, int>,
+        apply_wrap1<lambda_c<_, e>, int>,
         do_return<int13>
       >::type
     >
@@ -105,7 +104,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
     equal_to<
       exception<int13>,
       do_c<exception_monad,
-        set<x, apply_wrap1<always<e>, int> >,
+        set<x, apply_wrap1<lambda_c<_, e>, int> >,
         do_return<int13>
       >::type
     >

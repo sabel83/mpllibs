@@ -7,8 +7,8 @@
 
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/lazy_argument.hpp>
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -17,7 +17,6 @@
 #include <boost/mpl/minus.hpp>
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
@@ -28,11 +27,10 @@ using boost::mpl::minus;
 using boost::mpl::times;
 using boost::mpl::equal_to;
 using boost::mpl::less;
-using boost::mpl::eval_if;
 
 using mpllibs::metamonad::lazy;
-using mpllibs::metamonad::lazy_argument;
 using mpllibs::metamonad::returns;
+using mpllibs::metamonad::if_;
 
 #if defined(BOOST_NO_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
   #define BOOST_NO_CXX11_VARIADIC_TEMPLATES
@@ -44,12 +42,10 @@ namespace
 
   MPLLIBS_METAFUNCTION(fact, (N))
   ((
-    lazy<
-      eval_if<
-        less<N, int_<1> >,
-        lazy_argument<int_<1> >,
-        lazy_argument<times<fact<minus<N, int_<1> > >, N> >
-      >
+    if_<
+      less<N, int_<1> >,
+      int_<1>,
+      lazy<times<fact<minus<N, int_<1> > >, N> >
     >
   ));
 

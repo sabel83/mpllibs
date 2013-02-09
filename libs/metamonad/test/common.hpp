@@ -19,7 +19,6 @@
 #include <boost/mpl/divides.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/minus.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/equal_to.hpp>
 
 namespace
@@ -51,9 +50,6 @@ namespace
 
   MPLLIBS_LAZY_METAFUNCTION(lazy_times, (A)(B)) ((boost::mpl::times<A, B>));
 
-  MPLLIBS_METAFUNCTION(lazy_eval_if, (C)(T)(F))
-  ((boost::mpl::eval_if<typename C::type, T, F>));
-
   MPLLIBS_LAZY_METAFUNCTION(lazy_equal_to, (A)(B))
   ((boost::mpl::equal_to<A, B>));
 
@@ -67,7 +63,7 @@ namespace
   ((boost::mpl::int_<A::value + B::value>));
 
   MPLLIBS_METAFUNCTION(custom_eval_if, (C)(T)(F))
-  ((boost::mpl::eval_if<C, T, F>));
+  ((boost::mpl::if_<C, T, F>));
 
   typedef boost::mpl::divides<int1, int0> breaking_expr;
 }
@@ -77,7 +73,6 @@ MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, lazy_double_value, "lazy_double_value")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, lazy_plus, "lazy_plus")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, double_lazy_plus, "double_lazy_plus")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, lazy_times, "lazy_times")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, lazy_eval_if, "lazy_eval_if")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, lazy_equal_to, "lazy_equal_to")
 MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, lazy_apply, "lazy_apply")
 

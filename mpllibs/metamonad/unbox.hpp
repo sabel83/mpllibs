@@ -7,19 +7,25 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/lazy_metafunction.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
     template <class T>
-    struct unbox;
-
-    template <class T>
     struct box;
 
-    template <class T>
-    struct unbox<box<T> > : returns<T> {};
+    namespace impl
+    {
+      template <class T>
+      struct strict_unbox;
+
+      template <class T>
+      struct strict_unbox<box<T> > : returns<T> {};
+    }
+
+    MPLLIBS_LAZY_METAFUNCTION(unbox, (T)) ((impl::strict_unbox<T>));
   }
 }
 

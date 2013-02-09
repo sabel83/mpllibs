@@ -108,6 +108,13 @@ BOOST_AUTO_TEST_CASE(test_let_c)
   meta_require<
     is_same<syntax<eval_guard<int13> >, let_c<x, int13, eval_guard<x> >::type>
   >(MPLLIBS_HERE, "test_let_c_and_eval_guard");
+
+  meta_require<
+    is_same<
+      syntax<let_c<y, int11, some_template<int13, y> > >,
+      let_c<x, int13, let_c<y, int11, some_template<x, y> > >::type
+    >
+  >(MPLLIBS_HERE, "test_let_c_and_eval_guard");
 }
 
 

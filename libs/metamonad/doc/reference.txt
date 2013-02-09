@@ -16,11 +16,16 @@ link:name.html[name] +
 link:syntax.html[syntax] +
 link:var.html[var] +
 
-Pattern matching
-~~~~~~~~~~~~~~~~
+Control structures
+~~~~~~~~~~~~~~~~~~
 
 link:case_.html[case_] +
 link:eval_case.html[eval_case] +
+link:if_.html[if_] +
+
+Pattern matching
+~~~~~~~~~~~~~~~~
+
 link:match.html[match] +
 link:match_c.html[match_c] +
 

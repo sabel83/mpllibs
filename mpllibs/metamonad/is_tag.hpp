@@ -8,9 +8,9 @@
 
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <boost/mpl/tag.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/has_xxx.hpp>
 
 #include <boost/type_traits.hpp>
@@ -29,11 +29,7 @@ namespace mpllibs
       boost::is_same<
         typename boost::mpl::tag<typename E::type>::type,
         // Tags coming from Boost.Mpl are not metaprogramming values
-        typename boost::mpl::eval_if<
-          typename impl::has_type<T>::type,
-          T,
-          returns<T>
-        >::type
+        typename if_<impl::has_type<T>, T, returns<T> >::type
       >
     {};
 

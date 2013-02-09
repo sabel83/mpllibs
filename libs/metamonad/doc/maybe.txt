@@ -37,7 +37,6 @@ Example
 -------
 
 --------------------------------------
-using boost::mpl::eval_if;
 using boost::mpl::equal_to;
 using boost::mpl::int_;
 
@@ -45,7 +44,7 @@ struct division_by_zero;
 
 template <class A, class B>
 struct divide :
-  eval_if<
+  if_<
     equal_to<A, int_<0> >,
     nothing,
     just<divides<A, B> >

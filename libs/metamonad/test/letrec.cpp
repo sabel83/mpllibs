@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -23,9 +24,9 @@ BOOST_AUTO_TEST_CASE(test_letrec)
 
   using boost::mpl::equal_to;
   using boost::mpl::minus;
-  using boost::mpl::eval_if;
   
   using mpllibs::metamonad::letrec;
+  using mpllibs::metamonad::if_;
   using mpllibs::metamonad::lambda_c;
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::syntax;
@@ -62,7 +63,7 @@ BOOST_AUTO_TEST_CASE(test_letrec)
           syntax<
             lambda_c<
               y,
-              eval_if<
+              if_<
                 lazy_equal_to<y, int0>,
                 int1,
                 lazy_times<lazy_apply<x, minus<y, int1> >, y>

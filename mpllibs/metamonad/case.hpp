@@ -15,15 +15,13 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
-#include <mpllibs/metamonad/lazy_argument.hpp>
 #include <mpllibs/metamonad/eval_let.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
-#include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
 
@@ -80,14 +78,10 @@ namespace mpllibs
 
       template <class P, class E1, class E2>
       struct case_check_match<E1, matches<P, E2> > :
-        boost::mpl::eval_if<
-          typename is_exception<
-            typename match<typename P::type, typename E1::type>::type
-          >::type,
+        if_<
+          is_exception<match<P, E1> >,
           nothing,
-          just<
-            match_let<typename P::type, typename E1::type, typename E2::type>
-          >
+          just<match_let<P, E1, E2> >
         >
       {};
     }
@@ -111,23 +105,21 @@ namespace mpllibs
               // s:
               //  nothing -> no case matched so far
               //  just<X> -> a case matched, the result is X
-              lazy<
-                boost::mpl::eval_if<
-                  lazy_protect_args<boost::is_same<nothing, impl::let_case_s> >,
-                  already_lazy<impl::case_check_match<E, impl::let_case_c> >,
-                  already_lazy<impl::let_case_s>
-                >
+              if_<
+                boost::is_same<nothing, impl::let_case_s>,
+                impl::case_check_match<E, impl::let_case_c>,
+                impl::let_case_s
               >
             >
           >
         >,
         syntax<
-          lazy<
-            boost::mpl::eval_if<
-              boost::is_same<nothing, lazy_protect_args<impl::let_case_r> >,
-              already_lazy<exception<no_case_matched<E> > >,
-              already_lazy<impl::get_just_data<impl::let_case_r> >
-            >
+          if_<
+            lazy<
+              boost::is_same<nothing, lazy_protect_args<impl::let_case_r> >
+            >,
+            exception<no_case_matched<E> >,
+            impl::get_just_data<impl::let_case_r>
           >
         >
       >
