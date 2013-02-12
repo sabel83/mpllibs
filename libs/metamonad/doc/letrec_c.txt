@@ -22,8 +22,8 @@ struct letrec_c
 Description
 -----------
 
-The same as link:letrec.html[+letrec+], but +Exp+ and +Body+ are
-angle-bracket expressions and not link:syntax.html[+syntax+]es.
+The same as link:letrec.html[+letrec+], but +Exp+ and +Body+ are angle-bracket
+expressions and not syntaxes.
 
 Header
 ------

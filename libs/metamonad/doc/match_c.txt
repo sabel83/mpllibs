@@ -23,7 +23,7 @@ Description
 -----------
 
 The same as link:match.html[+match+], but +Pattern+ is an angle-bracket
-expression and not a link:syntax.html[+syntax+].
+expression and not a syntax.
 
 Header
 ------

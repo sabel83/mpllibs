@@ -25,10 +25,10 @@ struct lambda
 Description
 -----------
 
-+Name1+, ..., +Namen+ are classes, +F+ is a link:syntax.html[+syntax+]. The
-+lambda+ metafunction class takes classes, +T1+, ..., +Tn+ as arguments and
-produces a new nullary metafunction. It binds +T1+, ..., +Tn+ to the names
-+Name1+, ..., +Namen+ in the body of +F+ using link:let.html[let].
++Name1+, ..., +Namen+ are classes, +F+ is a syntax. The +lambda+ metafunction
+class takes classes, +T1+, ..., +Tn+ as arguments and produces a new nullary
+metafunction. It binds +T1+, ..., +Tn+ to the names +Name1+, ..., +Namen+ in the
+body of +F+ using link:let.html[let].
 
 The arguments may be +_+, in which case the value of the argument is ignored and
 no substitution happens.

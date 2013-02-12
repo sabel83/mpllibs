@@ -23,7 +23,7 @@ Description
 -----------
 
 The same as link:make_monadic.html[+make_monadic+], but +Expr+ is an
-angle-bracket expression and not a link:syntax.html[+syntax+].
+angle-bracket expression and not a syntax.
 
 Header
 ------

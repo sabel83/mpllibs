@@ -23,8 +23,7 @@ Description
 -----------
 
 Metafunction implementing pattern matching. It matches the angly-bracket
-expression +Expression+ against the pattern +Pattern+, which has to be a
-link:syntax.html[+syntax+].
+expression +Expression+ against the pattern +Pattern+, which has to be a syntax.
 
 Every class matches itself. The following two cases are exceptions:
 
@@ -38,8 +37,7 @@ Every class matches itself. The following two cases are exceptions:
 
 When the expression matches the pattern, +match+ returns a +boost::mpl::map+,
 where they keys are the open variables of the pattern and the values are the
-classes that were matched against them. The values of the map are
-link:syntax.html[+syntax+]es.
+classes that were matched against them. The values of the map are syntaxes.
 
 When the expression doesn't match, +match+ returns an
 link:exception.html[+exception+].

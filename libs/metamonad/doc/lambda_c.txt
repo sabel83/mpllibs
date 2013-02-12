@@ -25,8 +25,8 @@ struct lambda
 Description
 -----------
 
-The same as link:lambda.html[+lambda+], but +F+ is an angle-bracket
-expression and not a link:syntax.html[+syntax+].
+The same as link:lambda.html[+lambda+], but +F+ is an angle-bracket expression
+and not a syntax.
 
 Header
 ------

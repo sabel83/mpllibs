@@ -7,13 +7,14 @@ mpllibs::metamonad
 ==================
 Abel Sinkovics
 
-The main purpose of this library is implementing monads and exception handling
-for C++ template metaprograms. Apart from that it contains tools implementing
-let expressions and lambda expressions for template metaprograms.
-The library contains the following components:
+This library provides basic building blocks for constructing non-trivial
+template metaprograms. The main things the library provides for template
+metaprogramming:
 
 * Let expressions
 * Lambda expressions
+* Algebraic data-types
+* Pattern matching, case expressions
 * Haskell typeclasses in template metaprograms
 * Monads for template metaprograms
 * The do notation
@@ -28,10 +29,11 @@ developers can use it without knowing the Haskell language.
 
 The library implements an error handling mechanism for template metaprograms
 that is similar to exception handling in runtime code. The library calls this
-technique compile-time exception handling, and it is based on monads.
+technique compile-time exception handling and it is based on monads.
 
 link:manual.html[User manual] +
 link:reference.html[Library reference] +
+link:https://github.com/sabel83/mpllibs/tree/master/libs/metamonad/example[Examples] +
 
 include::copyright[]
 

@@ -22,10 +22,9 @@ struct let
 Description
 -----------
 
-+Name+ a class, +Exp+ and +Body+ are link:syntax.html[+syntax+]es.
-+let+ replaces all occurances of +Name+ with +Exp+ in +Body+. It recurses into
-template instantiations. The return value of the +let+ metafunction is the
-updated +Body+.
++Name+ a class, +Exp+ and +Body+ are syntaxes. +let+ replaces all occurances of
++Name+ with +Exp+ in +Body+. It recurses into template instantiations. The
+return value of the +let+ metafunction is the updated +Body+.
 
 Header
 ------

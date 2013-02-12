@@ -24,10 +24,9 @@ Description
 
 Variable substitution in an angly-bracket expression. The list of variables are
 defined by the +boost::mpl::map+ value +ValueMap+. The keys are the classes
-representing the variable names, the values are link:syntax.html[+syntax+]es
-to replace the variables with.
-The result of +multi_let+ is +Body+ with all occurrences of the variable names
-replaced by the corresponding value.
+representing the variable names, the values are syntaxes to replace the
+variables with. The result of +multi_let+ is +Body+ with all occurrences of the
+variable names replaced by the corresponding value.
 
 Header
 ------

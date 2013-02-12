@@ -23,9 +23,8 @@ Description
 -----------
 
 Metafunction class for creating __do blocks__. It takes the steps of the do
-block as arguments. The steps are link:syntax.html[+syntax+]es. The maximum
-number of arguments is defined by the +MPLLIBS_DO_MAX_ARGUMENT+ macro. Steps
-are either:
+block as arguments. The steps are syntaxes. The maximum number of arguments is
+defined by the +MPLLIBS_DO_MAX_ARGUMENT+ macro. Steps are either:
 
 * Nullary metafunctions returning a monadic value
 * link:set.html[set] constructs

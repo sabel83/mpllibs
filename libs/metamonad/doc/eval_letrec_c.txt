@@ -23,7 +23,7 @@ Description
 -----------
 
 The same as link:eval_letrec.html[+eval_letrec+], but +Exp+ and +Body+ are
-angle-bracket expressions and not link:syntax.html[+syntax+]es.
+angle-bracket expressions and not syntaxes.
 
 Header
 ------

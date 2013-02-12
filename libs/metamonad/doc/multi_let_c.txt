@@ -22,8 +22,8 @@ struct multi_let_c
 Description
 -----------
 
-The same as link:multi_let.html[+multi_let+], but +Body+ is an
-angle-bracket expression and not a link:syntax.html[+syntax+].
+The same as link:multi_let.html[+multi_let+], but +Body+ is an angle-bracket
+expression and not a syntax.
 
 Header
 ------

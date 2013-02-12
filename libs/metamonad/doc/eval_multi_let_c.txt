@@ -23,7 +23,7 @@ Description
 -----------
 
 The same as link:eval_multi_let.html[+eval_multi_let+], but +Body+ is an
-angle-bracket expression and not a link:syntax.html[+syntax+].
+angle-bracket expression and not a syntax.
 
 Header
 ------

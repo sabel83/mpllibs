@@ -22,9 +22,8 @@ struct try_
 Description
 -----------
 
-+try_+ implements a compile-time try-catch block. +Expr+ is a
-link:syntax.html[+syntax+], which can be followed by any number of +catch_+ and
-+catch_c+ blocks.
++try_+ implements a compile-time try-catch block. +Expr+ is a syntax, which can
+be followed by any number of +catch_+ and +catch_c+ blocks.
 
 +Expr+ gets transformed into a monadic expression
 (link:exception_monad.html[exception monad]) using
@@ -42,12 +41,12 @@ struct catch_
 };
 --------------------------------------
 
-The name +Name+ can be used in +Pred+ and in +Body+, which are
-link:syntax.html[+syntax+]es. +Pred+ is evaluated and when it returns true,
-+Body+ is evaluated and that will be the result of the +try_+ call.
+The name +Name+ can be used in +Pred+ and in +Body+, which are syntaxes. +Pred+
+is evaluated and when it returns true, +Body+ is evaluated and that will be the
+result of the +try_+ call.
 
 A +catch_c+ block is similar to a +catch_+ block, but +Pred+ and +Body+ are
-angle-bracket expressions and not +syntax+es.
+angle-bracket expressions and not syntaxes.
 
 When multiple +catch_+ and +catch_c+ blocks are provided, the first one whose
 predicate accepts the exception gets selected and the rest get skipped.

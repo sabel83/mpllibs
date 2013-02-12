@@ -23,7 +23,7 @@ Description
 -----------
 
 The same as link:eval_match_let.html[+eval_match_let+], but +Pattern+ and +Body+
-are angle-bracket expressions and not link:syntax.html[+syntax+]es.
+are angle-bracket expressions and not syntaxes.
 
 Header
 ------

@@ -23,7 +23,7 @@ Description
 -----------
 
 The same as link:try_.html[+try_+], but the expression is an angle-bracket
-expression and not a link:syntax.html[+syntax+].
+expression and not a syntax.
 
 Header
 ------

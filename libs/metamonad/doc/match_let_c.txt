@@ -22,8 +22,8 @@ struct match_let_c
 Description
 -----------
 
-The same as link:match_let.html[+match_let+], but +Pattern+ and +Body+
-are angle-bracket expressions and not link:syntax.html[+syntax+]es.
+The same as link:match_let.html[+match_let+], but +Pattern+ and +Body+ are
+angle-bracket expressions and not syntaxes.
 
 Header
 ------

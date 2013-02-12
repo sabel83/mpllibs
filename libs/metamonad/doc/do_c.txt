@@ -23,7 +23,7 @@ Description
 -----------
 
 The same as link:do_.html[+do_+], but the steps are angle-bracket expressions
-and not link:syntax.html[+syntax+]es.
+and not syntaxes.
 
 Header
 ------
