@@ -3,53 +3,19 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include "print_values.hpp"
+
 #include <mpllibs/metamonad/list.hpp>
 #include <mpllibs/metamonad/do_c.hpp>
-#include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/guard.hpp>
 
-#include <boost/mpl/fold.hpp>
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/range_c.hpp>
+#include <boost/mpl/equal_to.hpp>
 
 #include <iostream>
-
-using mpllibs::metamonad::tmp_value;
-using namespace mpllibs::metamonad::name;
-
-struct print_after : tmp_value<print_after>
-{
-  template <class Acc, class V>
-  struct apply : tmp_value<apply<Acc, V> >
-  {
-    static bool run()
-    {
-      const bool first_element = Acc::type::run();
-      std::cout
-        << (first_element ? "" : ", ") << "("
-        << boost::mpl::first<V>::type::value << ", "
-        << boost::mpl::second<V>::type::value
-        << ")";
-      return false;
-    }
-  };
-};
-
-struct print_empty : tmp_value<print_empty>
-{
-  static bool run()
-  {
-    // The next element is the first one
-    return true;
-  }
-};
-
-template <class L>
-void print_values()
-{
-  boost::mpl::fold<typename L::type, print_empty, print_after>::type::run();
-}
 
 int main()
 {
@@ -57,10 +23,14 @@ int main()
   using mpllibs::metamonad::list_tag;
   using mpllibs::metamonad::set;
   using mpllibs::metamonad::do_return;
+  using mpllibs::metamonad::guard;
 
   using boost::mpl::pair;
   using boost::mpl::list_c;
   using boost::mpl::range_c;
+  using boost::mpl::equal_to;
+
+  using namespace mpllibs::metamonad::name;
 
   /*
     List comprehension syntax in Haskell: [(i,j) | i <- [1,2], j <- [1..4]]
@@ -82,6 +52,31 @@ int main()
     result_of_list_comprehension;
   
   print_values<result_of_list_comprehension>();
+  std::cout << std::endl;
+
+  /*
+    List comprehension syntax in Haskell:
+      [(i,j) | i <- [1,2], j <- [1..4], i == j]
+
+    Do syntax in Haskell:
+      do i <- [1,2]
+         j <- [1..4]
+         Control.Monad.guard $ i == j
+         return (i,j)
+
+    Result in Haskell: [(1,1),(2,2)]
+   */
+
+  typedef
+    do_c<list_tag,
+      set<i, list_c<int, 1, 2> >,
+      set<j, range_c<int, 1, 5> >,
+      guard<list_tag, equal_to<i, j> >,
+      do_return<pair<i, j> >
+    >
+    result_of_list_comprehension_with_guard;
+  
+  print_values<result_of_list_comprehension_with_guard>();
   std::cout << std::endl;
 }
 

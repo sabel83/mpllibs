@@ -10,14 +10,17 @@ Abel Sinkovics
 Language elements
 -----------------
 
+Syntax
+~~~~~~
+
 link:eval_syntax.html[eval_syntax] +
 link:make_syntax.html[make_syntax] +
 link:name.html[name] +
 link:syntax.html[syntax] +
 link:var.html[var] +
 
-Control structures
-~~~~~~~~~~~~~~~~~~
+Control structure
+~~~~~~~~~~~~~~~~~
 
 link:case_.html[case_] +
 link:eval_case.html[eval_case] +
@@ -29,8 +32,8 @@ Pattern matching
 link:match.html[match] +
 link:match_c.html[match_c] +
 
-Let expressions
-~~~~~~~~~~~~~~~
+Let expression
+~~~~~~~~~~~~~~
 
 link:eval_let.html[eval_let] +
 link:eval_let_c.html[eval_let_c] +
@@ -95,8 +98,8 @@ link:is_exception.html[is_exception] +
 link:try_.html[try_] +
 link:try_c.html[try_c] +
 
-Algebraic data-types
-~~~~~~~~~~~~~~~~~~~~
+Algebraic data-type
+~~~~~~~~~~~~~~~~~~~
 
 link:MPLLIBS_DATA.html[MPLLIBS_DATA] +
 
@@ -118,8 +121,8 @@ link:tmp_value.html[tmp_value] +
 Data types
 ----------
 
-Tags
-~~~~
+Tag
+~~~
 
 link:tag_tag.html[tag_tag] +
 link:overloading_error_tag.html[overloading_error_tag] +
@@ -191,6 +194,7 @@ link:list_monad_plus.html[list monad plus] +
 Miscellaneous
 -------------
 
+link:guard.html[guard] +
 link:instantiate.html[instantiate] +
 link:is_tag.html[is_tag] +
 
