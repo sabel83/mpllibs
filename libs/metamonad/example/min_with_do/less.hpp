@@ -60,8 +60,10 @@ typedef boost::mpl::tag<boost::mpl::int_<0> >::type int_tag;
 template <>
 struct less_impl<int_tag, int_tag>
 {
+  // Visual C++ 2010 fails to compile it when operator< is used instead of
+  // operator >
   template <class A, class B>
-  struct apply : boost::mpl::bool_<(A::value < B::value)> {};
+  struct apply : boost::mpl::bool_< !(A::value > B::value)> {};
 };
 
 #endif
