@@ -7,10 +7,12 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/impl/metafunction.hpp>
+#include <mpllibs/metamonad/curried_call.hpp>
 
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/seq/size.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
+#include <boost/preprocessor/cat.hpp>
 
 #ifdef MPLLIBS_LAZY_EVAL_ARG
   #error MPLLIBS_LAZY_EVAL_ARG already defined
@@ -31,27 +33,22 @@
   MPLLIBS_DECLARE_HELPER(name, args) \
   \
   template <MPLLIBS_EXPAND_ARGS_USAGE(args)> \
+  struct BOOST_PP_CAT(name, ___impl); \
+  \
+  template <MPLLIBS_EXPAND_ARGS_USAGE_WITH_NA(args)> \
   struct name : \
+    BOOST_PP_CAT(mpllibs::metamonad::curried_call, BOOST_PP_SEQ_SIZE(args))< \
+      BOOST_PP_CAT(name, ___impl), \
+      MPLLIBS_EXPAND_ARGS_REF(args) \
+    > \
+  {}; \
+  \
+  template <MPLLIBS_EXPAND_ARGS_USAGE(args)> \
+  struct BOOST_PP_CAT(name, ___impl) : \
     MPLLIBS_HELPER_METAFUNCTION(name)<MPLLIBS_LAZY_EVAL_ARGS(args)> \
   {}; \
   \
   MPLLIBS_DEFINE_HELPER(name, args)
-
-#ifdef MPLLIBS_LAZY_VARIADIC_METAFUNCTION
-  #error MPLLIBS_LAZY_VARIADIC_METAFUNCTION already defined
-#endif
-#define MPLLIBS_LAZY_VARIADIC_METAFUNCTION(name, args, pack_name) \
-  MPLLIBS_DECLARE_HELPER(name, args(...pack_name)) \
-  \
-  template <MPLLIBS_EXPAND_ARGS_USAGE(args(...pack_name))> \
-  struct name : \
-    MPLLIBS_HELPER_METAFUNCTION(name)< \
-      MPLLIBS_LAZY_EVAL_ARGS(args) \
-      BOOST_PP_COMMA_IF(BOOST_PP_SEQ_SIZE(args)) typename pack_name::type... \
-    > \
-  {}; \
-  \
-  MPLLIBS_DEFINE_HELPER(name, args(...pack_name))
 
 #endif
 

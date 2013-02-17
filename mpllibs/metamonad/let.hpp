@@ -7,7 +7,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/impl/let.hpp>
-#include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/var.hpp>
 
@@ -26,7 +25,11 @@ namespace mpllibs
       {};
     }
 
-    MPLLIBS_LAZY_METAFUNCTION(let, (A)(E1)(E2)) ((impl::strict_let<A, E1, E2>));
+    // MPLLIBS_LAZY_METAFUNCTION depends on it
+    template <class A, class E1, class E2>
+    struct let :
+      impl::strict_let<typename A::type, typename E1::type, typename E2::type>
+    {};
 
     namespace impl
     {

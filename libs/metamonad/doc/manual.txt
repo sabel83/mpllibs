@@ -50,6 +50,66 @@ to be followed by the body of the macro in double parentheses.
 The use of this macro makes it explicit, that +add+ is a template metafunction,
 not just some random template class. 
 
+Currying
+~~~~~~~~
+
+What happens when someone tries calling a metafunction with less arguments than
+what it expects? For example:
+
+--------------------------------------
+add<mpl::int_<1>>::type
+--------------------------------------
+
++add+ expects two arguments: the two values to add, but the above expression
+called it with only one argument. Metafunctions implemented using
+link:MPLLIBS_METAFUNCTION.html[+MPLLIBS_METAFUNCTION+] support _currying_, which
+is a form of partial evaluation. When the number of arguments provided is less
+than what the metafunction needs, it returns a metafunction class expecting the
+remaining arguments. The body of the metafunction is evaluated only when all
+arguments are provided.
+
+Thus the above expression returns a metafunction class expecting one argument
+and then it adds +1+ to that argument. It can be used to increment all items of
+an +mpl::vector+ by one:
+
+--------------------------------------
+mpl::transform_view<
+  mpl::vector_c<int, 10, 12>,
+  add<mpl::int_<1>>
+>
+--------------------------------------
+
+This example passes the partially evaluated +add<mpl::int_<1>>+ to
++mpl::transform_view+. When +mpl::transform_view+ calls this partially
+evaluated metafunction with the elements of the vector, it adds +1+ to them.
+
+Providing _no arguments_ to +add+ turns it into a metafunction class taking two
+arguments, for example:
+
+--------------------------------------
+mpl::apply<add<>, mpl::int_<10>, mpl::int_<3>>::type
+--------------------------------------
+
+The above example calls the metafunction class +add<>+ with two arguments,
++mpl::int_<10>+ and +mpl::int_<3>+. The result of this call is +mpl::int_<13>+.
+
++add<>+ can be used to summarise the elements of a vector:
+
+--------------------------------------
+mpl::fold<
+  mpl::vector_c<int, 1, 1, 2, 3, 6>,
+  mpl::int_<0>,
+  add<>
+>
+--------------------------------------
+
+This example folds over the elements of the vector +[1, 1, 2, 3, 6]+. The
+initial state is +0+ and the forward operation adds the current element to the
+state. The result of the above expression is +mpl::int_<13>+.
+
+Currying makes it easy to build template metafunction classes from template
+metafunctions in many cases and can reduce the amount syntactic noise this way.
+
 Angle-bracket expressions
 -------------------------
 
@@ -1544,20 +1604,18 @@ it adds +1+ to +11+ twice.
 Currying
 ~~~~~~~~
 
-What happens when someone tries calling a metafunction class with less arguments
-than what it expects? For example:
+As template metafunctions built with
+link:MPLLIBS_METAFUNCTION.html[+MPLLIBS_METAFUNCTION+], template metafunction
+classes built with link:lambda.html[+lambda+] support currying. For example:
 
 --------------------------------------
 mpl::apply_wrap2<add, mpl::int_<1>>::type
 --------------------------------------
 
 +add+ expects two arguments: the two values to add, but the above expression
-called it with only one argument. Metafunction classes built with
-link:lambda.html[+lambda+]  support _currying_, which is a form of partial
-evaluation. When the number of arguments provided is less than what the lambda
-expression needs, it returns another metafunction class expecting the remaining
-arguments. The body of the link:lambda.html[+lambda+] is evaluated only when all
-arguments are provided.
+called it with only one argument. It returns another metafunction class
+expecting the remaining arguments. The body of the link:lambda.html[+lambda+] is
+evaluated only when all arguments are provided.
 
 Thus the above expression returns another metafunction class expecting one
 argument and then it adds +1+ to that argument. Thus, by using currying, there

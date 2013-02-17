@@ -18,6 +18,17 @@
   #define MPLLIBS_HELPER_METAFUNCTION(name) BOOST_PP_CAT(name, __impl)
 #endif
 
+#ifdef MPLLIBS_EXPAND_ARG_REF
+  #error MPLLIBS_EXPAND_ARG_REF already defined
+#endif
+#define MPLLIBS_EXPAND_ARG_REF(r, unused, n, arg) BOOST_PP_COMMA_IF(n) arg
+
+#ifdef MPLLIBS_EXPAND_ARGS_REF
+  #error MPLLIBS_EXPAND_ARGS_REF already defined
+#endif
+#define MPLLIBS_EXPAND_ARGS_REF(args) \
+  BOOST_PP_SEQ_FOR_EACH_I(MPLLIBS_EXPAND_ARG_REF, ~, args)
+
 #ifdef MPLLIBS_EXPAND_ARG_USAGE
   #error MPLLIBS_EXPAND_ARG_USAGE already defined
 #endif
@@ -29,6 +40,18 @@
 #endif
 #define MPLLIBS_EXPAND_ARGS_USAGE(args) \
   BOOST_PP_SEQ_FOR_EACH_I(MPLLIBS_EXPAND_ARG_USAGE, ~, args)
+
+#ifdef MPLLIBS_EXPAND_ARG_USAGE_WITH_NA
+  #error MPLLIBS_EXPAND_ARG_USAGE_WITH_NA already defined
+#endif
+#define MPLLIBS_EXPAND_ARG_USAGE_WITH_NA(r, unused, n, arg) \
+  BOOST_PP_COMMA_IF(n) class arg = boost::mpl::na
+
+#ifdef MPLLIBS_EXPAND_ARGS_USAGE_WITH_NA
+  #error MPLLIBS_EXPAND_ARGS_USAGE_WTIH_NA already defined
+#endif
+#define MPLLIBS_EXPAND_ARGS_USAGE_WITH_NA(args) \
+  BOOST_PP_SEQ_FOR_EACH_I(MPLLIBS_EXPAND_ARG_USAGE_WITH_NA, ~, args)
 
 #ifdef MPLLIBS_DECLARE_HELPER
   #error MPLLIBS_DECLARE_HELPER already defined

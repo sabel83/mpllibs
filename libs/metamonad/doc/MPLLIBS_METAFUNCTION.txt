@@ -24,6 +24,8 @@ macro call expands to metafunction forwarding using inheritance. +args+ is the
 list of template arguments, each of them in parentheses. The +body+ is expected
 to follow the macro call in double parentheses. +args+ can not be empty.
 
+The metafunctions defined using this macro support currying.
+
 +body+ is expected to use +typename+ for all dependent names, even when in the
 following situation:
 
@@ -48,7 +50,7 @@ template <class T>
 struct eval_arg : T {};
 --------------------------------------
 
-inheriting from its argumen, for any +body+ angly-bracket expression, +n > 0+
+inheriting from its argument, for any +body+ angly-bracket expression, +n > 0+
 and +arg1+ ... +argn+ template arguments the following
 
 --------------------------------------
@@ -59,7 +61,19 @@ is equivalent to
 
 --------------------------------------
 template <class arg1, class arg2, ..., class argn>
-struct name : eval_arg<body> {};
+struct name___impl : eval_arg<body> {};
+--------------------------------------
+
+For any +n >= k+, +t1+, ..., +tk+ classes and +v1+, ..., +vn-k+ variables
+
+--------------------------------------
+name<t1, ..., tk>::type
+--------------------------------------
+
+is equivalent to
+
+--------------------------------------
+lambda_c<v1, ..., vn-k, name__impl<t1, ..., tk, v1, ..., vn-k>>
 --------------------------------------
 
 Example

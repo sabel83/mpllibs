@@ -6,16 +6,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/metafunction.hpp>
-
 #include <boost/mpl/eval_if.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(if_, (C)(T)(F))
-    ((boost::mpl::eval_if<typename C::type, T, F>));
+    // MPLLIBS_METAFUNCTION depends on it
+    template <class C, class T, class F>
+    struct if_ : boost::mpl::eval_if<typename C::type, T, F> {};
   }
 }
 

@@ -20,8 +20,6 @@
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-#include <boost/config.hpp>
-
 using boost::mpl::int_;
 using boost::mpl::minus;
 using boost::mpl::times;
@@ -31,10 +29,6 @@ using boost::mpl::less;
 using mpllibs::metamonad::lazy;
 using mpllibs::metamonad::returns;
 using mpllibs::metamonad::if_;
-
-#if defined(BOOST_NO_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
-  #define BOOST_NO_CXX11_VARIADIC_TEMPLATES
-#endif
 
 namespace
 {
@@ -50,17 +44,6 @@ namespace
   ));
 
   MPLLIBS_METAFUNCTION(mult, (A)(B)) ((times<A, B>));
-
-#ifndef BOOST_NO_CXX11_VARIADIC_TEMPLATES
-  template <class... Ts>
-  struct var_first;
-
-  template <class T, class... Ts>
-  struct var_first<T, Ts...> : returns<T> {};
-
-  MPLLIBS_VARIADIC_METAFUNCTION(variadic_mf, (A), B)
-  ((times<A, typename var_first<B...>::type>));
-#endif
 }
 
 BOOST_AUTO_TEST_CASE(test_metafunction)
@@ -79,14 +62,16 @@ BOOST_AUTO_TEST_CASE(test_metafunction)
   >(MPLLIBS_HERE, "test_metafunction_with_two_arguments");
 
   meta_require<
+    equal_to<int_<6>, apply_wrap1<mult<int_<2> >::type, int_<3> >::type>
+  >(MPLLIBS_HERE, "test_currying");
+
+  meta_require<
+    equal_to<int_<6>, apply_wrap2<mult<>, int_<2>, int_<3> >::type>
+  >(MPLLIBS_HERE, "test_using_metafunction_as_metafunction_class");
+
+  meta_require<
     equal_to<int_<6>, fact<int_<3> >::type>
   >(MPLLIBS_HERE, "test_rec_metafunction");
-
-#ifndef BOOST_NO_CXX11_VARIADIC_TEMPLATES
-  meta_require<
-    equal_to<int_<6>, variadic_mf<int_<2>, int_<3>, int_<4>, int_<5> >::type>
-  >(MPLLIBS_HERE, "test_variadic_metafunction");
-#endif
 }
 
 

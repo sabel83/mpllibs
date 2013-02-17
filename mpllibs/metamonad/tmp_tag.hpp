@@ -9,7 +9,6 @@
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
 
 namespace mpllibs
 {
@@ -17,7 +16,9 @@ namespace mpllibs
   {
     struct tag_tag;
 
-    MPLLIBS_METAFUNCTION(tmp_tag, (T)) ((tmp_value<T, tag_tag>));
+    // MPLLIBS_METAFUNCTION depends on it
+    template <class T>
+    struct tmp_tag : tmp_value<T, tag_tag> {};
   }
 }
 

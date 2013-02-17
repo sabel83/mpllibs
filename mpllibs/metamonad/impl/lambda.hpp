@@ -11,7 +11,6 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/unused_arg.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/if.hpp>
 
 #include <boost/mpl/apply.hpp>
@@ -42,8 +41,9 @@ namespace mpllibs
     {
       struct lambda_impl_step : tmp_value<lambda_impl_step>
       {
-        MPLLIBS_METAFUNCTION(apply, (State)(T))
-        ((
+        // MPLLIBS_METAFUNCTION depends on it
+        template <class State, class T>
+        struct apply :
           boost::mpl::pair<
             typename boost::mpl::pop_front<
               typename boost::mpl::first<State>::type
@@ -65,7 +65,7 @@ namespace mpllibs
               >
             >::type
           >
-        ));
+        {};
       };
 
       template <class State>

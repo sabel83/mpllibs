@@ -7,7 +7,6 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/syntax.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
 
 namespace mpllibs
 {
@@ -22,8 +21,9 @@ namespace mpllibs
       struct eval_syntax_impl<syntax<E> > : E {};
     }
 
-    MPLLIBS_METAFUNCTION(eval_syntax, (E))
-    ((impl::eval_syntax_impl<typename E::type>));
+    // MPLLIBS_METAFUNCTION depends on it
+    template <class E>
+    struct eval_syntax : impl::eval_syntax_impl<typename E::type> {};
   }
 }
 

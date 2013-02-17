@@ -8,7 +8,6 @@
 
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
 
 namespace mpllibs
 {
@@ -16,7 +15,9 @@ namespace mpllibs
   {
     struct syntax_tag : tmp_tag<syntax_tag> {};
 
-    MPLLIBS_METAFUNCTION(syntax, (T)) ((tmp_value<syntax<T>, syntax_tag>));
+    // MPLLIBS_METAFUNCTION depends on it
+    template <class T>
+    struct syntax : tmp_value<syntax<T>, syntax_tag> {};
 
     template <class T>
     struct lazy;

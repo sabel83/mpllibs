@@ -6,13 +6,15 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(var, (Name)) ((tmp_value<var<Name> >));
+    // MPLLIBS_METAFUNCTION depends on it
+    template <class Name>
+    struct var : tmp_value<var<Name> > {};
     
     // Protection against lazy
     template <class E>

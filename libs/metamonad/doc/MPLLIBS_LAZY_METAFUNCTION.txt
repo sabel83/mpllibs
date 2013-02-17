@@ -22,6 +22,8 @@ Description
 This macro is similar to link:MPLLIBS_METAFUNCTION.html[+MPLLIBS_METAFUNCTION+]
 but it uses the evaluated arguments in its +body+.
 
+The metafunctions defined using this macro support currying.
+
 The macro defines a helper metafunction as well. The name of it is generated
 using the +MPLLIBS_HELPER_METAFUNCION+ macro. When it is not defined, the
 following default is used:
