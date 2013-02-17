@@ -14,6 +14,7 @@ macro(asciidoc_build TARGET_NAME OUTDIR)
     add_custom_command(
       OUTPUT ${OUTFILE}
       COMMAND ${ASCIIDOC_EXECUTABLE} -o ${OUTFILE} -b html4 ${IT}
+      COMMAND sed --in-place 's/Fork me on github/<a href=\"https:\\/\\/github.com\\/sabel83\\/mpllibs\"><img style=\"position: absolute\; top: 0\; right: 0\; border: 0\;\" src=\"https:\\/\\/s3.amazonaws.com\\/github\\/ribbons\\/forkme_right_darkblue_121621.png\" alt=\"Fork me on GitHub\"><\\/a>/' ${OUTFILE}
       COMMAND sed --in-place 's/<head>/<head>\\n<link rel="stylesheet" type="text\\/css" href="style.css" \\/> /' ${OUTFILE}
       COMMAND sed --in-place 's/<hr>//g' ${OUTFILE}
       DEPENDS ${IT}
