@@ -11,21 +11,16 @@
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/eval_let.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/var.hpp>
 #include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/second.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
-#include <boost/mpl/apply.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
-#include <boost/mpl/pair.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/mpl/apply_wrap.hpp>
-
-#include <boost/type_traits.hpp>
 
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 
@@ -53,13 +48,8 @@ namespace mpllibs
       struct handle_catch_impl :
         if_<
           eval_let<N, syntax<E>, Pred>,
-          lazy<
-            boost::mpl::pair<
-              boost::mpl::false_,
-              already_lazy<eval_let<N, syntax<E>, Body> >
-            >
-          >,
-          boost::mpl::pair<boost::mpl::true_, exception<E> >
+          pair<boost::mpl::false_, eval_let<N, syntax<E>, Body> >,
+          pair<boost::mpl::true_, exception<E> >
         >
       {};
 
@@ -100,27 +90,20 @@ namespace mpllibs
         make_monadic<exception_tag, Expr>,
         matches_c<
           exception<try_e>,
-          lazy<
-            boost::mpl::second<
-              lazy_protect_args<
-                boost::mpl::fold<
-                  boost::mpl::vector<
-                    BOOST_PP_ENUM_PARAMS(
-                      BOOST_MPL_LIMIT_METAFUNCTION_ARITY,
-                      Catch
-                    )
+          second<
+            boost::mpl::fold<
+              boost::mpl::vector<
+                BOOST_PP_ENUM_PARAMS(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, Catch)
+              >,
+              pair<boost::mpl::true_, exception<try_e> >,
+              lambda_c<try_s, try_a,
+                eval_case<
+                  try_s,
+                  matches_c<
+                    pair<boost::mpl::true_, _>,
+                    impl::handle_catch<try_e, try_a>
                   >,
-                  boost::mpl::pair<boost::mpl::true_, exception<try_e> >,
-                  lambda_c<try_s, try_a,
-                    eval_case<
-                      try_s,
-                      matches_c<
-                        boost::mpl::pair<boost::mpl::true_, _>,
-                        impl::handle_catch<try_e, try_a>
-                      >,
-                      matches_c<boost::mpl::pair<boost::mpl::false_, _>, try_s>
-                    >
-                  >
+                  matches_c<pair<boost::mpl::false_, _>, try_s>
                 >
               >
             >

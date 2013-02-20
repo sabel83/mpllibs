@@ -7,8 +7,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/tmp_value.hpp>
-
-#include <boost/mpl/pair.hpp>
+#include <mpllibs/metamonad/first.hpp>
+#include <mpllibs/metamonad/second.hpp>
 
 #include <iostream>
 
@@ -22,8 +22,8 @@ struct print_after : mpllibs::metamonad::tmp_value<print_after>
       const bool first_element = Acc::type::run();
       std::cout
         << (first_element ? "" : ", ") << "("
-        << boost::mpl::first<V>::type::value << ", "
-        << boost::mpl::second<V>::type::value
+        << mpllibs::metamonad::first<V>::type::value << ", "
+        << mpllibs::metamonad::second<V>::type::value
         << ")";
       return false;
     }

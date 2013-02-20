@@ -44,9 +44,9 @@ angly-bracket expressions
 --------------------------------------
 multi_let<
   boost::mpl::map<
-    boost::mpl::pair<n1, v1>,
+    pair<n1, v1>,
     // ...
-    boost::mpl::pair<nk, vk>
+    pair<nk, vk>
   >,
   b
 >::type

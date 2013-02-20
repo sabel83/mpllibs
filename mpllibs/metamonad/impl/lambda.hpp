@@ -12,9 +12,11 @@
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/unused_arg.hpp>
 #include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/first.hpp>
+#include <mpllibs/metamonad/second.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/pair.hpp>
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/empty.hpp>
@@ -44,26 +46,20 @@ namespace mpllibs
         // MPLLIBS_METAFUNCTION depends on it
         template <class State, class T>
         struct apply :
-          boost::mpl::pair<
-            typename boost::mpl::pop_front<
-              typename boost::mpl::first<State>::type
-            >::type,
-            typename if_<
+          pair<
+            boost::mpl::pop_front<typename first<State>::type>,
+            if_<
               boost::is_same<
-                typename boost::mpl::front<
-                  typename boost::mpl::first<State>::type
-                >::type,
+                typename boost::mpl::front<typename first<State>::type>::type,
                 _
               >,
-              typename boost::mpl::second<State>::type,
+              second<State>,
               let<
-                typename boost::mpl::front<
-                  typename boost::mpl::first<State>::type
-                >::type,
+                boost::mpl::front<typename first<State>::type>,
                 syntax<T>,
-                typename boost::mpl::second<State>::type
+                second<State>
               >
-            >::type
+            >
           >
         {};
       };
@@ -71,10 +67,8 @@ namespace mpllibs
       template <class State>
       struct lambda_impl :
         boost::mpl::if_<
-          typename boost::mpl::empty<
-            typename boost::mpl::first<State>::type
-          >::type,
-          eval_syntax<boost::mpl::second<State> >,
+          typename boost::mpl::empty<typename first<State>::type>::type,
+          eval_syntax<second<State> >,
           tmp_value<lambda_impl<State> >
         >::type
       {
@@ -102,16 +96,13 @@ namespace mpllibs
       struct
         let_impl<A, E1, impl::lambda_impl<State> > :
           impl::lambda_impl<
-            boost::mpl::pair<
-              typename boost::mpl::first<State>::type,
-              typename if_<
-                boost::mpl::contains<
-                  typename boost::mpl::first<State>::type,
-                  A
-                >,
-                boost::mpl::second<State>,
-                let_in_syntax<A, E1, typename boost::mpl::second<State>::type>
-              >::type
+            pair<
+              first<State>,
+              if_<
+                boost::mpl::contains<typename first<State>::type, A>,
+                second<State>,
+                let_in_syntax<A, E1, second<State> >
+              >
             >
           >
       {};

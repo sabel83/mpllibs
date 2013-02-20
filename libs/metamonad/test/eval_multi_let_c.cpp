@@ -6,6 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/eval_multi_let_c.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -13,7 +14,6 @@
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/map.hpp>
-#include <boost/mpl/pair.hpp>
 
 #include "common.hpp"
 
@@ -25,10 +25,10 @@ BOOST_AUTO_TEST_CASE(test_eval_multi_let_c)
   using boost::mpl::equal_to;
   using boost::mpl::plus;
   using boost::mpl::map;
-  using boost::mpl::pair;
   
   using mpllibs::metamonad::eval_multi_let_c;
   using mpllibs::metamonad::syntax;
+  using mpllibs::metamonad::pair;
 
   meta_require<
     equal_to<

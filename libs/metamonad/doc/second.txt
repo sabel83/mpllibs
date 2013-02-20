@@ -3,16 +3,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-eval_multi_let_c
-================
+second
+======
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class ValueMap, class Body>
-struct eval_multi_let_c
+template <class P>
+struct second
 {
   // unspecified
 };
@@ -22,46 +22,35 @@ struct eval_multi_let_c
 Description
 -----------
 
-The same as link:eval_multi_let.html[+eval_multi_let+], but +Body+ is an
-angle-bracket expression and not a syntax.
+Returns the second element of the pair +P+.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/eval_multi_let_c.hpp>
+#include <mpllibs/metamonad/second.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +m+ and +b+ classes
+For any +p+ nullary metafunction
 
 --------------------------------------
-eval_multi_let_c<m, b>::type
+second<p>::type
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-eval_multi_let<m, syntax<b>>::type
+p::type::second
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-using boost::mpl::times;
-using boost::mpl::plus;
-using boost::mpl::int_;
-using boost::mpl::map;
-
-using namespace mpllibs::metamonad::name;
-
-template <class N>
-struct my_metafunction :
-  eval_multi_let_c<map<pair<x, plus<n, int_<13>>>>, times<x, x>>
-{};
+second<pair<int_<11>, int_<13>>>::type
 --------------------------------------
 
 include::copyright[]

@@ -9,9 +9,9 @@
 #include <mpllibs/metamonad/do_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/guard.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <boost/mpl/list_c.hpp>
-#include <boost/mpl/pair.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/equal_to.hpp>
 
@@ -24,8 +24,8 @@ int main()
   using mpllibs::metamonad::set;
   using mpllibs::metamonad::do_return;
   using mpllibs::metamonad::guard;
+  using mpllibs::metamonad::pair;
 
-  using boost::mpl::pair;
   using boost::mpl::list_c;
   using boost::mpl::range_c;
   using boost::mpl::equal_to;

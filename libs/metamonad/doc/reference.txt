@@ -119,12 +119,6 @@ link:tmp_value.html[tmp_value] +
 Data types
 ----------
 
-Tag
-~~~
-
-link:tag_tag.html[tag_tag] +
-link:overloading_error_tag.html[overloading_error_tag] +
-
 Boxing
 ~~~~~~
 
@@ -132,15 +126,28 @@ link:box.html[box] +
 link:eval_guard.html[eval_guard] +
 link:unbox.html[unbox] +
 
+Either
+~~~~~~
+
+link:either.html[either] +
+
 Maybe
 ~~~~~
 
 link:maybe.html[maybe] +
 
-Either
-~~~~~~
+Pair
+~~~~
 
-link:either.html[either] +
+link:first.html[first] +
+link:pair.html[pair] +
+link:second.html[second] +
+
+Tag
+~~~
+
+link:tag_tag.html[tag_tag] +
+link:overloading_error_tag.html[overloading_error_tag] +
 
 Typeclasses
 -----------

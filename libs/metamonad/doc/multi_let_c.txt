@@ -55,7 +55,6 @@ using boost::mpl::times;
 using boost::mpl::plus;
 using boost::mpl::int_;
 using boost::mpl::map;
-using boost::mpl::pair;
 
 using namespace mpllibs::metamonad::name;
 

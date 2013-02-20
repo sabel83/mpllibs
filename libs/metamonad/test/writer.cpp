@@ -11,6 +11,7 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -22,11 +23,12 @@
 #include "common.hpp"
 
 using boost::mpl::list;
-using boost::mpl::pair;
 using boost::mpl::plus;
 
 using mpllibs::metamonad::tmp_value;
 using mpllibs::metamonad::lambda_c;
+using mpllibs::metamonad::pair;
+
 using namespace mpllibs::metamonad::name;
   
 namespace

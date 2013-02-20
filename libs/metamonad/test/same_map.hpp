@@ -10,14 +10,16 @@
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/first.hpp>
+#include <mpllibs/metamonad/second.hpp>
 
 #include <boost/type_traits.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
-#include <boost/mpl/pair.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/at.hpp>
@@ -40,12 +42,12 @@ MPLLIBS_METAFUNCTION(same_map, (A)(B))
               boost::is_same<
                 boost::mpl::at<
                   mpllibs::metamonad::already_lazy<B>,
-                  boost::mpl::first<
-                    mpllibs::metamonad::already_lazy<mpllibs::metamonad::p>
+                  mpllibs::metamonad::lazy_protect_args<
+                    mpllibs::metamonad::first<mpllibs::metamonad::p>
                   >
                 >,
-                boost::mpl::second<
-                  mpllibs::metamonad::already_lazy<mpllibs::metamonad::p>
+                mpllibs::metamonad::lazy_protect_args<
+                  mpllibs::metamonad::second<mpllibs::metamonad::p>
                 >
               >
             >

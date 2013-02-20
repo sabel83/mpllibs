@@ -11,11 +11,11 @@
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
-#include <boost/mpl/pair.hpp>
 #include <boost/mpl/map.hpp>
 
 #include <boost/type_traits.hpp>
@@ -38,8 +38,8 @@ BOOST_AUTO_TEST_CASE(test_multi_let_c)
   using mpllibs::metamonad::eval_case;
   using mpllibs::metamonad::syntax;
   using mpllibs::metamonad::eval_syntax;
+  using mpllibs::metamonad::pair;
 
-  using boost::mpl::pair;
   using boost::mpl::map;
 
   using boost::is_same;

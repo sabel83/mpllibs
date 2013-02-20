@@ -8,6 +8,7 @@
 
 #include <mpllibs/metamonad/impl/lambda.hpp>
 #include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <boost/mpl/contains.hpp>
 
@@ -44,7 +45,7 @@ namespace mpllibs
           ) \
         > : \
         impl::lambda_impl< \
-          boost::mpl::pair< \
+          pair< \
             boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, T)>, \
             syntax<F> \
           > \

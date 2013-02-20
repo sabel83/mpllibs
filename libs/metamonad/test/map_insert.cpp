@@ -6,6 +6,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/match_c.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -13,7 +14,6 @@
 #include <boost/type_traits.hpp>
 
 #include <boost/mpl/map.hpp>
-#include <boost/mpl/pair.hpp>
 
 #include "common.hpp"
 #include "same_map.hpp"
@@ -26,9 +26,9 @@ BOOST_AUTO_TEST_CASE(test_map_insert)
   using mpllibs::metatest::meta_require;
 
   using mpllibs::metamonad::impl::map_insert;
+  using mpllibs::metamonad::pair;
 
   using boost::mpl::map;
-  using boost::mpl::pair;
 
   using boost::is_same;
 

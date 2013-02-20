@@ -9,13 +9,17 @@
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
+#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/mappend.hpp>
+#include <mpllibs/metamonad/first.hpp>
+#include <mpllibs/metamonad/second.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
-#include <boost/mpl/pair.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -27,31 +31,27 @@ namespace mpllibs
     template <class M>
     struct monad<writer_tag<M> > : monad_defaults<writer_tag<M> >
     {
-      typedef
-        lambda_c<t,
-          lazy<
-            boost::mpl::pair<already_lazy<t>, mpllibs::metamonad::mempty<M> >
-          >
-        >
-        return_;
+      typedef lambda_c<t, pair<t, mempty<M> > > return_;
 
       typedef
         lambda_c<a, f,
-          lazy<
-            boost::mpl::pair<
-              boost::mpl::first<
+          pair<
+            first<
+              lazy<
                 boost::mpl::apply_wrap1<
-                  boost::mpl::lambda<f>,
-                  boost::mpl::first<a>
+                  lazy_protect_args<f>,
+                  first<lazy_protect_args<a> >
                 >
-              >,
-              mpllibs::metamonad::mappend<
-                already_lazy<M>,
-                boost::mpl::second<a>,
-                boost::mpl::second<
+              >
+            >,
+            mappend<
+              M,
+              second<a>,
+              second<
+                lazy<
                   boost::mpl::apply_wrap1<
-                    boost::mpl::lambda<f>,
-                    boost::mpl::first<a>
+                    lazy_protect_args<f>,
+                    first<lazy_protect_args<a> >
                   >
                 >
               >

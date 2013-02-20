@@ -12,11 +12,11 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/eval_match_let_c.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/pair.hpp>
 
 namespace mpllibs
 {
@@ -27,12 +27,12 @@ namespace mpllibs
     template <>
     struct monad<state_tag> : monad_defaults<state_tag>
     {
-      typedef lambda_c<t, s, boost::mpl::pair<t, s> > return_;
+      typedef lambda_c<t, s, pair<t, s> > return_;
 
       typedef
         lambda_c<a, f, s,
           eval_match_let_c<
-            boost::mpl::pair<t, u>,
+            pair<t, u>,
             lazy<boost::mpl::apply_wrap1<a, s> >,
             lazy<boost::mpl::apply_wrap1<boost::mpl::apply_wrap1<f, t>, u> >
           >

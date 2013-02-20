@@ -12,6 +12,7 @@
 #include <mpllibs/metamonad/box.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/eval_guard.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -19,7 +20,6 @@
 #include <boost/type_traits.hpp>
 
 #include <boost/mpl/map.hpp>
-#include <boost/mpl/pair.hpp>
 
 #include "common.hpp"
 #include "same_map.hpp"
@@ -45,10 +45,10 @@ BOOST_AUTO_TEST_CASE(test_match_c)
   using mpllibs::metamonad::syntax;
   using mpllibs::metamonad::box;
   using mpllibs::metamonad::eval_guard;
+  using mpllibs::metamonad::pair;
 
   using boost::mpl::na;
   using boost::mpl::map;
-  using boost::mpl::pair;
 
   using boost::is_same;
 

@@ -21,6 +21,7 @@
 #include <mpllibs/metamonad/box.hpp>
 #include <mpllibs/metamonad/eval_guard.hpp>
 #include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -34,7 +35,6 @@
 #include <boost/preprocessor/arithmetic/inc.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/pair.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/bool.hpp>
@@ -262,58 +262,50 @@ namespace mpllibs
       ((
         boost::mpl::fold<
           V,
-          boost::mpl::pair<boost::mpl::vector<>, boost::mpl::true_>,
+          pair<boost::mpl::vector<>, boost::mpl::true_>,
           lambda_c<let_do_s, let_do_c,
             eval_match_let_c<
-              boost::mpl::pair<let_do_v, let_do_d>,
+              pair<let_do_v, let_do_d>,
               let_do_s,
               if_< let_do_d,
                 eval_case< eval_guard<let_do_c>,
                   matches_c<eval_guard<set<let_do_n, let_do_w> >,
                     if_<
                       boost::is_same<A, let_do_n>,
-                      lazy<
-                        boost::mpl::pair<
-                          lazy_protect_args<
-                            boost::mpl::push_back<let_do_v, let_do_c>
-                          >,
-                          boost::mpl::false_
-                        >
+                      pair<
+                        boost::mpl::push_back<let_do_v, let_do_c>,
+                        boost::mpl::false_
                       >,
-                      lazy<
-                        boost::mpl::pair<
+                      pair<
+                        lazy<
                           boost::mpl::push_back<
-                            already_lazy<let_do_v>,
+                            lazy_protect_args<let_do_v>,
                             lazy_protect_args<
                               eval_let_c<A, E1, set<let_do_n, let_do_w> >
                             >
-                          >,
-                          boost::mpl::true_
-                        >
-                      >
-                    >
-                  >,
-                  matches_c<_,
-                    lazy<
-                      boost::mpl::pair<
-                        boost::mpl::push_back<
-                          already_lazy<let_do_v>,
-                          lazy_protect_args<
-                            eval_let_c<A, E1, returns<let_do_c> >
                           >
                         >,
                         boost::mpl::true_
                       >
                     >
+                  >,
+                  matches_c<_,
+                    pair<
+                      lazy<
+                        boost::mpl::push_back<
+                          lazy_protect_args<let_do_v>,
+                          lazy_protect_args<
+                            eval_let_c<A, E1, returns<let_do_c> >
+                          >
+                        >
+                      >,
+                      boost::mpl::true_
+                    >
                   >
                 >,
-                lazy<
-                  boost::mpl::pair<
-                    lazy_protect_args<
-                      boost::mpl::push_back<let_do_v, let_do_c>
-                    >,
-                    boost::mpl::false_
-                  >
+                pair<
+                  boost::mpl::push_back<let_do_v, let_do_c>,
+                  boost::mpl::false_
                 >
               >
             >
@@ -334,7 +326,7 @@ namespace mpllibs
         struct \
           let_impl<A, E1, f<Monad, BOOST_PP_ENUM_PARAMS(arg_num, T)> > : \
           eval_match_let< \
-            syntax<boost::mpl::pair<let_do_w, _> >, \
+            syntax<pair<let_do_w, _> >, \
             let_do_args< \
               A, \
               E1, \

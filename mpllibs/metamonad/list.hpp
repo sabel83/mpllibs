@@ -15,6 +15,7 @@
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
+#include <mpllibs/metamonad/lazy_protect_args.hpp>
 
 #include <mpllibs/metatest/to_stream_fwd.hpp>
 
@@ -36,9 +37,9 @@ namespace mpllibs
         lambda_c<a, b,
           lazy<
             boost::mpl::insert_range<
-              already_lazy<a>,
-              boost::mpl::end<already_lazy<a> >,
-              already_lazy<b>
+              lazy_protect_args<a>,
+              boost::mpl::end<lazy_protect_args<a> >,
+              lazy_protect_args<b>
             >
           >
         >

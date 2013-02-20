@@ -10,8 +10,9 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/first.hpp>
+#include <mpllibs/metamonad/second.hpp>
 
-#include <boost/mpl/pair.hpp>
 #include <boost/mpl/fold.hpp>
 
 namespace mpllibs
@@ -19,13 +20,7 @@ namespace mpllibs
   namespace metamonad
   {
     MPLLIBS_METAFUNCTION(multi_let, (M)(E))
-    ((
-      boost::mpl::fold<
-        M,
-        E,
-        lambda_c<s, p, let<boost::mpl::first<p>, boost::mpl::second<p>, s> >
-      >
-    ));
+    ((boost::mpl::fold<M, E, lambda_c<s, p, let<first<p>, second<p>, s> > >));
   }
 }
 

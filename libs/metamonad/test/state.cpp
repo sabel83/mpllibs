@@ -10,6 +10,7 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/pair.hpp>
 
 #include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -22,11 +23,11 @@
 #include "common.hpp"
 
 using boost::mpl::plus;
-using boost::mpl::pair;
 
 using mpllibs::metamonad::tmp_value;
 using mpllibs::metamonad::lazy;
 using mpllibs::metamonad::lambda_c;
+using mpllibs::metamonad::pair;
 
 using namespace mpllibs::metamonad::name;
 
