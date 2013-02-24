@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 
 #include <boost/preprocessor/cat.hpp>
@@ -32,23 +33,6 @@
   #define MPLLIBS_DATA_MAX_TEMPLATE_ARGUMENT 10
 #endif
 
-#ifdef MPLLIBS_EVAL_DATA_ARG
-  #error MPLLIBS_EVAL_DATA_ARG already defined
-#endif
-#define MPLLIBS_EVAL_DATA_ARG(z, n, unused) typename BOOST_PP_CAT(T, n)::type
-
-#ifdef MPLLIBS_EVAL_DATA_ARGS
-  #error MPLLIBS_EVAL_DATA_ARGS already defined
-#endif
-#define MPLLIBS_EVAL_DATA_ARGS(arity) \
-  <BOOST_PP_ENUM(arity, MPLLIBS_EVAL_DATA_ARG, ~)>
-
-#ifdef MPLLIBS_NAMED_DATA_ARGS
-  #error MPLLIBS_NAMED_DATA_ARGS already defined
-#endif
-#define MPLLIBS_NAMED_DATA_ARGS(arity) \
-  template <BOOST_PP_ENUM_PARAMS(arity, class T)>
-
 #ifdef MPLLIBS_DATA_ARGS
   #error MPLLIBS_DATA_ARGS already defined
 #endif
@@ -63,23 +47,43 @@
     BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(arity, class T, boost::mpl::void_) \
   >
 
+#ifdef MPLLIBS_NULLARY_DATA_CONSTR
+  #error MPLLIBS_NULLARY_DATA_CONSTR already defined
+#endif
+#define MPLLIBS_NULLARY_DATA_CONSTR(name, arity) \
+  struct name : \
+    mpllibs::metamonad::tmp_value< \
+      name, \
+      mpllibs::metamonad::algebraic_data_type_tag \
+    > \
+  {};
+
+#ifdef MPLLIBS_BUILD_SEQ
+  #error MPLLIBS_BUILD_SEQ already defined
+#endif
+#define MPLLIBS_BUILD_SEQ(z, n, unused) (BOOST_PP_CAT(T, n))
+
+#ifdef MPLLIBS_NON_NULLARY_DATA_CONSTR
+  #error MPLLIBS_NON_NULLARY_DATA_CONSTR already defined
+#endif
+#define MPLLIBS_NON_NULLARY_DATA_CONSTR(name, arity) \
+  MPLLIBS_LAZY_METAFUNCTION(name, BOOST_PP_REPEAT(arity, MPLLIBS_BUILD_SEQ, ~))\
+  (( \
+    mpllibs::metamonad::tmp_value< \
+      name<BOOST_PP_ENUM_PARAMS(arity, T)>, \
+      mpllibs::metamonad::algebraic_data_type_tag \
+    > \
+  )); \
+
 #ifdef MPLLIBS_DATA_CONSTR
   #error MPLLIBS_DATA_CONSTR already defined
 #endif
 #define MPLLIBS_DATA_CONSTR(name, arity) \
-  BOOST_PP_IF(arity, MPLLIBS_NAMED_DATA_ARGS, BOOST_PP_TUPLE_EAT(1))(arity) \
-  struct name \
-  { \
-    typedef \
-      name \
-        BOOST_PP_IF( \
-          arity, \
-          MPLLIBS_EVAL_DATA_ARGS, \
-          BOOST_PP_TUPLE_EAT(1) \
-        )(arity) \
-      type; \
-    typedef mpllibs::metamonad::algebraic_data_type_tag tag; \
-  };
+  BOOST_PP_IF( \
+    arity, \
+    MPLLIBS_NON_NULLARY_DATA_CONSTR, \
+    MPLLIBS_NULLARY_DATA_CONSTR \
+  )(name, arity)
 
 #ifdef MPLLIBS_DATA_CONSTR_CB
   #error MPLLIBS_DATA_CONSTR_CB already defined
@@ -103,7 +107,7 @@
   \
   BOOST_PP_SEQ_FOR_EACH(MPLLIBS_DATA_CONSTR_CB, ~, constrs) \
   \
-  BOOST_PP_IF(type_arity, MPLLIBS_DATA_ARGS, BOOST_PP_TUPLE_EAT(1))(type_arity) \
+  BOOST_PP_IF(type_arity, MPLLIBS_DATA_ARGS, BOOST_PP_TUPLE_EAT(1))(type_arity)\
   struct BOOST_PP_CAT(name, _tag) \
   { \
     typedef BOOST_PP_CAT(name, _tag) type; \

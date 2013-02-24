@@ -22,7 +22,7 @@
 
 namespace
 {
-  MPLLIBS_DATA(foo, 0, ((con0, 0))((con1, 1))((con2, 1)));
+  MPLLIBS_DATA(foo, 0, ((con0, 0))((con1, 1))((con2, 1))((con3, 2)));
 
   MPLLIBS_LAZY_METAFUNCTION(lazy_not, (E)) ((boost::mpl::not_<E>));
 }
@@ -61,6 +61,13 @@ BOOST_AUTO_TEST_CASE(test_data)
   meta_require<
     equal_to<con0, con0>
   >(MPLLIBS_HERE, "test_nullary_constructor_equality");
+
+  meta_require<
+    equal_to<
+      con3<int11, int13>,
+      con3<>::type::apply<int11>::type::apply<int13>
+    >
+  >(MPLLIBS_HERE, "test_currying");
 }
 
 
