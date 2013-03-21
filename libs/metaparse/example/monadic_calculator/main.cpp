@@ -189,6 +189,8 @@ int main()
   using std::cout;
   using std::endl;
   
+  using mpllibs::metamonad::value_to_stream;
+
   value_to_stream<apply_wrap1<calculator_parser, _S("13")> >::run(cout);
   cout << endl;
 
@@ -201,7 +203,7 @@ int main()
   value_to_stream<
     apply_wrap1<calculator_parser, _S("19 + 83/0 + 11")>
   >::run(cout);
-  cout << ::endl;
+  cout << endl;
 }
 
 #endif
