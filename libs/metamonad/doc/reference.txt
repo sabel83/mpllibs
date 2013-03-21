@@ -201,6 +201,7 @@ Miscellaneous
 -------------
 
 link:guard.html[guard] +
+link:has_get_value.html[has_get_value] +
 link:instantiate.html[instantiate] +
 link:is_tag.html[is_tag] +
 
