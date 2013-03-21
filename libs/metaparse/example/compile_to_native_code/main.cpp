@@ -19,8 +19,6 @@
 #include <mpllibs/metaparse/always.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/back.hpp>
@@ -112,8 +110,6 @@ struct build_plus
   {};
 };
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(build_plus)
-
 struct build_mult
 {
   template <class A, class B>
@@ -158,8 +154,6 @@ struct build_mult
   {};
 };
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(build_mult)
-
 struct build_value
 {
   typedef build_value type;
@@ -177,8 +171,6 @@ struct build_value
   };
 };
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(build_value)
-
 struct arg
 {
   typedef arg type;
@@ -189,8 +181,6 @@ struct arg
     return t;
   }
 };
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(arg)
 
 typedef
   one_of<transform<int_token, build_value>, always<arg_token, arg> >

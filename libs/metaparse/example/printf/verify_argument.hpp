@@ -8,8 +8,6 @@
 
 #include "verify_argument_impl.hpp"
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/or.hpp>
 
@@ -35,12 +33,6 @@ namespace safe
     >
   {};
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  2,
-  safe::verify_argument,
-  "verify_argument"
-)
 
 #endif
 

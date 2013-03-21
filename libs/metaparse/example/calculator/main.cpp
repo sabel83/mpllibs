@@ -18,8 +18,6 @@
 #include <mpllibs/metaparse/string.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/front.hpp>
@@ -46,8 +44,6 @@ using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
 using mpllibs::metaparse::token;
 using mpllibs::metaparse::entire_input;
-
-using mpllibs::metatest::to_stream;
 
 using boost::mpl::apply_wrap1;
 using boost::mpl::fold;
@@ -92,8 +88,6 @@ struct eval_plus
   {};
 };
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(eval_plus)
-  
 struct eval_mult
 {
   template <class C, class State>
@@ -105,8 +99,6 @@ struct eval_mult
     >
   {};
 };
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(eval_mult)
 
 typedef
   foldlp<

@@ -24,9 +24,6 @@ int main()
 #include <mpllibs/metaparse/string.hpp>
 #include <mpllibs/metaparse/util/digit_to_int.hpp>
 
-#include <mpllibs/metatest/to_stream.hpp>
-#include <mpllibs/metatest/to_stream_argument_list.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/front.hpp>
@@ -47,8 +44,6 @@ using mpllibs::metaparse::token;
 using mpllibs::metaparse::grammar;
 
 using mpllibs::metaparse::util::digit_to_int;
-
-using mpllibs::metatest::to_stream;
 
 using boost::mpl::apply_wrap1;
 using boost::mpl::fold;

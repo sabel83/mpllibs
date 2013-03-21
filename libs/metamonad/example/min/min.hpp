@@ -10,8 +10,6 @@
 
 #include <mpllibs/metamonad/try_c.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
 
@@ -35,8 +33,6 @@ struct min :
     typename B::type
   >
 {};
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, min, "min")
 
 #endif
 
