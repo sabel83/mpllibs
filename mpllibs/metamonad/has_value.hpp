@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_METAMONAD_HAS_GET_VALUE_HPP
-#define MPLLIBS_METAMONAD_HAS_GET_VALUE_HPP
+#ifndef MPLLIBS_METAMONAD_HAS_VALUE_HPP
+#define MPLLIBS_METAMONAD_HAS_VALUE_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2013.
 // Distributed under the Boost Software License, Version 1.0.
@@ -18,16 +18,16 @@ namespace mpllibs
   {
     namespace impl
     {
-      no has_get_value_test(...);
+      no has_value_test(...);
 
       template <class T>
-      yes has_get_value_test(T*, boost::mpl::int_<sizeof(T::get_value())>* = 0); 
+      yes has_value_test(T*, boost::mpl::int_<sizeof(T::value)>* = 0); 
     }
 
     template <class T>
-    struct has_get_value :
+    struct has_value :
       boost::mpl::bool_<
-        sizeof(impl::has_get_value_test((T*)0)) == sizeof(impl::yes)
+        sizeof(impl::has_value_test((T*)0)) == sizeof(impl::yes)
       >
     {};
   }

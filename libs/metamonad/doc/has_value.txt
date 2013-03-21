@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-has_get_value
-=============
+has_value
+=========
 Abel Sinkovics
 
 Synopsis
@@ -12,7 +12,7 @@ Synopsis
 
 --------------------------------------
 template <class T>
-struct has_get_value
+struct has_value
 {
   // unspecified
 };
@@ -22,14 +22,13 @@ struct has_get_value
 Description
 -----------
 
-Check if a +T::get_value+ function is available. Returns a wrapped boolean
-value.
+Check if a +T::value+ value is available. Returns a wrapped boolean value.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/has_get_value.hpp>
+#include <mpllibs/metamonad/has_value.hpp>
 --------------------------------------
 
 Example
@@ -38,7 +37,7 @@ Example
 --------------------------------------
 struct foo {};
 
-assert(!has_get_value<foo>::type::value);
+assert(!has_value<foo>::type::value);
 --------------------------------------
 
 include::copyright[]
