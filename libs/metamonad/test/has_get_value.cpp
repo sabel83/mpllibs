@@ -6,19 +6,22 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/has_get_value.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/assert.hpp>
 
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
-  struct with_get_value
+  struct with_get_value : tmp_value<with_get_value>
   {
     static int get_value() { return 13; }
   };
 
-  struct without_get_value {};
+  struct without_get_value : tmp_value<without_get_value> {};
 }
 
 BOOST_AUTO_TEST_CASE(test_has_get_value)

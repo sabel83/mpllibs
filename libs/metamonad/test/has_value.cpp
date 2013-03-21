@@ -6,26 +6,29 @@
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metamonad/has_value.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/assert.hpp>
 
+using mpllibs::metamonad::tmp_value;
+
 namespace
 {
-  struct with_const_value
+  struct with_const_value : tmp_value<with_const_value>
   {
     static const int value;
   };
   
   const int with_const_value::value = 13;
 
-  struct with_enum_value
+  struct with_enum_value : tmp_value<with_enum_value>
   {
     enum { value = 13 };
   };
 
-  struct without_value {};
+  struct without_value : tmp_value<without_value> {};
 }
 
 BOOST_AUTO_TEST_CASE(test_has_value)
