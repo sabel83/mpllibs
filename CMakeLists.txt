@@ -59,7 +59,6 @@ else()
     ugly
     misc
     reverse
-    exception_debug
   )
     set(FILENAME example_${E}.html)
     set(DST_FILE ${WEBSITE_ROOT}/metatest/${FILENAME})

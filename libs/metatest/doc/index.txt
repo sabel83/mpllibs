@@ -394,19 +394,6 @@ the code.
 link:https://github.com/sabel83/mpllibs/tree/master/libs/metatest/example/boost_test_assertion[source code] +
 link:example_boost_test_assertion.html[output] +
 
-exception_debug
-~~~~~~~~~~~~~~~
-
-This example demonstrates what a metaprogrammer can do when he needs to debug
-his code that throws a compile-time exception. metatest provides a small
-utility, +debug+, that displays the exception on the standard output. To use it,
-the code throwing the exception has to be compiled separatedly from the
-rest of the code. This example shows such a separatedly compiled debugging
-program.
-
-link:https://github.com/sabel83/mpllibs/tree/master/libs/metatest/example/exception_debug[source code] +
-link:example_exception_debug.html[output] +
-
 metatest_example
 ~~~~~~~~~~~~~~~~
 

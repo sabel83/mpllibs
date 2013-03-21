@@ -1,2 +1,0 @@
-This example demonstrates how to debug a compile-time exception. It has a
-Makefile for compilation on Linux with the GNU compiler.

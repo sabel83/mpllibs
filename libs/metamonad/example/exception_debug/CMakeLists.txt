@@ -6,14 +6,9 @@
 aux_source_directory(. SOURCES)
 add_executable(exception_debug ${SOURCES})
 
-target_link_libraries(exception_debug metatest)
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   target_link_libraries(exception_debug ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 else()
   target_link_libraries(exception_debug boost_unit_test_framework)
 endif()
-
-include(ExampleOutput)
-example_text_output(exception_debug exception_debug)
-
 

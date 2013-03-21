@@ -9,4 +9,5 @@ subdirs(
   min_with_do
   list_comprehension
   typeclass
+  exception_debug
 )
