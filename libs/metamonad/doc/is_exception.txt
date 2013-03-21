@@ -52,7 +52,7 @@ Example
 -------
 
 --------------------------------------
-typedef is_exception<mpllibs::metaparse::exception<int>::type> always_true;
+typedef is_exception<exception<int>::type> always_true;
 --------------------------------------
 
 include::copyright[]
