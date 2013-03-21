@@ -11,12 +11,12 @@
 #include <mpllibs/metamonad/box.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits.hpp>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
@@ -33,8 +33,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_eval_case)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::eval_case;
   using mpllibs::metamonad::matches;
   using mpllibs::metamonad::matches_c;
@@ -49,25 +47,28 @@ BOOST_AUTO_TEST_CASE(test_eval_case)
 
   using boost::mpl::equal_to;
 
-  meta_require<
+  // test_no_matches
+  BOOST_MPL_ASSERT((
     is_same<
       exception<no_case_matched<box<int> > >,
       eval_case< box<int>,
         matches<syntax<box<double> >, syntax<float> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_no_matches");
+  ));
 
-  meta_require<
+  // test_match
+  BOOST_MPL_ASSERT((
     is_same<
       float,
       eval_case< box<int>,
         matches<syntax<box<int> >, syntax<returns<float> > >
       >::type
     >
-  >(MPLLIBS_HERE, "test_match");
+  ));
 
-  meta_require<
+  // test_first_matches
+  BOOST_MPL_ASSERT((
     is_same<
       float,
       eval_case< box<int>,
@@ -75,9 +76,10 @@ BOOST_AUTO_TEST_CASE(test_eval_case)
         matches<syntax<box<double> >, syntax<char> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_first_matches");
+  ));
 
-  meta_require<
+  // test_second_matches
+  BOOST_MPL_ASSERT((
     is_same<
       float,
       eval_case< box<int>,
@@ -85,9 +87,10 @@ BOOST_AUTO_TEST_CASE(test_eval_case)
         matches<syntax<box<int> >, syntax<returns<float> > >
       >::type
     >
-  >(MPLLIBS_HERE, "test_second_matches");
+  ));
 
-  meta_require<
+  // test_vars_in_pattern
+  BOOST_MPL_ASSERT((
     is_same<
       some_other_template<int, double>,
       eval_case< returns<some_template<int, double> >,
@@ -96,9 +99,10 @@ BOOST_AUTO_TEST_CASE(test_eval_case)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_vars_in_pattern");
+  ));
 
-  meta_require<
+  // test_nested_case
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       eval_case< int11,
@@ -107,7 +111,7 @@ BOOST_AUTO_TEST_CASE(test_eval_case)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_nested_case");
+  ));
 }
 
 

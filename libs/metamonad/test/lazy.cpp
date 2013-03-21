@@ -9,7 +9,6 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
@@ -19,6 +18,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/assert.hpp>
 
 using mpllibs::metamonad::returns;
 
@@ -37,8 +37,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_lazy)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::lazy;
   
   using boost::mpl::equal_to;
@@ -46,21 +44,23 @@ BOOST_AUTO_TEST_CASE(test_lazy)
   using boost::mpl::if_;
   using boost::mpl::false_;
 
-  meta_require<
-    equal_to<int13, lazy<divides<int26, int2> >::type>
-  >(MPLLIBS_HERE, "test_evaluation");
+  // test_evaluation
+  BOOST_MPL_ASSERT((equal_to<int13, lazy<divides<int26, int2> >::type>));
 
-  meta_require<
+  // test_lazyness
+  BOOST_MPL_ASSERT((
     equal_to<int26, lazy<non_lazy_plus<returns13, returns13> >::type>
-  >(MPLLIBS_HERE, "test_lazyness");
+  ));
 
-  meta_require<
+  // test_evaluation_limit
+  BOOST_MPL_ASSERT((
     equal_to<int13, lazy<can_be_evaluated_only_once>::type::the_result>
-  >(MPLLIBS_HERE, "test_evaluation_limit");
+  ));
 
-  meta_require<
+  // test_evaluation_limit_of_double_lazy
+  BOOST_MPL_ASSERT((
     equal_to<int13, lazy<lazy<can_be_evaluated_only_once> >::type::the_result>
-  >(MPLLIBS_HERE, "test_evaluation_limit_of_double_lazy");
+  ));
 }
 
 

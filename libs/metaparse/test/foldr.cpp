@@ -7,8 +7,6 @@
 
 #include <mpllibs/metaparse/foldr.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/push_front.hpp>
 #include <boost/mpl/lambda.hpp>
@@ -26,8 +24,6 @@ namespace
   template <class P>
   struct any : foldr<P, list<>, lambda<push_front<_2, _1> >::type> {};
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, any, "foldr__any")
 
 #define DEFINE_TEST_CASE BOOST_AUTO_TEST_CASE(test_foldr)
 

@@ -10,17 +10,15 @@
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
 BOOST_AUTO_TEST_CASE(test_catch_all)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::equal_to;
   
   using mpllibs::metamonad::catch_all;
@@ -31,24 +29,28 @@ BOOST_AUTO_TEST_CASE(test_catch_all)
 
   using namespace mpllibs::metamonad::name;
 
-  meta_require<
+  // test_no_exception
+  BOOST_MPL_ASSERT((
     equal_to<int13, catch_all<int13, lambda_c<_, int11> >::type>
-  >(MPLLIBS_HERE, "test_no_exception");
+  ));
 
-  meta_require<
+  // test_handler_called
+  BOOST_MPL_ASSERT((
     equal_to<int11, catch_all<exception<int13>, lambda_c<_, int11> >::type>
-  >(MPLLIBS_HERE, "test_handler_called");
+  ));
 
-  meta_require<
+  // test_throw_value_is_passed_to_handler
+  BOOST_MPL_ASSERT((
     equal_to<int13, catch_all<exception<int13>, lambda_c<e, e> >::type>
-  >(MPLLIBS_HERE, "test_throw_value_is_passed_to_handler");
+  ));
 
-  meta_require<
+  // test_handler_argument_is_lazy
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       catch_all<exception<int13>, returns<lambda_c<e, e> > >::type
     >
-  >(MPLLIBS_HERE, "test_handler_argument_is_lazy");
+  ));
 }
 
 

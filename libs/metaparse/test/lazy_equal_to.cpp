@@ -9,32 +9,30 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/at.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_lazy_equal_to)
 {
-  using mpllibs::metatest::meta_require;
-  
   using mpllibs::metaparse::util::lazy_equal_to;
   
   using boost::mpl::eval_if;
   using boost::mpl::false_;
   using boost::mpl::true_;
 
-  meta_require<lazy_equal_to<int13, int13> >(MPLLIBS_HERE, "test_evaluated");
+  // test_evaluated
+  BOOST_MPL_ASSERT((lazy_equal_to<int13, int13>));
   
-  meta_require<
+  // test_not_evaluated
+  BOOST_MPL_ASSERT((
     eval_if<false_, lazy_equal_to<can_not_be_instantiated, int13>, true_>
-  >(MPLLIBS_HERE, "test_not_evaluated");
+  ));
 }
 
 

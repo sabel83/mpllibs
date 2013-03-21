@@ -13,10 +13,10 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/if.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/minus.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
 
@@ -24,8 +24,6 @@
 
 BOOST_AUTO_TEST_CASE(test_letrec_c)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::equal_to;
   using boost::mpl::minus;
   
@@ -41,31 +39,34 @@ BOOST_AUTO_TEST_CASE(test_letrec_c)
 
   // name is replaced with a nullary metafunction evaluating to the
   // substituted expression
-  meta_require<
-    equal_to<int13, eval_syntax<letrec_c<x, int13, x> >::type>
-  >(MPLLIBS_HERE, "test_letrec_name");
+  // test_letrec_name
+  BOOST_MPL_ASSERT((equal_to<int13, eval_syntax<letrec_c<x,int13, x> >::type>));
 
-  meta_require<
+  // test_letrec_not_name
+  BOOST_MPL_ASSERT((
     equal_to<int11, eval_syntax<letrec_c<x, int13, int11> >::type>
-  >(MPLLIBS_HERE, "test_letrec_not_name");
+  ));
   
-  meta_require<
+  // test_template
+  BOOST_MPL_ASSERT((
     equal_to<
       int26,
       eval_syntax<letrec_c<x, int13, lazy_double_value<x> > >::type
     >
-  >(MPLLIBS_HERE, "test_template");
+  ));
 
-  meta_require<
+  // test_nested_letrec
+  BOOST_MPL_ASSERT((
     equal_to<
       int24,
       eval_syntax<
         letrec_c<x, int13, eval_syntax<letrec_c<y, int11, lazy_plus<x, y> > > >
       >::type
     >
-  >(MPLLIBS_HERE, "test_nested_letrec");
+  ));
   
-  meta_require<
+  // test_shadowing
+  BOOST_MPL_ASSERT((
     equal_to<
       int37,
       eval_syntax<
@@ -78,9 +79,10 @@ BOOST_AUTO_TEST_CASE(test_letrec_c)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_shadowing");
+  ));
   
-  meta_require<
+  // test_recursion
+  BOOST_MPL_ASSERT((
     equal_to<
       int24,
       eval_syntax<
@@ -98,21 +100,23 @@ BOOST_AUTO_TEST_CASE(test_letrec_c)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_recursion");
+  ));
 
-  meta_require<
+  // test_letrec_lazy
+  BOOST_MPL_ASSERT((
     equal_to<
       int11,
       eval_syntax<letrec_c<x, int2, lazy<minus<int13, x> > > >::type
     >
-  >(MPLLIBS_HERE, "test_letrec_lazy");
+  ));
 
-  meta_require<
+  // test_letrec_c_in_let
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<letrec_c<x, int13, x> >,
       let<x, syntax<int13>, syntax<letrec_c<x, x, x> > >::type
     >
-  >(MPLLIBS_HERE, "test_letrec_c_in_let");
+  ));
 }
 
 

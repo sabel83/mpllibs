@@ -12,7 +12,6 @@
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
@@ -21,13 +20,12 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
 
 BOOST_AUTO_TEST_CASE(test_lambda_c)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::apply;
   using boost::mpl::apply_wrap1;
   using boost::mpl::apply_wrap3;
@@ -44,22 +42,24 @@ BOOST_AUTO_TEST_CASE(test_lambda_c)
   using mpllibs::metamonad::syntax;
   using mpllibs::metamonad::eval_syntax;
 
-  meta_require<
-    equal_to<int13, lambda_c<plus<int2, int11> >::type>
-  >(MPLLIBS_HERE, "test_no_argument");
+  // test_no_argument
+  BOOST_MPL_ASSERT((equal_to<int13, lambda_c<plus<int2, int11> >::type>));
 
-  meta_require<
+  // test_simple_lambda
+  BOOST_MPL_ASSERT((
     equal_to<int13, apply<lambda_c<x, plus<x, int11> >, int2>::type>
-  >(MPLLIBS_HERE, "test_simple_lambda");
+  ));
 
-  meta_require<
+  // test_nested_lambda
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       apply<lambda_c<x, y, plus<x, y> >, int2, int11>::type
     >
-  >(MPLLIBS_HERE, "test_nested_lambda");
+  ));
 
-  meta_require<
+  // test_multiple_arguments
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       lazy_apply<
@@ -67,16 +67,18 @@ BOOST_AUTO_TEST_CASE(test_lambda_c)
         int11
       >::type
     >
-  >(MPLLIBS_HERE, "test_multiple_arguments");
+  ));
 
-  meta_require<
+  // test_currying
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       lazy_apply<apply<lambda_c<x, y, plus<x, y> >, int2>, int11>::type
     >
-  >(MPLLIBS_HERE, "test_currying");
+  ));
 
-  meta_require<
+  // test_let_and_lambda_body
+  BOOST_MPL_ASSERT((
     equal_to<
       int11,
       apply_wrap1<
@@ -84,9 +86,10 @@ BOOST_AUTO_TEST_CASE(test_lambda_c)
         int13
       >::type
     >
-  >(MPLLIBS_HERE, "test_let_and_lambda_body");
+  ));
 
-  meta_require<
+  // test_let_and_lambda3_body
+  BOOST_MPL_ASSERT((
     equal_to<
       int1,
       eval_syntax<
@@ -96,9 +99,10 @@ BOOST_AUTO_TEST_CASE(test_lambda_c)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_let_and_lambda3_body");
+  ));
 
-  meta_require<
+  // test_let_and_lambda3_arg
+  BOOST_MPL_ASSERT((
     equal_to<
       int11,
       eval_syntax<
@@ -108,9 +112,10 @@ BOOST_AUTO_TEST_CASE(test_lambda_c)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_let_and_lambda3_arg");
+  ));
 
-  meta_require<
+  // test_nested_lambda
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       apply_wrap1<
@@ -118,13 +123,15 @@ BOOST_AUTO_TEST_CASE(test_lambda_c)
         int11
       >::type
     >
-  >(MPLLIBS_HERE, "test_nested_lambda");
+  ));
 
-  meta_require<
+  // test_unused_arg
+  BOOST_MPL_ASSERT((
     is_same<_, apply_wrap1<lambda_c<_, returns<_> >, int13>::type>
-  >(MPLLIBS_HERE, "test_unused_arg");
+  ));
 
-  meta_require<
+  // test_parameter_hiding
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       apply_wrap1<
@@ -132,7 +139,7 @@ BOOST_AUTO_TEST_CASE(test_lambda_c)
         int13
       >::type
     >
-  >(MPLLIBS_HERE, "test_parameter_hiding");
+  ));
 }
 
 

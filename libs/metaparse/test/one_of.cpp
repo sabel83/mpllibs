@@ -14,13 +14,10 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -33,9 +30,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_one_of)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::is_error;
   using mpllibs::metaparse::one_of_0;
   using mpllibs::metaparse::one_of_1;
@@ -48,103 +42,109 @@ BOOST_AUTO_TEST_CASE(test_one_of)
   using boost::mpl::apply_wrap2;
   using boost::mpl::equal_to;
   
-  meta_require<has_type<one_of<one_char> > >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
-    is_error<apply_wrap2<one_of_0< >, str_hello, start> >
-  >(MPLLIBS_HERE, "test0");
+  // test0
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<one_of_0< >, str_hello, start> >));
   
-  meta_require<
+  // test_1_with_good
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<one_of_1<one_char>, str_hello, start> >::type,
       char_h
     >
-  >(MPLLIBS_HERE, "test_1_with_good");
+  ));
 
-  meta_require<
+  // test_1_with_bad
+  BOOST_MPL_ASSERT((
     is_error<apply_wrap2<one_of_1<test_fail>, str_hello, start> >
-  >(MPLLIBS_HERE, "test_1_with_bad");
+  ));
 
-  meta_require<
+  // test_2_with_two_good
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<one_of_2<one_char, one_char>, str_hello, start>
       >::type,
       char_h
     >
-  >(MPLLIBS_HERE, "test_2_with_two_good");
+  ));
 
-  meta_require<
+  // test_2_with_first_good
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<one_of_2<one_char, test_fail>, str_hello, start>
       >::type,
       char_h
     >
-  >(MPLLIBS_HERE, "test_2_with_first_good");
+  ));
 
-  meta_require<
+  // test_2_with_second_good
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<one_of_2<test_fail, one_char>, str_hello, start>
       >::type,
       char_h
     >
-  >(MPLLIBS_HERE, "test_2_with_second_good");
+  ));
 
-  meta_require<
+  // test_2_with_two_bad
+  BOOST_MPL_ASSERT((
     is_error<apply_wrap2<one_of_2<test_fail, test_fail>, str_hello, start> >
-  >(MPLLIBS_HERE, "test_2_with_two_bad");
+  ));
 
 
 
 
 
-  meta_require<
-    is_error<apply_wrap2<one_of< >, str_hello, start> >
-  >(MPLLIBS_HERE, "test");
+  // test
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<one_of< >, str_hello, start> >));
   
-  meta_require<
+  // test_with_good
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<one_of<one_char>, str_hello, start> >::type,
       char_h
     >
-  >(MPLLIBS_HERE, "test_with_good");
+  ));
   
-  meta_require<
-    is_error<apply_wrap2<one_of<test_fail>, str_hello, start> >
-  >(MPLLIBS_HERE, "test_with_bad");
+  // test_with_bad
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<one_of<test_fail>,str_hello,start> >));
 
-  meta_require<
+  // test_with_two_good
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<one_of<one_char, one_char>, str_hello, start>
       >::type,
       char_h
     >
-  >(MPLLIBS_HERE, "test_with_two_good");
+  ));
     
-  meta_require<
+  // test_with_first_good
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<one_of<one_char, test_fail>, str_hello, start>
       >::type,
       char_h
     >
-  >(MPLLIBS_HERE, "test_with_first_good");
+  ));
 
-  meta_require<
+  // test_with_second_good
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<one_of<test_fail, one_char>, str_hello, start>
       >::type,
       char_h
     >
-  >(MPLLIBS_HERE, "test_with_second_good");
+  ));
 
-  meta_require<
+  // test_with_two_bad
+  BOOST_MPL_ASSERT((
     is_error<apply_wrap2<one_of<test_fail, test_fail>, str_hello, start> >
-  >(MPLLIBS_HERE, "test_with_two_bad");
+  ));
 }
 
 

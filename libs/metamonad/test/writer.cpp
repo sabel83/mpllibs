@@ -13,12 +13,12 @@
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
@@ -39,8 +39,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_writer)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::writer_tag;
   using mpllibs::metamonad::list_tag;
   using mpllibs::metamonad::monad;
@@ -53,15 +51,14 @@ BOOST_AUTO_TEST_CASE(test_writer)
   
   typedef apply<monad<list_writer_tag>::return_, int11>::type return11;
   
-  meta_require<
-    equal_to<int11, return11::first>
-  >(MPLLIBS_HERE, "test_return_value");
+  // test_return_value
+  BOOST_MPL_ASSERT((equal_to<int11, return11::first>));
   
-  meta_require<
-    equal<list<>, return11::second>
-  >(MPLLIBS_HERE, "test_return_log");
+  // test_return_log
+  BOOST_MPL_ASSERT((equal<list<>, return11::second>));
 
-  meta_require<
+  // test_bind_value
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       apply<
@@ -70,9 +67,10 @@ BOOST_AUTO_TEST_CASE(test_writer)
         log_plus<int2>
       >::type::first
     >
-  >(MPLLIBS_HERE, "test_bind_value");
+  ));
 
-  meta_require<
+  // test_bind_log
+  BOOST_MPL_ASSERT((
     equal<
       list<int2>,
       apply<
@@ -81,7 +79,7 @@ BOOST_AUTO_TEST_CASE(test_writer)
         log_plus<int2>
       >::type::second
     >
-  >(MPLLIBS_HERE, "test_bind_log");
+  ));
 }
 
 

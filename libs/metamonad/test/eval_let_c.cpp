@@ -7,28 +7,24 @@
 
 #include <mpllibs/metamonad/eval_let_c.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
 
 BOOST_AUTO_TEST_CASE(test_eval_let_c)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::equal_to;
   using boost::mpl::plus;
   
   using mpllibs::metamonad::eval_let_c;
 
-  meta_require<
-    equal_to<int13, eval_let_c<x, int11, plus<int2, x> >::type>
-  >(MPLLIBS_HERE, "test_evaluation_of_expression");
-
+  // test_evaluation_of_expression
+  BOOST_MPL_ASSERT((equal_to<int13, eval_let_c<x,int11,plus<int2, x> >::type>));
 }
 
 

@@ -10,10 +10,11 @@
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits.hpp>
+
+#include <boost/mpl/assert.hpp>
 
 using mpllibs::metamonad::returns;
 
@@ -27,18 +28,18 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_lazy_protect_args)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::lazy_protect_args;
   
-  meta_require<
+  // test_args_are_not_evaluated
+  BOOST_MPL_ASSERT((
     lazy<is_double<lazy_protect_args<returns_double<int, int, int> > > >
-  >(MPLLIBS_HERE, "test_args_are_not_evaluated");
+  ));
 
-  meta_require<
+  // test_outside_of_lazy
+  BOOST_MPL_ASSERT((
     is_same<lazy_protect_args<returns_double<int, int, int> >::type, double>
-  >(MPLLIBS_HERE, "test_outside_of_lazy");
+  ));
 }
 
 

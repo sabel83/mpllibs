@@ -11,13 +11,10 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/char.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -33,9 +30,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_foldrp)
 {
-  using mpllibs::metatest::has_type;
-  using mpllibs::metatest::meta_require;
-  
   using mpllibs::metaparse::foldrp;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::is_error;
@@ -48,26 +42,25 @@ BOOST_AUTO_TEST_CASE(test_foldrp)
 
   typedef foldrp<lit_c<'a'>, lit_c<'b'>, keep_state> p;
 
-  meta_require<has_type<p> >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_b
+  BOOST_MPL_ASSERT((
     equal_to<get_result<apply_wrap2<p, str_b, start> >::type, char_<'b'> >
-  >(MPLLIBS_HERE, "test_b");
+  ));
   
-  meta_require<
+  // test_ab
+  BOOST_MPL_ASSERT((
     equal_to<get_result<apply_wrap2<p, str_ab, start> >::type, char_<'b'> >
-  >(MPLLIBS_HERE, "test_ab");
+  ));
 
-  meta_require<
+  // test_aaaab
+  BOOST_MPL_ASSERT((
     equal_to<get_result<apply_wrap2<p, str_aaaab, start> >::type, char_<'b'> >
-  >(MPLLIBS_HERE, "test_aaaab");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<p, str_c, start> >
-  >(MPLLIBS_HERE, "test_c");
+  // test_c
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<p, str_c, start> >));
 
-  meta_require<
-    is_error<apply_wrap2<p, str_ac, start> >
-  >(MPLLIBS_HERE, "test_ac");
+  // test_ac
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<p, str_ac, start> >));
 }
 

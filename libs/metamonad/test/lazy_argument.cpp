@@ -8,7 +8,6 @@
 #include <mpllibs/metamonad/lazy_argument.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
@@ -16,18 +15,18 @@
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/assert.hpp>
 
 BOOST_AUTO_TEST_CASE(test_lazy_argument)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::lazy_argument;
   
   using boost::mpl::equal_to;
   using boost::mpl::false_;
 
-  meta_require<
+  //test_custom_eval_if_with_lazy_expression_as_selected_case_with_lazy_argument
+  BOOST_MPL_ASSERT((
     equal_to<
       int26,
       lazy<
@@ -38,11 +37,7 @@ BOOST_AUTO_TEST_CASE(test_lazy_argument)
         >
       >::type
     >
-  >(
-    MPLLIBS_HERE,
-    "test_custom_eval_if_with_lazy_expression_as_selected_case"
-    "_with_lazy_argument"
-  );
+  ));
 }
 
 

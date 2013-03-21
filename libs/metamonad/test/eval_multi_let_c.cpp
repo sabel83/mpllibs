@@ -8,20 +8,18 @@
 #include <mpllibs/metamonad/eval_multi_let_c.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/map.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
 
 BOOST_AUTO_TEST_CASE(test_eval_multi_let_c)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::equal_to;
   using boost::mpl::plus;
   using boost::mpl::map;
@@ -30,13 +28,13 @@ BOOST_AUTO_TEST_CASE(test_eval_multi_let_c)
   using mpllibs::metamonad::syntax;
   using mpllibs::metamonad::pair;
 
-  meta_require<
+  // test_evaluation_of_expression
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       eval_multi_let_c<map<pair<x, syntax<int11> > >, plus<int2, x> >::type
     >
-  >(MPLLIBS_HERE, "test_evaluation_of_expression");
-
+  ));
 }
 
 

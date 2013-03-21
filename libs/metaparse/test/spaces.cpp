@@ -12,15 +12,12 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -36,9 +33,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_spaces)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::is_error;
   using mpllibs::metaparse::spaces;
   using mpllibs::metaparse::start;
@@ -48,30 +42,31 @@ BOOST_AUTO_TEST_CASE(test_spaces)
   using boost::mpl::not_;
   using boost::mpl::equal;
 
-  meta_require<has_type<spaces> >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_reject_no_space
+  BOOST_MPL_ASSERT((
     is_error<apply_wrap2<spaces, str_hello, start> >
-  >(MPLLIBS_HERE, "test_reject_no_space");
+  ));
 
-  meta_require<
+  // test_accept_one_space
+  BOOST_MPL_ASSERT((
     not_<is_error<apply_wrap2<spaces, str__ello, start> > >
-  >(MPLLIBS_HERE, "test_accept_one_space");
+  ));
 
-  meta_require<
+  // test_accept_only_space
+  BOOST_MPL_ASSERT((
     equal<get_remaining<apply_wrap2<spaces, str__ello, start> >::type, str_ello>
-  >(MPLLIBS_HERE, "test_accept_only_space");
+  ));
 
-  meta_require<
-    not_<is_error<apply_wrap2<spaces, str_____ello, start> > >
-  >(MPLLIBS_HERE, "test_accept_all_spaces");
+  // test_accept_all_spaces
+  BOOST_MPL_ASSERT((not_<is_error<apply_wrap2<spaces, str_____ello,start> > >));
 
-  meta_require<
+  // test_consume_all_spaces
+  BOOST_MPL_ASSERT((
     equal<
       get_remaining<apply_wrap2<spaces, str_____ello, start> >::type,
       str_ello
     >
-  >(MPLLIBS_HERE, "test_consume_all_spaces");
+  ));
 }
 
 

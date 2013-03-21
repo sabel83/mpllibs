@@ -18,10 +18,10 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/tag.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/static_assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
@@ -45,8 +45,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_monad)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::equal_to;
   using boost::mpl::tag;
   
@@ -58,24 +56,26 @@ BOOST_AUTO_TEST_CASE(test_monad)
   typedef tag<int13>::type int_tag;
   typedef either_tag<int_tag, int_tag> either;
 
-  meta_require<
-    equal_to<right<int13>, return_<either, int13>::type>
-  >(MPLLIBS_HERE, "test_return");
+  // test_return
+  BOOST_MPL_ASSERT((equal_to<right<int13>, return_<either, int13>::type>));
 
-  meta_require<
+  // test_bind_right
+  BOOST_MPL_ASSERT((
     equal_to<right<int11>, bind<either, right<int13>, minus_2>::type>
-  >(MPLLIBS_HERE, "test_bind_right");
+  ));
 
-  meta_require<
+  // test_bind_left
+  BOOST_MPL_ASSERT((
     equal_to<left<int13>, bind<either, left<int13>, minus_2>::type>
-  >(MPLLIBS_HERE, "test_bind_left");
+  ));
 
-  meta_require<
+  // test_multi_step_chain
+  BOOST_MPL_ASSERT((
     equal_to<
       right<int9>,
       bind<either, bind<either, return_<either, int13>, minus_2>, minus_2>
     >
-  >(MPLLIBS_HERE, "test_multi_step_chain");
+  ));
 }
 
 

@@ -8,11 +8,11 @@
 #include <mpllibs/metamonad/instantiate.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
 
@@ -26,8 +26,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_instantiate)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::instantiate2;
 
   using boost::mpl::vector;
@@ -36,19 +34,21 @@ BOOST_AUTO_TEST_CASE(test_instantiate)
 
   using boost::is_same;
 
-  meta_require<
+  // test_instantiation
+  BOOST_MPL_ASSERT((
     is_same<
       some_template<int, double>,
       apply_wrap1<instantiate2<some_template>, vector<int, double> >::type
     >
-  >(MPLLIBS_HERE, "test_instantiation");
+  ));
 
-  meta_require<
+  // test_instantiation_with_na
+  BOOST_MPL_ASSERT((
     is_same<
       some_template<int, na>,
       apply_wrap1<instantiate2<some_template>, vector<int> >::type
     >
-  >(MPLLIBS_HERE, "test_instantiation_with_na");
+  ));
 }
 
 

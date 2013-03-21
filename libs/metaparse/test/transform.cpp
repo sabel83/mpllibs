@@ -14,17 +14,13 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-#include <mpllibs/metatest/to_stream.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/lambda.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -40,9 +36,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_transform)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::transform;
   using mpllibs::metaparse::start;
@@ -53,31 +46,31 @@ BOOST_AUTO_TEST_CASE(test_transform)
   using boost::mpl::front;
   using boost::mpl::_1;
 
-  meta_require<has_type<transform<lit_h, f> > >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_normal_case
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<transform<lit_h, f>, str_hello, start> >::type,
       char_x
     >
-  >(MPLLIBS_HERE, "test_normal_case");
+  ));
 
-  meta_require<
+  // test_parser_fails
+  BOOST_MPL_ASSERT((
     is_error<apply_wrap2<transform<lit_x, f>, str_hello, start> >
-  >(MPLLIBS_HERE, "test_parser_fails");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<transform<lit_h, f>, str_, start> >
-  >(MPLLIBS_HERE, "test_empty_input");
+  // test_empty_input
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<transform<lit_h, f>, str_, start> >));
   
-  meta_require<
+  // test_tranformation_functions_arg
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<transform<any_one_char, front<_1> >, str_hello, start>
       >::type,
       char_h
     >
-  >(MPLLIBS_HERE, "test_tranformation_functions_arg");
+  ));
 }
 
 

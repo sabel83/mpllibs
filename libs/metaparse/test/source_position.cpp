@@ -12,12 +12,9 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -32,9 +29,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_source_position)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::get_line;
   using mpllibs::metaparse::get_col;
   using mpllibs::metaparse::get_prev_char;
@@ -42,50 +36,45 @@ BOOST_AUTO_TEST_CASE(test_source_position)
   
   using boost::mpl::equal_to;
   
-  meta_require<has_type<sp> >(MPLLIBS_HERE, "test_has_type");
+  // test_get_line
+  BOOST_MPL_ASSERT((equal_to<int11, get_line<sp>::type>));
 
-  meta_require<
-    equal_to<int11, get_line<sp>::type>
-  >(MPLLIBS_HERE, "test_get_line");
-
-  meta_require<
-    equal_to<int13, get_col<sp>::type>
-  >(MPLLIBS_HERE, "test_get_col");
+  // test_get_col
+  BOOST_MPL_ASSERT((equal_to<int13, get_col<sp>::type>));
   
-  meta_require<
-    equal_to<int1, get_prev_char<sp>::type>
-  >(MPLLIBS_HERE, "test_get_prev_char");
+  // test_get_prev_char
+  BOOST_MPL_ASSERT((equal_to<int1, get_prev_char<sp>::type>));
 
-  meta_require<
-    equal_to<int1, get_line<start>::type>
-  >(MPLLIBS_HERE, "test_line_of_start");
+  // test_line_of_start
+  BOOST_MPL_ASSERT((equal_to<int1, get_line<start>::type>));
 
-  meta_require<
-    equal_to<int1, get_col<start>::type>
-  >(MPLLIBS_HERE, "test_col_of_start");
+  // test_col_of_start
+  BOOST_MPL_ASSERT((equal_to<int1, get_col<start>::type>));
 
-  meta_require<
-    equal_to<int2, get_col<next0>::type>
-  >(MPLLIBS_HERE, "test_next_chars_char");
+  // test_next_chars_char
+  BOOST_MPL_ASSERT((equal_to<int2, get_col<next0>::type>));
 
-  meta_require<
-    equal_to<int1, get_line<next0>::type>
-  >(MPLLIBS_HERE, "test_next_chars_line");
+  // test_next_chars_line
+  BOOST_MPL_ASSERT((equal_to<int1, get_line<next0>::type>));
 
-  meta_require<
+  // test_next_lines_char
+  BOOST_MPL_ASSERT((
     equal_to<int1, get_col<next_line<next0, char_0> >::type>
-  >(MPLLIBS_HERE, "test_next_lines_char");
+  ));
 
-  meta_require<
+  // test_next_lines_line
+  BOOST_MPL_ASSERT((
     equal_to<int2, get_line<next_line<start, char_0> >::type>
-  >(MPLLIBS_HERE, "test_next_lines_line");
+  ));
 
-  meta_require<
+  // test_next_chars_prev_char
+  BOOST_MPL_ASSERT((
     equal_to<char_1, get_prev_char< next_char<start, char_1> >::type>
-  >(MPLLIBS_HERE, "test_next_chars_prev_char");
+  ));
 
-  meta_require<
+  // test_next_lines_prev_char
+  BOOST_MPL_ASSERT((
     equal_to<char_1, get_prev_char<next_line<start, char_1> >::type>
-  >(MPLLIBS_HERE, "test_next_lines_prev_char");
+  ));
 }
 

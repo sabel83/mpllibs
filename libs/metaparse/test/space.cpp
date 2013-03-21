@@ -12,14 +12,11 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/char.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -33,9 +30,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_space)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::is_error;
   using mpllibs::metaparse::space;
   using mpllibs::metaparse::start;
@@ -45,43 +39,43 @@ BOOST_AUTO_TEST_CASE(test_space)
   using boost::mpl::equal_to;
   using boost::mpl::char_;
 
-  meta_require<has_type<space> >(MPLLIBS_HERE, "test_has_type");
+  // test_with_text
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<space, str_hello, start> >));
 
-  meta_require<
-    is_error<apply_wrap2<space, str_hello, start> >
-  >(MPLLIBS_HERE, "test_with_text");
-
-  meta_require<
+  // test_with_space
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<space, str__ello, start> >::type,
       char_<' '>
     >
-  >(MPLLIBS_HERE, "test_with_space");
+  ));
 
-  meta_require<
+  // test_with_tab
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<space, str_with_t, start> >::type,
       char_<'\t'>
     >
-  >(MPLLIBS_HERE, "test_with_tab");
+  ));
 
-  meta_require<
+  // test_with_line_feed
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<space, str_with_n, start> >::type,
       char_<'\n'>
     >
-  >(MPLLIBS_HERE, "test_with_line_feed");
+  ));
 
-  meta_require<
+  // test_with_c_return
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<space, str_with_r, start> >::type,
       char_<'\r'>
     >
-  >(MPLLIBS_HERE, "test_with_c_return");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<space, str_, start> >
-  >(MPLLIBS_HERE, "test_with_empty_string");
+  // test_with_empty_string
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<space, str_, start> >));
 }
 
 

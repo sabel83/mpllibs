@@ -14,14 +14,11 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -39,9 +36,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_token)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::get_remaining;
@@ -51,32 +45,32 @@ BOOST_AUTO_TEST_CASE(test_token)
   using boost::mpl::apply_wrap2;
   using boost::mpl::equal;
 
-  meta_require<has_type<a_test_token> >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_no_space
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<a_test_token, str_hello, start> >::type,
       get_result<apply_wrap2<test_parser, str_hello, start> >::type
     >
-  >(MPLLIBS_HERE, "test_no_space");
+  ));
 
-  meta_require<
+  // test_spaces
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<a_test_token, str_hello_t, start> >::type,
       get_result<apply_wrap2<test_parser, str_hello, start> >::type
     >
-  >(MPLLIBS_HERE, "test_spaces");
+  ));
 
-  meta_require<
+  // test_spaces_consumed
+  BOOST_MPL_ASSERT((
     equal<
       get_remaining<apply_wrap2<a_test_token, str_hello_t, start> >::type,
       str_
     >
-  >(MPLLIBS_HERE, "test_spaces_consumed");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<a_test_token, str_, start> >
-  >(MPLLIBS_HERE, "test_fail");
+  // test_fail
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<a_test_token, str_, start> >));
 }
 
 

@@ -9,10 +9,10 @@
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/plus.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
 
@@ -20,8 +20,6 @@
 
 BOOST_AUTO_TEST_CASE(test_make_syntax)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::syntax;
   using mpllibs::metamonad::make_syntax;
   using mpllibs::metamonad::returns;
@@ -30,13 +28,11 @@ BOOST_AUTO_TEST_CASE(test_make_syntax)
 
   using boost::is_same;
 
-  meta_require<
-    is_same<syntax<int13>, make_syntax<int13>::type>
-  >(MPLLIBS_HERE, "test_making_a_syntax");
+  // test_making_a_syntax
+  BOOST_MPL_ASSERT((is_same<syntax<int13>, make_syntax<int13>::type>));
 
-  meta_require<
-    is_same<syntax<int13>, make_syntax<returns<int13> >::type>
-  >(MPLLIBS_HERE, "test_laziness_of_make_syntax");
+  // test_laziness_of_make_syntax
+  BOOST_MPL_ASSERT((is_same<syntax<int13>,make_syntax<returns<int13> >::type>));
 }
 
 

@@ -5,10 +5,10 @@
 
 // This header file contains code that is reused by other cpp files
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <mpllibs/metaparse/source_position.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/preprocessor/cat.hpp>
 
@@ -16,20 +16,16 @@
 
 BOOST_AUTO_TEST_CASE(BOOST_PP_CAT(TEST_NAME, _except))
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metaparse::is_error;
   using mpllibs::metaparse::start;
 
   using boost::mpl::apply_wrap2;
   
-  meta_require<
-    is_error<apply_wrap2<oc, str_0, start> >
-  >(MPLLIBS_HERE, "rejects_except_char");
+  // rejects_except_char
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<oc, str_0, start> >));
 
-  meta_require<
-    is_error<apply_wrap2<oc, str_1, start> >
-  >(MPLLIBS_HERE, "rejects_other_except_char");
+  // rejects_other_except_char
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<oc, str_1, start> >));
 }
 
 #include "one_char_test.hpp"

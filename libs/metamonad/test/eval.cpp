@@ -8,10 +8,11 @@
 #include <mpllibs/metamonad/eval.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits.hpp>
+
+#include <boost/mpl/assert.hpp>
 
 using mpllibs::metamonad::returns;
 
@@ -25,19 +26,15 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_eval)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::eval;
 
   using boost::is_same;
 
-  meta_require<
-    is_same<c0, eval<c2>::type>
-  >(MPLLIBS_HERE, "test_extra_evaluation");
+  // test_extra_evaluation
+  BOOST_MPL_ASSERT((is_same<c0, eval<c2>::type>));
 
-  meta_require<
-    is_same<c1, eval<c3>::type>
-  >(MPLLIBS_HERE, "test_only_1_extra_evaluation");
+  // test_only_1_extra_evaluation
+  BOOST_MPL_ASSERT((is_same<c1, eval<c3>::type>));
 }
 
 

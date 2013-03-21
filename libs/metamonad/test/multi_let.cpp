@@ -13,10 +13,10 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/map.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
 
@@ -32,8 +32,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_multi_let)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::multi_let;
   using mpllibs::metamonad::eval_case;
   using mpllibs::metamonad::syntax;
@@ -46,18 +44,21 @@ BOOST_AUTO_TEST_CASE(test_multi_let)
 
   using namespace mpllibs::metamonad::name;
 
-  meta_require<
+  // test_setting_value
+  BOOST_MPL_ASSERT((
     is_same<
       int13,
       eval_syntax<multi_let<map<pair<x, syntax<int13> > >, syntax<x> > >::type
     >
-  >(MPLLIBS_HERE, "test_setting_value");
+  ));
 
-  meta_require<
+  // test_nothing_to_set
+  BOOST_MPL_ASSERT((
     is_same<x, eval_syntax<multi_let<map<>, syntax<x> > >::type>
-  >(MPLLIBS_HERE, "test_nothing_to_set");
+  ));
 
-  meta_require<
+  // test_multiple_variables
+  BOOST_MPL_ASSERT((
     is_same<
       some_template<int11, int13>,
       eval_syntax<
@@ -67,7 +68,7 @@ BOOST_AUTO_TEST_CASE(test_multi_let)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_multiple_variables");
+  ));
 }
 
 

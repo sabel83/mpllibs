@@ -9,7 +9,6 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
@@ -18,13 +17,12 @@
 #include <boost/mpl/divides.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
 
 BOOST_AUTO_TEST_CASE(test_already_lazy)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::already_lazy;
   using mpllibs::metamonad::returns;
@@ -35,7 +33,8 @@ BOOST_AUTO_TEST_CASE(test_already_lazy)
 
   using boost::is_same;
 
-  meta_require<
+  // test_custom_eval_if
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       lazy<
@@ -46,9 +45,10 @@ BOOST_AUTO_TEST_CASE(test_already_lazy)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_custom_eval_if");
+  ));
 
-  meta_require<
+  // test_custom_eval_if_with_lazy_expression_as_selected_case
+  BOOST_MPL_ASSERT((
     equal_to<
       int26,
       lazy<
@@ -59,11 +59,10 @@ BOOST_AUTO_TEST_CASE(test_already_lazy)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_custom_eval_if_with_lazy_expression_as_selected_case");
+  ));
 
-  meta_require<
-    is_same<double, already_lazy<returns<double> >::type>
-  >(MPLLIBS_HERE, "test_outside_of_lazy");
+  // test_outside_of_lazy
+  BOOST_MPL_ASSERT((is_same<double, already_lazy<returns<double> >::type>));
 }
 
 

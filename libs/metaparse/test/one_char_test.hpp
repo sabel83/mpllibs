@@ -14,13 +14,10 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -39,9 +36,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(TEST_NAME)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::get_remaining;
   using mpllibs::metaparse::get_position;
@@ -51,13 +45,11 @@ BOOST_AUTO_TEST_CASE(TEST_NAME)
   
   using boost::mpl::equal_to;
 
-  meta_require<has_type<oc> >(MPLLIBS_HERE, "test_has_type");
+  // test_for_non_empty_string
+  BOOST_MPL_ASSERT((equal_to<get_result<parse_first_char>::type, char_h>));
 
-  meta_require<
-    equal_to<get_result<parse_first_char>::type, char_h>
-  >(MPLLIBS_HERE, "test_for_non_empty_string");
-
-  meta_require<
+  // test_for_non_empty_string_second
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<
@@ -68,13 +60,13 @@ BOOST_AUTO_TEST_CASE(TEST_NAME)
       >::type,
       char_e
     >
-  >(MPLLIBS_HERE, "test_for_non_empty_string_second");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<oc, str_, start> >
-  >(MPLLIBS_HERE, "test_for_empty_string");
+  // test_for_empty_string
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<oc, str_, start> >));
   
-  meta_require<
+  // test_unix_multi_line_text
+  BOOST_MPL_ASSERT((
     equal_to<
       int2,
       get_line<
@@ -83,25 +75,27 @@ BOOST_AUTO_TEST_CASE(TEST_NAME)
         >
       >
     >
-  >(MPLLIBS_HERE, "test_unix_multi_line_text");
+  ));
 
-  meta_require<
+  // test_dos_multi_line_text
+  BOOST_MPL_ASSERT((
     equal_to<
       int2,
       get_line<
         get_position<apply_wrap2<iterate_c<oc, 3>, dos_multi_line_text, start> >
       >
     >
-  >(MPLLIBS_HERE, "test_dos_multi_line_text");
+  ));
 
-  meta_require<
+  // test_mac_multi_line_text
+  BOOST_MPL_ASSERT((
     equal_to<
       int2,
       get_line<
         get_position<apply_wrap2<iterate_c<oc, 2>, mac_multi_line_text, start> >
       >
     >
-  >(MPLLIBS_HERE, "test_mac_multi_line_text");
+  ));
 }
 
 

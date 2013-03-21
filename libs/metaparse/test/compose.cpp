@@ -9,17 +9,15 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -55,16 +53,8 @@ namespace
   };
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(make_pointer)
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(incr)
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(double_value)
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(take_first)
-
 BOOST_AUTO_TEST_CASE(test_compose)
 {
-  using mpllibs::metatest::has_type;
-  using mpllibs::metatest::meta_require;
-  
   using mpllibs::metaparse::util::compose;
   
   using boost::mpl::apply_wrap1;
@@ -73,15 +63,13 @@ BOOST_AUTO_TEST_CASE(test_compose)
   
   using boost::is_same;
 
-  meta_require<
-    has_type<compose<make_pointer, make_pointer> >
-  >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_same_function_twice
+  BOOST_MPL_ASSERT((
     is_same<apply_wrap1<compose<make_pointer, make_pointer>, int>::type, int**>
-  >(MPLLIBS_HERE, "test_same_function_twice");
+  ));
 
-  meta_require<
+  // test_same_function_five_times
+  BOOST_MPL_ASSERT((
     is_same<
       apply_wrap1<
         compose<
@@ -95,18 +83,20 @@ BOOST_AUTO_TEST_CASE(test_compose)
       >::type,
       int*****
     >
-  >(MPLLIBS_HERE, "test_same_function_five_times");
+  ));
 
-  meta_require<
+  // test_order
+  BOOST_MPL_ASSERT((
     equal_to<apply_wrap1<compose<double_value, incr>, int1>::type, int28>
-  >(MPLLIBS_HERE, "test_order");
+  ));
 
-  meta_require<
+  // test_two_arguments_for_the_first_function
+  BOOST_MPL_ASSERT((
     equal_to<
       apply_wrap2<compose<double_value, take_first>, int1, int3>::type,
       int2
     >
-  >(MPLLIBS_HERE, "test_two_arguments_for_the_first_function");
+  ));
 }
 
 

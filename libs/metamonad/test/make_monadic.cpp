@@ -11,11 +11,11 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
@@ -33,8 +33,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_make_monadic)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::make_monadic;
   using mpllibs::metamonad::already_monadic;
   using mpllibs::metamonad::maybe_tag;
@@ -45,14 +43,16 @@ BOOST_AUTO_TEST_CASE(test_make_monadic)
   typedef int11::tag int_tag;
   typedef maybe_tag<int_tag> mt;
 
-  meta_require<
+  // test_monadic_values
+  BOOST_MPL_ASSERT((
     equal_to<
       just<int13>,
       make_monadic<mt, syntax<already_monadic<just<int13> > > >::type
     >
-  >(MPLLIBS_HERE, "test_monadic_values");
+  ));
 
-  meta_require<
+  // test_metafunction_call
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       make_monadic<
@@ -62,9 +62,10 @@ BOOST_AUTO_TEST_CASE(test_make_monadic)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_metafunction_call");
+  ));
 
-  meta_require<
+  // test_nested_function_calls
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       make_monadic<
@@ -77,9 +78,10 @@ BOOST_AUTO_TEST_CASE(test_make_monadic)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_nested_function_calls");
+  ));
 
-  meta_require<
+  // test_variadic_metafunction_call
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       make_monadic<
@@ -89,7 +91,7 @@ BOOST_AUTO_TEST_CASE(test_make_monadic)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_variadic_metafunction_call");
+  ));
 }
 
 

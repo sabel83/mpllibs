@@ -11,12 +11,12 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/let_c.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits.hpp>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
@@ -33,8 +33,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_case)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::case_;
   using mpllibs::metamonad::matches;
   using mpllibs::metamonad::matches_c;
@@ -49,25 +47,28 @@ BOOST_AUTO_TEST_CASE(test_case)
 
   using boost::mpl::equal_to;
 
-  meta_require<
+  // test_no_matches
+  BOOST_MPL_ASSERT((
     is_same<
       exception<no_case_matched<box<int> > >,
       case_< box<int>,
         matches<syntax<box<double> >, syntax<float> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_no_matches");
+  ));
 
-  meta_require<
+  // test_match
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<float>,
       case_< box<int>,
         matches<syntax<box<int> >, syntax<float> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_match");
+  ));
 
-  meta_require<
+  // test_first_matches
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<float>,
       case_< box<int>,
@@ -75,9 +76,10 @@ BOOST_AUTO_TEST_CASE(test_case)
         matches<syntax<box<double> >, syntax<char> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_first_matches");
+  ));
 
-  meta_require<
+  // test_second_matches
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<float>,
       case_< box<int>,
@@ -85,9 +87,10 @@ BOOST_AUTO_TEST_CASE(test_case)
         matches<syntax<box<int> >, syntax<float> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_second_matches");
+  ));
 
-  meta_require<
+  // test_vars_in_pattern
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<some_other_template<int, double> >,
       case_< some_template<int, double>,
@@ -96,9 +99,10 @@ BOOST_AUTO_TEST_CASE(test_case)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_vars_in_pattern");
+  ));
 
-  meta_require<
+  // test_nested_case
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<case_< int2, matches_c<y, boost::mpl::plus<int11, y> > > >,
       case_< int11,
@@ -111,14 +115,15 @@ BOOST_AUTO_TEST_CASE(test_case)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_nested_case");
+  ));
 
-  meta_require<
+  // test_matches_in_let
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<matches_c<some_template<int11, int13>, int11> >,
       let_c<x, int11, matches_c<some_template<x, int13>, x> >::type
     >
-  >(MPLLIBS_HERE, "test_matches_in_let");
+  ));
 }
 
 

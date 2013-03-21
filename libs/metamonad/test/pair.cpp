@@ -10,18 +10,16 @@
 #include <mpllibs/metamonad/second.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/pair.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
 BOOST_AUTO_TEST_CASE(test_pair)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::equal_to;
   
   using mpllibs::metamonad::pair;
@@ -32,24 +30,24 @@ BOOST_AUTO_TEST_CASE(test_pair)
   typedef returns<int11> returns11;
   typedef returns<int13> returns13;
 
-  meta_require<
-    equal_to<int11, first<pair<returns11, returns13> >::type>
-  >(MPLLIBS_HERE, "test_first");
+  // test_first
+  BOOST_MPL_ASSERT((equal_to<int11, first<pair<returns11, returns13> >::type>));
 
-  meta_require<
-    equal_to<int13, second<pair<returns11, returns13> >::type>
-  >(MPLLIBS_HERE, "test_second");
+  // test_second
+  BOOST_MPL_ASSERT((equal_to<int13, second<pair<returns11,returns13> >::type>));
 
-  meta_require<
+  // test_currying1
+  BOOST_MPL_ASSERT((
     equal_to<int11, first<pair<returns11>::type::apply<returns13> >::type>
-  >(MPLLIBS_HERE, "test_currying1");
+  ));
 
-  meta_require<
+  // test_currying2
+  BOOST_MPL_ASSERT((
     equal_to<
       int11,
       first<pair<>::type::apply<returns11>::type::apply<returns13> >::type
     >
-  >(MPLLIBS_HERE, "test_currying2");
+  ));
 }
 
 

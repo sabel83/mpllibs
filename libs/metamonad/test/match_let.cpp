@@ -13,10 +13,11 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/box.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits.hpp>
+
+#include <boost/mpl/assert.hpp>
 
 using mpllibs::metamonad::tmp_value;
 
@@ -31,8 +32,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_match_let)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::match_let;
   using mpllibs::metamonad::var;
   using mpllibs::metamonad::eval_case;
@@ -46,21 +45,24 @@ BOOST_AUTO_TEST_CASE(test_match_let)
 
   using namespace mpllibs::metamonad::name;
 
-  meta_require<
+  // test_setting_value
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<box<int> >,
       match_let<syntax<x>, returns<box<int> >, syntax<x> >::type
     >
-  >(MPLLIBS_HERE, "test_setting_value");
+  ));
 
-  meta_require<
+  // test_nothing_to_set
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<x>,
       match_let<syntax<box<int> >, returns<box<int> >, syntax<x> >::type
     >
-  >(MPLLIBS_HERE, "test_nothing_to_set");
+  ));
 
-  meta_require<
+  // test_multiple_variables
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<some_other_template<int, double> >,
       match_let<
@@ -69,9 +71,10 @@ BOOST_AUTO_TEST_CASE(test_match_let)
         syntax<some_other_template<x, y> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_multiple_variables");
+  ));
 
-  meta_require<
+  // test_case_in_match_let
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<
         eval_case<returns<box<int> >,
@@ -87,7 +90,7 @@ BOOST_AUTO_TEST_CASE(test_match_let)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_case_in_match_let");
+  ));
 }
 
 

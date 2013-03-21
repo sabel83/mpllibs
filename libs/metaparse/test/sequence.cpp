@@ -12,24 +12,18 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/vector_c.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_sequence)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::sequence;
   using mpllibs::metaparse::start;
@@ -42,52 +36,55 @@ BOOST_AUTO_TEST_CASE(test_sequence)
   using boost::mpl::at_c;
   using boost::mpl::vector_c;
 
-  meta_require<has_type<sequence<lit_h> > >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_no_parser
+  BOOST_MPL_ASSERT((
     equal<get_result<apply_wrap2<sequence<>, str_hello, start> >::type, list<> >
-  >(MPLLIBS_HERE, "test_no_parser");
+  ));
 
-  meta_require<
+  // test_one_parser
+  BOOST_MPL_ASSERT((
     equal<
       get_result<apply_wrap2<sequence<lit_h>, str_hello, start> >::type,
       vector_c<char, 'h'>
     >
-  >(MPLLIBS_HERE, "test_one_parser");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<sequence<lit_e>, str_hello, start> >
-  >(MPLLIBS_HERE, "test_one_failing_parser");
+  // test_one_failing_parser
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<sequence<lit_e>, str_hello, start> >));
   
-  meta_require<
+  // test_two_chars
+  BOOST_MPL_ASSERT((
     equal<
       get_result<apply_wrap2<sequence<lit_h, lit_e>, str_hello, start> >::type,
       vector_c<char, 'h', 'e'>
     >
-  >(MPLLIBS_HERE, "test_two_chars");
+  ));
 
-  meta_require<
+  // test_first_fails
+  BOOST_MPL_ASSERT((
     is_error<apply_wrap2<sequence<lit_x, lit_e>, str_hello, start> >
-  >(MPLLIBS_HERE, "test_first_fails");
+  ));
 
-  meta_require<
+  // test_second_fails
+  BOOST_MPL_ASSERT((
     is_error<apply_wrap2<sequence<lit_h, lit_x>, str_hello, start> >
-  >(MPLLIBS_HERE, "test_second_fails");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<sequence<lit_h, lit_e>, str_, start> >
-  >(MPLLIBS_HERE, "test_empty_input");
+  // test_empty_input
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<sequence<lit_h,lit_e>, str_,start> >));
 
-  meta_require<
+  // test_three_chars
+  BOOST_MPL_ASSERT((
     equal<
       get_result<
         apply_wrap2<sequence<lit_h, lit_e, lit_l>, str_hello, start>
       >::type,
       vector_c<char, 'h', 'e', 'l'>
     >
-  >(MPLLIBS_HERE, "test_three_chars");
+  ));
 
-  meta_require<
+  // test_indexing_in_result
+  BOOST_MPL_ASSERT((
     equal_to<
       at_c<
         get_result<
@@ -97,7 +94,7 @@ BOOST_AUTO_TEST_CASE(test_sequence)
       >::type,
       char_e
     >
-  >(MPLLIBS_HERE, "test_indexing_in_result");
+  ));
 }
 
 

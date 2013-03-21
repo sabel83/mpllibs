@@ -12,13 +12,13 @@
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/make_tmp_value.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/quote.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
@@ -35,8 +35,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_reader)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::reader_tag;
   using mpllibs::metamonad::monad;
   using mpllibs::metamonad::make_tmp_value;
@@ -49,11 +47,12 @@ BOOST_AUTO_TEST_CASE(test_reader)
   typedef int_<22> int22;
   typedef apply<monad<reader_tag>::return_, int11>::type return11;
 
-  meta_require<
+  BOOST_MPL_ASSERT((
     equal_to<int11, apply<return11, int13>::type>
-  >(MPLLIBS_HERE, "test_return");
+  ));
+  // test_return
   
-  meta_require<
+  BOOST_MPL_ASSERT((
     equal_to<
       int22,
       apply<
@@ -65,7 +64,8 @@ BOOST_AUTO_TEST_CASE(test_reader)
         int11
       >::type
     >
-  >(MPLLIBS_HERE, "test_bind");
+  ));
+  // test_bind
 }
 
 

@@ -13,20 +13,14 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_lit)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::is_error;
@@ -36,21 +30,19 @@ BOOST_AUTO_TEST_CASE(test_lit)
   using boost::mpl::equal_to;
   using boost::mpl::apply_wrap2;
 
-  meta_require<has_type<lit_h> >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_accept
+  BOOST_MPL_ASSERT((
     equal_to<get_result<apply_wrap2<lit_h, str_hello, start> >::type, char_h>
-  >(MPLLIBS_HERE, "test_accept");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<lit_h, str_bello, start> >
-  >(MPLLIBS_HERE, "test_reject");
+  // test_reject
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<lit_h, str_bello, start> >));
 
-  meta_require<
-    is_error<apply_wrap2<lit_h, str_, start> >
-  >(MPLLIBS_HERE, "test_with_empty_string");
+  // test_with_empty_string
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<lit_h, str_, start> >));
 
-  meta_require<
+  // test_remaining_string
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<
@@ -61,7 +53,7 @@ BOOST_AUTO_TEST_CASE(test_lit)
       >::type,
       char_e
     >
-  >(MPLLIBS_HERE, "test_remaining_string");
+  ));
 }
 
 

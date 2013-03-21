@@ -10,17 +10,15 @@
 #include <mpllibs/metamonad/mzero.hpp>
 #include <mpllibs/metamonad/mplus.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
 
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/assert.hpp>
 
 BOOST_AUTO_TEST_CASE(test_list_monad_plus)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::list_tag;
   using mpllibs::metamonad::mplus;
   using mpllibs::metamonad::mzero;
@@ -30,22 +28,25 @@ BOOST_AUTO_TEST_CASE(test_list_monad_plus)
   
   typedef mzero<list_tag>::type zero;
 
-  meta_require<equal<zero, list<> > >(MPLLIBS_HERE, "test mzero");
+  // test mzero
+  BOOST_MPL_ASSERT((equal<zero, list<> >));
 
-  meta_require<
-    equal<zero, mplus<list_tag, zero, zero>::type>
-  >(MPLLIBS_HERE, "test mzero + mzero");
+  // test mzero + mzero
+  BOOST_MPL_ASSERT((equal<zero, mplus<list_tag, zero, zero>::type>));
 
-  meta_require<
+  // test mzero + x
+  BOOST_MPL_ASSERT((
     equal<list<int13>, mplus<list_tag, zero, list<int13> >::type>
-  >(MPLLIBS_HERE, "test mzero + x");
+  ));
 
-  meta_require<
+  // test x + mzero
+  BOOST_MPL_ASSERT((
     equal<list<int13>, mplus<list_tag, list<int13>, zero>::type>
-  >(MPLLIBS_HERE, "test x + mzero");
+  ));
 
-  meta_require<
+  // test x + y
+  BOOST_MPL_ASSERT((
     equal<list<int11, int13>, mplus<list_tag, list<int11>, list<int13> >::type>
-  >(MPLLIBS_HERE, "test x + y");
+  ));
 }
 

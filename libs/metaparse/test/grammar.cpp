@@ -12,7 +12,6 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
@@ -20,6 +19,7 @@
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/char.hpp>
+#include <boost/mpl/assert.hpp>
 
 using boost::mpl::char_;
 
@@ -39,9 +39,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_grammar)
 {
-  using mpllibs::metatest::has_type;
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metaparse::grammar;
   using mpllibs::metaparse::lit_c;
   using mpllibs::metaparse::get_result;
@@ -54,11 +51,8 @@ BOOST_AUTO_TEST_CASE(test_grammar)
   using boost::mpl::equal;
   using boost::mpl::vector;
 
-  meta_require<
-    has_type<grammar<> >
-  >(MPLLIBS_HERE, "grammar_has_type");
-
-  meta_require<
+  // import
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'x'>,
       get_result<
@@ -70,9 +64,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "import");
+  ));
 
-  meta_require<
+  // rename_import
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'x'>,
       get_result<
@@ -85,9 +80,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "rename_import");
+  ));
 
-  meta_require<
+  // char
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'x'>,
       get_result<
@@ -99,9 +95,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "char");
+  ));
 
-  meta_require<
+  // char_failure
+  BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<
         grammar<>
@@ -110,9 +107,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         start
       >
     >
-  >(MPLLIBS_HERE, "char_failure");
+  ));
 
-  meta_require<
+  // char_n
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'\n'>,
       get_result<
@@ -124,9 +122,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "char_n");
+  ));
 
-  meta_require<
+  // char_r
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'\r'>,
       get_result<
@@ -138,9 +137,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "char_r");
+  ));
 
-  meta_require<
+  // char_t
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'\t'>,
       get_result<
@@ -152,9 +152,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "char_t");
+  ));
 
-  meta_require<
+  // backslash 
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'\\'>,
       get_result<
@@ -166,9 +167,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "char_\\");
+  ));
 
-  meta_require<
+  // char_\'
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'\''>,
       get_result<
@@ -180,9 +182,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "char_\'");
+  ));
 
-  meta_require<
+  // rename_rule
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'x'>,
       get_result<
@@ -195,9 +198,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "rename_rule");
+  ));
 
-  meta_require<
+  // sequence
+  BOOST_MPL_ASSERT((
     equal<
       vector<char_<'x'>, char_<'x'> >,
       get_result<
@@ -210,9 +214,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "sequence");
+  ));
 
-  meta_require<
+  // sequence_first_fail
+  BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<
         grammar<>
@@ -222,9 +227,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         start
       >
     >
-  >(MPLLIBS_HERE, "sequence_first_fail");
+  ));
 
-  meta_require<
+  // sequence_second_fail
+  BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<
         grammar<>
@@ -234,9 +240,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         start
       >
     >
-  >(MPLLIBS_HERE, "sequence_second_fail");
+  ));
 
-  meta_require<
+  // selection 1
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'x'>,
       get_result<
@@ -250,9 +257,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "selection 1");
+  ));
 
-  meta_require<
+  // selection 2
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'y'>,
       get_result<
@@ -266,9 +274,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "selection 2");
+  ));
 
-  meta_require<
+  // selection_fail
+  BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<
         grammar<>
@@ -279,9 +288,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         start
       >
     >
-  >(MPLLIBS_HERE, "selection_fail");
+  ));
 
-  meta_require<
+  // repeat_0
+  BOOST_MPL_ASSERT((
     equal<
       vector<>,
       get_result<
@@ -294,9 +304,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "repeat_0");
+  ));
 
-  meta_require<
+  // repeat_1
+  BOOST_MPL_ASSERT((
     equal<
       vector<char_<'x'> >,
       get_result<
@@ -309,9 +320,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "repeat_1");
+  ));
 
-  meta_require<
+  // repeat_2
+  BOOST_MPL_ASSERT((
     equal<
       vector<char_<'x'>, char_<'x'> >,
       get_result<
@@ -324,23 +336,27 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "repeat_2");
+  ));
 
-  meta_require<
+  // bracket
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'x'>,
       get_result<
         apply_wrap2<
           grammar<>
-            ::rule<string<'S',' ',':',':','=',' ','(','\'','x','\'',')'> >::type,
+            ::rule<
+              string<'S',' ',':',':','=',' ','(','\'','x','\'',')'>
+            >::type,
           string<'x'>,
           start
         >
       >::type
     >
-  >(MPLLIBS_HERE, "bracket");
+  ));
 
-  meta_require<
+  // semantic_action
+  BOOST_MPL_ASSERT((
     equal_to<
       char_<'y'>,
       get_result<
@@ -355,9 +371,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "semantic_action");
+  ));
 
-  meta_require<
+  // repeat+_0
+  BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<
         grammar<>
@@ -367,9 +384,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         start
       >
     >
-  >(MPLLIBS_HERE, "repeat+_0");
+  ));
 
-  meta_require<
+  // repeat+_1
+  BOOST_MPL_ASSERT((
     equal<
       vector<char_<'x'> >,
       get_result<
@@ -382,9 +400,10 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "repeat+_1");
+  ));
 
-  meta_require<
+  // repeat+_2
+  BOOST_MPL_ASSERT((
     equal<
       vector<char_<'x'>, char_<'x'> >,
       get_result<
@@ -397,7 +416,7 @@ BOOST_AUTO_TEST_CASE(test_grammar)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "repeat+_2");
+  ));
 }
 
 

@@ -11,21 +11,15 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 
 BOOST_AUTO_TEST_CASE(test_alphanum)
 {
-  using mpllibs::metatest::has_type;
-  using mpllibs::metatest::meta_require;
-  
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::alphanum;
   using mpllibs::metaparse::start;
@@ -38,22 +32,20 @@ BOOST_AUTO_TEST_CASE(test_alphanum)
 
   typedef list_c<char, '.', '.', ','> other_string;
   
-  meta_require<has_type<alphanum> >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_with_text
+  BOOST_MPL_ASSERT((
     equal_to<get_result<apply_wrap2<alphanum, str_hello, start> >::type, char_h>
-  >(MPLLIBS_HERE, "test_with_text");
+  ));
    
-  meta_require<
+  // test_with_number
+  BOOST_MPL_ASSERT((
     equal_to<get_result<apply_wrap2<digit, str_1983, start> >::type, char_1>
-  >(MPLLIBS_HERE, "test_with_number");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<digit, other_string, start> >
-  >(MPLLIBS_HERE, "test_with_non_alphanum");
+  // test_with_non_alphanum
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<digit, other_string, start> >));
 
-  meta_require<
-    is_error<apply_wrap2<digit, str_, start> >
-  >(MPLLIBS_HERE, "test_with_empty_string");
+  // test_with_empty_string
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<digit, str_, start> >));
 }
 

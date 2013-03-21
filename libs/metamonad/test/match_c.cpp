@@ -14,12 +14,12 @@
 #include <mpllibs/metamonad/eval_guard.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits.hpp>
 
 #include <boost/mpl/map.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 #include "same_map.hpp"
@@ -35,8 +35,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_match_c)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::match_c;
   using mpllibs::metamonad::_;
   using mpllibs::metamonad::var;
@@ -52,35 +50,37 @@ BOOST_AUTO_TEST_CASE(test_match_c)
 
   using boost::is_same;
 
-  meta_require<
-    is_empty<match_c<_, box<int> > >
-  >(MPLLIBS_HERE, "test_match_any");
+  // test_match_any
+  BOOST_MPL_ASSERT((is_empty<match_c<_, box<int> > >));
 
-  meta_require<
+  // test_no_match
+  BOOST_MPL_ASSERT((
     is_same<
       exception<bad_match<box<double>, box<int> > >,
       match_c<box<double>, box<int> >::type
     >
-  >(MPLLIBS_HERE, "test_no_match");
+  ));
 
-  meta_require<
-    is_empty<match_c<box<int>, box<int> > >
-  >(MPLLIBS_HERE, "test_match_same_type");
+  // test_match_same_type
+  BOOST_MPL_ASSERT((is_empty<match_c<box<int>, box<int> > >));
 
-  meta_require<
+  // test_match_var
+  BOOST_MPL_ASSERT((
     same_map<map<pair<x, syntax<int13> > >, match_c<x, int13>::type>
-  >(MPLLIBS_HERE, "test_match_var");
+  ));
 
-  meta_require<
+  // test_nested_match_any
+  BOOST_MPL_ASSERT((
     is_empty<
       match_c<
         some_template<_, box<int>, box<double> >,
         some_template<box<char>, box<int>, box<double> >
       >
     >
-  >(MPLLIBS_HERE, "test_nested_match_any");
+  ));
 
-  meta_require<
+  // test_bad_nested_match
+  BOOST_MPL_ASSERT((
     is_same<
       exception<bad_match<box<int>, box<char> > >,
       match_c<
@@ -88,9 +88,10 @@ BOOST_AUTO_TEST_CASE(test_match_c)
         some_template<box<char>, box<int>, box<double> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_bad_nested_match");
+  ));
 
-  meta_require<
+  // test_match_nested_var
+  BOOST_MPL_ASSERT((
     same_map<
       map<pair<x, syntax<int13> > >,
       match_c<
@@ -98,9 +99,10 @@ BOOST_AUTO_TEST_CASE(test_match_c)
         some_template<box<int>, box<double>, int13>
       >::type
     >
-  >(MPLLIBS_HERE, "test_match_nested_var");
+  ));
 
-  meta_require<
+  // test_match_nested_var_twice
+  BOOST_MPL_ASSERT((
     same_map<
       map<pair<x, syntax<int13> > >,
       match_c<
@@ -108,9 +110,10 @@ BOOST_AUTO_TEST_CASE(test_match_c)
         some_template<int13, box<double>, int13>
       >::type
     >
-  >(MPLLIBS_HERE, "test_match_nested_var_twice");
+  ));
 
-  meta_require<
+  // test_nested_var_twice_doesnt_match
+  BOOST_MPL_ASSERT((
     is_same<
       exception<bad_match<x, syntax<box<double> > > >,
       match_c<
@@ -118,9 +121,10 @@ BOOST_AUTO_TEST_CASE(test_match_c)
         some_template<box<char>, box<int>, box<double> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_nested_var_twice_doesnt_match");
+  ));
 
-  meta_require<
+  // test_two_vars
+  BOOST_MPL_ASSERT((
     same_map<
       map<pair<x, syntax<int13> >, pair<y, syntax<int11> > >,
       match_c<
@@ -128,21 +132,23 @@ BOOST_AUTO_TEST_CASE(test_match_c)
         some_template<int11, box<double>, int13>
       >::type
     >
-  >(MPLLIBS_HERE, "test_two_vars");
+  ));
 
-  meta_require<
+  // test_match_with_na_template_argument
+  BOOST_MPL_ASSERT((
     same_map<
       map<pair<x, syntax<na> > >,
       match_c<some_template<x, _, _>, some_template<na, na, na> >::type
     >
-  >(MPLLIBS_HERE, "test_match_with_na_template_argument");
+  ));
 
-  meta_require<
+  // test_match_with_eval_guard
+  BOOST_MPL_ASSERT((
     same_map<
       map<pair<x, syntax<int13> > >,
       match_c<eval_guard<x>, eval_guard<int13> >::type
     >
-  >(MPLLIBS_HERE, "test_match_with_eval_guard");
+  ));
 }
 
 

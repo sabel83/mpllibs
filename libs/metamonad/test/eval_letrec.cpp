@@ -9,19 +9,17 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
 
 BOOST_AUTO_TEST_CASE(test_eval_letrec)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::equal_to;
   using boost::mpl::plus;
   
@@ -29,12 +27,13 @@ BOOST_AUTO_TEST_CASE(test_eval_letrec)
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::syntax;
 
-  meta_require<
+  // test_evaluation_of_expression
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       eval_letrec<x, syntax<int11>, syntax<lazy<plus<int2, x> > > >::type
     >
-  >(MPLLIBS_HERE, "test_evaluation_of_expression");
+  ));
 }
 
 

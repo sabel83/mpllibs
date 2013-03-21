@@ -7,10 +7,11 @@
 
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits/is_same.hpp>
+
+#include <boost/mpl/assert.hpp>
 
 namespace
 {
@@ -19,13 +20,11 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_returns)
 {
-  using mpllibs::metatest::meta_require;
   using mpllibs::metamonad::returns;
   using boost::is_same;
 
-  meta_require<
-    is_same<has_no_type, returns<has_no_type>::type>
-  >(MPLLIBS_HERE, "test_returns");
+  // test_returns
+  BOOST_MPL_ASSERT((is_same<has_no_type, returns<has_no_type>::type>));
 }
 
 

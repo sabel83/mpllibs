@@ -10,7 +10,6 @@
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/int.hpp>
@@ -18,6 +17,7 @@
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
@@ -25,8 +25,6 @@
 
 BOOST_AUTO_TEST_CASE(test_exception)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::is_same;
   
   using boost::mpl::equal_to;
@@ -49,24 +47,26 @@ BOOST_AUTO_TEST_CASE(test_exception)
 
   typedef exception<int13> e;
 
-  meta_require<
+  // test_monadic_no_exception
+  BOOST_MPL_ASSERT((
     equal_to<
       int13,
       do_c<exception_monad,
         do_return<int13>
       >::type
     >
-  >(MPLLIBS_HERE, "test_monadic_no_exception");
+  ));
 
-  meta_require<
+  // test_monadic_exception
+  BOOST_MPL_ASSERT((
     equal_to<
       exception<int13>,
       do_c<exception_monad, apply_wrap1<lambda_c<_, e>, int> >::type
     >
-  >(MPLLIBS_HERE, "test_monadic_exception");
+  ));
 
-
-  meta_require<
+  // test_exception_propagation
+  BOOST_MPL_ASSERT((
     equal_to<
       exception<int13>,
       do_c<exception_monad,
@@ -74,23 +74,23 @@ BOOST_AUTO_TEST_CASE(test_exception)
         do_return<int13>
       >::type
     >
-  >(MPLLIBS_HERE, "test_exception_propagation");
+  ));
 
+  // test_return_value
+  BOOST_MPL_ASSERT((is_same<int13, return_<exception_monad, int13>::type>));
 
-  meta_require<
-    is_same<int13, return_<exception_monad, int13>::type>
-  >(MPLLIBS_HERE, "test_return_value");
-
-  meta_require<
+  // test_return_with_1_element_do
+  BOOST_MPL_ASSERT((
     is_same<
       int11,
       do_c<exception_monad,
         do_return<int11>
       >::type
     >
-  >(MPLLIBS_HERE, "test_return_with_1_element_do");
+  ));
 
-  meta_require<
+  // test_execution_sequence
+  BOOST_MPL_ASSERT((
     equal_to<
       int11,
       do_c<exception_monad,
@@ -98,9 +98,10 @@ BOOST_AUTO_TEST_CASE(test_exception)
         do_return<int11>
       >::type
     >
-  >(MPLLIBS_HERE, "test_execution_sequence");
+  ));
   
-  meta_require<
+  // test_exception_in_set
+  BOOST_MPL_ASSERT((
     equal_to<
       exception<int13>,
       do_c<exception_monad,
@@ -108,14 +109,12 @@ BOOST_AUTO_TEST_CASE(test_exception)
         do_return<int13>
       >::type
     >
-  >(MPLLIBS_HERE, "test_exception_in_set");
+  ));
 
-  meta_require<
-    equal_to<exception<int13>, exception<int13> >
-  >(MPLLIBS_HERE, "test_compare_equal_exceptions");
+  // test_compare_equal_exceptions
+  BOOST_MPL_ASSERT((equal_to<exception<int13>, exception<int13> >));
 
-  meta_require<
-    not_<equal_to<exception<int11>, exception<int13> > >
-  >(MPLLIBS_HERE, "test_compare_not_equal_exceptions");
+  // test_compare_not_equal_exceptions
+  BOOST_MPL_ASSERT((not_<equal_to<exception<int11>, exception<int13> > >));
 }
 

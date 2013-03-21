@@ -12,7 +12,6 @@
 
 #include <mpllibs/metamonad/mconcat.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
@@ -22,6 +21,7 @@
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/apply.hpp>
+#include <boost/mpl/assert.hpp>
 
 
 using boost::mpl::_1;
@@ -62,8 +62,6 @@ namespace mpllibs
 
 BOOST_AUTO_TEST_CASE(test_monoid)
 {  
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::mconcat;
 
   using boost::mpl::equal_to;
@@ -71,13 +69,15 @@ BOOST_AUTO_TEST_CASE(test_monoid)
   using boost::mpl::apply;
   using boost::mpl::int_;
 
-  meta_require<
+  // test_concat_plus
+  BOOST_MPL_ASSERT((
     equal_to<int13, mconcat<plus_tag, list_c<int, 1, 2, 3, 4, 3> >::type>
-  >(MPLLIBS_HERE, "test_concat_plus");
+  ));
 
-  meta_require<
+  // test_concat_mult
+  BOOST_MPL_ASSERT((
     equal_to<int_<72>, mconcat<mult_tag, list_c<int, 1, 2, 3, 4, 3> >::type>
-  >(MPLLIBS_HERE, "test_concat_mult");
+  ));
 }
 
 

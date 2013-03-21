@@ -10,7 +10,6 @@
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/if.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/int.hpp>
@@ -19,6 +18,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
 using boost::mpl::int_;
 using boost::mpl::minus;
@@ -48,30 +48,27 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_metafunction)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::apply_wrap1;
   using boost::mpl::apply_wrap2;
 
-  meta_require<
-    equal_to<int_<6>, double_value<int_<3> >::type>
-  >(MPLLIBS_HERE, "test_metafunction");
+  // test_metafunction
+  BOOST_MPL_ASSERT((equal_to<int_<6>, double_value<int_<3> >::type>));
 
-  meta_require<
-    equal_to<int_<6>, mult<int_<2>, int_<3> >::type>
-  >(MPLLIBS_HERE, "test_metafunction_with_two_arguments");
+  // test_metafunction_with_two_arguments
+  BOOST_MPL_ASSERT((equal_to<int_<6>, mult<int_<2>, int_<3> >::type>));
 
-  meta_require<
+  // test_currying
+  BOOST_MPL_ASSERT((
     equal_to<int_<6>, apply_wrap1<mult<int_<2> >::type, int_<3> >::type>
-  >(MPLLIBS_HERE, "test_currying");
+  ));
 
-  meta_require<
+  // test_using_metafunction_as_metafunction_class
+  BOOST_MPL_ASSERT((
     equal_to<int_<6>, apply_wrap2<mult<>, int_<2>, int_<3> >::type>
-  >(MPLLIBS_HERE, "test_using_metafunction_as_metafunction_class");
+  ));
 
-  meta_require<
-    equal_to<int_<6>, fact<int_<3> >::type>
-  >(MPLLIBS_HERE, "test_rec_metafunction");
+  // test_rec_metafunction
+  BOOST_MPL_ASSERT((equal_to<int_<6>, fact<int_<3> >::type>));
 }
 
 

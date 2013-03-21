@@ -6,8 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
@@ -67,14 +65,6 @@ namespace
 
   typedef boost::mpl::divides<int1, int0> breaking_expr;
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, double_value, "double_value")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, lazy_double_value, "lazy_double_value")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, lazy_plus, "lazy_plus")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, double_lazy_plus, "double_lazy_plus")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, lazy_times, "lazy_times")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, lazy_equal_to, "lazy_equal_to")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, lazy_apply, "lazy_apply")
 
 #endif
 

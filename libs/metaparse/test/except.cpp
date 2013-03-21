@@ -14,19 +14,14 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_except)
 {
-  using mpllibs::metatest::has_type;
-  using mpllibs::metatest::meta_require;
-  
   using mpllibs::metaparse::is_error;
   using mpllibs::metaparse::except;
   using mpllibs::metaparse::one_char;
@@ -40,17 +35,15 @@ BOOST_AUTO_TEST_CASE(test_except)
 
   typedef string<'fail'> test_error_msg;
 
-  meta_require<
-    has_type<except<one_char, int13, test_error_msg> >
-  >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_with_good
+  BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<except<one_char, int13, test_error_msg>, str_hello, start>
     >
-  >(MPLLIBS_HERE, "test_with_good");
+  ));
   
-  meta_require<
+  // test_with_bad
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<
@@ -61,7 +54,7 @@ BOOST_AUTO_TEST_CASE(test_except)
       >::type,
       int13
     >
-  >(MPLLIBS_HERE, "test_with_bad");
+  ));
 }
 
 

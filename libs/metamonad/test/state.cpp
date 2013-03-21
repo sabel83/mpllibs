@@ -12,13 +12,13 @@
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/quote.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
@@ -39,8 +39,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_state)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::state_tag;
   using mpllibs::metamonad::monad;
 
@@ -53,15 +51,14 @@ BOOST_AUTO_TEST_CASE(test_state)
   typedef int_<14> int14;
   typedef apply<monad<state_tag>::return_, int11>::type return11;
   
-  meta_require<
-    equal_to<int11, apply<return11, int13>::type::first>
-  >(MPLLIBS_HERE, "test_return_value");
+  // test_return_value
+  BOOST_MPL_ASSERT((equal_to<int11, apply<return11, int13>::type::first>));
   
-  meta_require<
-    equal_to<int13, apply<return11, int13>::type::second>
-  >(MPLLIBS_HERE, "test_return_state");
+  // test_return_state
+  BOOST_MPL_ASSERT((equal_to<int13, apply<return11, int13>::type::second>));
 
-  meta_require<
+  // test_bind_value
+  BOOST_MPL_ASSERT((
     equal_to<
       int24,
       apply<
@@ -69,9 +66,10 @@ BOOST_AUTO_TEST_CASE(test_state)
         int1
       >::type::first
     >
-  >(MPLLIBS_HERE, "test_bind_value");
+  ));
 
-  meta_require<
+  // test_bind_state
+  BOOST_MPL_ASSERT((
     equal_to<
       int14,
       apply<
@@ -79,7 +77,7 @@ BOOST_AUTO_TEST_CASE(test_state)
         int1
       >::type::second
     >
-  >(MPLLIBS_HERE, "test_bind_state");
+  ));
 }
 
 

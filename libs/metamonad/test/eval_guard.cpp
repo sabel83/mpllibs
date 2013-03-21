@@ -8,17 +8,16 @@
 #include <mpllibs/metamonad/eval_guard.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits.hpp>
+
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
 BOOST_AUTO_TEST_CASE(test_eval_guard)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::eval_guard;
   using mpllibs::metamonad::lazy;
 
@@ -26,13 +25,11 @@ BOOST_AUTO_TEST_CASE(test_eval_guard)
 
   using namespace mpllibs::metamonad::name;
 
-  meta_require<
-    is_same<eval_guard<int>, eval_guard<int>::type>
-  >(MPLLIBS_HERE, "test_eval_guard_as_nullary_metafunction");
+  // test_eval_guard_as_nullary_metafunction
+  BOOST_MPL_ASSERT((is_same<eval_guard<int>, eval_guard<int>::type>));
 
-  meta_require<
-    is_same<eval_guard<int>, lazy<eval_guard<int> >::type>
-  >(MPLLIBS_HERE, "test_lazy");
+  // test_lazy
+  BOOST_MPL_ASSERT((is_same<eval_guard<int>, lazy<eval_guard<int> >::type>));
 }
 
 

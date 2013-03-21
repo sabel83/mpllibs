@@ -10,53 +10,43 @@
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/vector.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_join)
 {
-  using mpllibs::metatest::meta_require;
-  
   using mpllibs::metaparse::util::join_string;
   
   using boost::mpl::equal;
   using boost::mpl::string;
   using boost::mpl::vector;
 
-  meta_require<equal<string<>, join_string<vector<> >::type> >(
-    MPLLIBS_HERE,
-    "test_empty"
-  );
+  // test_empty
+  BOOST_MPL_ASSERT((equal<string<>, join_string<vector<> >::type>));
 
-  meta_require<
+  // test_single
+  BOOST_MPL_ASSERT((
     equal<
       string<'abc'>,
       join_string<vector<string<'abc'> > >::type
     >
-  >(
-    MPLLIBS_HERE,
-    "test_single"
-  );
+  ));
 
-  meta_require<
+  // test_two
+  BOOST_MPL_ASSERT((
     equal<
       string<'abcd', 'ef'>,
       join_string<vector<string<'abc'>, string<'def'> > >::type
     >
-  >(
-    MPLLIBS_HERE,
-    "test_two"
-  );
+  ));
 
-  meta_require<
+  // test_three
+  BOOST_MPL_ASSERT((
     equal<
       string<'abcd', 'efgh'>,
       join_string<vector<string<'abc'>, string<'def'>, string<'gh'> > >::type
     >
-  >(
-    MPLLIBS_HERE,
-    "test_three"
-  );
+  ));
 }
 

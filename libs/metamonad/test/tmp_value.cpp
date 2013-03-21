@@ -7,10 +7,11 @@
 
 #include <mpllibs/metamonad/tmp_value.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits/is_same.hpp>
+
+#include <boost/mpl/assert.hpp>
 
 namespace
 {
@@ -25,21 +26,17 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_tmp_value)
 {
-  using mpllibs::metatest::meta_require;
   using mpllibs::metamonad::tmp_value;
   using boost::is_same;
 
-  meta_require<
-    is_same<test_value, test_value::type>
-  >(MPLLIBS_HERE, "test_value_becomes_nullary_metafunction");
+  // test_value_becomes_nullary_metafunction
+  BOOST_MPL_ASSERT((is_same<test_value, test_value::type>));
 
-  meta_require<
-    is_same<test_value_with_tag, test_value_with_tag::type>
-  >(MPLLIBS_HERE, "test_value_with_tag_becomes_nullary_metafunction");
+  // test_value_with_tag_becomes_nullary_metafunction
+  BOOST_MPL_ASSERT((is_same<test_value_with_tag, test_value_with_tag::type>));
 
-  meta_require<
-    is_same<test_tag, test_value_with_tag::tag>
-  >(MPLLIBS_HERE, "test_value_with_tag_has_tag");
+  // test_value_with_tag_has_tag
+  BOOST_MPL_ASSERT((is_same<test_tag, test_value_with_tag::tag>));
 }
 
 

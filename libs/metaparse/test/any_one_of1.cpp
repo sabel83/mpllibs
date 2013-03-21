@@ -15,24 +15,18 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_any_one_of1)
 {
-  using mpllibs::metatest::has_type;
-  using mpllibs::metatest::meta_require;
-  
   using mpllibs::metaparse::fail;
   using mpllibs::metaparse::is_error;
   using mpllibs::metaparse::any_one_of1;
@@ -47,50 +41,50 @@ BOOST_AUTO_TEST_CASE(test_any_one_of1)
   using boost::mpl::string;
   using boost::mpl::vector_c;
   
-  meta_require<
-    has_type<any_one_of1<one_char> >
-  >(MPLLIBS_HERE, "test_has_type");
-
   typedef fail<string<'fail'> > test_fail;
 
-  meta_require<
-    is_error<apply_wrap2<any_one_of1< >, str_hello, start> >
-  >(MPLLIBS_HERE, "test0");
+  // test0
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<any_one_of1< >, str_hello, start> >));
   
-  meta_require<
+  // test_good_sequence
+  BOOST_MPL_ASSERT((
     equal<
       get_result<apply_wrap2<any_one_of1<one_char>, str_hello, start> >::type,
       vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
-  >(MPLLIBS_HERE, "test_good_sequence");
+  ));
 
-  meta_require<
+  // test_1_with_bad
+  BOOST_MPL_ASSERT((
     is_error<apply_wrap2<any_one_of1<test_fail>, str_hello, start> >
-  >(MPLLIBS_HERE, "test_1_with_bad");
+  ));
 
-  meta_require<
+  // test_2_with_first_good
+  BOOST_MPL_ASSERT((
     equal<
       get_result<
         apply_wrap2<any_one_of1<one_char, test_fail>, str_hello, start>
       >::type,
       vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
-  >(MPLLIBS_HERE, "test_2_with_first_good");
+  ));
 
-  meta_require<
+  // test_2_with_second_good
+  BOOST_MPL_ASSERT((
     equal<
       get_result<
         apply_wrap2<any_one_of1<test_fail, one_char>, str_hello, start>
       >::type,
       vector_c<char, 'h', 'e', 'l', 'l', 'o'>
     >
-  >(MPLLIBS_HERE, "test_2_with_second_good");
+  ));
 
   typedef keyword<str_h, char_h> keyword_h;
   typedef keyword<str_e, char_e> keyword_e;
   typedef keyword<str_l, char_l> keyword_l;
 
-  meta_require<
+  // test_accept_any_argument
+  BOOST_MPL_ASSERT((
     equal<
       get_result<
         apply_wrap2<
@@ -101,6 +95,6 @@ BOOST_AUTO_TEST_CASE(test_any_one_of1)
       >::type,
       list<char_h, char_e, char_l, char_l>
     >
-  >(MPLLIBS_HERE, "test_accept_any_argument");
+  ));
 }
 

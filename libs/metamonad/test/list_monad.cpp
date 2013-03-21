@@ -11,12 +11,12 @@
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
 
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/assert.hpp>
 
 using boost::mpl::list;
 
@@ -30,23 +30,21 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_list_monad)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::return_;
   using mpllibs::metamonad::bind;
   using mpllibs::metamonad::list_tag;
   
   using boost::mpl::equal;
   
-  meta_require<
-    equal<return_<list_tag, int13>, list<int13> >
-  >(MPLLIBS_HERE, "test_return");
+  // test_return
+  BOOST_MPL_ASSERT((equal<return_<list_tag, int13>, list<int13> >));
 
-  meta_require<
+  // test_bind
+  BOOST_MPL_ASSERT((
     equal<
       bind<list_tag, list<int13, int11>, twice>::type,
       list<int13, int13, int11, int11>
     >
-  >(MPLLIBS_HERE, "test_bind");
+  ));
 }
 

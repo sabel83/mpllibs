@@ -10,18 +10,16 @@
 #include <mpllibs/metamonad/let_c.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/not.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
 
 BOOST_AUTO_TEST_CASE(test_box)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::box;
   using mpllibs::metamonad::unbox;
   using mpllibs::metamonad::let_c;
@@ -33,32 +31,30 @@ BOOST_AUTO_TEST_CASE(test_box)
 
   using boost::is_same;
 
-  meta_require<
-    is_same<box<int>, box<int>::type>
-  >(MPLLIBS_HERE, "test_box_as_nullary_metafunction");
+  // test_box_as_nullary_metafunction
+  BOOST_MPL_ASSERT((is_same<box<int>, box<int>::type>));
 
-  meta_require<
-    is_same<int, unbox<box<int> >::type>
-  >(MPLLIBS_HERE, "test_unboxing");
+  // test_unboxing
+  BOOST_MPL_ASSERT((is_same<int, unbox<box<int> >::type>));
 
-  meta_require<
-    equal_to<box<int>, box<int> >
-  >(MPLLIBS_HERE, "test_equality");
+  // test_equality
+  BOOST_MPL_ASSERT((equal_to<box<int>, box<int> >));
 
-  meta_require<
-    not_<equal_to<box<int>, box<double> >::type>
-  >(MPLLIBS_HERE, "test_unequality");
+  // test_unequality
+  BOOST_MPL_ASSERT((not_<equal_to<box<int>, box<double> >::type>));
 
-  meta_require<
+  // test_let
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<box<var<int> > >,
       let_c<var<int>, double, box<var<int> > >::type
     >
-  >(MPLLIBS_HERE, "test_let");
+  ));
 
-  meta_require<
+  // test_let_with_boxed_value_as_variable
+  BOOST_MPL_ASSERT((
     is_same<syntax<double>, let_c<box<int>, double, box<int> >::type>
-  >(MPLLIBS_HERE, "test_let_with_boxed_value_as_variable");
+  ));
 }
 
 

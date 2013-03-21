@@ -11,13 +11,10 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -33,9 +30,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_return)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::get_remaining;
   using mpllibs::metaparse::get_position;
@@ -43,28 +37,25 @@ BOOST_AUTO_TEST_CASE(test_return)
   
   using boost::mpl::equal_to;
 
-  meta_require<has_type<return_x> >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_for_non_empty_string
+  BOOST_MPL_ASSERT((
     equal_to<get_result<apply_wrap2<return_x, str_hello, start> >::type, char_x>
-  >(MPLLIBS_HERE, "test_for_non_empty_string");
+  ));
 
-  meta_require<
+  // test_for_empty_string
+  BOOST_MPL_ASSERT((
     equal_to<get_result<apply_wrap2<return_x, str_, start> >::type, char_x>
-  >(MPLLIBS_HERE, "test_for_empty_string");
+  ));
 
  
-  meta_require<
-    equal_to<int1, get_result<acc>::type>
-  >(MPLLIBS_HERE, "test_get_result");
+  // test_get_result
+  BOOST_MPL_ASSERT((equal_to<int1, get_result<acc>::type>));
 
-  meta_require<
-    equal_to<int2, get_remaining<acc>::type>
-  >(MPLLIBS_HERE, "test_get_remaining");
+  // test_get_remaining
+  BOOST_MPL_ASSERT((equal_to<int2, get_remaining<acc>::type>));
 
-  meta_require<
-    equal_to<int3, get_position<acc>::type>
-  >(MPLLIBS_HERE, "test_get_position");
+  // test_get_position
+  BOOST_MPL_ASSERT((equal_to<int3, get_position<acc>::type>));
 }
 
 

@@ -11,17 +11,15 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/if.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "common.hpp"
 
 #include <boost/mpl/minus.hpp>
+#include <boost/mpl/assert.hpp>
 
 BOOST_AUTO_TEST_CASE(test_letrec)
 {
-  using mpllibs::metatest::meta_require;
-
   using boost::mpl::equal_to;
   using boost::mpl::minus;
   
@@ -34,27 +32,31 @@ BOOST_AUTO_TEST_CASE(test_letrec)
 
   // name is replaced with a nullary metafunction evaluating to the
   // substituted expression
-  meta_require<
+  // test_letrec_name
+  BOOST_MPL_ASSERT((
     equal_to<int13, eval_syntax<letrec<x, syntax<int13>, syntax<x> > >::type>
-  >(MPLLIBS_HERE, "test_letrec_name");
+  ));
 
-  meta_require<
+  // test_letrec_not_name
+  BOOST_MPL_ASSERT((
     equal_to<
       int11,
       eval_syntax<letrec<x, syntax<int13>, syntax<int11> > >::type
     >
-  >(MPLLIBS_HERE, "test_letrec_not_name");
+  ));
   
-  meta_require<
+  // test_template
+  BOOST_MPL_ASSERT((
     equal_to<
       int26,
       eval_syntax<
         letrec<x, syntax<int13>, syntax<lazy_double_value<x> > >
       >::type
     >
-  >(MPLLIBS_HERE, "test_template");
+  ));
 
-  meta_require<
+  // test_recursion
+  BOOST_MPL_ASSERT((
     equal_to<
       int24,
       eval_syntax<
@@ -74,16 +76,17 @@ BOOST_AUTO_TEST_CASE(test_letrec)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_recursion");
+  ));
 
-  meta_require<
+  // test_letrec_lazy
+  BOOST_MPL_ASSERT((
     equal_to<
       int11,
       eval_syntax<
         letrec<x, syntax<int2>, syntax<lazy<minus<int13, x> > > >
       >::type
     >
-  >(MPLLIBS_HERE, "test_letrec_lazy");
+  ));
 }
 
 

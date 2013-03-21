@@ -9,37 +9,26 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/not.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_util_is_letter)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::util::is_letter;
   
   using boost::mpl::apply_wrap1;
   using boost::mpl::not_;
 
-  meta_require<has_type<is_letter> >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
-    apply_wrap1<is_letter, char_k>
-  >(MPLLIBS_HERE, "test_lcase_letter");
+  // test_lcase_letter
+  BOOST_MPL_ASSERT((apply_wrap1<is_letter, char_k>));
   
-  meta_require<
-    apply_wrap1<is_letter, char_K>
-  >(MPLLIBS_HERE, "test_ucase_letter");
+  // test_ucase_letter
+  BOOST_MPL_ASSERT((apply_wrap1<is_letter, char_K>));
     
-  meta_require<
-    not_<apply_wrap1<is_letter, char_7> >
-  >(MPLLIBS_HERE, "test_not_letter");
+  // test_not_letter
+  BOOST_MPL_ASSERT((not_<apply_wrap1<is_letter, char_7> >));
 }
 

@@ -12,20 +12,14 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_if)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::if_;
   using mpllibs::metaparse::digit;
@@ -34,23 +28,21 @@ BOOST_AUTO_TEST_CASE(test_if)
   using boost::mpl::equal_to;
   using boost::mpl::apply_wrap2;
 
-  meta_require<
-    has_type<if_<digit, int11, int13> >
-  >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_true
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<if_<digit, int11, int13>, str_1, start> >::type,
       int11
     >
-  >(MPLLIBS_HERE, "test_true");
+  ));
     
-  meta_require<
+  // test_false
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<if_<digit, int11, int13>, str_a, start> >::type,
       int13
     >
-  >(MPLLIBS_HERE, "test_false");
+  ));
 }
 
 

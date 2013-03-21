@@ -9,7 +9,6 @@
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/type_traits.hpp>
@@ -17,6 +16,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/not.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <string>
 
@@ -43,8 +43,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_data)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::returns;
 
   using boost::is_same;
@@ -52,36 +50,31 @@ BOOST_AUTO_TEST_CASE(test_data)
   using boost::mpl::equal_to;
   using boost::mpl::int_;
 
-  meta_require<
-    is_same<con0, con0::type>
-  >(MPLLIBS_HERE, "test_type_of_nullary_constructor");
+  // test_type_of_nullary_constructor
+  BOOST_MPL_ASSERT((is_same<con0, con0::type>));
 
-  meta_require<
-    is_same<con1<int>, con1<returns<int> >::type>
-  >(MPLLIBS_HERE, "test_type_of_unary_constructor");
+  // test_type_of_unary_constructor
+  BOOST_MPL_ASSERT((is_same<con1<int>, con1<returns<int> >::type>));
 
-  meta_require<
-    equal_to<con1<int_<1> >, con1<int_<1> > >
-  >(MPLLIBS_HERE, "test_equality");
+  // test_equality
+  BOOST_MPL_ASSERT((equal_to<con1<int_<1> >, con1<int_<1> > >));
 
-  meta_require<
-    lazy_not<equal_to<con1<int_<1> >, con1<int_<2> > > >
-  >(MPLLIBS_HERE, "test_different_constructor_args");
+  // test_different_constructor_args
+  BOOST_MPL_ASSERT((lazy_not<equal_to<con1<int_<1> >, con1<int_<2> > > >));
 
-  meta_require<
-    lazy_not<equal_to<con1<int_<1> >, con2<int_<1> > > >
-  >(MPLLIBS_HERE, "test_different_constructors");
+  // test_different_constructors
+  BOOST_MPL_ASSERT((lazy_not<equal_to<con1<int_<1> >, con2<int_<1> > > >));
 
-  meta_require<
-    equal_to<con0, con0>
-  >(MPLLIBS_HERE, "test_nullary_constructor_equality");
+  // test_nullary_constructor_equality
+  BOOST_MPL_ASSERT((equal_to<con0, con0>));
 
-  meta_require<
+  // test_currying
+  BOOST_MPL_ASSERT((
     equal_to<
       con3<int11, int13>,
       con3<>::type::apply<int11>::type::apply<int13>
     >
-  >(MPLLIBS_HERE, "test_currying");
+  ));
 
   BOOST_CHECK_EQUAL("con0", con0::get_value());
   BOOST_CHECK_EQUAL("con0", con0::value);

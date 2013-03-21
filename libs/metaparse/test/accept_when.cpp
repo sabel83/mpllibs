@@ -14,20 +14,14 @@
 
 #include <mpllibs/metaparse/util/is_digit.hpp>
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_accept_when)
 {
-  using mpllibs::metatest::has_type;
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metaparse::is_error;
   using mpllibs::metaparse::accept_when;
   using mpllibs::metaparse::one_char;
@@ -43,11 +37,8 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
 
   typedef string<'fail'> test_error_msg;
 
-  meta_require<
-    has_type<accept_when<one_char, is_digit, test_error_msg> >
-  >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_with_text
+  BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<
         accept_when<one_char, is_digit, test_error_msg>,
@@ -55,9 +46,10 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
         start
       >
     >
-  >(MPLLIBS_HERE, "test_with_text");
+  ));
   
-  meta_require<
+  // test_with_number
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<
@@ -68,12 +60,13 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
       >::type,
       char_1
     >
-  >(MPLLIBS_HERE, "test_with_number");
+  ));
 
-  meta_require<
+  // test_with_empty_string
+  BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<accept_when<one_char, is_digit, test_error_msg>, str_, start>
     >
-  >(MPLLIBS_HERE, "test_with_empty_string");
+  ));
 }
 

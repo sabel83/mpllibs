@@ -7,54 +7,45 @@
 
 #include <mpllibs/safe_printf/verify_printf_arguments.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/not.hpp>
-
-namespace
-{
-  // lazy not
-  template <class T>
-  struct not_ : boost::mpl::not_<typename T::type> {};
-}
+#include <boost/mpl/assert.hpp> 
 
 BOOST_AUTO_TEST_CASE(test_verify_printf_arguments)
 {
-  using mpllibs::metatest::meta_require;
   using mpllibs::safe_printf::verify_printf_arguments;
 
   using boost::mpl::vector;
   using boost::mpl::string;
 
-  meta_require<
-    verify_printf_arguments<string<>, vector<> >
-  >(MPLLIBS_HERE, "Check empty format string");
+  // Check empty format string
+  BOOST_MPL_ASSERT((verify_printf_arguments<string<>, vector<> >));
 
-  meta_require<
-    verify_printf_arguments<string<'Hell','o'>, vector<> >
-  >(MPLLIBS_HERE, "Check format string with no placeholders");
+  // Check format string with no placeholders
+  BOOST_MPL_ASSERT((verify_printf_arguments<string<'Hell','o'>, vector<> >));
 
-  meta_require<
-    verify_printf_arguments<string<'%d'>, vector<int> >
-  >(MPLLIBS_HERE, "Check format string with one placeholder");
+  // Check format string with one placeholder
+  BOOST_MPL_ASSERT((verify_printf_arguments<string<'%d'>, vector<int> >));
 
-  meta_require<
+  // Check format string with two placeholders
+  BOOST_MPL_ASSERT((
     verify_printf_arguments<string<'%d  ', '%f'>, vector<int, double> >
-  >(MPLLIBS_HERE, "Check format string with two placeholders");
+  ));
 
-  meta_require<
-    not_<verify_printf_arguments<string<'%d'>, vector<int, double> > >
-  >(MPLLIBS_HERE, "Check format string with too few placeholders");
+  // Check format string with too few placeholders
+  BOOST_MPL_ASSERT_NOT((
+    verify_printf_arguments<string<'%d'>, vector<int, double> >
+  ));
 
-  meta_require<
-    not_<verify_printf_arguments<string<'%d ', '%f'>, vector<int> > >
-  >(MPLLIBS_HERE, "Check format string with too many placeholders");
+  // Check format string with too many placeholders
+  BOOST_MPL_ASSERT_NOT((
+    verify_printf_arguments<string<'%d ', '%f'>, vector<int> >
+  ));
 
-  meta_require<
-    not_<verify_printf_arguments<string<'%d'>, vector<double> > >
-  >(MPLLIBS_HERE, "Check format string with invalid placeholder");
+  // Check format string with invalid placeholder
+  BOOST_MPL_ASSERT_NOT((verify_printf_arguments<string<'%d'>,vector<double> >));
 }
 

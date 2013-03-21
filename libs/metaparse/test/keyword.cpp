@@ -13,14 +13,11 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -41,9 +38,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_keyword)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::is_error;
@@ -53,48 +47,47 @@ BOOST_AUTO_TEST_CASE(test_keyword)
   using boost::mpl::apply_wrap2;
   using boost::mpl::equal;
 
-  meta_require<has_type<keyword_hello> >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_result_type
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<
         apply_wrap2<keyword<str_hello, char_l>, str_hello, start>
       >::type,
       char_l
     >
-  >(MPLLIBS_HERE, "test_result_type");
+  ));
 
-  meta_require<
+  // test_empty_keyword
+  BOOST_MPL_ASSERT((
     equal_to<
       get_result<apply_wrap2<keyword<str_, char_l>, str_hello, start> >::type,
       char_l
     >
-  >(MPLLIBS_HERE, "test_empty_keyword");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<keyword_hello, str_, start> >
-  >(MPLLIBS_HERE, "test_empty_input");
+  // test_empty_input
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<keyword_hello, str_, start> >));
 
-  meta_require<
+  // test_itself
+  BOOST_MPL_ASSERT((
     equal<
       get_remaining<apply_wrap2<keyword_hello, str_hello, start> >::type,
       str_
     >
-  >(MPLLIBS_HERE, "test_itself");
+  ));
 
-  meta_require<
+  // test_more_than_itself
+  BOOST_MPL_ASSERT((
     equal<
       get_remaining<apply_wrap2<keyword_hello, str_hello_world, start> >::type,
       list_c<char, ' ', 'w', 'o', 'r', 'l', 'd'>
     >
-  >(MPLLIBS_HERE, "test_more_than_itself");
+  ));
 
-  meta_require<
-    is_error<apply_wrap2<keyword_hello, str_hellx, start> >
-  >(MPLLIBS_HERE, "test_no_match_at_end");
+  // test_no_match_at_end
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<keyword_hello, str_hellx, start> >));
 
-  meta_require<
-    is_error<apply_wrap2<keyword_hello, str_hxllo, start> >
-  >(MPLLIBS_HERE, "test_no_match_in_the_middle");
+  // test_no_match_in_the_middle
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<keyword_hello, str_hxllo, start> >));
 }
 

@@ -18,12 +18,12 @@
 #include <mpllibs/metamonad/either.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/tag.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
 
@@ -54,8 +54,6 @@ namespace
   template <class T>
   struct unwrap<wrapped<T> > : returns<T> {};
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, wrapped, "wrapped")
 
 namespace mpllibs
 {
@@ -92,8 +90,6 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_do)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::do_;
   using mpllibs::metamonad::let;
   using mpllibs::metamonad::eval_let;
@@ -110,7 +106,8 @@ BOOST_AUTO_TEST_CASE(test_do)
   typedef tag<int13>::type int_tag;
   typedef either_tag<int_tag, int_tag> either;
 
-  meta_require<
+  // test_do
+  BOOST_MPL_ASSERT((
     equal_to<
       right<int11>,
       do_<either,
@@ -118,9 +115,10 @@ BOOST_AUTO_TEST_CASE(test_do)
         syntax<minus_2<x> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_do");
+  ));
 
-  meta_require<
+  // test_do_three_steps
+  BOOST_MPL_ASSERT((
     equal_to<
       right<int9>,
       do_<either,
@@ -129,9 +127,10 @@ BOOST_AUTO_TEST_CASE(test_do)
         syntax<minus_2<y> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_do_three_steps");
+  ));
 
-  meta_require<
+  // test_do_two_calls
+  BOOST_MPL_ASSERT((
     equal_to<
       right<int9>,
       do_<either,
@@ -141,9 +140,10 @@ BOOST_AUTO_TEST_CASE(test_do)
         syntax<minus_2<y> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_do_two_calls");
+  ));
 
-  meta_require<
+  // test_do_two_returns
+  BOOST_MPL_ASSERT((
     equal_to<
       right<int13>,
       do_<either,
@@ -151,9 +151,10 @@ BOOST_AUTO_TEST_CASE(test_do)
         syntax<do_return<int13> >
       >::type
     >
-  >(MPLLIBS_HERE, "test_do_two_returns");
+  ));
 
-  meta_require<
+  // test_nested_do_with_return
+  BOOST_MPL_ASSERT((
     equal_to<
       right<right<int13> >,
       do_<either,
@@ -166,18 +167,20 @@ BOOST_AUTO_TEST_CASE(test_do)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_nested_do_with_return");
+  ));
 
-  meta_require<
+  // test_contents_of_return_is_substituted
+  BOOST_MPL_ASSERT((
     equal_to<
       right<right<int13> >,
       do_<either,
         syntax<do_return<do_return<int13> > >
       >::type
     >
-  >(MPLLIBS_HERE, "test_contents_of_return_is_substituted");
+  ));
 
-  meta_require<
+  // test_nested_do_with_different_monads
+  BOOST_MPL_ASSERT((
     equal_to<
       right<wrapped<int13> >,
       do_<either,
@@ -190,9 +193,10 @@ BOOST_AUTO_TEST_CASE(test_do)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_nested_do_with_different_monads");
+  ));
 
-  meta_require<
+  // test_set_in_let
+  BOOST_MPL_ASSERT((
     equal_to<
       right<int13>,
       eval_let<
@@ -205,9 +209,10 @@ BOOST_AUTO_TEST_CASE(test_do)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_set_in_let");
+  ));
 
-  meta_require<
+  // test_argument_of_set_and_do_in_let
+  BOOST_MPL_ASSERT((
     equal_to<
       right<int11>,
       eval_let<
@@ -220,9 +225,10 @@ BOOST_AUTO_TEST_CASE(test_do)
         >
       >::type
     >
-  >(MPLLIBS_HERE, "test_argument_of_set_and_do_in_let");
+  ));
 
-  meta_require<
+  // test_na_arguments_of_do
+  BOOST_MPL_ASSERT((
     is_same<
       syntax<do_<either, syntax<do_return<int11> > > >,
       let<
@@ -230,11 +236,9 @@ BOOST_AUTO_TEST_CASE(test_do)
         syntax<do_<either, syntax<do_return<int11> > > >
       >::type
     >
-  >(MPLLIBS_HERE, "test_na_arguments_of_do");
+  ));
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, minus_2, "minus_2")
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, eval_to_right, "eval_to_right")
 
 
 

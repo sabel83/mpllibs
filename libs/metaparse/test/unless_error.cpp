@@ -10,13 +10,10 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 namespace
@@ -29,26 +26,16 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_util_unless_error)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::is_error;
-  
   using mpllibs::metaparse::unless_error;
   
   using boost::mpl::equal_to;
 
-  meta_require<
-    has_type<unless_error<err, int13> >
-  >(MPLLIBS_HERE, "test_has_type");
+  // test_error
+  BOOST_MPL_ASSERT((is_error<unless_error<err, int13> >));
 
-  meta_require<
-    is_error<unless_error<err, int13> >
-  >(MPLLIBS_HERE, "test_error");
-
-  meta_require<
-    equal_to<int13, unless_error<int11, int13>::type>
-  >(MPLLIBS_HERE, "test_not_error");
+  // test_not_error
+  BOOST_MPL_ASSERT((equal_to<int13, unless_error<int11, int13>::type>));
 }
 
 

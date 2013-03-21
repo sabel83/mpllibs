@@ -10,30 +10,24 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_is_error)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
   using mpllibs::metaparse::is_error;
   using mpllibs::metaparse::fail;
   
   using boost::mpl::not_;
   using boost::mpl::apply_wrap2;
 
-  meta_require<not_<is_error<int13> > >(MPLLIBS_HERE, "test_not_error");
+  // test_not_error
+  BOOST_MPL_ASSERT((not_<is_error<int13> >));
 
-  meta_require<
-    is_error<apply_wrap2<fail<int11>, int1, int13> >
-  >(MPLLIBS_HERE, "test_error");
+  // test_error
+  BOOST_MPL_ASSERT((is_error<apply_wrap2<fail<int11>, int1, int13> >));
 }
 

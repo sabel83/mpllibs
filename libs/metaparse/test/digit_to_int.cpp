@@ -9,23 +9,18 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <mpllibs/metamonad/try_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_digit_to_int)
 {
-  using mpllibs::metatest::has_type;
-  using mpllibs::metatest::meta_require;
-  
   using mpllibs::metaparse::util::digit_to_int;
   
   using mpllibs::metamonad::try_c;
@@ -38,21 +33,18 @@ BOOST_AUTO_TEST_CASE(test_digit_to_int)
 
   using namespace mpllibs::metamonad::name;
 
-  meta_require<has_type<digit_to_int> >(MPLLIBS_HERE, "test_has_type");
+  // test0
+  BOOST_MPL_ASSERT((equal_to<apply_wrap1<digit_to_int, char_0>::type, int0>));
 
-  meta_require<
-    equal_to<apply_wrap1<digit_to_int, char_0>::type, int0>
-  >(MPLLIBS_HERE, "test0");
-
-  meta_require<
-    equal_to<apply_wrap1<digit_to_int, char_9>::type, int9>
-  >(MPLLIBS_HERE, "test9");
+  // test9
+  BOOST_MPL_ASSERT((equal_to<apply_wrap1<digit_to_int, char_9>::type, int9>));
   
-  meta_require<
+  // test_error
+  BOOST_MPL_ASSERT((
     equal_to<
       try_c<apply_wrap1<digit_to_int, char_x>, catch_c<e, true_, int13> >::type,
       int13
     >
-  >(MPLLIBS_HERE, "test_error");
+  ));
 }
 

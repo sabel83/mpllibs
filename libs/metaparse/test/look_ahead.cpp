@@ -13,21 +13,16 @@
 
 #include "common.hpp"
 
-#include <mpllibs/metatest/test.hpp>
-#include <mpllibs/metatest/has_type.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/equal.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_look_ahead)
 {
-  using mpllibs::metatest::meta_require;
-  using mpllibs::metatest::has_type;
-  
+ 
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::look_ahead;
   using mpllibs::metaparse::digit_val;
@@ -40,27 +35,26 @@ BOOST_AUTO_TEST_CASE(test_look_ahead)
   using boost::mpl::apply_wrap2;
   using boost::mpl::equal;
  
-  meta_require<
-    has_type<look_ahead<digit_val> >
-  >(MPLLIBS_HERE, "test_has_type");
-
-  meta_require<
+  // test_returns_result
+  BOOST_MPL_ASSERT((
     equal_to<
       int1,
       get_result<apply_wrap2<look_ahead<digit_val>, str_1983, start> >::type
     >
-  >(MPLLIBS_HERE, "test_returns_result");
+  ));
 
-  meta_require<
+  // test_returns_error
+  BOOST_MPL_ASSERT((
     is_error<apply_wrap2<look_ahead<fail<int13> >, str_1983, start> >
-  >(MPLLIBS_HERE, "test_returns_error");
+  ));
 
-  meta_require<
+  // test_doesnt_process_input
+  BOOST_MPL_ASSERT((
     equal<
       str_1983,
       get_remaining<apply_wrap2<look_ahead<digit_val>, str_1983, start> >::type
     >
-  >(MPLLIBS_HERE, "test_doesnt_process_input");
+  ));
 }
 
 

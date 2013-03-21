@@ -10,11 +10,11 @@
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/boost_test.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
 
@@ -41,21 +41,19 @@ namespace mpllibs
 
 BOOST_AUTO_TEST_CASE(test_return_)
 {
-  using mpllibs::metatest::meta_require;
-
   using mpllibs::metamonad::return_;
   using mpllibs::metamonad::monad;
 
   using boost::mpl::apply_wrap1;
   using boost::mpl::equal_to;
 
-  meta_require<
+  // test_specialisation_is_called
+  BOOST_MPL_ASSERT((
     equal_to<int13, apply_wrap1<monad<test_tag>::return_, int>::type>
-  >(MPLLIBS_HERE, "test_specialisation_is_called"); 
+  ));
 
-  meta_require<
-    equal_to<int13, return_<test_tag, int>::type>
-  >(MPLLIBS_HERE, "test_using_two_arguments");
+  // test_using_two_arguments
+  BOOST_MPL_ASSERT((equal_to<int13, return_<test_tag, int>::type>));
 }
 
 
