@@ -1,2 +1,1 @@
-This example demonstrates how to use the type-safe printf library. It has a
-Makefile for compilation on Linux with the GNU compiler.
+This example demonstrates how to use the type-safe printf library.
