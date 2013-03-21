@@ -12,8 +12,6 @@
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/get_prev_char.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
@@ -87,8 +85,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::one_char, "one_char")
 
 #endif
 

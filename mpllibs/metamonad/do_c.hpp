@@ -23,8 +23,6 @@
 #include <mpllibs/metamonad/if.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/arithmetic/dec.hpp>

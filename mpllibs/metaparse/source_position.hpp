@@ -11,8 +11,6 @@
 
 #include <mpllibs/metamonad/tmp_tag.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/char.hpp>
 #include <boost/mpl/plus.hpp>
@@ -123,14 +121,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  3,
-  mpllibs::metaparse::source_position,
-  "source_position"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::start, "start")
 
 #endif
 

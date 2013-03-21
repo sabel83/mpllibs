@@ -8,8 +8,6 @@
 
 #include <mpllibs/metaparse/util/in_range.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/char.hpp>
 
 namespace mpllibs
@@ -24,11 +22,6 @@ namespace mpllibs
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::util::is_ucase_letter,
-  "is_ucase_letter"
-)
 
 #endif
 

@@ -11,8 +11,6 @@
 
 #include <mpllibs/metaparse/util/is_whitespace.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/string.hpp>
 
 namespace mpllibs
@@ -35,8 +33,6 @@ namespace mpllibs
       space;
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::space, "space")
 
 #endif
 

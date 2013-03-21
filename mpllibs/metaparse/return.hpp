@@ -12,8 +12,6 @@
 
 #include <mpllibs/metamonad/tmp_tag.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <iostream>
 
 namespace mpllibs
@@ -76,12 +74,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metaparse::return_,
-  "metaparse::return_"
-)
 
 #endif
 

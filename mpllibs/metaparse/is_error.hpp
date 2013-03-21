@@ -6,8 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <mpllibs/metaparse/fail_tag.hpp>
 
 #include <boost/mpl/tag.hpp>
@@ -27,12 +25,6 @@ namespace mpllibs
     {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metaparse::is_error,
-  "is_error"
-)
 
 #endif
 

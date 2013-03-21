@@ -6,8 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/tag.hpp>
@@ -31,12 +29,6 @@ namespace mpllibs
     {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  2,
-  mpllibs::metaparse::next_line,
-  "next_line"
-)
 
 #endif
 

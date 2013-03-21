@@ -41,7 +41,5 @@ namespace mpllibs
   }
 }
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metamonad::let, "let")
-
 #endif
 

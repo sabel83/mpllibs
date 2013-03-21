@@ -8,8 +8,6 @@
 
 #include <mpllibs/metaparse/iterate_c.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 namespace mpllibs
 {
   namespace metaparse
@@ -18,8 +16,6 @@ namespace mpllibs
     struct iterate : iterate_c<P, N::type::value> {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, mpllibs::metaparse::iterate, "iterate")
 
 #endif
 

@@ -12,8 +12,6 @@
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/eval_case.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply.hpp>
 
 namespace mpllibs
@@ -53,21 +51,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::exception_tag>::bind,
-  "monad<exception_tag>::bind"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::exception_tag>::fail,
-  "monad<exception_tag>::fail"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::exception_tag>::return_,
-  "monad<exception_tag>::return_"
-)
 
 #endif
 

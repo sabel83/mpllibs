@@ -10,8 +10,6 @@
 #include <mpllibs/metamonad/exception_core.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/tag.hpp>
 
 #include <boost/preprocessor/repetition/enum_params.hpp>

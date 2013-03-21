@@ -9,8 +9,6 @@
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/any.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
@@ -57,13 +55,6 @@ namespace mpllibs
     #undef MPLLIBS_ANY_ONE_OF_UNUSED_PARAM
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  0,
-  MPLLIBS_ONE_OF_MAX_ARGUMENT,
-  mpllibs::metaparse::any_one_of,
-  "any_one_of"
-)
 
 #endif
 

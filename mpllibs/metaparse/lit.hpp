@@ -9,8 +9,6 @@
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/lambda.hpp>
 #include <boost/mpl/string.hpp>
@@ -40,8 +38,6 @@ namespace mpllibs
     {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::lit, "lit")
 
 #endif
 

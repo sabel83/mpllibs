@@ -14,8 +14,6 @@
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
@@ -48,16 +46,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::reader_tag>::bind,
-  "monad<reader_tag>::bind"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::reader_tag>::return_,
-  "monad<reader_tag>::return_"
-)
 
 #endif
 

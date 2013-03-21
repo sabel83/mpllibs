@@ -8,8 +8,6 @@
 
 #include <mpllibs/metaparse/foldl.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 namespace mpllibs
 {
   namespace metaparse
@@ -40,8 +38,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metaparse::foldlp, "foldlp")
 
 #endif
 

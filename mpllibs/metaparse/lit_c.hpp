@@ -8,8 +8,6 @@
 
 #include <mpllibs/metaparse/lit.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/char.hpp>
 
 namespace mpllibs
@@ -18,18 +16,6 @@ namespace mpllibs
   {
     template <char C>
     struct lit_c : lit<boost::mpl::char_<C> > {};
-  }
-
-  namespace metatest
-  {
-    template <char C>
-    struct to_stream<mpllibs::metaparse::lit_c<C> >
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        return o << "lit_c<" << C << ">";
-      }
-    };
   }
 }
 

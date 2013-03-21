@@ -6,8 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <mpllibs/metamonad/returns.hpp>
 
 namespace mpllibs
@@ -26,12 +24,6 @@ namespace mpllibs
     struct tmp_value<T, no_tag_for_tmp_value> : returns<T> {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metamonad::tmp_value,
-  "tmp_value"
-)
 
 #endif
 

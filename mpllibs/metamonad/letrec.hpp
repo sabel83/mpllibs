@@ -10,8 +10,6 @@
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 namespace mpllibs
 {
   namespace metamonad
@@ -28,8 +26,6 @@ namespace mpllibs
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(3, mpllibs::metamonad::letrec, "letrec")
 
 #endif
 

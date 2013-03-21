@@ -8,8 +8,6 @@
 
 #include <mpllibs/metaparse/fail_tag.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 namespace mpllibs
 {
   namespace metaparse
@@ -31,8 +29,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::fail, "fail")
 
 #endif
 

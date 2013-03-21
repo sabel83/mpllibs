@@ -9,8 +9,6 @@
 #include <mpllibs/metaparse/util/is_ucase_letter.hpp>
 #include <mpllibs/metaparse/util/is_lcase_letter.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
@@ -37,11 +35,6 @@ namespace mpllibs
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::util::is_letter,
-  "is_letter"
-)
 
 #endif
 

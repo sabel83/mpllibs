@@ -11,8 +11,6 @@
 #include <mpllibs/metaparse/get_remaining.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -47,8 +45,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, mpllibs::metaparse::always, "always")
 
 #endif
 

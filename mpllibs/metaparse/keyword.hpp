@@ -15,8 +15,6 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/empty.hpp>
@@ -92,8 +90,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, mpllibs::metaparse::keyword, "keyword")
 
 #endif
 

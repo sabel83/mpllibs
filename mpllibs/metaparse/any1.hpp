@@ -8,8 +8,6 @@
 
 #include <mpllibs/metaparse/foldr1.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/push_front.hpp>
 #include <boost/mpl/lambda.hpp>
@@ -30,8 +28,6 @@ namespace mpllibs
     {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::any1, "any1")
 
 #endif
 

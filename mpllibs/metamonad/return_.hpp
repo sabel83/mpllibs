@@ -6,8 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 
@@ -22,8 +20,6 @@ namespace mpllibs
     ((boost::mpl::apply_wrap1<typename monad<MonadTag>::return_, T>));
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(2, mpllibs::metamonad::return_, "return_")
 
 #endif
 

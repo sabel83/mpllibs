@@ -17,8 +17,6 @@
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/end.hpp>
@@ -85,16 +83,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::list_tag>::bind,
-  "monad<list_tag>::bind"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::list_tag>::return_,
-  "monad<list_tag>::return_"
-)
 
 #endif
 

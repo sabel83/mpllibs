@@ -9,8 +9,6 @@
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
 #include <boost/preprocessor/cat.hpp>

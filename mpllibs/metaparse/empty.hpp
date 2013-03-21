@@ -9,8 +9,6 @@
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/return.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
@@ -47,8 +45,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(1, mpllibs::metaparse::empty, "empty")
 
 #endif
 

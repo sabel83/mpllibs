@@ -6,8 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/eval_if.hpp>
 
 #include <iostream>
@@ -22,18 +20,6 @@ namespace mpllibs
       template <class C, class T, class F>
       struct lazy_eval_if : boost::mpl::eval_if<typename C::type, T, F> {};
     }
-  }
-
-  namespace metatest
-  {
-    template <class C, class T, class F>
-    struct to_stream<mpllibs::metaparse::util::lazy_eval_if<C, T, F> >
-    {
-      static std::ostream& run(std::ostream& o_)
-      {
-        return o_ <<"lazy_eval_if<not_evaluated, not_evaluated, not_evaluated>";
-      }
-    };
   }
 }
 

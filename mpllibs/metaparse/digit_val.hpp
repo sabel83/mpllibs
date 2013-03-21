@@ -11,8 +11,6 @@
 
 #include <mpllibs/metaparse/util/digit_to_int.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 namespace mpllibs
 {
   namespace metaparse
@@ -20,8 +18,6 @@ namespace mpllibs
     typedef transform<digit, mpllibs::metaparse::util::digit_to_int> digit_val;
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(mpllibs::metaparse::digit_val, "digit_val")
 
 #endif
 

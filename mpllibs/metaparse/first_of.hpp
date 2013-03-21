@@ -8,8 +8,6 @@
 
 #include <mpllibs/metaparse/nth_of.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 namespace mpllibs
 {
   namespace metaparse
@@ -26,13 +24,6 @@ namespace mpllibs
     {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  0,
-  MPLLIBS_SEQUENCE_MAX_ARGUMENT,
-  mpllibs::metaparse::first_of,
-  "first_of"
-)
 
 #endif
 

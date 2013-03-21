@@ -14,8 +14,6 @@
 #include <mpllibs/metamonad/eval_match_let_c.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
@@ -41,16 +39,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::state_tag>::bind,
-  "monad<state_tag>::bind"
-)
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metamonad::monad<mpllibs::metamonad::state_tag>::return_,
-  "monad<state_tag>::return_"
-)
 
 #endif
 

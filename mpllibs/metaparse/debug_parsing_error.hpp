@@ -9,8 +9,6 @@
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/string.hpp>
@@ -105,12 +103,6 @@ namespace mpllibs
     {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  2,
-  mpllibs::metaparse::debug_parsing_error,
-  "debug_parsing_error"
-)
 
 #endif
 

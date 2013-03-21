@@ -14,8 +14,6 @@
 #include <mpllibs/metaparse/util/int_to_string.hpp>
 #include <mpllibs/metaparse/util/join_string.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
@@ -257,13 +255,6 @@ namespace mpllibs
     {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  1,
-  BOOST_PP_ADD(MPLLIBS_SEQUENCE_MAX_ARGUMENT, 1),
-  mpllibs::metaparse::nth_of,
-  "nth_of"
-)
 
 #endif
 

@@ -6,8 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/back.hpp>
@@ -56,12 +54,6 @@ namespace mpllibs
     {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::safe_printf::pop_expected,
-  "pop_expected"
-)
 
 #endif
 

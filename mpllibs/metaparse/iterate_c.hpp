@@ -12,8 +12,6 @@
 #include <mpllibs/metaparse/get_remaining.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/deque.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
@@ -76,20 +74,6 @@ namespace mpllibs
     struct iterate_c :
       mpllibs::metaparse::impl::iterate_impl<N, P, boost::mpl::deque<> >
     {};
-  }
-
-  namespace metatest
-  {
-    template <class P, int N>
-    struct to_stream<mpllibs::metaparse::iterate_c<P, N> >
-    {
-      static std::ostream& run(std::ostream& o)
-      {
-        o << "iterate_c<";
-        to_stream<P>::run(o);
-        return o << ", " << N << ">";
-      }
-    };
   }
 }
 

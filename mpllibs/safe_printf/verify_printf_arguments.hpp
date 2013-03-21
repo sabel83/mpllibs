@@ -9,8 +9,6 @@
 #include <mpllibs/safe_printf/printf_parser.hpp>
 #include <mpllibs/safe_printf/verify_printf_arguments_impl.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
@@ -26,12 +24,6 @@ namespace mpllibs
     {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  2,
-  mpllibs::safe_printf::verify_printf_arguments,
-  "verify_printf_arguments"
-)
 
 #endif
 

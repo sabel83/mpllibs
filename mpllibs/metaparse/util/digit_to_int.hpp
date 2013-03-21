@@ -8,8 +8,6 @@
 
 #include <mpllibs/metamonad/exception.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/string.hpp>
 
@@ -71,11 +69,6 @@ namespace mpllibs
     }
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TYPE(
-  mpllibs::metaparse::util::digit_to_int,
-  "digit_to_int"
-)
 
 #endif
 

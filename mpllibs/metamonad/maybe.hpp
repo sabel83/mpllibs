@@ -16,8 +16,6 @@
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply.hpp>
 
 namespace mpllibs
@@ -77,12 +75,6 @@ namespace mpllibs
     };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metamonad::maybe_tag,
-  "maybe_tag"
-)
 
 #endif
 

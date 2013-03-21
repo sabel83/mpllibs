@@ -6,8 +6,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
@@ -24,12 +22,6 @@ namespace mpllibs
     struct lazy<already_lazy<AnglyExpr> > : returns<AnglyExpr> {};
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metamonad::already_lazy,
-  "already_lazy"
-)
 
 #endif
 

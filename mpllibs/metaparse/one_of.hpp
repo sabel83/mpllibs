@@ -9,8 +9,6 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply.hpp>
@@ -126,13 +124,6 @@ namespace mpllibs
     #undef MPLLIBS_ONE_OF_UNUSED_PARAM
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  0,
-  MPLLIBS_ONE_OF_MAX_ARGUMENT,
-  mpllibs::metaparse::one_of,
-  "one_of"
-)
 
 #endif
 

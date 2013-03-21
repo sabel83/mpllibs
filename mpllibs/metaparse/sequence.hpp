@@ -13,8 +13,6 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/transform.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
-
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/deque.hpp>
@@ -161,13 +159,6 @@ namespace mpllibs
     #undef MPLLIBS_SEQUENCE_UNUSED_PARAM
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE_WITH_DEFAULTS(
-  0,
-  MPLLIBS_SEQUENCE_MAX_ARGUMENT,
-  mpllibs::metaparse::sequence,
-  "sequence"
-)
 
 #endif
 
