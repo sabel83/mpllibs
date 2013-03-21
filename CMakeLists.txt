@@ -6,13 +6,9 @@
 cmake_minimum_required(VERSION 2.6)
 project(mpllibs)
 
-if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-  find_package(Boost COMPONENTS unit_test_framework REQUIRED)
-  if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIR})
-    link_directories(${Boost_LIBRARY_DIRS})
-  endif()
-endif()
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
+link_directories(${Boost_LIBRARY_DIRS})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}")
 include(Asciidoc)

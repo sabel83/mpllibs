@@ -6,12 +6,10 @@
 aux_source_directory(. SOURCES)
 add_executable(boost_mpl_unit_test ${SOURCES})
 
-target_link_libraries(boost_mpl_unit_test metatest)
-if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-  target_link_libraries(boost_mpl_unit_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-else()
-  target_link_libraries(boost_mpl_unit_test boost_unit_test_framework)
-endif()
+target_link_libraries(boost_mpl_unit_test
+  metatest
+  ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+)
 
 include(ExampleOutput)
 example_output(boost_mpl_unit_test boost_mpl_unit_test)
