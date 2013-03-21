@@ -31,7 +31,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metaparse/util/to_stream.hpp>
+#include <mpllibs/metatest/to_stream.hpp>
 --------------------------------------
 
 Example

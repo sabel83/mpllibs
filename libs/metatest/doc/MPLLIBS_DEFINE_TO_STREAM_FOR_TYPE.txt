@@ -27,7 +27,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/to_stream_fwd.hpp>
+#include <mpllibs/metatest/to_stream_fwd.hpp>
 --------------------------------------
 
 Example

@@ -26,7 +26,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/location.hpp>
+#include <mpllibs/metatest/location.hpp>
 --------------------------------------
 
 include::copyright[]

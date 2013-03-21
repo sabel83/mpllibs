@@ -31,7 +31,7 @@ Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/test.hpp>
+#include <mpllibs/metatest/test.hpp>
 --------------------------------------
 
 Example
