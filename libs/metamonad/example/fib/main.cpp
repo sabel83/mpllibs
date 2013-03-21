@@ -12,6 +12,8 @@
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/eval_if.hpp>
 
+#include <iostream>
+
 using boost::mpl::plus;
 using boost::mpl::minus;
 using boost::mpl::less;
