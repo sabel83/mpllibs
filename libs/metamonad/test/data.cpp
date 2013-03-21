@@ -18,6 +18,8 @@
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/not.hpp>
 
+#include <string>
+
 #include "common.hpp"
 
 namespace
@@ -25,6 +27,18 @@ namespace
   MPLLIBS_DATA(foo, 0, ((con0, 0))((con1, 1))((con2, 1))((con3, 2)));
 
   MPLLIBS_LAZY_METAFUNCTION(lazy_not, (E)) ((boost::mpl::not_<E>));
+
+  template <char C>
+  struct print_c
+  {
+    typedef print_c type;
+
+    static std::string get_value()
+    {
+      char s[] = {C, 0};
+      return s;
+    }
+  };
 }
 
 BOOST_AUTO_TEST_CASE(test_data)
@@ -68,6 +82,18 @@ BOOST_AUTO_TEST_CASE(test_data)
       con3<>::type::apply<int11>::type::apply<int13>
     >
   >(MPLLIBS_HERE, "test_currying");
+
+  BOOST_CHECK_EQUAL("con0", con0::get_value());
+  BOOST_CHECK_EQUAL("con0", con0::value);
+
+  BOOST_CHECK_EQUAL("con1<x>", con1<print_c<'x'> >::get_value());
+  BOOST_CHECK_EQUAL("con1<x>", con1<print_c<'x'> >::value);
+
+  BOOST_CHECK_EQUAL(
+    "con3<a, b>",
+    (con3<print_c<'a'>, print_c<'b'> >::get_value())
+  );
+  BOOST_CHECK_EQUAL("con3<a, b>", (con3<print_c<'a'>, print_c<'b'> >::value));
 }
 
 

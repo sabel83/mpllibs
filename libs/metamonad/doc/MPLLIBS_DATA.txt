@@ -44,6 +44,12 @@ The constructors support _currying_. For example when a constructor expecting
 +3+ arguments is called with +2+, it returns a constructor expecting +1+
 argument.
 
+The values have a public static +::get_value()+ method taking no argument and
+returning the string representation of the constructor. The values also have a
+public static +::value+ string constant holding the same value. The string
+representation of the values created using the constructor contain the name of
+the constructor and the values of the arguments.
+
 Header
 ------
 

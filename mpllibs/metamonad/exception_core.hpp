@@ -7,22 +7,47 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/data.hpp>
+#include <mpllibs/metamonad/tmp_tag.hpp>
 
-#include <mpllibs/metatest/to_stream_fwd.hpp>
+#include <string>
+#include <sstream>
+#include <iostream>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_DATA(exception, 0, ((exception, 1)));
+    struct exception_tag : tmp_tag<exception_tag> {};
+
+    template <class Reason = boost::mpl::void_>
+    struct exception
+    {
+      typedef exception<typename Reason::type> type;
+      typedef algebraic_data_type_tag tag;
+
+      static std::string get_value()
+      {
+        std::ostringstream s;
+        s << "exception<" << Reason::get_value() << ">";
+        return s.str();
+      }
+
+      static const std::string value;
+    };
+
+    template <class Reason>
+    const std::string exception<Reason>::value = exception<Reason>::get_value();
+
+    // Currying
+    template <>
+    struct exception<boost::mpl::void_> :
+      tmp_value<exception<boost::mpl::void_>, tag_tag>
+    {
+      template <class Reason>
+      struct apply : exception<Reason> {};
+    };
   }
 }
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_TEMPLATE(
-  1,
-  mpllibs::metamonad::exception,
-  "exception"
-)
 
 #endif
 

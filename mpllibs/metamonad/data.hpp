@@ -9,6 +9,8 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
+#include <mpllibs/metamonad/calculated_value.hpp>
+#include <mpllibs/metamonad/value_to_stream.hpp>
 
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
@@ -19,6 +21,7 @@
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
+#include <boost/preprocessor/stringize.hpp>
 
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/bool.hpp>
@@ -28,6 +31,9 @@
 #include <boost/mpl/void.hpp>
 
 #include <boost/type_traits.hpp>
+
+#include <string>
+#include <sstream>
 
 #ifndef MPLLIBS_DATA_MAX_TEMPLATE_ARGUMENT
   #define MPLLIBS_DATA_MAX_TEMPLATE_ARGUMENT 10
@@ -52,28 +58,54 @@
 #endif
 #define MPLLIBS_NULLARY_DATA_CONSTR(name, arity) \
   struct name : \
-    mpllibs::metamonad::tmp_value< \
+    mpllibs::metamonad::calculated_value< \
       name, \
+      std::string, \
       mpllibs::metamonad::algebraic_data_type_tag \
     > \
-  {};
+  { \
+    static std::string get_value() { return BOOST_PP_STRINGIZE(name); } \
+  };
 
 #ifdef MPLLIBS_BUILD_SEQ
   #error MPLLIBS_BUILD_SEQ already defined
 #endif
 #define MPLLIBS_BUILD_SEQ(z, n, unused) (BOOST_PP_CAT(T, n))
 
+#ifdef MPLLIBS_RUN_PARAM
+  #error MPLLIBS_RUN_PARAM already defined
+#endif
+#define MPLLIBS_RUN_PARAM(z, n, unused) \
+  s << BOOST_PP_IF(n, ", ", ""); \
+  mpllibs::metamonad::value_to_stream<BOOST_PP_CAT(T, n)>::run(s);
+
 #ifdef MPLLIBS_NON_NULLARY_DATA_CONSTR
   #error MPLLIBS_NON_NULLARY_DATA_CONSTR already defined
 #endif
 #define MPLLIBS_NON_NULLARY_DATA_CONSTR(name, arity) \
+  template <BOOST_PP_ENUM_PARAMS(arity, class T)> \
+  struct BOOST_PP_CAT(name, __body); \
+  \
   MPLLIBS_LAZY_METAFUNCTION(name, BOOST_PP_REPEAT(arity, MPLLIBS_BUILD_SEQ, ~))\
-  (( \
-    mpllibs::metamonad::tmp_value< \
+  (( BOOST_PP_CAT(name, __body)<BOOST_PP_ENUM_PARAMS(arity, T)> )); \
+  \
+  template <BOOST_PP_ENUM_PARAMS(arity, class T)> \
+  struct BOOST_PP_CAT(name, __body) : \
+    mpllibs::metamonad::calculated_value<\
       name<BOOST_PP_ENUM_PARAMS(arity, T)>, \
+      std::string, \
       mpllibs::metamonad::algebraic_data_type_tag \
     > \
-  )); \
+  { \
+    static std::string get_value() \
+    { \
+      std::ostringstream s; \
+      s << BOOST_PP_STRINGIZE(name) "<"; \
+      BOOST_PP_REPEAT(arity, MPLLIBS_RUN_PARAM, ~) \
+      s << ">"; \
+      return s.str(); \
+    } \
+  }; \
 
 #ifdef MPLLIBS_DATA_CONSTR
   #error MPLLIBS_DATA_CONSTR already defined
