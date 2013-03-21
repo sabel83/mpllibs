@@ -24,8 +24,8 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/name.hpp>
-
-#include <mpllibs/metatest/to_stream.hpp>
+#include <mpllibs/metamonad/data.hpp>
+#include <mpllibs/metamonad/value_to_stream.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/fold.hpp>
@@ -53,8 +53,6 @@ using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
 using mpllibs::metaparse::token;
 using mpllibs::metaparse::entire_input;
-
-using mpllibs::metatest::to_stream;
 
 using mpllibs::metamonad::do_c;
 using mpllibs::metamonad::exception;
@@ -93,8 +91,7 @@ typedef token<lit_c<'/'> > div_token;
  
 typedef token<int_> int_token;
 
-struct division_by_zero_tag : tmp_tag<division_by_zero_tag> {};
-struct division_by_zero : tmp_value<division_by_zero, division_by_zero_tag> {};
+MPLLIBS_DATA(division_by_zero, 0, ((division_by_zero, 0)));
 
 template <class T, char C>
 struct is_c : bool_<T::type::value == C> {};
@@ -112,8 +109,6 @@ struct eval_plus
   {};
 };
 
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(eval_plus)
-  
 struct eval_mult
 {
   template <class C, class State>
@@ -134,8 +129,6 @@ struct eval_mult
     >
   {};
 };
-
-MPLLIBS_DEFINE_TO_STREAM_FOR_SIMPLE_TYPE(eval_mult)
 
 typedef
   foldlp<
@@ -169,22 +162,24 @@ int main()
   using std::cout;
   using std::endl;
   using boost::mpl::string;
-  
-  to_stream<
-    apply_wrap1<calculator_parser, string<'13'> >::type
-  >::run(cout) << endl;
 
-  to_stream<
-    apply_wrap1<calculator_parser, string<' 1+ ','2*4-','6/2'> >::type
-  >::run(cout) << endl;
+  using mpllibs::metamonad::value_to_stream;
 
-  to_stream<
-    apply_wrap1<calculator_parser, string<'11/0'> >::type
-  >::run(cout) << endl;
+  value_to_stream<apply_wrap1<calculator_parser, string<'13'> > >::run(cout);
+  cout << endl;
 
-  to_stream<
-    apply_wrap1<calculator_parser, string<'19 +',' 83/','0 + ','11'> >::type
-  >::run(cout) << endl;
+  value_to_stream<
+    apply_wrap1<calculator_parser, string<' 1+ ','2*4-','6/2'> >
+  >::run(cout);
+  cout << endl;
+
+  value_to_stream<apply_wrap1<calculator_parser, string<'11/0'> > >::run(cout);
+  cout << endl;
+
+  value_to_stream<
+    apply_wrap1<calculator_parser, string<'19 +',' 83/','0 + ','11'> >
+  >::run(cout);
+  cout << endl;
 }
 
 #else
@@ -194,21 +189,19 @@ int main()
   using std::cout;
   using std::endl;
   
-  to_stream<
-    apply_wrap1<calculator_parser, _S("13")>::type
-  >::run(cout) << endl;
+  value_to_stream<apply_wrap1<calculator_parser, _S("13")> >::run(cout);
+  cout << endl;
 
-  to_stream<
-    apply_wrap1<calculator_parser, _S(" 1+ 2*4-6/2")>::type
-  >::run(cout) << endl;
+  value_to_stream<apply_wrap1<calculator_parser,_S(" 1+ 2*4-6/2")> >::run(cout);
+  cout << endl;
 
-  to_stream<
-    apply_wrap1<calculator_parser, _S("11/0")>::type
-  >::run(cout) << endl;
+  value_to_stream<apply_wrap1<calculator_parser, _S("11/0")> >::run(cout);
+  cout << endl;
 
-  to_stream<
-    apply_wrap1<calculator_parser, _S("19 + 83/0 + 11")>::type
-  >::run(cout) << endl;
+  value_to_stream<
+    apply_wrap1<calculator_parser, _S("19 + 83/0 + 11")>
+  >::run(cout);
+  cout << ::endl;
 }
 
 #endif
