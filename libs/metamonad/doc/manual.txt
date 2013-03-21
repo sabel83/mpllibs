@@ -1729,8 +1729,8 @@ Haskell typeclasses in template metaprograms
 
 link:http://boost.org/libs/mpl[Boost.MPL] supports polymorphic metafunctions.
 For example the addition operation makes sense for a number of different types.
-Integers, longs, etc can be added. To create an +add+ metafunction the way
-link:http://boost.org/libs/mpl[Boost.MPL] supports it, it can be implemented the
+Integers, longs, etc can be added. An +add+ metafunction the way
+link:http://boost.org/libs/mpl[Boost.MPL] supports it can be implemented the
 following way:
 
 --------------------------------------
