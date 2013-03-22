@@ -14,8 +14,6 @@ Components
 
 *mpllibs* contains the following libraries:
 
-* [metatest](http://abel.web.elte.hu/mpllibs/metatest) -
-    Unit testing framework for C++ template metaprograms
 * [metamonad](http://abel.web.elte.hu/mpllibs/metamonad) -
     Library implementing monads and exceptions in C++ template metaprograms
 * [metaparse](http://abel.web.elte.hu/mpllibs/metaparse) -

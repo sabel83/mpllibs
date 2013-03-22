@@ -18,8 +18,6 @@ Components
 
 _mpllibs_ contains the following libraries:
 
-* link:libs/metatest/html/index.html[metatest] -
-    Unit testing framework for C++ template metaprograms
 * link:libs/metamonad/html/index.html[metamonad] -
     Library implementing monads and exceptions in C++ template metaprograms
 * link:libs/metaparse/html/index.html[metaparse] -

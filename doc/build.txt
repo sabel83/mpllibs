@@ -52,8 +52,6 @@ Building the library on Windows
 * Click on _Configure_ and choose the compiler to use.
 * Click on _Generate_ to generate the solution file.
 * Open the generated solution in your development environment and build it.
-* When you run the unit tests and the examples on Windows, make sure you have
-  +metatest.dll+ on your +PATH+.
 
 link:index.html[[up]]
 
