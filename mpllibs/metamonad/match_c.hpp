@@ -26,6 +26,7 @@
 #include <mpllibs/metamonad/first.hpp>
 #include <mpllibs/metamonad/second.hpp>
 #include <mpllibs/metamonad/pair.hpp>
+#include <mpllibs/metamonad/is_same.hpp>
 
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/fold.hpp>
@@ -39,8 +40,6 @@
 #include <boost/mpl/back.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/push_back.hpp>
-
-#include <boost/type_traits.hpp>
 
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
@@ -107,12 +106,7 @@ namespace mpllibs
               if_<
                 second<s>,
                 if_<
-                  lazy<
-                    boost::is_same<
-                      lazy_protect_args<first<c> >,
-                      lazy_protect_args<first<Pair> >
-                    >
-                  >,
+                  is_same<first<c>, first<Pair> >,
                   pair<
                     lazy<
                       boost::mpl::push_back<
@@ -161,14 +155,14 @@ namespace mpllibs
                 >
               >,
               if_<
-                lazy<
-                  boost::is_same<
+                is_same<
+                  lazy<
                     boost::mpl::at<
                       already_lazy<s>,
                       lazy_protect_args<first<p> >
-                    >,
-                    lazy_protect_args<second<p> >
-                  >
+                    >
+                  >,
+                  second<p>
                 >,
                 s,
                 exception<

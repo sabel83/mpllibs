@@ -9,11 +9,10 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/is_same.hpp>
 
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/has_xxx.hpp>
-
-#include <boost/type_traits.hpp>
 
 namespace mpllibs
 {
@@ -26,10 +25,10 @@ namespace mpllibs
 
     template <class T, class E = boost::mpl::na>
     struct is_tag :
-      boost::is_same<
-        typename boost::mpl::tag<typename E::type>::type,
+      is_same<
+        boost::mpl::tag<typename E::type>,
         // Tags coming from Boost.Mpl are not metaprogramming values
-        typename if_<impl::has_type<T>, T, returns<T> >::type
+        if_<impl::has_type<T>, T, returns<T> >
       >
     {};
 

@@ -21,8 +21,6 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/find_if.hpp>
 
-#include <boost/type_traits.hpp>
-
 namespace mpllibs
 {
   namespace metamonad

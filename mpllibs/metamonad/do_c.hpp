@@ -22,6 +22,7 @@
 #include <mpllibs/metamonad/eval_guard.hpp>
 #include <mpllibs/metamonad/if.hpp>
 #include <mpllibs/metamonad/pair.hpp>
+#include <mpllibs/metamonad/is_same.hpp>
 
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
@@ -269,7 +270,7 @@ namespace mpllibs
                 eval_case< eval_guard<let_do_c>,
                   matches_c<eval_guard<set<let_do_n, let_do_w> >,
                     if_<
-                      boost::is_same<A, let_do_n>,
+                      is_same<A, let_do_n>,
                       pair<
                         boost::mpl::push_back<let_do_v, let_do_c>,
                         boost::mpl::false_

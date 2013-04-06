@@ -15,6 +15,7 @@
 #include <mpllibs/metamonad/first.hpp>
 #include <mpllibs/metamonad/second.hpp>
 #include <mpllibs/metamonad/pair.hpp>
+#include <mpllibs/metamonad/is_same.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/pop_front.hpp>
@@ -24,8 +25,6 @@
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/contains.hpp>
-
-#include <boost/type_traits.hpp>
 
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
@@ -49,10 +48,7 @@ namespace mpllibs
           pair<
             boost::mpl::pop_front<typename first<State>::type>,
             if_<
-              boost::is_same<
-                typename boost::mpl::front<typename first<State>::type>::type,
-                _
-              >,
+              is_same<boost::mpl::front<typename first<State>::type>, _>,
               second<State>,
               let<
                 boost::mpl::front<typename first<State>::type>,

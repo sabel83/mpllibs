@@ -11,11 +11,10 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/is_same.hpp>
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/map.hpp>
-
-#include <boost/type_traits.hpp>
 
 namespace mpllibs
 {
@@ -69,7 +68,7 @@ namespace boost
       equal_to_impl<mpllibs::metamonad::box_tag, mpllibs::metamonad::box_tag> :
       mpllibs::metamonad::lambda_c<
         mpllibs::metamonad::name::a, mpllibs::metamonad::name::b,
-        boost::is_same<mpllibs::metamonad::name::a, mpllibs::metamonad::name::b>
+        is_same<mpllibs::metamonad::name::a, mpllibs::metamonad::name::b>
       >
     {};
   }

@@ -15,18 +15,15 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/is_exception.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/eval_let.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/is_same.hpp>
 
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
-
-#include <boost/type_traits.hpp>
 
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
@@ -99,14 +96,14 @@ namespace mpllibs
         impl::let_case_r,
         syntax<
           boost::mpl::fold<
-            boost::mpl::vector<BOOST_PP_ENUM_PARAMS(MPLLIBS_LIMIT_CASE_SIZE, C)>,
+            boost::mpl::vector<BOOST_PP_ENUM_PARAMS(MPLLIBS_LIMIT_CASE_SIZE,C)>,
             nothing,
             lambda_c<impl::let_case_s, impl::let_case_c,
               // s:
               //  nothing -> no case matched so far
               //  just<X> -> a case matched, the result is X
               if_<
-                boost::is_same<nothing, impl::let_case_s>,
+                is_same<nothing, impl::let_case_s>,
                 impl::case_check_match<E, impl::let_case_c>,
                 impl::let_case_s
               >
@@ -115,9 +112,7 @@ namespace mpllibs
         >,
         syntax<
           if_<
-            lazy<
-              boost::is_same<nothing, lazy_protect_args<impl::let_case_r> >
-            >,
+            is_same<nothing, impl::let_case_r>,
             exception<no_case_matched<E> >,
             impl::get_just_data<impl::let_case_r>
           >

@@ -30,8 +30,6 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/void.hpp>
 
-#include <boost/type_traits.hpp>
-
 #include <string>
 #include <sstream>
 
