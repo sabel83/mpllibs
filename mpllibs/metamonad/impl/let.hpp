@@ -35,9 +35,6 @@ namespace mpllibs
       template <class A, class E1, class E2>
       struct let_in_syntax : let_impl<A, E1, E2> {};
 
-      template <class A, class E1, class E2>
-      struct let_in_syntax<A, E1, syntax<E2> > : syntax<E2> {};
-
       template <class A, class E1>
       struct let_in_syntax<A, E1, A> : returns<E1> {};
 
@@ -88,6 +85,9 @@ namespace mpllibs
       #undef MPLLIBS_LET_TEMPLATE_CASE
       #undef MPLLIBS_LET_CLASS
       #undef MPLLIBS_LET_REC_CASE
+
+      template <class A, class E1, class E2>
+      struct let_impl<A, E1, syntax<E2> > : syntax<E2> {};
     }
   }
 }
