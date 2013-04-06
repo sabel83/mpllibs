@@ -23,6 +23,7 @@
 #include <mpllibs/metamonad/if.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 #include <mpllibs/metamonad/is_same.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
@@ -33,7 +34,6 @@
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/arithmetic/inc.hpp>
 
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/bool.hpp>
@@ -144,13 +144,13 @@ namespace mpllibs
         BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), class E) \
       > \
       struct BOOST_PP_CAT(do, n) : \
-        boost::mpl::apply_wrap2< \
+        apply< \
           typename monad<Monad>::bind_, \
-          typename T::type, \
-          typename BOOST_PP_CAT(do, BOOST_PP_DEC(n))< \
+          T, \
+          BOOST_PP_CAT(do, BOOST_PP_DEC(n))< \
             Monad, \
             BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), E) \
-          >::type \
+          > \
         > \
       {}; \
       \
@@ -165,9 +165,9 @@ namespace mpllibs
         set<Name, Ex> BOOST_PP_COMMA_IF(BOOST_PP_DEC(n)) \
         BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(n), E) \
       > : \
-        boost::mpl::apply_wrap2< \
+        apply< \
           typename monad<Monad>::bind, \
-          typename do1<Monad, Ex>::type, \
+          do1<Monad, Ex>, \
           lambda_c< \
             Name, \
             BOOST_PP_CAT(do, BOOST_PP_DEC(n))< \
@@ -332,7 +332,7 @@ namespace mpllibs
               boost::mpl::vector<BOOST_PP_ENUM_PARAMS(arg_num, T)> \
             >, \
             syntax< \
-              boost::mpl::apply_wrap1< \
+              apply< \
                 BOOST_PP_CAT(instantiate, BOOST_PP_INC(arg_num))<f>, \
                 boost::mpl::push_front<let_do_w, Monad> \
               > \

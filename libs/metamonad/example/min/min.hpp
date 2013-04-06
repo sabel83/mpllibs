@@ -9,28 +9,29 @@
 #include "less.hpp"
 
 #include <mpllibs/metamonad/try_c.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/if.hpp>
+#include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 template <class TagA, class TagB>
 struct min_impl
 {
+  typedef min_impl type;
+
   template <class A, class B>
   struct apply :
-    mpllibs::metamonad::try_c<boost::mpl::if_<less<A, B>, A, B> >
+    mpllibs::metamonad::try_c<mpllibs::metamonad::if_<less<A, B>, A, B> >
   {};
 };
 
 template <class A, class B>
 struct min :
-  boost::mpl::apply_wrap2<
+  mpllibs::metamonad::apply<
     min_impl<
       typename boost::mpl::tag<typename A::type>::type,
       typename boost::mpl::tag<typename B::type>::type
     >,
-    typename A::type,
-    typename B::type
+    A,
+    B
   >
 {};
 

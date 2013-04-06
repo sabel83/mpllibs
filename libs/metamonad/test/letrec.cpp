@@ -10,6 +10,7 @@
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -29,6 +30,7 @@ BOOST_AUTO_TEST_CASE(test_letrec)
   using mpllibs::metamonad::lazy;
   using mpllibs::metamonad::syntax;
   using mpllibs::metamonad::eval_syntax;
+  using mpllibs::metamonad::apply;
 
   // name is replaced with a nullary metafunction evaluating to the
   // substituted expression
@@ -68,11 +70,11 @@ BOOST_AUTO_TEST_CASE(test_letrec)
               if_<
                 lazy_equal_to<y, int0>,
                 int1,
-                lazy_times<lazy_apply<x, minus<y, int1> >, y>
+                lazy_times<apply<x, minus<y, int1> >, y>
               >
             >
           >,
-          syntax<lazy_apply<x, int4> >
+          syntax<apply<x, int4> >
         >
       >::type
     >

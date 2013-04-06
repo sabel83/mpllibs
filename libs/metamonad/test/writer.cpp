@@ -12,10 +12,10 @@
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/pair.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/assert.hpp>
@@ -42,10 +42,10 @@ BOOST_AUTO_TEST_CASE(test_writer)
   using mpllibs::metamonad::writer_tag;
   using mpllibs::metamonad::list_tag;
   using mpllibs::metamonad::monad;
+  using mpllibs::metamonad::apply;
   
   using boost::mpl::equal_to;
   using boost::mpl::equal;
-  using boost::mpl::apply;
 
   typedef writer_tag<list_tag> list_writer_tag;
   

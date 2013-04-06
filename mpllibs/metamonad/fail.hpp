@@ -8,20 +8,14 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
     MPLLIBS_METAFUNCTION(fail, (MonadTag)(S))
-    ((
-      boost::mpl::apply_wrap1<
-        typename mpllibs::metamonad::monad<MonadTag>::fail,
-        S
-      >
-    ));
+    ((apply<typename mpllibs::metamonad::monad<MonadTag>::fail, S>));
   }
 }
 

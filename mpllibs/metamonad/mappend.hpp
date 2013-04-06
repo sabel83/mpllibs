@@ -7,8 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/metafunction.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
@@ -18,7 +17,7 @@ namespace mpllibs
     struct monoid;
 
     MPLLIBS_METAFUNCTION(mappend, (MonadTag)(A)(B))
-    ((boost::mpl::apply_wrap2<typename monoid<MonadTag>::mappend, A, B>));
+    ((apply<typename monoid<MonadTag>::mappend, A, B>));
   }
 }
 

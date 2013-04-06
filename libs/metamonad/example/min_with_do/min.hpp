@@ -8,37 +8,30 @@
 
 #include "less.hpp"
 
-#include <mpllibs/metamonad/do_c.hpp>
-#include <mpllibs/metamonad/exception.hpp>
-#include <mpllibs/metamonad/name.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/if.hpp>
-
-using mpllibs::metamonad::name::c;
+#include <mpllibs/metamonad/try_c.hpp>
+#include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/if.hpp>
 
 template <class TagA, class TagB>
 struct min_impl
 {
+  typedef min_impl type;
+
   template <class A, class B>
   struct apply :
-    mpllibs::metamonad::do_c<
-      mpllibs::metamonad::exception_tag,
-      mpllibs::metamonad::set<c, less<A, B> >,
-      boost::mpl::if_<c, A, B>
-    >
+    mpllibs::metamonad::try_c<mpllibs::metamonad::if_<less<A, B>, A, B> >
   {};
 };
 
 template <class A, class B>
 struct min :
-  boost::mpl::apply_wrap2<
+  mpllibs::metamonad::apply<
     min_impl<
       typename boost::mpl::tag<typename A::type>::type,
       typename boost::mpl::tag<typename B::type>::type
     >,
-    typename A::type,
-    typename B::type
+    A,
+    B
   >
 {};
 

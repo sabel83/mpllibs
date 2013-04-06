@@ -56,7 +56,6 @@ using boost::mpl::plus;
 using boost::mpl::minus;
 using boost::mpl::int_;
 using boost::mpl::equal_to;
-using boost::mpl::apply;
 
 struct fact;
 

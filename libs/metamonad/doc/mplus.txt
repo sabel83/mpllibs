@@ -44,7 +44,7 @@ mplus<monad_tag, a, b>
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply_wrap2<monad_plus<monad_tag>::mplus, a, b>
+apply<monad_plus<monad_tag>::mplus, a, b>
 --------------------------------------
 
 Example

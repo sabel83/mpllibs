@@ -45,7 +45,7 @@ bind<monad_tag, a, f>
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply_wrap2<monad<monad_tag>::bind, a, f>
+apply<monad<monad_tag>::bind, a, f>
 --------------------------------------
 
 Example

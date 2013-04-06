@@ -50,11 +50,11 @@ For any +MonadTag+, the operations are expected to meet the following
 requirements:
 
 * left identity:
-    +bind<return_<X>, F>+ is equivalent to +boost::mpl::apply<F, X>+.
+    +bind<return_<X>, F>+ is equivalent to +apply<F, X>+.
 * right identity:
     +bind<M, return_>+ is equivalent to +M+.
 * associativity:
-    +bind<M, lambda<x, bind<boost::mpl::apply<F, x>, G> > >+ is equivalent to
+    +bind<M, lambda<x, bind<apply<F, x>, G> > >+ is equivalent to
     +bind<bind<M, F>, G>+. +lambda+ is metamonad's lambda expression
     implementation.
 

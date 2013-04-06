@@ -13,11 +13,11 @@
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/if.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/minus.hpp>
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/begin_end.hpp>
@@ -28,8 +28,6 @@
 using boost::mpl::int_;
 using boost::mpl::plus;
 using boost::mpl::minus;
-using boost::mpl::apply_wrap1;
-using boost::mpl::apply_wrap2;
 using boost::mpl::list_c;
 using boost::mpl::insert_range;
 using boost::mpl::end;
@@ -40,6 +38,7 @@ using mpllibs::metamonad::lazy;
 using mpllibs::metamonad::lazy_protect_args;
 using mpllibs::metamonad::if_;
 using mpllibs::metamonad::tmp_value;
+using mpllibs::metamonad::apply;
 
 using namespace mpllibs::metamonad::name;
 
@@ -52,10 +51,10 @@ struct addable;
 //   struct add { template <class, class> struct apply; };
 
 MPLLIBS_METAFUNCTION(add, (Tag)(A)(B))
-((apply_wrap2<typename addable<Tag>::add, A, B>));
+((apply<typename addable<Tag>::add, A, B>));
 
 MPLLIBS_METAFUNCTION(double_, (Tag)(X))
-((apply_wrap1<typename addable<Tag>::double_, X>));
+((apply<typename addable<Tag>::double_, X>));
 
 template <class Tag>
 struct addable_defaults

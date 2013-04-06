@@ -8,15 +8,14 @@
 
 #include <mpllibs/metamonad/monad_plus.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
     MPLLIBS_METAFUNCTION(mplus, (MonadTag)(A)(B))
-    ((boost::mpl::apply_wrap2<typename monad_plus<MonadTag>::mplus, A, B>));
+    ((apply<typename monad_plus<MonadTag>::mplus, A, B>));
   }
 }
 

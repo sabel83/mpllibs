@@ -8,13 +8,9 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/already_lazy.hpp>
-#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
@@ -26,23 +22,7 @@ namespace mpllibs
     struct monad<reader_tag> : monad_defaults<reader_tag>
     {
       typedef lambda_c<t, _, t> return_;
-      
-      typedef
-        lambda_c<a, f, r,
-          lazy<
-            boost::mpl::apply_wrap1<
-              boost::mpl::apply_wrap1<
-                boost::mpl::lambda<lazy_protect_args<f> >,
-                boost::mpl::apply_wrap1<
-                  boost::mpl::lambda<lazy_protect_args<a> >,
-                  already_lazy<r>
-                >
-              >,
-              already_lazy<r>
-            >
-          >
-        >
-        bind;
+      typedef lambda_c<a, f, r, apply<apply<f, apply<a, r> >, r> > bind;
     };
   }
 }

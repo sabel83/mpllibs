@@ -16,11 +16,11 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/lazy_protect_args.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 #include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/end.hpp>
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/transform_view.hpp>
 
 namespace mpllibs
@@ -65,13 +65,7 @@ namespace mpllibs
     {
       typedef boost::mpl::list<> mempty;
       typedef
-        lambda_c<a, b,
-          boost::mpl::apply_wrap2<
-            mpllibs::metamonad::impl::join_lists,
-            a,
-            b
-          >
-        >
+        lambda_c<a, b, apply<mpllibs::metamonad::impl::join_lists, a, b> >
         mappend;
     };
 

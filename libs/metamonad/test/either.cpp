@@ -9,6 +9,8 @@
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
 #include <mpllibs/metamonad/fail.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
+#include <mpllibs/metamonad/name.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -17,11 +19,13 @@
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/assert.hpp>
 
+using namespace mpllibs::metamonad::name;
+
 using mpllibs::metamonad::left;
 using mpllibs::metamonad::right;
+using mpllibs::metamonad::lambda_c;
 
 using boost::mpl::plus;
-using boost::mpl::_1;
 using boost::mpl::int_;
 
 namespace
@@ -34,7 +38,7 @@ namespace
   typedef right<int11> right11;
   typedef left<int11> left11;
   
-  typedef right<plus<_1, int2> > either_add_2;
+  typedef lambda_c<x, right<plus<x, int2> > > either_add_2;
   
 }
 

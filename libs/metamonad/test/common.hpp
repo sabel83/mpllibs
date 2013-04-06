@@ -12,7 +12,6 @@
 #include <mpllibs/metamonad/name.hpp>
 
 #include <boost/mpl/int.hpp>
-#include <boost/mpl/apply.hpp>
 #include <boost/mpl/times.hpp>
 #include <boost/mpl/divides.hpp>
 #include <boost/mpl/plus.hpp>
@@ -50,8 +49,6 @@ namespace
 
   MPLLIBS_LAZY_METAFUNCTION(lazy_equal_to, (A)(B))
   ((boost::mpl::equal_to<A, B>));
-
-  MPLLIBS_LAZY_METAFUNCTION(lazy_apply, (F)(A1)) ((boost::mpl::apply<F, A1>));
 
   // Needed by laziness tests
 

@@ -11,10 +11,10 @@
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/pair.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/mpl/apply.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/quote.hpp>
@@ -41,9 +41,9 @@ BOOST_AUTO_TEST_CASE(test_state)
 {
   using mpllibs::metamonad::state_tag;
   using mpllibs::metamonad::monad;
+  using mpllibs::metamonad::apply;
 
   using boost::mpl::equal_to;
-  using boost::mpl::apply;
   using boost::mpl::int_;
   using boost::mpl::quote1;
 
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(test_state)
     equal_to<
       int24,
       apply<
-        apply<monad<state_tag>::bind, return11, plusn<int13> >::type,
+        apply<monad<state_tag>::bind, return11, plusn<int13> >,
         int1
       >::type::first
     >
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(test_state)
     equal_to<
       int14,
       apply<
-        apply<monad<state_tag>::bind, return11, plusn<int13> >::type,
+        apply<monad<state_tag>::bind, return11, plusn<int13> >,
         int1
       >::type::second
     >

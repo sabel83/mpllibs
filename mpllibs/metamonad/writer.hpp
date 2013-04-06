@@ -8,16 +8,13 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/monoid.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/mappend.hpp>
 #include <mpllibs/metamonad/first.hpp>
 #include <mpllibs/metamonad/second.hpp>
 #include <mpllibs/metamonad/pair.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
@@ -34,26 +31,8 @@ namespace mpllibs
       typedef
         lambda_c<a, f,
           pair<
-            first<
-              lazy<
-                boost::mpl::apply_wrap1<
-                  lazy_protect_args<f>,
-                  first<lazy_protect_args<a> >
-                >
-              >
-            >,
-            mappend<
-              M,
-              second<a>,
-              second<
-                lazy<
-                  boost::mpl::apply_wrap1<
-                    lazy_protect_args<f>,
-                    first<lazy_protect_args<a> >
-                  >
-                >
-              >
-            >
+            first<apply<f, first<a> > >,
+            mappend<M, second<a>, second<apply<f, first<a> > > >
           >
         >
         bind;

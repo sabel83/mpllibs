@@ -8,10 +8,10 @@
 #include <mpllibs/metamonad/curried_call.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
@@ -33,11 +33,7 @@ namespace
 BOOST_AUTO_TEST_CASE(test_curried_call)
 {
   using mpllibs::metamonad::curried_call4;
-
-  using boost::mpl::apply_wrap1;
-  using boost::mpl::apply_wrap2;
-  using boost::mpl::apply_wrap3;
-  using boost::mpl::apply_wrap4;
+  using mpllibs::metamonad::apply;
 
   using boost::is_same;
 
@@ -53,10 +49,7 @@ BOOST_AUTO_TEST_CASE(test_curried_call)
   BOOST_MPL_ASSERT((
     is_same<
       some_template<int0, int1, int2, int4>,
-      apply_wrap1<
-        curried_call4<returns_some_template, int0, int1, int2>::type,
-        int4
-      >::type
+      apply<curried_call4<returns_some_template, int0, int1, int2>, int4>::type
     >
   ));
 
@@ -64,8 +57,8 @@ BOOST_AUTO_TEST_CASE(test_curried_call)
   BOOST_MPL_ASSERT((
     is_same<
       some_template<int0, int1, int2, int4>,
-      apply_wrap2<
-        curried_call4<returns_some_template, int0, int1>::type,
+      apply<
+        curried_call4<returns_some_template, int0, int1>,
         int2,
         int4
       >::type
@@ -76,8 +69,8 @@ BOOST_AUTO_TEST_CASE(test_curried_call)
   BOOST_MPL_ASSERT((
     is_same<
       some_template<int0, int1, int2, int4>,
-      apply_wrap3<
-        curried_call4<returns_some_template, int0>::type,
+      apply<
+        curried_call4<returns_some_template, int0>,
         int1,
         int2,
         int4
@@ -89,8 +82,8 @@ BOOST_AUTO_TEST_CASE(test_curried_call)
   BOOST_MPL_ASSERT((
     is_same<
       some_template<int0, int1, int2, int4>,
-      apply_wrap4<
-        curried_call4<returns_some_template>::type,
+      apply<
+        curried_call4<returns_some_template>,
         int0,
         int1,
         int2,
@@ -103,14 +96,11 @@ BOOST_AUTO_TEST_CASE(test_curried_call)
   BOOST_MPL_ASSERT((
     is_same<
       some_template<int0, int1, int2, int4>,
-      apply_wrap1<
-        apply_wrap1<
-          apply_wrap1<
-            apply_wrap1<curried_call4<returns_some_template>::type, int0>::type,
-            int1
-          >::type,
+      apply<
+        apply<
+          apply<apply<curried_call4<returns_some_template>, int0>, int1>,
           int2
-        >::type,
+        >,
         int4
       >::type
     >

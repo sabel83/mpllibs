@@ -11,8 +11,7 @@
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
-
-#include <boost/mpl/apply.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
@@ -29,7 +28,7 @@ namespace mpllibs
         lambda_c<a, f,
           eval_case< a,
             matches_c<left<_>,  a>,
-            matches_c<right<x>, boost::mpl::apply<f, x> >
+            matches_c<right<x>, apply<f, x> >
           >
         >
         bind;

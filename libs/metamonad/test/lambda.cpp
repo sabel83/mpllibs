@@ -11,6 +11,7 @@
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -19,16 +20,12 @@
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/plus.hpp>
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/assert.hpp>
 
 #include <boost/type_traits.hpp>
 
 BOOST_AUTO_TEST_CASE(test_lambda)
 {
-  using boost::mpl::apply;
-  using boost::mpl::apply_wrap1;
-  using boost::mpl::apply_wrap3;
   using boost::mpl::plus;
   using boost::mpl::equal_to;
 
@@ -41,6 +38,7 @@ BOOST_AUTO_TEST_CASE(test_lambda)
   using mpllibs::metamonad::returns;
   using mpllibs::metamonad::syntax;
   using mpllibs::metamonad::eval_syntax;
+  using mpllibs::metamonad::apply;
 
   // test_no_argument
   BOOST_MPL_ASSERT((equal_to<int13, lambda<syntax<plus<int2,int11> > >::type>));
@@ -62,7 +60,7 @@ BOOST_AUTO_TEST_CASE(test_lambda)
   BOOST_MPL_ASSERT((
     equal_to<
       int13,
-      lazy_apply<apply<lambda<x, y, syntax<plus<x, y> > >, int2>, int11>::type
+      apply<apply<lambda<x, y, syntax<plus<x, y> > >, int2>, int11>::type
     >
   ));
 
@@ -73,9 +71,7 @@ BOOST_AUTO_TEST_CASE(test_lambda)
       eval_syntax<
         let<
           s, syntax<int11>,
-          syntax<
-            apply_wrap3<lambda<x, s, z, syntax<int11> >, int0, int1, int2>
-          >
+          syntax<apply<lambda<x, s, z, syntax<int11> >, int0, int1, int2> >
         >
       >::type
     >
@@ -83,7 +79,7 @@ BOOST_AUTO_TEST_CASE(test_lambda)
 
   // test_unused_arg
   BOOST_MPL_ASSERT((
-    is_same<_, apply_wrap1<lambda<_, syntax<returns<_> > >, int13>::type>
+    is_same<_, apply<lambda<_, syntax<returns<_> > >, int13>::type>
   ));
 }
 

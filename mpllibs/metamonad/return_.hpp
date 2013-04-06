@@ -8,8 +8,7 @@
 
 #include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
@@ -17,7 +16,7 @@ namespace mpllibs
   {
     // It must not be an alias to be able to do pattern matching on it
     MPLLIBS_METAFUNCTION(return_, (MonadTag)(T))
-    ((boost::mpl::apply_wrap1<typename monad<MonadTag>::return_, T>));
+    ((apply<typename monad<MonadTag>::return_, T>));
   }
 }
 

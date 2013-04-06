@@ -8,15 +8,14 @@
 
 #include <mpllibs/metamonad/monoid.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
     MPLLIBS_METAFUNCTION(mconcat, (MonadTag)(L))
-    ((boost::mpl::apply_wrap1<typename monoid<MonadTag>::mconcat, L>));
+    ((apply<typename monoid<MonadTag>::mconcat, L>));
   }
 }
 

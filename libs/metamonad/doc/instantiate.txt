@@ -46,7 +46,7 @@ For any +n > 0+, +k >= 0+, +n >= k+, +c1+, ..., +ck+ classes and +t+ template
 class taking +n+ classes as template arguments
 
 --------------------------------------
-boost::mpl::apply_wrap1<instantiaten<t>, boost::mpl::vector<c1, ..., ck> >::type
+instantiaten<t>::apply<boost::mpl::vector<c1, ..., ck> >::type
 --------------------------------------
 
 is equivalent with
@@ -59,9 +59,7 @@ Example
 -------
 
 --------------------------------------
-typedef 
-  boost::mpl::apply_wrap1<instantiate<pair>, boost::mpl::vector<int, int>>::type
-  int_pair;
+typedef apply<instantiate<pair>, boost::mpl::vector<int, int>>::type int_pair;
 --------------------------------------
 
 include::copyright[]

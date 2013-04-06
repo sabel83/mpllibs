@@ -9,11 +9,11 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/assert.hpp>
 
 #include "common.hpp"
@@ -43,17 +43,17 @@ BOOST_AUTO_TEST_CASE(test_return_)
 {
   using mpllibs::metamonad::return_;
   using mpllibs::metamonad::monad;
+  using mpllibs::metamonad::apply;
 
-  using boost::mpl::apply_wrap1;
   using boost::mpl::equal_to;
 
   // test_specialisation_is_called
   BOOST_MPL_ASSERT((
-    equal_to<int13, apply_wrap1<monad<test_tag>::return_, int>::type>
+    equal_to<int13, apply<monad<test_tag>::return_, int1>::type>
   ));
 
   // test_using_two_arguments
-  BOOST_MPL_ASSERT((equal_to<int13, return_<test_tag, int>::type>));
+  BOOST_MPL_ASSERT((equal_to<int13, return_<test_tag, int1>::type>));
 }
 
 

@@ -44,7 +44,7 @@ bind_<monad_tag, a, b>
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply_wrap2<monad<monad_tag>::bind_, a, b>
+apply<monad<monad_tag>::bind_, a, b>
 --------------------------------------
 
 Example

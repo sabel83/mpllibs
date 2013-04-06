@@ -64,6 +64,7 @@ link:lazy_protect_args.html[lazy_protect_args] +
 Lambda expression
 ~~~~~~~~~~~~~~~~~
 
+link:apply.html[apply] +
 link:lambda.html[lambda] +
 link:lambda_c.html[lambda_c] +
 

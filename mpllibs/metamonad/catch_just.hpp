@@ -9,12 +9,8 @@
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/name.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/lazy_protect_args.hpp>
-#include <mpllibs/metamonad/already_lazy.hpp>
 #include <mpllibs/metamonad/if.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
@@ -23,20 +19,7 @@ namespace mpllibs
     template <class E, class Pred, class Handler>
     struct catch_just :
       eval_case<E,
-        matches_c<exception<e>,
-          if_<
-            lazy<
-              boost::mpl::apply_wrap1<lazy_protect_args<Pred>, already_lazy<e> >
-            >,
-            lazy<
-              boost::mpl::apply_wrap1<
-                lazy_protect_args<Handler>,
-                already_lazy<e>
-              >
-            >,
-            E
-          >
-        >,
+        matches_c<exception<e>, if_<apply<Pred, e>, apply<Handler, e>, E> >,
         matches_c<_, E>
       >
     {};

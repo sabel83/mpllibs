@@ -46,8 +46,8 @@ following evaluate to true:
 --------------------------------------
 is_tag<v1, p>::type
 boost::mpl::not_<is_tag<v2, p>::type>::type
-boost::mpl::apply_wrap<is_tag<v1>, p>::type
-boost::mpl::not_<boost::mpl::apply_wrap<is_tag<v2>, p>::type>::type
+apply<is_tag<v1>, p>::type
+boost::mpl::not_<apply<is_tag<v2>, p>::type>::type
 --------------------------------------
 
 Example

@@ -44,7 +44,7 @@ return_<monad_tag, t>
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply_wrap1<monad<monad_tag>::return_, t>
+apply<monad<monad_tag>::return_, t>
 --------------------------------------
 
 Example

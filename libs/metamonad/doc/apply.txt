@@ -1,18 +1,18 @@
-//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2012.
+//    Copyright Abel Sinkovics (abel@sinkovics.hu) 2013.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-mconcat
-=======
+apply
+=====
 Abel Sinkovics
 
 Synopsis
 --------
 
 --------------------------------------
-template <class MonadTag, class L>
-struct mconcat
+template <class F, class T1, ..., class Tn>
+struct apply
 {
   // unspecified
 };
@@ -22,48 +22,37 @@ struct mconcat
 Description
 -----------
 
-+mconcat+ is a metafunction for the +mconcat+ operation of the
-link:monoid.html[monoid] typeclass.
+Lazy wrapper for +F::apply<T1, ..., Tn>+.
 
 Header
 ------
 
 --------------------------------------
-#include <mpllibs/metamonad/mconcat.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 --------------------------------------
 
 Expression semantics
 --------------------
 
-For any +monad_tag+ tag and +l+ list:
+For any +n+ and +f+ , +t1+, ..., +tn+ types
 
 --------------------------------------
-mconcat<monad_tag, l>
+apply<f, t1, ..., tn>::type
 --------------------------------------
 
 is equivalent to
 
 --------------------------------------
-apply<monoid<monad_tag>::mconcat, l>
+f::type::apply<t1::type, ..., tn::type>::type
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-using boost::mpl::list_c;
-using boost::mpl::list;
+using namespace mpllibs::metamonad::name;
 
-typedef
-  mconcat<
-    list_tag,
-    list<
-      list_c<int, 0, 1, 2, 3, 4>,
-      list_c<int, 5, 6>,
-      list_c<int, 7, 8, 9>
-    >
-  >::type
-  list_0_to_10;
+apply<lambda_c<a, b, mpl::plus<a, b>>, mpl::int_<1>, mpl::int_<2>>::type
 --------------------------------------
 
 include::copyright[]

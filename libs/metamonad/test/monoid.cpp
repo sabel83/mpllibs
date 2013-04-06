@@ -20,7 +20,6 @@
 #include <boost/mpl/list_c.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/times.hpp>
-#include <boost/mpl/apply.hpp>
 #include <boost/mpl/assert.hpp>
 
 
@@ -66,7 +65,6 @@ BOOST_AUTO_TEST_CASE(test_monoid)
 
   using boost::mpl::equal_to;
   using boost::mpl::list_c;
-  using boost::mpl::apply;
   using boost::mpl::int_;
 
   // test_concat_plus

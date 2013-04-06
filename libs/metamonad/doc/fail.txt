@@ -44,7 +44,7 @@ fail<monad_tag, s>
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply_wrap1<monad<monad_tag>::fail, s>
+apply<monad<monad_tag>::fail, s>
 --------------------------------------
 
 Example

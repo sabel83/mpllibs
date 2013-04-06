@@ -44,7 +44,7 @@ mappend<monad_tag, a, b>
 is equivalent to
 
 --------------------------------------
-boost::mpl::apply_wrap2<monoid<monad_tag>::mappend, a, b>
+apply<monoid<monad_tag>::mappend, a, b>
 --------------------------------------
 
 Example

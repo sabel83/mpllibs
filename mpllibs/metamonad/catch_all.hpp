@@ -9,8 +9,7 @@
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/name.hpp>
-
-#include <boost/mpl/apply_wrap.hpp>
+#include <mpllibs/metamonad/apply.hpp>
 
 namespace mpllibs
 {
@@ -19,9 +18,7 @@ namespace mpllibs
     template <class E, class Handler>
     struct catch_all :
       eval_case<E,
-        matches_c<exception<e>,
-          boost::mpl::apply_wrap1<typename Handler::type, e>
-        >,
+        matches_c<exception<e>, apply<Handler, e> >,
         matches_c<_, E>
       >
     {};

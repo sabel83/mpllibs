@@ -9,10 +9,10 @@
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/always.hpp>
 
 struct non_comparable_tag : mpllibs::metamonad::tmp_tag<non_comparable_tag> {};
 
@@ -26,7 +26,11 @@ namespace boost
   {
     template <>
     struct equal_to_impl<non_comparable_tag, non_comparable_tag> :
-      always<true_>
+      mpllibs::metamonad::lambda_c<
+        mpllibs::metamonad::_,
+        mpllibs::metamonad::_,
+        true_
+      >
     {};
     
     template <class T>
@@ -41,18 +45,22 @@ namespace boost
 
 template <class TagA, class TagB>
 struct less_impl :
-  boost::mpl::always<mpllibs::metamonad::exception<non_comparable> >
+  mpllibs::metamonad::lambda_c<
+    mpllibs::metamonad::_,
+    mpllibs::metamonad::_,
+    mpllibs::metamonad::exception<non_comparable>
+  >
 {};
 
 template <class A, class B>
 struct less :
-  boost::mpl::apply_wrap2<
+  mpllibs::metamonad::apply<
     less_impl<
       typename boost::mpl::tag<typename A::type>::type,
       typename boost::mpl::tag<typename B::type>::type
     >,
-    typename A::type,
-    typename B::type
+    A,
+    B
   >
 {};
 
@@ -61,6 +69,8 @@ typedef boost::mpl::tag<boost::mpl::int_<0> >::type int_tag;
 template <>
 struct less_impl<int_tag, int_tag>
 {
+  typedef less_impl type;
+
   // Visual C++ 2010 fails to compile it when operator< is used instead of
   // operator >
   template <class A, class B>
