@@ -10,8 +10,6 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
-#include <mpllibs/metamonad/lazy.hpp>
-#include <mpllibs/metamonad/lazy_protect_args.hpp>
 #include <mpllibs/metamonad/either.hpp>
 
 #include <boost/mpl/int.hpp>
@@ -31,16 +29,12 @@
 using boost::mpl::minus;
 
 using mpllibs::metamonad::tmp_value;
-using mpllibs::metamonad::lazy;
-using mpllibs::metamonad::lazy_protect_args;
 using mpllibs::metamonad::lambda_c;
 using mpllibs::metamonad::right;
 
 namespace
 {
-  typedef
-    lambda_c<a, lazy<right<lazy_protect_args<minus<a, int2> > > > >
-    minus_2;
+  typedef lambda_c<a, right<minus<a, int2> > > minus_2;
 }
 
 BOOST_AUTO_TEST_CASE(test_monad)
