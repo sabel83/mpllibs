@@ -51,11 +51,13 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(bad_match, (Pattern)(Value))
+    MPLLIBS_LAZY_METAFUNCTION(bad_match, (Pattern)(Value))
     ((tmp_value<bad_match<Pattern, Value> >));
 
     template <class Pattern, class Value>
-    struct match_impl : exception<bad_match<Pattern, Value> > {};
+    struct match_impl :
+      exception<bad_match<syntax<Pattern>, syntax<Value> > >
+    {};
 
     template <class Pattern, class Value>
     struct match_c_impl : match_impl<Pattern, Value> {};
@@ -165,14 +167,7 @@ namespace mpllibs
                   second<p>
                 >,
                 s,
-                exception<
-                  lazy<
-                    bad_match<
-                      lazy_protect_args<first<p> >,
-                      lazy_protect_args<second<p> >
-                    >
-                  >
-                >
+                exception<bad_match<first<p>, second<p> > >
               >,
               map_insert<s, p>
             >

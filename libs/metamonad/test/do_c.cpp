@@ -84,7 +84,7 @@ namespace boost
 
 namespace
 {
-  MPLLIBS_LAZY_METAFUNCTION(minus_2, (A)) ((lazy<right<minus<A, int2> > >));
+  MPLLIBS_LAZY_METAFUNCTION(minus_2, (A)) ((right<minus<A, int2> >));
   
   MPLLIBS_LAZY_METAFUNCTION(eval_to_right, (T)) ((right<T>));
 }
