@@ -27,6 +27,11 @@ namespace mpllibs
     >
     struct lambda;
 
+    #ifdef MPLLIBS_EVAL_PARAM
+      #error MPLLIBS_EVAL_PARAM already defined
+    #endif
+    #define MPLLIBS_EVAL_PARAM(z, n, name) typename BOOST_PP_CAT(name, n)::type
+
     #ifdef MPLLIBS_LAMBDA_CASE
       #error MPLLIBS_LAMBDA_CASE already defined
     #endif
@@ -47,7 +52,7 @@ namespace mpllibs
         > : \
         impl::lambda_impl< \
           pair< \
-            boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, T)>, \
+            boost::mpl::vector<BOOST_PP_ENUM(n, MPLLIBS_EVAL_PARAM, T)>, \
             F \
           > \
         > \
@@ -56,6 +61,7 @@ namespace mpllibs
     BOOST_PP_REPEAT(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, MPLLIBS_LAMBDA_CASE, ~)
 
     #undef MPLLIBS_LAMBDA_CASE
+    #undef MPLLIBS_EVAL_PARAM
 
     namespace impl
     {
@@ -85,14 +91,14 @@ namespace mpllibs
           > : \
             lambda< \
               BOOST_PP_ENUM_PARAMS(n, T) BOOST_PP_COMMA_IF(n) \
-              typename if_< \
+              if_< \
                 boost::mpl::contains< \
                   boost::mpl::vector<BOOST_PP_ENUM_PARAMS(n, T)>, \
                   A \
                 >, \
                 F, \
                 let_in_syntax<A, E1, F> \
-              >::type \
+              > \
             > \
         {};
 

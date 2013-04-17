@@ -40,8 +40,15 @@ BOOST_AUTO_TEST_CASE(test_lambda)
   using mpllibs::metamonad::eval_syntax;
   using mpllibs::metamonad::apply;
 
+  // test_metaprogramming_value
+  BOOST_MPL_ASSERT((
+    equal_to<int13, lambda<syntax<plus<int2, int11> > >::type::apply<>::type>
+  ));
+
   // test_no_argument
-  BOOST_MPL_ASSERT((equal_to<int13, lambda<syntax<plus<int2,int11> > >::type>));
+  BOOST_MPL_ASSERT((
+    equal_to<int13, lambda<syntax<plus<int2,int11> > >::apply<>::type>
+  ));
 
   // test_simple_lambda
   BOOST_MPL_ASSERT((
@@ -80,6 +87,14 @@ BOOST_AUTO_TEST_CASE(test_lambda)
   // test_unused_arg
   BOOST_MPL_ASSERT((
     is_same<_, apply<lambda<_, syntax<returns<_> > >, int13>::type>
+  ));
+
+  // test_laziness
+  BOOST_MPL_ASSERT((
+    equal_to<
+      int13,
+      apply<lambda<returns<x>, returns<syntax<plus<int2, x> > > >, int11>::type
+    >
   ));
 }
 

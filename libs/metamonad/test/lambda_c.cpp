@@ -40,8 +40,15 @@ BOOST_AUTO_TEST_CASE(test_lambda_c)
   using mpllibs::metamonad::eval_syntax;
   using mpllibs::metamonad::apply;
 
+  // test_metaprogramming_value
+  BOOST_MPL_ASSERT((
+    equal_to<int13, lambda_c<plus<int2, int11> >::type::apply<>::type>
+  ));
+
   // test_no_argument
-  BOOST_MPL_ASSERT((equal_to<int13, lambda_c<plus<int2, int11> >::type>));
+  BOOST_MPL_ASSERT((
+    equal_to<int13, lambda_c<plus<int2, int11> >::apply<>::type>
+  ));
 
   // test_simple_lambda
   BOOST_MPL_ASSERT((

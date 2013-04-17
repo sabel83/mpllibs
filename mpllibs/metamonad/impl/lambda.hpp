@@ -61,12 +61,19 @@ namespace mpllibs
       };
 
       template <class State>
-      struct lambda_impl :
-        boost::mpl::if_<
-          typename boost::mpl::empty<typename first<State>::type>::type,
+      struct lambda_impl;
+
+      template <class State>
+      struct lambda_maybe_eval :
+        if_<
+          boost::mpl::empty<typename first<State>::type>,
           eval_syntax<second<State> >,
-          tmp_value<lambda_impl<State> >
+          lambda_impl<State>
         >::type
+      {};
+
+      template <class State>
+      struct lambda_impl : tmp_value<lambda_impl<State> >
       {
         template <
           BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
@@ -76,14 +83,14 @@ namespace mpllibs
           )
         >
         struct apply :
-          lambda_impl<
-            typename boost::mpl::fold<
+          lambda_maybe_eval<
+            boost::mpl::fold<
               boost::mpl::vector<
                 BOOST_PP_ENUM_PARAMS(BOOST_MPL_LIMIT_METAFUNCTION_ARITY, T)
               >,
               State,
               lambda_impl_step
-            >::type
+            >
           >
         {};
       };
@@ -91,7 +98,7 @@ namespace mpllibs
       template <class A, class E1, class State>
       struct
         let_impl<A, E1, impl::lambda_impl<State> > :
-          impl::lambda_impl<
+          lambda_impl<
             pair<
               first<State>,
               if_<
