@@ -97,7 +97,7 @@ namespace mpllibs
 
       template <class A, class E1, class State>
       struct
-        let_impl<A, E1, impl::lambda_impl<State> > :
+        let_impl<A, E1, lambda_impl<State> > :
           lambda_impl<
             pair<
               first<State>,

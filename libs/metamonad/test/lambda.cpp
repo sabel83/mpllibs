@@ -8,6 +8,7 @@
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/eval_let.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
@@ -33,6 +34,7 @@ BOOST_AUTO_TEST_CASE(test_lambda)
   
   using mpllibs::metamonad::lambda;
   using mpllibs::metamonad::lazy;
+  using mpllibs::metamonad::eval_let;
   using mpllibs::metamonad::let;
   using mpllibs::metamonad::_;
   using mpllibs::metamonad::returns;
@@ -94,6 +96,20 @@ BOOST_AUTO_TEST_CASE(test_lambda)
     equal_to<
       int13,
       apply<lambda<returns<x>, returns<syntax<plus<int2, x> > > >, int11>::type
+    >
+  ));
+
+  // test_currying_and_lambda
+  BOOST_MPL_ASSERT((
+    equal_to<
+      int13,
+      apply<
+        eval_let<
+          y, syntax<int1>,
+          syntax<apply<lambda<x, y, syntax<y> >, int11> >
+        >,
+        int13
+      >::type
     >
   ));
 }
