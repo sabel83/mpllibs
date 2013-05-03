@@ -14,6 +14,8 @@
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/push_back.hpp>
 
+#include <string>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -21,9 +23,15 @@ namespace mpllibs
     namespace errors
     {
       template <class C>
-      struct literal_expected :
-        boost::mpl::push_back<boost::mpl::string<'expe','cted',': '>, C>
-      {};
+      struct literal_expected
+      {
+        typedef literal_expected type;
+
+        static std::string get_value()
+        {
+          return std::string("Expected: ") + C::type::value;
+        }
+      };
     }
   
     template <class C>

@@ -33,15 +33,12 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
   using boost::mpl::apply;
   using boost::mpl::equal_to;
   using boost::mpl::apply_wrap2;
-  using boost::mpl::string;
-
-  typedef string<'fail'> test_error_msg;
 
   // test_with_text
   BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<
-        accept_when<one_char, is_digit, test_error_msg>,
+        accept_when<one_char, is_digit, test_failure>,
         str_hello,
         start
       >
@@ -53,7 +50,7 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
     equal_to<
       get_result<
         apply_wrap2<
-          accept_when<one_char, is_digit, test_error_msg>,
+          accept_when<one_char, is_digit, test_failure>,
           str_1983,
           start
         >
@@ -65,7 +62,7 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
   // test_with_empty_string
   BOOST_MPL_ASSERT((
     is_error<
-      apply_wrap2<accept_when<one_char, is_digit, test_error_msg>, str_, start>
+      apply_wrap2<accept_when<one_char, is_digit, test_failure>, str_, start>
     >
   ));
 }

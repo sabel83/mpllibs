@@ -16,6 +16,8 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/at.hpp>
 
+#include <string>
+
 typedef boost::mpl::list_c<char> str_;
 typedef boost::mpl::list_c<char, '0'> str_0;
 typedef boost::mpl::list_c<char, '1'> str_1;
@@ -87,6 +89,13 @@ typedef boost::mpl::list< > empty_list;
 typedef
   boost::mpl::at<boost::mpl::vector<int, double>, int11>
   can_not_be_instantiated;
+
+struct test_failure
+{
+  typedef test_failure type;
+
+  static std::string get_value() { return "fail"; }
+};
 
 #endif
 

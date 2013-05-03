@@ -6,6 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metaparse/define_error.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 
 #include <boost/mpl/int.hpp>
@@ -19,7 +20,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      typedef boost::mpl::string<'inva','lid ','digi','t'> invalid_digit;
+      MPLLIBS_DEFINE_ERROR(invalid_digit, "Invalid digit");
     }
     
     namespace util

@@ -11,6 +11,7 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/get_prev_char.hpp>
+#include <mpllibs/metaparse/define_error.hpp>
 
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -30,9 +31,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      typedef
-        boost::mpl::string<'unex','pect','ed e','nd o','f in','put'>
-        unexpected_end_of_input;
+      MPLLIBS_DEFINE_ERROR(unexpected_end_of_input, "Unexpected end of input");
     }
     
     struct one_char

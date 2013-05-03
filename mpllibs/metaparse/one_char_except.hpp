@@ -8,6 +8,7 @@
 
 #include <mpllibs/metaparse/one_char.hpp>
 #include <mpllibs/metaparse/accept_when.hpp>
+#include <mpllibs/metaparse/define_error.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -29,9 +30,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      typedef
-        boost::mpl::string<'unex','pect','ed c','hara','cter'>
-        unexpected_character;
+      MPLLIBS_DEFINE_ERROR(unexpected_character, "Unexpected character");
     }
     
     namespace impl

@@ -50,7 +50,6 @@ namespace mpllibs
         static void run()
         {
           using std::endl;
-          using boost::mpl::c_str;
           using mpllibs::metaparse::get_line;
           using mpllibs::metaparse::get_col;
           
@@ -61,7 +60,7 @@ namespace mpllibs
             << "line " << get_line<typename R::source_position>::type::value
             << ", col " << get_col<typename R::source_position>::type::value
             << ": "
-            << c_str<typename R::message::type>::type::value << endl;
+            << R::message::type::get_value() << endl;
         }
       };
       

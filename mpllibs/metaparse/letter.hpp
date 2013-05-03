@@ -8,6 +8,7 @@
 
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
+#include <mpllibs/metaparse/define_error.hpp>
 
 #include <mpllibs/metaparse/util/is_letter.hpp>
 
@@ -17,7 +18,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      typedef boost::mpl::string<'lett','er e','xpec','ted'> letter_expected;
+      MPLLIBS_DEFINE_ERROR(letter_expected, "Letter expected");
     }
     
     typedef

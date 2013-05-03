@@ -8,6 +8,7 @@
 
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/fail.hpp>
+#include <mpllibs/metaparse/define_error.hpp>
 
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/not.hpp>
@@ -29,11 +30,10 @@ namespace mpllibs
   {
     namespace errors
     {
-      typedef
-        boost::mpl::string<
-          'none',' of ','the ','expe','cted',' cas','es f','ound'
-        >
-        none_of_the_expected_cases_found;
+      MPLLIBS_DEFINE_ERROR(
+        none_of_the_expected_cases_found,
+        "None of the expected cases found"
+      );
     }
   
     #ifdef MPLLIBS_ONE_OF_BODY_PREFIX

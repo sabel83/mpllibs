@@ -20,14 +20,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-namespace
-{
-  using mpllibs::metaparse::fail;
-  using boost::mpl::string;
-
-  typedef fail<string<'fail'> > test_fail;
-}
-
 BOOST_AUTO_TEST_CASE(test_one_of)
 {
   using mpllibs::metaparse::is_error;
@@ -38,10 +30,13 @@ BOOST_AUTO_TEST_CASE(test_one_of)
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::one_char;
+  using mpllibs::metaparse::fail;
   
   using boost::mpl::apply_wrap2;
   using boost::mpl::equal_to;
   
+  typedef fail<test_failure> test_fail;
+
   // test0
   BOOST_MPL_ASSERT((is_error<apply_wrap2<one_of_0< >, str_hello, start> >));
   

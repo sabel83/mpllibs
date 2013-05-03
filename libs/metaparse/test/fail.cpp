@@ -24,13 +24,10 @@ BOOST_AUTO_TEST_CASE(test_fail)
   using mpllibs::metaparse::start;
   
   using boost::mpl::apply_wrap2;
-  using boost::mpl::string;
-
-  typedef string<'fail'> test_error_msg;
 
   // test_fail_for_non_empty_string
   BOOST_MPL_ASSERT((
-    is_error<apply_wrap2<fail<test_error_msg>, str_hello, start> >
+    is_error<apply_wrap2<fail<test_failure>, str_hello, start> >
   ));
 }
 

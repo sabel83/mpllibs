@@ -19,7 +19,6 @@
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/vector_c.hpp>
-#include <boost/mpl/string.hpp>
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/assert.hpp>
 
@@ -38,10 +37,9 @@ BOOST_AUTO_TEST_CASE(test_any_one_of1)
   using boost::mpl::apply_wrap2;
   using boost::mpl::equal;
   using boost::mpl::list;
-  using boost::mpl::string;
   using boost::mpl::vector_c;
   
-  typedef fail<string<'fail'> > test_fail;
+  typedef fail<test_failure> test_fail;
 
   // test0
   BOOST_MPL_ASSERT((is_error<apply_wrap2<any_one_of1< >, str_hello, start> >));

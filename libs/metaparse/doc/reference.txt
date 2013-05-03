@@ -97,14 +97,12 @@ link:compose.html[compose] +
 link:curry.html[curry] + 
 link:digit_to_int.html[digit_to_int] + 
 link:int_to_digit.html[int_to_digit] + 
-link:int_to_string.html[int_to_string] + 
 link:in_range.html[in_range] + 
 link:is_digit.html[is_digit] + 
 link:is_lcase_letter.html[is_lcase_letter] + 
 link:is_letter.html[is_letter] + 
 link:is_ucase_letter.html[is_ucase_letter] + 
 link:is_whitespace.html[is_whitespace] + 
-link:join_string.html[join_string] + 
 
 include::copyright[]
 

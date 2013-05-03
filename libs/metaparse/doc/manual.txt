@@ -72,9 +72,10 @@ Error handling
 
 An error is described using a compile-time data structure. It contains
 information about the source position where the error was detected and some
-description about the error. The description is a +boost::mpl::string+ value.
-link:debug_parsing_error.html[+debug_parsing_error+] can be used to display the
-error message.
+description about the error. The description is a class with a
++public: static std::string get_value()+ method, which returns the error
+message. link:debug_parsing_error.html[+debug_parsing_error+] can be used to
+display the error message.
 
 Some examples of simple parsers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

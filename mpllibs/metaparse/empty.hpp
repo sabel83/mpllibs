@@ -8,6 +8,7 @@
 
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/return.hpp>
+#include <mpllibs/metaparse/define_error.hpp>
 
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/apply_wrap.hpp>
@@ -20,9 +21,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      typedef
-        boost::mpl::string<'end ','of i','nput','expe','cted'>
-        end_of_input_expected;
+      MPLLIBS_DEFINE_ERROR(end_of_input_expected, "End of input expected");
     }
     
     template <class Result>

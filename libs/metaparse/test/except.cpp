@@ -31,14 +31,11 @@ BOOST_AUTO_TEST_CASE(test_except)
   
   using boost::mpl::apply_wrap2;
   using boost::mpl::equal_to;
-  using boost::mpl::string;
-
-  typedef string<'fail'> test_error_msg;
 
   // test_with_good
   BOOST_MPL_ASSERT((
     is_error<
-      apply_wrap2<except<one_char, int13, test_error_msg>, str_hello, start>
+      apply_wrap2<except<one_char, int13, test_failure>, str_hello, start>
     >
   ));
   
@@ -47,7 +44,7 @@ BOOST_AUTO_TEST_CASE(test_except)
     equal_to<
       get_result<
         apply_wrap2<
-          except<fail<test_error_msg>, int13, test_error_msg>,
+          except<fail<test_failure>, int13, test_failure>,
           str_hello,
           start
         >

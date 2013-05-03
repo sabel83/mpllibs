@@ -19,15 +19,21 @@
 #include <mpllibs/metaparse/one_char.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 
-#include <boost/mpl/string.hpp>
+#include <string>
 
 namespace safe
 {
   namespace errors
   {
-    typedef
-      boost::mpl::string<'no %', ' exp','ecte','d'>
-      no_percentage_char_expected;
+    struct no_percentage_char_expected
+    {
+      typedef no_percentage_char_expected type;
+
+      static std::string get_value()
+      {
+        return "No % char expected";
+      }
+    };
   }
 
   namespace grammar

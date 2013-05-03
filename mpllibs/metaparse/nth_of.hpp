@@ -11,9 +11,6 @@
 #include <mpllibs/metaparse/return.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 
-#include <mpllibs/metaparse/util/int_to_string.hpp>
-#include <mpllibs/metaparse/util/join_string.hpp>
-
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/list.hpp>
@@ -38,25 +35,17 @@ namespace mpllibs
     namespace errors
     {
       template <int From, int To, int N>
-      struct index_out_of_range :
-        mpllibs::metaparse::util::join_string<
-          boost::mpl::vector<
-            boost::mpl::string<'inde','x ('>,
-            mpllibs::metaparse::util::int_to_string::apply<
-              boost::mpl::int_<N>
-            >,
-            boost::mpl::string<') ou','t of',' ran','ge ','['>,
-            mpllibs::metaparse::util::int_to_string::apply<
-              boost::mpl::int_<From>
-            >,
-            boost::mpl::string<'-'>,
-            mpllibs::metaparse::util::int_to_string::apply<
-              boost::mpl::int_<To>
-            >,
-            boost::mpl::string<']'>
-          >
-        >
-      {};
+      struct index_out_of_range
+      {
+        typedef index_out_of_range type;
+
+        static std::string get_value()
+        {
+          std::ostringstream s;
+          s << "index (" << N << ") out of range [" << From << "-" << To << "]";
+          return s.str();
+        }
+      };
     }
   
     namespace impl

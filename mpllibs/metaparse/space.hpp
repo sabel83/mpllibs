@@ -8,6 +8,7 @@
 
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/one_char.hpp>
+#include <mpllibs/metaparse/define_error.hpp>
 
 #include <mpllibs/metaparse/util/is_whitespace.hpp>
 
@@ -19,9 +20,7 @@ namespace mpllibs
   {
     namespace errors
     {
-      typedef
-        boost::mpl::string<'whit','espa','ce e','xpec','ted'>
-        whitespace_expected;
+      MPLLIBS_DEFINE_ERROR(whitespace_expected, "Whitespace expected");
     }
   
     typedef
