@@ -62,7 +62,7 @@ struct fact;
 typedef
   eval_letrec_c<
     fact,
-    lambda<
+    lambda_c<
       n,
       if_<
         equal_to<n, int_<0>>,

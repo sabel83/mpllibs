@@ -74,7 +74,7 @@ template <>
 struct monoid<plus_tag> : monoid_defaults<plus_tag>
 {
   typedef int0 mempty;
-  typedef lambda<plus<_1, _2> > mappend;
+  typedef lambda_c<a, b, plus<a, b>> mappend;
 };
 --------------------------------------
 

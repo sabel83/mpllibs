@@ -54,9 +54,8 @@ requirements:
 * right identity:
     +bind<M, return_>+ is equivalent to +M+.
 * associativity:
-    +bind<M, lambda<x, bind<apply<F, x>, G> > >+ is equivalent to
-    +bind<bind<M, F>, G>+. +lambda+ is metamonad's lambda expression
-    implementation.
+    +bind<M, lambda_c<x, bind<apply<F, x>, G>>>+ is equivalent to
+    +bind<bind<M, F>, G>+.
 
 The typeclass implements the following operation:
 

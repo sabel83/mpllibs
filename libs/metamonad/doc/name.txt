@@ -51,7 +51,7 @@ namespace my_metaprograms
 {
   using namespace mpllibs::metamonad::name;
 
-  typedef metamonad::lambda<x, y, boost::mpl::plus<x, y>>::type add;
+  typedef metamonad::lambda_c<x, y, boost::mpl::plus<x, y>>::type add;
 }
 --------------------------------------
 
