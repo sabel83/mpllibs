@@ -57,7 +57,8 @@ using boost::mpl::minus;
 using boost::mpl::int_;
 using boost::mpl::equal_to;
 
-struct fact;
+struct fact_;
+typedef var<fact_> fact;
 
 typedef
   eval_syntax<
