@@ -41,25 +41,19 @@ struct bind<ast::application<F, Arg>, TopEnv, Env>
 template <class F, class ArgName, class TopEnv, class Env>
 struct bind<ast::lambda<F, ArgName>, TopEnv, Env>
 {
-private:
-  struct lambda
-  {
-    typedef lambda type;
+  typedef bind type;
   
-    template <class ArgValue>
-    struct apply :
-      bind<
-        F,
-        TopEnv,
-        typename boost::mpl::insert<
-          Env,
-          boost::mpl::pair<ArgName, ast::bound<ArgValue> >
-        >::type
+  template <class ArgValue>
+  struct apply :
+    bind<
+      F,
+      TopEnv,
+      typename boost::mpl::insert<
+        Env,
+        boost::mpl::pair<ArgName, ast::bound<ArgValue> >
       >::type
-    {};
-  };
-public:
-  typedef lazy::value<lambda> type;
+    >::type
+  {};
 };
 
 template <class E, class TopEnv, class Env>
