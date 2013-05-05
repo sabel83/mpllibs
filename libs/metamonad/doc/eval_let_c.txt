@@ -60,7 +60,7 @@ using namespace mpllibs::metamonad::name;
 template <class N>
 struct my_metafunction :
   eval_let_c<
-    x, plus<n, int_<13> >,
+    x, plus<n, int_<13>>,
     times<x, x>
   >
 {};

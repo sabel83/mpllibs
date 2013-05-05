@@ -63,7 +63,7 @@ typedef
   eval_letrec<
     fact,
     syntax<
-      lambda<
+      lambda_c<
         n,
         if_<
           equal_to<n, int_<0>>,

@@ -69,7 +69,7 @@ typedef
         lambda_c<
           n,
           if_<
-            equal_to<n, int_<0> >,
+            equal_to<n, int_<0>>,
             int_<1>,
             lazy<times<apply<fact, minus<n, int_<1>>>, n>>
           >
