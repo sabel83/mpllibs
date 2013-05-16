@@ -50,16 +50,10 @@ struct bind<ast::lambda<F, ArgName>, TopEnv, Env>
       TopEnv,
       typename boost::mpl::insert<
         Env,
-        boost::mpl::pair<ArgName, ast::bound<ArgValue> >
+        boost::mpl::pair<ArgName, ast::value<ArgValue> >
       >::type
     >::type
   {};
-};
-
-template <class E, class TopEnv, class Env>
-struct bind<ast::bound<E>, TopEnv, Env>
-{
-  typedef E type;
 };
 
 template <class E, class TopEnv, class Env>

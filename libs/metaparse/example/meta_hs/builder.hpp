@@ -35,7 +35,7 @@ struct builder
     builder<
       typename boost::mpl::insert<
         Env,
-        boost::mpl::pair<Name, ast::bound<Value> >
+        boost::mpl::pair<Name, ast::value<Value> >
       >::type
     >
   {};
@@ -56,7 +56,7 @@ struct builder
         Env, \
         boost::mpl::pair< \
           Name, \
-          ast::bound<BOOST_PP_CAT(mpllibs::metaparse::util::curry, n)<F> > \
+          ast::value<BOOST_PP_CAT(mpllibs::metaparse::util::curry, n)<F> > \
         > \
       >::type \
     > \

@@ -70,7 +70,7 @@ namespace semantic
           typename boost::mpl::apply_wrap2<
             application,
             typename boost::mpl::at_c<Seq, 0>::type,
-            ast::bound<mpllibs::metaparse::util::curry3<lazy_if> >
+            ast::value<mpllibs::metaparse::util::curry3<lazy_if> >
           >::type
         >::type
       >

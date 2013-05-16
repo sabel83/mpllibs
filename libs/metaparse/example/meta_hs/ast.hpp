@@ -33,12 +33,6 @@ namespace ast
   };
   
   template <class E>
-  struct bound
-  {
-    typedef bound type;
-  };
-  
-  template <class E>
   struct top_bound
   {
     typedef top_bound type;
