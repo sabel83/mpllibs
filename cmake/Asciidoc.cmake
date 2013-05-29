@@ -11,7 +11,6 @@ macro(asciidoc_build_impl A2X_ARGS TARGET_NAME OUTDIR)
     get_filename_component(FILENAME ${IT} NAME_WE)
     set(OUTFILE ${OUTDIR}/${FILENAME}.html)
     set(OUTFILES ${OUTFILES} ${OUTFILE})
-    set(AA2X_ARGS --xsltproc-opts=--param --xsltproc-opts=generate.toc --xsltproc-opts=nop)
     add_custom_command(
       OUTPUT ${OUTFILE}
       COMMAND ${A2X_EXECUTABLE} -f xhtml ${IT} --stylesheet style.css --destination-dir=${OUTDIR} ${A2X_ARGS}
