@@ -44,7 +44,7 @@ h4
   font-variant: small-caps;
 }
 
-.code, tt, pre
+.code, tt, pre, code
 {
   font-family: Monaco, Courier;
   font-weight: 900;
@@ -52,9 +52,9 @@ h4
 
 pre
 {
-  padding: 0;
+  padding: 10px;
   margin: 0;
-  
+  background: #e8e8e8;
 }
 
 small
@@ -65,5 +65,16 @@ small
 p
 {
   margin-left: 10px;
+}
+
+sub
+{
+  font-size: 15px;
+}
+
+dl
+{
+  margin: 0px;
+  padding: 0px;
 }
 

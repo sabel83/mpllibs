@@ -31,9 +31,9 @@ The library implements an error handling mechanism for template metaprograms
 that is similar to exception handling in runtime code. The library calls this
 technique compile-time exception handling and it is based on monads.
 
-link:manual.html[User manual] +
-link:reference.html[Library reference] +
-link:https://github.com/sabel83/mpllibs/tree/master/libs/metamonad/example[Examples] +
+* link:manual.html[User manual]
+* link:reference.html[Library reference]
+* link:https://github.com/sabel83/mpllibs/tree/master/libs/metamonad/example[Examples]
 
 include::copyright[]
 

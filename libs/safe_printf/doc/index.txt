@@ -17,9 +17,9 @@ time overhead, however).
 Functions
 ---------
 
-link:printf.html[printf] + 
-link:sprintf.html[sprintf] + 
-link:fprintf.html[fprintf] + 
+* link:printf.html[printf]
+* link:sprintf.html[sprintf]
+* link:fprintf.html[fprintf]
 
 include::copyright[]
 

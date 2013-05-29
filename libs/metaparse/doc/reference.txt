@@ -10,99 +10,101 @@ mpllibs::metaparse reference
 Parsers and combinators provided by the library
 -----------------------------------------------
 
-link:accept_when.html[accept_when] +
-link:alphanum.html[alphanum] +
-link:always.html[always] +
-link:any.html[any] +
-link:any1.html[any1] +
-link:any_one_of.html[any_one_of] +
-link:any_one_of1.html[any_one_of1] +
-link:change_error_message.html[change_error_message] +
-link:digit.html[digit] +
-link:digit_val.html[digit_val] +
-link:empty.html[empty] +
-link:entire_input.html[entire_input] +
-link:except.html[except] +
-link:fail.html[fail] +
-link:first_of.html[first_of] +
-link:foldl.html[foldl] +
-link:foldl1.html[foldl1] +
-link:foldlp.html[foldlp] +
-link:foldr.html[foldr] +
-link:foldr1.html[foldr1] +
-link:foldrp.html[foldrp] +
-link:grammar.html[grammar] +
-link:if.html[if] +
-link:int.html[int_] +
-link:iterate.html[iterate] +
-link:iterate_c.html[iterate_c] +
-link:keyword.html[keyword] +
-link:last_of.html[last_of] +
-link:letter.html[letter] +
-link:lit.html[lit] +
-link:lit_c.html[lit_c] +
-link:look_ahead.html[look_ahead] +
-link:middle_of.html[middle_of] +
-link:nth_of.html[nth_of] +
-link:nth_of_c.html[nth_of_c] +
-link:one_char.html[one_char] +
-link:one_char_except.html[one_char_except] +
-link:one_char_except_c.html[one_char_except_c] +
-link:one_of.html[one_of] +
-link:return.html[return] +
-link:sequence.html[sequence] +
-link:space.html[space] +
-link:spaces.html[spaces] +
-link:token.html[token] +
-link:transform.html[transform] +
+* link:accept_when.html[accept_when]
+* link:alphanum.html[alphanum]
+* link:always.html[always]
+* link:any.html[any]
+* link:any1.html[any1]
+* link:any_one_of.html[any_one_of]
+* link:any_one_of1.html[any_one_of1]
+* link:change_error_message.html[change_error_message]
+* link:digit.html[digit]
+* link:digit_val.html[digit_val]
+* link:empty.html[empty]
+* link:entire_input.html[entire_input]
+* link:except.html[except]
+* link:fail.html[fail]
+* link:first_of.html[first_of]
+* link:foldl.html[foldl]
+* link:foldl1.html[foldl1]
+* link:foldlp.html[foldlp]
+* link:foldr.html[foldr]
+* link:foldr1.html[foldr1]
+* link:foldrp.html[foldrp]
+* link:grammar.html[grammar]
+* link:if.html[if]
+* link:int.html[int_]
+* link:iterate.html[iterate]
+* link:iterate_c.html[iterate_c]
+* link:keyword.html[keyword]
+* link:last_of.html[last_of]
+* link:letter.html[letter]
+* link:lit.html[lit]
+* link:lit_c.html[lit_c]
+* link:look_ahead.html[look_ahead]
+* link:middle_of.html[middle_of]
+* link:nth_of.html[nth_of]
+* link:nth_of_c.html[nth_of_c]
+* link:one_char.html[one_char]
+* link:one_char_except.html[one_char_except]
+* link:one_char_except_c.html[one_char_except_c]
+* link:one_of.html[one_of]
+* link:return.html[return]
+* link:sequence.html[sequence]
+* link:space.html[space]
+* link:spaces.html[spaces]
+* link:token.html[token]
+* link:transform.html[transform]
 
 Compile-time data structures and values
 ---------------------------------------
 
-Result of parsing +
-link:get_position.html[get_position] +
-link:get_remaining.html[get_remaining] +
-link:get_result.html[get_result] +
-link:is_error.html[is_error] +
+Result of parsing
 
-Source position +
-link:get_col.html[get_col] +
-link:get_line.html[get_line] +
-link:get_prev_char.html[get_prev_char] +
-link:next_char.html[next_char] +
-link:next_line.html[next_line] +
-link:source_position.html[source_position] +
-link:start.html[start] +
+* link:get_position.html[get_position]
+* link:get_remaining.html[get_remaining]
+* link:get_result.html[get_result]
+* link:is_error.html[is_error]
+
+Source position
+
+* link:get_col.html[get_col]
+* link:get_line.html[get_line]
+* link:get_prev_char.html[get_prev_char]
+* link:next_char.html[next_char]
+* link:next_line.html[next_line]
+* link:source_position.html[source_position]
+* link:start.html[start]
 
 Metafunctions and metafunction classes
 --------------------------------------
 
-link:build_parser.html[build_parser] +
-link:unless_error.html[unless_error] +
+* link:build_parser.html[build_parser]
+* link:unless_error.html[unless_error]
 
 Macros
 ------
 
-link:MPLLIBS_STRING.html[MPLLIBS_STRING] +
+* link:MPLLIBS_STRING.html[MPLLIBS_STRING]
 
 Utilities
 ---------
 
-link:debug_parsing_error.html[debug_parsing_error] +
+* link:debug_parsing_error.html[debug_parsing_error]
 
 Metaparse uses a number of general purpose metafunctions and metafunction
 classes.
 
-link:compose.html[compose] + 
-link:curry.html[curry] + 
-link:digit_to_int.html[digit_to_int] + 
-link:int_to_digit.html[int_to_digit] + 
-link:in_range.html[in_range] + 
-link:is_digit.html[is_digit] + 
-link:is_lcase_letter.html[is_lcase_letter] + 
-link:is_letter.html[is_letter] + 
-link:is_ucase_letter.html[is_ucase_letter] + 
-link:is_whitespace.html[is_whitespace] + 
+* link:compose.html[compose]
+* link:curry.html[curry]
+* link:digit_to_int.html[digit_to_int]
+* link:int_to_digit.html[int_to_digit]
+* link:in_range.html[in_range]
+* link:is_digit.html[is_digit]
+* link:is_lcase_letter.html[is_lcase_letter]
+* link:is_letter.html[is_letter]
+* link:is_ucase_letter.html[is_ucase_letter]
+* link:is_whitespace.html[is_whitespace]
 
 include::copyright[]
 

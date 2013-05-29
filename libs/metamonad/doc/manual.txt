@@ -1807,7 +1807,9 @@ calling +add+ for +float_+ values, he gets an error message saying that +add+ is
 not overloaded for +float_+ values (he actually gets an error message
 complaining about the missing definition of +add_impl<float_tag, float_tag>+,
 but it is easy to learn what it means). What is missing there, is: _the code
-assumed that +float_\_+ _is a number, but it isn't_.
+assumed that_
++float_+
+_is a number, but it isn't_.
 
 There is a way of adding this information to the error message by using
 _traits_. The operations of the _number_ concept can be collected into a trait:

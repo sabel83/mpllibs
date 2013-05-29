@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-mpllibs::metamonad refrence
-===========================
+mpllibs::metamonad reference
+============================
 Abel Sinkovics
 
 Language elements
@@ -13,110 +13,110 @@ Language elements
 Syntax
 ~~~~~~
 
-link:eval_syntax.html[eval_syntax] +
-link:make_syntax.html[make_syntax] +
-link:name.html[name] +
-link:syntax.html[syntax] +
-link:var.html[var] +
+* link:eval_syntax.html[eval_syntax]
+* link:make_syntax.html[make_syntax]
+* link:name.html[name]
+* link:syntax.html[syntax]
+* link:var.html[var]
 
 Control structure
 ~~~~~~~~~~~~~~~~~
 
-link:case_.html[case_] +
-link:eval_case.html[eval_case] +
-link:if_.html[if_] +
+* link:case_.html[case_]
+* link:eval_case.html[eval_case]
+* link:if_.html[if_]
 
 Pattern matching
 ~~~~~~~~~~~~~~~~
 
-link:match.html[match] +
-link:match_c.html[match_c] +
+* link:match.html[match]
+* link:match_c.html[match_c]
 
 Let expression
 ~~~~~~~~~~~~~~
 
-link:eval_let.html[eval_let] +
-link:eval_let_c.html[eval_let_c] +
-link:eval_letrec.html[eval_letrec] +
-link:eval_letrec_c.html[eval_letrec_c] +
-link:eval_match_let.html[eval_match_let] +
-link:eval_match_let_c.html[eval_match_let_c] +
-link:eval_multi_let.html[eval_multi_let] +
-link:eval_multi_let_c.html[eval_multi_let_c] +
-link:let.html[let] +
-link:let_c.html[let_c] +
-link:letrec.html[letrec] +
-link:letrec_c.html[letrec_c] +
-link:match_let.html[match_let] +
-link:match_let_c.html[match_let_c] +
-link:multi_let.html[multi_let] +
-link:multi_let_c.html[multi_let_c] +
+* link:eval_let.html[eval_let]
+* link:eval_let_c.html[eval_let_c]
+* link:eval_letrec.html[eval_letrec]
+* link:eval_letrec_c.html[eval_letrec_c]
+* link:eval_match_let.html[eval_match_let]
+* link:eval_match_let_c.html[eval_match_let_c]
+* link:eval_multi_let.html[eval_multi_let]
+* link:eval_multi_let_c.html[eval_multi_let_c]
+* link:let.html[let]
+* link:let_c.html[let_c]
+* link:letrec.html[letrec]
+* link:letrec_c.html[letrec_c]
+* link:match_let.html[match_let]
+* link:match_let_c.html[match_let_c]
+* link:multi_let.html[multi_let]
+* link:multi_let_c.html[multi_let_c]
 
 Lazy evaluation
 ~~~~~~~~~~~~~~~
 
-link:already_lazy.html[already_lazy] +
-link:eval.html[eval] +
-link:lazy.html[lazy] +
-link:lazy_argument.html[lazy_argument] +
-link:lazy_protect_args.html[lazy_protect_args] +
+* link:already_lazy.html[already_lazy]
+* link:eval.html[eval]
+* link:lazy.html[lazy]
+* link:lazy_argument.html[lazy_argument]
+* link:lazy_protect_args.html[lazy_protect_args]
 
 Lambda expression
 ~~~~~~~~~~~~~~~~~
 
-link:apply.html[apply] +
-link:lambda.html[lambda] +
-link:lambda_c.html[lambda_c] +
+* link:apply.html[apply]
+* link:lambda.html[lambda]
+* link:lambda_c.html[lambda_c]
 
 Typeclass
 ~~~~~~~~~
 
-link:MPLLIBS_TYPECLASS_EXPECT.html[MPLLIBS_TYPECLASS_EXPECT] +
+* link:MPLLIBS_TYPECLASS_EXPECT.html[MPLLIBS_TYPECLASS_EXPECT]
 
 Do notation
 ~~~~~~~~~~~
 
-link:do_.html[do_] +
-link:do_c.html[do_c] +
-link:set.html[set] +
-link:do_return.html[do_return] +
+* link:do_.html[do_]
+* link:do_c.html[do_c]
+* link:set.html[set]
+* link:do_return.html[do_return]
 
 Monadic conversion
 ~~~~~~~~~~~~~~~~~~
 
-link:already_monadic.html[already_monadic] +
-link:make_monadic.html[make_monadic] +
-link:make_monadic_c.html[make_monadic_c] +
+* link:already_monadic.html[already_monadic]
+* link:make_monadic.html[make_monadic]
+* link:make_monadic_c.html[make_monadic_c]
 
 Compile-time exception
 ~~~~~~~~~~~~~~~~~~~~~~
 
-link:catch_all.html[catch_all] +
-link:catch_just.html[catch_just] +
+* link:catch_all.html[catch_all]
+* link:catch_just.html[catch_just]
 
-link:exception.html[exception] +
-link:is_exception.html[is_exception] +
-link:try_.html[try_] +
-link:try_c.html[try_c] +
+* link:exception.html[exception]
+* link:is_exception.html[is_exception]
+* link:try_.html[try_]
+* link:try_c.html[try_c]
 
 Algebraic data-type
 ~~~~~~~~~~~~~~~~~~~
 
-link:MPLLIBS_DATA.html[MPLLIBS_DATA] +
+* link:MPLLIBS_DATA.html[MPLLIBS_DATA]
 
 Metafunction definition
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-link:MPLLIBS_DEFINE_TD_METAFUNCTION.html[MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION] +
+* link:MPLLIBS_DEFINE_TD_METAFUNCTION.html[MPLLIBS_DEFINE_TAG_DISPATCHING_METAFUNCTION]
 
-link:MPLLIBS_LAZY_METAFUNCTION.html[MPLLIBS_LAZY_METAFUNCTION] +
-link:MPLLIBS_METAFUNCTION.html[MPLLIBS_METAFUNCTION] +
+* link:MPLLIBS_LAZY_METAFUNCTION.html[MPLLIBS_LAZY_METAFUNCTION]
+* link:MPLLIBS_METAFUNCTION.html[MPLLIBS_METAFUNCTION]
 
-link:calculated_value.html[calculated_value] +
-link:make_tmp_value.html[make_tmp_value] +
-link:returns.html[returns] +
-link:tmp_tag.html[tmp_tag] +
-link:tmp_value.html[tmp_value] +
+* link:calculated_value.html[calculated_value]
+* link:make_tmp_value.html[make_tmp_value]
+* link:returns.html[returns]
+* link:tmp_tag.html[tmp_tag]
+* link:tmp_value.html[tmp_value]
 
 Data types
 ----------
@@ -124,32 +124,32 @@ Data types
 Boxing
 ~~~~~~
 
-link:box.html[box] +
-link:eval_guard.html[eval_guard] +
-link:unbox.html[unbox] +
+* link:box.html[box]
+* link:eval_guard.html[eval_guard]
+* link:unbox.html[unbox]
 
 Either
 ~~~~~~
 
-link:either.html[either] +
+* link:either.html[either]
 
 Maybe
 ~~~~~
 
-link:maybe.html[maybe] +
+* link:maybe.html[maybe]
 
 Pair
 ~~~~
 
-link:first.html[first] +
-link:pair.html[pair] +
-link:second.html[second] +
+* link:first.html[first]
+* link:pair.html[pair]
+* link:second.html[second]
 
 Tag
 ~~~
 
-link:tag_tag.html[tag_tag] +
-link:overloading_error_tag.html[overloading_error_tag] +
+* link:tag_tag.html[tag_tag]
+* link:overloading_error_tag.html[overloading_error_tag]
 
 Typeclasses
 -----------
@@ -157,57 +157,57 @@ Typeclasses
 Monoid
 ~~~~~~
 
-link:mappend.html[mappend] +
-link:mconcat.html[mconcat] +
-link:mempty.html[mempty] +
-link:monoid.html[monoid] +
+* link:mappend.html[mappend]
+* link:mconcat.html[mconcat]
+* link:mempty.html[mempty]
+* link:monoid.html[monoid]
 
-Instances of Monoid +
+Instances of Monoid
 
-link:list_monoid.html[list monoid] +
-link:maybe_monoid.html[maybe monoid] +
+* link:list_monoid.html[list monoid]
+* link:maybe_monoid.html[maybe monoid]
 
 Monad
 ~~~~~
 
-link:bind_.html[bind_] +
-link:bind.html[bind] +
-link:fail.html[fail] +
-link:monad.html[monad] +
-link:return_.html[return_] +
+* link:bind_.html[bind_]
+* link:bind.html[bind]
+* link:fail.html[fail]
+* link:monad.html[monad]
+* link:return_.html[return_]
 
-Instances of Monad +
+Instances of Monad
 
-link:either_monad.html[either monad] +
-link:exception_monad.html[exception monad] +
-link:list_monad.html[list monad] +
-link:maybe_monad.html[maybe monad] +
-link:reader_monad.html[reader monad] +
-link:state_monad.html[state monad] +
-link:writer_monad.html[writer monad] +
+* link:either_monad.html[either monad]
+* link:exception_monad.html[exception monad]
+* link:list_monad.html[list monad]
+* link:maybe_monad.html[maybe monad]
+* link:reader_monad.html[reader monad]
+* link:state_monad.html[state monad]
+* link:writer_monad.html[writer monad]
 
 MonadPlus
 ~~~~~~~~~
 
-link:monad_plus.html[monad_plus] +
-link:mplus.html[mplus] +
-link:mzero.html[mzero] +
+* link:monad_plus.html[monad_plus]
+* link:mplus.html[mplus]
+* link:mzero.html[mzero]
 
-Instances of MonadPlus +
+Instances of MonadPlus
 
-link:maybe_monad_plus.html[maybe monad plus] +
-link:list_monad_plus.html[list monad plus] +
+* link:maybe_monad_plus.html[maybe monad plus]
+* link:list_monad_plus.html[list monad plus]
 
 Miscellaneous
 -------------
 
-link:guard.html[guard] +
-link:has_get_value.html[has_get_value] +
-link:has_value.html[has_value] +
-link:instantiate.html[instantiate] +
-link:is_same.html[is_same] +
-link:is_tag.html[is_tag] +
-link:value_to_stream.html[value_to_stream] +
+* link:guard.html[guard]
+* link:has_get_value.html[has_get_value]
+* link:has_value.html[has_value]
+* link:instantiate.html[instantiate]
+* link:is_same.html[is_same]
+* link:is_tag.html[is_tag]
+* link:value_to_stream.html[value_to_stream]
 
 include::copyright[]
 

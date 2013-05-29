@@ -3,9 +3,7 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-include(Asciidoc)
+include(Documentation)
 
-file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.txt)
-list(REMOVE_ITEM SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt)
-asciidoc_build(metamonad_documentation ${CMAKE_CURRENT_SOURCE_DIR}/../html ${SOURCES})
+generate_documentation(metamonad manual.txt reference.txt)
 
