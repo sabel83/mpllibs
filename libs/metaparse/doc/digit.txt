@@ -43,9 +43,9 @@ The following are equivalent:
 --------------------------------------
 digit
 
-mpllibs::metaparse::accept_when<
-  mpllibs::metaparse::one_char,
-  mpllibs::metaparse::util::is_digit,
+accept_when<
+  one_char,
+  util::is_digit,
   // unspecified
 >
 --------------------------------------
@@ -54,11 +54,7 @@ Example
 -------
 
 --------------------------------------
-boost::mpl::apply<
-  mpllibs::metaparse::digit,
-  boost::mpl::string<'13'>,
-  mpllibs::metaparse::start
->
+boost::mpl::apply<digit, MPLLIBS_STRING("13"), start>
 --------------------------------------
 
 include::copyright[]

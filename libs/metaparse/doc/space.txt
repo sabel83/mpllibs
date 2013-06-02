@@ -42,9 +42,9 @@ The followin are equivalent:
 --------------------------------------
 space
 
-mpllibs::metaparse::accept_when<
-  mpllibs::metaparse::one_char,
-  mpllibs::metaparse::util::is_whitespace,
+accept_when<
+  one_char,
+  util::is_whitespace,
   // unspecified
 >
 --------------------------------------
@@ -54,13 +54,7 @@ Example
 
 --------------------------------------
 typedef
-  mpllibs::metaparse::get_remaining<
-    boost::mpl::apply<
-      space,
-      boost::mpl::string<' abc'>,
-      mpllibs::metaparse::start
-    >
-  >::type
+  get_remaining<boost::mpl::apply<space, MPLLIBS_STRING(" abc"), start> >::type
   abc;
 --------------------------------------
 

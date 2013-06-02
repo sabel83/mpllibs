@@ -68,11 +68,11 @@ int main()
 {
   using std::cout;
   using std::endl;
-  using boost::mpl::string;
+  using mpllibs::metaparse::string;
   
   cout
-    << binary<string<'100'> >::value << endl
-    << binary<string<'1011'> >::value << endl
+    << binary<string<'1','0','0'> >::value << endl
+    << binary<string<'1','0','1','1'> >::value << endl
     << binary<string<'1'> >::value << endl;
 }
 #else

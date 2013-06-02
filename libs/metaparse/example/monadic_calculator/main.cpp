@@ -161,23 +161,30 @@ int main()
 {
   using std::cout;
   using std::endl;
-  using boost::mpl::string;
+  using mpllibs::metaparse::string;
 
   using mpllibs::metamonad::value_to_stream;
 
-  value_to_stream<apply_wrap1<calculator_parser, string<'13'> > >::run(cout);
+  value_to_stream<apply_wrap1<calculator_parser, string<'1','3'> > >::run(cout);
   cout << endl;
 
   value_to_stream<
-    apply_wrap1<calculator_parser, string<' 1+ ','2*4-','6/2'> >
+    apply_wrap1<
+      calculator_parser, string<' ','1','+',' ','2','*','4','-','6','/','2'>
+    >
   >::run(cout);
   cout << endl;
 
-  value_to_stream<apply_wrap1<calculator_parser, string<'11/0'> > >::run(cout);
+  value_to_stream<
+    apply_wrap1<calculator_parser, string<'1','1','/','0'> >
+  >::run(cout);
   cout << endl;
 
   value_to_stream<
-    apply_wrap1<calculator_parser, string<'19 +',' 83/','0 + ','11'> >
+    apply_wrap1<
+      calculator_parser,
+      string<'1','9',' ','+',' ','8','3','/','0',' ','+',' ','1','1'>
+    >
   >::run(cout);
   cout << endl;
 }

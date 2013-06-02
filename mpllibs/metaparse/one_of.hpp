@@ -14,7 +14,6 @@
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/string.hpp>
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>

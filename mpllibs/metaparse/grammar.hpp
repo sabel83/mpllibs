@@ -24,13 +24,13 @@
 #include <mpllibs/metaparse/alphanum.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
+#include <mpllibs/metaparse/string.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/has_key.hpp>
-#include <boost/mpl/string.hpp>
 #include <boost/mpl/lambda.hpp>
 #include <boost/mpl/push_front.hpp>
 #include <boost/mpl/front.hpp>
@@ -62,9 +62,7 @@ namespace mpllibs
       
         template <class G>
         struct apply :
-          mpllibs::metaparse::any<
-            typename boost::mpl::apply_wrap1<FState, G>::type
-          >
+          any<typename boost::mpl::apply_wrap1<FState, G>::type>
         {};
       };
 
@@ -75,9 +73,7 @@ namespace mpllibs
       
         template <class G>
         struct apply :
-          mpllibs::metaparse::any1<
-            typename boost::mpl::apply_wrap1<FState, G>::type
-          >
+          any1<typename boost::mpl::apply_wrap1<FState, G>::type>
         {};
       };
 
@@ -100,7 +96,7 @@ namespace mpllibs
       
           template <class G>
           struct apply :
-            mpllibs::metaparse::sequence<
+            sequence<
               typename boost::mpl::apply_wrap1<FState, G>::type,
               typename boost::mpl::apply_wrap1<FP, G>::type
             >
@@ -122,7 +118,7 @@ namespace mpllibs
       
           template <class G>
           struct apply :
-            mpllibs::metaparse::one_of<
+            one_of<
               typename boost::mpl::apply_wrap1<FState, G>::type,
               typename boost::mpl::apply_wrap1<FP, G>::type
             >
@@ -144,12 +140,7 @@ namespace mpllibs
           p;
       
         template <class Actions>
-        struct impl :
-          mpllibs::metaparse::transform<
-            typename p::type,
-            typename Actions::type
-          >
-        {};
+        struct impl : transform<typename p::type, typename Actions::type> {};
       
         typedef
           typename boost::mpl::eval_if<
@@ -187,76 +178,45 @@ namespace mpllibs
           typedef apply_impl type;
       
           template <class G>
-          struct apply : mpllibs::metaparse::lit<C> {};
+          struct apply : lit<C> {};
         };
       
         template <class C>
         struct apply : apply_impl<C> {};
       };
       
-      typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'*'> >
-        repeat_token;
+      typedef token<lit_c<'*'> > repeat_token;
+      typedef token<lit_c<'+'> > repeat1_token;
+      typedef token<lit_c<'|'> > or_token;
+      typedef token<lit_c<'('> > open_bracket_token;
+      typedef token<lit_c<')'> > close_bracket_token;
+      typedef token<keyword<string<':',':','='> > > define_token;
 
       typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'+'> >
-        repeat1_token;
-
-      typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'|'> >
-        or_token;
-
-      typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'('> >
-        open_bracket_token;
-
-      typedef
-        mpllibs::metaparse::token<mpllibs::metaparse::lit_c<')'> >
-        close_bracket_token;
-
-      typedef
-        mpllibs::metaparse::token<
-          mpllibs::metaparse::keyword<boost::mpl::string<':',':','='> >
-        >
-        define_token;
-
-      typedef
-        mpllibs::metaparse::middle_of<
-          mpllibs::metaparse::lit_c<'\''>,
-          mpllibs::metaparse::one_of<
-            mpllibs::metaparse::last_of<
-              mpllibs::metaparse::lit_c<'\\'>,
-              mpllibs::metaparse::one_of<
-                mpllibs::metaparse::always<
-                  mpllibs::metaparse::lit_c<'n'>,
-                  boost::mpl::char_<'\n'>
-                >,
-                mpllibs::metaparse::always<
-                  mpllibs::metaparse::lit_c<'r'>,
-                  boost::mpl::char_<'\r'>
-                >,
-                mpllibs::metaparse::always<
-                  mpllibs::metaparse::lit_c<'t'>,
-                  boost::mpl::char_<'\t'>
-                >,
-                mpllibs::metaparse::lit_c<'\\'>,
-                mpllibs::metaparse::lit_c<'\''>
+        middle_of<
+          lit_c<'\''>,
+          one_of<
+            last_of<
+              lit_c<'\\'>,
+              one_of<
+                always<lit_c<'n'>, boost::mpl::char_<'\n'> >,
+                always<lit_c<'r'>, boost::mpl::char_<'\r'> >,
+                always<lit_c<'t'>, boost::mpl::char_<'\t'> >,
+                lit_c<'\\'>,
+                lit_c<'\''>
               >
             >,
-            mpllibs::metaparse::one_char_except_c<'\''>
+            one_char_except_c<'\''>
           >,
-          mpllibs::metaparse::token<mpllibs::metaparse::lit_c<'\''> >
+          token<lit_c<'\''> >
         >
         char_token;
       
       typedef
-        mpllibs::metaparse::token<
-          mpllibs::metaparse::foldr1<
-            mpllibs::metaparse::one_of<
-              mpllibs::metaparse::alphanum,
-              mpllibs::metaparse::lit_c<'_'>
-            >,
-            boost::mpl::string<>,
+        token<
+          foldr1<
+            one_of<alphanum, lit_c<'_'> >,
+            string<>,
             boost::mpl::lambda<
               boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1>
             >::type
@@ -267,54 +227,40 @@ namespace mpllibs
       struct expression;
       
       typedef
-        mpllibs::metaparse::middle_of<
-          open_bracket_token,
-          expression,
-          close_bracket_token
-        >
+        middle_of<open_bracket_token, expression, close_bracket_token>
         bracket_expression;
 
       typedef
-        mpllibs::metaparse::one_of<
-          mpllibs::metaparse::transform<char_token, build_char>,
-          mpllibs::metaparse::transform<name_token, build_name>,
+        one_of<
+          transform<char_token, build_char>,
+          transform<name_token, build_name>,
           bracket_expression
         >
         name_expression;
 
       typedef
-        mpllibs::metaparse::foldlp<
-          mpllibs::metaparse::one_of<repeat_token, repeat1_token>,
+        foldlp<
+          one_of<repeat_token, repeat1_token>,
           name_expression,
           build_repeat
         >
         repeat_expression;
       
       typedef
-        mpllibs::metaparse::foldlp<
-          repeat_expression,
-          repeat_expression,
-          build_sequence
-        >
+        foldlp<repeat_expression, repeat_expression, build_sequence>
         seq_expression;
       
       struct expression :
-        mpllibs::metaparse::foldlp<
-          mpllibs::metaparse::last_of<or_token, seq_expression>,
+        foldlp<
+          last_of<or_token, seq_expression>,
           seq_expression,
           build_selection
         >
       {};
       
-      typedef
-        mpllibs::metaparse::sequence<name_token, define_token, expression>
-        rule_definition;
-      
-      typedef
-        mpllibs::metaparse::build_parser<
-          mpllibs::metaparse::entire_input<rule_definition>
-        >
-        parser_parser;
+      typedef sequence<name_token, define_token, expression> rule_definition;
+
+      typedef build_parser<entire_input<rule_definition> > parser_parser;
       
       template <class P>
       struct build_native_parser
@@ -346,7 +292,7 @@ namespace mpllibs
         typedef boost::mpl::pair<name, the_parser> type;
       };
       
-      typedef mpllibs::metaparse::build_parser<name_token> name_parser;
+      typedef build_parser<name_token> name_parser;
       
       template <class S>
       struct rebuild : boost::mpl::apply_wrap1<name_parser, S> {};
@@ -428,7 +374,7 @@ namespace mpllibs
       {};
     }
 
-    template <class Start = boost::mpl::string<'S'> >
+    template <class Start = string<'S'> >
     struct grammar :
       grammar_util::grammar_builder<
         Start,

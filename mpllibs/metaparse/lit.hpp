@@ -11,7 +11,6 @@
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/lambda.hpp>
-#include <boost/mpl/string.hpp>
 #include <boost/mpl/push_back.hpp>
 
 #include <string>

@@ -18,8 +18,8 @@ Synopsis
 Description
 -----------
 
-Macro for defining +boost::mpl::string+ values. +s+ is expected to be a string
-literal. The macro requires C++11.
+Macro for defining link:string.html[+string+] values. +s+ is expected to be a
+string literal. The macro requires C++11.
 
 The maximal length of the string is limited. This limit is defined by the
 +MPLLIBS_STRING_MAX_LENGTH+ macro.
@@ -43,7 +43,7 @@ MPLLIBS_STRING("hello")
 is equivalent to
 
 --------------------------------------
-boost::mpl::string<'hell', 'o'>
+string<'h','e','l','l','o'>
 --------------------------------------
 
 Example

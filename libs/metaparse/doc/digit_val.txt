@@ -43,21 +43,14 @@ The following are equivalent:
 --------------------------------------
 digit_val
 
-mpllibs::metaparse::transform<
-  mpllibs::metaparse::digit,
-  mpllibs::metaparse::util::digit_to_int
->
+transform<digit, util::digit_to_int>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<
-  digit_val,
-  boost::mpl::string<'13'>,
-  mpllibs::metaparse::start
->
+boost::mpl::apply<digit_val, MPLLIBS_STRING("13"), start>
 --------------------------------------
 
 include::copyright[]

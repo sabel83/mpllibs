@@ -8,7 +8,6 @@
 
 #include <builder.hpp>
 
-#include <boost/mpl/string.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/minus.hpp>
 #include <boost/mpl/times.hpp>
@@ -47,18 +46,18 @@ BOOST_PP_SEQ_FOR_EACH(DEFINE_LAZY, ~,
 
 #undef DEFINE_LAZY
 
-typedef
-  builder<>
-    ::import2<boost::mpl::string<'.+.'>, lazy_plus>::type
-    ::import2<boost::mpl::string<'.-.'>, lazy_minus>::type
-    ::import2<boost::mpl::string<'.*.'>, lazy_times>::type
-    ::import2<boost::mpl::string<'./.'>, lazy_divides>::type
-    ::import2<boost::mpl::string<'.<.'>, lazy_less>::type
-    ::import2<boost::mpl::string<'.<=.'>, lazy_less_equal>::type
-    ::import2<boost::mpl::string<'.>.'>, lazy_greater>::type
-    ::import2<boost::mpl::string<'.>=.'>, lazy_greater_equal>::type
-    ::import2<boost::mpl::string<'.==.'>, lazy_equal_to>::type
-    ::import2<boost::mpl::string<'./=.'>, lazy_not_equal_to>::type
+typedef builder<>
+  ::import2<mpllibs::metaparse::string<'.','+','.'>, lazy_plus>::type
+  ::import2<mpllibs::metaparse::string<'.','-','.'>, lazy_minus>::type
+  ::import2<mpllibs::metaparse::string<'.','*','.'>, lazy_times>::type
+  ::import2<mpllibs::metaparse::string<'.','/','.'>, lazy_divides>::type
+  ::import2<mpllibs::metaparse::string<'.','<','.'>, lazy_less>::type
+  ::import2<mpllibs::metaparse::string<'.','<','=','.'>, lazy_less_equal>::type
+  ::import2<mpllibs::metaparse::string<'.','>','.'>, lazy_greater>::type
+  ::import2<mpllibs::metaparse::string<'.','>','=','.'>, lazy_greater_equal>::type
+  ::import2<mpllibs::metaparse::string<'.','=','=','.'>, lazy_equal_to>::type
+  ::import2<mpllibs::metaparse::string<'.','/','=','.'>, lazy_not_equal_to>::type
+
   meta_hs;
 
 #endif

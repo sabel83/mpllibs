@@ -43,9 +43,9 @@ The following are equivalent:
 --------------------------------------
 letter
 
-mpllibs::metaparse::accept_when<
-  mpllibs::metaparse::one_char,
-  mpllibs::metaparse::util::is_letter,
+accept_when<
+  one_char,
+  util::is_letter,
   // unspecified
 >
 --------------------------------------
@@ -54,7 +54,7 @@ Example
 -------
 
 --------------------------------------
-boost::mpl::apply<mpllibs::metaparse::letter, boost::mpl::string<'abcd'>, mpllibs::metaparse::start>
+boost::mpl::apply<letter, MPLLIBS_STRING("abcd"), start>
 --------------------------------------
 
 include::copyright[]

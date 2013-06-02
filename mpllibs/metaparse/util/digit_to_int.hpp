@@ -10,7 +10,6 @@
 #include <mpllibs/metamonad/exception.hpp>
 
 #include <boost/mpl/int.hpp>
-#include <boost/mpl/string.hpp>
 
 #include <iostream>
 

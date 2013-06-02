@@ -210,13 +210,15 @@ int main()
 {
   using std::cout;
   using std::endl;
-  using boost::mpl::string;
+  using mpllibs::metaparse::string;
 
-  typedef meta_lambda<string<'13'> >::type metafunction_class_1;
-  typedef meta_lambda<string<'2 + ','3'> >::type metafunction_class_2;
-  typedef meta_lambda<string<'2 * ','2'> >::type metafunction_class_3;
-  typedef meta_lambda<string<' 1+ ','2*4-','6/2'> >::type metafunction_class_4;
-  typedef meta_lambda<string<'2 * ','_'> >::type metafunction_class_5;
+  typedef meta_lambda<string<'1','3'> >::type metafunction_class_1;
+  typedef meta_lambda<string<'2',' ','+',' ','3'> >::type metafunction_class_2;
+  typedef meta_lambda<string<'2',' ','*',' ','2'> >::type metafunction_class_3;
+  typedef
+    meta_lambda<string<' ','1','+',' ','2','*','4','-','6','/','2'> >::type
+    metafunction_class_4;
+  typedef meta_lambda<string<'2',' ','*',' ','_'> >::type metafunction_class_5;
 
   typedef boost::mpl::int_<11> int11;
 

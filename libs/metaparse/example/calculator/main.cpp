@@ -130,11 +130,14 @@ int main()
 {
   using std::cout;
   using std::endl;
-  using boost::mpl::string;
+  using mpllibs::metaparse::string;
   
   cout
-    << apply_wrap1<calculator_parser, string<'13'> >::type::value << endl
-    << apply_wrap1<calculator_parser, string<' 1+ ','2*4-','6/2'> >::type::value
+    << apply_wrap1<calculator_parser, string<'1','3'> >::type::value << endl
+    <<
+      apply_wrap1<
+        calculator_parser, string<' ','1','+',' ','2','*','4','-','6','/','2'>
+      >::type::value
     << endl
     ;
 }

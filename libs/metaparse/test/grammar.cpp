@@ -3,7 +3,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#define BOOST_MPL_LIMIT_STRING_SIZE 45
 #define BOOST_TEST_DYN_LINK
 
 #include <mpllibs/metaparse/grammar.hpp>
@@ -11,6 +10,7 @@
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/source_position.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/string.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -44,8 +44,8 @@ BOOST_AUTO_TEST_CASE(test_grammar)
   using mpllibs::metaparse::get_result;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::is_error;
+  using mpllibs::metaparse::string;
 
-  using boost::mpl::string;
   using boost::mpl::apply_wrap2;
   using boost::mpl::equal_to;
   using boost::mpl::equal;
@@ -53,12 +53,12 @@ BOOST_AUTO_TEST_CASE(test_grammar)
 
   // import
   BOOST_MPL_ASSERT((
-    equal_to<
-      char_<'x'>,
-      get_result<
+        equal_to<
+        char_<'x'>,
+        get_result<
         apply_wrap2<
-          grammar<>
-            ::import<string<'S'>, lit_c<'x'> >::type,
+        grammar<>
+        ::import<string<'S'>, lit_c<'x'> >::type,
           string<'x'>,
           start
         >

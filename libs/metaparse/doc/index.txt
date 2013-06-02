@@ -11,8 +11,8 @@ Metaparse is parser generator library for template metaprograms. The purpose of
 this library is to support the creation of parsers that parse at compile time.
 This library is inteded to be used for embedded domain specific language
 creation for C\++. The input of the generated parser is a compile time string,
-see +boost::mpl::string+. The result of the parsing process is either an error
-or any other result the writer of the parser specifies.
+see link:string.html[+string+]. The result of the parsing process is either an
+error or any other result the writer of the parser specifies.
 
 The library is similar to Boost.Spirit, however while parsers built with Spirit
 parse at run-time, parsers built with Metaparse parse at compile-time. Parsers

@@ -13,14 +13,22 @@ int main()
   using safe::printf;
   using safe::sprintf;
   using safe::fprintf;
-  using boost::mpl::string;
+  using mpllibs::metaparse::string;
   
-  printf<string<'John',' %d,',' %s ','%d\n'> >(11, "Joe", 13);
+  printf<
+    string<'J','o','h','n',' ','%','d', ',',' ','%','s',' ','%','d','\n'>
+  >(11, "Joe", 13);
 
   char s[128];
-  sprintf<string<'%d /',' %d ','= %.','2f'> >(s, 13, 2, 6.5);
+  sprintf<
+    string<'%','d',' ','/',' ','%','d',' ','=',' ','%','.','2','f'>
+  >(s, 13, 2, 6.5);
   
-  fprintf<string<'Usin','g sp','rint','f: %','s\n'> >(stderr, s);
+  fprintf<
+    string<
+      'U','s','i','n','g',' ','s','p','r','i','n','t','f',':',' ','%','s','\n'
+    >
+  >(stderr, s);
 }
 
 #else

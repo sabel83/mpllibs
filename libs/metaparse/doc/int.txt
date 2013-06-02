@@ -44,8 +44,8 @@ The following are equivalent:
 --------------------------------------
 int_
 
-mpllibs::metaparse::foldl1<
-  mpllibs::metaparse::digit_val,
+foldl1<
+  digit_val,
   boost::mpl::int_<0>,
   boost::mpl::lambda<
     boost::mpl::plus<
@@ -60,7 +60,7 @@ Example
 -------
 
 --------------------------------------
-boost::mpl::apply<int_, boost::mpl::string<'13'>, mpllibs::metaparse::start>
+boost::mpl::apply<int_, MPLLIBS_STRING("13"), start>
 --------------------------------------
 
 include::copyright[]

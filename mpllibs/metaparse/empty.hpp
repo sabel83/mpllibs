@@ -13,7 +13,6 @@
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/string.hpp>
 
 namespace mpllibs
 {

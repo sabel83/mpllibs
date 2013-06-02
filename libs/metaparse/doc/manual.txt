@@ -12,7 +12,7 @@ What is a parser
 
 A parser is a template metafunction that takes the following arguments:
 
-* a postfix of the input text, a +boost::mpl::string+
+* a postfix of the input text, a link:string.html[+string+]
 * a structure describing at which position of the entire input text the postfix
   begins at
 
@@ -31,12 +31,12 @@ When there is a parsing error, the parser returns a structure with the tag
 The input of the parsers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Parsers take a +boost::mpl::string+ as input, which represents a string for
-template metaprograms. For example the string +"Hello World!"+ can be defined
-the following way:
+Parsers take a link:string.html[+string+] as input, which represents a string
+for template metaprograms. For example the string +"Hello World!"+ can be
+defined the following way:
 
 --------------------------------------
-boost::mpl::string<'Hell','o Wo','rld!'>
+string<'H','e','l','l','o',' ','W','o','r','l','d','!'>
 --------------------------------------
 
 This syntax makes the input of the parsers difficult to read. Metaparse works
@@ -50,8 +50,8 @@ link:MPLLIBS_STRING.html[+MPLLIBS_STRING+] for defining strings:
 MPLLIBS_STRING("Hello World!")
 --------------------------------------
 
-This defines a +boost::mpl::string+ as well, however, it is easier to read.
-The maximum length of the string that can be defined this way is limited,
+This defines a link:string.html[+string+] as well, however, it is easier to
+read. The maximum length of the string that can be defined this way is limited,
 however, this limit is configurable. It is specified by the 
 +MPLLIBS_STRING_MAX_LENGTH+ macro.
 

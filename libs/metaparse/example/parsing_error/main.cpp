@@ -32,7 +32,7 @@ typedef build_parser<s> test_parser;
 
 #ifdef BOOST_NO_CONSTEXPR
 
-typedef boost::mpl::string<'aaac'> invalid_input;
+typedef mpllibs::metaparse::string<'a','a','a','c'> invalid_input;
 
 #else
 

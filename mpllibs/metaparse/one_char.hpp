@@ -23,7 +23,6 @@
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/char.hpp>
-#include <boost/mpl/string.hpp>
 
 namespace mpllibs
 {

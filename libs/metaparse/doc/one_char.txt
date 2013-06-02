@@ -64,7 +64,7 @@ that (which is stored in the source position). +one_char+ updates the source
 position's +col+ and +line+ values based on the new line characters. It detects
 Linux (+\n+), Windows (+\r\n+) and Mac (+\r+) line endings.
 
-+boost::mpl::apply<one_char, boost::mpl::string<>, pos>+ returns an error for
++boost::mpl::apply<one_char, MPLLIBS_STRING(""), pos>+ returns an error for
 every +pos+ source position.
 
 Example

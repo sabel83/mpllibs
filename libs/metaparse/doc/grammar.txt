@@ -11,7 +11,7 @@ Synopsis
 --------
 
 --------------------------------------
-template <class StartSymbol = boost::mpl::string<'S'> >
+template <class StartSymbol = MPLLIBS_STRING("S")>
 struct grammar
 {
   template <class S, class Pos>

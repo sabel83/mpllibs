@@ -43,21 +43,14 @@ The following are equivalent:
 --------------------------------------
 alphanum
 
-mpllibs::metaparse::one_of<
-  mpllibs::metaparse::digit,
-  mpllibs::metaparse::letter
->
+one_of<digit, letter>
 --------------------------------------
 
 Example
 -------
 
 --------------------------------------
-boost::mpl::apply<
-  mpllibs::metaparse::alphanum,
-  boost::mpl::string<'abcd'>,
-  mpllibs::metaparse::start
->
+boost::mpl::apply<alphanum, MPLLIBS_STRING("abcd"), start>
 --------------------------------------
 
 include::copyright[]

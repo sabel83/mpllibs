@@ -57,7 +57,7 @@ Example
 -------
 
 --------------------------------------
-typedef keyword<boost::mpl::string<'if'> > accept_if;
+typedef keyword<MPLLIBS_STRING("if")> accept_if;
 --------------------------------------
 
 include::copyright[]

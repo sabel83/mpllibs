@@ -82,9 +82,10 @@ Metafunctions and metafunction classes
 * link:build_parser.html[build_parser]
 * link:unless_error.html[unless_error]
 
-Macros
-------
+Strings
+-------
 
+* link:string.html[string]
 * link:MPLLIBS_STRING.html[MPLLIBS_STRING]
 
 Utilities

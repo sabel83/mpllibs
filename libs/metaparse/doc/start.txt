@@ -23,7 +23,7 @@ Description
 A compile-time source position value. It represents the beginning of an input
 text.
 
-Its tag is +mpllibs::metaparse::source_position_tag+.
+Its tag is +source_position_tag+.
 
 Header
 ------
@@ -36,7 +36,7 @@ Example
 -------
 
 --------------------------------------
-accept<boost::mpl::int_<13>, boost::mpl::string<>, mpllibs::metaparse::start>
+accept<boost::mpl::int_<13>, MPLLIBS_STRING(""), start>
 --------------------------------------
 
 include::copyright[]

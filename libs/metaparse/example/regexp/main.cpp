@@ -18,6 +18,7 @@
 #include <boost/xpressive/xpressive.hpp>
 
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/string.hpp>
 
 using mpllibs::metaparse::foldl;
 using mpllibs::metaparse::foldl1;
@@ -129,7 +130,7 @@ void test_string(const std::string& s)
   using std::endl;
 
 #ifdef BOOST_NO_CONSTEXPR
-  typedef boost::mpl::string<'.(bc',')'> regexp;
+  typedef mpllibs::metaparse::string<'.','(','b','c',')'> regexp;
 #else
   typedef MPLLIBS_STRING(".(bc)") regexp;
 #endif

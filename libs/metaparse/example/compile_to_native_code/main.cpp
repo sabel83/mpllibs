@@ -211,13 +211,13 @@ typedef build_parser<entire_input<expression> > function_parser;
 template <class Exp>
 struct lambda : apply_wrap1<function_parser, Exp> {};
 
-using boost::mpl::string;
+using mpllibs::metaparse::string;
 
-lambda<string<'13'> >::type f1;
-lambda<string<'2 + ','3'> >::type f2;
-lambda<string<'2 * ','2'> >::type f3;
-lambda<string<' 1+ ','2*4-','6/2'> >::type f4;
-lambda<string<'2 * ','_'> >::type f5;
+lambda<string<'1','3'> >::type f1;
+lambda<string<'2',' ','+',' ','3'> >::type f2;
+lambda<string<'2',' ','*',' ','2'> >::type f3;
+lambda<string<' ','1','+',' ','2','*','4','-','6','/','2'> >::type f4;
+lambda<string<'2',' ','*',' ','_'> >::type f5;
 
 #else
 

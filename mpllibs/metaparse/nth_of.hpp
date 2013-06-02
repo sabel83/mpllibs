@@ -17,7 +17,6 @@
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/fold.hpp>
-#include <boost/mpl/string.hpp>
 
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>

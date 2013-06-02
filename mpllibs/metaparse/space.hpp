@@ -12,8 +12,6 @@
 
 #include <mpllibs/metaparse/util/is_whitespace.hpp>
 
-#include <boost/mpl/string.hpp>
-
 namespace mpllibs
 {
   namespace metaparse

@@ -9,6 +9,7 @@
 #include <ast.hpp>
 #include <except_keywords.hpp>
 
+#include <mpllibs/metaparse/string.hpp>
 #include <mpllibs/metaparse/token.hpp>
 #include <mpllibs/metaparse/always.hpp>
 #include <mpllibs/metaparse/lit_c.hpp>
@@ -22,7 +23,6 @@
 #include <mpllibs/metaparse/letter.hpp>
 #include <mpllibs/metaparse/keyword.hpp>
 
-#include <boost/mpl/string.hpp>
 #include <boost/mpl/lambda.hpp>
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/vector.hpp>
@@ -33,7 +33,7 @@ namespace token
     mpllibs::metaparse::token<
       mpllibs::metaparse::always<
         mpllibs::metaparse::lit_c<'+'>,
-        boost::mpl::string<'.+.'>
+        mpllibs::metaparse::string<'.','+','.'>
       >
     >
     plus;
@@ -42,7 +42,7 @@ namespace token
     mpllibs::metaparse::token<
       mpllibs::metaparse::always<
         mpllibs::metaparse::lit_c<'-'>,
-        boost::mpl::string<'.-.'>
+        mpllibs::metaparse::string<'.','-','.'>
       >
     >
     minus;
@@ -51,7 +51,7 @@ namespace token
     mpllibs::metaparse::token<
       mpllibs::metaparse::always<
         mpllibs::metaparse::lit_c<'*'>,
-        boost::mpl::string<'.*.'>
+        mpllibs::metaparse::string<'.','*','.'>
       >
     >
     mult;
@@ -60,7 +60,7 @@ namespace token
     mpllibs::metaparse::token<
       mpllibs::metaparse::always<
         mpllibs::metaparse::lit_c<'/'>,
-        boost::mpl::string<'./.'>
+        mpllibs::metaparse::string<'.','/','.'>
       >
     >
     div;
@@ -71,21 +71,27 @@ namespace token
         mpllibs::metaparse::last_of<
           mpllibs::metaparse::lit_c<'='>,
           mpllibs::metaparse::lit_c<'='>,
-          mpllibs::metaparse::return_<boost::mpl::string<'.==.'> >
+          mpllibs::metaparse::return_<
+            mpllibs::metaparse::string<'.','=','=','.'>
+          >
         >,
         mpllibs::metaparse::last_of<
           mpllibs::metaparse::lit_c<'/'>,
           mpllibs::metaparse::lit_c<'='>,
-          mpllibs::metaparse::return_<boost::mpl::string<'./=.'> >
+          mpllibs::metaparse::return_<
+            mpllibs::metaparse::string<'.','/','=','.'>
+          >
         >,
         mpllibs::metaparse::last_of<
           mpllibs::metaparse::lit_c<'<'>,
           mpllibs::metaparse::one_of<
             mpllibs::metaparse::always<
               mpllibs::metaparse::lit_c<'='>,
-              boost::mpl::string<'.<=.'>
+              mpllibs::metaparse::string<'.','<','=','.'>
             >,
-            mpllibs::metaparse::return_<boost::mpl::string<'.<.'> >
+            mpllibs::metaparse::return_<
+              mpllibs::metaparse::string<'.','<','.'>
+            >
           >
         >,
         mpllibs::metaparse::last_of<
@@ -93,9 +99,11 @@ namespace token
           mpllibs::metaparse::one_of<
             mpllibs::metaparse::always<
               mpllibs::metaparse::lit_c<'='>,
-              boost::mpl::string<'.>=.'>
+              mpllibs::metaparse::string<'.','>','=','.'>
             >,
-            mpllibs::metaparse::return_<boost::mpl::string<'.>.'> >
+            mpllibs::metaparse::return_<
+              mpllibs::metaparse::string<'.','>','.'>
+            >
           >
         >
       >
@@ -130,7 +138,10 @@ namespace token
               mpllibs::metaparse::lit_c<'_'>
             >,
             boost::mpl::lambda<
-              boost::mpl::push_back<boost::mpl::string<>, boost::mpl::_1>
+              boost::mpl::push_back<
+                mpllibs::metaparse::string<>,
+                boost::mpl::_1
+              >
             >::type
           >,
           boost::mpl::lambda<
@@ -138,9 +149,9 @@ namespace token
           >::type
         >,
         boost::mpl::vector<
-          boost::mpl::string<'if'>,
-          boost::mpl::string<'then'>,
-          boost::mpl::string<'else'>
+          mpllibs::metaparse::string<'i','f'>,
+          mpllibs::metaparse::string<'t','h','e','n'>,
+          mpllibs::metaparse::string<'e','l','s','e'>
         >
       >
     >
@@ -148,19 +159,19 @@ namespace token
   
   typedef
     mpllibs::metaparse::token<
-      mpllibs::metaparse::keyword<boost::mpl::string<'if'> >
+      mpllibs::metaparse::keyword<mpllibs::metaparse::string<'i','f'> >
     >
     if_;
   
   typedef
     mpllibs::metaparse::token<
-      mpllibs::metaparse::keyword<boost::mpl::string<'then'> >
+      mpllibs::metaparse::keyword<mpllibs::metaparse::string<'t','h','e','n'> >
     >
     then;
   
   typedef
     mpllibs::metaparse::token<
-      mpllibs::metaparse::keyword<boost::mpl::string<'else'> >
+      mpllibs::metaparse::keyword<mpllibs::metaparse::string<'e','l','s','e'> >
     >
     else_;
 }
