@@ -70,13 +70,6 @@ namespace mpllibs
       const char empty_string<Ignore>::value[1] = {0};
     }
 
-    template <class S, int Removed>
-    struct string_suffix
-    {
-      typedef string_suffix type;
-      typedef string_tag tag;
-    };
-
     // at_c
 
     template <class S, int N>
@@ -199,11 +192,6 @@ namespace mpllibs
         Ch,
         BOOST_PP_ENUM_PARAMS(BOOST_PP_DEC(MPLLIBS_STRING_MAX_LENGTH), C)
       >
-    {};
-
-    template <class S, int Removed, char C>
-    struct push_front_c<string_suffix<S, Removed>, C> :
-      push_front_c<typename string_suffix<S, Removed>::type, C>
     {};
 
     // update
@@ -554,11 +542,6 @@ namespace boost
     )
 
     #undef MPLLIBS_STRING_CASE
-
-    template <class S, int Removed>
-    struct c_str<mpllibs::metaparse::string_suffix<S, Removed> > :
-      mpllibs::metaparse::string_suffix<S, Removed>
-    {};
   }
 }
 
