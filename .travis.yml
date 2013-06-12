@@ -10,3 +10,10 @@ script:
   - cmake .. -DCMAKE_CXX_FLAGS:STRING="-std=c++0x"
   - make
   - make test
+  - cd ..
+  - rm -rf bin
+  - mkdir bin
+  - cd bin
+  - cmake ..
+  - make
+  - make test
