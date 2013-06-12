@@ -18,20 +18,21 @@ namespace mpllibs
       struct empty_string
       {
         typedef empty_string type;
-        static MPLLIBS_CONSTEXPR const char value[1]
-        #ifdef MPLLIBS_USE_CONSTEXPR
-          = {0}
+
+        #if defined MPLLIBS_USE_CONSTEXPR && !defined MPLLIBS_NO_CONSTEXPR_C_STR
+          static constexpr const char value[1] = {0};
+        #else
+          static const char value[1];
         #endif
-          ;
       };
 
-      template <class Ignore>
-      MPLLIBS_CONSTEXPR const char empty_string<Ignore>::value[1]
-      #ifndef MPLLIBS_USE_CONSTEXPR
-        = {0}
+      #if defined MPLLIBS_USE_CONSTEXPR && !defined MPLLIBS_NO_CONSTEXPR_C_STR
+        template <class Ignore>
+        constexpr const char empty_string<Ignore>::value[1];
+      #else
+        template <class Ignore>
+        const char empty_string<Ignore>::value[1] = {0};
       #endif
-        ;
-      ;
     }
   }
 }

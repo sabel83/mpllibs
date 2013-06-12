@@ -205,11 +205,11 @@ namespace boost
     struct c_str<mpllibs::metaparse::string<Cs...>>
     {
       typedef c_str type;
-      static MPLLIBS_CONSTEXPR const char value[sizeof...(Cs)]
-      #ifdef MPLLIBS_USE_CONSTEXPR
-        = {Cs...}
+      #if defined MPLLIBS_USE_CONSTEXPR && !defined MPLLIBS_NO_CONSTEXPR_C_STR
+        static constexpr const char value[sizeof...(Cs)] = {Cs...};
+      #else
+        static const char value[sizeof...(Cs)];
       #endif
-        ;
     };
 
     template <>
@@ -217,13 +217,13 @@ namespace boost
       mpllibs::metaparse::impl::empty_string<>
     {};
 
-    template <char... Cs>
-    MPLLIBS_CONSTEXPR const char
-      c_str<mpllibs::metaparse::string<Cs...>>::value[]
-      #ifndef MPLLIBS_USE_CONSTEXPR
-        = {Cs...}
-      #endif
-        ;
+    #if defined MPLLIBS_USE_CONSTEXPR && !defined MPLLIBS_NO_CONSTEXPR_C_STR
+      template <char... Cs>
+      constexpr const char c_str<mpllibs::metaparse::string<Cs...>>::value[];
+    #else
+      template <char... Cs>
+      const char c_str<mpllibs::metaparse::string<Cs...>>::value[] = {Cs...};
+    #endif
 
 #else
     template <BOOST_PP_ENUM_PARAMS(MPLLIBS_STRING_MAX_LENGTH, int C)>
