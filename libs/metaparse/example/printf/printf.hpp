@@ -120,8 +120,18 @@ namespace safe
   
   BOOST_PP_REPEAT(PRINTF_MAX_ARGUMENT, PRINTF, ~)
   BOOST_PP_REPEAT(PRINTF_MAX_ARGUMENT, FPRINTF, ~)
-  BOOST_PP_REPEAT(PRINTF_MAX_ARGUMENT, SPRINTF, ~)
+
+  #ifdef _MSC_VER
+    #pragma warning(push)
+    #pragma warning(disable: 4996)
+  #endif
+
+    BOOST_PP_REPEAT(PRINTF_MAX_ARGUMENT, SPRINTF, ~)
   
+  #ifdef _MSC_VER
+    #pragma warning(pop)
+  #endif
+    
   #undef PRINTF
   #undef FPRINTF
   #undef SPRINTF

@@ -128,7 +128,17 @@ namespace mpllibs
     
     BOOST_PP_REPEAT(MPLLIBS_PRINTF_MAX_ARGUMENT, MPLLIBS_PRINTF, ~)
     BOOST_PP_REPEAT(MPLLIBS_PRINTF_MAX_ARGUMENT, MPLLIBS_FPRINTF, ~)
-    BOOST_PP_REPEAT(MPLLIBS_PRINTF_MAX_ARGUMENT, MPLLIBS_SPRINTF, ~)
+
+    #ifdef _MSC_VER
+      #pragma warning(push)
+      #pragma warning(disable: 4996)
+    #endif
+
+      BOOST_PP_REPEAT(MPLLIBS_PRINTF_MAX_ARGUMENT, MPLLIBS_SPRINTF, ~)
+
+    #ifdef _MSC_VER
+      #pragma warning(pop)
+    #endif
     
     #undef MPLLIBS_PRINTF
     #undef MPLLIBS_FPRINTF
