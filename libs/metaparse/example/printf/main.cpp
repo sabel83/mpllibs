@@ -10,21 +10,18 @@
 
 int main()
 {
-  using safe::printf;
-  using safe::sprintf;
-  using safe::fprintf;
   using mpllibs::metaparse::string;
   
-  printf<
+  safe::printf<
     string<'J','o','h','n',' ','%','d', ',',' ','%','s',' ','%','d','\n'>
   >(11, "Joe", 13);
 
   char s[128];
-  sprintf<
+  safe::sprintf<
     string<'%','d',' ','/',' ','%','d',' ','=',' ','%','.','2','f'>
   >(s, 13, 2, 6.5);
   
-  fprintf<
+  safe::fprintf<
     string<
       'U','s','i','n','g',' ','s','p','r','i','n','t','f',':',' ','%','s','\n'
     >
@@ -35,16 +32,12 @@ int main()
 
 int main()
 {
-  using safe::printf;
-  using safe::sprintf;
-  using safe::fprintf;
-  
-  printf<MPLLIBS_STRING("John %d, %s %d\n")>(11, "Joe", 13);
+  safe::printf<MPLLIBS_STRING("John %d, %s %d\n")>(11, "Joe", 13);
 
   char s[128];
-  sprintf<MPLLIBS_STRING("%d / %d = %.2f")>(s, 13, 2, 6.5);
+  safe::sprintf<MPLLIBS_STRING("%d / %d = %.2f")>(s, 13, 2, 6.5);
   
-  fprintf<MPLLIBS_STRING("Using sprintf: %s\n")>(stderr, s);
+  safe::fprintf<MPLLIBS_STRING("Using sprintf: %s\n")>(stderr, s);
 }
 
 #endif
