@@ -31,16 +31,29 @@ compilers as well.
 * link:reference.html[Library reference]
 * link:performance.html[Performance]
 
-Related publications
---------------------
+Related publications and blogs
+------------------------------
 
-Ábel Sinkovics: +
-*Functional Extensions to the Boost Metaprogram Library* +
-In Electr. Notes Theor. Comput. Sci., 264(5):85-101, 2010 +
+Ábel Sinkovics, Dave Abrahams: +
+*Using strings in C++ template metaprograms*, +
+link:http://cpp-next.com/archive/2012/10/using-strings-in-c-template-metaprograms/[http://cpp-next.com/archive/2012/10/using-strings-in-c-template-metaprograms/] +
+
+Ábel Sinkovics, Zoltán Porkoláb: +
+*Domain-Specific Language Integration with C++ Template Metaprogramming*, +
+In Marjan Mernik (Ed): Formal and Practical Aspects of Domain-Specific
+Languages: Recent Developments. Published by Information Science Reference (an
+imprint of IGI Global), Hershey PA, USA. ISBN 978-1-4666-2092-6 (hardcover) -
+ISBN 978-1-4666-2093-3 (ebook) - ISBN 978-1-4666-2094-0 pp. 33-56.
+doi:10.4018/978-1-4666-2092-6.ch002 +
+
+Ábel Sinkovics, Zoltán Porkoláb: +
+*Metaparse - Compile-time Parsing with C\++ Template Metaprogramming*, +
+In C++Now! Aspen, Colorado, 15th May, 2012. +
+link:http://www.youtube.com/watch?v=v3XoWi0XbZk[Talk] +
 
 Zoltán Porkoláb, Ábel Sinkovics: +
 *Domain-specific Language Integration with Compile-time Parser Generator
-Library* +
+Library*, +
 In Eelco Visser, Jaakko Järvi, editors, Proceedings of the ninth
 international conference on Generative programming and component
 engineering (GPCE 2010). ACM, October 2010, pp. 137-146. +

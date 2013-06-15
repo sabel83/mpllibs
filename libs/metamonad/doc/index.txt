@@ -35,6 +35,33 @@ technique compile-time exception handling and it is based on monads.
 * link:reference.html[Library reference]
 * link:https://github.com/sabel83/mpllibs/tree/master/libs/metamonad/example[Examples]
 
+Related publications
+--------------------
+
+Ábel Sinkovics: +
+*Boosting MPL with Haskell elements*, +
+C++Now!, Aspen, Colorado, 13th May, 2013. +
+link:http://www.youtube.com/watch?v=aIj034VCUD8[Talk] +
+
+Ábel Sinkovics, Zoltán Porkoláb: +
+*Implementing monads for C++ template metaprograms*, +
+In Science of Computer Programming, Available online 23 January 2013, ISSN
+0167-6423, 10.1016/j.scico.2013.01.002. +
+
+Ábel Sinkovics, Endre Sajó, Zoltán Porkoláb: +
+*Towards more reliable C++ template metaprograms*, +
+In Jaan Penjam: 12th Symposium on Programming Languages and Software Tools
+(SPLST'11), Tallinn, Estonia, 5-7 October, 2011., pp. 260-271. +
+
+Ábel Sinkovics: +
+*Nested Lamda Expressions with Let Expressions in C++ Template Metaprorgams*, +
+In Zoltán Porkoláb, Nortbert Pataki: Proceedings of Workshop of Generative
+Technologies (WGT'11), Saarbrücken, Germany, 27th March, 2011., pp. 63-76. +
+
+Ábel Sinkovics: +
+*Functional Extensions to the Boost Metaprogram Library*, +
+In Electr. Notes Theor. Comput. Sci., 264(5):85-101, 2010 +
+
 include::copyright[]
 
 link:../../../index.html[[up]]
