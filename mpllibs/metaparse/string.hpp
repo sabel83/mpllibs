@@ -332,7 +332,7 @@ namespace boost
  * The MPLLIBS_STRING macro
  */
 
-#ifdef MPLLIBS_USE_CONSTEXPR
+#if defined MPLLIBS_USE_CONSTEXPR && !defined MPLLIBS_CONFIG_NO_MPLLIBS_STRING
 
 namespace mpllibs
 {
@@ -374,6 +374,8 @@ namespace mpllibs
   #endif
   #define MPLLIBS_STRING(s) \
     BOOST_STATIC_ASSERT_MSG(false, "MPLLIBS_STRING is not supported")
+
+  #define MPLLIBS_CONFIG_NO_MPLLIBS_STRING
 
 #endif
 
