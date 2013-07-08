@@ -1,80 +1,90 @@
 /*
- *     Copyright Abel Sinkovics (abel@sinkovics.hu) 2010.
- *  Distributed under the Boost Software License, Version 1.0.
- *     (See accompanying file LICENSE_1_0.txt or copy at
- *           http://www.boost.org/LICENSE_1_0.txt)
+ * Copyright Abel Sinkovics (abel@sinkovics.hu)  2013.
+ * Distributed under the Boost Software License, Version 1.0.
+ *   (See accompanying file LICENSE_1_0.txt or copy at
+ *         http://www.boost.org/LICENSE_1_0.txt)
  */
 
-body
-{
-  font-family: Helvetica, Tahoma, Arial;
-  font-size: 18px;
-  margin-left: 5%;
-  margin-right: 5%;
+body {
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
-a:link, a:visited, a:active
-{
+img {
+  width: 100%;
+}
+
+a:link {
   text-decoration: none;
 }
 
-h1
-{
-  text-align: center;
-  font-size: 30px;
-  font-weight: 900;
-  font-variant: small-caps;
+pre.sourceCode, table, blockquote {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+
+  /* Gradient generated with: http://www.colorzilla.com/gradient-editor/ */
+  background: #fafafa; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #fafafa 0%, #f0f0f0 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#fafafa), color-stop(100%,#f0f0f0)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, #fafafa 0%,#f0f0f0 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, #fafafa 0%,#f0f0f0 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, #fafafa 0%,#f0f0f0 100%); /* IE10+ */
+  background: linear-gradient(135deg, #fafafa 0%,#f0f0f0 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#f0f0f0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-h2
-{
-  font-size: 28px;
-  font-variant: small-caps;
+pre.sourceCode, table, td, th {
+  border-color: #c0c0c0;
 }
 
-h3
-{
-  font-size: 22px;
-  font-variant: small-caps;
-}
-
-h4
-{
-  font-size: 20px;
-  font-variant: small-caps;
-}
-
-.code, tt, pre, code
-{
-  font-family: Monaco, Courier;
-  font-weight: 900;
-}
-
-pre
-{
+pre.sourceCode {
   padding: 10px;
-  margin: 0;
-  background: #e8e8e8;
 }
 
-small
-{
-  font-size: 10px;
+p.caption {
+  text-align: center;
+  font-size: 80%;
 }
 
-p
-{
-  margin-left: 10px;
+h1 {
+  text-align: center;
 }
 
-sub
-{
-  font-size: 15px;
+td, th {
+  padding: 5px;
+  border-width: 1px;
+  border-style: dotted;
 }
 
-dl
-{
-  margin: 0px;
-  padding: 0px;
+td:last-child, th:last-child {
+  border-right-style: none;
+}
+
+td:first-child, th:first-child {
+  border-left-style: none;
+}
+
+tr:last-child>td, tr:last-child>th {
+  border-bottom-style: none;
+}
+
+tr:first-child>td, tr:first-child>th {
+  border-top-style: none;
+}
+
+blockquote {
+  border-color: #d0d0d0;
+
+  padding: 10px;
+}
+
+p.copyright {
+  font-size: 80%;
+}
+
+th {
+  font-weight: normal;
+  background-color: #c0c0c0;
 }
 

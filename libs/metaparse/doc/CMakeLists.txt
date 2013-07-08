@@ -5,6 +5,6 @@
 
 include(Documentation)
 
-generate_documentation(metaparse manual.txt reference.txt)
+generate_documentation(metaparse html)
 
 

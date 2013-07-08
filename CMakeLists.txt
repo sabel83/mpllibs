@@ -11,7 +11,7 @@ include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(Asciidoc)
+include(Pandoc)
 include(Files)
 
 enable_testing()
@@ -46,8 +46,8 @@ else()
   # The libraries
   foreach(L metamonad metaparse safe_printf)
     set(DIR ${CMAKE_SOURCE_DIR}/libs/${L})
-    file(GLOB FILES ${DIR}/doc/*.txt)
-    list(REMOVE_ITEM FILES ${DIR}/doc/CMakeLists.txt ${DIR}/doc/index.txt)
+    file(GLOB FILES ${DIR}/doc/*.md)
+    list(REMOVE_ITEM FILES ${DIR}/doc/index.md)
 
     dir(${WEBSITE_ROOT}/${L})
     

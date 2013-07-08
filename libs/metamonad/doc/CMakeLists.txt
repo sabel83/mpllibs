@@ -5,5 +5,5 @@
 
 include(Documentation)
 
-generate_documentation(metamonad manual.txt reference.txt)
+generate_documentation(metamonad html)
 

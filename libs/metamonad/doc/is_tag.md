@@ -1,0 +1,64 @@
+# is_tag
+
+## Synopsis
+
+```cpp
+template <class Tag, class Value>
+struct is_tag
+{
+  // unspecified
+};
+```
+
+## Description
+
+Metafunction checking the type of a value. Both arguments are lazy and the
+metafunction supports currying, thus when only `Value` is provided it returns a
+metafunction class expecting `Tag` as its argument.
+
+The metafunction checks if `Tag` can be evaluated, and works when it is not a
+nullary metafunction. It is added to support tags coming from Boost.MPL.
+
+## Header
+
+```cpp
+#include <mpllibs/metamonad/is_tag.hpp>
+```
+
+## Expression semantics
+
+For any `v1`, `v2` and `p` angle-bracket expressions, where the tag of the
+result of `p` is the result of `v1` and `v2` evaluates to something else the
+following evaluate to true:
+
+```cpp
+is_tag<v1, p>::type
+boost::mpl::not_<is_tag<v2, p>::type>::type
+apply<is_tag<v1>, p>::type
+boost::mpl::not_<apply<is_tag<v2>, p>::type>::type
+```
+
+## Example
+
+```cpp
+using boost::mpl::int_;
+using namespace mpllibs::metamonad::name;
+
+catch_just<
+  syntax<may_fail2<may_fail1<int_<13>>>>,
+  is_tag<list_tag>,
+  lambda_c<e, int_<11>>
+>::type
+```
+
+<p class="copyright">
+Copyright Abel Sinkovics (abel at elte dot hu) 2011.
+Distributed under the Boost Software License, Version 1.0.
+(See accompanying file LICENSE_1_0.txt or copy at
+[http://www.boost.org/LICENSE_1_0.txt](http://www.boost.org/LICENSE_1_0.txt)
+</p>
+
+[[up]](reference.html)
+
+
+

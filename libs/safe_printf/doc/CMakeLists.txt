@@ -5,6 +5,6 @@
 
 include(Documentation)
 
-generate_documentation(safe_printf)
+generate_documentation(safe_printf html)
 
 
