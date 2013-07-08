@@ -29,7 +29,7 @@ using boost::mpl::int_;
 using namespace mpllibs::metamonad::name;
 
 do_<exception_tag>::apply<
-  set<r, may_fail1<int_<13> >,
+  set<r, may_fail1<int_<13>>,
   may_fail2<r>
 >
 ```

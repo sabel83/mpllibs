@@ -49,7 +49,7 @@ equivalent:
 
 ```cpp
 matches_c<p1, b1>
-matches<syntax<p1>, syntax<b1> >
+matches<syntax<p1>, syntax<b1>>
 ```
 
 ```cpp

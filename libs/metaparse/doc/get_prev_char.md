@@ -27,7 +27,7 @@ For any `l`, `c` compile-time wrapped integral values and `ch` compile-time
 wrapped character the following are equivalent
 
 ```cpp
-get_prev_char<mpllibs::metaparse::source_position<l, c, ch> >::type
+get_prev_char<mpllibs::metaparse::source_position<l, c, ch>>::type
 
 ch::type
 ```

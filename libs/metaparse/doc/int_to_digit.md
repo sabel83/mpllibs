@@ -29,19 +29,19 @@ decimal value.
 The following pairs of expressions are equivalent
 
 ```cpp
-boost::mpl::apply<int_to_digit, boost::mpl::int_<0> >
+boost::mpl::apply<int_to_digit, boost::mpl::int_<0>>
 boost::mpl::char_<'0'>
 ```
 
 ```cpp
-boost::mpl::apply<int_to_digit, boost::mpl::int_<9> >
+boost::mpl::apply<int_to_digit, boost::mpl::int_<9>>
 boost::mpl::char_<'9'>
 ```
 
 ## Example
 
 ```cpp
-boost::mpl::apply<int_to_digit, boost::mpl::int_<7> >
+boost::mpl::apply<int_to_digit, boost::mpl::int_<7>>
 ```
 
 <p class="copyright">

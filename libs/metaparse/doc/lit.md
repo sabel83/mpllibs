@@ -34,7 +34,7 @@ lit<c>
 
 mpllibs::metaparse::accept_when<
   mpllibs::metaparse::one_char,
-  boost::mpl::lambda<boost::mpl::equal_to<boost::mpl::_1, c> >::type,
+  boost::mpl::lambda<boost::mpl::equal_to<boost::mpl::_1, c>>::type,
   // unspecified
 >
 ```
@@ -42,7 +42,7 @@ mpllibs::metaparse::accept_when<
 ## Example
 
 ```cpp
-typedef lit<boost::mpl::char_<'a'> > accept_a;
+typedef lit<boost::mpl::char_<'a'>> accept_a;
 ```
 
 <p class="copyright">

@@ -37,7 +37,7 @@ t
 ## Example
 
 ```cpp
-typedef unbox<box<int> >::type int_t;
+typedef unbox<box<int>>::type int_t;
 ```
 
 <p class="copyright">

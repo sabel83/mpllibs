@@ -50,11 +50,11 @@ when `boost::mpl::apply<p, s, pos>` returns an error. It is
 ```cpp
 boost::mpl::apply<
   f,
-  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type,
+  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos>>::type,
   boost::mpl::apply_wrap2<
     foldr<p, t, f>,
-    mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
-    mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
+    mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos>>,
+    mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos>>
   >::type
 >
 ```

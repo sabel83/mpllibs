@@ -41,7 +41,7 @@ boost::mpl::and_<
 
 ```cpp
 boost::mpl::apply<
-  in_range<boost::mpl::int_<11>, boost::mpl::int_<13> >,
+  in_range<boost::mpl::int_<11>, boost::mpl::int_<13>>,
   boost::mpl::int_<12>
 >
 ```

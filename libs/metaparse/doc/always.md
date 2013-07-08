@@ -33,7 +33,7 @@ For any `p` parser, `t` class the following are equivalent:
 ```cpp
 always<p, t>
 
-mpllibs::metaparse::last_of<p, mpllibs::metaparse::return_<t> >
+mpllibs::metaparse::last_of<p, mpllibs::metaparse::return_<t>>
 ```
 
 ## Example

@@ -31,18 +31,18 @@ It evaluates its argument lazily.
 The following pairs of expressions are equivalent
 
 ```cpp
-boost::mpl::apply<digit_to_int, boost::mpl::char_<'0'> >
+boost::mpl::apply<digit_to_int, boost::mpl::char_<'0'>>
 boost::mpl::int_<0>
 
 
-boost::mpl::apply<digit_to_int, boost::mpl::char_<'9'> >
+boost::mpl::apply<digit_to_int, boost::mpl::char_<'9'>>
 boost::mpl::int_<9>
 ```
 
 ## Example
 
 ```cpp
-boost::mpl::apply<digit_to_int, boost::mpl::char_<'7'> >
+boost::mpl::apply<digit_to_int, boost::mpl::char_<'7'>>
 ```
 
 <p class="copyright">

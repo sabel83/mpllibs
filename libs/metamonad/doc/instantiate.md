@@ -34,7 +34,7 @@ For any `n > 0`, `k >= 0`, `n >= k`, `c1`, ..., `ck` classes and `t` template
 class taking `n` classes as template arguments
 
 ```cpp
-instantiaten<t>::apply<boost::mpl::vector<c1, ..., ck> >::type
+instantiaten<t>::apply<boost::mpl::vector<c1, ..., ck>>::type
 ```
 
 is equivalent with

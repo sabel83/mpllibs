@@ -26,7 +26,7 @@ make pattern matching and let substitutions recurse into it.
 ```cpp
 case_< eval_guard<boost::mpl::plus<x, y>>,
   matches<
-    eval_guard<boost::mpl::plus<boost::mpl::int_<11>, boost::mpl::int_<2> > >,
+    eval_guard<boost::mpl::plus<boost::mpl::int_<11>, boost::mpl::int_<2>>>,
     boost::mpl::int_<13>
   >
 >

@@ -26,7 +26,7 @@ Metafunction for evaluating an angle-bracket expression wrapped by
 For any `t` type
 
 ```cpp
-eval_syntax<syntax<t> >::type
+eval_syntax<syntax<t>>::type
 ```
 
 is equivalent with
@@ -38,7 +38,7 @@ t::type
 ## Example
 
 ```cpp
-eval_syntax<syntax<boost::mpl::plus<int_<1>, int_<2> > > > >::type
+eval_syntax<syntax<boost::mpl::plus<int_<1>, int_<2>>>>>::type
 ```
 
 <p class="copyright">

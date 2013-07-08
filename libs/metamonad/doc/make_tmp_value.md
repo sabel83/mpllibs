@@ -50,7 +50,7 @@ publicly inherit from `t`.
 ## Example
 
 ```cpp
-make_tmp_value<boost::mpl::always<int> >
+make_tmp_value<boost::mpl::always<int>>
 ```
 
 <p class="copyright">

@@ -27,7 +27,7 @@ used. Otherwise the string `"???"` is displayed.
 ## Example
 
 ```cpp
-value_to_stream<mpl::int_<13> >::run(std::cout);
+value_to_stream<mpl::int_<13>>::run(std::cout);
 ```
 
 <p class="copyright">

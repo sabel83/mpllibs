@@ -45,7 +45,7 @@ boost::mpl::apply<p, s, pos>
 ```
 
 when `boost::mpl::apply<p, s, pos>` doesn't return an error and
-`boost::mpl::apply<pred, mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> > >::type`
+`boost::mpl::apply<pred, mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos>>>::type`
 is `true`. It is an error with `msg` as the error message otherwise.
 
 ## Example

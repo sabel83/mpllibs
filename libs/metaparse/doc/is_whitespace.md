@@ -29,22 +29,22 @@ Returns a wrapped boolean value.
 The following expressions are equivalent:
 
 ```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<' '> >
+boost::mpl::apply<is_whitespace, boost::mpl::char_<' '>>
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<'\t'> >
+boost::mpl::apply<is_whitespace, boost::mpl::char_<'\t'>>
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<'\r'> >
+boost::mpl::apply<is_whitespace, boost::mpl::char_<'\r'>>
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<'\n'> >
+boost::mpl::apply<is_whitespace, boost::mpl::char_<'\n'>>
 boost::mpl::true_
 ```
 
@@ -56,7 +56,7 @@ boost::mpl::false_
 ## Example
 
 ```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<' '> >
+boost::mpl::apply<is_whitespace, boost::mpl::char_<' '>>
 ```
 
 <p class="copyright">

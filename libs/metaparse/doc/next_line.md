@@ -26,19 +26,19 @@ For any `s` source position and `c` wrapped character the following are
 equivalent
 
 ```cpp
-mpllibs::metaparse::get_col<next_line<s, c> >::type
+mpllibs::metaparse::get_col<next_line<s, c>>::type
 
 boost::mpl::int_<1>
 ```
 
 ```cpp
-mpllibs::metaparse::get_line<next_line<s, c> >
+mpllibs::metaparse::get_line<next_line<s, c>>
 
-boost::mpl::plus<mpllibs::metaparse::get_line<s>::type, boost::mpl::int_<1> >
+boost::mpl::plus<mpllibs::metaparse::get_line<s>::type, boost::mpl::int_<1>>
 ```
 
 ```cpp
-mpllibs::metaparse::get_prev_char<next_line<s, c> >::type
+mpllibs::metaparse::get_prev_char<next_line<s, c>>::type
 
 c
 ```
@@ -48,7 +48,7 @@ c
 ```cpp
 typedef
   mpllibs::metaparse::get_line<
-    next_line<mpllibs::metaparse::start, boost::mpl::char_<'b'> >
+    next_line<mpllibs::metaparse::start, boost::mpl::char_<'b'>>
   >::type
   two;
 ```

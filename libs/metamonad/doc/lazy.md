@@ -18,7 +18,7 @@ every argument before passing it to the enclosing metafunction call. Thus, for
 example
 
 ```cpp
-lazy<boost::mpl::plus<f<boost::mpl::int_<11> >, boost::mpl::int_<13> >::type
+lazy<boost::mpl::plus<f<boost::mpl::int_<11>>, boost::mpl::int_<13>>::type
 ```
 
 evaluates
@@ -41,7 +41,7 @@ boost::mpl::plus<
 For any `t` template, and `c1` ... `cn` classes
 
 ```cpp
-lazy<t<c1, ..., cn> >::type
+lazy<t<c1, ..., cn>>::type
 ```
 
 is equivalent to
@@ -65,7 +65,7 @@ c::type
 For any `t` class the following are equivalent:
 
 ```cpp
-lazy<lazy<t> >::type
+lazy<lazy<t>>::type
 lazy<t>::type
 ```
 
@@ -77,9 +77,9 @@ using namespace boost::mpl;
 template <class N>
 struct fib :
   eval_if<
-    typename less<N, int_<2> >::type,
+    typename less<N, int_<2>>::type,
     int_<1>,
-    lazy<plus<fib<minus<N, int_<1> > >, fib<minus<N, int_<2> > > > >
+    lazy<plus<fib<minus<N, int_<1>>>, fib<minus<N, int_<2>>>>>
   >
 {};
 ```

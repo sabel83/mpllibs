@@ -41,7 +41,7 @@ accept_when<
 
 ```cpp
 typedef
-  get_remaining<boost::mpl::apply<space, MPLLIBS_STRING(" abc"), start> >::type
+  get_remaining<boost::mpl::apply<space, MPLLIBS_STRING(" abc"), start>>::type
   abc;
 ```
 

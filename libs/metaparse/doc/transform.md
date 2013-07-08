@@ -42,7 +42,7 @@ is equivalent to
 ```cpp
 boost::mpl::apply<
   t,
-  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type
+  mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos>>::type
 >::type
 ```
 

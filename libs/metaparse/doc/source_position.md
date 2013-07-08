@@ -38,21 +38,19 @@ For any `l`, `c` compile-time wrapped integral values, the following are
 equivalent
 
 ```cpp
-mpllibs::metaparse::get_col<source_position<l, c> >::type
+mpllibs::metaparse::get_col<source_position<l, c>>::type
 c::type
 ```
 
 ```cpp
-mpllibs::metaparse::get_line<source_position<l, c> >::type
+mpllibs::metaparse::get_line<source_position<l, c>>::type
 l::type
 ```
 
 ## Example
 
 ```cpp
-typedef
-  source_position<boost::mpl::int_<1>, boost::mpl::int_<1> >
-  start;
+typedef source_position<boost::mpl::int_<1>, boost::mpl::int_<1>> start;
 ```
 
 <p class="copyright">

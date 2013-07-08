@@ -30,19 +30,19 @@ For any `s` non-empty compile-time string and `pos` source position the
 following are equivalent
 
 ```cpp
-mpllibs::metaparse::get_result<boost::mpl::apply<one_char, s, pos> >
+mpllibs::metaparse::get_result<boost::mpl::apply<one_char, s, pos>>
 
 boost::mpl::front<s>
 ```
 
 ```cpp
-mpllibs::metaparse::get_remaining<boost::mpl::apply<one_char, s, pos> >
+mpllibs::metaparse::get_remaining<boost::mpl::apply<one_char, s, pos>>
 
 boost::mpl::pop_front<s>
 ```
 
 The value of
-`mpllibs::metaparse::get_position<boost::mpl::apply<one_char, s, pos> >` depends
+`mpllibs::metaparse::get_position<boost::mpl::apply<one_char, s, pos>>` depends
 on the first character of the sequence and the value of the one parsed before
 that (which is stored in the source position). `one_char` updates the source
 position's `col` and `line` values based on the new line characters. It detects

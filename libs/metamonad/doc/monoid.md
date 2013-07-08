@@ -42,7 +42,7 @@ requirements:
 
 * `mappend<mempty, X>` is equivalent to `X`
 * `mappend<X, mempty>` is equivalent to `X`
-* `mappend<X, mappend<Y, Z> >` is equivalent to `mappend<mappend<X, Y>, Z>`
+* `mappend<X, mappend<Y, Z>>` is equivalent to `mappend<mappend<X, Y>, Z>`
 * `mconcat<L>` is equivalent to `boost::mpl::reverse_fold<L, mempty, mappend>`
 
 ## Header

@@ -28,7 +28,7 @@ used in the expression passed to [`lazy`](lazy.html). The content of
 For any `c` class
 
 ```cpp
-lazy<lazy_argument<c> >::type
+lazy<lazy_argument<c>>::type
 ```
 
 is equivalent to
@@ -46,9 +46,9 @@ template <class N>
 struct fib :
   lazy<
     eval_if<
-      less<N, int_<2> >,
-      lazy_argument<int_<1> >,
-      lazy_argument<plus<fib<minus<N, int_<1> > >, fib<minus<N, int_<2> > > >
+      less<N, int_<2>>,
+      lazy_argument<int_<1>>,
+      lazy_argument<plus<fib<minus<N, int_<1>>>, fib<minus<N, int_<2>>>>
     >
   >
 {};

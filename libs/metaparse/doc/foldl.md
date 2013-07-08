@@ -54,12 +54,12 @@ boost::mpl::apply_wrap2<
     boost::mpl::apply<
       f,
       t,
-      mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type
+      mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos>>::type
     >::type,
     f
   >,
-  mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos> >,
-  mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos> >
+  mpllibs::metaparse::get_remaining<boost::mpl::apply<p, s, pos>>,
+  mpllibs::metaparse::get_position<boost::mpl::apply<p, s, pos>>
 >  
 ```
 

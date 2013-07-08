@@ -28,7 +28,7 @@ the wrapped expression does not get accidentally evaluated.
 struct my_var_id;
 
 syntax<
-  boost::mpl::plus<var<my_var_id>, boost::mpl::int_<13> >
+  boost::mpl::plus<var<my_var_id>, boost::mpl::int_<13>>
 >
 ```
 

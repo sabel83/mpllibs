@@ -35,7 +35,7 @@ is equivalent to
 ```cpp
 boost::mpl::apply<
   mpllibs::metaparse::return_<
-    mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos> >::type
+    mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos>>::type
   >,
   s,
   pos

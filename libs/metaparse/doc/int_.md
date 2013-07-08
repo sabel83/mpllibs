@@ -37,7 +37,7 @@ foldl1<
   boost::mpl::int_<0>,
   boost::mpl::lambda<
     boost::mpl::plus<
-      boost::mpl::times<boost::mpl::_2, boost::mpl::int_<10> >,
+      boost::mpl::times<boost::mpl::_2, boost::mpl::int_<10>>,
       boost::mpl::_1
     >
   >::type

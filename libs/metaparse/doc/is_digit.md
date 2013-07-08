@@ -29,14 +29,16 @@ value.
 The following expressions are equivalent:
 
 ```cpp
-boost::mpl::apply<is_digit, boost::mpl::char_<'0'> >
+boost::mpl::apply<is_digit, boost::mpl::char_<'0'>>
 boost::mpl::true_
+```
 
-
-boost::mpl::apply<is_digit, boost::mpl::char_<'9'> >
+```cpp
+boost::mpl::apply<is_digit, boost::mpl::char_<'9'>>
 boost::mpl::true_
+```
 
-
+```cpp
 boost::mpl::apply<is_digit, c>
 boost::mpl::false_
 ```
@@ -44,7 +46,7 @@ boost::mpl::false_
 ## Example
 
 ```cpp
-boost::mpl::apply<is_digit, boost::mpl::char_<'7'> >
+boost::mpl::apply<is_digit, boost::mpl::char_<'7'>>
 ```
 
 <p class="copyright">

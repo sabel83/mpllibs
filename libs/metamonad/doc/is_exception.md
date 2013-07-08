@@ -26,7 +26,7 @@ It expects a nullary metafunction as argument.
 For any `d` class the following evaluates to `true`
 
 ```cpp
-is_exception<exception<d> >
+is_exception<exception<d>>
 ```
 
 For any `c` class, that is not an instance of the `exception` template, the

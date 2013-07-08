@@ -28,22 +28,22 @@ Checks if a character is a letter. Returns a wrapped boolean value.
 The following expressions are equivalent:
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'a'> >
+boost::mpl::apply<is_letter, boost::mpl::char_<'a'>>
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'z'> >
+boost::mpl::apply<is_letter, boost::mpl::char_<'z'>>
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'A'> >
+boost::mpl::apply<is_letter, boost::mpl::char_<'A'>>
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'Z'> >
+boost::mpl::apply<is_letter, boost::mpl::char_<'Z'>>
 boost::mpl::true_
 ```
 
@@ -55,7 +55,7 @@ boost::mpl::false_
 ## Example
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'x'> >
+boost::mpl::apply<is_letter, boost::mpl::char_<'x'>>
 ```
 
 <p class="copyright">

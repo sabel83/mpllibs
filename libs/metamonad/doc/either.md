@@ -33,9 +33,9 @@ struct division_by_zero;
 template <class A, class B>
 struct divide :
   if_<
-    equal_to<A, int_<0> >,
+    equal_to<A, int_<0>>,
     left<division_by_zero>,
-    right<divides<A, B> >
+    right<divides<A, B>>
   >
   {};
 ```

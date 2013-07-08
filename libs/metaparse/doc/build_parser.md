@@ -38,7 +38,7 @@ boost::mpl::apply<build_parser<p>, s>
 is equivalent to
 
 ```cpp
-mpllibs::metaparse::get_result<boost::mpl::apply<p, s> >
+mpllibs::metaparse::get_result<boost::mpl::apply<p, s>>
 ```
 
 ## Example

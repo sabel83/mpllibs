@@ -29,7 +29,7 @@ expression.
 For any `c` class the following are equivalent
 
 ```cpp
-lazy<already_lazy<c> >::type
+lazy<already_lazy<c>>::type
 c
 ```
 
@@ -47,11 +47,9 @@ template <class N>
 struct fib :
   lazy<
     eval_if<
-      less<N, int_<2> >,
-      already_lazy<int_<1> >,
-      already_lazy<
-        lazy<plus<fib<minus<N, int_<1> > >, fib<minus<N, int_<2> > > >
-      >
+      less<N, int_<2>>,
+      already_lazy<int_<1>>,
+      already_lazy<lazy<plus<fib<minus<N, int_<1>>>, fib<minus<N, int_<2>>>>>
     >
   >
 {};

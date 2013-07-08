@@ -31,19 +31,19 @@ For any `c` class, `s` compile-time string and `pos` source position the
 following are equivalent
 
 ```cpp
-mpllibs::metaparse::get_result<boost::mpl::apply<return_<c>, s, pos> >::type
+mpllibs::metaparse::get_result<boost::mpl::apply<return_<c>, s, pos>>::type
 
 c
 ```
 
 ```cpp
-mpllibs::metaparse::get_remaining<boost::mpl::apply<return_<c>, s, pos> >::type
+mpllibs::metaparse::get_remaining<boost::mpl::apply<return_<c>, s, pos>>::type
 
 s
 ```
 
 ```cpp
-mpllibs::metaparse::get_position<boost::mpl::apply<return_<c>, s, pos> >::type
+mpllibs::metaparse::get_position<boost::mpl::apply<return_<c>, s, pos>>::type
 
 pos
 ```

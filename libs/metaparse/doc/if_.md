@@ -34,7 +34,7 @@ For any `p` parser, `t` and `f` classes the following are equivalent:
 if_<p, t, f>
 
 mpllibs::metaparse::one_of<
-  mpllibs::metaparse::last_of<p, mpllibs::metaparse::return_<t> >,
+  mpllibs::metaparse::last_of<p, mpllibs::metaparse::return_<t>>,
   mpllibs::metaparse::return_<f>
 >
 ```

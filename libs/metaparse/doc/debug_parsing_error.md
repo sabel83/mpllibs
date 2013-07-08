@@ -44,7 +44,7 @@ prints the result of parsing to the standard output and calls `exit`.
 ## Example
 
 ```cpp
-debug_parsing_error<some_parser, boost::string<'abcd'> > do_debugging;
+debug_parsing_error<some_parser, boost::string<'abcd'>> do_debugging;
 ```
 
 <p class="copyright">

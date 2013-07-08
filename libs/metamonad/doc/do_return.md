@@ -29,7 +29,7 @@ using boost::mpl::int_;
 using namespace mpllibs::metamonad::name;
 
 do_<exception_tag>::apply<
-  do_return<int_<13> >
+  do_return<int_<13>>
 >
 ```
 

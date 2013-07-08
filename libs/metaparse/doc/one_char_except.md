@@ -48,7 +48,7 @@ struct some_string;
 
 typedef
   mpllibs::metaparse::get_result<
-    boost::mpl::apply<one_char_except<boost::mpl::char_c<'"'> >, some_string>
+    boost::mpl::apply<one_char_except<boost::mpl::char_c<'"'>>, some_string>
   >::type
   first_character_of_some_string;
 ```

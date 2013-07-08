@@ -45,9 +45,9 @@ when the above expression returns a parsing error. It is
 
 ```cpp
 boost::mpl::apply<
-  foldl<p, get_result<apply<pt, s, pos> >::type, f>,
-  get_remaining<apply<pt, s, pos> >::type,
-  get_position<apply<pt, s, pos> >::type
+  foldl<p, get_result<apply<pt, s, pos>>::type, f>,
+  get_remaining<apply<pt, s, pos>>::type,
+  get_position<apply<pt, s, pos>>::type
 >
 ```
 

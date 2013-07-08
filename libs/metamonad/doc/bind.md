@@ -48,7 +48,7 @@ typedef
   bind<
     exception_tag,
     exception<one_error>,
-    always<exception<other_error> >
+    always<exception<other_error>>
   >::type
   exception_one_error;
 ```

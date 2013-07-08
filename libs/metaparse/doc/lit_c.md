@@ -32,7 +32,7 @@ For any `c` character the following are equivalent:
 ```cpp
 lit_c<c>
 
-lit<boost::mpl::char_<c> >
+lit<boost::mpl::char_<c>>
 ```
 
 ## Example

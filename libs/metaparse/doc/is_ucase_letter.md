@@ -28,12 +28,12 @@ Checks if a character is an upper case letter. Returns a wrapped boolean value.
 The following expressions are equivalent:
 
 ```cpp
-boost::mpl::apply<is_ucase_letter, boost::mpl::char_<'A'> >
+boost::mpl::apply<is_ucase_letter, boost::mpl::char_<'A'>>
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_ucase_letter, boost::mpl::char_<'Z'> >
+boost::mpl::apply<is_ucase_letter, boost::mpl::char_<'Z'>>
 boost::mpl::true_
 ```
 
@@ -45,7 +45,7 @@ boost::mpl::false_
 ## Example
 
 ```cpp
-boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'X'> >
+boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'X'>>
 ```
 
 <p class="copyright">

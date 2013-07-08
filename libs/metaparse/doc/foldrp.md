@@ -49,13 +49,13 @@ when the above expression returns a parsing error. It is
 boost::mpl::apply<
   mpllibs::metparase::return_<
     boost::mpl::apply<
-      foldr<p, get_result<apply<pt, s_, pos_> >::type, f>,
+      foldr<p, get_result<apply<pt, s_, pos_>>::type, f>,
       s,
       pos
     >
   >,
-  get_remaining<apply<pt, s_, pos_> >::type,
-  get_position<apply<pt, s_, pos_> >::type
+  get_remaining<apply<pt, s_, pos_>>::type,
+  get_position<apply<pt, s_, pos_>>::type
 >
 ```
 
