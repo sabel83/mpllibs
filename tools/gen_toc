@@ -12,12 +12,12 @@ import optparse
 def anchor(c, toc_type):
   if c == ' ':
     return '-'
-  if c == '.':
+  elif c == '.':
     if toc_type == 'pandoc_html':
       return '.'
     else:
       return ''
-  elif c == '`':
+  elif c in [':', '`']:
     return ''
   else:
     return c.lower()
