@@ -20,6 +20,7 @@ Based on C++11 features the library can provide advanced utilities for defining
 the input string, the rest of the library works on C++98-based compilers as
 well.
 
+* [Tutorial](https://github.com/sabel83/metaparse_tutorial#metaparse-tutorial)
 * [User manual](manual.html)
 * [Library reference](reference.html)
 * [Performance](performance.html)
