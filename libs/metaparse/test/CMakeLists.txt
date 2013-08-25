@@ -6,6 +6,10 @@
 aux_source_directory(. SOURCES)
 add_executable(metaparse_test ${SOURCES})
 
+add_definitions(-DBUILD_MAJOR_VERSION=${MAJOR_VERSION})
+add_definitions(-DBUILD_MINOR_VERSION=${MINOR_VERSION})
+add_definitions(-DBUILD_PATCH_VERSION=${PATCH_VERSION})
+
 target_link_libraries(metaparse_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(metaparse_unit_tests metaparse_test)

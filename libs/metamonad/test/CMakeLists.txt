@@ -6,6 +6,10 @@
 aux_source_directory(. SOURCES)
 add_executable(metamonad_test ${SOURCES})
 
+add_definitions(-DBUILD_MAJOR_VERSION=${MAJOR_VERSION})
+add_definitions(-DBUILD_MINOR_VERSION=${MINOR_VERSION})
+add_definitions(-DBUILD_PATCH_VERSION=${PATCH_VERSION})
+
 target_link_libraries(metamonad_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test(metamonad_unit_tests metamonad_test)

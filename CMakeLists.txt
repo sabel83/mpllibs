@@ -5,6 +5,10 @@
 
 cmake_minimum_required(VERSION 2.6)
 project(mpllibs)
+set(CMAKE_PROJECT_NAME mpllibs)
+set(MAJOR_VERSION 0)
+set(MINOR_VERSION 1)
+set(PATCH_VERSION 0)
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
@@ -96,10 +100,40 @@ macro(install_with_dir PREFIX_TO_CUT)
  endforeach(F)
           
 endmacro(install_with_dir)
-           
+
+set(CMAKE_INSTALL_PREFIX "/usr")
 
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/mpllibs/*.hpp)
 install_with_dir(${CMAKE_CURRENT_SOURCE_DIR} ${HEADER_FILES})
+
+# Debian package
+if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+  include(InstallRequiredSystemLibraries)
+   
+  set(CPACK_SET_DESTDIR "on")
+  set(CPACK_PACKAGING_INSTALL_PREFIX "/tmp")
+  set(CPACK_GENERATOR "DEB")
+   
+  set(CPACK_PACKAGE_DESCRIPTION "Mpllibs")
+  set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ template metaprogramming library collection")
+  set(CPACK_PACKAGE_VENDOR "Abel Sinkovics")
+  set(CPACK_PACKAGE_CONTACT "abel@sinkovics.hu")
+  set(CPACK_PACKAGE_VERSION_MAJOR "${MAJOR_VERSION}")
+  set(CPACK_PACKAGE_VERSION_MINOR "${MINOR_VERSION}")
+  set(CPACK_PACKAGE_VERSION_PATCH "${PATCH_VERSION}")
+  set(CPACK_PACKAGE_FILE_NAME "lib${CMAKE_PROJECT_NAME}-${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}-${CMAKE_SYSTEM_PROCESSOR}-dev")
+  set(CPACK_SOURCE_PACKAGE_FILE_NAME "lib${CMAKE_PROJECT_NAME}-${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}-dev")
+
+  set(CPACK_DEBIAN_PACKAGE_DEPENDS "libboost-dev")
+   
+  set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+  set(CPACK_DEBIAN_PACKAGE_SECTION "devel")
+  set(CPACK_DEBIAN_ARCHITECTURE "all") # Header-only
+   
+  set(CPACK_COMPONENTS_ALL headers)
+  include(CPack)
+   
+endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
 
 
