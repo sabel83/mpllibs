@@ -22,6 +22,23 @@ enable_testing()
 
 include_directories(".")
 
+# Warning level
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -pedantic")
+
+  # Boost.Config says that variadic macros are available when they should not be
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-variadic-macros")
+
+  message("Setting warning level for GCC")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -pedantic")
+
+  # Boost.Config says that variadic macros are available when they should not be
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-variadic-macros")
+
+  message("Setting warning level for Clang")
+endif()
+
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   subdirs(libs)
 else()
