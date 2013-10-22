@@ -23,8 +23,7 @@ typeclass.
 
 ## Expression semantics
 
-For any `monad_tag` tag, `a` class and `f` nullary metafunction taking one
-argument:
+For any `monad_tag` tag, `a` class and `f` metafunction taking one argument:
 
 ```cpp
 bind<monad_tag, a, f>
