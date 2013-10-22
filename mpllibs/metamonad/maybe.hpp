@@ -24,7 +24,7 @@ namespace mpllibs
     template <class T>
     struct monad<maybe_tag<T> > : monad_defaults<maybe_tag<T> >
     {
-      typedef lambda_c<x, just<x> > return_;
+      typedef just<> return_;
       
       typedef
         lambda_c<a, f,

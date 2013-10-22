@@ -22,7 +22,7 @@ namespace mpllibs
     template <class L, class R>
     struct monad<either_tag<L, R> > : monad_defaults<either_tag<L, R> >
     {
-      typedef lambda_c<t, right<t> > return_;
+      typedef right<> return_;
       
       typedef
         lambda_c<a, f,
@@ -33,7 +33,7 @@ namespace mpllibs
         >
         bind;
 
-      typedef lambda_c<t, left<t> > fail;
+      typedef left<> fail;
     };
   }
 }

@@ -23,7 +23,7 @@ namespace mpllibs
     template <>
     struct monad<state_tag> : monad_defaults<state_tag>
     {
-      typedef lambda_c<t, s, pair<t, s> > return_;
+      typedef pair<> return_;
 
       typedef
         lambda_c<a, f, s,

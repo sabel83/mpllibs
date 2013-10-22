@@ -31,7 +31,7 @@ namespace mpllibs
         lambda_c<a, b, mpllibs::metamonad::bind<Tag, a, lambda_c<s, b> > >
         bind_;
 
-      typedef lambda_c<s, exception<s> > fail;
+      typedef exception<> fail;
     };
   }
 }

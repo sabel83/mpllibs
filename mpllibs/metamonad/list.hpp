@@ -28,7 +28,7 @@ namespace mpllibs
     struct monad<list_tag> : monad_defaults<list_tag>
     {
       typedef lambda_c<t, boost::mpl::list<t> > return_;
-      typedef lambda_c<a, f, concat_map<a, f> > bind;
+      typedef concat_map<> bind;
     };
     
     template <>
