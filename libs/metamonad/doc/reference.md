@@ -126,6 +126,11 @@
 * [tag_tag](tag_tag.html)
 * [overloading_error_tag](overloading_error_tag.html)
 
+### Sequences
+
+* [concat](concat.html)
+* [concat_map](concat_map.html)
+
 ## Typeclasses
 
 ### Monoid
