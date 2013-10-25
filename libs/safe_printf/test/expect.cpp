@@ -5,5 +5,5 @@
 
 #define BOOST_TEST_DYN_LINK
 
-#include <mpllibs/safe_printf/expect.hpp>
+#include <mpllibs/safe_printf/impl/expect.hpp>
 

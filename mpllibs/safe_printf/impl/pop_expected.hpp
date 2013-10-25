@@ -1,5 +1,5 @@
-#ifndef MPLLIBS_SAFE_PRINTF_POP_EXPECTED_HPP
-#define MPLLIBS_SAFE_PRINTF_POP_EXPECTED_HPP
+#ifndef MPLLIBS_SAFE_PRINTF_IMPL_POP_EXPECTED_HPP
+#define MPLLIBS_SAFE_PRINTF_IMPL_POP_EXPECTED_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2009 - 2010.
 // Distributed under the Boost Software License, Version 1.0.
@@ -18,40 +18,43 @@ namespace mpllibs
 {
   namespace safe_printf
   {
-    template <class Expected>
-    struct pop_expected :
-      boost::mpl::eval_if<
-        typename boost::mpl::front<
-          typename boost::mpl::front<Expected>::type
-        >::type,
-        boost::mpl::push_front<
-          typename boost::mpl::pop_front<Expected>::type,
-          boost::mpl::deque<
-            boost::mpl::false_,
-            typename boost::mpl::back<
-              typename boost::mpl::front<Expected>::type
-            >::type
-          >
-        >,
+    namespace impl
+    {
+      template <class Expected>
+      struct pop_expected :
         boost::mpl::eval_if<
-          typename boost::mpl::at_c<
-            typename boost::mpl::front<Expected>::type,
-            1
+          typename boost::mpl::front<
+            typename boost::mpl::front<Expected>::type
           >::type,
           boost::mpl::push_front<
             typename boost::mpl::pop_front<Expected>::type,
             boost::mpl::deque<
-              boost::mpl::false_,
               boost::mpl::false_,
               typename boost::mpl::back<
                 typename boost::mpl::front<Expected>::type
               >::type
             >
           >,
-          boost::mpl::pop_front<Expected>
+          boost::mpl::eval_if<
+            typename boost::mpl::at_c<
+              typename boost::mpl::front<Expected>::type,
+              1
+            >::type,
+            boost::mpl::push_front<
+              typename boost::mpl::pop_front<Expected>::type,
+              boost::mpl::deque<
+                boost::mpl::false_,
+                boost::mpl::false_,
+                typename boost::mpl::back<
+                  typename boost::mpl::front<Expected>::type
+                >::type
+              >
+            >,
+            boost::mpl::pop_front<Expected>
+          >
         >
-      >
-    {};
+      {};
+    }
   }
 }
 

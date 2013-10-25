@@ -6,14 +6,11 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/safe_printf/pop_expected.hpp>
-#include <mpllibs/safe_printf/verify_argument.hpp>
+#include <mpllibs/safe_printf/impl/nonempty.hpp>
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/front.hpp>
-#include <boost/mpl/pop_front.hpp>
 
 namespace mpllibs
 {
@@ -28,19 +25,6 @@ namespace mpllibs
       private:
         typedef typename Expected::type ExpectedValue;
         typedef typename Actual::type ActualValue;
-      
-        template <class E, class A>
-        struct nonempty :
-          boost::mpl::eval_if<
-            typename verify_argument<
-              boost::mpl::front<E>,
-              boost::mpl::front<A>
-            >::type,
-            valid_arguments<pop_expected<E>, boost::mpl::pop_front<A> >,
-            boost::mpl::false_
-          >
-        {};
-
       public:
         typedef
           typename boost::mpl::eval_if<

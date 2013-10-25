@@ -5,5 +5,5 @@
 
 #define BOOST_TEST_DYN_LINK
 
-#include <mpllibs/safe_printf/verify_argument_impl.hpp>
+#include <mpllibs/safe_printf/impl/verify_argument_impl.hpp>
 
