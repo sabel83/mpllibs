@@ -7,7 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/safe_printf/printf_parser.hpp>
-#include <mpllibs/safe_printf/verify_printf_arguments_impl.hpp>
+#include <mpllibs/safe_printf/impl/valid_arguments.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 
@@ -16,11 +16,8 @@ namespace mpllibs
   namespace safe_printf
   {
     template <class F, class ArgTypes>
-    struct verify_printf_arguments :
-      verify_printf_arguments_impl<
-        boost::mpl::apply_wrap1<printf_parser, F>,
-        ArgTypes
-      >
+    struct valid_arguments :
+      impl::valid_arguments<boost::mpl::apply_wrap1<printf_parser, F>, ArgTypes>
     {};
   }
 }

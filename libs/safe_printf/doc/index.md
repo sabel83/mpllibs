@@ -15,7 +15,7 @@ time overhead, however).
 
 ## Metafunctions
 
-* [verify_printf_arguments](verify_printf_arguments.html)
+* [valid_arguments](valid_arguments.html)
 
 ## Related publications
 

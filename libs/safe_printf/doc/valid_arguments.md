@@ -1,10 +1,10 @@
-# verify_printf_arguments
+# valid_arguments
 
 ## Synopsis
 
 ```cpp
 template <class FormatString, class ArgumentTypes>
-struct verify_printf_arguments
+struct valid_arguments
 {
   // unspecified
 };
@@ -20,7 +20,7 @@ types is valid for the format string and false otherwise.
 ## Header
 
 ```cpp
-#include <mpllibs/safe_printf/verify_printf_arguments.hpp>
+#include <mpllibs/safe_printf/valid_arguments.hpp>
 ```
 
 ## Expression semantics
@@ -28,7 +28,7 @@ types is valid for the format string and false otherwise.
 For any `s` `mpllibs::metaparse::string` and `t` sequence of types:
 
 ```cpp
-mpllibs::safe_printf::verify_printf_arguments<s, t>::type::value
+mpllibs::safe_printf::valid_arguments<s, t>::type::value
 ```
 
 is `true` when the types `t` contains are correct according to `s` and `false`
@@ -38,7 +38,7 @@ otherwise.
 
 ```cpp
 BOOST_STATIC_ASSERT((
-  mpllibs::safe_printf::verify_printf_arguments<
+  mpllibs::safe_printf::valid_arguments<
     MPLLIBS_STRING("%d %d\n"),
     boost::mpl::list<int, int>
   >::type::value

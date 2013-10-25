@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/safe_printf/verify_printf_arguments.hpp>
+#include <mpllibs/safe_printf/valid_arguments.hpp>
 
 #include <boost/mpl/string.hpp>
 #include <boost/mpl/list.hpp>
@@ -65,7 +65,7 @@ namespace mpllibs
       int printf(BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_ARGS, ~)) \
       { \
         BOOST_STATIC_ASSERT(( \
-          verify_printf_arguments< \
+          valid_arguments< \
             FormatString, \
             boost::mpl::list<BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_CLASS_ARGS, ~)> \
           >::type::value \
@@ -89,7 +89,7 @@ namespace mpllibs
       ) \
       { \
         BOOST_STATIC_ASSERT(( \
-          verify_printf_arguments< \
+          valid_arguments< \
             FormatString, \
             boost::mpl::list<BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_CLASS_ARGS, ~)> \
           >::type::value \
@@ -114,7 +114,7 @@ namespace mpllibs
       ) \
       { \
         BOOST_STATIC_ASSERT(( \
-          verify_printf_arguments< \
+          valid_arguments< \
             FormatString, \
             boost::mpl::list<BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_CLASS_ARGS, ~)> \
           >::type::value \

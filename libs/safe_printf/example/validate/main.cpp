@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/safe_printf/verify_printf_arguments.hpp>
+#include <mpllibs/safe_printf/valid_arguments.hpp>
 #include <mpllibs/metaparse/string.hpp>
 
 #include <boost/mpl/list.hpp>
@@ -17,7 +17,7 @@ void validate_and_show()
 {
   std::cout
     << boost::mpl::c_str<S>::type::value << ": "
-    << mpllibs::safe_printf::verify_printf_arguments<S, ArgTypes>::type::value
+    << mpllibs::safe_printf::valid_arguments<S, ArgTypes>::type::value
     << std::endl;
 }
 
