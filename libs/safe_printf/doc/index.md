@@ -13,6 +13,10 @@ time overhead, however).
 * [sprintf](sprintf.html)
 * [fprintf](fprintf.html)
 
+## Metafunctions
+
+* [verify_printf_arguments](verify_printf_arguments.html)
+
 ## Related publications
 
 Ábel Sinkovics, Zoltán Porkoláb: <br />
