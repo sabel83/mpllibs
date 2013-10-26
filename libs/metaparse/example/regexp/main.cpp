@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/transform.hpp>
 #include <mpllibs/metaparse/one_char_except_c.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
-#include <mpllibs/metaparse/always.hpp>
+#include <mpllibs/metaparse/always_c.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
 #include <mpllibs/metaparse/middle_of.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
@@ -26,7 +26,7 @@ using mpllibs::metaparse::lit_c;
 using mpllibs::metaparse::transform;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::one_of;
-using mpllibs::metaparse::always;
+using mpllibs::metaparse::always_c;
 using mpllibs::metaparse::middle_of;
 using mpllibs::metaparse::one_char_except_c;
 using mpllibs::metaparse::entire_input;
@@ -104,7 +104,7 @@ struct r_append
 typedef
   foldl1<
     one_of<
-      always<lit_c<'.'>, r_any_char>,
+      always_c<'.', r_any_char>,
       transform<one_char_except_c<'.', '(', ')'>, r_char_lit>
     >,
     r_epsilon,

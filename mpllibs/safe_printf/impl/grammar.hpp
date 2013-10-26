@@ -10,6 +10,7 @@
 #include <mpllibs/safe_printf/error.hpp>
 
 #include <mpllibs/metaparse/always.hpp>
+#include <mpllibs/metaparse/always_c.hpp>
 #include <mpllibs/metaparse/any.hpp>
 #include <mpllibs/metaparse/any1.hpp>
 #include <mpllibs/metaparse/digit.hpp>
@@ -35,6 +36,7 @@ namespace mpllibs
         using mpllibs::metaparse::any;
         using mpllibs::metaparse::any1;
         using mpllibs::metaparse::always;
+        using mpllibs::metaparse::always_c;
         using mpllibs::metaparse::digit;
         using mpllibs::metaparse::except;
         using mpllibs::metaparse::first_of;
@@ -76,7 +78,7 @@ namespace mpllibs
         typedef
           one_of<
             always<integer, false_>,
-            always<lit_c<'*'>, true_>,
+            always_c<'*', true_>,
             return_<false_>
           >
           width;
@@ -86,7 +88,7 @@ namespace mpllibs
 
         typedef
           one_of<
-            always<lit_c<'c'>, box<char> >,
+            always_c<'c', box<char> >,
             always<one_of<lit_c<'d'>, lit_c<'i'> >, box<int> >,
             always<
               one_of<
@@ -98,14 +100,14 @@ namespace mpllibs
               >,
               box<double>
             >,
-            always<lit_c<'o'>, box<int> >,
-            always<lit_c<'s'>, box<char*> >,
+            always_c<'o', box<int> >,
+            always_c<'s', box<char*> >,
             always<
               one_of<lit_c<'u'>, lit_c<'x'>, lit_c<'X'> >,
               box<unsigned int>
             >,
-            always<lit_c<'p'>, box<any_type*> >,
-            always<lit_c<'n'>, box<int*> >
+            always_c<'p', box<any_type*> >,
+            always_c<'n', box<int*> >
           >
           format_no_flag;
 
@@ -124,9 +126,9 @@ namespace mpllibs
 
         typedef
           one_of<
-            always<lit_c<'c'>, box<wchar_t> >,
+            always_c<'c', box<wchar_t> >,
             always<one_of<lit_c<'d'>, lit_c<'i'>, lit_c<'o'> >, box<long int> >,
-            always<lit_c<'s'>, box<wchar_t*> >,
+            always_c<'s', box<wchar_t*> >,
             always<
               one_of<lit_c<'u'>, lit_c<'x'>, lit_c<'X'> >,
               box<long unsigned int>

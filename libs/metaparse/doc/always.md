@@ -28,7 +28,7 @@ the result `P` returned.
 
 ## Expression semantics
 
-For any `p` parser, `t` class the following are equivalent:
+For any `p` parser and `t` class the following are equivalent:
 
 ```cpp
 always<p, t>

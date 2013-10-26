@@ -11,7 +11,7 @@
 
 #include <mpllibs/metaparse/string.hpp>
 #include <mpllibs/metaparse/token.hpp>
-#include <mpllibs/metaparse/always.hpp>
+#include <mpllibs/metaparse/always_c.hpp>
 #include <mpllibs/metaparse/lit_c.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/last_of.hpp>
@@ -31,37 +31,25 @@ namespace token
 {
   typedef
     mpllibs::metaparse::token<
-      mpllibs::metaparse::always<
-        mpllibs::metaparse::lit_c<'+'>,
-        mpllibs::metaparse::string<'.','+','.'>
-      >
+      mpllibs::metaparse::always_c<'+',mpllibs::metaparse::string<'.','+','.'> >
     >
     plus;
   
   typedef
     mpllibs::metaparse::token<
-      mpllibs::metaparse::always<
-        mpllibs::metaparse::lit_c<'-'>,
-        mpllibs::metaparse::string<'.','-','.'>
-      >
+      mpllibs::metaparse::always_c<'-',mpllibs::metaparse::string<'.','-','.'> >
     >
     minus;
   
   typedef
     mpllibs::metaparse::token<
-      mpllibs::metaparse::always<
-        mpllibs::metaparse::lit_c<'*'>,
-        mpllibs::metaparse::string<'.','*','.'>
-      >
+      mpllibs::metaparse::always_c<'*',mpllibs::metaparse::string<'.','*','.'> >
     >
     mult;
   
   typedef
     mpllibs::metaparse::token<
-      mpllibs::metaparse::always<
-        mpllibs::metaparse::lit_c<'/'>,
-        mpllibs::metaparse::string<'.','/','.'>
-      >
+      mpllibs::metaparse::always_c<'/',mpllibs::metaparse::string<'.','/','.'> >
     >
     div;
   
@@ -85,8 +73,8 @@ namespace token
         mpllibs::metaparse::last_of<
           mpllibs::metaparse::lit_c<'<'>,
           mpllibs::metaparse::one_of<
-            mpllibs::metaparse::always<
-              mpllibs::metaparse::lit_c<'='>,
+            mpllibs::metaparse::always_c<
+              '=',
               mpllibs::metaparse::string<'.','<','=','.'>
             >,
             mpllibs::metaparse::return_<
@@ -97,8 +85,8 @@ namespace token
         mpllibs::metaparse::last_of<
           mpllibs::metaparse::lit_c<'>'>,
           mpllibs::metaparse::one_of<
-            mpllibs::metaparse::always<
-              mpllibs::metaparse::lit_c<'='>,
+            mpllibs::metaparse::always_c<
+              '=',
               mpllibs::metaparse::string<'.','>','=','.'>
             >,
             mpllibs::metaparse::return_<

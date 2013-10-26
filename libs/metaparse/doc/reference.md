@@ -7,6 +7,7 @@
 * [accept_when](accept_when.html)
 * [alphanum](alphanum.html)
 * [always](always.html)
+* [always_c](always_c.html)
 * [any](any.html)
 * [any1](any1.html)
 * [any_one_of](any_one_of.html)

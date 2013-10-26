@@ -14,6 +14,5 @@ subdirs(
   meta_metaparse
   monadic_calculator
   parsing_error
-  printf
   regexp
 )
