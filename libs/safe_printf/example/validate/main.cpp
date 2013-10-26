@@ -43,6 +43,8 @@ int main()
 
 int main()
 {
+  using boost::mpl::list;
+
   validate_and_show<
     MPLLIBS_STRING("John %d, %s %d")>,
     list<int, const char*, int>
