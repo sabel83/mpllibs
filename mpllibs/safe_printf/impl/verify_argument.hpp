@@ -8,7 +8,9 @@
 
 #include <mpllibs/safe_printf/impl/verify_argument_impl.hpp>
 
-#include <boost/mpl/eval_if.hpp>
+#include <mpllibs/metamonad/unbox.hpp>
+
+#include <boost/mpl/if.hpp>
 #include <boost/mpl/or.hpp>
 
 #include <boost/mpl/front.hpp>
@@ -24,16 +26,18 @@ namespace mpllibs
       // This function is lazy
       template <class Expected, class Actual>
       struct verify_argument :
-        boost::mpl::eval_if<
-          typename boost::mpl::or_<
-            typename boost::mpl::front<typename Expected::type>::type,
-            typename boost::mpl::at_c<typename Expected::type, 1>::type
+        verify_argument_impl<
+          typename boost::mpl::if_<
+            typename boost::mpl::or_<
+              typename boost::mpl::front<typename Expected::type>::type,
+              typename boost::mpl::at_c<typename Expected::type, 1>::type
+            >::type,
+            unsigned int,
+            typename mpllibs::metamonad::unbox<
+              boost::mpl::back<typename Expected::type>
+            >::type
           >::type,
-          verify_argument_impl<expect_unsigned_integer, typename Actual::type>,
-          verify_argument_impl<
-            typename boost::mpl::back<typename Expected::type>::type,
-            typename Actual::type
-          >
+          typename Actual::type
         >
       {};
     }

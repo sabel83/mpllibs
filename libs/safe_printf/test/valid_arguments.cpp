@@ -14,13 +14,13 @@
 #include <boost/mpl/not.hpp>
 #include <boost/mpl/assert.hpp> 
 
+using mpllibs::safe_printf::valid_arguments;
+
+using boost::mpl::vector;
+using mpllibs::metaparse::string;
+
 BOOST_AUTO_TEST_CASE(test_valid_arguments)
 {
-  using mpllibs::safe_printf::valid_arguments;
-
-  using boost::mpl::vector;
-  using mpllibs::metaparse::string;
-
   // Check empty format string
   BOOST_MPL_ASSERT((valid_arguments<string<>, vector<> >));
 
@@ -47,5 +47,10 @@ BOOST_AUTO_TEST_CASE(test_valid_arguments)
 
   // Check format string with invalid placeholder
   BOOST_MPL_ASSERT_NOT((valid_arguments<string<'%','d'>, vector<double> >));
+}
+
+BOOST_AUTO_TEST_CASE(test_double_percent_char)
+{
+  BOOST_MPL_ASSERT((valid_arguments<string<'%', '%'>, vector<> >));
 }
 

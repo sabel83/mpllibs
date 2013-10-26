@@ -6,9 +6,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/safe_printf/impl/expect.hpp>
+#include <mpllibs/safe_printf/impl/any_type.hpp>
 
 #include <boost/mpl/bool.hpp>
+
+#include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/remove_cv.hpp>
 
 namespace mpllibs
 {
@@ -17,77 +20,18 @@ namespace mpllibs
     namespace impl
     {
       template <class Expected, class Actual>
-      struct verify_argument_impl : boost::mpl::false_ {};
-
-      template <>
-      struct verify_argument_impl<expect_character, char> : boost::mpl::true_ {};
-
-      template <>
-      struct verify_argument_impl<expect_unsigned_character, unsigned char> :
-        boost::mpl::true_
-      {};
-
-      template <>
-      struct verify_argument_impl<expect_string, char*> : boost::mpl::true_ {};
-
-      template <>
-      struct verify_argument_impl<expect_string, const char*> :
-        boost::mpl::true_
-      {};
-
-      template <>
-      struct verify_argument_impl<expect_signed_integer, int> :
-        boost::mpl::true_
-      {};
-
-      template <>
-      struct verify_argument_impl<expect_unsigned_integer, unsigned int> :
-        boost::mpl::true_
-      {};
-
-      template <>
-      struct verify_argument_impl<expect_short_signed_integer, short> :
-        boost::mpl::true_
-      {};
-
-      template <>
-      struct verify_argument_impl<expect_short_unsigned_integer, unsigned short> :
-        boost::mpl::true_
-      {};
-
-      template <>
-      struct verify_argument_impl<expect_long_signed_integer, long> :
-        boost::mpl::true_
-      {};
-
-      template <>
-      struct verify_argument_impl<expect_long_unsigned_integer, unsigned long> :
-        boost::mpl::true_
-      {};
-
-      template <>
-      struct verify_argument_impl<expect_float, float> : boost::mpl::true_ {};
-
-      template <>
-      struct verify_argument_impl<expect_double, double> : boost::mpl::true_ {};
-
-      template <>
-      struct verify_argument_impl<expect_long_double, long double> :
-        boost::mpl::true_
+      struct verify_argument_impl :
+        boost::is_same<
+          typename boost::remove_cv<Expected>::type,
+          typename boost::remove_cv<Actual>::type
+        >
       {};
 
       template <class T>
-      struct verify_argument_impl<expect_pointer, T*> : boost::mpl::true_ {};
+      struct verify_argument_impl<any_type, T> : boost::mpl::true_ {};
 
-      template <class T>
-      struct verify_argument_impl<expect_pointer, const T*> :
-        boost::mpl::true_
-      {};
-
-      template <>
-      struct verify_argument_impl<expect_signed_int_pointer, int*> :
-        boost::mpl::true_
-      {};
+      template <class T, class U>
+      struct verify_argument_impl<T*, U*> : verify_argument_impl<T, U> {};
     }
   }
 }
