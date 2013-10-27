@@ -44,6 +44,7 @@
 * [one_char_except](one_char_except.html)
 * [one_char_except_c](one_char_except_c.html)
 * [one_of](one_of.html)
+* [one_of_c](one_of_c.html)
 * [return_](return_.html)
 * [sequence](sequence.html)
 * [space](space.html)

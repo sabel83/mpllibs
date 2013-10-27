@@ -3,11 +3,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/lit_c.hpp>
 #include <mpllibs/metaparse/foldl1.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
 #include <mpllibs/metaparse/transform.hpp>
-#include <mpllibs/metaparse/one_of.hpp>
+#include <mpllibs/metaparse/one_of_c.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
 #include <mpllibs/metaparse/string.hpp>
 
@@ -19,11 +18,10 @@
 
 #include <iostream>
 
-using mpllibs::metaparse::lit_c;
 using mpllibs::metaparse::foldl1;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::transform;
-using mpllibs::metaparse::one_of;
+using mpllibs::metaparse::one_of_c;
 using mpllibs::metaparse::entire_input;
 
 using mpllibs::metaparse::util::digit_to_int;
@@ -45,11 +43,7 @@ struct next_element
 };
 
 typedef
-  foldl1<
-    transform<one_of<lit_c<'0'>, lit_c<'1'> >, digit_to_int>,
-    int_<0>,
-    next_element
-  >
+  foldl1<transform<one_of_c<'0', '1'>, digit_to_int>, int_<0>, next_element>
   S;
 
 typedef build_parser<entire_input<S> > binary_parser;
