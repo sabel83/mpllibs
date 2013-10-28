@@ -53,8 +53,6 @@ BOOST_AUTO_TEST_CASE(test_either)
 
   typedef either_tag<> et;
 
-  typedef int_<13>::tag int_tag;
-
   // test_return
   BOOST_MPL_ASSERT((equal_to<return_<et, int13>, right13>));
 
