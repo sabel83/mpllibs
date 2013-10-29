@@ -43,6 +43,29 @@ to be followed by the body of the macro in double parentheses.
 The use of this macro makes it explicit, that `add` is a template metafunction,
 not just some random template class. 
 
+### Looking at the result of a metafunction
+
+It is useful to be able to look at the result of calling a metafunction. It
+helps development and is invaluable during debugging. Tools like
+[Metashell](https://github.com/sabel83/metashell) and
+[Templight](http://plc.inf.elte.hu/templight/) can help doing this. They are
+based on Clang, thus the compiler evaluating the metaprograms is Clang. Other
+compilers may evaluate the metaprograms in a different way and produce other
+results. In this case these tools are less useful.
+
+Metamonad offers the [`fail_with_type`](fail_with_type.html) template function.
+It can be used to check the result of the above `add` function:
+
+```cpp
+int main()
+{
+  fail_with_type< add<mpl::int_<11>, mpl::int_<2>>::type >();
+}
+```
+
+Compiling this code generates an error message which contains the result of
+calling `add<mpl::int_<11>, mpl::int_<2>>`.
+
 ### Currying
 
 What happens when someone tries calling a metafunction with less arguments than

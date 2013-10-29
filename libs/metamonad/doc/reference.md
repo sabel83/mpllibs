@@ -176,6 +176,7 @@
 
 ## Miscellaneous
 
+* [fail_with_type](fail_with_type.html)
 * [guard](guard.html)
 * [has_get_value](has_get_value.html)
 * [has_value](has_value.html)

@@ -10,4 +10,5 @@ subdirs(
   list_comprehension
   typeclass
   exception_debug
+  fail_with_type
 )
