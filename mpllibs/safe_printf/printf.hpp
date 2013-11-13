@@ -15,11 +15,8 @@
 
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
+#include <boost/preprocessor/repetition/enum_binary_params.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
-#include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
-#include <boost/preprocessor/repetition/enum_trailing_params.hpp>
-#include <boost/preprocessor/arithmetic/sub.hpp>
-#include <boost/preprocessor/arithmetic/dec.hpp>
 
 #include <cstdio>
 
@@ -30,124 +27,80 @@ namespace mpllibs
     #ifndef MPLLIBS_PRINTF_MAX_ARGUMENT
       #define MPLLIBS_PRINTF_MAX_ARGUMENT 10
     #endif
-    
-    #ifdef MPLLIBS_PRINTF_NO_CLASS_ARGS
-      #error MPLLIBS_PRINTF_NO_CLASS_ARGS already defined
+
+    #ifdef MPLLIBS_PRINTF_TEMPLATE
+      #error MPLLIBS_PRINTF_TEMPLATE already defined
     #endif
-    #define MPLLIBS_PRINTF_NO_CLASS_ARGS(z, n, unused) \
-      , t##n
-    
-    #ifdef MPLLIBS_PRINTF_CLASS_ARGS
-      #error MPLLIBS_PRINTF_CLASS_ARGS already defined
+    #define MPLLIBS_PRINTF_TEMPLATE(n) \
+      template < \
+        class FormatString \
+        BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, class T) \
+      >
+
+    #ifdef MPLLIBS_PRINTF_ASSERT
+      #error MPLLIBS_PRINTF_ASSERT already defined
     #endif
-    #define MPLLIBS_PRINTF_CLASS_ARGS(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) T##n
+    #define MPLLIBS_PRINTF_ASSERT(n) \
+      BOOST_STATIC_ASSERT(( \
+        valid_arguments< \
+          FormatString, \
+          boost::mpl::list<BOOST_PP_ENUM_PARAMS(n, T)> \
+        >::type::value \
+      )) \
 
     #ifdef MPLLIBS_PRINTF_ARGS
       #error MPLLIBS_PRINTF_ARGS already defined
     #endif
-    #define MPLLIBS_PRINTF_ARGS(z, n, unused) \
-      BOOST_PP_COMMA_IF(n) T##n t##n
-
-    #ifdef MPLLIBS_PRINTF_CLASSES
-      #error MPLLIBS_PRINTF_CLASSES already defined
-    #endif
-    #define MPLLIBS_PRINTF_CLASSES(z, n, unused) \
-      , class T##n
-
+    #define MPLLIBS_PRINTF_ARGS(n) \
+      boost::mpl::c_str<FormatString>::type::value BOOST_PP_COMMA_IF(n) \
+      BOOST_PP_ENUM_PARAMS(n, t) \
+    
     #ifdef MPLLIBS_PRINTF
       #error MPLLIBS_PRINTF already defined
     #endif
     #define MPLLIBS_PRINTF(z, n, unused) \
-      template < \
-        class FormatString BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_CLASSES, ~) \
-      > \
-      int printf(BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_ARGS, ~)) \
+      MPLLIBS_PRINTF_TEMPLATE(n) \
+      int printf(BOOST_PP_ENUM_BINARY_PARAMS(n, T, t)) \
       { \
-        BOOST_STATIC_ASSERT(( \
-          valid_arguments< \
-            FormatString, \
-            boost::mpl::list<BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_CLASS_ARGS, ~)> \
-          >::type::value \
-        )); \
-        return ::printf( \
-          boost::mpl::c_str<FormatString>::type::value \
-          BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_NO_CLASS_ARGS, ~) \
-        ); \
-      }
-    
-    #ifdef MPLLIBS_FPRINTF
-      #error MPLLIBS_FPRINTF already defined
-    #endif
-    #define MPLLIBS_FPRINTF(z, n, unused) \
-      template < \
-        class FormatString BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_CLASSES, ~) \
-      > \
+        MPLLIBS_PRINTF_ASSERT(n); \
+        return ::printf(MPLLIBS_PRINTF_ARGS(n)); \
+      } \
+      \
+      MPLLIBS_PRINTF_TEMPLATE(n) \
       int fprintf( \
         FILE* stream BOOST_PP_COMMA_IF(n) \
-        BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_ARGS, ~) \
+        BOOST_PP_ENUM_BINARY_PARAMS(n, T, t) \
       ) \
       { \
-        BOOST_STATIC_ASSERT(( \
-          valid_arguments< \
-            FormatString, \
-            boost::mpl::list<BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_CLASS_ARGS, ~)> \
-          >::type::value \
-        )); \
-        return ::fprintf( \
-          stream, \
-          boost::mpl::c_str<FormatString>::type::value \
-          BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_NO_CLASS_ARGS, ~) \
-        ); \
-      }
-
-    #ifdef MPLLIBS_SPRINTF
-      #error MPLLIBS_SPRINTF already defined
-    #endif
-    #define MPLLIBS_SPRINTF(z, n, unused) \
-      template < \
-        class FormatString BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_CLASSES, ~) \
-      > \
+        MPLLIBS_PRINTF_ASSERT(n); \
+        return ::fprintf(stream, MPLLIBS_PRINTF_ARGS(n)); \
+      } \
+      \
+      MPLLIBS_PRINTF_TEMPLATE(n) \
       int sprintf( \
         char* s BOOST_PP_COMMA_IF(n) \
-        BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_ARGS, ~) \
+        BOOST_PP_ENUM_BINARY_PARAMS(n, T, t) \
       ) \
       { \
-        BOOST_STATIC_ASSERT(( \
-          valid_arguments< \
-            FormatString, \
-            boost::mpl::list<BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_CLASS_ARGS, ~)> \
-          >::type::value \
-        )); \
-        return ::sprintf( \
-          s, \
-          boost::mpl::c_str<FormatString>::type::value \
-          BOOST_PP_REPEAT(n, MPLLIBS_PRINTF_NO_CLASS_ARGS, ~) \
-        ); \
+        MPLLIBS_PRINTF_ASSERT(n); \
+        return ::sprintf(s, MPLLIBS_PRINTF_ARGS(n)); \
       }
-    
-    BOOST_PP_REPEAT(MPLLIBS_PRINTF_MAX_ARGUMENT, MPLLIBS_PRINTF, ~)
-    BOOST_PP_REPEAT(MPLLIBS_PRINTF_MAX_ARGUMENT, MPLLIBS_FPRINTF, ~)
 
     #ifdef _MSC_VER
       #pragma warning(push)
       #pragma warning(disable: 4996)
     #endif
 
-      BOOST_PP_REPEAT(MPLLIBS_PRINTF_MAX_ARGUMENT, MPLLIBS_SPRINTF, ~)
+    BOOST_PP_REPEAT(MPLLIBS_PRINTF_MAX_ARGUMENT, MPLLIBS_PRINTF, ~)
 
     #ifdef _MSC_VER
       #pragma warning(pop)
     #endif
     
     #undef MPLLIBS_PRINTF
-    #undef MPLLIBS_FPRINTF
-    #undef MPLLIBS_SPRINTF
-    
-    #undef MPLLIBS_PRINTF_CLASSES
     #undef MPLLIBS_PRINTF_ARGS
-    #undef MPLLIBS_PRINTF_CLASS_ARGS
-    #undef MPLLIBS_PRINTF_NO_CLASS_ARGS
+    #undef MPLLIBS_PRINTF_ASSERT
+    #undef MPLLIBS_PRINTF_TEMPLATE
   }
 }
 
