@@ -7,10 +7,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/config.hpp>
-#include <mpllibs/metaparse/string_fwd.hpp>
+#include <mpllibs/metaparse/impl/string.hpp>
 #include <mpllibs/metaparse/impl/push_front_c.hpp>
-
-#include <boost/mpl/clear.hpp>
 
 namespace mpllibs
 {
@@ -25,13 +23,28 @@ namespace mpllibs
       // this code assumes that MPLLIBS_NO_CHARs are at the end of the string
       template <char... Cs>
       struct remove_trailing_no_chars<string<MPLLIBS_NO_CHAR, Cs...>> :
-        boost::mpl::clear<string<MPLLIBS_NO_CHAR, Cs...>>
+        string<>
       {};
 
       template <char C, char... Cs>
       struct remove_trailing_no_chars<string<C, Cs...>> :
         push_front_c<typename remove_trailing_no_chars<string<Cs...>>::type, C>
       {};
+
+#ifdef _MSC_VER
+      /*
+       * These specialisations are needed to avoid an internal compiler error
+       * in Visual C++ 12
+       */
+      template <char C>
+      struct remove_trailing_no_chars<string<C>> : string<C> {};
+
+      template <>
+      struct remove_trailing_no_chars<string<MPLLIBS_NO_CHAR>> : string<> {};
+
+      template <>
+      struct remove_trailing_no_chars<string<>> : string<> {};
+#endif
 #endif
     }
   }
