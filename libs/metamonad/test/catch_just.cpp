@@ -3,8 +3,6 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#define BOOST_TEST_DYN_LINK
-
 #include <mpllibs/metamonad/catch_just.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
