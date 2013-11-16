@@ -12,8 +12,8 @@ struct valid_arguments
 
 ## Description
 
-`ArgumentTypes` is a sequence of types representing the types of arguments
-passed to a `printf` function, `FormatString` is a string representing a
+`ArgumentTypes` is a sequence of boxed types representing the types of arguments
+passed to a `printf` function. `FormatString` is a string representing a
 `printf` format string. The function returns true when the list of argument
 types is valid for the format string and false otherwise.
 
@@ -25,7 +25,7 @@ types is valid for the format string and false otherwise.
 
 ## Expression semantics
 
-For any `s` `mpllibs::metaparse::string` and `t` sequence of types:
+For any `s` `mpllibs::metaparse::string` and `t` sequence of boxed types:
 
 ```cpp
 mpllibs::safe_printf::valid_arguments<s, t>::type::value
@@ -37,10 +37,12 @@ otherwise.
 ## Example
 
 ```cpp
+using mpllibs::metamonad::box;
+
 BOOST_STATIC_ASSERT((
   mpllibs::safe_printf::valid_arguments<
     MPLLIBS_STRING("%d %d\n"),
-    boost::mpl::list<int, int>
+    boost::mpl::list<box<int>, box<int>>
   >::type::value
 ));
 ```

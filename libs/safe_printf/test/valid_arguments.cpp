@@ -17,6 +17,8 @@ using mpllibs::safe_printf::valid_arguments;
 using boost::mpl::vector;
 using mpllibs::metaparse::string;
 
+using mpllibs::metamonad::box;
+
 BOOST_AUTO_TEST_CASE(test_valid_arguments)
 {
   // Check empty format string
@@ -26,29 +28,61 @@ BOOST_AUTO_TEST_CASE(test_valid_arguments)
   BOOST_MPL_ASSERT((valid_arguments<string<'H','e','l','l','o'>, vector<> >));
 
   // Check format string with one placeholder
-  BOOST_MPL_ASSERT((valid_arguments<string<'%','d'>, vector<int> >));
+  BOOST_MPL_ASSERT((valid_arguments<string<'%','d'>, vector<box<int> > >));
 
   // Check format string with two placeholders
   BOOST_MPL_ASSERT((
-    valid_arguments<string<'%','d',' ',' ','%','f'>, vector<int, double> >
+    valid_arguments<
+      string<'%','d',' ',' ','%','f'>,
+      vector<box<int>, box<double> >
+    >
   ));
 
   // Check format string with too few placeholders
   BOOST_MPL_ASSERT_NOT((
-    valid_arguments<string<'%','d'>, vector<int, double> >
+    valid_arguments<string<'%','d'>, vector<box<int>, box<double> > >
   ));
 
   // Check format string with too many placeholders
   BOOST_MPL_ASSERT_NOT((
-    valid_arguments<string<'%','d',' ','%','f'>, vector<int> >
+    valid_arguments<string<'%','d',' ','%','f'>, vector<box<int> > >
   ));
 
   // Check format string with invalid placeholder
-  BOOST_MPL_ASSERT_NOT((valid_arguments<string<'%','d'>, vector<double> >));
+  BOOST_MPL_ASSERT_NOT((
+    valid_arguments<string<'%','d'>, vector<box<double> > >
+  ));
 }
 
 BOOST_AUTO_TEST_CASE(test_double_percent_char)
 {
   BOOST_MPL_ASSERT((valid_arguments<string<'%', '%'>, vector<> >));
 }
+
+BOOST_AUTO_TEST_CASE(test_const_argument)
+{
+  BOOST_MPL_ASSERT((
+    valid_arguments<string<'%', 'd'>, vector<box<const int> > >
+  ));
+}
+
+BOOST_AUTO_TEST_CASE(test_const_char_pointer)
+{
+  BOOST_MPL_ASSERT((
+    valid_arguments<string<'%', 's'>, vector<box<const char*> > >
+  ));
+}
+
+BOOST_AUTO_TEST_CASE(test_const_char_array)
+{
+  BOOST_MPL_ASSERT((
+    valid_arguments<string<'%', 's'>, vector<box<const char[]> > >
+  ));
+}
+
+BOOST_AUTO_TEST_CASE(test_any_type)
+{
+  BOOST_MPL_ASSERT((valid_arguments<string<'%', 'p'>, vector<box<int*> > >));
+}
+
 

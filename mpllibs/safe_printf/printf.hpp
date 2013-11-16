@@ -9,12 +9,14 @@
 #include <mpllibs/safe_printf/valid_arguments.hpp>
 
 #include <boost/mpl/string.hpp>
-#include <boost/mpl/list.hpp>
+#include <boost/mpl/vector.hpp>
 
 #include <boost/static_assert.hpp>
 
+#include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/repetition.hpp>
 #include <boost/preprocessor/comma_if.hpp>
+#include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/repetition/enum_binary_params.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
 
@@ -37,6 +39,12 @@ namespace mpllibs
         BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, class T) \
       >
 
+    #ifdef MPLLIBS_PRINTF_BOX
+      #error MPLLIBS_PRINTF_BOX already defined
+    #endif
+    #define MPLLIBS_PRINTF_BOX(z, n, unused) \
+      metamonad::box<BOOST_PP_CAT(T, n)>
+
     #ifdef MPLLIBS_PRINTF_ASSERT
       #error MPLLIBS_PRINTF_ASSERT already defined
     #endif
@@ -44,7 +52,7 @@ namespace mpllibs
       BOOST_STATIC_ASSERT(( \
         valid_arguments< \
           FormatString, \
-          boost::mpl::list<BOOST_PP_ENUM_PARAMS(n, T)> \
+          boost::mpl::vector<BOOST_PP_ENUM(n, MPLLIBS_PRINTF_BOX, ~)> \
         >::type::value \
       )) \
 
@@ -98,6 +106,7 @@ namespace mpllibs
     #endif
     
     #undef MPLLIBS_PRINTF
+    #undef MPLLIBS_PRINTF_BOX
     #undef MPLLIBS_PRINTF_ARGS
     #undef MPLLIBS_PRINTF_ASSERT
     #undef MPLLIBS_PRINTF_TEMPLATE

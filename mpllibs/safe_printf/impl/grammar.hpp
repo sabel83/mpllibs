@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/safe_printf/impl/any_type.hpp>
+#include <mpllibs/safe_printf/impl/expected_arg.hpp>
 #include <mpllibs/safe_printf/error.hpp>
 
 #include <mpllibs/metaparse/always.hpp>
@@ -21,8 +22,10 @@
 #include <mpllibs/metaparse/one_char.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/one_of_c.hpp>
+#include <mpllibs/metaparse/transform.hpp>
 
 #include <mpllibs/metamonad/box.hpp>
+#include <mpllibs/metamonad/instantiate.hpp>
 
 #include <string>
 
@@ -48,8 +51,10 @@ namespace mpllibs
         using mpllibs::metaparse::one_of_c;
         using mpllibs::metaparse::return_;
         using mpllibs::metaparse::sequence;
+        using mpllibs::metaparse::transform;
 
         using mpllibs::metamonad::box;
+        using mpllibs::metamonad::instantiate3;
 
         using boost::mpl::true_;
         using boost::mpl::false_;
@@ -130,7 +135,14 @@ namespace mpllibs
 
         // returns deque<defined extra int, defined extra int, format>
         typedef
-          last_of<lit_c<'%'>, any<flag>, sequence<width, precision, format> >
+          last_of<
+            lit_c<'%'>,
+            any<flag>,
+            transform<
+              sequence<width, precision, format>,
+              instantiate3<expected_arg>
+            >
+          >
           parameter;
 
         typedef

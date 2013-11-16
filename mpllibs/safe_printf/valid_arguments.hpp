@@ -6,17 +6,25 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/safe_printf/impl/parser.hpp>
-#include <mpllibs/safe_printf/impl/valid_arguments.hpp>
+#include <mpllibs/safe_printf/impl/matches.hpp>
+#include <mpllibs/safe_printf/expected_types.hpp>
+
+#include <mpllibs/metamonad/metafunction.hpp>
+
+#include <boost/mpl/equal.hpp>
 
 namespace mpllibs
 {
   namespace safe_printf
   {
-    template <class F, class ArgTypes>
-    struct valid_arguments :
-      impl::valid_arguments<impl::parser::apply<F>, ArgTypes>
-    {};
+    MPLLIBS_METAFUNCTION(valid_arguments, (F)(ArgTypes))
+    ((
+      boost::mpl::equal<
+        typename expected_types<F>::type,
+        typename ArgTypes::type,
+        impl::matches<>
+      >
+    ));
   }
 }
 

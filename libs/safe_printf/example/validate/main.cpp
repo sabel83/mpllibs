@@ -6,7 +6,9 @@
 #include <mpllibs/safe_printf/valid_arguments.hpp>
 #include <mpllibs/metaparse/string.hpp>
 
-#include <boost/mpl/list.hpp>
+#include <mpllibs/metamonad/box.hpp>
+
+#include <boost/mpl/vector.hpp>
 
 #include <iostream>
 
@@ -26,16 +28,17 @@ void validate_and_show()
 int main()
 {
   using mpllibs::metaparse::string;
-  using boost::mpl::list;
+  using mpllibs::metamonad::box;
+  using boost::mpl::vector;
   
   validate_and_show<
     string<'J','o','h','n',' ','%','d',',',' ','%','s',' ','%','d'>,
-    list<int, const char*, int>
+    vector<box<int>, box<const char*>, box<int> >
   >();
 
   validate_and_show<
     string<'J','o','h','n',' ','%','d',',',' ','%','s',' ','%','d'>,
-    list<int, double, int>
+    vector<box<int>, box<double>, box<int> >
   >();
 }
 
@@ -43,16 +46,17 @@ int main()
 
 int main()
 {
-  using boost::mpl::list;
+  using boost::mpl::vector;
+  using mpllibs::metamonad::box;
 
   validate_and_show<
     MPLLIBS_STRING("John %d, %s %d"),
-    list<int, const char*, int>
+    vector<box<int>, box<const char*>, box<int>>
   >();
 
   validate_and_show<
     MPLLIBS_STRING("John %d, %s %d"),
-    list<int, double, int>
+    vector<box<int>, box<double>, box<int>>
   >();
 }
 

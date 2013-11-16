@@ -15,6 +15,7 @@ time overhead, however).
 
 ## Metafunctions
 
+* [expected_types](expected_types.html)
 * [valid_arguments](valid_arguments.html)
 
 ## Related publications
