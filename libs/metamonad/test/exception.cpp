@@ -4,10 +4,11 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/exception.hpp>
-#include <mpllibs/metamonad/do.hpp>
+#include <mpllibs/metamonad/do_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/return_.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -29,9 +30,8 @@ BOOST_AUTO_TEST_CASE(test_exception)
   using boost::mpl::not_;
   
   using mpllibs::metamonad::exception;
-  using mpllibs::metamonad::exception_monad;
+  using mpllibs::metamonad::exception_tag;
   using mpllibs::metamonad::return_;
-  using mpllibs::metamonad::do_;
   using mpllibs::metamonad::do_c;
   using mpllibs::metamonad::set;
   using mpllibs::metamonad::do_return;
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   BOOST_MPL_ASSERT((
     equal_to<
       int13,
-      do_c<exception_monad,
+      do_c<exception_tag,
         do_return<int13>
       >::type
     >
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   BOOST_MPL_ASSERT((
     equal_to<
       exception<int13>,
-      do_c<exception_monad, apply<lambda_c<_, e>, int1> >::type
+      do_c<exception_tag, apply<lambda_c<_, e>, int1> >::type
     >
   ));
 
@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   BOOST_MPL_ASSERT((
     equal_to<
       exception<int13>,
-      do_c<exception_monad,
+      do_c<exception_tag,
         apply<lambda_c<_, e>, int1>,
         do_return<int13>
       >::type
@@ -73,13 +73,13 @@ BOOST_AUTO_TEST_CASE(test_exception)
   ));
 
   // test_return_value
-  BOOST_MPL_ASSERT((is_same<int13, return_<exception_monad, int13>::type>));
+  BOOST_MPL_ASSERT((is_same<int13, return_<exception_tag, int13>::type>));
 
   // test_return_with_1_element_do
   BOOST_MPL_ASSERT((
     is_same<
       int11,
-      do_c<exception_monad,
+      do_c<exception_tag,
         do_return<int11>
       >::type
     >
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   BOOST_MPL_ASSERT((
     equal_to<
       int11,
-      do_c<exception_monad,
+      do_c<exception_tag,
         do_return<int13>,
         do_return<int11>
       >::type
@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE(test_exception)
   BOOST_MPL_ASSERT((
     equal_to<
       exception<int13>,
-      do_c<exception_monad,
+      do_c<exception_tag,
         set<x, apply<lambda_c<_, e>, int1> >,
         do_return<int13>
       >::type

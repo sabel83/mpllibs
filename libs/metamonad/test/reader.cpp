@@ -10,6 +10,8 @@
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/make_tmp_value.hpp>
 #include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 
 #include <boost/test/unit_test.hpp>
 

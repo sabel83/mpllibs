@@ -26,6 +26,7 @@ technique compile-time exception handling and it is based on monads.
 
 * [User manual](manual.html)
 * [Library reference](reference.html)
+* [Versioning](versioning.html)
 * [Examples](
     https://github.com/sabel83/mpllibs/tree/master/libs/metamonad/example
   )

@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/impl/push_back_c.hpp>
+#include <mpllibs/metaparse/v1/impl/push_back_c.hpp>
 #include <mpllibs/metaparse/string.hpp>
 
 #include <boost/mpl/equal_to.hpp>
@@ -13,7 +13,7 @@
 
 BOOST_AUTO_TEST_CASE(test_push_back_c)
 {
-  using mpllibs::metaparse::impl::push_back_c;
+  using mpllibs::metaparse::v1::impl::push_back_c;
   using mpllibs::metaparse::string;
   
   using boost::mpl::equal_to;

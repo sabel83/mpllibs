@@ -6,25 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/concat.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
-
-#include <boost/mpl/list.hpp>
-#include <boost/mpl/fold.hpp>
-#include <boost/mpl/transform_view.hpp>
+#include <mpllibs/metamonad/v1/concat_map.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(concat_map, (l)(f))
-    ((
-      boost::mpl::fold<
-        boost::mpl::transform_view<l, f>,
-        boost::mpl::list<>,
-        concat<>
-      >
-    ));
+    using v1::concat_map;
   }
 }
 

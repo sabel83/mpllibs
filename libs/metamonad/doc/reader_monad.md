@@ -7,7 +7,7 @@ returning some value. The purpose of this monad is to combine such functions.
 ## General information
 
 * header: `<mpllibs/metamonad/reader.hpp>`
-* tag of monad: `reader_tag`
+* tag of monad: [`reader_tag`](reader_tag.html)
 * `return`'s logic: construct a constant function, returning always return's
   argument regardless of the state
 * `bind`'s logic: construct a function that gets a value by passing the state to

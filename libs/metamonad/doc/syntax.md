@@ -14,7 +14,8 @@ struct syntax
 
 Wrapper for angle-bracket expressions. Wrapped expressions can be passed around
 in lazy template metaprograms. Evaluating a wrapped value returns itself, thus
-the wrapped expression does not get accidentally evaluated.
+the wrapped expression does not get accidentally evaluated. The tag of the
+syntax values is [`syntax_tag`](syntax_tag.html).
 
 ## Header
 

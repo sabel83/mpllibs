@@ -20,7 +20,6 @@ BOOST_AUTO_TEST_CASE(test_eval_match_let_c)
   using boost::mpl::plus;
   
   using mpllibs::metamonad::eval_match_let_c;
-  using mpllibs::metamonad::var;
 
   // test_evaluation_of_expression
   BOOST_MPL_ASSERT((

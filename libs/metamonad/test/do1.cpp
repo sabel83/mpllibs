@@ -3,9 +3,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/do.hpp>
+#include <mpllibs/metamonad/do_.hpp>
 #include <mpllibs/metamonad/lazy_metafunction.hpp>
 #include <mpllibs/metamonad/either.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 
 #include <boost/test/unit_test.hpp>
 

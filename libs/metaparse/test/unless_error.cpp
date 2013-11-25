@@ -5,6 +5,7 @@
 
 #include <mpllibs/metaparse/unless_error.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/fail.hpp>
 
 #include "common.hpp"
 

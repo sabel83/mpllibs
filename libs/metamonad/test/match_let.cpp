@@ -10,6 +10,7 @@
 #include <mpllibs/metamonad/syntax.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/box.hpp>
+#include <mpllibs/metamonad/var.hpp>
 
 #include <boost/test/unit_test.hpp>
 

@@ -26,7 +26,7 @@ when any of the parsers accept it. The result of parsing is the result
 of applying the first parser that accepts the input.
 
 The maximum number of accepted parsers is defined by the
-`MPLLIBS_ONE_OF_MAX_ARGUMENT` macro. Its default value is `20`.
+`MPLLIBS_LIMIT_ONE_OF_SIZE` macro. Its default value is `20`.
 
 ## Header
 

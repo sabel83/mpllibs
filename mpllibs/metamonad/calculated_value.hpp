@@ -6,21 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/tmp_value.hpp>
+#include <mpllibs/metamonad/v1/calculated_value.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    template <class T, class ValueType, class Tag = no_tag_for_tmp_value>
-    struct calculated_value : tmp_value<T, Tag>
-    {
-      static const ValueType value;
-    };
-
-    template <class T, class ValueType, class Tag>
-    const ValueType calculated_value<T, ValueType, Tag>::value =
-      T::get_value();
+    using v1::calculated_value;
   }
 }
 

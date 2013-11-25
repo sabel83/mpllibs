@@ -3,13 +3,10 @@
 ## Synopsis
 
 ```cpp
+template <class C>
 struct is_digit
 {
-  template <class C>
-  struct apply
-  {
-    // unspecified
-  };
+  // unspecified
 };
 ```
 
@@ -17,6 +14,8 @@ struct is_digit
 
 Checks if a boxed character is a digit value or not. Returns a wrapped boolean
 value.
+
+This metafunction supports currying.
 
 ## Header
 
@@ -29,24 +28,22 @@ value.
 The following expressions are equivalent:
 
 ```cpp
-boost::mpl::apply<is_digit, boost::mpl::char_<'0'>>
+is_digit<boost::mpl::char_<'0'>>::type
+boost::mpl::apply<is_digit<>, boost::mpl::char_<'0'>>::type
 boost::mpl::true_
 ```
 
-```cpp
-boost::mpl::apply<is_digit, boost::mpl::char_<'9'>>
-boost::mpl::true_
-```
+The following expressions are also equivalent:
 
 ```cpp
-boost::mpl::apply<is_digit, c>
+boost::mpl::apply<is_digit<>, c>::type
 boost::mpl::false_
 ```
 
 ## Example
 
 ```cpp
-boost::mpl::apply<is_digit, boost::mpl::char_<'7'>>
+boost::mpl::apply<is_digit<>, boost::mpl::char_<'7'>>
 ```
 
 <p class="copyright">

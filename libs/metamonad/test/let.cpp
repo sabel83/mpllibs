@@ -4,9 +4,11 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/let.hpp>
+#include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/eval_case.hpp>
 #include <mpllibs/metamonad/eval_syntax.hpp>
 #include <mpllibs/metamonad/eval_guard.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 
 #include <boost/test/unit_test.hpp>
 

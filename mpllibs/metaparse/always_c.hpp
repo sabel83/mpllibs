@@ -6,15 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/always.hpp>
-#include <mpllibs/metaparse/lit_c.hpp>
+#include <mpllibs/metaparse/v1/always_c.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    template <char C, class Result>
-    struct always_c : always<lit_c<C>, Result> {};
+    using v1::always_c;
   }
 }
 

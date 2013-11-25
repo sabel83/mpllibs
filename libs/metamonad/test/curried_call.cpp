@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/curried_call.hpp>
+#include <mpllibs/metamonad/v1/impl/curried_call.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/apply.hpp>
@@ -30,7 +30,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_curried_call)
 {
-  using mpllibs::metamonad::curried_call4;
+  using mpllibs::metamonad::v1::impl::curried_call4;
   using mpllibs::metamonad::apply;
 
   using boost::is_same;

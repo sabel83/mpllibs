@@ -15,7 +15,7 @@ int main()
 #else
 
 #define BOOST_MPL_LIMIT_STRING_SIZE 64 
-#define MPLLIBS_STRING_MAX_LENGTH BOOST_MPL_LIMIT_STRING_SIZE
+#define MPLLIBS_LIMIT_STRING_SIZE BOOST_MPL_LIMIT_STRING_SIZE
 
 #include <mpllibs/metaparse/grammar.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
@@ -123,7 +123,7 @@ typedef
       _1,
       int_<0>,
       lambda<
-        lazy_plus<lazy_times<_1, int_<10>>, apply_wrap1<digit_to_int, _2>>
+        lazy_plus<lazy_times<_1, int_<10>>, apply_wrap1<digit_to_int<>, _2>>
       >::type
     >
   >::type

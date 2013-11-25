@@ -6,24 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/syntax.hpp>
+#include <mpllibs/metamonad/v1/eval_syntax.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    namespace impl
-    {
-      template <class E>
-      struct eval_syntax_impl;
-
-      template <class E>
-      struct eval_syntax_impl<syntax<E> > : E {};
-    }
-
-    // MPLLIBS_METAFUNCTION depends on it
-    template <class E>
-    struct eval_syntax : impl::eval_syntax_impl<typename E::type> {};
+    using v1::eval_syntax;
   }
 }
 

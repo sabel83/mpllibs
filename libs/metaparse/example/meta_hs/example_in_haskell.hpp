@@ -16,7 +16,7 @@
 #else
 
 #define BOOST_MPL_LIMIT_STRING_SIZE 50
-#define MPLLIBS_STRING_MAX_LENGTH BOOST_MPL_LIMIT_STRING_SIZE
+#define MPLLIBS_LIMIT_STRING_SIZE BOOST_MPL_LIMIT_STRING_SIZE
 
 #include <meta_hs.hpp>
 #include <double_number.hpp>

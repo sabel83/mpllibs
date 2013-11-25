@@ -6,10 +6,11 @@
 // This header file contains code that is reused by other cpp files
 
 #include <mpllibs/metaparse/is_error.hpp>
-#include <mpllibs/metaparse/source_position.hpp>
+#include <mpllibs/metaparse/start.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/get_remaining.hpp>
 #include <mpllibs/metaparse/get_position.hpp>
+#include <mpllibs/metaparse/get_line.hpp>
 #include <mpllibs/metaparse/iterate_c.hpp>
 
 #include "common.hpp"

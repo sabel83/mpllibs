@@ -6,9 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/util/in_range.hpp>
-
-#include <boost/mpl/char.hpp>
+#include <mpllibs/metaparse/v1/util/is_digit.hpp>
 
 namespace mpllibs
 {
@@ -16,9 +14,7 @@ namespace mpllibs
   {
     namespace util
     {
-      typedef
-        in_range<boost::mpl::char_<'0'>, boost::mpl::char_<'9'> >
-        is_digit;
+      using v1::util::is_digit;
     }
   }
 }

@@ -5,7 +5,9 @@
 
 #include <mpllibs/metaparse/alphanum.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
-#include <mpllibs/metaparse/source_position.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+#include <mpllibs/metaparse/digit.hpp>
 
 #include "common.hpp"
 

@@ -4,7 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/concat_map.hpp>
-#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
 
 #include <boost/test/unit_test.hpp>

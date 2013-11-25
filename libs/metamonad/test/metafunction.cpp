@@ -6,7 +6,7 @@
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/returns.hpp>
-#include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/if_.hpp>
 
 #include <boost/test/unit_test.hpp>
 

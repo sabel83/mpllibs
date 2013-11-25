@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#define MPLLIBS_STRING_MAX_LENGTH 64
+#define MPLLIBS_LIMIT_STRING_SIZE 64
 
 #include <mpllibs/metaparse/string.hpp>
 

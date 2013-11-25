@@ -4,9 +4,12 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/source_position.hpp>
+#include <mpllibs/metaparse/start.hpp>
 #include <mpllibs/metaparse/next_char.hpp>
 #include <mpllibs/metaparse/next_line.hpp>
 #include <mpllibs/metaparse/get_prev_char.hpp>
+#include <mpllibs/metaparse/get_line.hpp>
+#include <mpllibs/metaparse/get_col.hpp>
 
 #include "common.hpp"
 

@@ -16,6 +16,10 @@ struct let
 `Name` with `Exp` in `Body`. It recurses into template instantiations. The
 return value of the `let` metafunction is the updated `Body`.
 
+Let can deal with templates taking not more than
+`MPLLIBS_LIMIT_METAFUNCTION_ARITY` template arguments. This is macro and its
+value is 10 by default.
+
 ## Header
 
 ```cpp

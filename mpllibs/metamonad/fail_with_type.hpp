@@ -6,21 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/v1/fail_with_type.hpp>
+
 namespace mpllibs
 {
   namespace metamonad
   {
-    namespace impl
-    {
-      template <class T>
-      struct FAIL_WITH_TYPE__________________________________ {};
-    }
-
-    template <class T>
-    void fail_with_type()
-    {
-      impl::FAIL_WITH_TYPE__________________________________<T>::f();
-    }
+    using v1::fail_with_type;
   }
 }
 

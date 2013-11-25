@@ -11,6 +11,7 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/eval_guard.hpp>
 #include <mpllibs/metamonad/pair.hpp>
+#include <mpllibs/metamonad/var.hpp>
 
 #include <boost/test/unit_test.hpp>
 

@@ -11,7 +11,7 @@
 
 Macro for defining a typedef for throwing a compile-time exception. The purpose
 of the macro is improving readability of typeclass expectation descriptions. The
-tag of the exception is `invalid_typeclass_tag`.
+expection thrown is [`invalid_typeclass`](invalid_typeclass.html).
 
 ## Header
 
@@ -30,9 +30,7 @@ MPLLIBS_TYPECLASS_EXPECT(some_fun);
 is equivalent to
 
 ```cpp
-typedef mpllibs::metamonad::exception<
-  // unspecified
-> some_fun;
+typedef mpllibs::metamonad::exception<invalid_typeclass> some_fun;
 ```
 
 ## Example

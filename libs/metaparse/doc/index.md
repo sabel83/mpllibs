@@ -23,6 +23,7 @@ well.
 * [Tutorial](https://github.com/sabel83/metaparse_tutorial#metaparse-tutorial)
 * [User manual](manual.html)
 * [Library reference](reference.html)
+* [Versioning](versioning.html)
 * [Performance](performance.html)
 
 Related publications and blogs

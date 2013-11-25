@@ -5,6 +5,7 @@
 
 #include <mpllibs/metamonad/eval_multi_let.hpp>
 #include <mpllibs/metamonad/pair.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 
 #include <boost/test/unit_test.hpp>
 

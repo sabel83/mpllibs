@@ -6,14 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/multi_let.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/v1/multi_let_c.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(multi_let_c, (M)(E)) ((multi_let<M, syntax<E> >));
+    using v1::multi_let_c;
   }
 }
 

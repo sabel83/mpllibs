@@ -47,7 +47,7 @@ It can not be handled by catch blocks following the one that throws.
 ## Header
 
 ```cpp
-#include <mpllibs/metamonad/try.hpp>
+#include <mpllibs/metamonad/try_.hpp>
 ```
 
 ## Expression semantics
@@ -67,7 +67,7 @@ try_<
   // ...
   catch_<en, syntax<pn>, syntax<bn>>
 >::type
-make_monadic<exception_monad, g>::type
+make_monadic<exception_tag, g>::type
 ```
 
 ```cpp
@@ -94,7 +94,7 @@ try_<
 is equivalent to
 
 ```cpp
-make_monadic<exception_monad, g>::type
+make_monadic<exception_tag, g>::type
 ```
 
 In all the above cases

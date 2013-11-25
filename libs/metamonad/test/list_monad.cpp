@@ -8,6 +8,7 @@
 #include <mpllibs/metamonad/bind.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 
 #include <boost/test/unit_test.hpp>
 

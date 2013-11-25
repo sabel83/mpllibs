@@ -21,12 +21,12 @@ BOOST_AUTO_TEST_CASE(test_util_is_whitespace)
   using boost::mpl::not_;
 
   // test_space
-  BOOST_MPL_ASSERT((apply_wrap1<is_whitespace, char_space>));
+  BOOST_MPL_ASSERT((apply_wrap1<is_whitespace<>, char_space>));
   
   // test_tab
-  BOOST_MPL_ASSERT((apply_wrap1<is_whitespace, char_tab>));
+  BOOST_MPL_ASSERT((apply_wrap1<is_whitespace<>, char_tab>));
   
   // test_non_whitespace
-  BOOST_MPL_ASSERT((not_<apply_wrap1<is_whitespace, char_a> >));
+  BOOST_MPL_ASSERT((not_<apply_wrap1<is_whitespace<>, char_a> >));
 }
 

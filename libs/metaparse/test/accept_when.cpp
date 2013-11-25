@@ -4,9 +4,11 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/accept_when.hpp>
-#include <mpllibs/metaparse/one_char.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+#include <mpllibs/metaparse/util/is_digit.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
-#include <mpllibs/metaparse/source_position.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/one_char.hpp>
 
 #include "common.hpp"
 
@@ -36,7 +38,7 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
   BOOST_MPL_ASSERT((
     is_error<
       apply_wrap2<
-        accept_when<one_char, is_digit, test_failure>,
+        accept_when<one_char, is_digit<>, test_failure>,
         str_hello,
         start
       >
@@ -48,7 +50,7 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
     equal_to<
       get_result<
         apply_wrap2<
-          accept_when<one_char, is_digit, test_failure>,
+          accept_when<one_char, is_digit<>, test_failure>,
           str_1983,
           start
         >
@@ -60,7 +62,7 @@ BOOST_AUTO_TEST_CASE(test_accept_when)
   // test_with_empty_string
   BOOST_MPL_ASSERT((
     is_error<
-      apply_wrap2<accept_when<one_char, is_digit, test_failure>, str_, start>
+      apply_wrap2<accept_when<one_char, is_digit<>, test_failure>, str_, start>
     >
   ));
 }

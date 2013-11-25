@@ -4,6 +4,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/util/digit_to_int.hpp>
+#include <mpllibs/metamonad/try_c.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 
 #include "common.hpp"
 
@@ -32,15 +34,18 @@ BOOST_AUTO_TEST_CASE(test_digit_to_int)
   using namespace mpllibs::metamonad::name;
 
   // test0
-  BOOST_MPL_ASSERT((equal_to<apply_wrap1<digit_to_int, char_0>::type, int0>));
+  BOOST_MPL_ASSERT((equal_to<apply_wrap1<digit_to_int<>, char_0>::type, int0>));
 
   // test9
-  BOOST_MPL_ASSERT((equal_to<apply_wrap1<digit_to_int, char_9>::type, int9>));
+  BOOST_MPL_ASSERT((equal_to<apply_wrap1<digit_to_int<>, char_9>::type, int9>));
   
   // test_error
   BOOST_MPL_ASSERT((
     equal_to<
-      try_c<apply_wrap1<digit_to_int, char_x>, catch_c<e, true_, int13> >::type,
+      try_c<
+        apply_wrap1<digit_to_int<>, char_x>,
+        catch_c<e, true_, int13>
+      >::type,
       int13
     >
   ));

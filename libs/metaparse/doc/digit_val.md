@@ -31,7 +31,7 @@ The following are equivalent:
 ```cpp
 digit_val
 
-transform<digit, util::digit_to_int>
+transform<digit, util::digit_to_int<>>
 ```
 
 ## Example

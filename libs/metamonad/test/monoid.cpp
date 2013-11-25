@@ -41,19 +41,22 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    template <>
-    struct monoid<plus_tag> : monoid_defaults<plus_tag>
+    namespace v1
     {
-      typedef int0 mempty;
-      typedef lambda_c<a, b, plus<a, b> >::type mappend;
-    };
+      template <>
+      struct monoid<plus_tag> : monoid_defaults<plus_tag>
+      {
+        typedef int0 mempty;
+        typedef lambda_c<a, b, plus<a, b> >::type mappend;
+      };
 
-    template <>
-    struct monoid<mult_tag> : monoid_defaults<mult_tag>
-    {
-      typedef int1 mempty;
-      typedef lambda_c<a, b, times<a, b> >::type mappend;
-    };
+      template <>
+      struct monoid<mult_tag> : monoid_defaults<mult_tag>
+      {
+        typedef int1 mempty;
+        typedef lambda_c<a, b, times<a, b> >::type mappend;
+      };
+    }
   }
 }
 

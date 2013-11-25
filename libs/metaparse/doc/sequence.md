@@ -25,7 +25,7 @@ when all parsers accept it. The result of parsing is a sequence of the results
 of the parsers.
 
 The maximum number of parsers `sequence` accepts can be specified with the
-`MPLLIBS_SEQUENCE_MAX_ARGUMENT` macro. Its default value is `5`.
+`MPLLIBS_LIMIT_SEQUENCE_SIZE` macro. Its default value is `5`.
 
 ## Header
 

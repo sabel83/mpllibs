@@ -32,7 +32,7 @@ space
 
 accept_when<
   one_char,
-  util::is_whitespace,
+  util::is_whitespace<>,
   // unspecified
 >
 ```

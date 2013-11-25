@@ -14,7 +14,7 @@ struct do_
 
 Metafunction class for creating _do blocks_. It takes the steps of the do block
 as arguments. The steps are syntaxes. The maximum number of arguments is defined
-by the `MPLLIBS_DO_MAX_ARGUMENT` macro. Steps are either:
+by the `MPLLIBS_LIMIT_DO_SIZE` macro. Steps are either:
 
 * Nullary metafunctions returning a monadic value
 * [`set`](set.html) constructs
@@ -23,7 +23,7 @@ by the `MPLLIBS_DO_MAX_ARGUMENT` macro. Steps are either:
 ## Header
 
 ```cpp
-#include <mpllibs/metamonad/do.hpp>
+#include <mpllibs/metamonad/do_.hpp>
 ```
 
 ## Example

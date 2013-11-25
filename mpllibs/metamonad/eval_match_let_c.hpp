@@ -6,15 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/eval_match_let.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/v1/eval_match_let_c.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(eval_match_let_c, (P)(E1)(E2))
-    ((eval_match_let<syntax<P>, E1, syntax<E2> >));
+    using v1::eval_match_let_c;
   }
 }
 

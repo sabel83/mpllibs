@@ -16,6 +16,7 @@
 #include <mpllibs/metamonad/either.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -58,12 +59,15 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    template <>
-    struct monad<wrapper_tag>
+    namespace v1
     {
-      typedef lambda_c<t, wrapped<t> > return_;
-      typedef lambda_c<a, f, apply<f, a> > bind;
-    };
+      template <>
+      struct monad<wrapper_tag>
+      {
+        typedef lambda_c<t, wrapped<t> > return_;
+        typedef lambda_c<a, f, apply<f, a> > bind;
+      };
+    }
   }
 }
 

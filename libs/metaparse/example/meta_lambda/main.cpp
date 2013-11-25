@@ -8,7 +8,7 @@
 #include <mpllibs/metaparse/lit_c.hpp>
 #include <mpllibs/metaparse/last_of.hpp>
 #include <mpllibs/metaparse/space.hpp>
-#include <mpllibs/metaparse/int.hpp>
+#include <mpllibs/metaparse/int_.hpp>
 #include <mpllibs/metaparse/foldlp.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/get_result.hpp>

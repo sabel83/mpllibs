@@ -3,19 +3,17 @@
 ## Synopsis
 
 ```cpp
+template <class C>
 struct is_ucase_letter
 {
-  template <class C>
-  struct apply
-  {
-    // unspecified
-  };
+  // unspecified
 };
 ```
 
 ## Description
 
 Checks if a character is an upper case letter. Returns a wrapped boolean value.
+It supports currying.
 
 ## Header
 
@@ -28,24 +26,24 @@ Checks if a character is an upper case letter. Returns a wrapped boolean value.
 The following expressions are equivalent:
 
 ```cpp
-boost::mpl::apply<is_ucase_letter, boost::mpl::char_<'A'>>
+boost::mpl::apply<is_ucase_letter<>, boost::mpl::char_<'A'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_ucase_letter, boost::mpl::char_<'Z'>>
+boost::mpl::apply<is_ucase_letter<>, boost::mpl::char_<'Z'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_ucase_letter, c>
+boost::mpl::apply<is_ucase_letter<>, c>::type
 boost::mpl::false_
 ```
 
 ## Example
 
 ```cpp
-boost::mpl::apply<is_lcase_letter, boost::mpl::char_<'X'>>
+is_lcase_letter<boost::mpl::char_<'X'>>::type
 ```
 
 <p class="copyright">

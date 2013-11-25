@@ -14,12 +14,12 @@ struct start
 A compile-time source position value. It represents the beginning of an input
 text.
 
-Its tag is `source_position_tag`.
+Its tag is [`source_position_tag`](source_position_tag.html).
 
 ## Header
 
 ```cpp
-#include <mpllibs/metaparse/source_position.hpp>
+#include <mpllibs/metaparse/start.hpp>
 ```
 
 ## Example

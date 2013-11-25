@@ -45,6 +45,9 @@ requirements:
 * `mappend<X, mappend<Y, Z>>` is equivalent to `mappend<mappend<X, Y>, Z>`
 * `mconcat<L>` is equivalent to `boost::mpl::reverse_fold<L, mempty, mappend>`
 
+Due to the way Metamonad [handles versioning](versioning.html), the `monoid`
+template class has to be specialised in the `mpllibs::metamonad::v1` namespace.
+
 ## Header
 
 ```cpp

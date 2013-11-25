@@ -4,6 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metamonad/catch_all.hpp>
+#include <mpllibs/metamonad/match.hpp>
 #include <mpllibs/metamonad/exception.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/returns.hpp>

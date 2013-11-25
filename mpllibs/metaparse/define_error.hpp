@@ -6,20 +6,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <string>
+#include <mpllibs/metaparse/v1/define_error.hpp>
 
 #ifdef MPLLIBS_DEFINE_ERROR
-  #error MPLLIBS_DEFINE_ERROR already defined
+#  error MPLLIBS_DEFINE_ERROR already defined
 #endif
-#define MPLLIBS_DEFINE_ERROR(name, msg) \
-  struct name \
-  { \
-    typedef name type; \
-    static std::string get_value() \
-    { \
-      return msg; \
-    } \
-  }
+#define MPLLIBS_DEFINE_ERROR MPLLIBS_DEFINE_V1_ERROR
 
 #endif
 

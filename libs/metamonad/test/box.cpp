@@ -7,6 +7,7 @@
 #include <mpllibs/metamonad/box.hpp>
 #include <mpllibs/metamonad/let_c.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
+#include <mpllibs/metamonad/var.hpp>
 
 #include <boost/test/unit_test.hpp>
 

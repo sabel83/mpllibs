@@ -6,28 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/syntax.hpp>
-#include <mpllibs/metamonad/make_monadic_c.hpp>
+#include <mpllibs/metamonad/v1/make_monadic.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    template <class MonadTag, class Expr>
-    struct make_monadic_c;
-
-    template <class MonadTag, class Expr>
-    struct make_monadic_impl;
-
-    template <class MonadTag, class Expr>
-    struct make_monadic_impl<MonadTag, syntax<Expr> > :
-      make_monadic_c<MonadTag, Expr>
-    {};
-
-    template <class MonadTag, class Expr>
-    struct make_monadic :
-      make_monadic_impl<typename MonadTag::type, typename Expr::type>
-    {};
+    using v1::make_monadic;
   }
 }
 

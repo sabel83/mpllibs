@@ -22,7 +22,7 @@ sequence.
 ## Header
 
 ```cpp
-#include <mpllibs/metaparse/int.hpp>
+#include <mpllibs/metaparse/int_.hpp>
 ```
 
 ## Expression semantics

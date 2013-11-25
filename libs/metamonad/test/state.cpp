@@ -10,6 +10,7 @@
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 #include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 
 #include <boost/test/unit_test.hpp>
 

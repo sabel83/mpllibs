@@ -22,7 +22,7 @@ before reaching that position of the input text. This can be queried using
 The following operations are also supported: [`next_char`](next_char.html) and
 [`next_line`](next_line.html).
 
-Its tag is `source_position_tag`.
+Its tag is [`source_position_tag`](source_position_tag.html).
 
 The beginning of the input text is represented by [`start`](start.html).
 

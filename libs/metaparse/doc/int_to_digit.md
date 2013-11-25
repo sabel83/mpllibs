@@ -3,20 +3,17 @@
 ## Synopsis
 
 ```cpp
+template <class D>
 struct int_to_digit
 {
-  template <class D>
-  struct apply
-  {
-    // unspecified
-  };
+  // unspecified
 };
 ```
 
 ## Description
 
-Converts an integer value in the range `[0-9]` to a character representing that
-decimal value.
+Converts a boxed integer value in the range `[0-9]` to a character representing
+that decimal value.
 
 ## Header
 
@@ -29,19 +26,19 @@ decimal value.
 The following pairs of expressions are equivalent
 
 ```cpp
-boost::mpl::apply<int_to_digit, boost::mpl::int_<0>>
+int_to_digit<boost::mpl::int_<0>>::type
 boost::mpl::char_<'0'>
 ```
 
 ```cpp
-boost::mpl::apply<int_to_digit, boost::mpl::int_<9>>
+int_to_digit<boost::mpl::int_<9>>::type
 boost::mpl::char_<'9'>
 ```
 
 ## Example
 
 ```cpp
-boost::mpl::apply<int_to_digit, boost::mpl::int_<7>>
+int_to_digit<boost::mpl::int_<7>>::type
 ```
 
 <p class="copyright">

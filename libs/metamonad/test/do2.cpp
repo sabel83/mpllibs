@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/do.hpp>
+#include <mpllibs/metamonad/do_.hpp>
 #include <mpllibs/metamonad/tmp_tag.hpp>
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/returns.hpp>
@@ -16,6 +16,7 @@
 #include <mpllibs/metamonad/either.hpp>
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/syntax.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -57,12 +58,15 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    template <>
-    struct monad<wrapper_tag>
+    namespace v1
     {
-      typedef lambda_c<t, wrapped<t> > return_;
-      typedef lambda_c<a, f, apply<f, a> > bind;
-    };
+      template <>
+      struct monad<wrapper_tag>
+      {
+        typedef lambda_c<t, wrapped<t> > return_;
+        typedef lambda_c<a, f, apply<f, a> > bind;
+      };
+    }
   }
 }
 

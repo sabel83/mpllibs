@@ -43,7 +43,7 @@ struct next_element
 };
 
 typedef
-  foldl1<transform<one_of_c<'0', '1'>, digit_to_int>, int_<0>, next_element>
+  foldl1<transform<one_of_c<'0', '1'>, digit_to_int<> >, int_<0>, next_element>
   S;
 
 typedef build_parser<entire_input<S> > binary_parser;

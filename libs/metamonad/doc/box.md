@@ -19,8 +19,9 @@ can be passed around in lazy template metaprograms.
 The content of `box` is left untouched by [`lazy`](lazy.html) and is not subject
 to variable substitution in let, lambda and do expressions.
 
-The tag of boxed values is `box_tag`. Boxed values can be compared with
-`boost::mpl::equal_to` and considered equal when they wrap the same type.
+The tag of boxed values is [`box_tag`](box_tag.html). Boxed values can be
+compared with `boost::mpl::equal_to` and considered equal when they wrap the
+same type.
 
 ## Header
 

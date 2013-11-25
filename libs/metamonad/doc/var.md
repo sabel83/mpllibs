@@ -13,7 +13,7 @@ struct var
 ## Description
 
 Wrapper for variables in expressions. The class parameter, `T` is the identity
-of the variable.
+of the variable. The tag of the variables is [`var_tag`](var_tag.html).
 
 ## Header
 

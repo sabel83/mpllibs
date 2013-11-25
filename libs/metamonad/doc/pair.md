@@ -12,7 +12,7 @@ struct pair;
 ## Description
 
 Algebraic data-type representing pairs of values. It is compatible with
-`mpl::pair` values.
+`mpl::pair` values. The tag of the values is [`pair_tag`](pair_tag.html).
 
 ## Header
 

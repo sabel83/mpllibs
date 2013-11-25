@@ -10,16 +10,20 @@
 * [make_syntax](make_syntax.html)
 * [name](name.html)
 * [syntax](syntax.html)
+* [syntax_tag](syntax_tag.html)
 * [var](var.html)
+* [var_tag](var_tag.html)
 
 ### Control structure
 
 * [case_](case_.html)
 * [eval_case](eval_case.html)
 * [if_](if_.html)
+* [no_case_matched](no_case_matched.html)
 
 ### Pattern matching
 
+* [bad_match](bad_match.html)
 * [match](match.html)
 * [match_c](match_c.html)
 
@@ -58,6 +62,8 @@
 
 ### Typeclass
 
+* [invalid_typeclass](invalid_typeclass.html)
+* [invalid_typeclass_tag](invalid_typeclass_tag.html)
 * [MPLLIBS_TYPECLASS_EXPECT](MPLLIBS_TYPECLASS_EXPECT.html)
 
 ### Do notation
@@ -78,6 +84,7 @@
 * [catch_all](catch_all.html)
 * [catch_just](catch_just.html)
 * [exception](exception.html)
+* [exception_tag](exception_tag.html)
 * [is_exception](is_exception.html)
 * [try_](try_.html)
 * [try_c](try_c.html)
@@ -85,6 +92,7 @@
 ### Algebraic data-type
 
 * [MPLLIBS_DATA](MPLLIBS_DATA.html)
+* [algebraic_data_type_tag](algebraic_data_type_tag.html)
 
 ### Metafunction definition
 
@@ -94,7 +102,9 @@
 * [MPLLIBS_LAZY_METAFUNCTION](MPLLIBS_LAZY_METAFUNCTION.html)
 * [MPLLIBS_METAFUNCTION](MPLLIBS_METAFUNCTION.html)
 * [calculated_value](calculated_value.html)
+* [compose](compose.html)
 * [make_tmp_value](make_tmp_value.html)
+* [overloading_error_tag](overloading_error_tag.html)
 * [returns](returns.html)
 * [tmp_tag](tmp_tag.html)
 * [tmp_value](tmp_value.html)
@@ -104,6 +114,7 @@
 ### Boxing
 
 * [box](box.html)
+* [box_tag](box_tag.html)
 * [eval_guard](eval_guard.html)
 * [unbox](unbox.html)
 
@@ -119,12 +130,16 @@
 
 * [first](first.html)
 * [pair](pair.html)
+* [pair_tag](pair_tag.html)
 * [second](second.html)
 
 ### Tag
 
+* [list_tag](list_tag.html)
+* [reader_tag](reader_tag.html)
+* [state_tag](state_tag.html)
 * [tag_tag](tag_tag.html)
-* [overloading_error_tag](overloading_error_tag.html)
+* [writer_tag](writer_tag.html)
 
 ### Sequences
 
@@ -135,10 +150,13 @@
 
 ### Monoid
 
+* [monoid](monoid.html)
+
+#### Operations of Monoid
+
 * [mappend](mappend.html)
 * [mconcat](mconcat.html)
 * [mempty](mempty.html)
-* [monoid](monoid.html)
 
 #### Instances of Monoid
 
@@ -147,10 +165,13 @@
 
 ### Monad
 
+* [monad](monad.html)
+
+#### Operations of Monad
+
 * [bind_](bind_.html)
 * [bind](bind.html)
 * [fail](fail.html)
-* [monad](monad.html)
 * [return_](return_.html)
 
 #### Instances of Monad
@@ -166,6 +187,9 @@
 ### MonadPlus
 
 * [monad_plus](monad_plus.html)
+
+#### Operations of MonadPlus
+
 * [mplus](mplus.html)
 * [mzero](mzero.html)
 

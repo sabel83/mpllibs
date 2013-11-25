@@ -7,7 +7,7 @@
 #include <mpllibs/metaparse/one_char.hpp>
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/is_error.hpp>
-#include <mpllibs/metaparse/source_position.hpp>
+#include <mpllibs/metaparse/start.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 
 #include "common.hpp"
@@ -21,9 +21,8 @@
 BOOST_AUTO_TEST_CASE(test_one_of)
 {
   using mpllibs::metaparse::is_error;
-  using mpllibs::metaparse::one_of_0;
-  using mpllibs::metaparse::one_of_1;
-  using mpllibs::metaparse::one_of_2;
+  using mpllibs::metaparse::v1::impl::one_of_1;
+  using mpllibs::metaparse::v1::impl::one_of_2;
   using mpllibs::metaparse::one_of;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::get_result;
@@ -35,9 +34,6 @@ BOOST_AUTO_TEST_CASE(test_one_of)
   
   typedef fail<test_failure> test_fail;
 
-  // test0
-  BOOST_MPL_ASSERT((is_error<apply_wrap2<one_of_0< >, str_hello, start> >));
-  
   // test_1_with_good
   BOOST_MPL_ASSERT((
     equal_to<

@@ -6,16 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/let_c.hpp>
-#include <mpllibs/metamonad/eval_syntax.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/v1/eval_let_c.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(eval_let_c, (N)(E1)(E2))
-    ((eval_syntax<let_c<N, E1, E2> >));
+    using v1::eval_let_c;
   }
 }
 

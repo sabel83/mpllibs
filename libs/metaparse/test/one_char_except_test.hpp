@@ -5,7 +5,8 @@
 
 // This header file contains code that is reused by other cpp files
 
-#include <mpllibs/metaparse/source_position.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/assert.hpp>

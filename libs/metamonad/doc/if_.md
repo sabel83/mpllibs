@@ -19,7 +19,7 @@ returns false, `if_` returns the result of the nullary metafunction `F`.
 ## Header
 
 ```cpp
-#include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/if_.hpp>
 ```
 
 ## Expression semantics

@@ -5,6 +5,7 @@
 
 #include <mpllibs/metamonad/match_c.hpp>
 #include <mpllibs/metamonad/pair.hpp>
+#include <mpllibs/metamonad/tmp_value.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -21,7 +22,7 @@ using mpllibs::metamonad::tmp_value;
 
 BOOST_AUTO_TEST_CASE(test_map_insert)
 {
-  using mpllibs::metamonad::impl::map_insert;
+  using mpllibs::metamonad::v1::impl::map_insert;
   using mpllibs::metamonad::pair;
 
   using boost::mpl::map;

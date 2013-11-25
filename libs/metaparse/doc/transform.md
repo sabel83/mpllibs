@@ -55,7 +55,7 @@ returns the error otherwise.
 typedef
   mpllibs::metaparse::transform<
     mpllibs::metaparse::digit,
-    mpllibs::metaparse::util::digit_to_int
+    mpllibs::metaparse::util::digit_to_int<>
   >
   digit_val;
 ```

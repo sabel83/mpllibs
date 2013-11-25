@@ -6,15 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/eval_multi_let.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
+#include <mpllibs/metamonad/v1/eval_multi_let_c.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(eval_multi_let_c, (M)(E))
-    ((eval_multi_let<M, syntax<E> >));
+    using v1::eval_multi_let_c;
   }
 }
 

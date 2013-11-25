@@ -9,8 +9,7 @@
 #include <grammar.hpp>
 #include <ast.hpp>
 #include <bind.hpp>
-
-#include <mpllibs/metaparse/util/curry.hpp>
+#include <curry.hpp>
 
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/insert.hpp>
@@ -18,10 +17,10 @@
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-#include <boost/preprocessor/punctuation/comma_if.hpp>
-#include <boost/preprocessor/repetition/repeat.hpp>
+#include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
+#include <boost/preprocessor/tuple/eat.hpp>
 
 typedef boost::mpl::map<> empty_environment;
 
@@ -40,32 +39,26 @@ struct builder
     >
   {};
 
-#ifdef DEF_CLASS
-  #error DEF_CLASS already defined
-#endif
-#define DEF_CLASS(z, n, unused) BOOST_PP_COMMA_IF(n) class
-
 #ifdef IMPORT
-  #error IMPORT already defined
+#  error IMPORT already defined
 #endif
 #define IMPORT(z, n, unused) \
-  template <class Name, template <BOOST_PP_REPEAT(n, DEF_CLASS, ~)> class F> \
+  template < \
+    class Name, \
+    template <BOOST_PP_ENUM(n, class BOOST_PP_TUPLE_EAT(3), ~)> class F \
+  > \
   struct BOOST_PP_CAT(import, n) : \
     builder< \
       typename boost::mpl::insert< \
         Env, \
-        boost::mpl::pair< \
-          Name, \
-          ast::value<BOOST_PP_CAT(mpllibs::metaparse::util::curry, n)<F> > \
-        > \
+        boost::mpl::pair<Name, ast::value<BOOST_PP_CAT(curry, n)<F> > > \
       >::type \
     > \
   {};
 
-BOOST_PP_REPEAT_FROM_TO(1, MPLLIBS_CURRY_MAX_ARGUMENT, IMPORT, ~)
+BOOST_PP_REPEAT_FROM_TO(1, CURRY_MAX_ARGUMENT, IMPORT, ~)
 
 #undef IMPORT
-#undef DEF_CLASS
 
   template <class S>
   struct define :

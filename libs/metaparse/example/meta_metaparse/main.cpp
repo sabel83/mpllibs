@@ -4,7 +4,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_MPL_LIMIT_STRING_SIZE 64
-#define MPLLIBS_STRING_MAX_LENGTH BOOST_MPL_LIMIT_STRING_SIZE
+#define MPLLIBS_LIMIT_STRING_SIZE BOOST_MPL_LIMIT_STRING_SIZE
 
 #include <mpllibs/metaparse/grammar.hpp>
 
@@ -12,7 +12,7 @@
 #include <mpllibs/metaparse/build_parser.hpp>
 #include <mpllibs/metaparse/token.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
-#include <mpllibs/metaparse/int.hpp>
+#include <mpllibs/metaparse/int_.hpp>
 #include <mpllibs/metaparse/transform.hpp>
 
 #include <boost/mpl/apply_wrap.hpp>

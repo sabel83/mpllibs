@@ -8,7 +8,7 @@ functions.
 ## General information
 
 * header: `<mpllibs/metamonad/state.hpp>`
-* tag of monad: `state_tag`
+* tag of monad: [`state_tag`](state_tag.html)
 * `return`'s logic: construct a constant function, returning always return's
   argument regardless of the state and leaving the state unchanged
 * `bind`'s logic: construct a function that gets a value and a new state by

@@ -6,18 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/if.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/mzero.hpp>
-
-#include <boost/mpl/void.hpp>
+#include <mpllibs/metamonad/v1/guard.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(guard, (MonadTag)(B))
-    ((if_<B, return_<MonadTag, boost::mpl::void_>, mzero<MonadTag> >));
+    using v1::guard;
   }
 }
 

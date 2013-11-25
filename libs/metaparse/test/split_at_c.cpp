@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/impl/split_at_c.hpp>
+#include <mpllibs/metaparse/v1/impl/split_at_c.hpp>
 #include <mpllibs/metaparse/string.hpp>
 
 #include <boost/mpl/pair.hpp>
@@ -14,7 +14,7 @@
 
 BOOST_AUTO_TEST_CASE(test_split_at_c)
 {
-  using mpllibs::metaparse::impl::split_at_c;
+  using mpllibs::metaparse::v1::impl::split_at_c;
   using mpllibs::metaparse::string;
   
   using boost::mpl::pair;

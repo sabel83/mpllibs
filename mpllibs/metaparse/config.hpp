@@ -35,9 +35,9 @@
 #endif
 
 #ifdef MPLLIBS_USE_CONSTEXPR
-  #define MPLLIBS_CONSTEXPR constexpr
+#  define MPLLIBS_CONSTEXPR constexpr
 #else
-  #define MPLLIBS_CONSTEXPR
+#  define MPLLIBS_CONSTEXPR
 #endif
 
 /*
@@ -45,7 +45,7 @@
  */
 
 #if defined __GNUC__ && (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 7))
-  #define MPLLIBS_NO_CONSTEXPR_C_STR
+#  define MPLLIBS_NO_CONSTEXPR_C_STR
 #endif
 
 /*
@@ -53,7 +53,7 @@
  */
 
 #if defined MPLLIBS_USE_VARIADIC_TEMPLATES && !defined MPLLIBS_VARIADIC_STRING
-  #define MPLLIBS_VARIADIC_STRING
+#  define MPLLIBS_VARIADIC_STRING
 #endif
 
 #endif

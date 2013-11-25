@@ -30,6 +30,10 @@ boost::mpl::plus<
 >::type
 ```
 
+Lazy can deal with templates taking not more than
+`MPLLIBS_LIMIT_METAFUNCTION_ARITY` template arguments. This is macro and its
+value is 10 by default.
+
 ## Header
 
 ```cpp

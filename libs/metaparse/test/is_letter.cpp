@@ -21,12 +21,12 @@ BOOST_AUTO_TEST_CASE(test_util_is_letter)
   using boost::mpl::not_;
 
   // test_lcase_letter
-  BOOST_MPL_ASSERT((apply_wrap1<is_letter, char_k>));
+  BOOST_MPL_ASSERT((apply_wrap1<is_letter<>, char_k>));
   
   // test_ucase_letter
-  BOOST_MPL_ASSERT((apply_wrap1<is_letter, char_K>));
+  BOOST_MPL_ASSERT((apply_wrap1<is_letter<>, char_K>));
     
   // test_not_letter
-  BOOST_MPL_ASSERT((not_<apply_wrap1<is_letter, char_7> >));
+  BOOST_MPL_ASSERT((not_<apply_wrap1<is_letter<>, char_7> >));
 }
 

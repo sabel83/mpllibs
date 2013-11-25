@@ -26,7 +26,7 @@ beginning with any of the characters. The result of parsing is the first
 character of the input.
 
 The maximum number of characters that can be provided is defined by the
-`MPLLIBS_ONE_OF_MAX_ARGUMENT` macro. Its default value is `20`.
+`MPLLIBS_LIMIT_ONE_OF_SIZE` macro. Its default value is `20`.
 
 ## Header
 

@@ -22,6 +22,9 @@ instantiated template. The sequence may have less elements than the number of
 template arguments `T` expects. In such cases `boost::mpl::na` is used instead
 of the non-specified arguments.
 
+The largest supported arity is the value of `MPLLIBS_INSTANTIATE_ARITY`. The
+default value of it is 32.
+
 ## Header
 
 ```cpp

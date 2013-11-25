@@ -3,20 +3,17 @@
 ## Synopsis
 
 ```cpp
+template <class C>
 struct is_whitespace
 {
-  template <class C>
-  struct apply
-  {
-    // unspecified
-  };
+  // unspecified
 };
 ```
 
 ## Description
 
 Checks if a character is a whitespace character.
-Returns a wrapped boolean value.
+Returns a wrapped boolean value. It supports currying.
 
 ## Header
 
@@ -26,37 +23,18 @@ Returns a wrapped boolean value.
 
 ## Expression semantics
 
-The following expressions are equivalent:
+For any `C` nullary template metafunction returning a wrapped character value
+the following are equivalent:
 
 ```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<' '>>
-boost::mpl::true_
-```
-
-```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<'\t'>>
-boost::mpl::true_
-```
-
-```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<'\r'>>
-boost::mpl::true_
-```
-
-```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<'\n'>>
-boost::mpl::true_
-```
-
-```cpp
-boost::mpl::apply<is_whitespace, c>
-boost::mpl::false_
+boost::mpl::apply<is_whitespace, C>::type
+is_whitespace_c<C::type::value>::type
 ```
 
 ## Example
 
 ```cpp
-boost::mpl::apply<is_whitespace, boost::mpl::char_<' '>>
+is_whitespace<boost::mpl::char_<' '>>::type
 ```
 
 <p class="copyright">

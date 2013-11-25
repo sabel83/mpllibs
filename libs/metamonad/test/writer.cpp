@@ -8,6 +8,8 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/metafunction.hpp>
 #include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 #include <mpllibs/metamonad/name.hpp>
 #include <mpllibs/metamonad/pair.hpp>
 #include <mpllibs/metamonad/apply.hpp>
@@ -15,6 +17,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/equal.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/assert.hpp>
 

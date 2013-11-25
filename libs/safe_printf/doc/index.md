@@ -18,6 +18,10 @@ time overhead, however).
 * [expected_types](expected_types.html)
 * [valid_arguments](valid_arguments.html)
 
+## Versioning
+
+* [Versioning](versioning.html)
+
 ## Related publications
 
 Ábel Sinkovics, Zoltán Porkoláb: <br />

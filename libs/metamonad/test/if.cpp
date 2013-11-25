@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/if.hpp>
+#include <mpllibs/metamonad/if_.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 
 #include <boost/test/unit_test.hpp>

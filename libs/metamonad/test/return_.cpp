@@ -8,6 +8,7 @@
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/returns.hpp>
 #include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/monad.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -27,13 +28,16 @@ namespace mpllibs
 {
   namespace metamonad
   {
-    template <>
-    struct monad<test_tag> : monad_defaults<test_tag>
+    namespace v1
     {
-      typedef lambda_c<_, returns<int13> > return_;
+      template <>
+      struct monad<test_tag> : monad_defaults<test_tag>
+      {
+        typedef lambda_c<_, returns<int13> > return_;
       
-      // no bind is needed for this test
-    };
+        // no bind is needed for this test
+      };
+    }
   }
 }
 

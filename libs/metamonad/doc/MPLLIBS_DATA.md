@@ -15,9 +15,10 @@ element tuples. Each tuple describes one constructor. The first element of the
 tuple is the name, the second element is the arity of the constructor. The
 values can be compared using `boost::mpl::equal_to`.
 
-The `::tag` of the values is `mpllibs::metamonad::algebraic_data_type_tag`
-indicating that the values belong to an algebraic data-type. A custom tag
-(`name_tag`) is defined for each algebraic data-type.
+The `::tag` of the values is
+[`algebraic_data_type_tag`](algebraic_data_type_tag.html) indicating that the
+values belong to an algebraic data-type. A custom tag (`name_tag`) is defined
+for each algebraic data-type.
 
 `type_arity` is the number of type arguments. When there are one or more type
 arguments, the tag of the data type becomes a template class with `type_arity`
@@ -39,6 +40,9 @@ returning the string representation of the constructor. The values also have a
 public static `::value` string constant holding the same value. The string
 representation of the values created using the constructor contain the name of
 the constructor and the values of the arguments.
+
+The number of constructor arguments should not be greater than the value of
+`MPLLIBS_LIMIT_DATA_SIZE`. It has the value 10 by default.
 
 ## Header
 

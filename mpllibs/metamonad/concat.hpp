@@ -6,19 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/metafunction.hpp>
-
-#include <boost/mpl/begin_end.hpp>
-#include <boost/mpl/insert_range.hpp>
+#include <mpllibs/metamonad/v1/concat.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    MPLLIBS_METAFUNCTION(concat, (a)(b))
-    ((
-      boost::mpl::insert_range<a, typename boost::mpl::end<a>::type, b>
-    ));
+    using v1::concat;
   }
 }
 

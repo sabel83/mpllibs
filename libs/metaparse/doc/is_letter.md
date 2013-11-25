@@ -3,19 +3,17 @@
 ## Synopsis
 
 ```cpp
+template <class C>
 struct is_letter
 {
-  template <class C>
-  struct apply
-  {
-    // unspecified
-  };
+  // unspecified
 };
 ```
 
 ## Description
 
-Checks if a character is a letter. Returns a wrapped boolean value.
+Checks if a character is a letter. Returns a wrapped boolean value. It supports
+currying.
 
 ## Header
 
@@ -28,34 +26,34 @@ Checks if a character is a letter. Returns a wrapped boolean value.
 The following expressions are equivalent:
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'a'>>
+boost::mpl::apply<is_letter<>, boost::mpl::char_<'a'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'z'>>
+boost::mpl::apply<is_letter<>, boost::mpl::char_<'z'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'A'>>
+boost::mpl::apply<is_letter<>, boost::mpl::char_<'A'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'Z'>>
+boost::mpl::apply<is_letter<>, boost::mpl::char_<'Z'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter, c>
+boost::mpl::apply<is_letter<>, c>::type
 boost::mpl::false_
 ```
 
 ## Example
 
 ```cpp
-boost::mpl::apply<is_letter, boost::mpl::char_<'x'>>
+is_letter<boost::mpl::char_<'x'>>::type
 ```
 
 <p class="copyright">

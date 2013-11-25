@@ -17,8 +17,10 @@ compatible with `boost::mpl::string`, but they accept only individual characters
 as arguments. When `constexpr` is available, they should be constructed using
 the [`MPLLIBS_STRING`](MPLLIBS_STRING.html) macro.
 
+The tag of the strings is [`string_tag`](string_tag.html).
+
 *C++98*: The maximum length of these strings is controlled by the
-`MPLLIBS_STRING_MAX_LENGTH` macro.
+`MPLLIBS_LIMIT_STRING_SIZE` macro.
 
 *C++11*: The strings use variadic templates.
 

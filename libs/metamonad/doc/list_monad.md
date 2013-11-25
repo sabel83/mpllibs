@@ -6,7 +6,7 @@ Monadic values are `boost::mpl::list` values.
 ## General information
 
 * header: `<mpllibs/metamonad/list.hpp>`
-* tag of monad: `list_tag`
+* tag of monad: [`list_tag`](list_tag.html)
 * `return`'s logic: creates a one-element list from the argument
 * `bind`'s logic: maps the operation on all elements of the input list and
   concatenates the resulting lists.

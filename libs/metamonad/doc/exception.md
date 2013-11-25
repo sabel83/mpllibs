@@ -18,6 +18,8 @@ Compile-time data-structure representing an error that occured during the
 evaluation of template metaprograms. `Data` is a compile-time data-structure
 describing the error.
 
+The tag of the values is [`exception_tag`](exception_tag.html).
+
 ## Header
 
 ```cpp

@@ -69,35 +69,57 @@
 * [next_char](next_char.html)
 * [next_line](next_line.html)
 * [source_position](source_position.html)
+* [source_position_tag](source_position_tag.html)
 * [start](start.html)
+
+## String
+
+* [string](string.html)
+* [string_tag](string_tag.html)
+* [MPLLIBS_STRING](MPLLIBS_STRING.html)
+
+## Errors
+
+* [digit_expected](digit_expected.html)
+* [end_of_input_expected](end_of_input_expected.html)
+* [index_out_of_range](index_out_of_range.html)
+* [letter_expected](letter_expected.html)
+* [literal_expected](literal_expected.html)
+* [none_of_the_expected_cases_found](none_of_the_expected_cases_found.html)
+* [unexpected_character](unexpected_character.html)
+* [unexpected_end_of_input](unexpected_end_of_input.html)
+* [whitespace_expected](whitespace_expected.html)
+
+## Tags
+
+* [accept_tag](accept_tag.html)
+* [fail_tag](fail_tag.html)
+* [parser_tag](parser_tag.html)
 
 ## Metafunctions and metafunction classes
 
 * [build_parser](build_parser.html)
 * [unless_error](unless_error.html)
 
-## Strings
-
-* [string](string.html)
-* [MPLLIBS_STRING](MPLLIBS_STRING.html)
-
 ## Utilities
 
 * [debug_parsing_error](debug_parsing_error.html)
+* [MPLLIBS_DEFINE_ERROR](MPLLIBS_DEFINE_ERROR.html)
 
 Metaparse uses a number of general purpose metafunctions and metafunction
 classes.
 
-* [compose](compose.html)
-* [curry](curry.html)
 * [digit_to_int](digit_to_int.html)
+* [digit_to_int_c](digit_to_int_c.html)
 * [int_to_digit](int_to_digit.html)
+* [int_to_digit_c](int_to_digit_c.html)
 * [in_range](in_range.html)
 * [is_digit](is_digit.html)
 * [is_lcase_letter](is_lcase_letter.html)
 * [is_letter](is_letter.html)
 * [is_ucase_letter](is_ucase_letter.html)
 * [is_whitespace](is_whitespace.html)
+* [is_whitespace_c](is_whitespace_c.html)
 
 <p class="copyright">
 Copyright Abel Sinkovics (abel at elte dot hu) 2011.

@@ -21,10 +21,10 @@ BOOST_AUTO_TEST_CASE(test_util_is_digit)
   using boost::mpl::not_;
 
   // test_digit
-  BOOST_MPL_ASSERT((apply_wrap1<is_digit, char_7>));
+  BOOST_MPL_ASSERT((apply_wrap1<is_digit<>, char_7>));
   
   // test_non_digit
-  BOOST_MPL_ASSERT((not_<apply_wrap1<is_digit, char_a> >));
+  BOOST_MPL_ASSERT((not_<apply_wrap1<is_digit<>, char_a> >));
 }
 
 

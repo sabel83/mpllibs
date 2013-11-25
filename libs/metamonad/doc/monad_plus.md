@@ -16,6 +16,9 @@ This is a typeclass for monad pluses. A monad plus represents a monad that
 satisfies the expectations of a [monoid](monoid.html). The indentity value is
 called `mzero`, the operation is called `mplus`.
 
+Due to the way Metamonad [handles versioning](versioning.html), the `monad_plus`
+template class has to be specialised in the `mpllibs::metamonad::v1` namespace.
+
 ## Header
 
 ```cpp

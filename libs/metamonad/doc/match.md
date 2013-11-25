@@ -29,8 +29,8 @@ When the expression matches the pattern, `match` returns a `boost::mpl::map`,
 where they keys are the open variables of the pattern and the values are the
 classes that were matched against them. The values of the map are syntaxes.
 
-When the expression doesn't match, `match` returns an
-[`exception`](exception.html).
+When the expression doesn't match, `match` returns a
+[`bad_match`](bad_match.html) [`exception`](exception.html).
 
 ## Header
 

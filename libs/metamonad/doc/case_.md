@@ -27,9 +27,10 @@ The arguments of both `matches` have to be syntaxes. When `case_` is evaluated,
 the angyl-bracket expression `Exp` is evaluated and matched against the
 `Pattern` patterns in order. When it matches one of them, the `Body` belonging
 to it is returned. When the expression doesn't match any of the patterns, an
-[`exception`](exception.html) is returned. When the result of `Exp` matches
-multiple patterns, the first one is used. The open variables of a `Pattern` can
-be used in the `Body` belonging to it.
+[`exception`](exception.html) is returned with a
+[`no_case_matched`](no_case_matched.html) value. When the result of `Exp`
+matches multiple patterns, the first one is used. The open variables of a
+`Pattern` can be used in the `Body` belonging to it.
 
 The maximum number of `matches` elements is limited by the value of
 `MPLLIBS_LIMIT_CASE_SIZE` macro.
@@ -37,7 +38,7 @@ The maximum number of `matches` elements is limited by the value of
 ## Header
 
 ```cpp
-#include <mpllibs/metamonad/case.hpp>
+#include <mpllibs/metamonad/case_.hpp>
 ```
 
 ## Expression semantics

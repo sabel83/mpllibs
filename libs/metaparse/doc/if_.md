@@ -23,7 +23,7 @@ input. It is `F` otherwise.
 ## Header
 
 ```cpp
-#include <mpllibs/metaparse/if.hpp>
+#include <mpllibs/metaparse/if_.hpp>
 ```
 
 ## Expression semantics

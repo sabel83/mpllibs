@@ -25,6 +25,9 @@ struct one_char_except
 except any of `C1` ... `Cn`. If the input is empty or the next character is one
 of the non-accepted ones, the parser rejects the input.
 
+The maximum number of template arguments this class can have is the value the
+macro `MPLLIBS_LIMIT_ONE_CHAR_EXCEPT_SIZE` expands to. Its default value is 10.
+
 ## Header
 
 ```cpp

@@ -12,7 +12,7 @@ A parser is a template metafunction that takes the following arguments:
 
 The function parses a prefix of the input string.
 When the parsing is successful, it returns a structure with the tag
-`mpllibs::metaparse::accept_tag`. The following metafunctions can be used to
+[`accept_tag`](accept_tag.html). The following metafunctions can be used to
 query this result:
 
 * [`get_result`](get_result.html)
@@ -20,7 +20,7 @@ query this result:
 * [`get_position`](get_position.html)
 
 When there is a parsing error, the parser returns a structure with the tag
-`mpllibs::metaparse::fail_tag`.
+[`fail_tag`](fail_tag.html).
 
 ### The input of the parsers
 
@@ -46,7 +46,7 @@ MPLLIBS_STRING("Hello World!")
 This defines a [`string`](string.html) as well, however, it is easier to
 read. The maximum length of the string that can be defined this way is limited,
 however, this limit is configurable. It is specified by the 
-`MPLLIBS_STRING_MAX_LENGTH` macro.
+`MPLLIBS_LIMIT_STRING_SIZE` macro.
 
 ### Source positions
 
@@ -66,7 +66,9 @@ information about the source position where the error was detected and some
 description about the error. The description is a class with a
 `public: static std::string get_value()` method, which returns the error
 message. [`debug_parsing_error`](debug_parsing_error.html) can be used to
-display the error message.
+display the error message. Metaparse provides the
+[`MPLLIBS_DEFINE_ERROR`](MPLLIBS_DEFINE_ERROR.html) macro for defining simple
+error messages.
 
 ### Some examples of simple parsers
 

@@ -13,10 +13,10 @@ Macro for defining [`string`](string.html) values. `s` is expected to be a
 string literal. The macro requires C++11.
 
 The maximal length of the string is limited. This limit is defined by the
-`MPLLIBS_STRING_MAX_LENGTH` macro.
+`MPLLIBS_LIMIT_STRING_SIZE` macro.
 
 On platforms where `MPLLIBS_STRING` is not supported, the `string.hpp` header
-defines the `MPLLIBS_CONFIG_NO_MPLLIBS_STRING` macro. Defining this macro
+defines the `MPLLIBS_V1_CONFIG_NO_MPLLIBS_STRING` macro. Defining this macro
 before including the header disables the `MPLLIBS_STRING` macro.
 
 ## Header

@@ -6,24 +6,14 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/tmp_value.hpp>
-#include <mpllibs/metamonad/tmp_tag.hpp>
+#include <mpllibs/metamonad/v1/syntax.hpp>
+#include <mpllibs/metamonad/syntax_tag.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    struct syntax_tag : tmp_tag<syntax_tag> {};
-
-    // MPLLIBS_METAFUNCTION depends on it
-    template <class T>
-    struct syntax : tmp_value<syntax<T>, syntax_tag> {};
-
-    template <class T>
-    struct lazy;
-
-    template <class T>
-    struct lazy<syntax<T> > : syntax<T> {};
+    using v1::syntax;
   }
 }
 

@@ -6,22 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/eval_case.hpp>
-#include <mpllibs/metamonad/exception.hpp>
-#include <mpllibs/metamonad/name.hpp>
-#include <mpllibs/metamonad/apply.hpp>
+#include <mpllibs/metamonad/v1/catch_all.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    template <class E, class Handler>
-    struct catch_all :
-      eval_case<E,
-        matches_c<exception<e>, apply<Handler, e> >,
-        matches_c<_, E>
-      >
-    {};
+    using v1::catch_all;
   }
 }
 

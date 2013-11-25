@@ -25,12 +25,15 @@ namespace
   typedef boost::mpl::int_<0> int0;
   typedef boost::mpl::int_<1> int1;
   typedef boost::mpl::int_<2> int2;
+  typedef boost::mpl::int_<3> int3;
   typedef boost::mpl::int_<4> int4;
+  typedef boost::mpl::int_<6> int6;
   typedef boost::mpl::int_<9> int9;
   typedef boost::mpl::int_<11> int11;
   typedef boost::mpl::int_<13> int13;
   typedef boost::mpl::int_<24> int24;
   typedef boost::mpl::int_<26> int26;
+  typedef boost::mpl::int_<28> int28;
   typedef boost::mpl::int_<37> int37;
 
   MPLLIBS_METAFUNCTION(eval, (T)) ((T));

@@ -8,7 +8,7 @@
 #include <mpllibs/metamonad/return_.hpp>
 #include <mpllibs/metamonad/bind.hpp>
 #include <mpllibs/metamonad/fail.hpp>
-#include <mpllibs/metamonad/lambda.hpp>
+#include <mpllibs/metamonad/lambda_c.hpp>
 
 #include <mpllibs/metamonad/mzero.hpp>
 #include <mpllibs/metamonad/mplus.hpp>

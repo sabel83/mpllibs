@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
+#include <mpllibs/metamonad/v1/first.hpp>
+
 namespace mpllibs
 {
   namespace metamonad
   {
-    // LAZY_METAFUNCTION uses lambda, which uses pairs
-    template <class P>
-    struct first : P::type::first {};
+    using v1::first;
   }
 }
 

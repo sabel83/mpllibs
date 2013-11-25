@@ -51,6 +51,9 @@ The typeclass implements the following operation:
 
 * `bind_` taking two monadic values as arguments and returns a value.
 
+Due to the way Metamonad [handles versioning](versioning.html), the `monad`
+template class has to be specialised in the `mpllibs::metamonad::v1` namespace.
+
 ## Header
 
 ```cpp

@@ -6,19 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metamonad/letrec_c.hpp>
-#include <mpllibs/metamonad/metafunction.hpp>
-#include <mpllibs/metamonad/eval_syntax.hpp>
+#include <mpllibs/metamonad/v1/eval_letrec_c.hpp>
 
 namespace mpllibs
 {
   namespace metamonad
   {
-    template <class A, class E1, class E2>
-    struct letrec_c;
-
-    MPLLIBS_METAFUNCTION(eval_letrec_c, (N)(E1)(E2))
-    ((eval_syntax<letrec_c<N, E1, E2> >));
+    using v1::eval_letrec_c;
   }
 }
 
