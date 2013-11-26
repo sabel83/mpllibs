@@ -1,5 +1,5 @@
 #ifndef MPLLIBS_METAPARSE_V1_ERROR_LETTER_EXPECTED_HPP
-#define MPLLIBS_METAPARSE_V1_ERROR_LETTER_EXLETTER_HPP
+#define MPLLIBS_METAPARSE_V1_ERROR_LETTER_EXPECTED_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2013.
 // Distributed under the Boost Software License, Version 1.0.

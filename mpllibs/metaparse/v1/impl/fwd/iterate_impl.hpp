@@ -1,5 +1,5 @@
 #ifndef MPLLIBS_METAPARSE_V1_IMPL_FWD_ITERATE_IMPL_HPP
-#define MPLLIBS_METAPARSE_V1_IMPL_FWD_ITEITERATE_C_HPP
+#define MPLLIBS_METAPARSE_V1_IMPL_FWD_ITERATE_IMPL_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2013.
 // Distributed under the Boost Software License, Version 1.0.

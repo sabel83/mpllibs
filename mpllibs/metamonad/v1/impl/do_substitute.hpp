@@ -1,5 +1,5 @@
 #ifndef MPLLIBS_METAMONAD_V1_IMPL_DO_SUBSTITUTE_HPP
-#define MPLLIBS_METAMONAD_V1_IMPL_DO_SUBSTITUTC_HPP
+#define MPLLIBS_METAMONAD_V1_IMPL_DO_SUBSTITUTE_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2013.
 // Distributed under the Boost Software License, Version 1.0.

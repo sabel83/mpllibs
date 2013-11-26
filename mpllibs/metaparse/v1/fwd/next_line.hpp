@@ -1,5 +1,5 @@
 #ifndef MPLLIBS_METAPARSE_V1_FWD_NEXT_LINE_IMPL_HPP
-#define MPLLIBS_METAPARSE_V1_FWD_NEXT_NEXT_LINE_HPP
+#define MPLLIBS_METAPARSE_V1_FWD_NEXT_LINE_IMPL_HPP
 
 //    Copyright Abel Sinkovics (abel@sinkovics.hu) 2013.
 // Distributed under the Boost Software License, Version 1.0.

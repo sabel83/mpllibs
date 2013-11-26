@@ -1,5 +1,5 @@
 #ifndef MPLLIBS_METAPARSE_V1_IMPL_ITERATE_IMPL_UNCHECKED_HPP
-#define MPLLIBS_METAPARSE_V1_IMPL_ITERATE_IMPL_UNCHECKEC_HPP
+#define MPLLIBS_METAPARSE_V1_IMPL_ITERATE_IMPL_UNCHECKED_HPP
 
 // Copyright Abel Sinkovics (abel@sinkovics.hu)  2013.
 // Distributed under the Boost Software License, Version 1.0.
