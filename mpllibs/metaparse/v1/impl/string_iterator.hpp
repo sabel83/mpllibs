@@ -9,6 +9,8 @@
 #include <mpllibs/metaparse/v1/impl/string_iterator_tag.hpp>
 #include <mpllibs/metaparse/v1/impl/at_c.hpp>
 
+#include <mpllibs/boost.hpp>
+
 #include <boost/mpl/iterator_tags.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/bool.hpp>
@@ -56,7 +58,7 @@ namespace mpllibs
   }
 }
 
-namespace boost
+namespace MPLLIBS_BOOST_NAMESPACE
 {
   namespace mpl
   {

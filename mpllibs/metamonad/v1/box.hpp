@@ -16,6 +16,8 @@
 #include <mpllibs/metamonad/v1/is_same.hpp>
 #include <mpllibs/metamonad/v1/box_tag.hpp>
 
+#include <mpllibs/boost.hpp>
+
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/map.hpp>
 
@@ -41,7 +43,7 @@ namespace mpllibs
   }
 }
 
-namespace boost
+namespace MPLLIBS_BOOST_NAMESPACE
 {
   namespace mpl
   {

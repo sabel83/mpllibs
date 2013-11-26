@@ -12,6 +12,8 @@
 #include <mpllibs/metamonad/v1/tmp_value.hpp>
 #include <mpllibs/metamonad/v1/lazy_metafunction.hpp>
 
+#include <mpllibs/boost.hpp>
+
 #include <boost/mpl/always.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/equal.hpp>
@@ -27,7 +29,7 @@ namespace mpllibs
   }
 }
 
-namespace boost
+namespace MPLLIBS_BOOST_NAMESPACE
 {
   namespace mpl
   {

@@ -17,6 +17,8 @@
 #include <mpllibs/metaparse/v1/impl/push_back_c.hpp>
 #include <mpllibs/metaparse/v1/impl/pop_back.hpp>
 
+#include <mpllibs/boost.hpp>
+
 #include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>
@@ -59,7 +61,7 @@ namespace mpllibs
  * Boost.MPL overloads
  */
 
-namespace boost
+namespace MPLLIBS_BOOST_NAMESPACE
 {
   namespace mpl
   {
