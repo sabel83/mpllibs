@@ -11,6 +11,7 @@
 #include <mpllibs/metamonad/tmp_value.hpp>
 #include <mpllibs/metamonad/apply.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
+#include <mpllibs/boost.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 
@@ -20,7 +21,7 @@ struct non_comparable :
   mpllibs::metamonad::tmp_value<non_comparable, non_comparable_tag>
 {};
 
-namespace boost
+namespace MPLLIBS_BOOST_NAMESPACE
 {
   namespace mpl
   {

@@ -17,6 +17,7 @@
 #include <mpllibs/metamonad/lazy.hpp>
 #include <mpllibs/metamonad/apply.hpp>
 #include <mpllibs/metamonad/syntax.hpp>
+#include <mpllibs/boost.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -71,7 +72,7 @@ namespace mpllibs
   }
 }
 
-namespace boost
+namespace MPLLIBS_BOOST_NAMESPACE
 {
   namespace mpl
   {
