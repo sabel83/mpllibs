@@ -6,8 +6,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(mpllibs)
 set(CMAKE_PROJECT_NAME mpllibs)
-set(MAJOR_VERSION 0)
-set(MINOR_VERSION 1)
+set(MAJOR_VERSION 1)
+set(MINOR_VERSION 0)
 set(PATCH_VERSION 0)
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)

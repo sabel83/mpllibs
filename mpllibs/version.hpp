@@ -16,8 +16,8 @@
   #error MPLLIBS_PATCH already defined
 #endif
 
-#define MPLLIBS_MAJOR_VERSION 0
-#define MPLLIBS_MINOR_VERSION 1
+#define MPLLIBS_MAJOR_VERSION 1
+#define MPLLIBS_MINOR_VERSION 0
 #define MPLLIBS_PATCH_VERSION 0
 
 #endif
