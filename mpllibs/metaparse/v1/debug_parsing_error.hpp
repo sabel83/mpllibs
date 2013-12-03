@@ -15,6 +15,7 @@
 #include <boost/mpl/string.hpp>
 
 #include <iostream>
+#include <cstdlib>
 
 namespace mpllibs
 {
