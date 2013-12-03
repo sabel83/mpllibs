@@ -41,10 +41,10 @@ int main()
 }
 #else
 
-#ifdef _S
-  #error _S already defined
+#ifdef _STR
+#  error _STR already defined
 #endif
-#define _S MPLLIBS_STRING
+#define _STR MPLLIBS_STRING
 
 template <class T, char C>
 struct is_c : bool_<T::type::value == C> {};
@@ -208,20 +208,20 @@ struct keep_front
 };
 
 typedef
-  grammar<_S("plus_exp")>
-    ::import<_S("int_token"), token<transform<int_, build_value>>>::type
+  grammar<_STR("plus_exp")>
+    ::import<_STR("int_token"), token<transform<int_, build_value>>>::type
 
-    ::rule<_S("ws ::= (' ' | '\n' | '\r' | '\t')*")>::type
-    ::rule<_S("plus_token ::= '+' ws"), keep_front>::type
-    ::rule<_S("minus_token ::= '-' ws"), keep_front>::type
-    ::rule<_S("mult_token ::= '*' ws"), keep_front>::type
-    ::rule<_S("div_token ::= '/' ws"), keep_front>::type
-    ::rule<_S("arg_token ::= '_' ws"), keep_front>::type
+    ::rule<_STR("ws ::= (' ' | '\n' | '\r' | '\t')*")>::type
+    ::rule<_STR("plus_token ::= '+' ws"), keep_front>::type
+    ::rule<_STR("minus_token ::= '-' ws"), keep_front>::type
+    ::rule<_STR("mult_token ::= '*' ws"), keep_front>::type
+    ::rule<_STR("div_token ::= '/' ws"), keep_front>::type
+    ::rule<_STR("arg_token ::= '_' ws"), keep_front>::type
 
-    ::rule<_S("plus_exp ::= prod_exp ((plus_token | minus_token) prod_exp)*"), build_plus>::type
-    ::rule<_S("prod_exp ::= value_exp ((mult_token | div_token) value_exp)*"), build_mult>::type
-    ::rule<_S("value_exp ::= int_token | arg_exp")>::type
-    ::rule<_S("arg_exp ::= arg_token"), build_arg>::type
+    ::rule<_STR("plus_exp ::= prod_exp ((plus_token | minus_token) prod_exp)*"), build_plus>::type
+    ::rule<_STR("prod_exp ::= value_exp ((mult_token | div_token) value_exp)*"), build_mult>::type
+    ::rule<_STR("value_exp ::= int_token | arg_exp")>::type
+    ::rule<_STR("arg_exp ::= arg_token"), build_arg>::type
   g;
 
 typedef build_parser<entire_input<g>> function_parser;

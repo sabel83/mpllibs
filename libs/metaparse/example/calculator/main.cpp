@@ -120,10 +120,10 @@ typedef last_of<any<space>, plus_exp> expression;
 
 typedef build_parser<entire_input<expression> > calculator_parser;
 
-#ifdef _S
-  #error _S already defined
+#ifdef _STR
+#  error _STR already defined
 #endif
-#define _S MPLLIBS_STRING
+#define _STR MPLLIBS_STRING
 
 #ifdef BOOST_NO_CONSTEXPR
 int main()
@@ -148,8 +148,8 @@ int main()
   using std::endl;
   
   cout
-    << apply_wrap1<calculator_parser, _S("13")>::type::value << endl
-    << apply_wrap1<calculator_parser, _S(" 1+ 2*4-6/2")>::type::value << endl
+    << apply_wrap1<calculator_parser, _STR("13")>::type::value << endl
+    << apply_wrap1<calculator_parser, _STR(" 1+ 2*4-6/2")>::type::value << endl
     ;
 }
 #endif

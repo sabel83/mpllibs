@@ -51,10 +51,10 @@ typedef build_parser<entire_input<S> > binary_parser;
 template <class S>
 struct binary : binary_parser::apply<S>::type {};
 
-#ifdef _S
-  #error _S already defined
+#ifdef _STR
+#  error _STR already defined
 #endif
-#define _S MPLLIBS_STRING
+#define _STR MPLLIBS_STRING
 
 #ifdef BOOST_NO_CONSTEXPR
 
@@ -76,9 +76,9 @@ int main()
   using std::endl;
   
   cout
-    << binary<_S("100")>::value << endl
-    << binary<_S("1011")>::value << endl
-    << binary<_S("1")>::value << endl;
+    << binary<_STR("100")>::value << endl
+    << binary<_STR("1011")>::value << endl
+    << binary<_STR("1")>::value << endl;
 }
 #endif
 

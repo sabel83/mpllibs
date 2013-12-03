@@ -150,10 +150,10 @@ typedef last_of<any<space>, plus_exp> expression;
 
 typedef build_parser<entire_input<expression> > calculator_parser;
 
-#ifdef _S
-  #error _S already defined
+#ifdef _STR
+#  error _STR already defined
 #endif
-#define _S MPLLIBS_STRING
+#define _STR MPLLIBS_STRING
 
 #ifdef BOOST_NO_CONSTEXPR
 
@@ -198,17 +198,19 @@ int main()
   
   using mpllibs::metamonad::value_to_stream;
 
-  value_to_stream<apply_wrap1<calculator_parser, _S("13")> >::run(cout);
-  cout << endl;
-
-  value_to_stream<apply_wrap1<calculator_parser,_S(" 1+ 2*4-6/2")> >::run(cout);
-  cout << endl;
-
-  value_to_stream<apply_wrap1<calculator_parser, _S("11/0")> >::run(cout);
+  value_to_stream<apply_wrap1<calculator_parser, _STR("13")> >::run(cout);
   cout << endl;
 
   value_to_stream<
-    apply_wrap1<calculator_parser, _S("19 + 83/0 + 11")>
+    apply_wrap1<calculator_parser,_STR(" 1+ 2*4-6/2")>
+  >::run(cout);
+  cout << endl;
+
+  value_to_stream<apply_wrap1<calculator_parser, _STR("11/0")> >::run(cout);
+  cout << endl;
+
+  value_to_stream<
+    apply_wrap1<calculator_parser, _STR("19 + 83/0 + 11")>
   >::run(cout);
   cout << endl;
 }

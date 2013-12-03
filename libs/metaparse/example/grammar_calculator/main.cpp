@@ -61,10 +61,10 @@ using boost::mpl::char_;
 using boost::mpl::lambda;
 using boost::mpl::int_;
 
-#ifdef _S
-  #error _S already defined
+#ifdef _STR
+  #error _STR already defined
 #endif
-#define _S MPLLIBS_STRING
+#define _STR MPLLIBS_STRING
 
 template <class A, class B>
 struct lazy_plus : plus<typename A::type, typename B::type> {};
@@ -130,18 +130,18 @@ typedef
   int_action;
 
 typedef
-  grammar<_S("plus_exp")>
+  grammar<_STR("plus_exp")>
 
-    ::rule<_S("int ::= ('0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9')+"), int_action>::type
-    ::rule<_S("ws ::= (' ' | '\n' | '\r' | '\t')*")>::type
-    ::rule<_S("int_token ::= int ws"), front<_1>>::type
-    ::rule<_S("plus_token ::= '+' ws"), front<_1>>::type
-    ::rule<_S("minus_token ::= '-' ws"), front<_1>>::type
-    ::rule<_S("mult_token ::= '*' ws"), front<_1>>::type
-    ::rule<_S("div_token ::= '/' ws"), front<_1>>::type
-    ::rule<_S("plus_token ::= '+' ws")>::type
-    ::rule<_S("plus_exp ::= prod_exp ((plus_token | minus_token) prod_exp)*"), plus_action>::type
-    ::rule<_S("prod_exp ::= int_token ((mult_token | div_token) int_token)*"), prod_action>::type
+    ::rule<_STR("int ::= ('0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9')+"), int_action>::type
+    ::rule<_STR("ws ::= (' ' | '\n' | '\r' | '\t')*")>::type
+    ::rule<_STR("int_token ::= int ws"), front<_1>>::type
+    ::rule<_STR("plus_token ::= '+' ws"), front<_1>>::type
+    ::rule<_STR("minus_token ::= '-' ws"), front<_1>>::type
+    ::rule<_STR("mult_token ::= '*' ws"), front<_1>>::type
+    ::rule<_STR("div_token ::= '/' ws"), front<_1>>::type
+    ::rule<_STR("plus_token ::= '+' ws")>::type
+    ::rule<_STR("plus_exp ::= prod_exp ((plus_token | minus_token) prod_exp)*"), plus_action>::type
+    ::rule<_STR("prod_exp ::= int_token ((mult_token | div_token) int_token)*"), prod_action>::type
   expression;
 
 typedef build_parser<entire_input<expression>> calculator_parser;
@@ -152,8 +152,8 @@ int main()
   using std::endl;
   
   cout
-    << apply_wrap1<calculator_parser, _S("13")>::type::value << endl
-    << apply_wrap1<calculator_parser, _S("1+ 2*4-6/2")>::type::value << endl
+    << apply_wrap1<calculator_parser, _STR("13")>::type::value << endl
+    << apply_wrap1<calculator_parser, _STR("1+ 2*4-6/2")>::type::value << endl
     ;
 }
 #endif
