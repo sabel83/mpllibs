@@ -3,7 +3,7 @@
 ## Synopsis
 
 ```cpp
-template <class P>
+template <class P, class Msg = error::end_of_input_expected>
 struct entire_input
 {
   template <class S, class Pos>
@@ -18,7 +18,9 @@ struct entire_input
 
 Parser taking a parser, `P` as argument, parsing the input using it and checking
 if `P` consumes the entire input. If `P` fails or doesn't consume the entire
-input, `entire_input` fails. Otherwise it returns the result of `P`.
+input, `entire_input` fails. Otherwise it returns the result of `P`. When `P`
+does not consume the entire input, the error message returned by the parser is
+`Msg`.
 
 ## Header
 
@@ -28,15 +30,18 @@ input, `entire_input` fails. Otherwise it returns the result of `P`.
 
 ## Expression semantics
 
-For any `p` parser the following are equivalent
+For any `p` parser and `e` error message the following are equivalent
 
 ```cpp
-entire_input<p>
+entire_input<p, e>
 
-mpllibs::metaparser::first_of<
+mpllibs::metaparse::first_of<
   p,
-  mpllibs::metaparser::empty<
-    // unspecified
+  mpllibs::metaparse::change_error_message<
+    mpllibs::metaparse::empty<
+      // unspecified
+    >,
+    e
   >
 >
 ```
@@ -44,7 +49,7 @@ mpllibs::metaparser::first_of<
 ## Example
 
 ```cpp
-typedef entire_input<mpllibs::metaparser::one_char> expect_one_char_input;
+typedef entire_input<mpllibs::metaparse::one_char> expect_one_char_input;
 ```
 
 <p class="copyright">

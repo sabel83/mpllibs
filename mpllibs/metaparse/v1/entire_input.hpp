@@ -8,6 +8,7 @@
 
 #include <mpllibs/metaparse/v1/first_of.hpp>
 #include <mpllibs/metaparse/v1/empty.hpp>
+#include <mpllibs/metaparse/v1/change_error_message.hpp>
 
 namespace mpllibs
 {
@@ -15,8 +16,15 @@ namespace mpllibs
   {
     namespace v1
     {
+      template <class P, class Msg = error::end_of_input_expected>
+      struct entire_input :
+        first_of<P, change_error_message<empty<void>, Msg> >
+      {};
+
       template <class P>
-      struct entire_input : first_of<P, empty<void> > {};
+      struct entire_input<P, error::end_of_input_expected> :
+        first_of<P, empty<void> >
+      {};
     }
   }
 }
