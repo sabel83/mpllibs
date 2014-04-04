@@ -23,7 +23,7 @@ namespace mpllibs
       MPLLIBS_V1_METAFUNCTION(concat_map, (L)(F))
       ((
         boost::mpl::fold<
-          boost::mpl::transform_view<L, F>,
+          boost::mpl::transform_view<typename L::type, typename F::type>,
           boost::mpl::list<>,
           concat<>
         >

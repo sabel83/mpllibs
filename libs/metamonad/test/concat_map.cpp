@@ -6,6 +6,7 @@
 #include <mpllibs/metamonad/concat_map.hpp>
 #include <mpllibs/metamonad/lambda_c.hpp>
 #include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/returns.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -16,6 +17,7 @@
 
 using boost::mpl::list;
 using mpllibs::metamonad::concat_map;
+using mpllibs::metamonad::returns;
 using boost::mpl::equal;
  
 using mpllibs::metamonad::lambda_c;
@@ -44,6 +46,23 @@ BOOST_AUTO_TEST_CASE(test_concat_map_two_element_list)
     equal<
       concat_map<list<int11, int13>, twice>::type,
       list<int11, int11, int13, int13>
+    >
+  ));
+}
+
+BOOST_AUTO_TEST_CASE(test_concat_map_laziness)
+{
+  BOOST_MPL_ASSERT((
+    equal<
+      concat_map<returns<list<int11> >, twice>::type,
+      list<int11, int11>
+    >
+  ));
+
+  BOOST_MPL_ASSERT((
+    equal<
+      concat_map<list<int11>, returns<twice> >::type,
+      list<int11, int11>
     >
   ));
 }
