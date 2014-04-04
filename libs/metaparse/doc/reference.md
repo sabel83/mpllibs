@@ -58,6 +58,7 @@
 
 ### Result of parsing
 
+* [get_message](get_message.html)
 * [get_position](get_position.html)
 * [get_remaining](get_remaining.html)
 * [get_result](get_result.html)

@@ -8,6 +8,8 @@
 
 #include <mpllibs/metamonad/tmp_tag.hpp>
 
+#include <mpllibs/metaparse/v1/fwd/get_message.hpp>
+
 #include <iostream>
 
 namespace mpllibs
@@ -17,6 +19,13 @@ namespace mpllibs
     namespace v1
     {
       struct fail_tag : metamonad::tmp_tag<fail_tag> {};
+
+      template <>
+      struct get_message_impl<fail_tag>
+      {
+        template <class A>
+        struct apply : A::message {};
+      };
     }
   }
 }
