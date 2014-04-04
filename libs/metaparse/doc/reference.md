@@ -114,6 +114,7 @@ classes.
 * [int_to_digit](int_to_digit.html)
 * [int_to_digit_c](int_to_digit_c.html)
 * [in_range](in_range.html)
+* [in_range_c](in_range_c.html)
 * [is_digit](is_digit.html)
 * [is_lcase_letter](is_lcase_letter.html)
 * [is_letter](is_letter.html)
