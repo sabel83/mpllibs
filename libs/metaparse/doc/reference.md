@@ -98,6 +98,7 @@
 * [accept_tag](accept_tag.html)
 * [fail_tag](fail_tag.html)
 * [parser_tag](parser_tag.html)
+* [source_position_tag](source_position_tag.html)
 
 ## Metafunctions and metafunction classes
 
