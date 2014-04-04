@@ -9,6 +9,10 @@
 #include <mpllibs/metaparse/v1/fwd/source_position.hpp>
 #include <mpllibs/metaparse/v1/source_position_tag.hpp>
 
+#include <mpllibs/boost.hpp>
+
+#include <boost/mpl/bool.hpp>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -26,6 +30,47 @@ namespace mpllibs
         typedef PrevChar prev_char;
       };
     }
+  }
+}
+
+namespace MPLLIBS_BOOST_NAMESPACE
+{
+  namespace mpl
+  {
+    template <class TagA, class TagB>
+    struct equal_to_impl;
+
+    template <>
+    struct equal_to_impl<
+      mpllibs::metaparse::v1::source_position_tag,
+      mpllibs::metaparse::v1::source_position_tag
+    >
+    {
+      typedef equal_to_impl type;
+
+      template <class A, class B>
+      struct apply :
+        bool_<
+          A::type::line::value == B::type::line::value
+          && A::type::col::value == B::type::col::value
+        >
+      {};
+    };
+
+    template <class TagA, class TagB>
+    struct not_equal_to_impl;
+
+    template <>
+    struct not_equal_to_impl<
+      mpllibs::metaparse::v1::source_position_tag,
+      mpllibs::metaparse::v1::source_position_tag
+    >
+    {
+      typedef not_equal_to_impl type;
+
+      template <class A, class B>
+      struct apply : bool_<!equal_to<A, B>::type::value> {};
+    };
   }
 }
 

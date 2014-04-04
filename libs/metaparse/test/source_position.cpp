@@ -14,6 +14,7 @@
 #include "common.hpp"
 
 #include <boost/mpl/equal_to.hpp>
+#include <boost/mpl/not_equal_to.hpp>
 #include <boost/mpl/assert.hpp>
 
 #include <boost/test/unit_test.hpp>
@@ -36,6 +37,7 @@ BOOST_AUTO_TEST_CASE(test_source_position)
   using mpllibs::metaparse::next_line;
   
   using boost::mpl::equal_to;
+  using boost::mpl::not_equal_to;
   
   // test_get_line
   BOOST_MPL_ASSERT((equal_to<int11, get_line<sp>::type>));
@@ -76,6 +78,33 @@ BOOST_AUTO_TEST_CASE(test_source_position)
   // test_next_lines_prev_char
   BOOST_MPL_ASSERT((
     equal_to<char_1, get_prev_char<next_line<start, char_1> >::type>
+  ));
+
+  // test_equal_source_positions
+  BOOST_MPL_ASSERT((equal_to<sp, sp>));
+
+  // test_equal_source_positions_when_prev_char_is_different
+  BOOST_MPL_ASSERT((
+    equal_to<
+      source_position<int11, int13, char_a>,
+      source_position<int11, int13, char_b>
+    >
+  ));
+
+  // test_not_equal_source_positions_when_line_is_different
+  BOOST_MPL_ASSERT((
+    not_equal_to<
+      source_position<int11, int13, char_a>,
+      source_position<int13, int13, char_a>
+    >
+  ));
+
+  // test_not_equal_source_positions_when_col_is_different
+  BOOST_MPL_ASSERT((
+    not_equal_to<
+      source_position<int11, int11, char_a>,
+      source_position<int11, int13, char_a>
+    >
   ));
 }
 
