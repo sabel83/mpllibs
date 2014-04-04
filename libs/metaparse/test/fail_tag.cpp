@@ -5,6 +5,7 @@
 
 #include <mpllibs/metaparse/fail.hpp>
 #include <mpllibs/metaparse/get_message.hpp>
+#include <mpllibs/metaparse/get_position.hpp>
 #include <mpllibs/metaparse/start.hpp>
 
 #include "common.hpp"
@@ -20,6 +21,7 @@ BOOST_AUTO_TEST_CASE(test_fail_tag)
 {
   using mpllibs::metaparse::fail;
   using mpllibs::metaparse::get_message;
+  using mpllibs::metaparse::get_position;
   using mpllibs::metaparse::start;
   
   using boost::mpl::apply_wrap2;
@@ -31,5 +33,8 @@ BOOST_AUTO_TEST_CASE(test_fail_tag)
 
   // test_getting_message_back
   BOOST_MPL_ASSERT((is_same<test_failure, get_message<failed_result>::type>));
+
+  // test_getting_position
+  BOOST_MPL_ASSERT((equal_to<start, get_position<failed_result>::type>));
 }
 

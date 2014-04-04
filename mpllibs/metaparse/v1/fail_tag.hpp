@@ -9,6 +9,7 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 
 #include <mpllibs/metaparse/v1/fwd/get_message.hpp>
+#include <mpllibs/metaparse/v1/fwd/get_position.hpp>
 
 #include <iostream>
 
@@ -25,6 +26,13 @@ namespace mpllibs
       {
         template <class A>
         struct apply : A::message {};
+      };
+
+      template <>
+      struct get_position_impl<fail_tag>
+      {
+        template <class A>
+        struct apply : A::source_position {};
       };
     }
   }
