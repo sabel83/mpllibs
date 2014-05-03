@@ -47,6 +47,12 @@ namespace mpllibs
         int sprintf( \
           char* s BOOST_PP_COMMA_IF(n) \
           BOOST_PP_ENUM_BINARY_PARAMS(n, T, t) \
+        ); \
+        \
+        MPLLIBS_PRINTF_TEMPLATE(n) \
+        int snprintf( \
+          char* s, size_t size BOOST_PP_COMMA_IF(n) \
+          BOOST_PP_ENUM_BINARY_PARAMS(n, T, t) \
         );
   
       BOOST_PP_REPEAT(MPLLIBS_PRINTF_MAX_ARGUMENT, MPLLIBS_PRINTF, ~)

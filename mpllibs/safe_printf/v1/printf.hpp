@@ -91,6 +91,16 @@ namespace mpllibs
         { \
           MPLLIBS_PRINTF_ASSERT(n); \
           return ::sprintf(s, MPLLIBS_PRINTF_ARGS(n)); \
+        } \
+        \
+        MPLLIBS_PRINTF_TEMPLATE(n) \
+        int snprintf( \
+          char* s, size_t size BOOST_PP_COMMA_IF(n) \
+          BOOST_PP_ENUM_BINARY_PARAMS(n, T, t) \
+        ) \
+        { \
+          MPLLIBS_PRINTF_ASSERT(n); \
+          return ::snprintf(s, size, MPLLIBS_PRINTF_ARGS(n)); \
         }
   
       #ifdef _MSC_VER
