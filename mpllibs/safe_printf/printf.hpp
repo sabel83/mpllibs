@@ -15,6 +15,7 @@ namespace mpllibs
     using v1::printf;
     using v1::fprintf;
     using v1::sprintf;
+    using v1::snprintf;
   }
 }
 
