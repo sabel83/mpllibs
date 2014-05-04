@@ -8,6 +8,9 @@
 #include <mpllibs/safe_printf/error.hpp>
 #include <mpllibs/safe_printf/expected_types.hpp>
 #include <mpllibs/safe_printf/printf.hpp>
+#include <mpllibs/safe_printf/fprintf.hpp>
+#include <mpllibs/safe_printf/sprintf.hpp>
+#include <mpllibs/safe_printf/snprintf.hpp>
 #include <mpllibs/safe_printf/printf_max_argument.hpp>
 #include <mpllibs/safe_printf/valid_arguments.hpp>
 

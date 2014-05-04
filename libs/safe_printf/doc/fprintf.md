@@ -21,7 +21,7 @@ using `fprintf` without type-checking.
 ## Header
 
 ```cpp
-#include <mpllibs/safe_printf/printf.hpp>
+#include <mpllibs/safe_printf/fprintf.hpp>
 ```
 
 ## Expression semantics

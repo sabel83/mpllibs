@@ -4,6 +4,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/safe_printf/printf.hpp>
+#include <mpllibs/safe_printf/sprintf.hpp>
+#include <mpllibs/safe_printf/fprintf.hpp>
 #include <mpllibs/metaparse/string.hpp>
 
 namespace safe = mpllibs::safe_printf;

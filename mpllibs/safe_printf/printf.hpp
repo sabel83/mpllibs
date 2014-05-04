@@ -13,11 +13,12 @@ namespace mpllibs
   namespace safe_printf
   {
     using v1::printf;
-    using v1::fprintf;
-    using v1::sprintf;
-    using v1::snprintf;
   }
 }
+
+// Backward compatibility
+#include <mpllibs/safe_printf/fprintf.hpp>
+#include <mpllibs/safe_printf/sprintf.hpp>
 
 #endif
 

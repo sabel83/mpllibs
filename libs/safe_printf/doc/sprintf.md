@@ -20,7 +20,7 @@ using `sprintf` without type-checking.
 ## Header
 
 ```cpp
-#include <mpllibs/safe_printf/printf.hpp>
+#include <mpllibs/safe_printf/sprintf.hpp>
 ```
 
 ## Expression semantics
