@@ -11,6 +11,7 @@ time overhead, however).
 
 * [printf](printf.html)
 * [sprintf](sprintf.html)
+* [snprintf](snprintf.html)
 * [fprintf](fprintf.html)
 
 ## Metafunctions
