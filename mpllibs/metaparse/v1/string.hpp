@@ -213,7 +213,7 @@ namespace MPLLIBS_BOOST_NAMESPACE
     {
       typedef c_str type;
       #if defined MPLLIBS_USE_CONSTEXPR && !defined MPLLIBS_NO_CONSTEXPR_C_STR
-        static constexpr const char value[sizeof...(Cs)] = {Cs...};
+        static constexpr char value[sizeof...(Cs)] = {Cs...};
       #else
         static const char value[sizeof...(Cs)];
       #endif
@@ -226,8 +226,7 @@ namespace MPLLIBS_BOOST_NAMESPACE
 
     #if defined MPLLIBS_USE_CONSTEXPR && !defined MPLLIBS_NO_CONSTEXPR_C_STR
       template <char... Cs>
-      constexpr const char
-        c_str<mpllibs::metaparse::v1::string<Cs...>>::value[];
+      constexpr char c_str<mpllibs::metaparse::v1::string<Cs...>>::value[];
     #else
       template <char... Cs>
       const char c_str<mpllibs::metaparse::v1::string<Cs...>>::value[]

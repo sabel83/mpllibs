@@ -22,7 +22,7 @@ namespace mpllibs
           typedef empty_string type;
 
           #if defined MPLLIBS_USE_CONSTEXPR && !defined MPLLIBS_NO_CONSTEXPR_C_STR
-            static constexpr const char value[1] = {0};
+            static constexpr char value[1] = {0};
           #else
             static const char value[1];
           #endif
@@ -30,7 +30,7 @@ namespace mpllibs
 
         #if defined MPLLIBS_USE_CONSTEXPR && !defined MPLLIBS_NO_CONSTEXPR_C_STR
           template <class Ignore>
-          constexpr const char empty_string<Ignore>::value[1];
+          constexpr char empty_string<Ignore>::value[1];
         #else
           template <class Ignore>
           const char empty_string<Ignore>::value[1] = {0};
