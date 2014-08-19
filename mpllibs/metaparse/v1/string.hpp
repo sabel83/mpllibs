@@ -16,6 +16,7 @@
 #include <mpllibs/metaparse/v1/impl/push_front_c.hpp>
 #include <mpllibs/metaparse/v1/impl/push_back_c.hpp>
 #include <mpllibs/metaparse/v1/impl/pop_back.hpp>
+#include <mpllibs/metaparse/v1/impl/assert_string_length.hpp>
 
 #include <mpllibs/boost.hpp>
 
@@ -372,9 +373,12 @@ namespace mpllibs
   #  error MPLLIBS_V1_STRING already defined
   #endif
   #define MPLLIBS_V1_STRING(s) \
-    mpllibs::metaparse::v1::impl::remove_trailing_no_chars< \
-      mpllibs::metaparse::v1::string< \
-        BOOST_PP_ENUM(MPLLIBS_LIMIT_STRING_SIZE, MPLLIBS_V1_STRING_N, s) \
+    mpllibs::metaparse::v1::impl::assert_string_length< \
+      sizeof(s) - 1, \
+      mpllibs::metaparse::v1::impl::remove_trailing_no_chars< \
+        mpllibs::metaparse::v1::string< \
+          BOOST_PP_ENUM(MPLLIBS_LIMIT_STRING_SIZE, MPLLIBS_V1_STRING_N, s) \
+        > \
       > \
     >::type
 
