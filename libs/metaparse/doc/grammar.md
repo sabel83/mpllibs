@@ -28,6 +28,12 @@ struct grammar
 
 ## Description
 
+> Note that using this adds a significant overhead to your builds. When someone
+> uses your parser, the compiler will have to build your grammar parser, use it
+> to parse your grammar and build your parser and then it can parse the input
+> the user would like to parse with your parser. You might consider using the
+> parser combinators the library provides.
+
 Parser combinator for constructing parsers based on an embedded DSL similar to
 EBNF. It can be used the following way:
 

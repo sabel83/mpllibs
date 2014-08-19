@@ -18,7 +18,7 @@ a:link {
   text-decoration: none;
 }
 
-pre.sourceCode, table, blockquote {
+pre.sourceCode, table {
   border-style: solid;
   border-width: 2px;
   border-radius: 10px;
@@ -74,9 +74,25 @@ tr:first-child>td, tr:first-child>th {
 }
 
 blockquote {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+
   border-color: #d0d0d0;
 
   padding: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+
+  /* Gradient generated with: http://www.colorzilla.com/gradient-editor/ */
+  background: #d5cea6; /* Old browsers */
+  background: -moz-linear-gradient(top, #d5cea6 0%, #c9c190 40%, #b7ad70 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d5cea6), color-stop(40%,#c9c190), color-stop(100%,#b7ad70)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #d5cea6 0%,#c9c190 40%,#b7ad70 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #d5cea6 0%,#c9c190 40%,#b7ad70 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #d5cea6 0%,#c9c190 40%,#b7ad70 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #d5cea6 0%,#c9c190 40%,#b7ad70 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d5cea6', endColorstr='#b7ad70',GradientType=0 ); /* IE6-9 */
 }
 
 p.copyright {
