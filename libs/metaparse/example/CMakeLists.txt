@@ -6,6 +6,7 @@
 subdirs(
   binary_number
   calculator
+  calculator_with_parens
   compile_to_native_code
   constexpr_parser
   grammar_calculator
