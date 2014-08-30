@@ -9,6 +9,7 @@
 #include <mpllibs/metaparse/v1/fwd/build_parser.hpp>
 #include <mpllibs/metaparse/v1/start.hpp>
 #include <mpllibs/metaparse/v1/is_error.hpp>
+#include <mpllibs/metaparse/v1/get_remaining.hpp>
 
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/if.hpp>
