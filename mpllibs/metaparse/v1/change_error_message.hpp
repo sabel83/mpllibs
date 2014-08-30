@@ -7,10 +7,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/v1/is_error.hpp>
-#include <mpllibs/metaparse/v1/fail.hpp>
+#include <mpllibs/metaparse/v1/reject.hpp>
 
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/if.hpp>
+#include <boost/mpl/eval_if.hpp>
 
 namespace mpllibs
 {
@@ -23,14 +23,10 @@ namespace mpllibs
       {
         template <class S, class Pos>
         struct apply :
-          boost::mpl::apply<
-            typename boost::mpl::if_<
-              is_error<boost::mpl::apply<P, S, Pos> >,
-              fail<Msg>,
-              P
-            >::type,
-            S,
-            Pos
+          boost::mpl::eval_if<
+            typename is_error<boost::mpl::apply<P, S, Pos> >::type,
+            reject<Msg, Pos>,
+            boost::mpl::apply<P, S, Pos>
           >
         {};
         

@@ -7,12 +7,11 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/v1/error/end_of_input_expected.hpp>
-#include <mpllibs/metaparse/v1/fail.hpp>
-#include <mpllibs/metaparse/v1/return_.hpp>
+#include <mpllibs/metaparse/v1/reject.hpp>
+#include <mpllibs/metaparse/v1/accept.hpp>
 #include <mpllibs/metaparse/v1/define_error.hpp>
 
 #include <boost/mpl/empty.hpp>
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/if.hpp>
 
 namespace mpllibs
@@ -28,14 +27,10 @@ namespace mpllibs
         
         template <class S, class Pos>
         struct apply :
-          boost::mpl::apply_wrap2<
-            typename boost::mpl::if_<
-              boost::mpl::empty<S>,
-              return_<Result>,
-              fail<error::end_of_input_expected>
-            >::type,
-            S,
-            Pos
+          boost::mpl::if_<
+            boost::mpl::empty<S>,
+            accept<Result, S, Pos>,
+            reject<error::end_of_input_expected, Pos>
           >
         {};
       };

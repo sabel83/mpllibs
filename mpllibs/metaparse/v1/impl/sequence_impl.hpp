@@ -7,9 +7,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/v1/impl/apply_parser.hpp>
-#include <mpllibs/metaparse/v1/return_.hpp>
+#include <mpllibs/metaparse/v1/accept.hpp>
 
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/deque.hpp>
 #include <boost/mpl/fold.hpp>
 
@@ -25,11 +24,7 @@ namespace mpllibs
         struct sequence_impl :
           boost::mpl::fold<
             Ps,
-            typename boost::mpl::apply_wrap2<
-              return_<boost::mpl::deque<> >,
-              S,
-              Pos
-            >::type,
+            accept<boost::mpl::deque<>, S, Pos>,
             apply_parser
           >
         {};

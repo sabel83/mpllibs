@@ -7,11 +7,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/v1/is_error.hpp>
-#include <mpllibs/metaparse/v1/return_.hpp>
+#include <mpllibs/metaparse/v1/accept.hpp>
 #include <mpllibs/metaparse/v1/get_result.hpp>
 
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/eval_if.hpp>
 
 namespace mpllibs
@@ -30,11 +29,7 @@ namespace mpllibs
           boost::mpl::eval_if<
             typename is_error<boost::mpl::apply<P, S, Pos> >::type,
             boost::mpl::apply<P, S, Pos>,
-            boost::mpl::apply_wrap2<
-              return_<get_result<boost::mpl::apply<P, S, Pos> > >,
-              S,
-              Pos
-            >
+            accept<get_result<boost::mpl::apply<P, S, Pos> >, S, Pos>
           >
         {};
       };

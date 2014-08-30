@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/return_.hpp>
+#include <mpllibs/metaparse/v1/accept.hpp>
 #include <mpllibs/metaparse/v1/get_result.hpp>
 #include <mpllibs/metaparse/v1/get_remaining.hpp>
 #include <mpllibs/metaparse/v1/get_position.hpp>
@@ -14,7 +14,6 @@
 
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -38,11 +37,9 @@ namespace mpllibs
         struct apply :
           unless_error<
             boost::mpl::apply<P, S, Pos>,
-            boost::mpl::apply_wrap2<
-              return_<
-                apply_transformation_function<
-                  get_result<boost::mpl::apply<P, S, Pos> >
-                >
+            accept<
+              apply_transformation_function<
+                get_result<boost::mpl::apply<P, S, Pos> >
               >,
               get_remaining<boost::mpl::apply<P, S, Pos> >,
               get_position<boost::mpl::apply<P, S, Pos> >

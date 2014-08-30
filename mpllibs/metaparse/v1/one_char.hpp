@@ -9,20 +9,15 @@
 #include <mpllibs/metaparse/v1/error/unexpected_end_of_input.hpp>
 #include <mpllibs/metaparse/v1/next_char.hpp>
 #include <mpllibs/metaparse/v1/next_line.hpp>
-#include <mpllibs/metaparse/v1/return_.hpp>
-#include <mpllibs/metaparse/v1/fail.hpp>
+#include <mpllibs/metaparse/v1/accept.hpp>
+#include <mpllibs/metaparse/v1/reject.hpp>
 #include <mpllibs/metaparse/v1/get_prev_char.hpp>
 
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/pop_front.hpp>
-#include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/or.hpp>
-#include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/mpl/not.hpp>
-#include <boost/mpl/char.hpp>
+#include <boost/mpl/bool.hpp>
 
 namespace mpllibs
 {
@@ -36,24 +31,13 @@ namespace mpllibs
         template <class C, class Pos>
         struct next_pos :
           boost::mpl::eval_if<
-            typename boost::mpl::or_<
-              typename boost::mpl::equal_to<
-                boost::mpl::char_<'\r'>,
-                typename C::type
-              >::type,
-              typename boost::mpl::and_<
-                typename boost::mpl::equal_to<
-                  boost::mpl::char_<'\n'>,
-                  typename C::type
-                >::type,
-                typename boost::mpl::not_<
-                  typename boost::mpl::equal_to<
-                    boost::mpl::char_<'\r'>,
-                    typename get_prev_char<Pos>::type
-                  >::type
-                >
-              >::type
-            >::type,
+            boost::mpl::bool_<
+              C::type::value == '\r'
+              || (
+                C::type::value == '\n'
+                && get_prev_char<Pos>::type::value != '\r'
+              )
+            >,
             next_line<Pos, C>,
             next_char<Pos, C>
           >
@@ -65,13 +49,9 @@ namespace mpllibs
         struct apply :
           boost::mpl::eval_if<
             typename boost::mpl::empty<S>::type,
-            boost::mpl::apply_wrap2<
-              fail<error::unexpected_end_of_input>,
-              S,
-              Pos
-            >,
-            boost::mpl::apply_wrap2<
-              return_<boost::mpl::front<S> >,
+            reject<error::unexpected_end_of_input, Pos>,
+            accept<
+              boost::mpl::front<S>,
               boost::mpl::pop_front<S>,
               next_pos<boost::mpl::front<S>, Pos>
             >

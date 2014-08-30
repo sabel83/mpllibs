@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/return_.hpp>
+#include <mpllibs/metaparse/v1/accept.hpp>
 #include <mpllibs/metaparse/v1/is_error.hpp>
 #include <mpllibs/metaparse/v1/get_position.hpp>
 #include <mpllibs/metaparse/v1/get_result.hpp>
@@ -28,13 +28,11 @@ namespace mpllibs
       private:
         template <class Res, class Rem>
         struct apply_unchecked1 :
-          boost::mpl::apply_wrap2<
-            return_<
-              typename boost::mpl::apply<
-                BackwardOp,
-                typename get_result<Res>::type,
-                typename get_result<Rem>::type
-              >::type
+          accept<
+            boost::mpl::apply<
+              BackwardOp,
+              typename get_result<Res>::type,
+              typename get_result<Rem>::type
             >,
             typename get_remaining<Rem>::type,
             typename get_position<Rem>::type

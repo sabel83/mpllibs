@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/fail_tag.hpp>
+#include <mpllibs/metaparse/v1/reject.hpp>
 
 namespace mpllibs
 {
@@ -20,14 +20,7 @@ namespace mpllibs
         typedef fail type;
         
         template <class S, class Pos>
-        struct apply
-        {
-          typedef fail_tag tag;
-          typedef apply type;
-
-          typedef Pos source_position;
-          typedef Msg message;
-        };
+        struct apply : reject<Msg, Pos> {};
       };
     }
   }

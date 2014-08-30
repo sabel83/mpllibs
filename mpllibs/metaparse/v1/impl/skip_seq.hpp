@@ -7,13 +7,12 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/v1/is_error.hpp>
-#include <mpllibs/metaparse/v1/return_.hpp>
+#include <mpllibs/metaparse/v1/accept.hpp>
 #include <mpllibs/metaparse/v1/get_remaining.hpp>
 #include <mpllibs/metaparse/v1/get_position.hpp>
 #include <mpllibs/metaparse/v1/get_result.hpp>
 
 #include <boost/mpl/apply.hpp>
-#include <boost/mpl/apply_wrap.hpp>
 
 namespace mpllibs
 {
@@ -28,8 +27,8 @@ namespace mpllibs
         private:
           template <class ParsingResult, class NewResultValue>
           struct change_result :
-            boost::mpl::apply_wrap2<
-              return_<NewResultValue>,
+            accept<
+              NewResultValue,
               typename get_remaining<ParsingResult>::type,
               typename get_position<ParsingResult>::type
             >
