@@ -9,8 +9,8 @@
 #include <mpllibs/metaparse/v1/util/is_ucase_letter.hpp>
 #include <mpllibs/metaparse/v1/util/is_lcase_letter.hpp>
 
-#include <boost/mpl/or.hpp>
-#include <boost/mpl/apply.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/vector.hpp>
 
 namespace mpllibs
 {
@@ -22,9 +22,8 @@ namespace mpllibs
       {
         template <class C = boost::mpl::na>
         struct is_letter :
-          boost::mpl::or_<
-            typename is_lcase_letter<C>::type,
-            typename is_ucase_letter<C>::type
+          boost::mpl::bool_<
+            is_lcase_letter<C>::type::value || is_ucase_letter<C>::type::value
           >
         {};
 

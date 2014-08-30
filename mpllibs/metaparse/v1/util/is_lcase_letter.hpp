@@ -6,9 +6,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/util/in_range.hpp>
+#include <mpllibs/metaparse/v1/util/in_range_c.hpp>
 
-#include <boost/mpl/char.hpp>
 #include <boost/mpl/vector.hpp>
 
 namespace mpllibs
@@ -20,9 +19,7 @@ namespace mpllibs
       namespace util
       {
         template <class C = boost::mpl::na>
-        struct is_lcase_letter :
-          in_range<boost::mpl::char_<'a'>, boost::mpl::char_<'z'> >::apply<C>
-        {};
+        struct is_lcase_letter : in_range_c<char, 'a', 'z'>::apply<C> {};
 
         template <>
         struct is_lcase_letter<boost::mpl::na>
