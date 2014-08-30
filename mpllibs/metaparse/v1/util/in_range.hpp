@@ -8,9 +8,11 @@
 
 #include <boost/mpl/less_equal.hpp>
 #include <boost/mpl/comparison.hpp>
-#include <boost/mpl/and.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/quote.hpp>
+#include <boost/mpl/bool.hpp>
+
+#include <boost/mpl/vector.hpp>
 
 namespace mpllibs
 {
@@ -20,18 +22,50 @@ namespace mpllibs
     {
       namespace util
       {
+        template <
+          class LowerBound = boost::mpl::na,
+          class UpperBound = boost::mpl::na,
+          class Item = boost::mpl::na
+        >
+        struct in_range :
+          boost::mpl::bool_<
+            boost::mpl::less_equal<LowerBound, Item>::type::value
+            && boost::mpl::less_equal<Item, UpperBound>::type::value
+          >
+        {};
+
         template <class LowerBound, class UpperBound>
-        struct in_range
+        struct in_range<LowerBound, UpperBound, boost::mpl::na>
         {
           typedef in_range type;
-        
-          template <class Item>
-          struct apply :
-            boost::mpl::and_<
-              boost::mpl::less_equal<LowerBound, Item>,
-              boost::mpl::less_equal<Item, UpperBound>
-            >
-          {};
+
+          template <class Item = boost::mpl::na>
+          struct apply : in_range<LowerBound, UpperBound, Item> {};
+        };
+
+        template <class LowerBound>
+        struct in_range<LowerBound, boost::mpl::na, boost::mpl::na>
+        {
+          typedef in_range type;
+
+          template <
+            class UpperBound = boost::mpl::na,
+            class Item = boost::mpl::na
+          >
+          struct apply : in_range<LowerBound, UpperBound, Item> {};
+        };
+
+        template <>
+        struct in_range<boost::mpl::na, boost::mpl::na, boost::mpl::na>
+        {
+          typedef in_range type;
+
+          template <
+            class LowerBound = boost::mpl::na,
+            class UpperBound = boost::mpl::na,
+            class Item = boost::mpl::na
+          >
+          struct apply : in_range<LowerBound, UpperBound, Item> {};
         };
       }
     }

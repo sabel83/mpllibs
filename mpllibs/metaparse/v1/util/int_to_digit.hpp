@@ -8,6 +8,8 @@
 
 #include <mpllibs/metaparse/v1/util/int_to_digit_c.hpp>
 
+#include <boost/mpl/vector.hpp>
+
 namespace mpllibs
 {
   namespace metaparse
@@ -16,8 +18,17 @@ namespace mpllibs
     {
       namespace util
       {
-        template <class N>
+        template <class N = boost::mpl::na>
         struct int_to_digit : int_to_digit_c<N::type::value> {};
+
+        template <>
+        struct int_to_digit<boost::mpl::na>
+        {
+          typedef int_to_digit type;
+
+          template <class N = boost::mpl::na>
+          struct apply : int_to_digit<N> {};
+        };
       }
     }
   }
