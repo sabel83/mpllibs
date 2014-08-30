@@ -5,6 +5,7 @@
 
 // No include guards to make it possible to include it multiple times
 
+#include <mpllibs/metaparse/accept.hpp>
 #include <mpllibs/metaparse/accept_tag.hpp>
 #include <mpllibs/metaparse/accept_when.hpp>
 #include <mpllibs/metaparse/alphanum.hpp>
@@ -76,6 +77,7 @@
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/parser_monad.hpp>
 #include <mpllibs/metaparse/parser_tag.hpp>
+#include <mpllibs/metaparse/reject.hpp>
 #include <mpllibs/metaparse/return_.hpp>
 #include <mpllibs/metaparse/sequence.hpp>
 #include <mpllibs/metaparse/source_position.hpp>
