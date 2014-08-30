@@ -16,7 +16,6 @@
 #include <mpllibs/metamonad/tmp_tag.hpp>
 
 #include <boost/mpl/int.hpp>
-#include <boost/mpl/plus.hpp>
 
 namespace mpllibs
 {
@@ -56,10 +55,7 @@ namespace mpllibs
         struct apply :
           source_position<
             typename get_line<P>::type,
-            typename boost::mpl::plus<
-              typename get_col<P>::type,
-              boost::mpl::int_<1>
-            >::type,
+            boost::mpl::int_<get_col<P>::type::value + 1>,
             Ch
           >
         {};
@@ -71,10 +67,7 @@ namespace mpllibs
         template <class P, class Ch>
         struct apply :
           source_position<
-            typename boost::mpl::plus<
-              typename get_line<P>::type,
-              boost::mpl::int_<1>
-            >::type,
+            boost::mpl::int_<get_line<P>::type::value + 1>,
             boost::mpl::int_<1>,
             Ch
           >

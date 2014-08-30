@@ -13,6 +13,7 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/lambda.hpp>
 #include <boost/mpl/push_back.hpp>
+#include <boost/mpl/char.hpp>
 
 namespace mpllibs
 {
@@ -25,7 +26,10 @@ namespace mpllibs
         accept_when<
           one_char,
           typename boost::mpl::lambda<
-            boost::mpl::equal_to<boost::mpl::_1, C>
+            boost::mpl::equal_to<
+              boost::mpl::_1,
+              boost::mpl::char_<C::type::value>
+            >
           >::type,
           error::literal_expected<C>
         >

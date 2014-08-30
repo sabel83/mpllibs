@@ -8,7 +8,7 @@
 
 #include <mpllibs/metaparse/v1/accept_when.hpp>
 #include <mpllibs/metaparse/v1/one_char.hpp>
-#include <mpllibs/metaparse/v1/util/in_range.hpp>
+#include <mpllibs/metaparse/v1/util/in_range_c.hpp>
 #include <mpllibs/metaparse/v1/error/unexpected_character.hpp>
 
 namespace mpllibs
@@ -21,7 +21,7 @@ namespace mpllibs
       struct range :
         accept_when<
           one_char,
-          util::in_range<From, To>,
+          util::in_range_c<char, From::type::value, To::type::value>,
           error::unexpected_character
         >
       {};

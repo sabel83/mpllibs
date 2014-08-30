@@ -8,9 +8,9 @@
 
 #include <mpllibs/metaparse/limit_one_char_except_size.hpp>
 
-#include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/arithmetic/dec.hpp>
@@ -42,10 +42,10 @@ namespace mpllibs
             template <class C> \
             struct apply : \
               boost::mpl::eval_if< \
-                typename boost::mpl::equal_to< \
-                  typename C::type, \
-                  typename BOOST_PP_CAT(T, BOOST_PP_DEC(n))::type \
-                >::type, \
+                boost::mpl::bool_< \
+                  C::type::value \
+                  == BOOST_PP_CAT(T, BOOST_PP_DEC(n))::type::value \
+                >, \
                 boost::mpl::false_, \
                 boost::mpl::apply_wrap1< \
                   BOOST_PP_CAT(is_any, BOOST_PP_DEC(n))< \
