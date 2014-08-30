@@ -3,20 +3,44 @@
 ## Synopsis
 
 ```cpp
-template <class T, T LowerBound, T UpperBound>
-struct in_range_c
+namespace util
 {
-  template <class T>
-  struct apply
+  template <class T, T LowerBound, T UpperBound>
+  struct in_range_c
   {
-    // unspecified
+    template <class U>
+    struct apply;
   };
-};
+}
 ```
+
+This is a [template metafunction class](metafunction_class.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`T`</td>
+    <td>integral type</td>
+  </tr>
+  <tr>
+    <td>`LowerBound`</td>
+    <td>value of type `T`</td>
+  </tr>
+  <tr>
+    <td>`UpperBound`</td>
+    <td>value of type `T`</td>
+  </tr>
+  <tr>
+    <td>`U`</td>
+    <td>[boxed integral value](boxed_value.html)</td>
+  </tr>
+</table>
 
 ## Description
 
-Metafunction class verifying that a value is in a range or not.
+Metafunction class verifying that `U` is in the `[LowerBound..UpperBound]` range
+or not.
 
 ## Header
 
@@ -30,15 +54,49 @@ For any `T` integral type, `A`, `B` values of type `T` and `C` wrapped value the
 following are equivalent:
 
 ```cpp
-boost::mpl::apply<in_range_c<T, A, B>, C>
+in_range_c<T, A, B>::apply<C>::type::value
 
-boost::mpl::bool_<(A <= C::type::value && C::type::value <= B)>
+A <= C::type::value && C::type::value <= B
 ```
 
 ## Example
 
 ```cpp
-boost::mpl::apply<in_range_c<int, 11, 13>, boost::mpl::int_<12>>
+#include <mpllibs/metaparse/util/in_range_c.hpp>
+
+#include <type_traits>
+
+using namespace mpllibs::metaparse;
+
+static_assert(
+  !util::in_range_c<int, 11, 13>
+    ::apply<std::integral_constant<int, 10>>::type::value,
+  "A value below the lower bound should not be in the range"
+);
+
+static_assert(
+  !util::in_range_c<int, 11, 13>
+    ::apply<std::integral_constant<int, 14>>::type::value,
+  "A value above the upper bound should not be in the range"
+);
+
+static_assert(
+  util::in_range_c<int, 11, 13>
+    ::apply<std::integral_constant<int, 11>>::type::value,
+  "The lower bound should be in the range"
+);
+
+static_assert(
+  util::in_range_c<int, 11, 13>
+    ::apply<std::integral_constant<int, 13>>::type::value,
+  "The upper bound should be in the range"
+);
+
+static_assert(
+  util::in_range_c<int, 11, 13>
+    ::apply<std::integral_constant<int, 12>>::type::value,
+  "A value between the bounds should be in the range"
+);
 ```
 
 <p class="copyright">

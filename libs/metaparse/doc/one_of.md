@@ -3,27 +3,26 @@
 ## Synopsis
 
 ```cpp
-template <
-  class P1,
-  class P2,
-  // ...
-  class Pn
->
-struct one_of
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+template <class P1, class P2, /* ... */, class Pn>
+struct one_of;
 ```
+
+This is a [parser combinator](parser_combinator.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`P1` .. `Pn`</td>
+    <td>[parser](parser.html)s</td>
+  </tr>
+</table>
 
 ## Description
 
-Parser combinator taking a number of parsers as arguments. It accepts an input
-when any of the parsers accept it. The result of parsing is the result
-of applying the first parser that accepts the input.
+It accepts an input when any of the `P1`, ... `Pn` parsers accept it. The result
+of parsing is the result of applying the first parser that accepts the input.
+The parsers are tried in order.
 
 The maximum number of accepted parsers is defined by the
 `MPLLIBS_LIMIT_ONE_OF_SIZE` macro. Its default value is `20`.
@@ -40,32 +39,45 @@ For any `p1`, ..., `pn` parsers, `s` compile-time string and `pos` source
 position
 
 ```cpp
-boost::mpl::apply<one_of<p1, ..., pn>, s, pos>
+one_of<p1, ..., pn>::apply<s, pos>
 ```
 
 is equivalent to
 
 ```cpp
-boost::mpl::apply<pk, s, pos>
+pk::apply<s, pos>
 ```
 
-when there is a `k`, that `boost::mpl::apply<pi, s, pos>::type` returns an error
-for every `i` in the range `[1..k)` and `boost::mpl::apply<pk, s, pos>::type`
-doesn't return an error.
+when there is a `k`, that `pi::apply<s, pos>::type` returns an error for every
+`i` in the range `[1..k)` and `pk::apply<s, pos>::type` doesn't return an error.
 
 The parser combinator returns an error when there is no such `k`.
 
 ## Example
 
 ```cpp
-typedef
-  one_of<
-    mpllibs::metaparse::lit_c<' '>,
-    mpllibs::metaparse::lit_c<'\t'>,
-    mpllibs::metaparse::lit_c<'\n'>,
-    mpllibs::metaparse::lit_c<'\r'>
-  >
-  space;
+#include <mpllibs/metaparse/one_of.hpp>
+#include <mpllibs/metaparse/lit_c.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+
+using namespace mpllibs::metaparse;
+
+using whitespace =
+  one_of<lit_c<' '>, lit_c<'\n'>, lit_c<'\r'>, lit_c<'\t'>, lit_c<'\v'>>;
+
+static_assert(
+  get_result<whitespace::apply<MPLLIBS_STRING(" "), start>>::type::value == ' ',
+  "the result of parsing should be the first character of the input"
+);
+
+static_assert(
+  is_error<whitespace::apply<MPLLIBS_STRING("x"), start>>::type::value,
+  "it should return an error when the input does not begin with a whitespace"
+);
+
 ```
 
 <p class="copyright">
@@ -76,5 +88,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 

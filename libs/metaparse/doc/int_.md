@@ -3,21 +3,15 @@
 ## Synopsis
 
 ```cpp
-struct int_
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct int_;
 ```
+
+This is a [parser](parser.html).
 
 ## Description
 
-Parser accepting a non-empty sequence of characters in the range `0-9`. The
-result of the parser is the decimal value represented by the accepted character
-sequence.
+It accepts a non-empty sequence of characters in the range `0-9`. The result of
+the parser is the decimal value represented by the accepted character sequence.
 
 ## Header
 
@@ -47,7 +41,23 @@ foldl1<
 ## Example
 
 ```cpp
-boost::mpl::apply<int_, MPLLIBS_STRING("13"), start>
+#include <mpllibs/metaparse/int_.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+
+using namespace mpllibs::metaparse;
+
+static_assert(
+  get_result<int_::apply<MPLLIBS_STRING("13"), start>>::type::value == 13,
+  "It should parse an integer value"
+);
+
+static_assert(
+  is_error<int_::apply<MPLLIBS_STRING("six"), start>>::type::value,
+  "It should reject the input if it is not a number"
+);
 ```
 
 <p class="copyright">
@@ -58,5 +68,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 

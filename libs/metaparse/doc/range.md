@@ -4,20 +4,28 @@
 
 ```cpp
 template <class From, class To>
-struct range
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct range;
 ```
+
+This is a [parser](parser.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`From`</td>
+    <td>[boxed](boxed_value.html) character value</td>
+  </tr>
+  <tr>
+    <td>`To`</td>
+    <td>[boxed](boxed_value.html) character value</td>
+  </tr>
+</table>
 
 ## Description
 
-Parser accepting one character in the range `From-To`. The
-result of the parser is the accepted character.
+`range` accepts one character in the range `[From..To]`. The result of the
+parser is the accepted character.
 
 ## Header
 
@@ -32,19 +40,39 @@ For any `A`, `B` wrapped characters the following are equivalent:
 ```cpp
 range<A, B>
 
-accept_when<
-  one_char,
-  util::in_range<A, B>,
-  // unspecified
->
+accept_when<one_char, util::in_range<A, B>, errors::unexpected_character>
 ```
 
 ## Example
 
 ```cpp
-using boost::mpl::char_;
+#include <mpllibs/metaparse/range.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
 
-boost::mpl::apply<range<char_<'0'>, char_<'9'>>, MPLLIBS_STRING("13"), start>
+#include <type_traits>
+
+using namespace mpllibs::metaparse;
+
+using one_digit =
+  range<std::integral_constant<char, '0'>, std::integral_constant<char, '9'>>;
+
+static_assert(
+  !is_error<one_digit::apply<MPLLIBS_STRING("0"), start>>::type::value,
+  "one_digit should accept a digit"
+);
+
+static_assert(
+  is_error<one_digit::apply<MPLLIBS_STRING("x"), start>>::type::value,
+  "one_digit should reject a value outside of ['0'..'9']"
+);
+
+static_assert(
+  get_result<one_digit::apply<MPLLIBS_STRING("0"), start>>::type::value == '0',
+  "the result of parsing should be the character value"
+);
 ```
 
 <p class="copyright">
@@ -55,5 +83,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 

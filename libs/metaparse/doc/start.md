@@ -3,29 +3,20 @@
 ## Synopsis
 
 ```cpp
-struct start
-{
-  // unspecified
-};
+struct start;
 ```
+
+This is a [template metaprogramming value](metaprogramming_value.html) of type
+[source position](source_position.html).
 
 ## Description
 
-A compile-time source position value. It represents the beginning of an input
-text.
-
-Its tag is [`source_position_tag`](source_position_tag.html).
+It represents the beginning of an input text.
 
 ## Header
 
 ```cpp
 #include <mpllibs/metaparse/start.hpp>
-```
-
-## Example
-
-```cpp
-accept<boost::mpl::int_<13>, MPLLIBS_STRING(""), start>
 ```
 
 <p class="copyright">
@@ -36,6 +27,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
-
 

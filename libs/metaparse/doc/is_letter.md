@@ -3,17 +3,28 @@
 ## Synopsis
 
 ```cpp
-template <class C>
-struct is_letter
+namespace util
 {
-  // unspecified
-};
+  template <class C>
+  struct is_letter;
+}
 ```
+
+This is a [lazy template metafunction](lazy_metafunction.html) that supports
+[currying](currying.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`C`</td>
+    <td>[boxed](boxed_value.html) character value</td>
+  </tr>
+</table>
 
 ## Description
 
-Checks if a character is a letter. Returns a wrapped boolean value. It supports
-currying.
+Checks if `C` is a letter. Returns a boxed boolean value.
 
 ## Header
 
@@ -26,34 +37,64 @@ currying.
 The following expressions are equivalent:
 
 ```cpp
-boost::mpl::apply<is_letter<>, boost::mpl::char_<'a'>>::type
+is_letter<>::apply<boost::mpl::char_<'a'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter<>, boost::mpl::char_<'z'>>::type
+is_letter<>::apply<boost::mpl::char_<'z'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter<>, boost::mpl::char_<'A'>>::type
+is_letter<>::apply<boost::mpl::char_<'A'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter<>, boost::mpl::char_<'Z'>>::type
+is_letter<>::apply<boost::mpl::char_<'Z'>>::type
 boost::mpl::true_
 ```
 
 ```cpp
-boost::mpl::apply<is_letter<>, c>::type
+is_letter<>::apply<c>::type
 boost::mpl::false_
 ```
 
 ## Example
 
 ```cpp
-is_letter<boost::mpl::char_<'x'>>::type
+#include <mpllibs/metaparse/util/is_letter.hpp>
+
+#include <type_traits>
+
+using namespace mpllibs::metaparse;
+
+struct returns_char
+{
+  using type = std::integral_constant<char, 'A'>;
+};
+
+static_assert(
+  util::is_letter<std::integral_constant<char, 'A'>>::type::value,
+  "A should be a letter"
+);
+
+static_assert(
+  !util::is_letter<std::integral_constant<char, '0'>>::type::value,
+  "a number should not be a letter"
+);
+
+static_assert(
+  util::is_letter<>::type
+    ::apply<std::integral_constant<char, 'A'>>::type::value,
+  "it should support currying"
+);
+
+static_assert(
+  util::is_letter<returns_char>::type::value,
+  "it should support lazy evaluation"
+);
 ```
 
 <p class="copyright">
@@ -64,5 +105,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 

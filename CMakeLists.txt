@@ -69,6 +69,8 @@ else()
   # The libraries
   foreach(L metamonad metaparse safe_printf)
     set(DIR ${CMAKE_SOURCE_DIR}/libs/${L})
+
+    # HTML
     file(GLOB FILES ${DIR}/doc/*.md)
     list(REMOVE_ITEM FILES ${DIR}/doc/index.md)
 
@@ -80,12 +82,7 @@ else()
 
       set(FILENAME ${FN_BASE}.html)
       set(DST ${P}/${FILENAME})
-      copy_file(
-        ${DIR}/html
-        ${FILENAME}
-        ${P}
-        ${L}_documentation
-      )
+      copy_file(${DIR}/html ${FILENAME} ${P})
       set(WEBSITE_FILES ${WEBSITE_FILES} ${DST})
     endforeach(F)
 
@@ -96,6 +93,20 @@ else()
     )
     set(WEBSITE_FILES ${WEBSITE_FILES} ${P}/index.html)
   
+    # Images
+    file(GLOB SVGS ${DIR}/doc/*.svg)
+
+    foreach(F ${SVGS})
+      get_filename_component(FN_BASE ${F} NAME_WE)
+      get_filename_component(P ${WEBSITE_ROOT}/${L} ABSOLUTE)
+
+      set(FILENAME ${FN_BASE}.png)
+      set(DST ${P}/${FILENAME})
+      copy_file(${DIR}/html ${FILENAME} ${P})
+      set(WEBSITE_FILES ${WEBSITE_FILES} ${DST})
+    endforeach(F)
+
+    # CSS
     copy_file(${DIR}/html style.css ${P})
     set(WEBSITE_FILES ${WEBSITE_FILES} ${P}/style.css)
 

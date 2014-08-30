@@ -3,19 +3,14 @@
 ## Synopsis
 
 ```cpp
-struct spaces
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct spaces;
 ```
+
+This is a [parser](parser.html).
 
 ## Description
 
-Parser accepting any number of whitespace characters. It requires at least one
+`spaces` accepts any number of whitespace characters. It requires at least one
 to be present.
 
 ## Header
@@ -33,21 +28,34 @@ spaces
 is equivalent to
 
 ```cpp
-mpllibs::metaparse::any1<mpllibs::metaparse::space>
+any1<space>
 ```
 
 ## Example
 
 ```cpp
-typedef
-  // ...
-  some_string;
+#include <mpllibs/metaparse/spaces.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/get_remaining.hpp>
 
-typedef
-  mpllibs::metaparse::get_remaining<
-    boost::mpl::apply<spaces, some_string, mpllibs::metaparse::start>
-  >::type
-  some_string_without_leading_whitespaces;
+#include <type_traits>
+
+using namespace mpllibs::metaparse;
+
+static_assert(
+  std::is_same<
+    MPLLIBS_STRING("foo"),
+    get_remaining<spaces::apply<MPLLIBS_STRING("  foo"), start>>::type
+  >::type::value,
+  "it should consume all whitespaces at the beginning of the input"
+);
+
+static_assert(
+  is_error<spaces::apply<MPLLIBS_STRING("x"), start>>::type::value,
+  "it should return an error when the input does not begin with a whitespace"
+);
 ```
 
 <p class="copyright">
@@ -58,5 +66,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 

@@ -3,24 +3,36 @@
 ## Synopsis
 
 ```cpp
-template <class Line, class Col>
-struct source_position
-{
-  // unspecified
-};
+template <class Line, class Col, class PrevChar>
+struct source_position;
 ```
+
+This is a [template metaprogramming value](metaprogramming_value.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`Line`</td>
+    <td>[boxed](boxed_value.html) integer value</td>
+  </tr>
+  <tr>
+    <td>`Col`</td>
+    <td>[boxed](boxed_value.html) integer value</td>
+  </tr>
+  <tr>
+    <td>`PrevChar`</td>
+    <td>[boxed](boxed_value.html) character value</td>
+  </tr>
+</table>
 
 ## Description
 
-Compile-time data-structure describing a position of the input text. It can be
-queried using [`get_col`](get_col.html) and [`get_line`](get_line.html).
+Compile-time data-structure describing a position of the input text.
 
 The values of this data-structure store the last character that was parsed
-before reaching that position of the input text. This can be queried using
-[`get_prev_char`](get_prev_char).
-
-The following operations are also supported: [`next_char`](next_char.html) and
-[`next_line`](next_line.html).
+before reaching the position of the input described by the `source_position`
+value.
 
 Its tag is [`source_position_tag`](source_position_tag.html).
 
@@ -34,24 +46,35 @@ The beginning of the input text is represented by [`start`](start.html).
 
 ## Expression semantics
 
-For any `l`, `c` compile-time wrapped integral values, the following are
-equivalent
+For any `l`, `c` compile-time boxed integral values and `p` compile-time boxed
+character value, the following are equivalent
 
 ```cpp
-mpllibs::metaparse::get_col<source_position<l, c>>::type
+get_col<source_position<l, c, p>>::type
 c::type
 ```
 
 ```cpp
-mpllibs::metaparse::get_line<source_position<l, c>>::type
+get_line<source_position<l, c, p>>::type
 l::type
 ```
 
-## Example
-
 ```cpp
-typedef source_position<boost::mpl::int_<1>, boost::mpl::int_<1>> start;
+get_prev_char<source_position<l, c, p>>::type
+p::type
 ```
+
+## Constant values of this type
+
+* [`start`](start.html)
+
+## Operations
+
+* [`get_col`](get_col.html)
+* [`get_line`](get_line.html)
+* [`get_prev_char`](get_prev_char.html)
+* [`next_char`](next_char.html)
+* [`next_line`](next_line.html)
 
 <p class="copyright">
 Copyright Abel Sinkovics (abel at elte dot hu) 2011.
@@ -61,6 +84,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
-
 

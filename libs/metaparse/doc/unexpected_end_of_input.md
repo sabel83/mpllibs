@@ -3,16 +3,18 @@
 ## Synopsis
 
 ```cpp
-struct unexpected_end_of_input
+namespace error
 {
-  // unspecified
-};
+  struct unexpected_end_of_input;
+}
 ```
+
+This is a [template metaprogramming value](metaprogramming_value.html).
 
 ## Description
 
 Class representing the error that the end of input has been reached while it
-should contain further characters. This class is in the `error` namespace.
+should contain further characters.
 
 ## Header
 
@@ -28,6 +30,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
-
 

@@ -3,11 +3,10 @@
 ## Synopsis
 
 ```cpp
-struct accept_tag
-{
-  // unspecified
-};
+struct accept_tag;
 ```
+
+This is a [tag](tag.html).
 
 ## Description
 
@@ -19,15 +18,6 @@ This is the tag of the values returned by a parser when parsing was successful.
 #include <mpllibs/metaparse/accept_tag.hpp>
 ```
 
-## Expression semantics
-
-The following are equivalent
-
-```cpp
-accept_tag
-accept_tag::type
-```
-
 <p class="copyright">
 Copyright Abel Sinkovics (abel at elte dot hu) 2011.
 Distributed under the Boost Software License, Version 1.0.
@@ -36,6 +26,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
-
 

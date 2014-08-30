@@ -3,16 +3,18 @@
 ## Synopsis
 
 ```cpp
-struct whitespace_expected
+namespace error
 {
-  // unspecified
-};
+  struct whitespace_expected;
+}
 ```
+
+This is a [template metaprogramming value](metaprogramming_value.html).
 
 ## Description
 
 Class representing the error that a whitespace character was expected at a
-specific location. This class is in the `error` namespace.
+specific location.
 
 ## Header
 
@@ -28,6 +30,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
-
 

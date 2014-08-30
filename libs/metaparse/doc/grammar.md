@@ -7,22 +7,13 @@ template <class StartSymbol = MPLLIBS_STRING("S")>
 struct grammar
 {
   template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
+  struct apply;
 
   template <class Name, class P>
-  struct import
-  {
-    // unspecified
-  };
+  struct import;
 
   template <class S, class Action = /* unspecified */>
-  struct rule
-  {
-    // unspecified
-  };
+  struct rule;
 };
 ```
 
@@ -89,15 +80,32 @@ The start symbol of the grammar is specified by the template argument of the
 ## Example
 
 ```cpp
+#define MPLLIBS_LIMIT_STRING_SIZE 64
+
+#include <mpllibs/metaparse/grammar.hpp>
+#include <mpllibs/metaparse/token.hpp>
+#include <mpllibs/metaparse/int_.hpp>
+#include <mpllibs/metaparse/entire_input.hpp>
+#include <mpllibs/metaparse/build_parser.hpp>
+#include <mpllibs/metaparse/string.hpp>
+
+#include <boost/mpl/front.hpp>
+#include <boost/mpl/back.hpp>
+#include <boost/mpl/plus.hpp>
+#include <boost/mpl/fold.hpp>
+#include <boost/mpl/lambda.hpp>
+
 using mpllibs::metaparse::token;
 using mpllibs::metaparse::int_;
-using mpllibs::metaparse::build_grammar;
+using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::entire_input;
+using mpllibs::metaparse::grammar;
 
 using boost::mpl::front;
 using boost::mpl::back;
 using boost::mpl::plus;
 using boost::mpl::fold;
+using boost::mpl::lambda;
 using boost::mpl::_1;
 using boost::mpl::_2;
 
@@ -109,23 +117,24 @@ struct lazy_fold :
   fold<typename Sequence::type, typename State::type, typename ForwardOp::type>
 {};
 
-typedef
-  lazy_fold<back<_1>, front<_1>, lambda<lazy_plus<_1, back<_2>>>::type>
-  plus_action;
+using plus_action =
+  lazy_fold<back<_1>, front<_1>, lambda<lazy_plus<_1, back<_2>>>::type>;
 
-typedef
+using plus_grammar =
   grammar<MPLLIBS_STRING("plus_exp")>
     ::import<MPLLIBS_STRING("int_token"), token<int_>>::type
 
     ::rule<MPLLIBS_STRING("ws ::= (' ' | '\n' | '\r' | '\t')*")>::type
     ::rule<MPLLIBS_STRING("plus_token ::= '+' ws"), front<_1>>::type
     ::rule<MPLLIBS_STRING("plus_exp ::= int_token (plus_token int_token)*"), plus_action>::type
-  plus_grammar;
+  ;
 
-typedef build_parser<entire_input<plus_grammar>> plus_parser;
+using plus_parser = build_parser<entire_input<plus_grammar>>;
 
-const int ten =
-  apply_wrap1<plus_parser, MPLLIBS_STRING("1 ` 2 ` 3 + 4")>::type::value;
+static_assert(
+  plus_parser::apply<MPLLIBS_STRING("1 + 2 + 3 + 4")>::type::value == 10,
+  "Arithmetic expression should be evaluated"
+);
 ```
 
 <p class="copyright">

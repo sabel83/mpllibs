@@ -3,16 +3,18 @@
 ## Synopsis
 
 ```cpp
-struct unexpected_character
+namespace error
 {
-  // unspecified
-};
+  struct unexpected_character;
+}
 ```
+
+This is a [template metaprogramming value](metaprogramming_value.html).
 
 ## Description
 
 Class representing the error that a different character was expected than what
-was found at a specific location. This class is in the `error` namespace.
+was found at a specific location.
 
 ## Header
 
@@ -28,6 +30,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
-
 

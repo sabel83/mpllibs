@@ -4,22 +4,46 @@
 
 ```cpp
 template <class P>
-struct build_parser
-{
-  template <class S>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct build_parser;
 ```
+
+This is a [template metafunction](metafunction.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`P`</td>
+    <td>[parser](parser.html)</td>
+  </tr>
+</table>
 
 ## Description
 
-This function can generate the external interface of a parser. It takes a
-parser as argument and builds a metafunction class that accepts an input
-string and returns the result of parsing. It generates a compilation error
-when parsing fails.
+It generates a simple interface for parser. It returns a metafunction class that
+takes an input string, parses it with `P` and returns the result of parsing. It
+generates a compilation error when parsing fails.
+
+## Return value
+
+It returns a [template metafunction class](metafunction_class.html):
+
+```cpp
+struct
+{
+  template <class S>
+  struct apply;
+};
+```
+
+Arguments:
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`S`</td>
+    <td>[string](string.html)</td>
+  </tr>
+</table>
 
 ## Header
 
@@ -32,23 +56,30 @@ when parsing fails.
 For any `p` parser and `s` compile-time string
 
 ```cpp
-boost::mpl::apply<build_parser<p>, s>
+build_parser<p>::type::apply<s>
 ```
 
 is equivalent to
 
 ```cpp
-mpllibs::metaparse::get_result<boost::mpl::apply<p, s>>
+get_result<p::apply<s>>
 ```
 
 ## Example
 
 ```cpp
-struct main_of_dsl_parser :
-  // ...
-{};
+#include <mpllibs/metaparse/build_parser.hpp>
+#include <mpllibs/metaparse/int_.hpp>
+#include <mpllibs/metaparse/string.hpp>
 
-typedef build_parser<main_of_dsl_parser> dsl_parser;
+using namespace mpllibs::metaparse;
+
+using string_to_int = build_parser<int_>::type;
+
+static_assert(
+  string_to_int::apply<MPLLIBS_STRING("1113")>::type::value == 1113,
+  "string_to_int should be a metafunction turning a string into an int"
+);
 ```
 
 <p class="copyright">

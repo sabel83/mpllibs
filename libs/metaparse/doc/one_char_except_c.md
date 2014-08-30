@@ -3,27 +3,30 @@
 ## Synopsis
 
 ```cpp
-template <
-  char C1,
-  char C2,
-  // ...
-  char Cn
->
-struct one_char_except_c
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+template <char C1, char C2, /* ... */, char Cn>
+struct one_char_except_c;
 ```
+
+This is a [parser](parser.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`C1`..`Cn`</td>
+    <td>character values</td>
+  </tr>
+</table>
 
 ## Description
 
-`C1` ... `Cn` are character values. This parser accepts one character
-except any of `C1` ... `Cn`. If the input is empty or the next character is one
-of the non-accepted ones, the parser rejects the input.
+`one_char_except_c` accepts one character except any of `C1` ... `Cn`. When the
+input is empty or begins with one of the non-accepted characters,
+`one_char_except_c` rejects the input. Otherwise it accepts the input and the
+result of parsing is the character value.
+
+The maximum number of template arguments this class can have is the value the
+macro `MPLLIBS_LIMIT_ONE_CHAR_EXCEPT_SIZE` expands to. Its default value is 10.
 
 ## Header
 
@@ -37,25 +40,50 @@ For any `s` compile-time string and `c1`, ..., `cn` characters the following are
 equivalent
 
 ```cpp
-boost::mpl::apply<one_char_except_c<c1, ..., cn>, s, pos>
+one_char_except_c<c1, ..., cn>::apply<s, pos>
 
-boost::mpl::apply<mpllibs::metaparse::one_char, s, pos>
+mpllibs::metaparse::one_char::apply<s, pos>
 ```
 
 when `s` is empty or it begins with a character other than `c1`, ..., `cn`.
-Otherwise `boost::mpl::apply<one_char_except_c<c1, ..., cn>, s, pos>` returns a
-parsing error.
+Otherwise `one_char_except_c<c1, ..., cn>::appl<s, pos>` returns a parsing
+error.
 
 ## Example
 
 ```cpp
-struct some_string;
+#include <mpllibs/metaparse/one_char_except_c.hpp>
+#include <mpllibs/metaparse/lit_c.hpp>
+#include <mpllibs/metaparse/middle_of.hpp>
+#include <mpllibs/metaparse/any.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
 
-typedef
-  mpllibs::metaparse::get_result<
-    boost::mpl::apply<one_char_except_c<'"'>, some_string>
-  >::type
-  first_character_of_some_string;
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/char.hpp>
+#include <boost/mpl/equal.hpp>
+
+using namespace mpllibs::metaparse;
+
+using string_literal_parser =
+  middle_of<lit_c<'"'>, any<one_char_except_c<'"'>>, lit_c<'"'>>;
+
+static_assert(
+  boost::mpl::equal<
+    boost::mpl::vector<
+      boost::mpl::char_<'h'>,
+      boost::mpl::char_<'e'>,
+      boost::mpl::char_<'l'>,
+      boost::mpl::char_<'l'>,
+      boost::mpl::char_<'o'>
+    >,
+    get_result<
+      string_literal_parser::apply<MPLLIBS_STRING("\"hello\""), start>
+    >::type
+  >::type::value,
+  "it should return the content of the string literal"
+);
 ```
 
 <p class="copyright">
@@ -66,5 +94,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 

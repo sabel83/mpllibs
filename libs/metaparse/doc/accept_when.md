@@ -4,24 +4,35 @@
 
 ```cpp
 template <class P, class Pred, class Msg>
-struct accept_when
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct accept_when;
 ```
+
+This is a [parser combinator](parser_combinator.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`P`</td>
+    <td>[parser](parser.html)</td>
+  </tr>
+  <tr>
+    <td>`Pred`</td>
+    <td>[predicate](predicate.html)</td>
+  </tr>
+  <tr>
+    <td>`Msg`</td>
+    <td>[template metaprogramming value](metaprogramming_value.html)</td>
+  </tr>
+</table>
 
 ## Description
 
-Parser combinator taking a parser, a predicate and an error message as
-arguments. It builds a parser that accepts the input if and only if the original
-parsers accepts it and the predicate is `true` for the result of the
-original parser. When the original parser, `P` fails, the error returned by `P`
-is forwarded. When the predicate returns `false` on the result of the original
-parser, an error with `Msg` as the error message is returned.
+It parses the input with `P`. When `P` rejects the input, `accept_when` rejects
+it as well. When `P` accepts it, `accept_when` evaluates `Pred` with the result
+of parsing the input with `P`. When `Pred` returns `true`, `accept_when` accepts
+the input and the result of parsing will be what `P` returned. Otherwise
+`accept_when` rejects the input and `Msg` is used as the error reason.
 
 ## Header
 
@@ -35,29 +46,57 @@ For any `p` parser, `pred` predicate, `msg` error message, `s` compile-time
 string and `pos` source position
 
 ```cpp
-boost::mpl::apply<accept_when<p, pred, msg>, s, pos>
+accept_when<p, pred, msg>i::apply<s, pos>::type
 ```
 
 is equivalent to
 
 ```cpp
-boost::mpl::apply<p, s, pos>
+p::apply<s, pos>::type
 ```
 
 when `boost::mpl::apply<p, s, pos>` doesn't return an error and
-`boost::mpl::apply<pred, mpllibs::metaparse::get_result<boost::mpl::apply<p, s, pos>>>::type`
-is `true`. It is an error with `msg` as the error message otherwise.
+`pred::apply<get_result<p::apply<s, pos>>>::type` is `true`. Otherwise it is
+equivalent to
+
+```cpp
+fail<msg>
+```
 
 ## Example
 
 ```cpp
-typedef
-  accept_when<
-    mpllibs::metaparse::one_char,
-    mpllibs::metaparse::util::is_digit,
-    mpllibs::metaparse::errors::digit_expected
-  >
-  accept_digit;
+#include <mpllibs/metaparse/accept_when.hpp>
+#include <mpllibs/metaparse/one_char.hpp>
+#include <mpllibs/metaparse/util/is_digit.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+#include <mpllibs/metaparse/define_error.hpp>
+
+using namespace mpllibs::metaparse;
+
+MPLLIBS_DEFINE_ERROR(digit_expected, "Digit expected");
+
+using accept_digit = accept_when<one_char, util::is_digit<>, digit_expected>;
+
+static_assert(
+  !is_error<accept_digit::apply<MPLLIBS_STRING("0"), start>>::type::value,
+  "accept_digit should accept a digit"
+);
+
+static_assert(
+  get_result<
+    accept_digit::apply<MPLLIBS_STRING("0"), start>
+  >::type::value == '0',
+  "the result of parsing should be the character value"
+);
+
+static_assert(
+  is_error<accept_digit::apply<MPLLIBS_STRING("x"), start>>::type::value,
+  "accept_digit should reject a character that is not a digit"
+);
 ```
 
 <p class="copyright">
@@ -68,5 +107,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 

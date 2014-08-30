@@ -3,27 +3,30 @@
 ## Synopsis
 
 ```cpp
-template <
-  class P1,
-  class P2,
-  // ...
-  class Pn
->
-struct any_one_of1
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+template <class P1, class P2, /* ... */, class Pn>
+struct any_one_of1;
 ```
+
+This is a [parser combinator](parser_combinator.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`P1` .. `Pn`</td>
+    <td>[parser](parser.html)s</td>
+  </tr>
+</table>
 
 ## Description
 
-Parser combinator taking a number of parsers as arguments. It applies the
-parsers repeatedly as long as any of them accepts the input. The result is a
-sequence of the individual parsing results.
+It applies the `P1` ... `Pn` parsers repeatedly as long as any of them accepts
+the input. In each iteration the parsers are tried in order and the first one
+accepting the input is used. The result is a sequence of the individual parsing
+results.
+
+When none of the `P1` ... `Pn` parsers accept the input in the first iteration,
+`any_one_of1` rejects the input.
 
 The maximum number of accepted parsers is defined by the
 `MPLLIBS_LIMIT_ONE_OF_SIZE` macro. Its default value is 20.
@@ -39,36 +42,52 @@ The maximum number of accepted parsers is defined by the
 For any `p1`, ..., `pn` parsers
 
 ```cpp
-any_one_of1<
-  p1,
-  // ...
-  pn
->
+any_one_of1<p1, /* ... */, pn>
 ```
 
 is equivalent to
 
 ```cpp
-mpllibs::metaparse::any1<
-  mpllibs::metaparse::one_of<
-    p1,
-    // ...
-    pn
-  >
->
+any1<one_of<p1, /* ... */, pn>>
 ```
 
 ## Example
 
 ```cpp
-typedef
-  any_one_of1<
-    mpllibs::metaparse::lit_c<' '>,
-    mpllibs::metaparse::lit_c<'\t'>,
-    mpllibs::metaparse::lit_c<'\n'>,
-    mpllibs::metaparse::lit_c<'\r'>
-  >
-  spaces;
+#include <mpllibs/metaparse/any_one_of1.hpp>
+#include <mpllibs/metaparse/lit_c.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+
+#include <boost/mpl/equal.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/char.hpp>
+
+using namespace mpllibs::metaparse;
+
+using as_and_bs = any_one_of1<lit_c<'a'>, lit_c<'b'>>;
+
+static_assert(
+  boost::mpl::equal<
+    get_result<as_and_bs::apply<MPLLIBS_STRING("abaab"), start>>::type,
+    boost::mpl::vector<
+      boost::mpl::char_<'a'>,
+      boost::mpl::char_<'b'>,
+      boost::mpl::char_<'a'>,
+      boost::mpl::char_<'a'>,
+      boost::mpl::char_<'b'>
+    >
+  >::type::value,
+  "the result of parsing should be the list of results"
+);
+
+static_assert(
+  is_error<as_and_bs::apply<MPLLIBS_STRING("x"), start>>::type::value,
+  "any_one_of1 should reject the input when it"
+  " can't parse anything with digit_val"
+);
 ```
 
 <p class="copyright">

@@ -4,19 +4,23 @@
 
 ```cpp
 template <class C>
-struct lit
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct lit;
 ```
+
+This is a [parser](parser.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`C`</td>
+    <td>[boxed](boxed_value.html) character value</td>
+  </tr>
+</table>
 
 ## Description
 
-Parser accepting one specific character. The result of parsing is the accepted
+Parser accepting only the `C` character. The result of parsing is the accepted
 character.
 
 ## Header
@@ -27,22 +31,45 @@ character.
 
 ## Expression semantics
 
-For any `c` wrapped character the following are equivalent:
+For any `c` boxed character the following are equivalent:
 
 ```cpp
 lit<c>
 
-mpllibs::metaparse::accept_when<
-  mpllibs::metaparse::one_char,
+accept_when<
+  one_char,
   boost::mpl::lambda<boost::mpl::equal_to<boost::mpl::_1, c>>::type,
-  // unspecified
+  error::literal_expected<c>
 >
 ```
 
 ## Example
 
 ```cpp
-typedef lit<boost::mpl::char_<'a'>> accept_a;
+#include <mpllibs/metaparse/lit.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+
+#include <type_traits>
+
+using namespace mpllibs::metaparse;
+
+static_assert(
+  is_error<lit<std::integral_constant<char, 'x'>>::apply<MPLLIBS_STRING("a"), start>>::type::value,
+  "a different character should be an error"
+);
+
+static_assert(
+  is_error<lit<std::integral_constant<char, 'x'>>::apply<MPLLIBS_STRING(""), start>>::type::value,
+  "empty input should be an error"
+);
+
+static_assert(
+  get_result<lit<std::integral_constant<char, 'x'>>::apply<MPLLIBS_STRING("x"), start>>::type::value == 'x',
+  "result of parsing should be the accepted character"
+);
 ```
 
 <p class="copyright">
@@ -53,5 +80,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 

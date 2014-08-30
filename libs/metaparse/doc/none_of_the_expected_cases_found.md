@@ -3,16 +3,18 @@
 ## Synopsis
 
 ```cpp
-struct none_of_the_expected_cases_found
+namespace error
 {
-  // unspecified
-};
+  struct none_of_the_expected_cases_found;
+}
 ```
+
+This is a [template metaprogramming value](metaprogramming_value.html).
 
 ## Description
 
 Class representing the error that none of a list of parsers could parse the
-input. This class is in the `error` namespace.
+input.
 
 ## Header
 
@@ -28,6 +30,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
-
 

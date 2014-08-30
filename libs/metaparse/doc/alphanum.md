@@ -3,19 +3,14 @@
 ## Synopsis
 
 ```cpp
-struct alphanum
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct alphanum;
 ```
+
+This is a [parser](parser.html).
 
 ## Description
 
-Parser accepting one character in the range `a-z`, `A-Z` or `0-9`. The
+It accepts one character in the range `a-z`, `A-Z` or `0-9`. The
 result of the parser is the accepted character.
 
 ## Header
@@ -37,7 +32,33 @@ one_of<digit, letter>
 ## Example
 
 ```cpp
-boost::mpl::apply<alphanum, MPLLIBS_STRING("abcd"), start>
+#include <mpllibs/metaparse/alphanum.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+
+using namespace mpllibs::metaparse;
+
+static_assert(
+  !is_error<alphanum::apply<MPLLIBS_STRING("0"), start>>::type::value,
+  "alphanum should accept a digit"
+);
+
+static_assert(
+  !is_error<alphanum::apply<MPLLIBS_STRING("x"), start>>::type::value,
+  "alphanum should accept a character"
+);
+
+static_assert(
+  get_result<alphanum::apply<MPLLIBS_STRING("x"), start>>::type::value == 'x',
+  "the result of parsing should be the character value"
+);
+
+static_assert(
+  is_error<alphanum::apply<MPLLIBS_STRING(","), start>>::type::value,
+  "alphanum should reject a comma"
+);
 ```
 
 <p class="copyright">

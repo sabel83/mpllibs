@@ -3,19 +3,36 @@
 ## Synopsis
 
 ```cpp
-template <int From, int To, int N>
-struct index_out_of_range
+namespace error
 {
-  // unspecified
-};
+  template <int From, int To, int N>
+  struct index_out_of_range;
+}
 ```
+
+This is a [template metaprogramming value](metaprogramming_value.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`From`</td>
+    <td>`int` value. The lower bound of the range.</td>
+  </tr>
+  <tr>
+    <td>`To`</td>
+    <td>`int` value. The upper bound of the range.</td>
+  </tr>
+  <tr>
+    <td>`N`</td>
+    <td>`int` value. The value outside of the range.</td>
+  </tr>
+</table>
 
 ## Description
 
 Template class representing an over or under indexing error. `From` and `To`
 represent the range and `N` is the value outside of the range.
-
-This class is in the `error` namespace.
 
 ## Header
 

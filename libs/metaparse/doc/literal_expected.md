@@ -3,19 +3,28 @@
 ## Synopsis
 
 ```cpp
-template <class C>
-struct literal_expected
+namespace error
 {
-  // unspecified
-};
+  template <class C>
+  struct literal_expected;
+}
 ```
+
+This is a [template metaprogramming value](metaprogramming_value.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`C`</td>
+    <td>[template metaprogramming value](metaprogramming_value.html)</td>
+  </tr>
+</table>
 
 ## Description
 
 Template class representing the error that a specific literal was expected. `C`
 is the literal that was expected but not found.
-
-This class is in the `error` namespace.
 
 ## Header
 
@@ -31,6 +40,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
-
 

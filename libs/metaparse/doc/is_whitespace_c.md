@@ -3,17 +3,28 @@
 ## Synopsis
 
 ```cpp
-template <char C>
-struct is_whitespace_c
+namespace util
 {
-  // unspecified
-};
+  template <char C>
+  struct is_whitespace_c;
+}
 ```
+
+This is a template class similar to a [template metafunction](metafunction.html)
+but taking a `char` value as argument.
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`D`</td>
+    <td>`char` value</td>
+  </tr>
+</table>
 
 ## Description
 
-Checks if a character is a whitespace character.
-Returns a wrapped boolean value.
+Checks if `C` is a whitespace character. Returns a boxed boolean value.
 
 ## Header
 
@@ -56,7 +67,22 @@ boost::mpl::false_
 ## Example
 
 ```cpp
-is_whitespace_c<' '>::type
+#include <mpllibs/metaparse/util/is_whitespace_c.hpp>
+
+#include <type_traits>
+
+using namespace mpllibs::metaparse;
+
+static_assert(
+  util::is_whitespace_c<' '>::type::value,
+  "a space should be a whitespace character"
+);
+
+static_assert(
+  !util::is_whitespace_c<'0'>::type::value,
+  "a number should not be a whitespace character"
+);
+
 ```
 
 <p class="copyright">

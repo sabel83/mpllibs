@@ -3,16 +3,18 @@
 ## Synopsis
 
 ```cpp
-struct end_of_input_expected
+namespace error
 {
-  // unspecified
-};
+  struct end_of_input_expected;
+}
 ```
+
+This is a [template metaprogramming value](metaprogramming_value.html).
 
 ## Description
 
 Class representing the error that the input contains more characters than it
-should. This class is in the `error` namespace.
+should.
 
 ## Header
 

@@ -4,21 +4,56 @@
 
 ```cpp
 template <class P, class StateP, class BackwardOp>
-struct foldrp
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct foldrp;
 ```
+
+This is a [parser combinator](parser_combinator.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`P`</td>
+    <td>[parser](parser.html)</td>
+  </tr>
+  <tr>
+    <td>`StateP`</td>
+    <td>[parser](parser.html)</td>
+  </tr>
+  <tr>
+    <td>`BackwardOp`</td>
+    <td>
+      [template metafunction class](metafunction_class.html) taking two
+      arguments
+    </td>
+  </tr>
+</table>
 
 ## Description
 
-The same as [`foldr`](foldr.html), but before folding it applies a parser,
-`StateP` on the input. If it fails, `foldrp` fails. If it succeeds, `foldrp`
-works as `foldr` taking the result of `StateP` as the initial state.
+The same as [`foldr`](foldr.html), but after folding it applies a parser,
+`StateP` on the input. If `StateP` fails, `foldrp` fails. If it succeeds,
+the result of parsing is equivalent to
+`boost::reverse_fold<Sequence, State, BackwardOp>`, where `Sequence` is the
+sequence of the results of the applications of `P` and `State` is the result
+`StateP` returned _after_ the repeated application of `P` on the input.
+
+Here is a diagram showing how `foldrp` works by example:
+
+```cpp
+using int_token = token<int_>;
+using plus_token = token<lit_c<'+'>>;
+using int_plus = first_of<int_token, plus_token>;
+using sum_op = mpl::lambda<mpl::plus<mpl::_1, mpl::_2>>::type;
+```
+
+<p align="center">
+  <a href="foldrp_diag1.png"><img src="foldrp_diag1.png" style="width:70%" /></a>
+</p>
+
+Further details can be found in the [Introducing
+foldrp](manual.html#introducing-foldrp) section of the [User
+Manual](manual.html).
 
 ## Header
 
@@ -34,28 +69,23 @@ where the repeated application of `p` on `s` fails for the first time. Let
 `s_` be the postfix of `s` starting at that position.
 
 ```cpp
-boost::mpl::apply<foldrp<p, pt, f>, s, pos>
+foldrp<p, pt, f>::apply<s, pos>
 ```
 
 is equivalent to
 
 ```cpp
-apply<pt, s_, pos_>
+pt::apply<s_, pos_>
 ```
 
 when the above expression returns a parsing error. It is
 
 ```cpp
-boost::mpl::apply<
-  mpllibs::metparase::return_<
-    boost::mpl::apply<
-      foldr<p, get_result<apply<pt, s_, pos_>>::type, f>,
-      s,
-      pos
-    >
-  >,
-  get_remaining<apply<pt, s_, pos_>>::type,
-  get_position<apply<pt, s_, pos_>>::type
+return_<
+  foldr<p, get_result<pt::apply<s_, pos_>>::type, f>::apply<s, pos>
+>::apply<
+  get_remaining<pt::apply<s_, pos_>>::type,
+  get_position<pt::apply<s_, pos_>>::type
 >
 ```
 
@@ -64,11 +94,40 @@ otherwise.
 ## Example
 
 ```cpp
-typedef boost::mpl::list<> empty_list;
-typedef boost::mpl::push_front<boost::mpl::_2, boost::mpl::_1> push_front;
+#include <mpllibs/metaparse/foldrp.hpp>
+#include <mpllibs/metaparse/lit_c.hpp>
+#include <mpllibs/metaparse/first_of.hpp>
+#include <mpllibs/metaparse/token.hpp>
+#include <mpllibs/metaparse/int_.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
 
-template <class P>
-struct any : foldrp<P, mpllibs::metaparse::return_<empty_list>, push_front> {};
+#include <boost/mpl/lambda.hpp>
+#include <boost/mpl/plus.hpp>
+
+using namespace mpllibs::metaparse;
+
+using int_token = token<int_>;
+using plus_token = token<lit_c<'+'>>;
+using int_plus = first_of<int_token, plus_token>;
+using sum_op =
+  boost::mpl::lambda<boost::mpl::plus<boost::mpl::_1, boost::mpl::_2>>::type;
+
+using ints = foldrp<int_plus, int_token, sum_op>;
+
+static_assert(
+  get_result<
+    ints::apply<MPLLIBS_STRING("11 + 13 + 3 + 21"), start>
+  >::type::value == 48,
+  "ints should sum the numbers"
+);
+
+static_assert(
+  is_error<ints::apply<MPLLIBS_STRING(""), start>>::type::value,
+  "when no numbers are provided, it should be an error"
+);
 ```
 
 <p class="copyright">
@@ -79,5 +138,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 

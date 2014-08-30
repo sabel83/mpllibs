@@ -3,15 +3,10 @@
 ## Synopsis
 
 ```cpp
-struct digit
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct digit;
 ```
+
+This is a [parser](parser.html).
 
 ## Description
 
@@ -31,17 +26,34 @@ The following are equivalent:
 ```cpp
 digit
 
-accept_when<
-  one_char,
-  util::is_digit,
-  // unspecified
->
+accept_when<one_char, util::is_digit, error::digit_expected>
 ```
 
 ## Example
 
 ```cpp
-boost::mpl::apply<digit, MPLLIBS_STRING("13"), start>
+#include <mpllibs/metaparse/digit.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/get_result.hpp>
+
+using namespace mpllibs::metaparse;
+
+static_assert(
+  !is_error<digit::apply<MPLLIBS_STRING("0"), start>>::type::value,
+  "digit should accept a digit"
+);
+
+static_assert(
+  is_error<digit::apply<MPLLIBS_STRING("x"), start>>::type::value,
+  "digit should reject a character"
+);
+
+static_assert(
+  get_result<digit::apply<MPLLIBS_STRING("0"), start>>::type::value == '0',
+  "the result of parsing should be the character value"
+);
 ```
 
 <p class="copyright">

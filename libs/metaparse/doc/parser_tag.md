@@ -3,11 +3,10 @@
 ## Synopsis
 
 ```cpp
-struct parser_tag
-{
-  // unspecified
-};
+struct parser_tag;
 ```
+
+This is a [tag](tag.html).
 
 ## Description
 
@@ -19,15 +18,6 @@ This tag represents the [Parser monad](parser_monad.html).
 #include <mpllibs/metaparse/parser_tag.hpp>
 ```
 
-## Expression semantics
-
-The following are equivalent
-
-```cpp
-parser_tag
-parser_tag::type
-```
-
 <p class="copyright">
 Copyright Abel Sinkovics (abel at elte dot hu) 2011.
 Distributed under the Boost Software License, Version 1.0.
@@ -36,6 +26,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
-
 

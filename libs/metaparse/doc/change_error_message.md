@@ -4,22 +4,29 @@
 
 ```cpp
 template <class P, class Msg>
-struct change_error_message
-{
-  template <class S, class Pos>
-  struct apply
-  {
-    // unspecified
-  };
-};
+struct change_error_message;
 ```
+
+This is a [parser combinator](parser_combinator.html).
+
+## Arguments
+
+<table cellpadding='0' cellspacing='0'>
+  <tr>
+    <td>`P`</td>
+    <td>[parser](parser.html)</td>
+  </tr>
+  <tr>
+    <td>`Msg`</td>
+    <td>[template metaprogramming value](metaprogramming_value.html)</td>
+  </tr>
+</table>
 
 ## Description
 
-Parser combinator taking a parser and an error message as arguments.
-It applies the parser on the input. When the parser succeeds, the combinator
-returns the result of the parser, otherwise the combinator generates an error
-with the message `Msg`.
+It applies `P` on the input. When `P` succeeds, `change_error_message` returns
+the result `P` returns, otherwise `change_error_message` rejects the input and
+the reson will be `Msg`.
 
 ## Header
 
@@ -33,24 +40,56 @@ For any `p` parser and `m` error message, `s` compile-time string and `pos`
 source position
 
 ```cpp
-boost::mpl::apply<change_error_message<p, msg>, s, pos>
+change_error_message<p, msg>::apply<s, pos>
 ```
 
-is equivalent to `boost::mpl::apply<p, s, pos>` when it doesn't return an error.
-It is equivalent to `boost::mpl::apply<mpllibs::metaparse::fail<msg>, s, pos>`
-otherwise.
+is equivalent to `p::apply<s, pos>` when `p` accepts the input.
+It is equivalent to `fail<msg>::apply<s, pos>` otherwise.
 
 ## Example
 
 ```cpp
-struct custom_error_message
-{
-  // ...
-};
+#include <mpllibs/metaparse/change_error_message.hpp>
+#include <mpllibs/metaparse/any1.hpp>
+#include <mpllibs/metaparse/letter.hpp>
+#include <mpllibs/metaparse/keyword.hpp>
+#include <mpllibs/metaparse/last_of.hpp>
+#include <mpllibs/metaparse/token.hpp>
+#include <mpllibs/metaparse/string.hpp>
+#include <mpllibs/metaparse/is_error.hpp>
+#include <mpllibs/metaparse/start.hpp>
+#include <mpllibs/metaparse/get_message.hpp>
+#include <mpllibs/metaparse/define_error.hpp>
 
-typedef
-  change_error_message<mpllibs::metaparse::digit, custom_error_message>
-  specialised_digit;
+#include <type_traits>
+
+using namespace mpllibs::metaparse;
+
+MPLLIBS_DEFINE_ERROR(name_expected, "Name expected");
+
+using keyword_name = token<keyword<MPLLIBS_STRING("name")>>;
+using name_token = token<any1<letter>>;
+
+using name_parser =
+  last_of<keyword_name, change_error_message<name_token, name_expected>>;
+
+static_assert(
+  !is_error<name_parser::apply<MPLLIBS_STRING("name Bela"), start>>::type::value,
+  "name_parser should accept \"name <a name>\""
+);
+
+static_assert(
+  is_error<name_parser::apply<MPLLIBS_STRING("name ?"), start>>::type::value,
+  "name_parser should reject input when name is a question mark"
+);
+
+static_assert(
+  std::is_same<
+    get_message<name_parser::apply<MPLLIBS_STRING("name ?"), start>>::type,
+    name_expected
+  >::type::value,
+  "the error message should be the one specified by change_error_message"
+);
 ```
 
 <p class="copyright">
@@ -61,5 +100,4 @@ Distributed under the Boost Software License, Version 1.0.
 </p>
 
 [[up]](reference.html)
-
 
