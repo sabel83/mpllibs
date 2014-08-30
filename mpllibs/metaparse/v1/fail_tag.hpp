@@ -25,7 +25,7 @@ namespace mpllibs
       struct get_message_impl<fail_tag>
       {
         template <class A>
-        struct apply : A::message {};
+        struct apply { typedef typename A::message type; };
       };
 
       template <>

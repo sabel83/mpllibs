@@ -38,7 +38,7 @@ namespace mpllibs
       struct get_result_impl<accept_tag>
       {
         template <class A>
-        struct apply : A::result {};
+        struct apply { typedef typename A::result type; };
       };
     }
   }
