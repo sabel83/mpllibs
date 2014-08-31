@@ -1,0 +1,8 @@
+# Copyright Abel Sinkovics (abel@sinkovics.hu)  2014.
+# Distributed under the Boost Software License, Version 1.0.
+#    (See accompanying file LICENSE_1_0.txt or copy at
+#          http://www.boost.org/LICENSE_1_0.txt)
+
+aux_source_directory(. SOURCES)
+add_executable(calculator_with_parens_and_unary_ops ${SOURCES})
+
