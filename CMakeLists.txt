@@ -131,7 +131,9 @@ macro(install_with_dir PREFIX_TO_CUT)
           
 endmacro(install_with_dir)
 
-set(CMAKE_INSTALL_PREFIX "/usr")
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX "/usr")
+endif()
 
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/mpllibs/*.hpp)
 install_with_dir(${CMAKE_CURRENT_SOURCE_DIR} ${HEADER_FILES})
