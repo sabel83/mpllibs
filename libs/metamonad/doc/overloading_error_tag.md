@@ -13,7 +13,7 @@ struct overloading_error_tag
 
 `tag` that can be used as `tag` of errors, when an overloaded function is called
 with an argument there is no overload for. The `tag` of this `tag` is
-`[tag_tag](tag_tag.html)`.
+[`tag_tag`](tag_tag.html).
 
 ## Header
 
