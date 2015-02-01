@@ -20,7 +20,7 @@ using boost::mpl::lambda;
 namespace
 { 
   template <class P>
-  struct any : foldl<P, vector<>, lambda<push_back<_2, _1> >::type> {};
+  struct any : foldl<P, vector<>, lambda<push_back<_1, _2> >::type> {};
 }
 
 #define DEFINE_TEST_CASE BOOST_AUTO_TEST_CASE(test_foldl)

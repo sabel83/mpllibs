@@ -6,12 +6,12 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/define_error.hpp>
+#include <mpllibs/metaparse/v2/define_error.hpp>
 
 #ifdef MPLLIBS_DEFINE_ERROR
 #  error MPLLIBS_DEFINE_ERROR already defined
 #endif
-#define MPLLIBS_DEFINE_ERROR MPLLIBS_V1_DEFINE_ERROR
+#define MPLLIBS_DEFINE_ERROR MPLLIBS_V2_DEFINE_ERROR
 
 #endif
 

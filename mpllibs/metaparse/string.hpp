@@ -6,19 +6,19 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/string.hpp>
+#include <mpllibs/metaparse/v2/string.hpp>
 #include <mpllibs/metaparse/string_tag.hpp>
 
 #ifdef MPLLIBS_STRING
 #  error MPLLIBS_STRING already defined
 #endif
-#define MPLLIBS_STRING MPLLIBS_V1_STRING
+#define MPLLIBS_STRING MPLLIBS_V2_STRING
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::string;
+    using v2::string;
   }
 }
 

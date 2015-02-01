@@ -133,7 +133,7 @@ namespace token
             >::type
           >,
           boost::mpl::lambda<
-            boost::mpl::push_back<boost::mpl::_2, boost::mpl::_1>
+            boost::mpl::push_back<boost::mpl::_1, boost::mpl::_2>
           >::type
         >,
         boost::mpl::vector<

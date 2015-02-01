@@ -19,7 +19,7 @@ using boost::mpl::_2;
 namespace
 { 
   template <class P>
-  struct any1 : foldl1<P, vector<>, push_back<_2, _1> > {};
+  struct any1 : foldl1<P, vector<>, push_back<_1, _2> > {};
 }
 
 #define DEFINE_TEST_CASE BOOST_AUTO_TEST_CASE(test_foldl1)

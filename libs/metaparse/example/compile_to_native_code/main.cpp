@@ -100,7 +100,7 @@ struct build_plus
     typename B::type _right;
   };
 
-  template <class C, class State>
+  template <class State, class C>
   struct apply :
     if_<
       typename is_c<front<C>, '+'>::type,
@@ -144,7 +144,7 @@ struct build_mult
     typename B::type _right;
   };
 
-  template <class C, class State>
+  template <class State, class C>
   struct apply :
     if_<
       typename is_c<front<C>, '*'>::type,

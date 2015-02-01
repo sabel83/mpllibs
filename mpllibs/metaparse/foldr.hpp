@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/foldr.hpp>
+#include <mpllibs/metaparse/v2/foldr.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::foldr;
+    using v2::foldr;
   }
 }
 

@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/util/int_to_digit_c.hpp>
+#include <mpllibs/metaparse/v2/util/int_to_digit_c.hpp>
 
 namespace mpllibs
 {
@@ -14,7 +14,7 @@ namespace mpllibs
   {
     namespace util
     {
-      using v1::util::int_to_digit_c;
+      using v2::util::int_to_digit_c;
     }
   }
 }

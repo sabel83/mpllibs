@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/get_remaining.hpp>
+#include <mpllibs/metaparse/v2/get_remaining.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::get_remaining;
+    using v2::get_remaining;
   }
 }
 

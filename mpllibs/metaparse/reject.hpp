@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/reject.hpp>
+#include <mpllibs/metaparse/v2/reject.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::reject;
+    using v2::reject;
   }
 }
 

@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/look_ahead.hpp>
+#include <mpllibs/metaparse/v2/look_ahead.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::look_ahead;
+    using v2::look_ahead;
   }
 }
 

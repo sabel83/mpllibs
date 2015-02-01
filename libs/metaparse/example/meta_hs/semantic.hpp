@@ -38,7 +38,7 @@ namespace semantic
   {
     typedef lambda type;
   
-    template <class ArgName, class F>
+    template <class F, class ArgName>
     struct apply : ast::lambda<F, ArgName> {};
   };
   
@@ -46,7 +46,7 @@ namespace semantic
   {
     typedef application type;
   
-    template <class Arg, class F>
+    template <class F, class Arg>
     struct apply : ast::application<F, Arg> {};
   };
   
@@ -62,16 +62,16 @@ namespace semantic
     struct apply :
       boost::mpl::apply_wrap2<
         application,
-        typename boost::mpl::at_c<Seq, 2>::type,
         typename boost::mpl::apply_wrap2<
           application,
-          typename boost::mpl::at_c<Seq, 1>::type,
           typename boost::mpl::apply_wrap2<
             application,
-            typename boost::mpl::at_c<Seq, 0>::type,
-            ast::value<curry3<lazy_if> >
-          >::type
-        >::type
+            ast::value<curry3<lazy_if> >,
+            typename boost::mpl::at_c<Seq, 0>::type
+          >::type,
+          typename boost::mpl::at_c<Seq, 1>::type
+        >::type,
+        typename boost::mpl::at_c<Seq, 2>::type
       >
     {};
   };
@@ -80,19 +80,19 @@ namespace semantic
   {
     typedef binary_op type;
   
-    template <class C, class Exp>
+    template <class Exp, class C>
     struct apply :
       boost::mpl::apply_wrap2<
         application,
-        typename boost::mpl::back<C>::type,
         typename boost::mpl::apply_wrap2<
           application,
-          Exp,
           typename boost::mpl::apply_wrap1<
             ref,
             typename boost::mpl::front<C>::type
-          >::type
-        >::type
+          >::type,
+          Exp
+        >::type,
+        typename boost::mpl::back<C>::type
       >
     {};
   };

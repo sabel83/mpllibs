@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/impl/eval_if_possible.hpp>
+#include <mpllibs/metaparse/v2/impl/eval_if_possible.hpp>
 
 #include <boost/mpl/assert.hpp>
 
@@ -22,7 +22,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_eval_if_possible)
 {
-  using mpllibs::metaparse::v1::impl::eval_if_possible;
+  using mpllibs::metaparse::v2::impl::eval_if_possible;
 
   using boost::is_same;
 

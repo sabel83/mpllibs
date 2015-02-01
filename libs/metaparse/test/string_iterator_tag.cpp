@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/impl/string_iterator_tag.hpp>
+#include <mpllibs/metaparse/v2/impl/string_iterator_tag.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 
@@ -11,7 +11,7 @@
 
 BOOST_AUTO_TEST_CASE(test_string_iterator_tag)
 {
-  using mpllibs::metaparse::v1::impl::string_iterator_tag;
+  using mpllibs::metaparse::v2::impl::string_iterator_tag;
   
   using boost::is_same;
 

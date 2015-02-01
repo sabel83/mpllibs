@@ -3,7 +3,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/impl/has_type.hpp>
+#include <mpllibs/metaparse/v2/impl/has_type.hpp>
 
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/not.hpp>
@@ -20,7 +20,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE(test_has_type)
 {
-  using mpllibs::metaparse::v1::impl::has_type;
+  using mpllibs::metaparse::v2::impl::has_type;
   using boost::mpl::not_;
 
   // test_int_has_no_type

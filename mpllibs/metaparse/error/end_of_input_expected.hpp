@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/error/end_of_input_expected.hpp>
+#include <mpllibs/metaparse/v2/error/end_of_input_expected.hpp>
 
 namespace mpllibs
 {
@@ -14,7 +14,7 @@ namespace mpllibs
   {
     namespace error
     {
-      using v1::error::end_of_input_expected;
+      using v2::error::end_of_input_expected;
     }
   }
 }

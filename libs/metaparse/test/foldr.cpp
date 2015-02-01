@@ -20,7 +20,7 @@ using boost::mpl::lambda;
 namespace
 { 
   template <class P>
-  struct any : foldr<P, list<>, lambda<push_front<_2, _1> >::type> {};
+  struct any : foldr<P, list<>, lambda<push_front<_1, _2> >::type> {};
 }
 
 #define DEFINE_TEST_CASE BOOST_AUTO_TEST_CASE(test_foldr)

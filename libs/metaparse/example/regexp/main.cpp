@@ -83,11 +83,11 @@ struct r_char_lit
 struct r_append
 {
   template <class A, class B>
-  struct apply : has_value<apply<A, B> >
+  struct apply : has_value<apply<B, A> >
   {
     static sregex run()
     {
-      return B::type::run() >> A::type::run();
+      return A::type::run() >> B::type::run();
     }
   };
 };

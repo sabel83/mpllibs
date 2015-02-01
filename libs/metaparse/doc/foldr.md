@@ -78,11 +78,13 @@ when `p::apply<s, pos>` returns an error. It is
 
 ```cpp
 f::apply<
-  get_result<p::apply<s, pos>>::type,
-  foldr<p, t, f>::apply<
-    get_remaining<p::apply<s, pos>>,
-    get_position<p::apply<s, pos>>
-  >::type
+  get_result<
+    foldr<p, t, f>::apply<
+      get_remaining<p::apply<s, pos>>,
+      get_position<p::apply<s, pos>>
+    >
+  >::type,
+  get_result<p::apply<s, pos>>::type
 >
 ```
 

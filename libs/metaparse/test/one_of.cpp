@@ -21,8 +21,8 @@
 BOOST_AUTO_TEST_CASE(test_one_of)
 {
   using mpllibs::metaparse::is_error;
-  using mpllibs::metaparse::v1::impl::one_of_1;
-  using mpllibs::metaparse::v1::impl::one_of_2;
+  using mpllibs::metaparse::v2::impl::one_of_1;
+  using mpllibs::metaparse::v2::impl::one_of_2;
   using mpllibs::metaparse::one_of;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::get_result;

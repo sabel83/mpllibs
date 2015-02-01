@@ -201,7 +201,7 @@ struct count
 {
   typedef count type;
 
-  template <class C, class State>
+  template <class State, class C>
   struct apply : plus<int_<1>, State> {};
 };
 

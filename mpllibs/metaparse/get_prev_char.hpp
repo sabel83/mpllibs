@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/get_prev_char.hpp>
+#include <mpllibs/metaparse/v2/get_prev_char.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::get_prev_char;
+    using v2::get_prev_char;
   }
 }
 

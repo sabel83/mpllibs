@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/source_position_tag.hpp>
+#include <mpllibs/metaparse/v2/source_position_tag.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::source_position_tag;
+    using v2::source_position_tag;
   }
 }
 

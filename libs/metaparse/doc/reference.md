@@ -154,6 +154,7 @@ repetition combinators.
 
 * [debug_parsing_error](debug_parsing_error.html)
 * [MPLLIBS_DEFINE_ERROR](MPLLIBS_DEFINE_ERROR.html)
+* [v1::swap](swap.html)
 
 Metaparse uses a number of general purpose metafunctions and metafunction
 classes.

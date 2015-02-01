@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/get_position.hpp>
+#include <mpllibs/metaparse/v2/get_position.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::get_position;
+    using v2::get_position;
   }
 }
 

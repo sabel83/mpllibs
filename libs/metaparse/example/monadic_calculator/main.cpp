@@ -98,7 +98,7 @@ struct is_c : bool_<T::type::value == C> {};
 
 struct eval_plus
 {
-  template <class C, class State>
+  template <class State, class C>
   struct apply :
     do_c<
       exception_tag,
@@ -111,7 +111,7 @@ struct eval_plus
 
 struct eval_mult
 {
-  template <class C, class State>
+  template <class State, class C>
   struct apply :
     do_c<
       exception_tag,

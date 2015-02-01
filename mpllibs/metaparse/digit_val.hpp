@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/digit_val.hpp>
+#include <mpllibs/metaparse/v2/digit_val.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::digit_val;
+    using v2::digit_val;
   }
 }
 

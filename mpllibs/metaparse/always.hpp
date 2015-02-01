@@ -6,13 +6,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v1/always.hpp>
+#include <mpllibs/metaparse/v2/always.hpp>
 
 namespace mpllibs
 {
   namespace metaparse
   {
-    using v1::always;
+    using v2::always;
   }
 }
 

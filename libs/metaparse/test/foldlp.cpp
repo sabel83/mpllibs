@@ -24,7 +24,7 @@ namespace
   {
     typedef keep_state type;
 
-    template <class C, class S>
+    template <class S, class C>
     struct apply : S {};
   };
 }
@@ -80,7 +80,7 @@ namespace
 { 
   template <class P>
   struct any :
-    foldlp<P, return_<vector<> >, lambda<push_back<_2, _1> >::type>
+    foldlp<P, return_<vector<> >, lambda<push_back<_1, _2> >::type>
   {};
 }
 

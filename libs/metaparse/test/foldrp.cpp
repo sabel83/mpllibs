@@ -24,7 +24,7 @@ namespace
   {
     typedef keep_state type;
 
-    template <class C, class S>
+    template <class S, class C>
     struct apply : S {};
   };
 }

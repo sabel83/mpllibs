@@ -38,7 +38,7 @@ using boost::mpl::times;
 
 struct next_element
 {
-  template <class B, class Acc>
+  template <class Acc, class B>
   struct apply : plus<times<Acc, int_<2> >, B> {};
 };
 
