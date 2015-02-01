@@ -58,7 +58,7 @@ the library. (eg. `MPLLIBS_LIMIT_STRING_SIZE`)
 The callback functions of [`foldl`](foldl.html), [`foldl1`](foldl1.html),
 [`foldlp`](foldlp.html), [`foldr`](foldr.html), [`foldr1`](foldr1.html),
 [`foldrp`](foldrp.html) expect their arguments in reverse order in `v2` compared
-to `v1`. To help migration, Metashell provides the [`v1::swap`](swap.html)
+to `v1`. To help migration, Metaparse provides the [`v1::swap`](swap.html)
 metafunction class.
 
 <p class="copyright">
