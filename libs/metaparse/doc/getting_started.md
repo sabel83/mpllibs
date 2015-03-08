@@ -556,7 +556,7 @@ Let's give the example output we have just parsed a name. This will make it
 easier to test the code calculating the final result from this structure:
 
 ```cpp
-> using temp_result = exp_parser7::apply<MPLLIBS_STRING("1 + 2 + 3 + 4")>::type
+> using temp_result = exp_parser7::apply<MPLLIBS_STRING("1 + 2 + 3 + 4")>::type;
 ```
 
 Now we can write a [template metafunction](metafunction.html) turning this
