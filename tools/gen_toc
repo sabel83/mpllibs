@@ -22,6 +22,12 @@ def anchor(c, toc_type):
   else:
     return c.lower()
 
+def prepare_for_anchor_generation(title, toc_type):
+  if toc_type == 'pandoc_html':
+    return re.sub('^[0-9. ]*', '', title)
+  else:
+    return title
+
 def index_anchor(a, n):
   return '%s-%d' % (a, n)
 
@@ -30,7 +36,10 @@ class Header:
     [pre, title] = s.split(' ', 1)
     self.depth = len(pre) - 1
     self.title = title.strip()
-    self.anchor = ''.join([anchor(c, toc_type) for c in self.title])
+    self.anchor = ''.join([
+      anchor(c, toc_type)
+        for c in prepare_for_anchor_generation(self.title, toc_type)
+    ])
     if self.anchor in prev_anchors:
       i = 1
       while index_anchor(self.anchor, i) in prev_anchors:
