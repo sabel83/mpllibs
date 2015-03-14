@@ -20,6 +20,20 @@ use [Metashell](https://github.com/sabel83/metashell). Since the
 [online demo](http://abel.web.elte.hu/shell/metashell.html) makes the Mpllibs
 headers available, you can use that in the tutorial as well.
 
+This tutorial is long and therefore you might want to make shorter or longer
+breaks while reading it. To make it easy for you to stop at a certain point and
+continue later (or to start in the middle if you are already familiar with the
+basics) Metaparse has a `getting_started` directory in the `example`s. This
+contains the definitions for each section of this tutorial.
+
+If you're about to start (or continue) this guide from section 5.2.1, you can
+include `5_2_1.hpp`. This will define everything you need to start with that
+section.
+
+> You have access to these headers in the online Metashell demo as well. For
+> example you can include the `<mpllibs/metaparase/getting_started/5_2_1.hpp>`
+> header to start from section 5.2.1.
+
 ## 2. The text to parse
 
 With Metaparse you can create template metaprograms parsing an input text. To
