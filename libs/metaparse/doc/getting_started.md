@@ -785,7 +785,7 @@ part with [`transform`](transform.html), which transforms the result of
 ...>       >::type \
 ...>     > \
 ...>   > \
-...> >
+...> >;
 ```
 
 It uses [`transform`](transform.html) to turn the result of the previous version
@@ -822,7 +822,7 @@ as well:
 ...>     >, \
 ...>     boost::mpl::quote1<sum_vector> /* summarise the vector of numbers */ \
 ...>   > \
-...> >
+...> >;
 ```
 
 `exp_parser9` wraps the parser we had so far (which gives us the two element
@@ -967,7 +967,7 @@ returns as the starting value. Here is how we can implement our parser using it:
 ...>     int_token, /* use this parser to get the initial value */ \
 ...>     boost::mpl::quote2<sum_items> /* use this function to add a new value to the summary */ \
 ...>   > \
-...> >
+...> >;
 ```
 
 This version of `exp_parser` uses [`foldlp`](foldlp.html). This implementation
@@ -1028,7 +1028,7 @@ Using this, we can make our parser accept subtractions as well:
 ...>     int_token, \
 ...>     boost::mpl::quote2<sum_items> \
 ...>   > \
-...> >
+...> >;
 ```
 
 It uses [`one_of`](one_of.html)`<plus_token, minus_token>` as the separator for
@@ -1143,7 +1143,7 @@ the third argument of [`foldlp`](foldlp.html):
 ...>     int_token, \
 ...>     boost::mpl::quote2<binary_op> \
 ...>   > \
-...> >
+...> >;
 ```
 
 It uses `binary_op` instead of `sum_items`. Let's try it out:
@@ -1194,7 +1194,7 @@ Now we can extend our parser to accept the `*` symbol as an operator:
 ...>     int_token, \
 ...>     boost::mpl::quote2<binary_op> \
 ...>   > \
-...> >
+...> >;
 ```
 
 This version accepts either a `+`, a `-` or a `*` symbol as the operator. Let's
@@ -1406,7 +1406,7 @@ We can rewrite `mult_exp` using [`foldrp`](foldrp.html):
 ...>   int_token, /* The parser parsing the last number */ \
 ...>   boost::mpl::quote2<reverse_binary_op> /* The function called for every result */ \
 ...>                                         /* of applying the above parser */ \
-...> >
+...> >;
 ```
 
 It is almost the same as `mult_exp2`, but ...
@@ -1490,7 +1490,7 @@ which means that we should use this new layer where we have been using
 ...>   minus_token, \
 ...>   int_token, \
 ...>   boost::mpl::lambda<boost::mpl::negate<boost::mpl::_1>>::type \
-...> >
+...> >;
 ```
 
 We had to include `<boost/mpl/negate.hpp>` to get a [metafunction](
