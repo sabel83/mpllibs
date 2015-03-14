@@ -2,7 +2,7 @@
 
 ## Table of contents
 
-## Introduction
+## 1. Introduction
 
 This tutorial shows you how to build a parser for a small calculator language
 from the ground up. The goal is not to have a complete calculator, but to show
@@ -10,7 +10,7 @@ you the most common situations one can face while building a parser using
 Metaparse. This tutorial assumes, that you have some template metaprogramming
 experience.
 
-### Testing environment
+### 1.1. Testing environment
 
 While you are using Metaparse, you will be writing parsers turning an input text
 into a type. These types can later be processed by further template
@@ -20,7 +20,7 @@ use [Metashell](https://github.com/sabel83/metashell). Since the
 [online demo](http://abel.web.elte.hu/shell/metashell.html) makes the Mpllibs
 headers available, you can use that in the tutorial as well.
 
-## The text to parse
+## 2. The text to parse
 
 With Metaparse you can create template metaprograms parsing an input text. To
 pass the input text to the metaprograms, you need to represent them as types.
@@ -77,7 +77,7 @@ in Metashell:
 You will get the same result as you got by instantiating
 [`mpllibs::metaparse::string`](string.html) yourself.
 
-## Creating a simple parser
+## 3. Creating a simple parser
 
 Let's try creating a parser. We will start with creating a parser for something
 simple: we will be parsing integer numbers, such as the text `"13"`. You can
@@ -142,7 +142,7 @@ the input text as it's argument and it returns the integral representation of
 the number in the string. Try it with different numbers and see how it converts
 them.
 
-### Dealing with invalid input
+### 3.1. Dealing with invalid input
 
 Have you tried parsing an invalid input? Something that is not a number, such
 as:
@@ -159,7 +159,7 @@ get a compilation error from Metashell.
 In the [Dealing with invalid input](#dealing-with-invalid-input-1) section we
 will go into further details on error handling.
 
-### Dealing with input containing more than what is needed
+### 3.2. Dealing with input containing more than what is needed
 
 Let's try to give the parser two numbers instead of one:
 
@@ -208,7 +208,7 @@ It can still parse numbers. Let's try to give it two numbers:
 
 This generates a compilation error, since the parser failed.
 
-### Accepting optional whitespaces at the end of the input
+### 3.3. Accepting optional whitespaces at the end of the input
 
 Our parser became a bit too
 restrictive now. It doesn't allow _anything_ after the number, not even
@@ -242,7 +242,7 @@ nothing else:
 mpl_::integral_c<int, 11>
 ```
 
-## Parsing simple expressions
+## 4. Parsing simple expressions
 
 We can parse numbers. Let's try parsing something more complicated, such as
 `"11 + 2"`. This is a number followed by a `+` symbol followed by another
@@ -324,7 +324,7 @@ What you get now looks more simple: this is a vector of three elements:
 The result of parsing with a [`sequence`](sequence.html) is the `vector` of the
 individual parsing results.
 
-### Tokeniser
+### 4.1. Tokeniser
 
 You might have noticed that our parsers have no separate tokenisers.
 Tokenisation is part of the parsing process. However, it makes the code of the
@@ -368,7 +368,7 @@ We can use it the same way as `exp_parser4`:
 boost_::mpl::vector<mpl_::integral_c<int, 11>, mpl_::char_<'+'>, mpl_::integral_c<int, 2> >
 ```
 
-### Evaluating the expression
+### 4.2. Evaluating the expression
 
 It would be nice if we could evaluate the expression as well. Instead of
 returning a `vector` as the result of parsing, we should return the evaluated
@@ -460,13 +460,13 @@ number, the `+` symbol and the second number) and builds a `vector`. The final
 result is calculated from that `vector` by the [`transform`](transform.html)
 parser.
 
-## Parsing longer expressions
+## 5. Parsing longer expressions
 
 We can parse simple expressions adding two numbers together. But we can't parse
 expressions adding three, four or maybe more numbers together. In this section
 we will implement a parser for expressions adding lots of numbers together.
 
-### Parsing a subexpression repeatedly
+### 5.1. Parsing a subexpression repeatedly
 
 We can't solve this problem with [`sequence`](sequence.html), since we don't
 know how many numbers the input will have. We need a parser that:
@@ -548,7 +548,7 @@ are collected by [`any`](any.html), which constructs a `vector` of these
 results. The value of the first `<number>` and this `vector` are placed in
 another `vector`, which is the result of parsing.
 
-### Evaluating the parsed expression
+### 5.2. Evaluating the parsed expression
 
 The final result here is a pair of the first number and the `vector` of the rest
 of the values. To calculate the result we need to process that data structure.
@@ -562,7 +562,7 @@ easier to test the code calculating the final result from this structure:
 Now we can write a [template metafunction](metafunction.html) turning this
 structure into the result of the calculation this structure represents.
 
-#### Learning about `boost::mpl::fold`
+#### 5.2.1. Learning about `boost::mpl::fold`
 
 We have a `vector` containing
 another `vector`. Therefore, we will need to be able to summarise the elements
@@ -757,7 +757,7 @@ It starts with the value `boost::mpl::int_<0>` and adds the elements of the
 `boost_::mpl::vector` containing the parsing results one by one. The diagram
 shows how the subresults are calculated and then used for further calculations.
 
-#### Evaluating the expression using `boost::mpl::fold`
+#### 5.2.2. Evaluating the expression using `boost::mpl::fold`
 
 Let's use `sum_items` with `boost::mpl::fold` to build the parser that
 summarises the values coming from the `+ <number>` elements. We can extend the
@@ -854,7 +854,7 @@ There are two loops in this process:
 > every recursive call is one iteration of the loop. The loop is stopped at the
 > bottom of the recursive chain.
 
-#### Using a folding parser combinator
+#### 5.2.3. Using a folding parser combinator
 
 It would be nice, if the two loops could be merged together and the temporary
 `vector` wouldn't have to be built in the middle (don't forget: there is no
@@ -941,7 +941,7 @@ the difference:
   <a href="tutorial_diag6.png"><img src="tutorial_diag6.png" style="width:100%" /></a>
 </p>
 
-#### Processing the initial element with the folding parser combinator
+#### 5.2.4. Processing the initial element with the folding parser combinator
 
 This solution can still be improved. The [`foldl`](foldl.html) summarising the
 `+ <number>` elements starts from `0` and once this is done, we add the value of
@@ -987,13 +987,13 @@ a diagram showing how this implementation works:
   <a href="tutorial_diag7.png"><img src="tutorial_diag7.png" style="width:90%" /></a>
 </p>
 
-## Adding support for other operators
+## 6. Adding support for other operators
 
 Our parsers now support expressions adding numbers together. In this section we
 will add support for the `-` operator, so expressions like `1 + 2 - 3` can be
 evaluated.
 
-### Parsing expressions containing `-` operators
+### 6.1. Parsing expressions containing `-` operators
 
 Currently we use the `plus_token` for parsing "the" operator, which has to be
 `+`. We can define a new token for parsing the `-` symbol:
@@ -1043,7 +1043,7 @@ The result is not correct. The reason for this is that `sum_items`, the function
 we summarise with ignores which operator was used and assumes that it is always
 `+`.
 
-### Evaluating expressions containing `-` operators
+### 6.2. Evaluating expressions containing `-` operators
 
 To fix the evaluation of expressions containing subtractions, we need to fix
 the function we use for summarising. We need to write a version that takes the
@@ -1155,11 +1155,11 @@ mpl_::integral_c<int, 0>
 
 It returns the correct result.
 
-## Dealing with precedence
+## 7. Dealing with precedence
 
 We support addition and subtraction. Let's support multiplication as well.
 
-### Adding support for the `*` operator
+### 7.1. Adding support for the `*` operator
 
 We can extend the solution we have built for addition and subtraction. To do
 that, we need to add support for multiplication to `eval_binary_op`:
@@ -1218,7 +1218,7 @@ operator precedence into account. It treats this expression as `(1 + 2) * 3`
 while we expect it to be `1 + (2 * 3)` since addition has higher precedence than
 multiplication.
 
-### Adding support for precedence of operators
+### 7.2. Adding support for precedence of operators
 
 Let's make it possible for different operators to have different precedence. To
 do this, we define a new parser for parsing expressions containing only `*`
@@ -1274,7 +1274,7 @@ If you need more layers (eg. introducing the `^` operator) you can extend this
 solution with further layers. The order of the layers determine the precedence
 of the operators.
 
-## Dealing with associativity
+## 8. Dealing with associativity
 
 Let's add division to our calculator language. Since it has the same precedence
 as multiplication, it should be added to that layer:
@@ -1326,7 +1326,7 @@ expression is interpreted as `8 / (4 / 2)` and the result is `4`.
 Try to guess which result our current implementation gives before trying it
 out. Once you have verified the current behaviour, continue reading.
 
-### Understanding the current implementation
+### 8.1. Understanding the current implementation
 
 Here is a diagram showing how our current parser processes the expression
 `8 / 4 / 2`:
@@ -1342,7 +1342,7 @@ implementation, division is left associative: `8 / 4 / 2` means `(8 / 4) / 2`.
 Another thing to note is that the initial value is `8` and the list of values
 [`foldl`](foldl.html) iterates over is "`/ 4`", "`/ 2`".
 
-### Folding in reverse order
+### 8.2. Folding in reverse order
 
 [`foldl`](foldl.html) applies a parser repeatedly and iterates over the parsing
 results from _left_ to right. (This is where the `l` in the name comes from).
@@ -1464,7 +1464,7 @@ implement right associativity.
 > efficient way than folding from right to left. Therefore when both solutions
 > can be used you should prefer folding from left to right.
 
-## Dealing with unary operators
+## 9. Dealing with unary operators
 
 Our calculator language provides no direct support for negative numbers. To get
 a negative number, we need to do a subtraction. For example to get the number
@@ -1533,7 +1533,7 @@ mpl_::integral_c<int, 13>
 
 It can deal with negative numbers correctly.
 
-## Dealing with parens
+## 10. Dealing with parens
 
 Our parsers already support the precedence of the different operators. Let's add
 support for parens as well, so users can override the precedence rules when they
@@ -1682,7 +1682,7 @@ mpl_::integral_c<int, 9>
 
 Our parser accepts and can deal with parens in the expressions.
 
-## Dealing with invalid input
+## 11. Dealing with invalid input
 
 So far we have been focusing on parsing valid user input. However, users of our
 parsers will make mistakes and we should help them finding the source of the
@@ -1724,7 +1724,7 @@ contains answers to the main questions one has when parsing fails:
   much in this case. But this is _our_ fault: _we_ (the parser authors) need to
   make the parsing errors more descriptive.
 
-### Improving the error messages
+### 11.1. Improving the error messages
 
 So how can we improve the error messages? Let's look at what went wrong in the
 previous case:
@@ -1752,7 +1752,7 @@ previous case:
 We, the parser authors know: we expect a primary expression there. When
 [`one_of`](one_of.html) fails, it means that none was found.
 
-### Defining custom errors
+### 11.2. Defining custom errors
 
 To be able to return custom error messages (like `missing_primary_expression`)
 to the user, we need to define those error messages first. There are several
@@ -1845,7 +1845,7 @@ The error message is now more specific to the calculator language. This covers
 only one case, where the error messages can be improved. Other cases (eg.
 missing closing parens, missing operators, etc) can be covered in a similar way.
 
-## Summary
+## 12. Summary
 
 This tutorial showed you how to build a parser for a calculator language. Now
 that you understand how to do this, you should be able to use the same
