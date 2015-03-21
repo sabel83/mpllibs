@@ -48,6 +48,7 @@
 * [change_error_message](change_error_message.html)
 * [entire_input](entire_input.html)
 * [except](except.html)
+* [transform_error](transform_error.html)
 
 #### Repetition
 
