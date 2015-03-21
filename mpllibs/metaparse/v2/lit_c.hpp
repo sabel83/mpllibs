@@ -12,6 +12,7 @@
 #include <mpllibs/metaparse/v2/error/literal_expected.hpp>
 #include <mpllibs/metaparse/v2/accept_when.hpp>
 #include <mpllibs/metaparse/v2/one_char.hpp>
+#include <mpllibs/metaparse/v2/change_error_message.hpp>
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/lambda.hpp>
@@ -26,7 +27,7 @@ namespace mpllibs
       template <char C>
       struct lit_c :
         accept_when<
-          one_char,
+          change_error_message<one_char, error::literal_expected<C> >,
           typename boost::mpl::lambda<
             boost::mpl::equal_to<boost::mpl::_1, boost::mpl::char_<C> >
           >::type,
