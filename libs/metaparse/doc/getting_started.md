@@ -1724,7 +1724,7 @@ look. It contains this:
 ```cpp
 x__________________PARSING_FAILED__________________x<
   1, 1,
-  mpllibs::metaparse::v2::error::none_of_the_expected_cases_found
+  mpllibs::metaparse::v2::error::literal_expected<mpl_::char_<'('> >
 >
 ```
 
@@ -1734,9 +1734,11 @@ contains answers to the main questions one has when parsing fails:
 
 * _where_ is the error? It is column `1` in line `1` (inside [`MPLLIBS_STRING`](
   MPLLIBS_STRING.html)). This is the `1, 1` part.
-* _what_ is the problem? `none_of_the_expected_cases_found`. This won't tell us
-  much in this case. But this is _our_ fault: _we_ (the parser authors) need to
-  make the parsing errors more descriptive.
+* _what_ is the problem? `literal_expected<mpl_::char_<'('> >`. This is a bit
+  misleading, as it contains only a part of the problem. An open paren is not
+  the only acceptable token here, a number would also be fine. This misleading
+  error message is _our_ fault: _we_ (the parser authors) need to make the
+  parsing errors more descriptive.
 
 ### 11.1. Improving the error messages
 
@@ -1757,11 +1759,16 @@ previous case:
 * `primary_exp2` is: [`one_of`](one_of.html)`<int_token, paren_exp2>`. It tried
   parsing the input with `int_token` (which failed) and then with `paren_exp2`
   (which failed as well). So [`one_of`](one_of.html) could not parse the input
-  with any of the choices and therefore it failed as well. And it gave the best
-  error message it could: [`none_of_the_expected_cases_found`](
-  none_of_the_expected_cases_found.html). The rest of the layers did not change
-  or improve this error message so this was the error message displayed to the
-  user.
+  with any of the choices and therefore it failed as well. In such situations
+  `one_of` checks which parser made the most progress (consumed the most
+  characters of the input) before failing and assumes, that that is the parser
+  the user intended to use, thus it returns the error message coming from that
+  parser. In this example none of the parsers could make any progress, in which
+  case `one_of` returns the error coming from the last parser in the list. This
+  was `paren_exp2`, and it expects the expression to start with an open paren.
+  This is where the error message came from. The rest of the layers did not
+  change or improve this error message so this was the error message displayed
+  to the user.
 
 We, the parser authors know: we expect a primary expression there. When
 [`one_of`](one_of.html) fails, it means that none was found.
@@ -1803,23 +1810,26 @@ Let's define `plus_exp` and `paren_exp` first. Their definition does not change:
 > using paren_exp4 = middle_of<lparen_token, plus_exp3, rparen_token>;
 ```
 
-Metaparse provides [`change_error_message`](change_error_message.html), which
-can be used to change the error message of a parser in case it fails. Let's
-include the header it is defined in:
+When the input contains no number (parsed by `int_token`) and no paren
+expression (parsed by `paren_exp4`), we should return the
+`missing_primary_expression` error message. We can do it by adding a third
+parser to `one_of<int_token, paren_exp4, ...>` which always fails with this
+error message. Metaparse provides [`fail`](fail.html) for this:
 
 ```cpp
-> #include <mpllibs/metaparse/change_error_message.hpp>
+> #include <mpllibs/metaparse/fail.hpp>
 ```
 
 Now we can define the `primary_exp` parser using it:
 
 ```cpp
-> using primary_exp3 = change_error_message<one_of<int_token, paren_exp4>, missing_primary_expression>;
+> using primary_exp3 = one_of<int_token, paren_exp4, fail<missing_primary_expression>>;
 ```
 
-It wraps [`one_of`](one_of.html) with [`change_error_message`](
-change_error_message.html). When [`one_of`](one_of.html) fails, the error
-message it returns will be replaced with `missing_primary_expression`.
+It adds [`fail`](fail.html)`<missing_primary_expression>` to `one_of` as the
+last element. Therefore if none of the "real" cases parse the input _and_ none
+of them makes any progress before failing, the error message will be
+`missing_primary_expression`.
 
 We need to define the rest of the parsers. Their definition is the same as
 before:

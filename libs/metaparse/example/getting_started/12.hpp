@@ -15,9 +15,9 @@ struct plus_exp3;
 
 using paren_exp4 = middle_of<lparen_token, plus_exp3, rparen_token>;
 
-#include <mpllibs/metaparse/change_error_message.hpp>
+#include <mpllibs/metaparse/fail.hpp>
 
-using primary_exp3 = change_error_message<one_of<int_token, paren_exp4>, missing_primary_expression>;
+using primary_exp3 = one_of<int_token, paren_exp4, fail<missing_primary_expression>>;
 
 using unary_exp3 = 
  foldrp< 
