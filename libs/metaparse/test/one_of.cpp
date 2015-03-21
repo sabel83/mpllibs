@@ -21,8 +21,6 @@
 BOOST_AUTO_TEST_CASE(test_one_of)
 {
   using mpllibs::metaparse::is_error;
-  using mpllibs::metaparse::v2::impl::one_of_1;
-  using mpllibs::metaparse::v2::impl::one_of_2;
   using mpllibs::metaparse::one_of;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::get_result;
@@ -37,21 +35,21 @@ BOOST_AUTO_TEST_CASE(test_one_of)
   // test_1_with_good
   BOOST_MPL_ASSERT((
     equal_to<
-      get_result<apply_wrap2<one_of_1<one_char>, str_hello, start> >::type,
+      get_result<apply_wrap2<one_of<one_char>, str_hello, start> >::type,
       char_h
     >
   ));
 
   // test_1_with_bad
   BOOST_MPL_ASSERT((
-    is_error<apply_wrap2<one_of_1<test_fail>, str_hello, start> >
+    is_error<apply_wrap2<one_of<test_fail>, str_hello, start> >
   ));
 
   // test_2_with_two_good
   BOOST_MPL_ASSERT((
     equal_to<
       get_result<
-        apply_wrap2<one_of_2<one_char, one_char>, str_hello, start>
+        apply_wrap2<one_of<one_char, one_char>, str_hello, start>
       >::type,
       char_h
     >
@@ -61,7 +59,7 @@ BOOST_AUTO_TEST_CASE(test_one_of)
   BOOST_MPL_ASSERT((
     equal_to<
       get_result<
-        apply_wrap2<one_of_2<one_char, test_fail>, str_hello, start>
+        apply_wrap2<one_of<one_char, test_fail>, str_hello, start>
       >::type,
       char_h
     >
@@ -71,7 +69,7 @@ BOOST_AUTO_TEST_CASE(test_one_of)
   BOOST_MPL_ASSERT((
     equal_to<
       get_result<
-        apply_wrap2<one_of_2<test_fail, one_char>, str_hello, start>
+        apply_wrap2<one_of<test_fail, one_char>, str_hello, start>
       >::type,
       char_h
     >
@@ -79,7 +77,7 @@ BOOST_AUTO_TEST_CASE(test_one_of)
 
   // test_2_with_two_bad
   BOOST_MPL_ASSERT((
-    is_error<apply_wrap2<one_of_2<test_fail, test_fail>, str_hello, start> >
+    is_error<apply_wrap2<one_of<test_fail, test_fail>, str_hello, start> >
   ));
 
 
