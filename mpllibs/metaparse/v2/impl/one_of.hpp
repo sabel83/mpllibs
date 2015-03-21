@@ -32,7 +32,7 @@ namespace mpllibs
               Parsers,
               fail<error::none_of_the_expected_cases_found>::apply<S, Pos>,
               one_of_fwd_op<S, Pos>
-            >
+            >::type
           {};
         };
       }

@@ -7,6 +7,7 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/metaparse/v2/is_error.hpp>
+#include <mpllibs/metaparse/v2/impl/later_result.hpp>
 
 #include <boost/mpl/eval_if.hpp>
 
@@ -29,7 +30,7 @@ namespace mpllibs
               typename is_error<State>::type,
               boost::mpl::eval_if<
                 typename is_error<typename P::template apply<S, Pos> >::type,
-                State,
+                later_result<State, typename P::template apply<S, Pos> >,
                 typename P::template apply<S, Pos>
               >,
               State
