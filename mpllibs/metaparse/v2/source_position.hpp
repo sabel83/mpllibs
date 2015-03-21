@@ -88,10 +88,11 @@ namespace MPLLIBS_BOOST_NAMESPACE
       struct apply :
         bool_<(
           A::type::line::value < B::type::line::value || (
-            A::type::line::value == B::type::line::value &&
-            A::type::col::value < B::type::col::value || (
-              A::type::col::value == B::type::col::value &&
-              A::type::prev_char::value < B::type::prev_char::value
+            A::type::line::value == B::type::line::value && (
+              A::type::col::value < B::type::col::value || (
+                A::type::col::value == B::type::col::value &&
+                A::type::prev_char::value < B::type::prev_char::value
+              )
             )
           )
         )>
