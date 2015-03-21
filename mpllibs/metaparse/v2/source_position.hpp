@@ -53,6 +53,7 @@ namespace MPLLIBS_BOOST_NAMESPACE
         bool_<
           A::type::line::value == B::type::line::value
           && A::type::col::value == B::type::col::value
+          && A::type::prev_char::value == B::type::prev_char::value
         >
       {};
     };
@@ -71,6 +72,81 @@ namespace MPLLIBS_BOOST_NAMESPACE
       template <class A, class B>
       struct apply : bool_<!equal_to<A, B>::type::value> {};
     };
+
+    template <class TagA, class TagB>
+    struct less_impl;
+
+    template <>
+    struct less_impl<
+      mpllibs::metaparse::v2::source_position_tag,
+      mpllibs::metaparse::v2::source_position_tag
+    >
+    {
+      typedef less_impl type;
+
+      template <class A, class B>
+      struct apply :
+        bool_<(
+          A::type::line::value < B::type::line::value || (
+            A::type::line::value == B::type::line::value &&
+            A::type::col::value < B::type::col::value || (
+              A::type::col::value == B::type::col::value &&
+              A::type::prev_char::value < B::type::prev_char::value
+            )
+          )
+        )>
+      {};
+    };
+
+    template <class TagA, class TagB>
+    struct greater_impl;
+
+    template <>
+    struct greater_impl<
+      mpllibs::metaparse::v2::source_position_tag,
+      mpllibs::metaparse::v2::source_position_tag
+    >
+    {
+      typedef greater_impl type;
+
+      template <class A, class B>
+      struct apply :
+        bool_<!(less<A, B>::type::value || equal_to<A, B>::type::value)>
+      {};
+    };
+
+    template <class TagA, class TagB>
+    struct greater_equal_impl;
+
+    template <>
+    struct greater_equal_impl<
+      mpllibs::metaparse::v2::source_position_tag,
+      mpllibs::metaparse::v2::source_position_tag
+    >
+    {
+      typedef greater_equal_impl type;
+
+      template <class A, class B>
+      struct apply : bool_<!less<A, B>::type::value> {};
+    };
+
+    template <class TagA, class TagB>
+    struct less_equal_impl;
+
+    template <>
+    struct less_equal_impl<
+      mpllibs::metaparse::v2::source_position_tag,
+      mpllibs::metaparse::v2::source_position_tag
+    >
+    {
+      typedef less_equal_impl type;
+
+      template <class A, class B>
+      struct apply :
+        bool_<less<A, B>::type::value || equal_to<A, B>::type::value>
+      {};
+    };
+
   }
 }
 

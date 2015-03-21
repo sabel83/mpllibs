@@ -16,6 +16,11 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/not_equal_to.hpp>
 #include <boost/mpl/assert.hpp>
+#include <boost/mpl/less.hpp>
+#include <boost/mpl/greater.hpp>
+#include <boost/mpl/greater_equal.hpp>
+#include <boost/mpl/less_equal.hpp>
+#include <boost/mpl/not.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -38,6 +43,12 @@ BOOST_AUTO_TEST_CASE(test_source_position)
   
   using boost::mpl::equal_to;
   using boost::mpl::not_equal_to;
+
+  using boost::mpl::not_;
+  using boost::mpl::less;
+  using boost::mpl::greater;
+  using boost::mpl::greater_equal;
+  using boost::mpl::less_equal;
   
   // test_get_line
   BOOST_MPL_ASSERT((equal_to<int11, get_line<sp>::type>));
@@ -85,9 +96,11 @@ BOOST_AUTO_TEST_CASE(test_source_position)
 
   // test_equal_source_positions_when_prev_char_is_different
   BOOST_MPL_ASSERT((
-    equal_to<
-      source_position<int11, int13, char_a>,
-      source_position<int11, int13, char_b>
+    not_<
+      equal_to<
+        source_position<int11, int13, char_a>,
+        source_position<int11, int13, char_b>
+      >::type
     >
   ));
 
@@ -104,6 +117,222 @@ BOOST_AUTO_TEST_CASE(test_source_position)
     not_equal_to<
       source_position<int11, int11, char_a>,
       source_position<int11, int13, char_a>
+    >
+  ));
+
+  // test_source_position_is_not_less_than_itself
+  BOOST_MPL_ASSERT((
+    not_<
+      less<
+        source_position<int11, int13, char_a>,
+        source_position<int11, int13, char_a>
+      >::type
+    >
+  ));
+
+  // test_source_position_earlier_in_the_same_line_is_less
+  BOOST_MPL_ASSERT((
+    less<
+      source_position<int11, int11, char_a>,
+      source_position<int11, int13, char_a>
+    >
+  ));
+
+  // test_source_position_later_in_the_same_line_is_not_less
+  BOOST_MPL_ASSERT((
+    not_<
+      less<
+        source_position<int11, int13, char_a>,
+        source_position<int11, int11, char_a>
+      >::type
+    >
+  ));
+
+  // test_source_position_in_the_same_pos_with_less_char_is_less
+  BOOST_MPL_ASSERT((
+    less<
+      source_position<int11, int13, char_a>,
+      source_position<int11, int13, char_b>
+    >
+  ));
+
+  // test_source_position_earlier_line_is_less
+  BOOST_MPL_ASSERT((
+    less<
+      source_position<int1, int28, char_a>,
+      source_position<int11, int13, char_a>
+    >
+  ));
+
+  // test_source_position_later_line_is_not_less
+  BOOST_MPL_ASSERT((
+    not_<
+      less<
+        source_position<int28, int2, char_a>,
+        source_position<int11, int13, char_a>
+      >::type
+    >
+  ));
+
+  // test_source_position_is_greater_equal_to_itself
+  BOOST_MPL_ASSERT((
+    greater_equal<
+      source_position<int11, int13, char_a>,
+      source_position<int11, int13, char_a>
+    >
+  ));
+
+  // test_source_position_earlier_in_the_same_line_is_not_greater_equal
+  BOOST_MPL_ASSERT((
+    not_<
+      greater_equal<
+        source_position<int11, int11, char_a>,
+        source_position<int11, int13, char_a>
+      >::type
+    >
+  ));
+
+  // test_source_position_later_in_the_same_line_is_greater_equal
+  BOOST_MPL_ASSERT((
+    greater_equal<
+      source_position<int11, int13, char_a>,
+      source_position<int11, int11, char_a>
+    >
+  ));
+
+  // test_source_position_in_the_same_pos_with_less_char_is_not_greater_equal
+  BOOST_MPL_ASSERT((
+    not_<
+      greater_equal<
+        source_position<int11, int13, char_a>,
+        source_position<int11, int13, char_b>
+      >::type
+    >
+  ));
+
+  // test_source_position_earlier_line_is_not_greater_equal
+  BOOST_MPL_ASSERT((
+    not_<
+      greater_equal<
+        source_position<int1, int28, char_a>,
+        source_position<int11, int13, char_a>
+      >::type
+    >
+  ));
+
+  // test_source_position_later_line_is_greater_equal
+  BOOST_MPL_ASSERT((
+    greater_equal<
+      source_position<int28, int2, char_a>,
+      source_position<int11, int13, char_a>
+    >
+  ));
+
+  // test_source_position_is_not_greater_than_itself
+  BOOST_MPL_ASSERT((
+    not_<
+      greater<
+        source_position<int11, int13, char_a>,
+        source_position<int11, int13, char_a>
+      >::type
+    >
+  ));
+
+  // test_source_position_earlier_in_the_same_line_is_not_greater
+  BOOST_MPL_ASSERT((
+    not_<
+      greater<
+        source_position<int11, int11, char_a>,
+        source_position<int11, int13, char_a>
+      >::type
+    >
+  ));
+
+  // test_source_position_later_in_the_same_line_is_greater
+  BOOST_MPL_ASSERT((
+    greater<
+      source_position<int11, int13, char_a>,
+      source_position<int11, int11, char_a>
+    >
+  ));
+
+  // test_source_position_in_the_same_pos_with_less_char_is_not_greater
+  BOOST_MPL_ASSERT((
+    not_<
+      greater<
+        source_position<int11, int13, char_a>,
+        source_position<int11, int13, char_b>
+      >::type
+    >
+  ));
+
+  // test_source_position_earlier_line_is_not_greater
+  BOOST_MPL_ASSERT((
+    not_<
+      greater<
+        source_position<int1, int28, char_a>,
+        source_position<int11, int13, char_a>
+      >::type
+    >
+  ));
+
+  // test_source_position_later_line_is_greater
+  BOOST_MPL_ASSERT((
+    greater<
+      source_position<int28, int2, char_a>,
+      source_position<int11, int13, char_a>
+    >
+  ));
+
+  // test_source_position_is_less_equal_to_itself
+  BOOST_MPL_ASSERT((
+    less_equal<
+      source_position<int11, int13, char_a>,
+      source_position<int11, int13, char_a>
+    >
+  ));
+
+  // test_source_position_earlier_in_the_same_line_is_less_equal
+  BOOST_MPL_ASSERT((
+    less_equal<
+      source_position<int11, int11, char_a>,
+      source_position<int11, int13, char_a>
+    >
+  ));
+
+  // test_source_position_later_in_the_same_line_is_not_less_equal
+  BOOST_MPL_ASSERT((
+    not_<
+      less_equal<
+        source_position<int11, int13, char_a>,
+        source_position<int11, int11, char_a>
+      >::type
+    >
+  ));
+
+  // test_source_position_in_the_same_pos_with_less_char_is_less_equal
+  BOOST_MPL_ASSERT((
+    less_equal<
+      source_position<int11, int13, char_a>,
+      source_position<int11, int13, char_b>
+    >
+  ));
+
+  // test_source_position_earlier_line_is_less_equal
+  BOOST_MPL_ASSERT((
+    less_equal<
+      source_position<int1, int28, char_a>,
+      source_position<int11, int13, char_a>
+    >
+  ));
+
+  // test_source_position_later_line_is_not_less_equal
+  BOOST_MPL_ASSERT((
+    not_<
+      less_equal<
+        source_position<int28, int2, char_a>,
+        source_position<int11, int13, char_a>
+      >::type
     >
   ));
 }

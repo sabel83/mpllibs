@@ -70,6 +70,12 @@ p::type
 
 ## Operations
 
+* `boost::mpl::equal_to`
+* `boost::mpl::greater`
+* `boost::mpl::greater_equal`
+* `boost::mpl::less`
+* `boost::mpl::less_equal`
+* `boost::mpl::not_equal_to`
 * [`get_col`](get_col.html)
 * [`get_line`](get_line.html)
 * [`get_prev_char`](get_prev_char.html)
