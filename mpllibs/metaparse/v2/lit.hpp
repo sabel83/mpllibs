@@ -6,14 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v2/error/literal_expected.hpp>
-#include <mpllibs/metaparse/v2/accept_when.hpp>
-#include <mpllibs/metaparse/v2/one_char.hpp>
-
-#include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/lambda.hpp>
-#include <boost/mpl/push_back.hpp>
-#include <boost/mpl/char.hpp>
+#include <mpllibs/metaparse/v2/lit_c.hpp>
 
 namespace mpllibs
 {
@@ -22,22 +15,10 @@ namespace mpllibs
     namespace v2
     {
       template <class C>
-      struct lit :
-        accept_when<
-          one_char,
-          typename boost::mpl::lambda<
-            boost::mpl::equal_to<
-              boost::mpl::_1,
-              boost::mpl::char_<C::type::value>
-            >
-          >::type,
-          error::literal_expected<C>
-        >
-      {};
+      struct lit : lit_c<C::type::value> {};
     }
   }
 }
 
 #endif
-
 

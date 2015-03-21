@@ -16,14 +16,14 @@ namespace mpllibs
     {
       namespace error
       {
-        template <class C>
+        template <char C>
         struct literal_expected
         {
           typedef literal_expected type;
 
           static std::string get_value()
           {
-            return std::string("Expected: ") + C::type::value;
+            return std::string("Expected: ") + C;
           }
         };
       }

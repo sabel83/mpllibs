@@ -5,7 +5,7 @@
 ```cpp
 namespace error
 {
-  template <class C>
+  template <char C>
   struct literal_expected;
 }
 ```
@@ -17,7 +17,7 @@ This is a [template metaprogramming value](metaprogramming_value.html).
 <table cellpadding='0' cellspacing='0'>
   <tr>
     <td>`C`</td>
-    <td>[template metaprogramming value](metaprogramming_value.html)</td>
+    <td>`char` value</td>
   </tr>
 </table>
 

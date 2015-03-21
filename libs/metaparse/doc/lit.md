@@ -39,7 +39,7 @@ lit<c>
 accept_when<
   one_char,
   boost::mpl::lambda<boost::mpl::equal_to<boost::mpl::_1, c>>::type,
-  error::literal_expected<c>
+  error::literal_expected<c::type::value>
 >
 ```
 

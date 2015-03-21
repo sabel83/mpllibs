@@ -1724,7 +1724,7 @@ look. It contains this:
 ```cpp
 x__________________PARSING_FAILED__________________x<
   1, 1,
-  mpllibs::metaparse::v2::error::literal_expected<mpl_::char_<'('> >
+  mpllibs::metaparse::v2::error::literal_expected<'('>
 >
 ```
 
@@ -1734,11 +1734,11 @@ contains answers to the main questions one has when parsing fails:
 
 * _where_ is the error? It is column `1` in line `1` (inside [`MPLLIBS_STRING`](
   MPLLIBS_STRING.html)). This is the `1, 1` part.
-* _what_ is the problem? `literal_expected<mpl_::char_<'('> >`. This is a bit
-  misleading, as it contains only a part of the problem. An open paren is not
-  the only acceptable token here, a number would also be fine. This misleading
-  error message is _our_ fault: _we_ (the parser authors) need to make the
-  parsing errors more descriptive.
+* _what_ is the problem? `literal_expected<'('>`. This is a bit misleading, as
+  it contains only a part of the problem. An open paren is not the only
+  acceptable token here, a number would also be fine. This misleading error
+  message is _our_ fault: _we_ (the parser authors) need to make the parsing
+  errors more descriptive.
 
 ### 11.1. Improving the error messages
 
