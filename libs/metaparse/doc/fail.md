@@ -14,7 +14,7 @@ This is a [parser](parser.html).
 <table cellpadding='0' cellspacing='0'>
   <tr>
     <td>`Msg`</td>
-    <td>[template metaprogramming value](metaprogramming_value.html)</td>
+    <td>[parsing error message](parsing_error_message.html)</td>
   </tr>
 </table>
 
@@ -30,7 +30,8 @@ Parser rejecting every input.
 
 ## Expression semantics
 
-For any `msg` error message, `s` compile-time string and `pos` source position
+For any `msg` parsing error message, `s` compile-time string and `pos` source
+position
 
 ```cpp
 fail<msg>::apply<s, pos>::type

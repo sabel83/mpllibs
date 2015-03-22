@@ -22,7 +22,7 @@ This is a [parser combinator](parser_combinator.html).
   </tr>
   <tr>
     <td>`ErrorMsg`</td>
-    <td>[template metaprogramming value](metaprogramming_value.html)</td>
+    <td>[parsing error message](parsing_error_message.html)</td>
   </tr>
 </table>
 
@@ -40,8 +40,8 @@ reason is `ErrorMsg`.
 
 ## Expression semantics
 
-For any `p` parser, `c` class, `msg` error message, `s` compile-time string and
-`pos` source position the following are equivalent
+For any `p` parser, `c` class, `msg` parsing error message, `s` compile-time
+string and `pos` source position the following are equivalent
 
 ```cpp
 get_result<except<p, c, msg>, s, pos>::type

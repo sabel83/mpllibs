@@ -24,9 +24,9 @@ This is a macro.
 
 ## Description
 
-Macro for defining a class which can be used as error messages returned by
-parsers. `name` is the name of the class representing the error message and
-`msg` is a string literal containing the description of the error.
+Macro for defining a [parsing error message](parsing_error_message.html) class.
+`name` is the name of the class representing the error message and `msg` is a
+string literal containing the description of the error.
 
 ## Header
 

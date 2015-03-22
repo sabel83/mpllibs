@@ -18,7 +18,7 @@ This is a [parser combinator](parser_combinator.html).
   </tr>
   <tr>
     <td>`Msg`</td>
-    <td>[template metaprogramming value](metaprogramming_value.html)</td>
+    <td>[parsing error message](parsing_error_message.html)</td>
   </tr>
 </table>
 
@@ -37,7 +37,7 @@ input, the error message returned by `entire_input` is `Msg`.
 
 ## Expression semantics
 
-For any `p` parser and `e` error message the following are equivalent
+For any `p` parser and `e` parsing error message the following are equivalent
 
 ```cpp
 entire_input<p, e>

@@ -22,7 +22,7 @@ This is a [parser combinator](parser_combinator.html).
   </tr>
   <tr>
     <td>`Msg`</td>
-    <td>[template metaprogramming value](metaprogramming_value.html)</td>
+    <td>[parsing error message](parsing_error_message.html)</td>
   </tr>
 </table>
 
@@ -42,8 +42,8 @@ the input and the result of parsing will be what `P` returned. Otherwise
 
 ## Expression semantics
 
-For any `p` parser, `pred` predicate, `msg` error message, `s` compile-time
-string and `pos` source position
+For any `p` parser, `pred` predicate, `msg` parsing error message, `s`
+compile-time string and `pos` source position
 
 ```cpp
 accept_when<p, pred, msg>i::apply<s, pos>::type

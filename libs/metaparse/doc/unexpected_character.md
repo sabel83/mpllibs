@@ -9,7 +9,7 @@ namespace error
 }
 ```
 
-This is a [template metaprogramming value](metaprogramming_value.html).
+This is a [parsing error message](parsing_error_message.html).
 
 ## Description
 

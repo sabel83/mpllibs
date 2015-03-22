@@ -48,12 +48,11 @@ The beginning of the input is [`start`](start.html) which requires
 
 An error is described using a compile-time data structure. It contains
 information about the source position where the error was detected and some
-description about the error. The description is a class with a
-`public: static std::string get_value()` method, which returns the error
-message. [`debug_parsing_error`](debug_parsing_error.html) can be used to
-display the error message. Metaparse provides the
-[`MPLLIBS_DEFINE_ERROR`](MPLLIBS_DEFINE_ERROR.html) macro for defining simple
-error messages.
+[description](parsing_error_message.html) about the error.
+[`debug_parsing_error`](debug_parsing_error.html) can be used to display the
+error message. Metaparse provides the [`MPLLIBS_DEFINE_ERROR`](
+MPLLIBS_DEFINE_ERROR.html) macro for defining simple [parsing error message](
+parsing_error_message.html)s.
 
 ### Some examples of simple parsers
 

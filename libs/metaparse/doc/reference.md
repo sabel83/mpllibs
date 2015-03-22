@@ -183,6 +183,7 @@ classes.
 * [nullary template metafunction](nullary_metafunction.html)
 * [parser](parser.html)
 * [parser combinator](parser_combinator.html)
+* [parsing error message](parsing_error_message.html)
 * [predicate](predicate.html)
 * [tag](tag.html)
 * [template metafunction](metafunction.html)

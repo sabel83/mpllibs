@@ -1776,24 +1776,23 @@ We, the parser authors know: we expect a primary expression there. When
 ### 11.2. Defining custom errors
 
 To be able to return custom error messages (like `missing_primary_expression`)
-to the user, we need to define those error messages first. There are several
-requirements for the class used as the error message:
+to the user, we need to define those error messages first. The error messages
+are represented by classes with some requriements:
 
 * It should have a static method called `get_value()` returning a `std::string`
   containing the description of the error.
 * It should be a [template metaprogramming value](metaprogramming_value.html).
-* Its `tag` should be [`fail_tag`](fail_tag.html).
 
-To make it easy to implement classes representing error messages and to make it
-difficult (if not impossible) to forget to fulfill a requirement, Metaparse
-provides a macro for defining these classes. To get this macro, include the
-following header:
+These classes are called [parsing error message](parsing_error_message.html)s.
+To make it easy to implement such classes and to make it difficult (if not
+impossible) to forget to fulfill a requirement, Metaparse provides a macro for
+defining these classes. To get this macro, include the following header:
 
 ```cpp
 > #include <mpllibs/metaparse/define_error.hpp>
 ```
 
-Let's define the error message:
+Let's define the [parsing error message](parsing_error_message.html):
 
 ```cpp
 > MPLLIBS_DEFINE_ERROR(missing_primary_expression, "Missing primary expression");

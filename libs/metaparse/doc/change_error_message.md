@@ -18,7 +18,7 @@ This is a [parser combinator](parser_combinator.html).
   </tr>
   <tr>
     <td>`Msg`</td>
-    <td>[template metaprogramming value](metaprogramming_value.html)</td>
+    <td>[parsing error message](parsing_error_message.html)</td>
   </tr>
 </table>
 
@@ -36,8 +36,8 @@ the reson will be `Msg`.
 
 ## Expression semantics
 
-For any `p` parser and `m` error message, `s` compile-time string and `pos`
-source position
+For any `p` parser and `m` parsing error message, `s` compile-time string and
+`pos` source position
 
 ```cpp
 change_error_message<p, msg>::apply<s, pos>
