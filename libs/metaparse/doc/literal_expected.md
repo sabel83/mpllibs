@@ -1,4 +1,4 @@
-# lteral_expected
+# literal_expected
 
 ## Synopsis
 
