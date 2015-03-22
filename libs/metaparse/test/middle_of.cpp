@@ -7,12 +7,17 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/start.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
+#include <mpllibs/metaparse/get_message.hpp>
+#include <mpllibs/metaparse/error/unpaired.hpp>
+#include <mpllibs/metaparse/error/literal_expected.hpp>
 
 #include "common.hpp"
 
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/assert.hpp>
+
+#include <boost/type_traits/is_same.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -22,7 +27,13 @@ BOOST_AUTO_TEST_CASE(test_middle_of)
   using mpllibs::metaparse::middle_of;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::is_error;
+  using mpllibs::metaparse::get_message;
+
+  using mpllibs::metaparse::error::unpaired;
+  using mpllibs::metaparse::error::literal_expected;
   
+  using boost::is_same;
+
   using boost::mpl::equal_to;
   using boost::mpl::apply_wrap2;
 
@@ -49,6 +60,16 @@ BOOST_AUTO_TEST_CASE(test_middle_of)
   // test_third_fails
   BOOST_MPL_ASSERT((
     is_error<apply_wrap2<middle_of<lit_h, lit_e, lit_x>, str_hello, start> >
+  ));
+
+  // test_error_message_when_third_fails
+  BOOST_MPL_ASSERT((
+    is_same<
+      unpaired<1, 1, literal_expected<'x'> >,
+      get_message<
+        apply_wrap2<middle_of<lit_h, lit_e, lit_x>, str_hello, start>
+      >::type
+    >
   ));
 
   // test_empty_input
