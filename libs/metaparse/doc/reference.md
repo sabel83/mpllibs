@@ -138,6 +138,7 @@ repetition combinators.
 * [none_of_the_expected_cases_found](none_of_the_expected_cases_found.html)
 * [unexpected_character](unexpected_character.html)
 * [unexpected_end_of_input](unexpected_end_of_input.html)
+* [unpaired](unpaired.html)
 * [whitespace_expected](whitespace_expected.html)
 
 ## Tags
