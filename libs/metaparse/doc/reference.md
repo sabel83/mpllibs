@@ -48,6 +48,7 @@
 * [change_error_message](change_error_message.html)
 * [entire_input](entire_input.html)
 * [except](except.html)
+* [fail_at_first_char_expected](fail_at_first_char_expected.html)
 * [transform_error](transform_error.html)
 * [transform_error_message](transform_error_message.html)
 
@@ -132,6 +133,7 @@ repetition combinators.
 
 * [digit_expected](digit_expected.html)
 * [end_of_input_expected](end_of_input_expected.html)
+* [expected_to_fail](expected_to_fail.html)
 * [index_out_of_range](index_out_of_range.html)
 * [letter_expected](letter_expected.html)
 * [literal_expected](literal_expected.html)

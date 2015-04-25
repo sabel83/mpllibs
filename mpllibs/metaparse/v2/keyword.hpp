@@ -6,7 +6,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v2/impl/accepted_keyword.hpp>
+#include <mpllibs/metaparse/v2/impl/void_.hpp>
 #include <mpllibs/metaparse/v2/lit.hpp>
 #include <mpllibs/metaparse/v2/return_.hpp>
 #include <mpllibs/metaparse/v2/is_error.hpp>
@@ -27,7 +27,7 @@ namespace mpllibs
     namespace v2
     {
       // Does not consume/check anything after the keyword
-      template <class Kw, class ResultType = impl::accepted_keyword>
+      template <class Kw, class ResultType = impl::void_>
       struct keyword
       {
       private:

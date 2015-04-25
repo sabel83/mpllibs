@@ -1868,6 +1868,92 @@ The error message is now more specific to the calculator language. This covers
 only one case, where the error messages can be improved. Other cases (eg.
 missing closing parens, missing operators, etc) can be covered in a similar way.
 
+### 11.3. Missing closing parens
+
+Missing closing parens are common errors. Let's see how our parsers report them:
+
+```cpp
+> exp_parser20::apply<MPLLIBS_STRING("(1+2")>::type
+<< compilation error >>
+..... x__________________PARSING_FAILED__________________x<1, 5, unpaired<1, 1, literal_expected<')'>>> ....
+<< compilation error >>
+```
+
+The parser could detect that there is a missing paren and the error report
+points to the open paren which is not closed. This looks great, but we are not
+done yet. Let's try a slightly more complex input:
+
+```cpp
+> exp_parser20::apply<MPLLIBS_STRING("0+(1+2")>::type
+mpl_::integral_c<int, 0>
+```
+
+This is getting strange now. We parse the `+ <mult_exp>` elements using
+[`foldlp`](foldlp.html) (see the definition of `plus_exp3`).
+[`foldlp`](foldlp.html) parses the input as long as it can and stops when it
+fails to parse it. In the above input, it parses `0` as the initial element and
+then it tries to parse the first `+ <mult_exp>` element. But parsing the
+`<mult_exp>` part fails because of the missing closing paren. So
+[`foldlp`](foldlp.html) stops and ignores this failing part of the input.
+
+The result of the above is that we parse only the `0` part of the input, ignore
+the "garbage" at the end and assume that the value of the expression is `0`.
+This could be fixed by using [`entire_input`](entire_input.html). Our parser
+would reject the input (because of the "garbage" at the end), but the error
+message would not be useful. So we take a different approach.
+
+When [`foldlp`](foldlp.html) stops, we should check if there is an extra broken
+`+ <mult_exp>` there or not. When there is, we should report what is wrong with
+that broken `+ <mult_exp>` (eg. a missing closing paren). Metaparse provides
+[`fail_at_first_char_expected`](fail_at_first_char_expected.html) to implement
+such validations.
+[`fail_at_first_char_expected`](fail_at_first_char_expected.html)`<parser>`
+checks how `parser` fails to parse the input: when it fails right at the first
+character, [`fail_at_first_char_expected`](fail_at_first_char_expected.html)
+assumes that there is no garbage and accepts the input. When `parser` consumes
+characters from the input before failing,
+[`fail_at_first_char_expected`](fail_at_first_char_expected.html) assumes that
+there is a broken expression and propagates the error. It can be used the
+following way:
+
+```cpp
+> #include <mpllibs/metaparse/fail_at_first_char_expected.hpp>
+> #include <mpllibs/metaparse/first_of.hpp>
+> struct plus_exp4 : \
+...> first_of< \
+...>   foldlp< \
+...>     sequence<one_of<plus_token, minus_token>, mult_exp6>, \
+...>     mult_exp6, \
+...>     boost::mpl::quote2<binary_op> \
+...>   >, \
+...>   fail_at_first_char_expected< \
+...>     sequence<one_of<plus_token, minus_token>, mult_exp6> \
+...>   > \
+...> > {};
+> using exp_parser21 = build_parser<plus_exp4>;
+```
+
+[`first_of`](first_of.html) is similar to [`middle_of`](middle_of.html), but
+keeps the result of the first element, not the middle one. We use it to keep the
+"real" result (the result of [`foldlp`](foldlp.html)) and to throw the dummy
+result coming from
+[`fail_at_first_char_expected`](fail_at_first_char_expected.html) away when
+there is no broken expression at the end. [`first_of`](first_of.html) propagates
+any error coming from
+[`fail_at_first_char_expected`](fail_at_first_char_expected.html).
+
+Let's try this new expression parser out with a missing closing paren:
+
+```cpp
+> exp_parser21::apply<MPLLIBS_STRING("0+(1+2")>::type
+<< compilation error >>
+..... x__________________PARSING_FAILED__________________x<1, 7, unpaired<1, 3, literal_expected<')'>>> ....
+<< compilation error >>
+```
+
+This works as expected now: it tells us that there is a missing paren and it
+points us the open paren which is not closed.
+
 ## 12. Summary
 
 This tutorial showed you how to build a parser for a calculator language. Now
