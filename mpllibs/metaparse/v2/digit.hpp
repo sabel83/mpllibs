@@ -9,6 +9,7 @@
 #include <mpllibs/metaparse/v2/error/digit_expected.hpp>
 #include <mpllibs/metaparse/v2/accept_when.hpp>
 #include <mpllibs/metaparse/v2/one_char.hpp>
+#include <mpllibs/metaparse/v2/change_error_message.hpp>
 
 #include <mpllibs/metaparse/v2/util/is_digit.hpp>
 
@@ -19,7 +20,11 @@ namespace mpllibs
     namespace v2
     {
       typedef
-        accept_when<one_char, util::is_digit<>, error::digit_expected>
+        accept_when<
+          change_error_message<one_char, error::digit_expected>,
+          util::is_digit<>,
+          error::digit_expected
+        >
         digit;
     }
   }
