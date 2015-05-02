@@ -124,7 +124,6 @@ static_assert(
   >::type::value == 0,
   "the sum of no elements is 0"
 );
-
 ```
 
 <p class="copyright">
