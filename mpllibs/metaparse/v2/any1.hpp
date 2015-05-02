@@ -6,10 +6,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/v2/foldr1.hpp>
+#include <mpllibs/metaparse/v2/foldl1.hpp>
 
 #include <boost/mpl/vector.hpp>
-#include <boost/mpl/push_front.hpp>
+#include <boost/mpl/push_back.hpp>
 #include <boost/mpl/lambda.hpp>
 
 namespace mpllibs
@@ -20,11 +20,11 @@ namespace mpllibs
     {
       template <class P>
       struct any1 :
-        foldr1<
+        foldl1<
           P,
           boost::mpl::vector<>,
           boost::mpl::lambda<
-            boost::mpl::push_front<boost::mpl::_1, boost::mpl::_2>
+            boost::mpl::push_back<boost::mpl::_1, boost::mpl::_2>
           >::type
         >
       {};
