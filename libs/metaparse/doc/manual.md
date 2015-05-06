@@ -408,6 +408,68 @@ folding from the right.
 > [`foldlp`](foldlp.html) is more efficient than [`foldrp`](foldrp.html). Prefer
 > [`foldlp`](foldlp.html) whenever possible.
 
+#### Introducing foldlfp
+
+Using a parser built with [`foldlp`](foldlp.html) we can parse the input when
+the input is correct. However, it is not always the case. Consider the following
+input for example:
+
+```cpp
+MPLLIBS_STRING("11 + 13 + 3 + 21 +")
+```
+
+This is an ivalid expression. However, if we parse it using the
+`foldlp`](foldlp.html)-based parser presented earlier (`sum_parser3`), it
+accepts the input and the result is `48`. This is because
+[`foldlp`](foldlp.html) parses the input _as long as it can_. It parses the
+first`int_token` (`11`) and then it starts parsing the `plus_int` elements
+(`+ 13`, `+ 3`, `+ 21`). After parsing all of these, it tries to parse the
+remaining `" +"` input using `plus_int` which fails and therefore
+[`foldlp`](foldlp.html) stops after `+ 21`.
+
+The problem is that the parser parses the longest sub-expression starting from
+the beginning, that represents a valid expression. The rest is ignored. The
+parser can be wrapped by [`entire_input`](entire_input.html) to make sure to
+reject expressions with invalid extra characters at the end, however, that
+won't make the error message useful. ([`entire_input`](entire_input.html) can
+only tell the author of the invalid expression that after `+ 21` is something
+wrong).
+
+Metaparse provides [`foldlfp`](foldlfp.html), which does the same as
+[`foldlp`](foldlp.html), except that once no further repetitions are found, it
+checks _where_ the repeated parser (in our example `plus_int`) fails. When it
+can make any progress (eg. it finds a `+` symbol), then
+[`foldlfp`](foldlfp.html) assumes, that the expression's author intended to make
+the repetition longer, but made a mistake and propagates the error message
+coming from that last broken expression.
+
+<p align="center">
+  <a href="foldlfp_diag1.png"><img src="foldlfp_diag1.png" style="width:70%" /></a>
+</p>
+
+The above diagram shows how [`foldlfp`](foldlfp.html) parses the example
+invalid input and how it fails. This can be used for better error reporting
+from the parsers.
+
+Other folding parsers also have their `f` version. (eg. [`foldrf`](foldrf.html),
+[`foldlf1`](foldlf1.html), etc).
+
+#### Finding the right folding parser combinator
+
+As you might have noticed, there are a lot of different folding parser
+combinators. To help you find the right one, the following naming convention is
+used:
+
+<p align="center">
+  <a href="folds.png"><img src="folds.png" style="width:70%" /></a>
+</p>
+
+> Note that there is no `foldrfp`. The `p` version of the right-folding parsers
+> applies the special parser, whose result is the initial value, after the
+> repeated elements. Therefore, when the parser parsing one repeated element
+> fails, `foldrp` would apply that special final parser instead of checking how
+> the repeated element's parser failed.
+
 ### Grammars
 
 Metaparse provides a way to define grammars in a syntax that resembles EBNF. The

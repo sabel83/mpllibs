@@ -15,6 +15,7 @@
 #include <boost/mpl/int.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/at.hpp>
+#include <boost/mpl/equal.hpp>
 
 #include <string>
 
@@ -95,6 +96,14 @@ struct test_failure
   typedef test_failure type;
 
   static std::string get_value() { return "fail"; }
+};
+
+struct equal_sequences
+{
+  typedef equal_sequences type;
+
+  template <class A, class B>
+  struct apply : boost::mpl::equal<typename A::type, typename B::type> {};
 };
 
 #endif

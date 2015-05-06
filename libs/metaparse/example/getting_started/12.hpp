@@ -3,36 +3,44 @@
 
 // Automatically generated header file
 
-// Definitions before section 11.3
-#include "11_3.hpp"
+// Definitions before section 11.3.2
+#include "11_3_2.hpp"
 
-// Definitions of section 11.3
-// query:
-//    exp_parser20::apply<MPLLIBS_STRING("(1+2")>::type
+// Definitions of section 11.3.2
+struct plus_exp6;
 
-// query:
-//    exp_parser20::apply<MPLLIBS_STRING("0+(1+2")>::type
+using paren_exp5 = middle_of<lparen_token, plus_exp6, rparen_token>;
 
-#include <mpllibs/metaparse/fail_at_first_char_expected.hpp>
+using primary_exp4 = one_of<int_token, paren_exp5, fail<missing_primary_expression>>;
 
-#include <mpllibs/metaparse/first_of.hpp>
+using unary_exp4 = 
+ foldrp< 
+   minus_token, 
+   primary_exp4, 
+   boost::mpl::lambda<boost::mpl::negate<boost::mpl::_1>>::type 
+ >;
 
-struct plus_exp4 : 
- first_of< 
-   foldlp< 
-     sequence<one_of<plus_token, minus_token>, mult_exp6>, 
-     mult_exp6, 
-     boost::mpl::quote2<binary_op> 
-   >, 
-   fail_at_first_char_expected< 
-     sequence<one_of<plus_token, minus_token>, mult_exp6> 
-   > 
+using mult_exp7 = 
+ foldlfp< 
+   sequence<one_of<times_token, divides_token>, unary_exp4>, 
+   unary_exp4, 
+   boost::mpl::quote2<binary_op> 
+ >;
+
+struct plus_exp6 : 
+ foldlfp< 
+   sequence<one_of<plus_token, minus_token>, mult_exp7>, 
+   mult_exp7, 
+   boost::mpl::quote2<binary_op> 
  > {};
 
-using exp_parser21 = build_parser<plus_exp4>;
+using exp_parser23 = build_parser<plus_exp6>;
 
 // query:
-//    exp_parser21::apply<MPLLIBS_STRING("0+(1+2")>::type
+//    exp_parser23::apply<MPLLIBS_STRING("1+(2*")>::type
+
+// query:
+//    exp_parser23::apply<MPLLIBS_STRING("1+(2*3")>::type
 
 #endif
 

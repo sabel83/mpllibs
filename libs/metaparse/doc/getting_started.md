@@ -1954,6 +1954,103 @@ Let's try this new expression parser out with a missing closing paren:
 This works as expected now: it tells us that there is a missing paren and it
 points us the open paren which is not closed.
 
+### 11.3.1 Simplifying the parser
+
+Our parser provides useful error messages for missing closing parens, however,
+the implementation of the parser (`plus_exp4`) is long and repetitive: it
+contains the parser for the repeated element
+([`sequence`](sequence.html)`<`[`one_of`](one_of.html
+)`<plus_token, minus_token>, mult_exp6>`) twice, and that is not ideal.
+
+`plus_exp4` uses [`foldlp`](foldlp.html) to implement repetition. Metaparse
+provides [`foldlfp`](foldlfp.html) which does the same we did with
+[`first_of`](first_of.html), [`foldlp`](foldlp.html) and
+[`fail_at_first_char_expected`](fail_at_first_char_expected.html) together:
+
+```cpp
+> #include <mpllibs/metaparse/foldlfp.hpp>
+> struct plus_exp5 : \
+...> foldlfp< \
+...>   sequence<one_of<plus_token, minus_token>, mult_exp6>, \
+...>   mult_exp6, \
+...>   boost::mpl::quote2<binary_op> \
+...> > {};
+> using exp_parser22 = build_parser<plus_exp5>;
+```
+
+It parses the input using [`sequence`](sequence.html)`<`[`one_of`](one_of.html
+)`<plus_token, minus_token>, mult_exp6>`) repeatedly. When it fails,
+[`foldlfp`](foldlfp.html) checks if it consumed any character before failing
+(the same as what
+[`fail_at_first_char_expected`](fail_at_first_char_expected.html) does), and if
+yes, then [`foldlfp`](foldlfp.html) fails.
+
+This makes the implementation of the repetition with advanced error reporting
+simpler. Let's try it out:
+
+```cpp
+> exp_parser22::apply<MPLLIBS_STRING("0+(1+2")>::type
+<< compilation error >>
+..... x__________________PARSING_FAILED__________________x<1, 7, unpaired<1, 3, literal_expected<')'>>> ....
+<< compilation error >>
+```
+
+Note that other folding parsers have their `f` versions as well (eg.
+[`foldrf`](foldrf.html), [`foldlf1`](foldlf1.html), etc).
+
+### 11.3.2 Using `foldlfp` at other places as well
+
+We have replaced one [`foldlp`](foldlp.html) with [`foldlfp`](foldlfp.html).
+Other layers (`mult_exp`, `unary_exp`, etc) use folding as well. Let's use it at
+all layers:
+
+```cpp
+> struct plus_exp6;
+> using paren_exp5 = middle_of<lparen_token, plus_exp6, rparen_token>;
+> using primary_exp4 = one_of<int_token, paren_exp5, fail<missing_primary_expression>>;
+> using unary_exp4 = \
+...> foldrp< \
+...>   minus_token, \
+...>   primary_exp4, \
+...>   boost::mpl::lambda<boost::mpl::negate<boost::mpl::_1>>::type \
+...> >;
+> using mult_exp7 = \
+...> foldlfp< \
+...>   sequence<one_of<times_token, divides_token>, unary_exp4>, \
+...>   unary_exp4, \
+...>   boost::mpl::quote2<binary_op> \
+...> >;
+> struct plus_exp6 : \
+...> foldlfp< \
+...>   sequence<one_of<plus_token, minus_token>, mult_exp7>, \
+...>   mult_exp7, \
+...>   boost::mpl::quote2<binary_op> \
+...> > {};
+> using exp_parser23 = build_parser<plus_exp6>;
+```
+
+> Note that `unary_exp4` uses [`foldrp`](foldrp.html) instead of `foldrfp`. The
+> reason behind it is that there is no `foldrfp`. [`foldrp`](foldrp.html)
+> applies the `primary_exp4` parser when `minus_token` does not accept the
+> input any more. Therefore, it is supposed to catch the errors of incomplete
+> expressions after the repetition.
+
+Let's try different invalid expressions:
+
+```cpp
+> exp_parser23::apply<MPLLIBS_STRING("1+(2*")>::type
+<< compilation error >>
+..... x__________________PARSING_FAILED__________________x<1, 6, missing_primary_expression> ....
+<< compilation error >>
+```
+
+```cpp
+> exp_parser23::apply<MPLLIBS_STRING("1+(2*3")>::type
+<< compilation error >>
+..... x__________________PARSING_FAILED__________________x<1, 7, unpaired<1, 3, literal_expected<')'>>> ....
+<< compilation error >>
+```
+
 ## 12. Summary
 
 This tutorial showed you how to build a parser for a calculator language. Now

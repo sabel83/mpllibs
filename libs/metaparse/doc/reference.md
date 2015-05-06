@@ -58,15 +58,26 @@ See the [Repetition](manual.html#repetition) section of the
 [User Manual](manual.html) for a detailed comparisan of the most common
 repetition combinators.
 
+[Cheat-sheet](manual.html#finding-the-right-folding-parser-combinator) for
+choosing among the `fold*` parsers.
+
 * [any](any.html)
 * [any1](any1.html)
+* [anyf](anyf.html)
+* [anyf1](anyf1.html)
 * [any_one_of](any_one_of.html)
 * [any_one_of1](any_one_of1.html)
 * [foldl](foldl.html)
 * [foldl1](foldl1.html)
+* [foldlf](foldlf.html)
+* [foldlf1](foldlf1.html)
+* [foldlfp](foldlfp.html)
+* [foldlp](foldlp.html)
 * [foldlp](foldlp.html)
 * [foldr](foldr.html)
 * [foldr1](foldr1.html)
+* [foldrf](foldrf.html)
+* [foldrf1](foldrf1.html)
 * [foldrp](foldrp.html)
 * [iterate](iterate.html)
 * [iterate_c](iterate_c.html)
