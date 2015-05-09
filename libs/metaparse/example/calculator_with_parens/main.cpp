@@ -11,7 +11,7 @@
 #include <mpllibs/metaparse/middle_of.hpp>
 #include <mpllibs/metaparse/space.hpp>
 #include <mpllibs/metaparse/int_.hpp>
-#include <mpllibs/metaparse/foldlp.hpp>
+#include <mpllibs/metaparse/foldlfp.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/token.hpp>
@@ -41,7 +41,7 @@ using mpllibs::metaparse::space;
 using mpllibs::metaparse::any;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::int_;
-using mpllibs::metaparse::foldlp;
+using mpllibs::metaparse::foldlfp;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
 using mpllibs::metaparse::token;
@@ -114,7 +114,7 @@ typedef middle_of<open_paren_token, plus_exp, close_paren_token> paren_exp;
 typedef one_of<int_token, paren_exp> simple_exp;
 
 typedef
-  foldlp<
+  foldlfp<
     sequence<one_of<mult_token, div_token>, simple_exp>,
     simple_exp,
     eval_mult
@@ -122,7 +122,7 @@ typedef
   prod_exp;
   
 struct plus_exp :
-  foldlp<
+  foldlfp<
     sequence<one_of<plus_token, minus_token>, prod_exp>,
     prod_exp,
     eval_plus

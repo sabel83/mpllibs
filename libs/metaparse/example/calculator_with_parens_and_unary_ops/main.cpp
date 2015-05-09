@@ -11,7 +11,7 @@
 #include <mpllibs/metaparse/middle_of.hpp>
 #include <mpllibs/metaparse/space.hpp>
 #include <mpllibs/metaparse/int_.hpp>
-#include <mpllibs/metaparse/foldlp.hpp>
+#include <mpllibs/metaparse/foldlfp.hpp>
 #include <mpllibs/metaparse/foldrp.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
@@ -44,7 +44,7 @@ using mpllibs::metaparse::space;
 using mpllibs::metaparse::any;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::int_;
-using mpllibs::metaparse::foldlp;
+using mpllibs::metaparse::foldlfp;
 using mpllibs::metaparse::foldrp;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
@@ -115,7 +115,7 @@ struct eval_mult
 
 struct eval_unary_plus
 {
-  template <class C, class State>
+  template <class State, class C>
   struct apply :
     eval_if<
       typename equal_to<char_<'+'>, typename C::type>::type,
@@ -138,7 +138,7 @@ typedef
   simple_exp;
 
 typedef
-  foldlp<
+  foldlfp<
     sequence<one_of<mult_token, div_token>, simple_exp>,
     simple_exp,
     eval_mult
@@ -146,7 +146,7 @@ typedef
   prod_exp;
   
 struct plus_exp :
-  foldlp<
+  foldlfp<
     sequence<one_of<plus_token, minus_token>, prod_exp>,
     prod_exp,
     eval_plus

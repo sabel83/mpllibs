@@ -9,7 +9,7 @@
 #include <mpllibs/metaparse/last_of.hpp>
 #include <mpllibs/metaparse/space.hpp>
 #include <mpllibs/metaparse/int_.hpp>
-#include <mpllibs/metaparse/foldlp.hpp>
+#include <mpllibs/metaparse/foldlfp.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
 #include <mpllibs/metaparse/token.hpp>
@@ -37,7 +37,7 @@ using mpllibs::metaparse::space;
 using mpllibs::metaparse::any;
 using mpllibs::metaparse::build_parser;
 using mpllibs::metaparse::int_;
-using mpllibs::metaparse::foldlp;
+using mpllibs::metaparse::foldlfp;
 using mpllibs::metaparse::get_result;
 using mpllibs::metaparse::one_of;
 using mpllibs::metaparse::token;
@@ -182,7 +182,7 @@ typedef
   value_exp;
 
 typedef
-  foldlp<
+  foldlfp<
     sequence<one_of<mult_token, div_token>, value_exp>,
     value_exp,
     build_mult
@@ -190,7 +190,7 @@ typedef
   prod_exp;
   
 typedef
-  foldlp<
+  foldlfp<
     sequence<one_of<plus_token, minus_token>, prod_exp>,
     prod_exp,
     build_plus

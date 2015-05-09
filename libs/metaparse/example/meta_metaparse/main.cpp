@@ -20,6 +20,7 @@
 #include <boost/mpl/back.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/bool.hpp>
+#include <boost/mpl/fold.hpp>
 
 using boost::mpl::apply_wrap1;
 using boost::mpl::front;

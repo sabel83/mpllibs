@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <mpllibs/metaparse/foldl.hpp>
-#include <mpllibs/metaparse/foldl1.hpp>
+#include <mpllibs/metaparse/foldlf.hpp>
+#include <mpllibs/metaparse/foldlf1.hpp>
 #include <mpllibs/metaparse/lit_c.hpp>
 #include <mpllibs/metaparse/transform.hpp>
 #include <mpllibs/metaparse/one_char_except_c.hpp>
@@ -20,8 +20,8 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/string.hpp>
 
-using mpllibs::metaparse::foldl;
-using mpllibs::metaparse::foldl1;
+using mpllibs::metaparse::foldlf;
+using mpllibs::metaparse::foldlf1;
 using mpllibs::metaparse::lit_c;
 using mpllibs::metaparse::transform;
 using mpllibs::metaparse::build_parser;
@@ -102,7 +102,7 @@ struct r_append
  */
 
 typedef
-  foldl1<
+  foldlf1<
     one_of<
       always_c<'.', r_any_char>,
       transform<one_char_except_c<'.', '(', ')'>, r_char_lit>
@@ -115,7 +115,7 @@ typedef
 typedef middle_of<lit_c<'('>, non_bracket_expr, lit_c<')'> > bracket_expr;
 
 typedef
-  foldl<one_of<bracket_expr, non_bracket_expr>, r_epsilon, r_append>
+  foldlf<one_of<bracket_expr, non_bracket_expr>, r_epsilon, r_append>
   regexp;
 
 typedef build_parser<entire_input<regexp> > regexp_parser;

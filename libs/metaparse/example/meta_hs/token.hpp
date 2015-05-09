@@ -17,7 +17,7 @@
 #include <mpllibs/metaparse/last_of.hpp>
 #include <mpllibs/metaparse/return_.hpp>
 #include <mpllibs/metaparse/int_.hpp>
-#include <mpllibs/metaparse/foldlp.hpp>
+#include <mpllibs/metaparse/foldlfp.hpp>
 #include <mpllibs/metaparse/alphanum.hpp>
 #include <mpllibs/metaparse/transform.hpp>
 #include <mpllibs/metaparse/letter.hpp>
@@ -115,7 +115,7 @@ namespace token
   typedef
     mpllibs::metaparse::token<
       except_keywords<
-        mpllibs::metaparse::foldlp<
+        mpllibs::metaparse::foldlfp<
           mpllibs::metaparse::one_of<
             mpllibs::metaparse::alphanum,
             mpllibs::metaparse::lit_c<'_'>

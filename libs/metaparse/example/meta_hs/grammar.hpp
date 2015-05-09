@@ -14,7 +14,7 @@
 #include <mpllibs/metaparse/sequence.hpp>
 #include <mpllibs/metaparse/last_of.hpp>
 #include <mpllibs/metaparse/one_of.hpp>
-#include <mpllibs/metaparse/foldlp.hpp>
+#include <mpllibs/metaparse/foldlfp.hpp>
 #include <mpllibs/metaparse/foldrp.hpp>
 #include <mpllibs/metaparse/entire_input.hpp>
 #include <mpllibs/metaparse/build_parser.hpp>
@@ -66,11 +66,11 @@ namespace grammar
     single_exp;
   
   typedef
-    mpllibs::metaparse::foldlp<single_exp, single_exp, semantic::application>
+    mpllibs::metaparse::foldlfp<single_exp, single_exp, semantic::application>
     application;
   
   typedef
-    mpllibs::metaparse::foldlp<
+    mpllibs::metaparse::foldlfp<
       mpllibs::metaparse::sequence<
         mpllibs::metaparse::one_of<token::mult, token::div>,
         application
@@ -81,7 +81,7 @@ namespace grammar
     mult_exp;
   
   typedef
-    mpllibs::metaparse::foldlp<
+    mpllibs::metaparse::foldlfp<
       mpllibs::metaparse::sequence<
         mpllibs::metaparse::one_of<token::plus, token::minus>,
         mult_exp
@@ -92,7 +92,7 @@ namespace grammar
     plus_exp;
   
   typedef
-    mpllibs::metaparse::foldlp<
+    mpllibs::metaparse::foldlfp<
       mpllibs::metaparse::sequence<token::cmp, plus_exp>,
       plus_exp,
       semantic::binary_op
