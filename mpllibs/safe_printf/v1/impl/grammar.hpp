@@ -13,6 +13,8 @@
 #include <mpllibs/metaparse/always.hpp>
 #include <mpllibs/metaparse/always_c.hpp>
 #include <mpllibs/metaparse/any.hpp>
+#include <mpllibs/metaparse/anyf.hpp>
+#include <mpllibs/metaparse/any_one_of.hpp>
 #include <mpllibs/metaparse/any1.hpp>
 #include <mpllibs/metaparse/digit.hpp>
 #include <mpllibs/metaparse/except.hpp>
@@ -43,6 +45,8 @@ namespace mpllibs
         {
           using mpllibs::metaparse::any;
           using mpllibs::metaparse::any1;
+          using mpllibs::metaparse::anyf;
+          using mpllibs::metaparse::any_one_of;
           using mpllibs::metaparse::always;
           using mpllibs::metaparse::always_c;
           using mpllibs::metaparse::digit;
@@ -64,17 +68,15 @@ namespace mpllibs
           using boost::mpl::false_;
 
           typedef
-            any<
-              one_of<
-                last_of<lit_c<'%'>, lit_c<'%'> >,
-                last_of<
-                  except<
-                    lit_c<'%'>,
-                    boost::mpl::void_,
-                    error::no_percentage_char_expected
-                  >,
-                  one_char
-                >
+            any_one_of<
+              last_of<lit_c<'%'>, lit_c<'%'> >,
+              last_of<
+                except<
+                  lit_c<'%'>,
+                  boost::mpl::void_,
+                  error::no_percentage_char_expected
+                >,
+                one_char
               >
             >
             normal_chars;
@@ -150,7 +152,7 @@ namespace mpllibs
             parameter;
 
           typedef
-            last_of<normal_chars, any<first_of<parameter, normal_chars> > >
+            last_of<normal_chars, anyf<first_of<parameter, normal_chars> > >
             S;
         }
       }
