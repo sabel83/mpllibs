@@ -2,7 +2,7 @@
 
 Metaparse is parser generator library for template metaprograms. The purpose of
 this library is to support the creation of parsers that parse at compile time.
-This library is inteded to be used for embedded domain specific language
+This library is intended to be used for embedded domain specific language
 creation for C++. The input of the generated parser is a compile time string,
 see [`string`](string.html). The result of the parsing process is either an
 error or any other result the writer of the parser specifies.
