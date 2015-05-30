@@ -1,0 +1,5 @@
+```cpp
+#include <boost/mpl/times.hpp>
+template <class L, class R> struct eval_binary_op<L, '*', R> : boost::mpl::times<L, R>::type {};
+
+```

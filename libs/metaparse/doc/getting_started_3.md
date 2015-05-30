@@ -1,0 +1,4 @@
+```cpp
+eval_plus< boost::mpl::vector< mpl_::integral_c<int, 11>, mpl_::char_<'+'>, mpl_::integral_c<int, 2> >>::type
+
+```

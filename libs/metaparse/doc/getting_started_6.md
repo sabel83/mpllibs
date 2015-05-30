@@ -1,0 +1,4 @@
+```cpp
+using vector_of_numbers = boost::mpl::vector< boost::mpl::int_<2>, boost::mpl::int_<5>, boost::mpl::int_<6> >;
+
+```

@@ -1,0 +1,5 @@
+```cpp
+struct plus_exp3;
+using paren_exp4 = middle_of<lparen_token, plus_exp3, rparen_token>;
+
+```

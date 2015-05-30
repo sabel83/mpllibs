@@ -136,6 +136,7 @@ build_parser.html):
 > using namespace mpllibs::metaparse;
 > using exp_parser1 = build_parser<int_>;
 ```
+<p align="right">[copy-paste friendly version](getting_started_0.html)</p>
 
 First we need to include `build_parser.hpp` to make [`build_parser`](
 build_parser.html) available. Then we make our lives easier by running
@@ -363,6 +364,7 @@ tokenisation from the rest of the parser:
 > using int_token = token<int_>;
 > using plus_token = token<lit_c<'+'>>;
 ```
+<p align="right">[copy-paste friendly version](getting_started_1.html)</p>
 
 These two definitions create type aliases for the parsers of our tokens. For the
 compiler it doesn't matter if we use `plus_token` or
@@ -414,6 +416,7 @@ this [metafunction](metafunction.html):
 ...>     typename boost::mpl::at_c<Vector, 2>::type \
 ...>   > {};
 ```
+<p align="right">[copy-paste friendly version](getting_started_2.html)</p>
 
 What it does is that using [`at_c`](at_c.html) it takes the first (index 0) and
 the third (index 2) elements of the `vector` that is the result of parsing with
@@ -429,6 +432,7 @@ example `vector`:
 ...>  >>::type
 mpl_::integral_c<int, 13>
 ```
+<p align="right">[copy-paste friendly version](getting_started_3.html)</p>
 
 We can use `eval_plus` to build a parser that evaluates the expression it
 parses:
@@ -443,6 +447,7 @@ parses:
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_4.html)</p>
 
 > Note that we have to use `boost::mpl::quote1` to turn our `eval_plus`
 > [metafunction](metafunction.html) into a [metafunction
@@ -510,6 +515,7 @@ input for us. Let's create a parser for our expressions using it:
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_5.html)</p>
 
 We have a [`sequence`](sequence.html) with two elements:
 
@@ -609,6 +615,7 @@ summarise the elements of the following `vector`:
 ...>   boost::mpl::int_<6> \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_6.html)</p>
 
 We will write a [template metafunction](metafunction.html), `sum_vector` for
 summarising the elements of a `vector` of numbers:
@@ -625,6 +632,7 @@ summarising the elements of a `vector` of numbers:
 ...>    > \
 ...>  {};
 ```
+<p align="right">[copy-paste friendly version](getting_started_7.html)</p>
 
 This [metafunction](metafunction.html) takes the `vector` to summarise the
 elements of as its argument and uses `boost::mpl::fold` to calculate the sum.
@@ -697,6 +705,7 @@ that can deal with these elements. One such element is
 ...>     > \
 ...> {};
 ```
+<p align="right">[copy-paste friendly version](getting_started_8.html)</p>
 
 This function takes two arguments:
 
@@ -717,6 +726,7 @@ To get the next number out of `Item`, it uses `boost::mpl::at_c`. Let's try
 ...> >::type
 mpl_::integral_c<int, 3>
 ```
+<p align="right">[copy-paste friendly version](getting_started_9.html)</p>
 
 We have called `sum_items` with values from `temp_result` and saw that it works
 as expected: it added the partial sum (`mpl_::integral_c<int, 1>`) to the next
@@ -752,6 +762,7 @@ value of the first `<number>` element). Let's try fold out for this:
 ...> >::type
 mpl_::integral_c<int, 9>
 ```
+<p align="right">[copy-paste friendly version](getting_started_10.html)</p>
 
 > We are using `sum_items` as the function to call in each iteration. We are
 > passing a [metafunction](metafunction.html) (`sum_items`) to another
@@ -801,6 +812,7 @@ part with [`transform`](transform.html), which transforms the result of
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_11.html)</p>
 
 It uses [`transform`](transform.html) to turn the result of the previous version
 of our parser into one that summarises the `+ <number>` elements. Let's try it
@@ -838,6 +850,7 @@ as well:
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_12.html)</p>
 
 `exp_parser9` wraps the parser we had so far (which gives us the two element
 `vector` as the result) with [`transform`](transform.html) to add the elements
@@ -903,6 +916,7 @@ the summary on the fly. Here is how we can write our parser using it:
 ...>     boost::mpl::quote1<sum_vector>> \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_13.html)</p>
 
 Here are the formatted versions of `exp_parser9` and `exp_parser10` side-by-side:
 
@@ -983,6 +997,7 @@ returns as the starting value. Here is how we can implement our parser using it:
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_14.html)</p>
 
 This version of `exp_parser` uses [`foldlp`](foldlp.html). This implementation
 is more compact than the earlier versions. There is no [`sequence`](
@@ -1044,6 +1059,7 @@ Using this, we can make our parser accept subtractions as well:
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_15.html)</p>
 
 It uses [`one_of`](one_of.html)`<plus_token, minus_token>` as the separator for
 the numbers. Let's try it out:
@@ -1078,6 +1094,7 @@ the operator and the right operand:
 > template <class L, class R> struct eval_binary_op<L, '+', R> : boost::mpl::plus<L, R>::type {};
 > template <class L, class R> struct eval_binary_op<L, '-', R> : boost::mpl::minus<L, R>::type {};
 ```
+<p align="right">[copy-paste friendly version](getting_started_16.html)</p>
 
 The first command declares the `eval_binary_op` metafunction. The first and
 third arguments are the left and right operands and the second argument is the
@@ -1100,6 +1117,7 @@ mpl_::integral_c<int, 13>
 > eval_binary_op<boost::mpl::int_<13>, '-', boost::mpl::int_<2>>::type                                
 mpl_::integral_c<int, 11>
 ```
+<p align="right">[copy-paste friendly version](getting_started_17.html)</p>
 
 You might also try to use it with an operator it does not expect (yet). For
 example `'*'`. You will see the C++ compiler complaining about that the
@@ -1131,6 +1149,7 @@ arguments and calls `eval_binary_op`:
 ...>   > \
 ...>   {};
 ```
+<p align="right">[copy-paste friendly version](getting_started_18.html)</p>
 
 This [metafunction](metafunction.html) takes the operator (the first element)
 and the right operand (the second element) from `Item`. The operator is a class
@@ -1159,6 +1178,7 @@ the third argument of [`foldlp`](foldlp.html):
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_19.html)</p>
 
 It uses `binary_op` instead of `sum_items`. Let's try it out:
 
@@ -1182,6 +1202,7 @@ that, we need to add support for multiplication to `eval_binary_op`:
 > #include <boost/mpl/times.hpp>
 > template <class L, class R> struct eval_binary_op<L, '*', R> : boost::mpl::times<L, R>::type {};
 ```
+<p align="right">[copy-paste friendly version](getting_started_20.html)</p>
 
 We had to include `<boost/mpl/times.hpp>` to get the `boost::mpl::times`
 [metafunction](metafunction.html) and then we could extend `eval_binary_op` to
@@ -1210,6 +1231,7 @@ Now we can extend our parser to accept the `*` symbol as an operator:
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_21.html)</p>
 
 This version accepts either a `+`, a `-` or a `*` symbol as the operator. Let's
 try this out:
@@ -1262,6 +1284,7 @@ Here is the parser implementing this:
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_22.html)</p>
 
 Note that this is almost the same as `exp_parser13`. The only difference is that
 it uses `mult_exp1` everywhere, where `exp_parser13` was using `int_token`.
@@ -1312,6 +1335,7 @@ as multiplication, it should be added to that layer:
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_23.html)</p>
 
 We have to include `<boost/mpl/divides.hpp>` to get a [metafunction](
 metafunction.html) for doing a division. We need to extend the `eval_binary_op`
@@ -1393,6 +1417,7 @@ metafunction.html) for this purpose:
 ...>   > \
 ...>   {};
 ```
+<p align="right">[copy-paste friendly version](getting_started_24.html)</p>
 
 There are multiple differences between `binary_op` and `reverse_binary_op`:
 
@@ -1422,6 +1447,7 @@ We can rewrite `mult_exp` using [`foldrp`](foldrp.html):
 ...>                                         /* of applying the above parser */ \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_25.html)</p>
 
 It is almost the same as `mult_exp2`, but ...
 
@@ -1443,6 +1469,7 @@ We can create a new version of `exp_parser` that uses `mult_exp3` instead of
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_26.html)</p>
 
 The only difference between `exp_parser17` and the previous version,
 `exp_parser16` is that it uses the updated version of `mult_exp`. Let's try this
@@ -1506,6 +1533,7 @@ which means that we should use this new layer where we have been using
 ...>   boost::mpl::lambda<boost::mpl::negate<boost::mpl::_1>>::type \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_27.html)</p>
 
 We had to include `<boost/mpl/negate.hpp>` to get a [metafunction](
 metafunction.html) we can negate a value with.
@@ -1535,6 +1563,7 @@ only `exp_parser18`) use `unary_exp1` instead of `int_token`.
 ...>   > \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_28.html)</p>
 
 Let's try these new parsers out:
 
@@ -1544,6 +1573,7 @@ mpl_::integral_c<int, -13>
 > exp_parser18::apply<MPLLIBS_STRING("13")>::type                                                     
 mpl_::integral_c<int, 13>
 ```
+<p align="right">[copy-paste friendly version](getting_started_29.html)</p>
 
 It can deal with negative numbers correctly.
 
@@ -1560,6 +1590,7 @@ First we introduce tokens for parsing the `(` and `)` symbols:
 > using lparen_token = token<lit_c<'('>>;
 > using rparen_token = token<lit_c<')'>>;
 ```
+<p align="right">[copy-paste friendly version](getting_started_30.html)</p>
 
 A paren can contain an expression with any operators in it, so we add a parser
 for parsing (and evaluating) an expression containing operators of the highest
@@ -1573,6 +1604,7 @@ precedence:
 ...>   boost::mpl::quote2<binary_op> \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_31.html)</p>
 
 This was just a refactoring of our last parser for the calculator language. We
 can build the parser for our calculator language by using
@@ -1595,6 +1627,7 @@ pattern, that Metaparse provides [`middle_of`](middle_of.html) for this:
 > #include <mpllibs/metaparse/middle_of.hpp>
 > using paren_exp2 = middle_of<lparen_token, plus_exp1, rparen_token>;
 ```
+<p align="right">[copy-paste friendly version](getting_started_32.html)</p>
 
 This implementation is almost the same as `paren_exp1`. The difference is that
 the result of parsing will be the value of the wrapped expression (the result of
@@ -1666,6 +1699,7 @@ Now we can write the rest of the parsers and they can refer to `plus_exp2`:
 ...>   boost::mpl::quote2<binary_op> \
 ...> >;
 ```
+<p align="right">[copy-paste friendly version](getting_started_33.html)</p>
 
 There is nothing new in the definition of these parsers. They build up the
 hierarchy we have worked out in the earlier sections of this tutorial. The only
@@ -1679,6 +1713,7 @@ element missing is `plus_exp2`:
 ...>   boost::mpl::quote2<binary_op> \
 ...> > {};
 ```
+<p align="right">[copy-paste friendly version](getting_started_34.html)</p>
 
 This definition makes use of inheritance instead of type aliasing. Now we can
 write the parser for the calculator that supports parens as well:
@@ -1808,6 +1843,7 @@ Let's define `plus_exp` and `paren_exp` first. Their definition does not change:
 > struct plus_exp3;
 > using paren_exp4 = middle_of<lparen_token, plus_exp3, rparen_token>;
 ```
+<p align="right">[copy-paste friendly version](getting_started_35.html)</p>
 
 When the input contains no number (parsed by `int_token`) and no paren
 expression (parsed by `paren_exp4`), we should return the
@@ -1854,6 +1890,7 @@ before:
 ...> > {};
 > using exp_parser20 = build_parser<plus_exp3>;
 ```
+<p align="right">[copy-paste friendly version](getting_started_36.html)</p>
 
 We can can try to give our new parser an invalid input:
 
@@ -1932,6 +1969,7 @@ following way:
 ...> > {};
 > using exp_parser21 = build_parser<plus_exp4>;
 ```
+<p align="right">[copy-paste friendly version](getting_started_37.html)</p>
 
 [`first_of`](first_of.html) is similar to [`middle_of`](middle_of.html), but
 keeps the result of the first element, not the middle one. We use it to keep the
@@ -1977,6 +2015,7 @@ provides [`foldlfp`](foldlfp.html) which does the same we did with
 ...> > {};
 > using exp_parser22 = build_parser<plus_exp5>;
 ```
+<p align="right">[copy-paste friendly version](getting_started_38.html)</p>
 
 It parses the input using [`sequence`](sequence.html)`<`[`one_of`](one_of.html
 )`<plus_token, minus_token>, mult_exp6>`) repeatedly. When it fails,
@@ -2028,6 +2067,7 @@ all layers:
 ...> > {};
 > using exp_parser23 = build_parser<plus_exp6>;
 ```
+<p align="right">[copy-paste friendly version](getting_started_39.html)</p>
 
 > Note that `unary_exp4` uses [`foldrp`](foldrp.html) instead of `foldrfp`. The
 > reason behind it is that there is no `foldrfp`. [`foldrp`](foldrp.html)
