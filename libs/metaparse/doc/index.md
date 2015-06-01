@@ -32,8 +32,8 @@ Related publications and blogs
 
 Ábel Sinkovics, Dave Abrahams: <br />
 *Using strings in C++ template metaprograms*, <br />
-[http://cpp-next.com/archive/2012/10/using-strings-in-c-template-metaprograms/](
-  http://cpp-next.com/archive/2012/10/using-strings-in-c-template-metaprograms/
+[http://web.archive.org/web/20140217173026/http://cpp-next.com/archive/2012/10/using-strings-in-c-template-metaprograms](
+  http://web.archive.org/web/20140217173026/http://cpp-next.com/archive/2012/10/using-strings-in-c-template-metaprograms
 )
 
 Ábel Sinkovics, Zoltán Porkoláb: <br />
