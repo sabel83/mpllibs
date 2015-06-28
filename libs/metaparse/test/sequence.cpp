@@ -7,6 +7,8 @@
 #include <mpllibs/metaparse/is_error.hpp>
 #include <mpllibs/metaparse/start.hpp>
 #include <mpllibs/metaparse/get_result.hpp>
+#include <mpllibs/metaparse/always.hpp>
+#include <mpllibs/metaparse/one_char.hpp>
 
 #include "common.hpp"
 
@@ -16,6 +18,7 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/vector_c.hpp>
+#include <boost/mpl/vector.hpp>
 #include <boost/mpl/assert.hpp>
 
 #include <boost/test/unit_test.hpp>
@@ -26,6 +29,8 @@ BOOST_AUTO_TEST_CASE(test_sequence)
   using mpllibs::metaparse::sequence;
   using mpllibs::metaparse::start;
   using mpllibs::metaparse::is_error;
+  using mpllibs::metaparse::always;
+  using mpllibs::metaparse::one_char;
   
   using boost::mpl::equal;
   using boost::mpl::apply_wrap2;
@@ -33,6 +38,9 @@ BOOST_AUTO_TEST_CASE(test_sequence)
   using boost::mpl::equal_to;
   using boost::mpl::at_c;
   using boost::mpl::vector_c;
+  using boost::mpl::vector;
+
+  typedef always<one_char, int> always_int;
 
   // test_no_parser
   BOOST_MPL_ASSERT((
@@ -93,6 +101,15 @@ BOOST_AUTO_TEST_CASE(test_sequence)
       char_e
     >
   ));
-}
 
+  // test_no_extra_evaluation
+  BOOST_MPL_ASSERT((
+    equal<
+      get_result<
+        apply_wrap2<sequence<always_int, always_int>, str_ca, start>
+      >::type,
+      vector<int, int>
+    >
+  ));
+}
 

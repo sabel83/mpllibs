@@ -30,9 +30,7 @@ namespace mpllibs
           struct do_append
           {
             template <class Item>
-            struct apply :
-              boost::mpl::push_back<ListToAppend, typename Item::type>
-            {};
+            struct apply : boost::mpl::push_back<ListToAppend, Item> {};
           };
 
           template <class Accum, class S, class Pos, class Parser>
