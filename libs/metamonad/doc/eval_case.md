@@ -51,7 +51,7 @@ struct maybe_something :
 
 typedef
   unbox<
-    eval_case< maybe_something<box<int>>::type,
+    eval_case< maybe_something<box<int>>,
       matches_c<just<x>, returns<x>>,
       matches_c<nothing, nothing>,
       matches_c<_,       nothing>
