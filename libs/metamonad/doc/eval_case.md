@@ -40,6 +40,16 @@ eval_syntax<case_<e, c1, ..., cn>>
 ```cpp
 using namespace mpllibs::metamonad::name;
 
+using mpllibs::metamonad::just;
+using mpllibs::metamonad::nothing;
+using mpllibs::metamonad::eval_case;
+using mpllibs::metamonad::matches_c;
+using mpllibs::metamonad::var;
+using mpllibs::metamonad::returns;
+using mpllibs::metamonad::_;
+using mpllibs::metamonad::box;
+using mpllibs::metamonad::unbox;
+
 template <class A>
 struct maybe_something :
   boost::mpl::if_<
