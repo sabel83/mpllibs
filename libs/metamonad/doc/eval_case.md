@@ -44,16 +44,18 @@ template <class A>
 struct maybe_something :
   boost::mpl::if_<
     typename boost::is_same<A, int>::type,
-    just<double>,
+    just<box<double>>,
     nothing
   >
 {};
 
 typedef
-  eval_case< maybe_something<int>::type,
-    matches_c<just<var<x>>, returns<x>>,
-    matches_c<nothing,      nothing>,
-    matches_c<_,            nothing>
+  unbox<
+    eval_case< maybe_something<int>::type,
+      matches_c<just<x>, returns<x>>,
+      matches_c<nothing, nothing>,
+      matches_c<_,       nothing>
+    >
   >::type
   this_is_double;
 ```
