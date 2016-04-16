@@ -38,6 +38,17 @@ eval_syntax<case_<e, c1, ..., cn>>
 ## Example
 
 ```cpp
+#include <mpllibs/metamonad/name.hpp>
+#include <mpllibs/metamonad/maybe.hpp>
+#include <mpllibs/metamonad/eval_case.hpp>
+#include <mpllibs/metamonad/var.hpp>
+#include <mpllibs/metamonad/returns.hpp>
+#include <mpllibs/metamonad/box.hpp>
+#include <mpllibs/metamonad/unbox.hpp>
+
+#include <boost/mpl/if.hpp>
+#include <boost/type_traits/is_same.hpp>
+
 using namespace mpllibs::metamonad::name;
 
 using mpllibs::metamonad::just;
