@@ -43,7 +43,7 @@ using namespace mpllibs::metamonad::name;
 template <class A>
 struct maybe_something :
   boost::mpl::if_<
-    typename boost::is_same<A, int>::type,
+    typename boost::is_same<A, box<int> >::type,
     just<box<double>>,
     nothing
   >
@@ -51,7 +51,7 @@ struct maybe_something :
 
 typedef
   unbox<
-    eval_case< maybe_something<int>::type,
+    eval_case< maybe_something<box<int>>::type,
       matches_c<just<x>, returns<x>>,
       matches_c<nothing, nothing>,
       matches_c<_,       nothing>
