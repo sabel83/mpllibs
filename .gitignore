@@ -3,5 +3,6 @@
 bin
 /index.html
 /build.html
+/metaparse.html
 website
 local.mk

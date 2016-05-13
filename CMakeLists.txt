@@ -65,7 +65,17 @@ else()
 
     set(WEBSITE_FILES ${WEBSITE_FILES} ${WEBSITE_ROOT}/${F}.html)
   endforeach(F)
-  
+
+  dir(${WEBSITE_ROOT}/metaparse)
+
+  add_custom_command(
+    OUTPUT ${WEBSITE_ROOT}/metaparse/index.html
+    COMMAND cp ${CMAKE_SOURCE_DIR}/metaparse.html ${WEBSITE_ROOT}/metaparse/index.html
+    DEPENDS ${CMAKE_SOURCE_DIR}/metaparse.html ${WEBSITE_ROOT}/metaparse
+  )
+
+  set(WEBSITE_FILES ${WEBSITE_FILES} ${WEBSITE_ROOT}/metaparse/index.html)
+
   # The libraries
   foreach(L metamonad safe_printf)
     set(DIR ${CMAKE_SOURCE_DIR}/libs/${L})
