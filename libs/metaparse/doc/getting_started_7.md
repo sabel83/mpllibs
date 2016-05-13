@@ -1,4 +1,0 @@
-```cpp
-template <class Vector> struct sum_vector : boost::mpl::fold< Vector, boost::mpl::int_<0>, boost::mpl::lambda< boost::mpl::plus<boost::mpl::_1, boost::mpl::_2> >::type > {};
-
-```

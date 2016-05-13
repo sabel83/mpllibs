@@ -4,9 +4,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/safe_printf/valid_arguments.hpp>
-#include <mpllibs/metaparse/string.hpp>
 
 #include <mpllibs/metamonad/box.hpp>
+
+#include <boost/metaparse/string.hpp>
 
 #include <boost/mpl/vector.hpp>
 
@@ -27,8 +28,8 @@ void validate_and_show()
 
 int main()
 {
-  using mpllibs::metaparse::string;
   using mpllibs::metamonad::box;
+  using boost::metaparse::string;
   using boost::mpl::vector;
   
   validate_and_show<
@@ -50,12 +51,12 @@ int main()
   using mpllibs::metamonad::box;
 
   validate_and_show<
-    MPLLIBS_STRING("John %d, %s %d"),
+    BOOST_METAPARSE_STRING("John %d, %s %d"),
     vector<box<int>, box<const char*>, box<int>>
   >();
 
   validate_and_show<
-    MPLLIBS_STRING("John %d, %s %d"),
+    BOOST_METAPARSE_STRING("John %d, %s %d"),
     vector<box<int>, box<double>, box<int>>
   >();
 }

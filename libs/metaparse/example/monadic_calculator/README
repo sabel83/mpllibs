@@ -1,3 +1,0 @@
-Calculator, working at compile-time. Its implementation takes advantage of
-monads and monadic parsing.
-

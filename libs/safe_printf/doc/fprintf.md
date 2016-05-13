@@ -11,7 +11,7 @@ int fprintf(FILE *f, T1 a1, ..., Tn an);
 ## Description
 
 Wrapper of the `fprintf` function of the C library. It takes the format string
-as a compile-time string, which is an `mpllibs::metaparse::string`.
+as a compile-time string, which is an `boost::metaparse::string`.
 It type-checks the arguments based on the format string. When type-checking
 fails, this function emits a compilation error. When type-checking succeeds,
 this function calls the `sprintf` function of the C library. This thin wrapper
@@ -26,7 +26,7 @@ using `fprintf` without type-checking.
 
 ## Expression semantics
 
-For any `s` `mpllibs::metaparse::string`, `f` `FILE` pointer and `a1` ... `an`
+For any `s` `boost::metaparse::string`, `f` `FILE` pointer and `a1` ... `an`
 runtime objects:
 
 ```cpp
@@ -46,7 +46,7 @@ otherwise it is a compilation error.
 
 ```cpp
 FILE *f = std::fopen("test.txt", "wt");
-safe_printf::fprintf<MPLLIBS_STRING("%d %d\n")>(f, 11, 13);
+safe_printf::fprintf<BOOST_METAPARSE_STRING("%d %d\n")>(f, 11, 13);
 fclose(f);
 ```
 

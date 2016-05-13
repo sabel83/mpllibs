@@ -25,7 +25,7 @@ types is valid for the format string and false otherwise.
 
 ## Expression semantics
 
-For any `s` `mpllibs::metaparse::string` and `t` sequence of boxed types:
+For any `s` `boost::metaparse::string` and `t` sequence of boxed types:
 
 ```cpp
 mpllibs::safe_printf::valid_arguments<s, t>::type::value
@@ -41,7 +41,7 @@ using mpllibs::metamonad::box;
 
 BOOST_STATIC_ASSERT((
   mpllibs::safe_printf::valid_arguments<
-    MPLLIBS_STRING("%d %d\n"),
+    BOOST_METAPARSE_STRING("%d %d\n"),
     boost::mpl::list<box<int>, box<int>>
   >::type::value
 ));

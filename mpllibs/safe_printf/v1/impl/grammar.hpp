@@ -10,23 +10,23 @@
 #include <mpllibs/safe_printf/v1/impl/expected_arg.hpp>
 #include <mpllibs/safe_printf/v1/error.hpp>
 
-#include <mpllibs/metaparse/always.hpp>
-#include <mpllibs/metaparse/always_c.hpp>
-#include <mpllibs/metaparse/any.hpp>
-#include <mpllibs/metaparse/anyf.hpp>
-#include <mpllibs/metaparse/any_one_of.hpp>
-#include <mpllibs/metaparse/any1.hpp>
-#include <mpllibs/metaparse/digit.hpp>
-#include <mpllibs/metaparse/except.hpp>
-#include <mpllibs/metaparse/first_of.hpp>
-#include <mpllibs/metaparse/last_of.hpp>
-#include <mpllibs/metaparse/lit_c.hpp>
-#include <mpllibs/metaparse/one_char.hpp>
-#include <mpllibs/metaparse/one_of.hpp>
-#include <mpllibs/metaparse/one_of_c.hpp>
-#include <mpllibs/metaparse/transform.hpp>
-#include <mpllibs/metaparse/return_.hpp>
-#include <mpllibs/metaparse/sequence.hpp>
+#include <boost/metaparse/always.hpp>
+#include <boost/metaparse/always_c.hpp>
+#include <boost/metaparse/repeated.hpp>
+#include <boost/metaparse/repeated_reject_incomplete.hpp>
+#include <boost/metaparse/repeated_one_of.hpp>
+#include <boost/metaparse/repeated1.hpp>
+#include <boost/metaparse/digit.hpp>
+#include <boost/metaparse/except.hpp>
+#include <boost/metaparse/first_of.hpp>
+#include <boost/metaparse/last_of.hpp>
+#include <boost/metaparse/lit_c.hpp>
+#include <boost/metaparse/one_char.hpp>
+#include <boost/metaparse/one_of.hpp>
+#include <boost/metaparse/one_of_c.hpp>
+#include <boost/metaparse/transform.hpp>
+#include <boost/metaparse/return_.hpp>
+#include <boost/metaparse/sequence.hpp>
 
 #include <mpllibs/metamonad/box.hpp>
 #include <mpllibs/metamonad/instantiate.hpp>
@@ -43,23 +43,23 @@ namespace mpllibs
       {
         namespace grammar
         {
-          using mpllibs::metaparse::any;
-          using mpllibs::metaparse::any1;
-          using mpllibs::metaparse::anyf;
-          using mpllibs::metaparse::any_one_of;
-          using mpllibs::metaparse::always;
-          using mpllibs::metaparse::always_c;
-          using mpllibs::metaparse::digit;
-          using mpllibs::metaparse::except;
-          using mpllibs::metaparse::first_of;
-          using mpllibs::metaparse::last_of;
-          using mpllibs::metaparse::lit_c;
-          using mpllibs::metaparse::one_char;
-          using mpllibs::metaparse::one_of;
-          using mpllibs::metaparse::one_of_c;
-          using mpllibs::metaparse::return_;
-          using mpllibs::metaparse::sequence;
-          using mpllibs::metaparse::transform;
+          using boost::metaparse::repeated;
+          using boost::metaparse::repeated1;
+          using boost::metaparse::repeated_reject_incomplete;
+          using boost::metaparse::repeated_one_of;
+          using boost::metaparse::always;
+          using boost::metaparse::always_c;
+          using boost::metaparse::digit;
+          using boost::metaparse::except;
+          using boost::metaparse::first_of;
+          using boost::metaparse::last_of;
+          using boost::metaparse::lit_c;
+          using boost::metaparse::one_char;
+          using boost::metaparse::one_of;
+          using boost::metaparse::one_of_c;
+          using boost::metaparse::return_;
+          using boost::metaparse::sequence;
+          using boost::metaparse::transform;
 
           using mpllibs::metamonad::box;
           using mpllibs::metamonad::instantiate3;
@@ -68,7 +68,7 @@ namespace mpllibs
           using boost::mpl::false_;
 
           typedef
-            any_one_of<
+            repeated_one_of<
               last_of<lit_c<'%'>, lit_c<'%'> >,
               last_of<
                 except<
@@ -83,7 +83,7 @@ namespace mpllibs
 
           typedef one_of_c<'-', '+', ' ', '#', '0'> flag;
 
-          typedef any1<digit> integer;
+          typedef repeated1<digit> integer;
         
           // Returns true_ or false_
           typedef
@@ -143,7 +143,7 @@ namespace mpllibs
           typedef
             last_of<
               lit_c<'%'>,
-              any<flag>,
+              repeated<flag>,
               transform<
                 sequence<width, precision, format>,
                 instantiate3<expected_arg>
@@ -152,7 +152,10 @@ namespace mpllibs
             parameter;
 
           typedef
-            last_of<normal_chars, anyf<first_of<parameter, normal_chars> > >
+            last_of<
+              normal_chars,
+              repeated_reject_incomplete<first_of<parameter, normal_chars> >
+            >
             S;
         }
       }

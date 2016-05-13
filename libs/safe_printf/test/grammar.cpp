@@ -5,11 +5,11 @@
 
 #include <mpllibs/safe_printf/v1/impl/grammar.hpp>
 
-#include <mpllibs/metaparse/string.hpp>
-#include <mpllibs/metaparse/is_error.hpp>
-#include <mpllibs/metaparse/start.hpp>
-
 #include <boost/test/unit_test.hpp>
+
+#include <boost/metaparse/string.hpp>
+#include <boost/metaparse/is_error.hpp>
+#include <boost/metaparse/start.hpp>
 
 #include <boost/mpl/assert.hpp> 
 
@@ -17,9 +17,9 @@ BOOST_AUTO_TEST_CASE(test_invalid_format_string)
 {
   using mpllibs::safe_printf::v1::impl::grammar::S;
 
-  using mpllibs::metaparse::is_error;
-  using mpllibs::metaparse::string;
-  using mpllibs::metaparse::start;
+  using boost::metaparse::is_error;
+  using boost::metaparse::string;
+  using boost::metaparse::start;
 
   BOOST_MPL_ASSERT(( is_error<S::apply<string<'%'>, start> > ));
 }

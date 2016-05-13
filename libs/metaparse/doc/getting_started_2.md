@@ -1,6 +1,0 @@
-```cpp
-#include <boost/mpl/plus.hpp>
-#include <boost/mpl/at.hpp>
-template <class Vector> struct eval_plus : boost::mpl::plus< typename boost::mpl::at_c<Vector, 0>::type, typename boost::mpl::at_c<Vector, 2>::type > {};
-
-```

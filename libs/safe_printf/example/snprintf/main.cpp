@@ -4,7 +4,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/safe_printf/snprintf.hpp>
-#include <mpllibs/metaparse/string.hpp>
+
+#include <boost/metaparse/string.hpp>
 
 namespace safe = mpllibs::safe_printf;
 
@@ -12,7 +13,7 @@ namespace safe = mpllibs::safe_printf;
 
 int main()
 {
-  using mpllibs::metaparse::string;
+  using boost::metaparse::string;
   
   char s[128];
   safe::snprintf<
@@ -25,7 +26,9 @@ int main()
 int main()
 {
   char s[128];
-  safe::snprintf<MPLLIBS_STRING("%d / %d = %.2f")>(s, sizeof(s), 13, 2, 6.5);
+  safe::snprintf<
+    BOOST_METAPARSE_STRING("%d / %d = %.2f")
+  >(s, sizeof(s), 13, 2, 6.5);
 }
 
 #endif

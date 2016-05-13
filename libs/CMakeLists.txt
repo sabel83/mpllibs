@@ -3,5 +3,5 @@
 #    (See accompanying file LICENSE_1_0.txt or copy at
 #          http://www.boost.org/LICENSE_1_0.txt)
 
-subdirs(metamonad metaparse safe_printf)
+subdirs(metamonad safe_printf)
 

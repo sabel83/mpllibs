@@ -816,11 +816,11 @@ var<state>
 ```
 
 Another option to name variables is to use template metaprogramming strings as
-the identifier. The `MPLLIBS_STRING` macro of Metaparse helps creating them.
-For example:
+the identifier. The `BOOST_METAPARSE_STRING` macro of Boost.Metaparse helps
+creating them. For example:
 
 ```cpp
-var<MPLLIBS_STRING("state")>
+var<BOOST_METAPARSE_STRING("state")>
 ```
 
 Metamonad provides pre-defined variables that can be used without declaring

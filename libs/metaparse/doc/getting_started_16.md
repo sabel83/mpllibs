@@ -1,6 +1,0 @@
-```cpp
-template <class L, char Op, class R> struct eval_binary_op;
-template <class L, class R> struct eval_binary_op<L, '+', R> : boost::mpl::plus<L, R>::type {};
-template <class L, class R> struct eval_binary_op<L, '-', R> : boost::mpl::minus<L, R>::type {};
-
-```

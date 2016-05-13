@@ -6,7 +6,8 @@
 #include <mpllibs/safe_printf/printf.hpp>
 #include <mpllibs/safe_printf/sprintf.hpp>
 #include <mpllibs/safe_printf/fprintf.hpp>
-#include <mpllibs/metaparse/string.hpp>
+
+#include <boost/metaparse/string.hpp>
 
 namespace safe = mpllibs::safe_printf;
 
@@ -14,7 +15,7 @@ namespace safe = mpllibs::safe_printf;
 
 int main()
 {
-  using mpllibs::metaparse::string;
+  using boost::metaparse::string;
   
   safe::printf<
     string<'J','o','h','n',' ','%','d',',',' ','%','s',' ','%','d','\n'>
@@ -36,12 +37,12 @@ int main()
 
 int main()
 {
-  safe::printf<MPLLIBS_STRING("John %d, %s %d\n")>(11, "Joe", 13);
+  safe::printf<BOOST_METAPARSE_STRING("John %d, %s %d\n")>(11, "Joe", 13);
 
   char s[128];
-  safe::sprintf<MPLLIBS_STRING("%d / %d = %.2f")>(s, 13, 2, 6.5);
+  safe::sprintf<BOOST_METAPARSE_STRING("%d / %d = %.2f")>(s, 13, 2, 6.5);
   
-  safe::fprintf<MPLLIBS_STRING("Using sprintf: %s\n")>(stderr, s);
+  safe::fprintf<BOOST_METAPARSE_STRING("Using sprintf: %s\n")>(stderr, s);
 }
 
 #endif

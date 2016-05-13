@@ -4,9 +4,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <mpllibs/safe_printf/valid_arguments.hpp>
-#include <mpllibs/metaparse/string.hpp>
 
 #include <boost/test/unit_test.hpp>
+
+#include <boost/metaparse/string.hpp>
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/not.hpp>
@@ -15,7 +16,7 @@
 using mpllibs::safe_printf::valid_arguments;
 
 using boost::mpl::vector;
-using mpllibs::metaparse::string;
+using boost::metaparse::string;
 
 using mpllibs::metamonad::box;
 

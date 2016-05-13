@@ -1,5 +1,0 @@
-```cpp
-using int_token = token<int_>;
-using plus_token = token<lit_c<'+'>>;
-
-```

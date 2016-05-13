@@ -67,7 +67,7 @@ else()
   endforeach(F)
   
   # The libraries
-  foreach(L metamonad metaparse safe_printf)
+  foreach(L metamonad safe_printf)
     set(DIR ${CMAKE_SOURCE_DIR}/libs/${L})
 
     # HTML

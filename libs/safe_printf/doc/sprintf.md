@@ -10,7 +10,7 @@ int sprintf(char *dst, T1 a1, ..., Tn an);
 ## Description
 
 Wrapper of the `sprintf` function of the C library. It takes the format string
-as a compile-time string, which is an `mpllibs::metaparse::string`.
+as a compile-time string, which is an `boost::metaparse::string`.
 It type-checks the arguments based on the format string. When type-checking
 fails, this function emits a compilation error. When type-checking succeeds,
 this function calls the `sprintf` function of the C library. This thin wrapper
@@ -25,7 +25,7 @@ using `sprintf` without type-checking.
 
 ## Expression semantics
 
-For any `s` `mpllibs::metaparse::string`, `buf` `char` pointer and
+For any `s` `boost::metaparse::string`, `buf` `char` pointer and
 `a1` ... `an` runtime objects:
 
 ```cpp
@@ -45,7 +45,7 @@ otherwise it is a compilation error.
 
 ```cpp
 char s[32];
-mpllibs::safe_printf::sprintf<MPLLIBS_STRING("%d %d\n")>(s, 11, 13);
+mpllibs::safe_printf::sprintf<BOOST_METAPARSE_STRING("%d %d\n")>(s, 11, 13);
 ```
 
 <p class="copyright">

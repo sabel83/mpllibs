@@ -24,7 +24,7 @@ boxed using Metamonad's boxing wrapper.
 
 ## Expression semantics
 
-For any `s` `mpllibs::metaparse::string`:
+For any `s` `boost::metaparse::string`:
 
 ```cpp
 mpllibs::safe_printf::expected_types<s>::type
@@ -40,7 +40,9 @@ using mpllibs::metamonad::box;
 
 BOOST_STATIC_ASSERT((
   boost::mpl::equal<
-    mpllibs::safe_printf::expected_types<MPLLIBS_STRING("%d %d\n")>::type,
+    mpllibs::safe_printf::expected_types<
+      BOOST_METAPARSE_STRING("%d %d\n")
+    >::type,
     boost::mpl::vector<box<int>, box<int>>
   >::type::value
 ));

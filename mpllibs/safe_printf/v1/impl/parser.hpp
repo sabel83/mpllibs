@@ -8,7 +8,7 @@
 
 #include <mpllibs/safe_printf/v1/impl/grammar.hpp>
 
-#include <mpllibs/metaparse/build_parser.hpp>
+#include <boost/metaparse/build_parser.hpp>
 
 namespace mpllibs
 {
@@ -18,7 +18,7 @@ namespace mpllibs
     {
       namespace impl
       {
-        typedef mpllibs::metaparse::build_parser<grammar::S> parser;
+        typedef boost::metaparse::build_parser<grammar::S> parser;
       }
     }
   }
